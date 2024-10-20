@@ -1,4 +1,4 @@
-<div class="coc7 chat-card range initiator" data-actor-key="{{actorKey}}" data-item-id="{{item.id}}" data-fast-forward="{{fastForward}}" data-resolved="{{resolved}}" data-rolled="{{rolled}}" data-cover="{{cover}}" data-surprised="{{surprised}}" data-auto-success="{{autoSuccess}}" data-single-shot="{{singleShot}}" data-multiple-shots="{{multipleShots}}" data-burst="{{burst}}" data-full-auto="{{fullAuto}}" data-advantage="{{advantage}}" data-disadvantage="{{disadvantage}}" data-aiming={{aiming}} data-is-GM="{{isKeeper}}" data-aimed="{{aimed}}" data-damage-rolled="{{damageRolled}}" data-damage-dealt="{{damageDealt}}" data-total-bullets-fired="{{totalBulletsFired}}" data-roll-mode="{{rollMode}}" data-is-blind="false" data-volley-size="{{volleySize}}">
+<div class="coc7 chat-card range initiator" data-actor-key="{{actorKey}}" data-item-id="{{item.id}}" data-fast-forward="{{fastForward}}" data-resolved="{{resolved}}" data-rolled="{{rolled}}" data-cover="{{cover}}" data-surprised="{{surprised}}" data-auto-success="{{autoSuccess}}" data-single-shot="{{singleShot}}" data-multiple-shots="{{multipleShots}}" data-burst="{{burst}}" data-full-auto="{{fullAuto}}" data-dice-modifier="{{diceModifier}}" data-aiming={{aiming}} data-is-GM="{{isKeeper}}" data-aimed="{{aimed}}" data-damage-rolled="{{damageRolled}}" data-damage-dealt="{{damageDealt}}" data-total-bullets-fired="{{totalBulletsFired}}" data-roll-mode="{{rollMode}}" data-is-blind="false" data-volley-size="{{volleySize}}">
   <header class="card-header flexcol">
     <div class="flexrow">
       {{#if displayActorOnCard}}
@@ -24,8 +24,6 @@
         {{#if multipleShots}} <span class="tag" title="{{localize 'CoC7.rangeCombatCard.MultipleShots'}}">{{localize 'CoC7.rangeCombatCard.MultipleShots'}}</span>{{/if}}
         {{#if burst}} <span class="tag" title="{{localize 'CoC7.rangeCombatCard.Burst'}}">{{localize 'CoC7.rangeCombatCard.Burst'}}</span>{{/if}}
         {{#if fullAuto}} <span class="tag" title="{{localize 'CoC7.rangeCombatCard.FullAuto'}}">{{localize 'CoC7.rangeCombatCard.FullAuto'}}</span> {{/if}}
-        {{#if advantage}} <span class="tag" title="{{localize 'CoC7.TitleAdvantage'}}">{{localize 'CoC7.Advantage'}}</span>{{/if}}
-        {{#if disadvantage}} <span class="tag" title="{{localize 'CoC7.TitleDisadvantage'}}">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
         {{#if aimed}} <span class="tag" title="{{localize 'CoC7.rangeCombatCard.AimingTitle'}}">{{localize 'CoC7.rangeCombatCard.aiming'}}</span>{{/if}}
       </div>
     {{else}}
@@ -43,20 +41,38 @@
         {{#if item.multipleShots}}
           <span class="flex1 toggle-switch multipleShots {{#unless rolled}}simple-flag{{/unless}} {{#if multipleShots}}switched-on{{/if}}" title="{{localize 'CoC7.rangeCombatCard.MultipleShots'}}" style="text-align:center" data-flag="multiple-shots" data-selected={{multipleShots}}>{{localize 'CoC7.rangeCombatCard.MultipleShots'}}</span>
         {{/if}}
+      </div>
+
+      <div class="flexrow advantage-selection">
         {{#if item.system.properties.brst}}
           <span class="flex1 toggle-switch burst {{#unless rolled}}simple-flag{{/unless}} {{#if burst}}switched-on{{/if}}" title="{{localize 'CoC7.rangeCombatCard.Burst'}}" style="text-align:center" data-flag="burst" data-selected={{burst}}>{{localize 'CoC7.rangeCombatCard.Burst'}}</span>
         {{/if}}
         {{#if item.system.properties.auto}}
           <span class="flex1 toggle-switch fullAuto {{#unless rolled}}simple-flag{{/unless}} {{#if fullAuto}}switched-on{{/if}}" title="{{localize 'CoC7.rangeCombatCard.FullAuto'}}" style="text-align:center" data-flag="full-auto" data-selected={{fullAuto}}>{{localize 'CoC7.rangeCombatCard.FullAuto'}}</span>
         {{/if}}
-      </div>
-
-      <div class="flexrow advantage-selection">
-        <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleAdvantage'}}" style="text-align:center" data-flag="advantage" data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
-        <span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleDisadvantage'}}" style="text-align:center" data-flag="disadvantage" data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
         <span class="flex1 toggle-switch aiming {{#unless rolled}}simple-flag{{/unless}} {{#if aiming}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.AimingTitle'}}" style="text-align:center" data-flag="aiming" data-selected={{aiming}}>{{localize 'CoC7.rangeCombatCard.aiming'}}</span>
       </div>
-    {{/if}}
+
+      <div style="flex: 1;display: flex;flex-direction: column;margin: 0.5rem 1rem 0;opacity:0.6">
+        <div class="flexrow">
+          <span style="flex: 4; text-align: left">{{localize 'CoC7.PenaltyDice'}}</span>
+          <span style="flex: 1">&nbsp;</span>
+          <span style="flex: 4; text-align: right">{{localize 'CoC7.BonusDice'}}</span>
+        </div>
+        <div class="flexrow">
+          <span style="flex: 1; text-align: left;">-2</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: center;">-1</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: center;">0</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: center;">+1</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: right;">+2</span>
+        </div>
+        <input type="range" name="diceModifier" min="-2" max="2" value="{{diceModifierDisplay}}" class="slider gm-range-only">
+      </div>
+      {{/if}}
   </header>
 
   <div class="targets">
@@ -116,6 +132,17 @@
               <span class="flex1 toggle-switch inMelee target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.inMelee}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.InMeleeTitle'}}" style="text-align:center" data-flag="in-melee" data-selected={{trgt.inMelee}}>{{localize 'CoC7.rangeCombatCard.InMelee'}}</span>
               <span class="flex1 toggle-switch fast target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.fast}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.FastMovingTargetTitle'}}" style="text-align:center" data-flag="fast" data-selected={{trgt.fast}}>{{localize 'CoC7.rangeCombatCard.FastMovingTarget'}}</span>
             </div>
+
+            {{#if ../calculatedBonusDice}}
+            <div class="flexrow" style="margin-top: 5px;">
+              <div style="text-align: center">{{localize 'CoC7.BonusDice'}}: {{../calculatedBonusDice}}</div>
+            </div>
+            {{/if}}
+            {{#if ../calculatedPenaltyDice}}
+            <div class="flexrow" style="margin-top: 5px;">
+              <div style="text-align: center">{{localize 'CoC7.PenaltyDice'}}: {{../calculatedPenaltyDice}}</div>
+            </div>
+            {{/if}}
           {{/if}}
         </div>
 
@@ -322,7 +349,9 @@
                     </span>
                     <ol class="dice-rolls">
                       {{#each d.rolls as |roll|}}
-                        <li data-formula="{{roll.formula}}" data-total="{{roll.total}}" data-die="{{roll.die}}" data-critical="{{roll.critical}}" class="roll die {{roll.die}} {{#if roll.critical}}max{{/if}}">{{roll.total}}</li>
+                        {{#each roll.dice as |die|}}
+                          <li class="roll die d{{die.faces}}">{{die.result}}</li>
+                        {{/each}}
                       {{/each}}
                     </ol>
                   </div>

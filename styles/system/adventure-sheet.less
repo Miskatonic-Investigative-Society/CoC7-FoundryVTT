@@ -1,0 +1,358 @@
+@colourAdventureSheetAdventure: #75844c;
+@colourAdventureSheetKeeperNotes: rgba(79,39,1,0.1);
+@colourAdventureSheetKeeperNotesDark: rgba(79,39,1,0.2);
+@colourAdventureSheetKeeperFoundryvtt: rgba(254,134,32,0.1);
+@colourAdventureSheetKeeperFoundryvttDark: rgba(254,134,32,0.2);
+@colourAdventureSheetKeeperReadaloud: rgba(127,127,127,0.1);
+@colourAdventureSheetKeeperReadaloudDark: rgba(127,127,127,0.2);
+@colourAdventureSheetExample: rgb(102,77,42);
+
+div.coc7-adventure-entry.sheet {
+  &.fixed-adventure-heading form.journal-header {
+    display: none;
+  }
+
+  nav.pages-list {
+    font-family: Voltaire;
+  }
+
+  section.journal-entry-content,
+  div.editor.prosemirror {
+      background: url(./assets/art/page.webp) repeat;
+  }
+
+  section.journal-entry-content {
+    form.journal-header {
+      font-family: Voltaire;
+      input[type="text"] {
+        color: @colourAdventureSheetAdventure;
+      }
+    }
+  }
+
+  div.journal-entry-pages,
+  div.journal-page-content {
+    font-family: Lusitana;
+    /* font-family: Arial; */
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: Voltaire;
+      border-bottom: none;
+      color: @colourAdventureSheetAdventure;
+    }
+
+    h1, h2 {
+      text-transform: uppercase;
+    }
+
+    .coc7-adventure-solo {
+      display: none;
+
+      p {
+        text-align: justify;
+
+        a.content-link,
+        a.inline-roll {
+          margin: 0 0.2rem;
+        }
+      }
+
+      p.actor-drop {
+        border: 1px solid #000;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .assign-point-values ul {
+        padding:0;
+      }
+
+      ul.flexrow {
+        li {
+          list-style-type: none;
+          text-align: center;
+        }
+
+        &.source-values {
+          li {
+            border: 1px solid #000;
+            flex: 0 0 40px;
+            margin: 0 auto;
+          }
+
+          width: 80%;
+          margin: 0 auto;
+        }
+
+        &.destination-values li div.value {
+          border: 1px solid #000;
+          width: 40px;
+          margin: 0 auto;
+        }
+
+        .draggable-other {
+          &.value.empty {
+            border: 1px dotted #999;
+          }
+          &:not(.empty) {
+            cursor: move;
+          }
+        }
+
+        div.selectPadding {
+          padding: 4px;
+        }
+
+        select {
+          width: 95%;
+        }
+      }
+
+      .hidden-until {
+        display: none;
+      }
+    }
+
+    p.hasdropcap:first-letter {
+      font-size: 2.3em;
+      float: left;
+      padding-right: 0.1em;
+      margin-top: -0.2em;
+    }
+
+    p.hasindent {
+      text-indent: 1em;
+      * {
+        text-indent: 0;
+      }
+    }
+
+    div.adventure-heading-section {
+      margin-bottom: 1em;
+
+      div.bookmark {
+        flex: 0 0 93px;
+        mask: url(./assets/art/bookmark.webp) center center / contain no-repeat;
+        -webkit-mask: url(./assets/art/bookmark.webp) center center / contain no-repeat;
+        background: @colourAdventureSheetAdventure;
+
+        &.short {
+          mask: url(./assets/art/bookmarks.webp) center center / contain no-repeat;
+          -webkit-mask: url(./assets/art/bookmarks.webp) center center / contain no-repeat;
+        }
+
+        img {
+          display: block;
+          width: 100%;
+          mix-blend-mode: luminosity;
+        }
+      }
+
+      .adventure-heading {
+        padding: 0.5em;
+
+        div.heading {
+          font-size: 3em;
+          font-family: Voltaire;
+          text-transform: uppercase;
+          color: @colourAdventureSheetAdventure;
+        }
+
+        .subheading {
+          font-style: italic;
+        }
+      }
+    }
+
+    p.example {
+      color: @colourAdventureSheetExample;
+    }
+    p.example,
+    p.example-neutral {
+      font-style: italic;
+    }
+
+    tr.example {
+      background-color: @colourAdventureSheetExample;
+    }
+
+    div.keeper-foundryvtt,
+    div.keeper-read-aloud {
+      font-style: italic;
+    }
+
+    div.keeper-notes,
+    div.keeper-foundryvtt,
+    div.keeper-read-aloud {
+      position: relative;
+      background-color: @colourAdventureSheetKeeperNotes;
+      border-radius: 1em;
+      border: 1px solid @colourAdventureSheetKeeperNotesDark;
+      margin-bottom: 1em;
+
+      &.sidebar {
+        float: right;
+        width: 22em;
+        margin-left: 1em;
+        margin-bottom: 1em;
+      }
+
+
+      div.keeper-title {
+        background-color: @colourAdventureSheetKeeperNotes;
+        margin: 0;
+        padding: 0.7em 0.7em 0.7em 3em;
+        font-family: Voltaire;
+        font-size: 1.2em;
+        border-radius: 1em 1em 0 0;
+        border-bottom: 1px solid @colourAdventureSheetKeeperNotesDark;
+        background-image: url(./assets/art/elder-sign.webp);
+        background-repeat: no-repeat;
+        background-position-y: 0.45em;
+        background-position-x: 0.4em;
+
+        &.default {
+          &:before {
+            content: "Keeper Note";
+          }
+          p {
+            display: none;
+          }
+        }
+        &:not(.default) {
+          p {
+            margin: 0;
+          }
+        }
+      }
+
+      div.keeper-body {
+        padding: 0.3em 1em 0.5em;
+      }
+
+      table.keeper-body {
+        margin: 0;
+        border: 0;
+      }
+    }
+
+    div.keeper-foundryvtt {
+      background-color: @colourAdventureSheetKeeperFoundryvtt;
+      border: 1px solid @colourAdventureSheetKeeperFoundryvttDark;
+      div.keeper-title {
+        background-image: url(./assets/art/coc7-fvtt.webp);
+        background-position-y: 0.4em;
+        background-color: @colourAdventureSheetKeeperFoundryvtt;
+        border-bottom: 1px solid @colourAdventureSheetKeeperFoundryvttDark;
+        &.default:before {
+          content: "FoundryVTT Note";
+        }
+      }
+    }
+
+    div.keeper-read-aloud {
+      background-color: @colourAdventureSheetKeeperReadaloud;
+      border: 1px solid @colourAdventureSheetKeeperReadaloudDark;
+      div.keeper-title {
+        background-image: url(./assets/art/chat-bubble.svg);
+        background-position-y: 0.3em;
+        background-color: @colourAdventureSheetKeeperReadaloud;
+        border-bottom: 1px solid @colourAdventureSheetKeeperReadaloudDark;
+        background-size: 35px 35px;
+        &.default:before {
+          content: "Read aloud or paraphrase the following to the players";
+        }
+      }
+    }
+
+    div.keeper-information {
+      background-color: rgba(0, 0, 0, 0.1);
+      padding: 0.7em;
+      border-radius: 1.4em;
+      margin-top: 0.7em;
+
+      &.sidebar {
+        float: right;
+        width: 22em;
+        margin-left: 1em;
+        margin-bottom: 1em;
+      }
+
+      &::before {
+        content: '';
+        background-repeat: no-repeat;
+        background-size: contain;
+        display: block;
+        background-image: url(assets/art/keeper-bottom.webp);
+        aspect-ratio: 17/1;
+      }
+
+      &::after {
+        content: '';
+        background-repeat: no-repeat;
+        background-size: contain;
+        display: block;
+        background-image: url(assets/art/keeper-top.webp);
+        aspect-ratio: 17/1;
+      }
+
+      h2, h3 {
+        text-align: center;
+      }
+    }
+
+    div.flexrow.two-column {
+      text-align: justify;
+
+      div:first-child {
+        padding-right: 2em;
+      }
+
+      div.keeper-information.sidebar {
+        margin-left: 0;
+      }
+
+      table th,
+      table td {
+        text-align: center;
+      }
+    }
+
+    .creditspage {
+      text-align: center;
+    }
+
+    .coc7-link, .coc7-inline {
+      vertical-align: baseline;
+    }
+
+    section.tmi-toggleable p.toggle {
+      background: #DDD;
+      padding: 1px 0.8em;
+      display: inline;
+      border: 1px solid var(--color-border-dark-tertiary);
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    section.tmi-toggleable p.toggle:hover {
+      text-shadow: 0 0 8px var(--color-shadow-primary);
+    }
+  }
+
+  div.journal-entry-pages:not(.editor-content),
+  div.journal-page-content:not(.editor-content) {
+    section.tmi-toggleable div.toggle {
+      display: none;
+    }
+  }
+
+  div.journal-entry-pages.editor-content,
+  div.journal-page-content.editor-content {
+    section.tmi-toggleable div.toggle {
+      border-style: dashed;
+    }
+  }
+}

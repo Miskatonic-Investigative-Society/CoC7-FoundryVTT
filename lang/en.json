@@ -45,7 +45,7 @@
   "CoC7.Archetype": "Archetype",
   "CoC7.Occupation": "Occupation",
   "CoC7.Age": "Age",
-  "CoC7.Sex": "Sex",
+  "CoC7.Sex": "Pronoun",
   "CoC7.Residence": "Residence",
   "CoC7.Birthplace": "Birthplace",
   "CoC7.Organization": "Organization",
@@ -608,6 +608,8 @@
   "CoC7.IntCheck": "Intelligence check",
   "CoC7.NoSanLoss": "No SAN loss",
   "CoC7.SANLoss": "Sanity Loss",
+  "CoC7.SANLossPass": "pass",
+  "CoC7.SANLossFail": "fail",
   "CoC7.SanityCheckPerformed": "You were exposed to a traumatic event.",
   "CoC7.InvoluntaryActionPerformed": "You lost self-control for a moment.",
   "CoC7.SanityLost": "Sanity points lost",
@@ -1328,6 +1330,17 @@
 
   "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
   "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+  "CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
+  "CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
+  "CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
+  "CoC7.ActorCoCIDItemsRules1": "The Item must match the the current era \"{era}\" or have no eras selected",
+  "CoC7.ActorCoCIDItemsRules2": "Check Item's that match the language \"{lang}\" or \"English\" if no translated Items exist",
+  "CoC7.ActorCoCIDItemsRules3": "Select the Item with the highest priority",
+  "CoC7.ActorCoCIDItemsSceneTokens": "Update all tokens on this scene",
+  "CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
+  "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
+  "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+  "CoC7.ActorCoCIDItemsUpdate": "Update",
 
   "CoC7.TokenCreationRoll.Title": "Rollable detected",
   "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
@@ -1335,7 +1348,6 @@
   "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
   "CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
   "CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
-
 
   "CoC7.RealRollDecaderPlaceholderName": "10's",
 
@@ -1351,5 +1363,12 @@
   "CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
   "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
-  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
+  "CoC7.PauseName": "Time Stop",
+
+  "CoC7.ClickableEvents.MouseOver.Title": "Permission to click",
+  "CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",
+  "CoC7.ClickableEvents.LeftClick.Title": "Left Click Script",
+  "CoC7.ClickableEvents.RightClick.Title": "Right Click Script",
+  "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 }

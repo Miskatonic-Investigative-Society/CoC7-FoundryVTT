@@ -135,6 +135,7 @@
   "CoC7.Initiative": "Initiative",
 
   "CoC7.Cast": "Jet",
+    "CoC7.CastHidden": "Jet Caché",
   "CoC7.SanityCost": "Coût en SAN",
   "CoC7.PowerCost": "Coût en Pouvoir",
   "CoC7.HitPointsCost": "Coût en Points de Vie",
@@ -387,9 +388,9 @@
   "CoC7.SkillRarityShort": "[RA]",
   "CoC7.SkillPush": "Redoublement",
   "CoC7.SkillCombat": "Combat",
-  "CoC7.SkillFighting": "Au contact",
-  "CoC7.SkillFirearm": "Arme à feu",
-  "CoC7.SkillRanged": "À distance",
+  "CoC7.SkillFighting": "Combat. Au Contact",
+  "CoC7.SkillFirearm": "Combat. Arme à feu",
+  "CoC7.SkillRanged": "Combat. À distance",
   "CoC7.SkillRequiresName": "Nécessite un Nom",
   "CoC7.SkillKeepBaseValue": "Conserver la valeur de base",
   "CoC7.SkillPickNameOnly": "Choisissez la Spécialisation",
@@ -412,8 +413,8 @@
   "CoC7.WeaponBlst": "À Souffle",
   "CoC7.WeaponStun": "Étourdissante",
   "CoC7.Weapon.Property.Melee": "Mêlée",
-  "CoC7.Weapon.Property.Thrown": "Jeter",
-  "CoC7.Weapon.Property.Burn": "Brûlante",
+  "CoC7.Weapon.Property.Thrown": "Lancé",
+  "CoC7.Weapon.Property.Burn": "Brûle",
   "CoC7.Weapon.Property.Shotgun": "Fusil à pompe",
 
   "CoC7.ErrorItem": "Objet introuvable",
@@ -427,10 +428,10 @@
 
   "CoC7.NewBioSectionName": "Nouvelle Section",
 
-  "CoC7.FightingSpecializationName": "Combat rapproché",
+  "CoC7.FightingSpecializationName": "Combat. Au Contact",
   "CoC7.UnarmedWeaponName": "Sans arme",
-  "CoC7.FirearmSpecializationName": "Armes à feu",
-  "CoC7.RangedSpecializationName": "A distance",
+  "CoC7.FirearmSpecializationName": "Combat. Arme à feu",
+  "CoC7.RangedSpecializationName": "Combat. À distance",
   "CoC7.DriveSpecializationName": "Conduite",
   "CoC7.PilotSpecializationName": "Pilotage",
   "CoC7.LanguageSpecializationName": "Language",
@@ -607,6 +608,8 @@
   "CoC7.IntCheck": "Test d'intelligence",
   "CoC7.NoSanLoss": "Pas de perte de SAN",
   "CoC7.SANLoss": "Perte de SAN",
+  "CoC7.SANLossPass": "réussi",
+  "CoC7.SANLossFail": "manqué",
   "CoC7.SanityCheckPerformed": "Vous êtes exposé à une situation traumatisante.",
   "CoC7.InvoluntaryActionPerformed": "Vous avez perdu votre sang froid quelques instants.",
   "CoC7.SanityLost": "Perte de santé mentale",
@@ -1031,7 +1034,7 @@
   "CoC7.Migrate.ErrorActor": "Échec de la migration du système CoC7 pour le Personnage {name}: {message}",
 
   "CoC7.System.Documentation": "Consulter le manuel du système",
-  
+
   "CoC7.Settings.CoreRules.Title": "Règles Optionnelles du Livre de Base",
   "CoC7.Settings.Rules.Name": "Variantes/Règles optionnelles",
   "CoC7.Settings.Rules.Label": "Configurer les variantes/règles optionnelles",
@@ -1128,6 +1131,8 @@
   "SETTINGS.PulpRulesHint": "Permettre l'utilisation des règles Pulp (archétype, talent, PV)",
   "SETTINGS.developmentRollForLuck": "Points de Chance récupérables",
   "SETTINGS.developmentRollForLuckHint": "Chaque joueur peut faire un jet de développement pour sa Chance durant la phase de développement",
+  "SETTINGS.allowMythosHardenedTitle": "Résistant au Mythe",
+  "SETTINGS.allowMythosHardenedHint": "Permet de réduire les pertes de SAN pour des Résistants au Mythe",
   "SETTINGS.displayPlayerNameOnSheet": "Afficher le nom du joueur sur la fiche",
   "SETTINGS.DisregardAmmo": "Ne pas tenir compte du nombre de munitions.",
   "SETTINGS.DisregardAmmoHint": "Si activé le système ne tiendra pas compte du nombre de balles chargées dans le pistolet",
@@ -1221,13 +1226,13 @@
   "SETTINGS.UseContextMenusHint": "[EXPERIMENTAL] Utiliser les menus contextuels pour les jets à la place des combinaisons de touches.",
   "SETTINGS.SceneDistanceNotCalcualtedNoError": "Ne pas afficher les erreurs pour les distances",
   "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "Au début d'un combat à distance, en mode immersion, ne pas afficher les messages de calcul.",
-  
+
   "CoC7.getTheExample": "Copier l'Exemple",
   "CoC7.Copied": "Texte de l'Exemple copié dans le presse-papier",
 
   "CoC7.EffectNew": "Nouvel effet",
   "CoC7.EffectAppliedCantOverride": "Un effet actif est applicable. Vous de pouvez modifier [{name}]. Désactivez cet effet pour pouvoir modifier cette valeur.",
-  
+
   "CoC7.InvestigatorWizard.Title": "Création de Personnage guidée",
   "CoC7.InvestigatorWizard.TitleKeeperConfiguration": "Configuration du Gardien",
   "CoC7.InvestigatorWizard.TitleSelectSetup": "Configuration de l'Investigateur",
@@ -1325,14 +1330,24 @@
 
   "CoC7.CoCIDBatch.title": "Automate du System ID (CoC ID)",
   "CoC7.CoCIDBatch.summary": "Le système CoC7 a ajouté le System ID (CoC ID). Cela permet d'identifier les items FoundryVTT, les compétences par exemple. Cette page vous permettra de positionner l'identifiant pour des '{type}' existant(e)s. Le System ID doit utiliser les traductions anglaises pour pouvoir supporter le portage dans d'autres langues.",
-  
+  "CoC7.ActorCoCIDItemsBest": "CoC ID: remplacement des Acteur Item",
+  "CoC7.ActorCoCIDItemsWarning": "Cette action ne peut être annulée, sauvegardez votre monde avant de mettre à jour vos Acteurs",
+  "CoC7.ActorCoCIDItemsWhich": "Vérifier l'Item CoC ID dans lescompendiums actifs, compendiums du monde, et le répertoire des Items en remplaçant celui de Acteur Items en fonction du meilleur choix basé sur ces règles",
+  "CoC7.ActorCoCIDItemsRules1": "L'Item doit être affecté à la période correcte \"{era}\" ou ne pas en avoir d'affectée",
+  "CoC7.ActorCoCIDItemsRules2": "Vérifier l'Item en fonction du language \"{lang}\" ou \"English\" si une traduction n'existe pas",
+  "CoC7.ActorCoCIDItemsRules3": "Sélectionner l'Item avec la plus haute priorité",
+  "CoC7.ActorCoCIDItemsSceneTokens": "Mettre à jour tous les tokens sur cette scène",
+  "CoC7.ActorCoCIDItemsUnlinkedToken": "Mettre à jour les Acteurs orphelins dans le répertoire pour chaque Token en premier",
+  "CoC7.ActorCoCIDItemsActorSheets": "Mettre à jour les feuilles de personnages ouvertes",
+  "CoC7.ActorCoCIDItemsActorDirectory": "Mettre à jour tous les Acteurs du répertoire",
+  "CoC7.ActorCoCIDItemsUpdate": "Mise à jour",
+
   "CoC7.TokenCreationRoll.Title": "Aléatoire détecté",
   "CoC7.TokenCreationRoll.Prompt": "Ce token a des caractéristiques ou compétences aléatoires.<br>Que souhaitez-vous faire ?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Jeter les dés pour toutes",
   "CoC7.TokenCreationRoll.ButtonAverage": "Prendre les moyennes",
   "CoC7.TokenCreationRoll.Rolled": "Caractéristiques et compétences {name} jetées",
   "CoC7.TokenCreationRoll.Averaged": "Caractéristiques et compétences {name} moyennées",
-
 
   "CoC7.RealRollDecaderPlaceholderName": "10's",
 
@@ -1348,5 +1363,6 @@
   "CoC7.ErrorRollAlreadyCompleted": "Ce jet a déjà été fait",
   "CoC7.ErrorNoActorPermission": "Vous n'êtes pes le Proriétaire de cet Acteur",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "Vous ne pouvez pas avoir plus d'un acteur dans un jet combiné",
-  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Une carte de jet opposé demandes deux acteurs"
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Une carte de jet opposé demandes deux acteurs",
+  "CoC7.PauseName": "Time Stop"
 }

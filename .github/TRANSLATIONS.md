@@ -4,169 +4,93 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cn.json (431 untranslated strings)](./ABANDONED.md#cnjson)
+[cn.json (450 untranslated strings)](./ABANDONED.md#cnjson)
 
-[cs.json (616 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (635 untranslated strings)](./ABANDONED.md#csjson)
 
-[ko.json (213 untranslated strings)](./ABANDONED.md#kojson)
+[ko.json (232 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (161 untranslated strings)](./ABANDONED.md#ptbrjson)
+[pt-BR.json (180 untranslated strings)](./ABANDONED.md#ptbrjson)
 
-[ru.json (83 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (102 untranslated strings)](./ABANDONED.md#rujson)
 
-[sv.json (399 untranslated strings)](./ABANDONED.md#svjson)
+[sv.json (418 untranslated strings)](./ABANDONED.md#svjson)
 
-[zh-TW.json (60 untranslated strings)](./ABANDONED.md#zhtwjson)
+[uk.json (67 untranslated strings)](./ABANDONED.md#ukjson)
+
+[zh-TW.json (79 untranslated strings)](./ABANDONED.md#zhtwjson)
 
 
 
-|Key|de|es|fr|it|ja|pl|uk|
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**12**|**49**|**3**|**3**|**4**|**11**|**48**|
-|[CoC7.CastHidden](#coc7casthidden)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.EraReignOfTerror](#coc7erareignofterror)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.ErrorCombinedRollsRequireSingleActor](#coc7errorcombinedrollsrequiresingleactor)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.ErrorNoActorPermission](#coc7errornoactorpermission)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.ErrorOpposedRollsLimitedToTwoActors](#coc7erroropposedrollslimitedtotwoactors)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.ErrorRollAlreadyCompleted](#coc7errorrollalreadycompleted)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.Inactive](#coc7inactive)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.InfoSkillAddedAtBase](#coc7infoskilladdedatbase)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.Japanese](#coc7japanese)|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.LanguageSpecializationName](#coc7languagespecializationname)|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.LinkCheckDiffModifPushing](#coc7linkcheckdiffmodifpushing)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.LinkCheckDiffPushing](#coc7linkcheckdiffpushing)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.LinkCheckModifPushing](#coc7linkcheckmodifpushing)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.LinkCheckPushing](#coc7linkcheckpushing)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.MonetaryDefaultAristocracy](#coc7monetarydefaultaristocracy)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.MonetaryDefaultDestitute](#coc7monetarydefaultdestitute)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.MonetaryDefaultEstablished](#coc7monetarydefaultestablished)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.MonetaryDefaultGentry](#coc7monetarydefaultgentry)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.MonetaryDefaultLower](#coc7monetarydefaultlower)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.MonetaryDefaultMiddle](#coc7monetarydefaultmiddle)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.MonetaryDefaultProfessional](#coc7monetarydefaultprofessional)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.Passive](#coc7passive)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
-|[CoC7.PickWhichActorDesc](#coc7pickwhichactordesc)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.PickWhichActorTitle](#coc7pickwhichactortitle)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.RangedSpecializationName](#coc7rangedspecializationname)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.RealRollDecaderPlaceholderName](#coc7realrolldecaderplaceholdername)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.SkillNameHandgun](#coc7skillnamehandgun)|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.SkillNameLaunch](#coc7skillnamelaunch)|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.SkillNameMachinGun](#coc7skillnamemachingun)|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.SkillNameRifle](#coc7skillnamerifle)|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.SkillNameRifleShotgun](#coc7skillnamerifleshotgun)|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.SkillNameShotgun](#coc7skillnameshotgun)|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.SkillNameSmb](#coc7skillnamesmb)|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.SkillRanged](#coc7skillranged)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.Suppressed](#coc7suppressed)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.Temporary](#coc7temporary)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.TokenCreationRoll.Averaged](#coc7tokencreationrollaveraged)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.TokenCreationRoll.Rolled](#coc7tokencreationrollrolled)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.Unavailable](#coc7unavailable)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.WaitingOnUser](#coc7waitingonuser)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[SETTINGS.TokenDropMode](#settingstokendropmode)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[SETTINGS.TokenDropModeAsk](#settingstokendropmodeask)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[SETTINGS.TokenDropModeAverage](#settingstokendropmodeaverage)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[SETTINGS.TokenDropModeHint](#settingstokendropmodehint)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[SETTINGS.TokenDropModeIgnore](#settingstokendropmodeignore)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[SETTINGS.TokenDropModeRoll](#settingstokendropmoderoll)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
-|[SETTINGS.allowMythosHardenedTitle](#settingsallowmythoshardenedtitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|Key|de|es|fr|it|ja|pl|
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+|**Remaining**:|**5**|**17**|**5**|**22**|**18**|**5**|
+|[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.ActorCoCIDItemsBest](#coc7actorcociditemsbest)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules1](#coc7actorcociditemsrules1)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules2](#coc7actorcociditemsrules2)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules3](#coc7actorcociditemsrules3)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.ActorCoCIDItemsSceneTokens](#coc7actorcociditemsscenetokens)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.ActorCoCIDItemsUnlinkedToken](#coc7actorcociditemsunlinkedtoken)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.ActorCoCIDItemsUpdate](#coc7actorcociditemsupdate)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.ActorCoCIDItemsWarning](#coc7actorcociditemswarning)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.ActorCoCIDItemsWhich](#coc7actorcociditemswhich)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.CastHidden](#coc7casthidden)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ClickableEvents.LeftClick.Title](#coc7clickableeventsleftclicktitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ClickableEvents.MouseOver.Hint](#coc7clickableeventsmouseoverhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ClickableEvents.MouseOver.Title](#coc7clickableeventsmouseovertitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ClickableEvents.RightClick.Title](#coc7clickableeventsrightclicktitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.PauseName](#coc7pausename)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SANLossPass](#coc7sanlosspass)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
+|[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
+|[SETTINGS.allowMythosHardenedTitle](#settingsallowmythoshardenedtitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
+|[TYPES.RegionBehavior.coc7ClickableEvents](#typesregionbehaviorcoc7clickableevents)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+##### CoC7.ActorCoCIDItemsActorDirectory
+```  "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",```
+##### CoC7.ActorCoCIDItemsActorSheets
+```  "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",```
+##### CoC7.ActorCoCIDItemsBest
+```  "CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",```
+##### CoC7.ActorCoCIDItemsRules1
+```  "CoC7.ActorCoCIDItemsRules1": "The Item must match the the current era "{era}" or have no eras selected",```
+##### CoC7.ActorCoCIDItemsRules2
+```  "CoC7.ActorCoCIDItemsRules2": "Check Item's that match the language "{lang}" or "English" if no translated Items exist",```
+##### CoC7.ActorCoCIDItemsRules3
+```  "CoC7.ActorCoCIDItemsRules3": "Select the Item with the highest priority",```
+##### CoC7.ActorCoCIDItemsSceneTokens
+```  "CoC7.ActorCoCIDItemsSceneTokens": "Update all tokens on this scene",```
+##### CoC7.ActorCoCIDItemsUnlinkedToken
+```  "CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",```
+##### CoC7.ActorCoCIDItemsUpdate
+```  "CoC7.ActorCoCIDItemsUpdate": "Update",```
+##### CoC7.ActorCoCIDItemsWarning
+```  "CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",```
+##### CoC7.ActorCoCIDItemsWhich
+```  "CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",```
 ##### CoC7.CastHidden
 ```  "CoC7.CastHidden": "Cast Hidden",```
-##### CoC7.EraReignOfTerror
-```  "CoC7.EraReignOfTerror": "Reign Of Terror",```
-##### CoC7.ErrorCombinedRollsRequireSingleActor
-```  "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",```
-##### CoC7.ErrorNoActorPermission
-```  "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",```
-##### CoC7.ErrorOpposedRollsLimitedToTwoActors
-```  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",```
-##### CoC7.ErrorRollAlreadyCompleted
-```  "CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",```
-##### CoC7.Inactive
-```  "CoC7.Inactive": "Inactive",```
-##### CoC7.InfoSkillAddedAtBase
-```  "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",```
-##### CoC7.Japanese
-```  "CoC7.Japanese": "Japanese",```
-##### CoC7.LanguageSpecializationName
-```  "CoC7.LanguageSpecializationName": "Language",```
-##### CoC7.LinkCheckDiffModifPushing
-```  "CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} check - pushing({modifier})",```
-##### CoC7.LinkCheckDiffPushing
-```  "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",```
-##### CoC7.LinkCheckModifPushing
-```  "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",```
-##### CoC7.LinkCheckPushing
-```  "CoC7.LinkCheckPushing": " {name} check - pushing",```
-##### CoC7.MonetaryDefaultAristocracy
-```  "CoC7.MonetaryDefaultAristocracy": "Aristocracy",```
-##### CoC7.MonetaryDefaultDestitute
-```  "CoC7.MonetaryDefaultDestitute": "Destitute",```
-##### CoC7.MonetaryDefaultEstablished
-```  "CoC7.MonetaryDefaultEstablished": "Poor Gentry / Established Professional",```
-##### CoC7.MonetaryDefaultGentry
-```  "CoC7.MonetaryDefaultGentry": "Wealthy Gentry",```
-##### CoC7.MonetaryDefaultLower
-```  "CoC7.MonetaryDefaultLower": "Lower-Class",```
-##### CoC7.MonetaryDefaultMiddle
-```  "CoC7.MonetaryDefaultMiddle": "Emerging Middle-Class / Starting Professional",```
-##### CoC7.MonetaryDefaultProfessional
-```  "CoC7.MonetaryDefaultProfessional": "Average Gentry / Wealthy Professional",```
-##### CoC7.Passive
-```  "CoC7.Passive": "Passive",```
+##### CoC7.ClickableEvents.LeftClick.Title
+```  "CoC7.ClickableEvents.LeftClick.Title": "Left Click Script",```
+##### CoC7.ClickableEvents.MouseOver.Hint
+```  "CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",```
+##### CoC7.ClickableEvents.MouseOver.Title
+```  "CoC7.ClickableEvents.MouseOver.Title": "Permission to click",```
+##### CoC7.ClickableEvents.RightClick.Title
+```  "CoC7.ClickableEvents.RightClick.Title": "Right Click Script",```
+##### CoC7.PauseName
+```  "CoC7.PauseName": "Time Stop",```
 ##### CoC7.PersonalSpecialityPlaceholder
 ```  "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",```
-##### CoC7.PickWhichActorDesc
-```  "CoC7.PickWhichActorDesc": "You have Owner permissions for multiple Actors please pick which to roll as",```
-##### CoC7.PickWhichActorTitle
-```  "CoC7.PickWhichActorTitle": "Pick who to roll as",```
-##### CoC7.RangedSpecializationName
-```  "CoC7.RangedSpecializationName": "Ranged",```
-##### CoC7.RealRollDecaderPlaceholderName
-```  "CoC7.RealRollDecaderPlaceholderName": "10's",```
-##### CoC7.SkillNameHandgun
-```  "CoC7.SkillNameHandgun": "Handgun",```
-##### CoC7.SkillNameLaunch
-```  "CoC7.SkillNameLaunch": "Launch",```
-##### CoC7.SkillNameMachinGun
-```  "CoC7.SkillNameMachinGun": "Machine Gun",```
-##### CoC7.SkillNameRifle
-```  "CoC7.SkillNameRifle": "Rifle",```
-##### CoC7.SkillNameRifleShotgun
-```  "CoC7.SkillNameRifleShotgun": "Rifle/Shotgun",```
-##### CoC7.SkillNameShotgun
-```  "CoC7.SkillNameShotgun": "Shotgun",```
-##### CoC7.SkillNameSmb
-```  "CoC7.SkillNameSmb": "Submachine Gun",```
-##### CoC7.SkillRanged
-```  "CoC7.SkillRanged": "Ranged",```
-##### CoC7.Suppressed
-```  "CoC7.Suppressed": "Suppressed",```
-##### CoC7.Temporary
-```  "CoC7.Temporary": "Temporary",```
-##### CoC7.TokenCreationRoll.Averaged
-```  "CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",```
-##### CoC7.TokenCreationRoll.Rolled
-```  "CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",```
-##### CoC7.Unavailable
-```  "CoC7.Unavailable": "Unavailable",```
-##### CoC7.WaitingOnUser
-```  "CoC7.WaitingOnUser": "Waiting On User",```
-##### SETTINGS.TokenDropMode
-```  "SETTINGS.TokenDropMode": "When creating NPC :",```
-##### SETTINGS.TokenDropModeAsk
-```  "SETTINGS.TokenDropModeAsk": "Ask what to do",```
-##### SETTINGS.TokenDropModeAverage
-```  "SETTINGS.TokenDropModeAverage": "Average rolls",```
-##### SETTINGS.TokenDropModeHint
-```  "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",```
-##### SETTINGS.TokenDropModeIgnore
-```  "SETTINGS.TokenDropModeIgnore": "Do nothing",```
-##### SETTINGS.TokenDropModeRoll
-```  "SETTINGS.TokenDropModeRoll": "Roll what you can",```
+##### CoC7.SANLossFail
+```  "CoC7.SANLossFail": "fail",```
+##### CoC7.SANLossPass
+```  "CoC7.SANLossPass": "pass",```
 ##### SETTINGS.allowMythosHardenedHint
 ```  "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",```
 ##### SETTINGS.allowMythosHardenedTitle
 ```  "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",```
+##### TYPES.RegionBehavior.coc7ClickableEvents
+```  "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events",```

@@ -1,0 +1,47 @@
+<form autocomplete="off" class="flexcol">
+  <div class="form-fields">
+    <p style="background-color: rgba(255, 166, 0, 0.5); outline: 2px dashed rgba(255, 100, 0, 0.3); padding: 0.5rem;"><i class="fas fa-exclamation-triangle"></i> {{localize 'CoC7.ActorCoCIDItemsWarning'}}</p>
+    <p>{{localize 'CoC7.ActorCoCIDItemsWhich'}}</p>
+    <ul>
+      <li>{{localize 'CoC7.ActorCoCIDItemsRules1' era=era}}</li>
+      {{#unless isEn}}
+      <li>{{localize 'CoC7.ActorCoCIDItemsRules2' lang=lang}}</li>
+      {{/unless}}
+      <li>{{localize 'CoC7.ActorCoCIDItemsRules3'}}</li>
+    </ul>
+    <div class="form-group flexrow">
+      <label for="coc-id-actor-update-items-parent">{{localize 'CoC7.ActorCoCIDItemsUnlinkedToken'}}:</label>
+      <div style="flex: 0 0 2rem">
+        <input type="checkbox" name="coc-id-actor-update-items-parent" id="coc-id-actor-update-items-parent" value="on"  style="margin-left: -5px;" checked="checked">
+      </div>
+    </div>
+    <div class="form-group flexrow">
+      <label for="coc-id-actor-update-items-which-1">{{localize 'CoC7.ActorCoCIDItemsSceneTokens'}}:</label>
+      <div style="flex: 0 0 2rem">
+        <input type="radio" name="coc-id-actor-update-items-which" id="coc-id-actor-update-items-which-1" value="1" style="margin-left: -2px; transform: scale(1.5);" checked="checked">
+      </div>
+    </div>
+    <div class="form-group flexrow">
+      <label for="coc-id-actor-update-items-which-2">{{localize 'CoC7.ActorCoCIDItemsActorSheets'}}:</label>
+      <div style="flex: 0 0 2rem">
+        <input type="radio" name="coc-id-actor-update-items-which" id="coc-id-actor-update-items-which-2" value="2" class="submit_on_change" style="margin-left: -2px; transform: scale(1.5);">
+      </div>
+    </div>
+    <div class="form-group flexrow">
+      <label for="coc-id-actor-update-items-which-3">{{localize 'CoC7.ActorCoCIDItemsActorDirectory'}}:</label>
+      <div style="flex: 0 0 2rem">
+        <input type="radio" name="coc-id-actor-update-items-which" id="coc-id-actor-update-items-which-3" value="3" class="submit_on_change" style="margin-left: -2px; transform: scale(1.5);">
+      </div>
+    </div>
+  </div>
+  <div class="dialog-buttons flexrow">
+      <button class="submit-button" data-button="update">
+        <i class="fas fa-check"></i>
+        {{localize 'CoC7.ActorCoCIDItemsUpdate'}}
+      </button>
+      <button class="submit-button" data-button="cancel">
+        <i class="fas fa-ban"></i>
+        {{localize 'Cancel'}}
+      </button>
+  </div>
+</form>

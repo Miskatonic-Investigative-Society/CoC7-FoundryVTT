@@ -1,4 +1,4 @@
-/* global ChatMessage, CONFIG, game, Roll */
+/* global ChatMessage, CONFIG, foundry, game, Roll */
 
 export class CoC7Dice {
   static async roll (modif = 0, rollMode = null, hideDice = false) {
@@ -8,6 +8,11 @@ export class CoC7Dice {
         alternativeDice = game.settings.get('CoC7', 'tenDiePenalty')
       } else if (modif > 0) {
         alternativeDice = game.settings.get('CoC7', 'tenDieBonus')
+        // Temporary fix for bronze texture in DsN
+        // FoundryVTT v12
+        if (alternativeDice === 'bronze' && foundry.utils.isNewerVersion(game.modules.get('dice-so-nice').version, '5.0.0') && !foundry.utils.isNewerVersion(game.modules.get('dice-so-nice').version, '5.0.5')) {
+          alternativeDice = 'bronze01'
+        }
       }
     }
     let roll
@@ -111,8 +116,10 @@ export class CoC7Dice {
     }
     if (bonusDice > 0) {
       pool.push(
+        // Temporary fix for bronze texture in DsN
+        // FoundryVTT v12
         (hasDSN
-          ? '+1do[' + game.settings.get('CoC7', 'tenDieBonus') + ']'
+          ? '+1do[' + (game.settings.get('CoC7', 'tenDieBonus') === 'bronze' && foundry.utils.isNewerVersion(game.modules.get('dice-so-nice').version, '5.0.0') && !foundry.utils.isNewerVersion(game.modules.get('dice-so-nice').version, '5.0.5') ? 'bronze01' : game.settings.get('CoC7', 'tenDieBonus')) + ']'
           : '+1dt'
         ).repeat(Math.abs(bonusDice))
       )

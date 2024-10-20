@@ -135,6 +135,7 @@
   "CoC7.Initiative": "Initiative",
 
   "CoC7.Cast": "Ausführen",
+  "CoC7.CastHidden": "Versteckt ausführen",
   "CoC7.SanityCost": "Stabilitätskosten",
   "CoC7.PowerCost": "Manakosten",
   "CoC7.HitPointsCost": "Trefferpunktekosten",
@@ -433,9 +434,18 @@
   "CoC7.RangedSpecializationName": "Fernkampf",
   "CoC7.DriveSpecializationName": "Fahren",
   "CoC7.PilotSpecializationName": "Steuern",
-  "CoC7.AnySpecName": "Eine",
+  "CoC7.LanguageSpecializationName": "Sprache",
+  "CoC7.AnySpecName": "Beliebig",
   "CoC7.BoutOfMadnessName": "Anfall von Wahnsinn",
   "CoC7.InsanityName": "Wahnsinn",
+
+  "CoC7.SkillNameHandgun": "Handfeuerwaffe",
+  "CoC7.SkillNameRifle": "Gewehr",
+  "CoC7.SkillNameShotgun": "Schrotflinte",
+  "CoC7.SkillNameRifleShotgun": "Gewehr/Flinte",
+  "CoC7.SkillNameSmb": "Maschinenpistole",
+  "CoC7.SkillNameMachinGun": "Maschinengewehr",
+  "CoC7.SkillNameLaunch": "Abfeuern",
 
   "CoC7.NewSkillName": "neue Fertigkeit",
   "CoC7.AddSkill": "Fertigkeit hinzufügen",
@@ -598,6 +608,8 @@
   "CoC7.IntCheck": "Ideenwurf",
   "CoC7.NoSanLoss": "Kein Stabilitätsverlust",
   "CoC7.SANLoss": "Stabilitätsverlust",
+  "CoC7.SANLossPass": "Geschafft",
+  "CoC7.SANLossFail": "Misslungen",
   "CoC7.SanityCheckPerformed": "Du warst einem traumatischen Ereignis ausgesetzt.",
   "CoC7.InvoluntaryActionPerformed": "Du hast für einen Moment die Selbstbeherrschung verloren.",
   "CoC7.SanityLost": "verlorene Stabilitätspunkte",
@@ -971,6 +983,7 @@
   "CoC7.German": "Deutsch",
   "CoC7.Polish": "Polnisch",
   "CoC7.TraditionalChinese": "Traditionelles Chinesisch",
+  "CoC7.Japanese": "Japanisch",
   "CoC7.SelectSourceLanguage": "Wähle die Originalsprache aus",
   "CoC7.ImportedUnnamedCharacter": "Importiere unbenannten Charakter",
   "CoC7.CreatedImportedCharactersFolder": "Erzeuge \"Importierte Charaktere\" Ordner",
@@ -1118,6 +1131,8 @@
   "SETTINGS.PulpRulesHint": "BETA IMPLEMENTIERUNGSPHASE:<br>Erlaube die Verwendung der Pulp-Cthulhu Regeln (Archetypen, Talente, Lebensenergie)",
   "SETTINGS.developmentRollForLuck": "Glückspunkte wiederherstellem",
   "SETTINGS.developmentRollForLuckHint": "Jeder Spieler darf in der Entwicklungsphase einen Verbesserungswurf auf seine Glückspunkte machen",
+  "SETTINGS.allowMythosHardenedTitle": "Mythos-gestählt",
+  "SETTINGS.allowMythosHardenedHint": "Erlaube die verringerung von Stabilitätsverlusten bei Mythos-Gestähltheit.",
   "SETTINGS.displayPlayerNameOnSheet": "Spielernamen auf Charakterblatt darstellen",
   "SETTINGS.DisregardAmmo": "Munitionsmenge ignorieren",
   "SETTINGS.DisregardAmmoHint": "Die Aktivierung wird die Menge der in der Waffe geladenen Kugeln ignorieren.",
@@ -1314,15 +1329,25 @@
   "CoC7.CoCIDFlag.error.documents-not-found": "Keine Dokumente mit passender CoC ID ({cocids}), Sprache \"{lang}\", und Ära \"{era}\" in der Welt oder Kompendien gefunden. Bitte überprüfe deine Ära in den Welteinstellungen.",
 
   "CoC7.CoCIDBatch.title": "Batch setzen System ID (CoC ID)",
-  "CoC7.CoCIDBatch.summary": "Das CoC7 System hat eine neue System ID (CoC ID) eingeführt. Dies erlaubt dem System FoundryVTT-Dokumente (z.B. Fertigkeiten) zu identifizieren. Diese Seite erlmöglicht dir die ID für existierende Dokumente {type} zu setzen. Die System ID sollte die Englische Übersetzung des Namens verwenden, um Lokalisierung für alle Sprachen zu ermöglichen.",
+  "CoC7.CoCIDBatch.summary": "Das CoC7 System hat eine neue System ID (CoC ID) eingeführt. Dies erlaubt dem System FoundryVTT-Dokumente (z.B. Fertigkeiten) zu identifizieren. Diese Seite ermöglicht dir die ID für existierende Dokumente {type} zu setzen. Die System ID sollte die Englische Übersetzung des Namens verwenden, um Lokalisierung für alle Sprachen zu ermöglichen.",
+  "CoC7.ActorCoCIDItemsBest": "CoC ID: Figur Gegenstand Austausch",
+  "CoC7.ActorCoCIDItemsWarning": "Diese Aktion kann nicht rückgängig gemacht werden! Bitte sichere die Spielwelt, bevor die Figuren aktualisiert werden.",
+  "CoC7.ActorCoCIDItemsWhich": "Prüfe die CoC ID der Gegenstände in aktiven Kompendien, Weltkompendien und Gegenstandsverzeichnissen, um die Gegenstände der Figur mit ihrer besten Entsprechung auszutauschen.",
+  "CoC7.ActorCoCIDItemsRules1": "Gegenstände müssen mit der gegenwärtigen Ära \"{era}\" übereinstimmen oder dürfen keiner zugeordnet sein.",
+  "CoC7.ActorCoCIDItemsRules2": "Gegenstände werden geprüft ob sie der Sprache \"{lang}\" oder \"English\" entsprechen, falls kein übersetzter Gegenstand existiert.",
+  "CoC7.ActorCoCIDItemsRules3": "Wähle den Gegenstand mit der höchsten Priorität.",
+  "CoC7.ActorCoCIDItemsSceneTokens": "Aktualisiere alle Tokens in der Szene.",
+  "CoC7.ActorCoCIDItemsUnlinkedToken": "Aktualisiere zuerst für jedes Token die nicht verknüpften Figuren im Verzeichnis.",
+  "CoC7.ActorCoCIDItemsActorSheets": "Aktualisiere geöffnete Charakterbögen.",
+  "CoC7.ActorCoCIDItemsActorDirectory": "Aktualisiere alle Figuren im Verzeichnis.",
+  "CoC7.ActorCoCIDItemsUpdate": "Aktualisieren",
 
   "CoC7.TokenCreationRoll.Title": "Auswürfelbare Werte erkannt",
   "CoC7.TokenCreationRoll.Prompt": "Dieses Token hat auswürfelbare Attribute oder Fertigkeiten.<br>Was möchtest du tun?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Alle würfeln",
   "CoC7.TokenCreationRoll.ButtonAverage": "Mittelwerte verwenden",
-  "CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
-  "CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
-
+  "CoC7.TokenCreationRoll.Rolled": "{name} Eigenschaft und Fertigkeit gewürfelt.",
+  "CoC7.TokenCreationRoll.Averaged": "{name} Eigenschaft und Fertigkeit im Durchschnitt.",
 
   "CoC7.RealRollDecaderPlaceholderName": "10's",
 
@@ -1338,5 +1363,6 @@
   "CoC7.ErrorRollAlreadyCompleted": "Der Wurf wurde bereits abgeschlossen",
   "CoC7.ErrorNoActorPermission": "Du besitzt diese Figur nicht",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "Du kannst nicht mehr als eine Figur in einem gemeinsamen Wurf einsetzen",
-  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Ein gegenüberstellender Wurf benötigt zwei Figuren"
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Ein gegenüberstellender Wurf benötigt zwei Figuren",
+  "CoC7.PauseName": "Zeitstopp"
 }

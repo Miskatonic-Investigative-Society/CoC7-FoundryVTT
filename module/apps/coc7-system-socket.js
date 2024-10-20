@@ -1,4 +1,4 @@
-/* global fromUuid, game, ui */
+/* global fromUuid, game, NotesLayer, ui */
 import { CoC7GroupMessage } from './coc7-group-message.js'
 import { CoC7InvestigatorWizard } from './investigator-wizard.js'
 import { CoC7Utilities } from '../utilities.js'
@@ -53,6 +53,9 @@ export class CoC7SystemSocket {
       switch (data.type) {
         case 'updateChar':
           CoC7Utilities.updateCharSheets()
+          break
+        case 'toggleMapNotes':
+          game.settings.set('core', NotesLayer.TOGGLE_SETTING, data.toggle === true)
           break
       }
     }

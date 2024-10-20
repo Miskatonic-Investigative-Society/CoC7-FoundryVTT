@@ -5,6 +5,7 @@ import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
 import { CoC7Check } from '../../check.js'
 import { CoC7ContentLinkDialog } from '../../apps/coc7-content-link-dialog.js'
 import { COC7 } from '../../config.js'
+import { CoCActor } from '../../actors/actor.js'
 import { CoC7Item } from '../../items/item.js'
 import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js'
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js'
@@ -1832,6 +1833,19 @@ export class CoC7ActorSheet extends ActorSheet {
       ui.notifications.warn(
         game.i18n.format('CoC7.EffectAppliedCantOverride', { name })
       )
+    }
+
+    if (this.object.img !== formData.img && (this.object.token ?? this.object.prototypeToken).texture.src === CoCActor.defaultImg(this.object.type)) {
+      // Image was changed and it was the default, so also update the token image
+      if (this.object.token) {
+        this.object.token.update({
+          'texture.src': formData.img
+        })
+      } else {
+        this.object.prototypeToken.update({
+          'texture.src': formData.img
+        })
+      }
     }
 
     if (event.currentTarget) {

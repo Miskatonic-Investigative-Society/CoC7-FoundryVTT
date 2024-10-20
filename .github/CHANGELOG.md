@@ -9,6 +9,28 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.0
+
+**_!! FoundryVTT v10 is no longer supported !!_**
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add placeholders for SAN loss to localization, thanks to @lozanoje #1587
+- Allow weapon ranges to be based on characteristics
+- Explicitly set FoundryVTT v12 version of grid values, thanks to @Vicnasc #1564
+- Fix compendium filtering
+- Fix db/2 calculation, thanks to @lozanoje #1601
+- Fix ranged weapons not adding DB/2
+- Preparing the system for upcoming premium content.
+- Workaround for DsN 5.0.0 to 5.0.5 bonus dice, replace bronze dice withl bronze01 dice
+- Update CoC ID functionality as per ticket #1584
+- Update token art if default and the actor image is changed
+- Update to French localization, thanks to @vonv #1580, #1581, and #1595
+- Update to German localization, thanks to @MrViso #1596
+- Update to Japanese localization, thanks to @doumoku #1586 and #1591
+- Update to Polish localization, thanks to @everyonecancode #1598
+- Update to Spanish localization, thanks to @lozanoje #1587
+
 ## Version 0.10.19
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

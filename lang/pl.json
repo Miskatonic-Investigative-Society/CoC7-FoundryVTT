@@ -390,12 +390,13 @@
   "CoC7.SkillCombat": "Walka",
   "CoC7.SkillFighting": "Walka Wręcz",
   "CoC7.SkillFirearm": "Broń Palna",
+  "CoC7.SkillRanged": "Zasięgowa",
   "CoC7.SkillRequiresName": "Wymaga nazwy",
   "CoC7.SkillKeepBaseValue": "Użyj podstawowej wartości",
   "CoC7.SkillPickNameOnly": "Wybierz specjalizację",
   "CoC7.SkillSpecializationIsUnique": "Unikalna specjalizacja",
 
-  "CoC7.WeaponRngd": "Zasięgowy",
+  "CoC7.WeaponRngd": "Zasięgowa",
   "CoC7.WeaponProperyManeuver": "Manewr",
   "CoC7.WeaponTouch": "Uderzenie",
   "CoC7.WeaponImpl": "Przebijający",
@@ -430,6 +431,7 @@
   "CoC7.FightingSpecializationName": "Walka Wręcz",
   "CoC7.UnarmedWeaponName": "Nieuzbrojony",
   "CoC7.FirearmSpecializationName": "Broń Palna",
+  "CoC7.RangedSpecializationName": "Zasięgowa",
   "CoC7.DriveSpecializationName": "Prowadzenie",
   "CoC7.PilotSpecializationName": "Pilotowanie",
   "CoC7.LanguageSpecializationName": "Język",
@@ -557,11 +559,18 @@
   "CoC7.MonetaryFormatLsd": "£sd",
   "CoC7.MonetaryFormatRoman": "Rzymskie",
   "CoC7.MonetaryDefaultPenniless": "Ubogi",
+  "CoC7.MonetaryDefaultDestitute": "Nędzarz",
   "CoC7.MonetaryDefaultPoor": "Biedny",
   "CoC7.MonetaryDefaultAverage": "Przeciętnie majętny",
+  "CoC7.MonetaryDefaultLower": "Klasa niższa",
+  "CoC7.MonetaryDefaultMiddle": "Wschodząca klasa średnia / Rozpoczynający profesjonalista",
   "CoC7.MonetaryDefaultWealthy": "Zamożny",
+  "CoC7.MonetaryDefaultEstablished": "Biedna szlachta / Ugruntowany profesjonalista",
+  "CoC7.MonetaryDefaultProfessional": "Przeciętna szlachta / Bogaty profesjonalista",
+  "CoC7.MonetaryDefaultGentry": "Bogata szlachta",
   "CoC7.MonetaryDefaultRich": "Bogaty",
   "CoC7.MonetaryDefaultSuperRich": "Krezus",
+  "CoC7.MonetaryDefaultAristocracy": "Arystokrata",
 
   "CoC7.PossessionsNotes": "Notatki :",
   "CoC7.PossessionsNotesHolder": "Notatki",
@@ -591,7 +600,7 @@
   "CoC7.SanityLossEncounter": "Spotkanie z dziwnymi istotami",
   "CoC7.SanityLossImmunity": "Odporność na Utratę Poczytalności",
 
-  "CoC7.creatureFightingSkill": "Walka Wręcz",
+  "CoC7.creatureFightingSkill": "Walka",
 
   "CoC7.InvoluntaryAction": "Mimowolne działanie",
   "CoC7.InvoluntaryActionPerfomed": "Wykonano mimowolne działanie",
@@ -599,6 +608,8 @@
   "CoC7.IntCheck": "Test Inteligencji",
   "CoC7.NoSanLoss": "Nie utracono Poczytalności",
   "CoC7.SANLoss": "Poczytalność Utracona",
+  "CoC7.SANLossPass": "sukces",
+  "CoC7.SANLossFail": "porażka",
   "CoC7.SanityCheckPerformed": "Zostałeś wystawiony na traumatyczne wydarzenie.",
   "CoC7.InvoluntaryActionPerformed": "Na chwilę straciłeś kontrolę nad sobą.",
   "CoC7.SanityLost": "Stracono punkty poczytalności",
@@ -1319,7 +1330,18 @@
 
   "CoC7.CoCIDBatch.title": "Ustawienia System ID (CoC ID)",
   "CoC7.CoCIDBatch.summary": "System CoC7 wprowadził CoC ID. Pozwala ono na identyfikowanie dokumentów FoundryVTT, na przykład umiejętności. Ta strona pozwala na ustawienie identyfikatorów dla istniejących dokumentów typu \"{type}\". ID powinno używać angielskiej wersji nazw, żeby umożliwić poprawną lokalizację",
-
+  "CoC7.ActorCoCIDItemsBest": "CoC ID: Podmiana przedmiotów postaci",
+  "CoC7.ActorCoCIDItemsWarning": "Ta akcja nie może zostać cofnięta. Stwórz kopię zapasową świata przed aktualizacją",
+  "CoC7.ActorCoCIDItemsWhich": "Poszukaj CoC ID w aktywnym kompendium, kompediach świata oraz katalogu przedmiotów podmieniając przedmioty postaci korzystając z następujących reguł",
+  "CoC7.ActorCoCIDItemsRules1": "Predmiot musi mieć erę \"{era}\" lub mieć zaznaczone ery",
+  "CoC7.ActorCoCIDItemsRules2": "Sprawdź przedmioty w języku \"{lang}\" lub \"Angielskim\" jeśli nie istnieje przetłumaczony przedmiot",
+  "CoC7.ActorCoCIDItemsRules3": "Wybierz przedmiot z najwyższym priorytetem",
+  "CoC7.ActorCoCIDItemsSceneTokens": "Zaktualizuj wszystkie tokeny w aktywnej scenie",
+  "CoC7.ActorCoCIDItemsUnlinkedToken": "Zaktualizuj niepodłączone postacie w folderze dla każdego tokena",
+  "CoC7.ActorCoCIDItemsActorSheets": "Zaktualizuj otwartą kartę postaci",
+  "CoC7.ActorCoCIDItemsActorDirectory": "Zaktualizuj wszystkie postacie w foldere",
+  "CoC7.ActorCoCIDItemsUpdate": "Aktualizuj",
+  
   "CoC7.TokenCreationRoll.Title": "Wykryto formuły rzutów",
   "CoC7.TokenCreationRoll.Prompt": "Token ma formuły rzutów na cechy i/lub umiejętności.<br>Co chcesz zrobić?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Rzucaj koścmi",
@@ -1327,9 +1349,12 @@
   "CoC7.TokenCreationRoll.Rolled": "Charakterystyki i umiejętności dla {name} zostały wylosowane",
   "CoC7.TokenCreationRoll.Averaged": "Charakterystyki i umiejętności dla {name} zostały uśrednione",
 
+  "CoC7.RealRollDecaderPlaceholderName": "10tka",
+
   "CoC7.Temporary": "Tymczasowy",
   "CoC7.Passive": "Pasywny",
   "CoC7.Inactive": "Nieaktywny",
+  "CoC7.Suppressed": "Stłumiony",
   "CoC7.Unavailable": "Niedostępny",
 
   "CoC7.PickWhichActorTitle": "Wybierz za kogo rzucić",
@@ -1338,5 +1363,6 @@
   "CoC7.ErrorRollAlreadyCompleted": "Ten rzut został już rozwiązany",
   "CoC7.ErrorNoActorPermission": "Nie jesteś właścicielem tego aktora",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "Nie możesz użyć więcej niż jednego aktora w rzucie łączonym",
-  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Rzut przeciwstawny wymaga dwóch aktorów"
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Rzut przeciwstawny wymaga dwóch aktorów",
+  "CoC7.PauseName": "Pauza"
 }

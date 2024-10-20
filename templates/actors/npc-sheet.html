@@ -230,13 +230,13 @@
             <div class="san-check flexrow" style="flex: 8; font-size: 12px;" draggable="true" data-context-menu="san-loss-roll" data-target-type="san-check">
               <label class="roll-san rollable" style="text-align: right;" title="{{ localize 'CoC7.SanRollHint'}}">{{ localize "CoC7.SANLoss" }} :</label>
               {{#if data.system.flags.locked}}
-                <span class="san-value pass flex1" style="line-height: 22px;padding-left: 2px; text-align: right;" placeholder="pass">{{data.system.special.sanLoss.checkPassed}}</span>
+                <span class="san-value pass flex1" style="line-height: 22px;padding-left: 2px; text-align: right;" placeholder="{{localize 'CoC7.SANLossPass'}}">{{data.system.special.sanLoss.checkPassed}}</span>
                 <span class="flex0" style="line-height: 22px;">/</span>
-                <span class="san-value failed flex1" style="line-height: 22px;padding-left: 2px;" placeholder="fail">{{data.system.special.sanLoss.checkFailled}}</span>
+                <span class="san-value failed flex1" style="line-height: 22px;padding-left: 2px;" placeholder="{{localize 'CoC7.SANLossFail'}}">{{data.system.special.sanLoss.checkFailled}}</span>
               {{else}}
-                <input class="san-value flex1" style="text-align: right;" type="text" name="system.special.sanLoss.checkPassed" value="{{data.system.special.sanLoss.checkPassed}}" data-dtype="String" placeholder="pass">
+                <input class="san-value flex1" style="text-align: right;" type="text" name="system.special.sanLoss.checkPassed" value="{{data.system.special.sanLoss.checkPassed}}" data-dtype="String" placeholder="{{localize 'CoC7.SANLossPass'}}">
                 <span class="flex0" style="line-height: 22px;">/</span>
-                <input class="san-value flex1" type="text" name="system.special.sanLoss.checkFailled" value="{{data.system.special.sanLoss.checkFailled}}" data-dtype="String" placeholder="fail">
+                <input class="san-value flex1" type="text" name="system.special.sanLoss.checkFailled" value="{{data.system.special.sanLoss.checkFailled}}" data-dtype="String" placeholder="{{localize 'CoC7.SANLossFail'}}">
               {{/if}}
             </div>
             <div class="flex1"></div>

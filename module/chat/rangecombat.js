@@ -12,8 +12,7 @@ export class CoC7RangeInitiator {
     this.cover = false
     this.surprised = false
     this.autoSuccess = false
-    this.advantage = false
-    this.disadvantage = false
+    this.diceModifier = 0
     this.messageId = null
     this.targetCard = null
     this.rolled = false
@@ -30,8 +29,11 @@ export class CoC7RangeInitiator {
       target.token = t
       this._targets.push(target)
     }
-    if (this._targets.length) this._targets[0].active = true
-    else {
+    if (this._targets.length) {
+      this._targets = [this._targets[0]]
+      // temporarily only allow one target
+      this._targets[0].active = true
+    } else {
       const target = new CoC7RangeTarget()
       target.active = true
       this._targets.push(target)
@@ -43,8 +45,11 @@ export class CoC7RangeInitiator {
       if (itemId) {
         const weapon = actor.items.get(itemId)
         if (weapon) {
-          if (this.weapon.singleShot) this.singleShot = true
-          else if (this.weapon.system.properties.auto) this.fullAuto = true
+          if (this.weapon.singleShot) {
+            this.singleShot = true
+          } else if (this.weapon.system.properties.auto) {
+            this.fullAuto = true
+          }
         }
       }
     }
@@ -297,6 +302,14 @@ export class CoC7RangeInitiator {
     }
   }
 
+  get calculatedBonusDice () {
+    return (this._calculatedModifier > 2 ? this._calculatedModifier : 0)
+  }
+
+  get calculatedPenaltyDice () {
+    return (this._calculatedModifier < -2 ? -this._calculatedModifier : 0)
+  }
+
   shotDifficulty (t = null) {
     const target = t || this.activeTarget
     let damage = this.weapon.system.range.normal.damage
@@ -304,18 +317,17 @@ export class CoC7RangeInitiator {
       if (t.longRange) damage = this.weapon.system.range.long.damage
       if (t.extremeRange) damage = this.weapon.system.range.extreme.damage
     }
-    let modifier = target.modifier
+    let modifier = parseInt(this.diceModifier, 10) + parseInt(target.modifier, 10)
     let difficulty
     this.weapon.system.properties.shotgun
       ? (difficulty = 1)
       : (difficulty = target.difficulty)
     let difficultyName = ''
     if (this.aiming && this.currentShotRank === 1) modifier++
-    if (this.advantage) modifier++
-    if (this.disadvantage) modifier--
     if (this.reload) modifier--
     if (this.multipleShots && !this.fullAuto) modifier--
     if (this.fullAuto) modifier -= this.currentShotRank - 1
+    this._calculatedModifier = modifier
     if (modifier < -2) {
       const excess = Math.abs(modifier + 2)
       difficulty += excess
@@ -323,6 +335,8 @@ export class CoC7RangeInitiator {
         difficulty = CoC7Check.difficultyLevel.impossible
       }
       modifier = -2
+    } else if (modifier > 2) {
+      modifier = 2
     }
 
     if (CoC7Check.difficultyLevel.regular === difficulty) {
@@ -421,6 +435,10 @@ export class CoC7RangeInitiator {
     return 'systems/CoC7/templates/chat/combat/range-initiator.html'
   }
 
+  get diceModifierDisplay () {
+    return Math.max(-2, Math.min(2, parseInt(this.diceModifier, 10)))
+  }
+
   async createChatCard () {
     this.calcTargetsDifficulty()
     const html = await renderTemplate(this.template, this)
@@ -486,6 +504,23 @@ export class CoC7RangeInitiator {
       this.burst = !this.burst
     } else {
       this[flag] = !this[flag]
+    }
+    switch (flag) {
+      case 'aiming':
+        if (this.currentShotRank === 1) {
+          this.diceModifier = parseInt(this.diceModifier, 10) + (this[flag] ? 1 : -1)
+        }
+        break
+      case 'multipleShots':
+        if (!this.fullAuto) {
+          this.diceModifier = parseInt(this.diceModifier, 10) + (this[flag] ? -1 : 1)
+        }
+        break
+      case 'fullAuto':
+        if (!this.fullAuto) {
+          this.diceModifier = parseInt(this.diceModifier, 10) + (this[flag] ? -(this.currentShotRank - 1) : (this.currentShotRank - 1))
+        }
+        break
     }
   }
 
@@ -716,6 +751,12 @@ export class CoC7RangeInitiator {
       if (volleySize > 0) {
         let damageFormula = String(h.shot.damage)
         if (!damageFormula || damageFormula === '') damageFormula = '0'
+        if (this.item.system.properties.addb) {
+          damageFormula = damageFormula + '+' + this.actor.db
+        }
+        if (this.item.system.properties.ahdb) {
+          damageFormula = damageFormula + '+ceil(' + this.actor.db + '/2)'
+        }
         const damageDie = CoC7Damage.getMainDie(damageFormula)
         const maxDamage = new Roll(damageFormula)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
         const criticalDamageFormula = this.weapon.impale
@@ -752,10 +793,20 @@ export class CoC7RangeInitiator {
           await roll.evaluate({ async: true })
           await CoC7Dice.showRollDice3d(roll)
           /*****************/
+          const dice = []
+          for (const die of roll.dice) {
+            for (const result of die.results) {
+              dice.push({
+                faces: die.faces,
+                result: result.result
+              })
+            }
+          }
           damageRolls.push({
             formula: damageFormula,
             total: roll.total,
             die: damageDie,
+            dice,
             critical: false
           })
           total += roll.total
@@ -766,10 +817,20 @@ export class CoC7RangeInitiator {
           await roll.evaluate({ async: true })
           await CoC7Dice.showRollDice3d(roll)
           /*****************/
+          const dice = []
+          for (const die of roll.dice) {
+            for (const result of die.results) {
+              dice.push({
+                faces: die.faces,
+                result: result.result
+              })
+            }
+          }
           damageRolls.push({
             formula: criticalDamageFormula,
             total: roll.total,
             die: criticalDamageDie,
+            dice,
             critical: true
           })
           total += roll.total
