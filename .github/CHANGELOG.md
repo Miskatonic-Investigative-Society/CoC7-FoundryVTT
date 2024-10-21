@@ -9,6 +9,12 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.1
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix FoundryVTT v11 breaking issue
+
 ## Version 7.0
 
 **_!! FoundryVTT v10 is no longer supported !!_**
