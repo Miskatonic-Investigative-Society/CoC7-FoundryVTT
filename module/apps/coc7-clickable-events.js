@@ -1,8 +1,16 @@
 /* global canvas, CONFIG, CONST, DocumentSheetConfig, foundry, fromUuid, game, NotesLayer, RegionBehavior, TokenLayer */
-const { RegionBehaviorType } = foundry.data.regionBehaviors
+const { RegionBehaviorType } = foundry.data.regionBehaviors ?? {} // FoundryVTT v11
 
-export default class CoC7ClickableEvents extends RegionBehaviorType {
+// FoundryVTT v11
+const RegionBehaviorTypeClass = (typeof RegionBehaviorType === 'undefined' ? class {} : RegionBehaviorType)
+
+export default class CoC7ClickableEvents extends RegionBehaviorTypeClass {
   static initSelf () {
+    // FoundryVTT v11
+    if (!foundry.utils.isNewerVersion(game.version, '12')) {
+      return
+    }
+
     Object.assign(CONFIG.RegionBehavior.dataModels, {
       coc7ClickableEvents: CoC7ClickableEvents
     })
