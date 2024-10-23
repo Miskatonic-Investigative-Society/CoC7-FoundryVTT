@@ -1228,7 +1228,7 @@
   "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "遠隔攻撃を開始する時、戦闘マップを使用しない場合に距離計算メッセージを表示しない。",
 
   "CoC7.getTheExample": "例をコピー",
-  "CoC7.Copied": "例をクリップボードにコピー",
+  "CoC7.Copied": "例をクリップボードにコピーしました",
 
   "CoC7.EffectNew": "新規エフェクト",
   "CoC7.EffectAppliedCantOverride": "エフェクトが適用されています。[{name}]を変更できません。この値を変更するには対応するエフェクトを無効化してください。",
@@ -1330,6 +1330,17 @@
 
   "CoC7.CoCIDBatch.title": "システムID (CoC ID)をバッチ適用",
   "CoC7.CoCIDBatch.summary": "CoC7システムはシステムID (CoC ID)を導入しました。これによりシステムがFvttドキュメントから技能の例を認識できます。このページであなたは存在する{type}ドキュメントにidを設定できます。システムIDはすべての言語翻訳をサポートするために、英語版の名称を使用されるべきです。",
+  "CoC7.ActorCoCIDItemsBest": "CoC ID: アクター内アイテムの置換",
+  "CoC7.ActorCoCIDItemsWarning": "この動作は元に戻せません。アクターを更新する前に、ワールドをバックアップしてください",
+  "CoC7.ActorCoCIDItemsWhich": "アイテムのCoC IDを有効化されている辞典、ワールド辞典、アイテムディレクトリ内で確認し、アクターのアイテムをこれらの規則に従う最適なものに入れ替えます",
+  "CoC7.ActorCoCIDItemsRules1": "現在設定されている時代「{era}」に一致しているか、時代が選択されていないアイテム",
+  "CoC7.ActorCoCIDItemsRules2": "言語「{lang}」に一致するアイテムを確認します。翻訳されたアイテムが存在しないなら「英語」の者を選択します",
+  "CoC7.ActorCoCIDItemsRules3": "最も高い優先度のアイテムを選択",
+  "CoC7.ActorCoCIDItemsSceneTokens": "このシーンのコマをすべて更新",
+  "CoC7.ActorCoCIDItemsUnlinkedToken": "ディレクトリ内のリンクされていないアクターを優先して更新",
+  "CoC7.ActorCoCIDItemsActorSheets": "開いているアクターシートを更新",
+  "CoC7.ActorCoCIDItemsActorDirectory": "ディレクトリ内のアクターをすべて更新",
+  "CoC7.ActorCoCIDItemsUpdate": "更新",
 
   "CoC7.TokenCreationRoll.Title": "ロール可能を検知",
   "CoC7.TokenCreationRoll.Prompt": "このコマはロール可能な能力値か技能があります。<br>どうしますか？",
@@ -1337,7 +1348,6 @@
   "CoC7.TokenCreationRoll.ButtonAverage": "すべて平均値",
   "CoC7.TokenCreationRoll.Rolled": "{name} の能力値と技能がロールされた",
   "CoC7.TokenCreationRoll.Averaged": "{name} の能力値と技能に平均値が使用された",
-
 
   "CoC7.RealRollDecaderPlaceholderName": "10's",
 
@@ -1354,4 +1364,11 @@
   "CoC7.ErrorNoActorPermission": "あなたはこのアクターの所有者ではない",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "複合ロールでは１人より多いアクターは参加できない",
   "CoC7.ErrorOpposedRollsLimitedToTwoActors": "対抗カードには２名のアクターが必要"
+  "CoC7.PauseName": "Time Stop",
+
+  "CoC7.ClickableEvents.MouseOver.Title": "クリックの許可",
+  "CoC7.ClickableEvents.MouseOver.Hint": "クリック許可とマウスカーソル表示にbooleanを返す",
+  "CoC7.ClickableEvents.LeftClick.Title": "左クリックのスクリプト",
+  "CoC7.ClickableEvents.RightClick.Title": "右クリックのスクリプト",
+  "TYPES.RegionBehavior.coc7ClickableEvents": "クリック可能なイベント"
 }
