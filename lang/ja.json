@@ -1209,7 +1209,7 @@
   "SETTINGS.TokenDropMode": "NPC作成時 :",
   "SETTINGS.TokenDropModeHint": "ロール可能な能力値や技能をもつNPCをシーンにドロップした時のデフォルト処理を決定する。",
   "SETTINGS.TokenDropModeAsk": "選択肢を表示",
-  "SETTINGS.TokenDropModeRoll": "手動でロール",
+  "SETTINGS.TokenDropModeRoll": "可能ならロールする",
   "SETTINGS.TokenDropModeAverage": "平均値を使用",
   "SETTINGS.TokenDropModeIgnore": "何もしない",
   "SETTINGS.EnableStatusIcons": "状態アイコンを有効化",
