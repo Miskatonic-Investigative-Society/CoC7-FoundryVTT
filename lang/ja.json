@@ -142,7 +142,7 @@
   "CoC7.MagicPointsCost": "MPコスト",
   "CoC7.OtherCosts": "その他のコスト",
   "CoC7.CastingSpell": "<i>{spell}</i> 呪文を詠唱。",
-  "CoC7.NotEnoughMagicPoints": "{spell} 呪文のコストとしてMPが{originalMagicPoints}ポイント必要だ。だが今君のMPは{actorMagicPoints}ポイントしかなく、不足分である{convertedHitPoints}ポイントのコストを、君の耐久力から支払うことが可能だ。そうしたなら、{convertedHitPoints} ダメージを受ける。",
+  "CoC7.NotEnoughMagicPoints": "{spell} 呪文のコストとしてMPが{originalMagicPoints}ポイント必要だ。今君には{actorMagicPoints}ポイントのMPしかないが、不足分である{convertedHitPoints}ポイントのコストを、君の耐久力から支払うことが可能だ。そうしたなら、{convertedHitPoints} ダメージを受ける。",
 
   "CoC7.CopyToClipboard": "クリップボードにコピー",
   "CoC7.WhisperToSelection": "選択したコマに秘匿送信",
@@ -218,7 +218,7 @@
   "CoC7.RollDifficultyExtremeTitle": "イクストリームの難易度",
   "CoC7.RollDifficultyCritical": "クリティカル",
   "CoC7.RollDifficultyCriticalTitle": "クリティカルの難易度",
-  "CoC7.RollResult.LuckSpendText": "{luckAmount} の幸運を消費して {successLevel} 成功した",
+  "CoC7.RollResult.LuckSpendText": "{luckAmount}ポイントの幸運を消費して{successLevel}成功した",
   "CoC7.RollDice": "ロール !",
   "CoC7.CreateLink": "リンク作成",
   "CoC7.SuccesLevelHint": "成功レベル {value}",
@@ -309,8 +309,8 @@
   "CoC7.BulletsFired": "発砲済み",
   "CoC7.Shots": "ラウンドの発砲回数",
   "CoC7.Shoot": "射撃",
-  "CoC7.ShotBullets": "{actor} に {bullets}弾を撃った。",
-  "CoC7.ShotVoley": "{actor} に {bullets}弾を斉射した。",
+  "CoC7.ShotBullets": "{actor} に {bullets}発撃った。",
+  "CoC7.ShotVoley": "{actor} に {bullets}発を斉射した。",
   "CoC7.rangeCombatCard.AimingTitle": "ボーナス･ダイス1個。狙いを定めた最初の射撃",
   "CoC7.rangeCombatCard.CoverTitle": "ペナルティー･ダイス1個。目標が掩蔽にいるか､掩蔽への飛び込みに成功した。",
   "CoC7.rangeCombatCard.PointBlankRangeTitle": "ボーナス･ダイス1個。ゼロ射程の対象",
@@ -450,7 +450,7 @@
   "CoC7.NewSkillName": "新しい技能",
   "CoC7.AddSkill": "技能追加",
   "CoC7.CleanSkillList": "技能リスト非表示",
-  "CoC7.CleanSkillListHint": "<p>これにより技能から専門分野を非表示できる。</p> <p>技能を次のように表示しない。 : '専門分野(専門分野(技能))'</p>",
+  "CoC7.CleanSkillListHint": "<p>これにより技能から専門分野を非表示できる。</p><p>技能を次のように表示しない。 : '専門分野(専門分野(技能))'</p>",
   "CoC7.DevelopemmentPhase": "探索者成長フェイズの自動技能成長",
   "CoC7.RecoverLuckPoints": "幸運の回復",
   "CoC7.SkillCantGainXp": "経験で成長しない技能",
@@ -1209,7 +1209,7 @@
   "SETTINGS.TokenDropMode": "NPC作成時 :",
   "SETTINGS.TokenDropModeHint": "ロール可能な能力値や技能をもつNPCをシーンにドロップした時のデフォルト処理を決定する。",
   "SETTINGS.TokenDropModeAsk": "選択肢を表示",
-  "SETTINGS.TokenDropModeRoll": "手動でロール",
+  "SETTINGS.TokenDropModeRoll": "可能ならロールする",
   "SETTINGS.TokenDropModeAverage": "平均値を使用",
   "SETTINGS.TokenDropModeIgnore": "何もしない",
   "SETTINGS.EnableStatusIcons": "状態アイコンを有効化",
@@ -1228,7 +1228,7 @@
   "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "遠隔攻撃を開始する時、戦闘マップを使用しない場合に距離計算メッセージを表示しない。",
 
   "CoC7.getTheExample": "例をコピー",
-  "CoC7.Copied": "例をクリップボードにコピー",
+  "CoC7.Copied": "例をクリップボードにコピーしました",
 
   "CoC7.EffectNew": "新規エフェクト",
   "CoC7.EffectAppliedCantOverride": "エフェクトが適用されています。[{name}]を変更できません。この値を変更するには対応するエフェクトを無効化してください。",
@@ -1262,13 +1262,13 @@
   "CoC7.InvestigatorWizard.QuickFireValues": "連続して能力値をロール",
   "CoC7.InvestigatorWizard.Setups": "キャラクターシート",
   "CoC7.InvestigatorWizard.Characteristics": "能力値の数値",
-  "CoC7.InvestigatorWizard.SetupCounts": "あなたは {count} のセットアップ選択肢がある。キャラクターシートにデフォルトの技能を指定するため、全プレイヤーに対し一つのセットアップ方法を選択ことが推奨される。 システムはCoC ID が指定されたデフォルトのセットアップが選ばれている。アイテムシートの設定ヘッダに有効な CoC IDの値を使用することで、 別のセットアップを追加できる。 この値が指定された辞典は自動的に選択肢に追加される。",
+  "CoC7.InvestigatorWizard.SetupCounts": "{count}件のセットアップ選択肢があります。キャラクターシートにデフォルトの技能を指定するために、全プレイヤーに対し一つのセットアップ方法を選択することが推奨されます。CoC IDが設定されたセットアップがシステムのデフォルトになっています。アイテムシートの設定ヘッダに有効なCoC IDの値を使用することで、別のセットアップを追加できます。この値が指定された辞典は自動的に選択肢に追加されます。",
   "CoC7.InvestigatorWizard.SetupSelect": "探索者のセットアップを選ぶ",
   "CoC7.InvestigatorWizard.SetupAny": "初期値無し",
   "CoC7.InvestigatorWizard.Occupations": "職業",
-  "CoC7.InvestigatorWizard.OccupationCounts": "あなたは {count} の職業がある。 システムはCoC ID が指定された職業がデフォルトになっている。アイテムシートの設定ヘッダに有効な CoC IDの値を使用することで、 別の職業を追加できる。 この値が指定された辞典は自動的に選択肢に追加される。",
+  "CoC7.InvestigatorWizard.OccupationCounts": " {count}件の職業があります。CoC IDが設定された職業がシステムのデフォルトになっています。アイテムシートの設定ヘッダに有効な CoC IDの値を使用することで、他の職業を追加できます。この値が指定された辞典は自動的に選択肢に追加されます。",
   "CoC7.InvestigatorWizard.Archetypes": "パルプ・アーキタイプ",
-  "CoC7.InvestigatorWizard.ArchetypeCounts": "あなたは {count} のアーキタイプがある。 システムはCoC ID が指定されたアーキタイプがデフォルトになっている。アイテムシートの設定ヘッダに有効な CoC IDの値を使用することで、 別のアーキタイプを追加できる。 この値が指定された辞典は自動的に選択肢に追加される。",
+  "CoC7.InvestigatorWizard.ArchetypeCounts": "{count}件のアーキタイプがあります。CoC IDが指定されたアーキタイプがシステムのデフォルトになっています。アイテムシートの設定ヘッダに有効な CoC IDの値を使用することで、他のアーキタイプを追加できます。この値が指定された辞典は自動的に選択肢に追加されます。",
   "CoC7.InvestigatorWizard.SetupPage": "時代を選択することでキャラクターシートの技能が設定される。",
   "CoC7.InvestigatorWizard.ArchetypePage": "あなたのキャラクターアーキタイプを選択することでキャラクターシートに追加の技能が設定される。",
   "CoC7.InvestigatorWizard.ArchetypeSelect": "アーキタイプを選択",
@@ -1306,7 +1306,7 @@
 
   "CoC7.CoCIDFlag.id": "ID",
   "CoC7.CoCIDFlag.title": "システムIDを編集 (CoC ID)",
-  "CoC7.CoCIDFlag.summary": "Set a group identifier that can be used to find the the most up to date version of this {type}. The System ID should use the English translation of the {type} to support localization across all languages.",
+  "CoC7.CoCIDFlag.summary": "Set a group identifier that can be used to find the most up to date version of this {type}. The System ID should use the English translation of the {type} to support localization across all languages.",
   "CoC7.CoCIDFlag.key": "System ID (CoC ID)",
   "CoC7.CoCIDFlag.keys.i.skill.drive-auto": "運転（自動車）",
   "CoC7.CoCIDFlag.keys.i.skill.dodge": "回避",
@@ -1330,6 +1330,17 @@
 
   "CoC7.CoCIDBatch.title": "システムID (CoC ID)をバッチ適用",
   "CoC7.CoCIDBatch.summary": "CoC7システムはシステムID (CoC ID)を導入しました。これによりシステムがFvttドキュメントから技能の例を認識できます。このページであなたは存在する{type}ドキュメントにidを設定できます。システムIDはすべての言語翻訳をサポートするために、英語版の名称を使用されるべきです。",
+  "CoC7.ActorCoCIDItemsBest": "CoC ID: アクター内アイテムの置換",
+  "CoC7.ActorCoCIDItemsWarning": "この動作は元に戻せません。アクターを更新する前に、ワールドをバックアップしてください",
+  "CoC7.ActorCoCIDItemsWhich": "アイテムのCoC IDを有効化されている辞典、ワールド辞典、アイテムディレクトリ内で確認し、アクターのアイテムをこれらの規則に従う最適なものに入れ替えます",
+  "CoC7.ActorCoCIDItemsRules1": "現在設定されている時代「{era}」に一致しているか、時代が選択されていないアイテム",
+  "CoC7.ActorCoCIDItemsRules2": "言語「{lang}」に一致するアイテムを確認します。翻訳されたアイテムが存在しないなら「英語」の者を選択します",
+  "CoC7.ActorCoCIDItemsRules3": "最も高い優先度のアイテムを選択",
+  "CoC7.ActorCoCIDItemsSceneTokens": "このシーンのコマをすべて更新",
+  "CoC7.ActorCoCIDItemsUnlinkedToken": "ディレクトリ内のリンクされていないアクターを優先して更新",
+  "CoC7.ActorCoCIDItemsActorSheets": "開いているアクターシートを更新",
+  "CoC7.ActorCoCIDItemsActorDirectory": "ディレクトリ内のアクターをすべて更新",
+  "CoC7.ActorCoCIDItemsUpdate": "更新",
 
   "CoC7.TokenCreationRoll.Title": "ロール可能を検知",
   "CoC7.TokenCreationRoll.Prompt": "このコマはロール可能な能力値か技能があります。<br>どうしますか？",
@@ -1337,7 +1348,6 @@
   "CoC7.TokenCreationRoll.ButtonAverage": "すべて平均値",
   "CoC7.TokenCreationRoll.Rolled": "{name} の能力値と技能がロールされた",
   "CoC7.TokenCreationRoll.Averaged": "{name} の能力値と技能に平均値が使用された",
-
 
   "CoC7.RealRollDecaderPlaceholderName": "10's",
 
@@ -1353,5 +1363,12 @@
   "CoC7.ErrorRollAlreadyCompleted": "このロールはすでに完了している",
   "CoC7.ErrorNoActorPermission": "あなたはこのアクターの所有者ではない",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "複合ロールでは１人より多いアクターは参加できない",
-  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "対抗カードには２名のアクターが必要"
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "対抗カードには２名のアクターが必要",
+  "CoC7.PauseName": "時間停止",
+
+  "CoC7.ClickableEvents.MouseOver.Title": "クリックの許可",
+  "CoC7.ClickableEvents.MouseOver.Hint": "クリック許可とマウスカーソル表示にbooleanを返す",
+  "CoC7.ClickableEvents.LeftClick.Title": "左クリックのスクリプト",
+  "CoC7.ClickableEvents.RightClick.Title": "右クリックのスクリプト",
+  "TYPES.RegionBehavior.coc7ClickableEvents": "クリック可能なイベント"
 }
