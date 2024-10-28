@@ -527,9 +527,20 @@ export class CoC7Damage {
     for (const r of rolls) {
       const roll = {}
       chatHelper.getObjectFromElement(roll, r)
-      damage.rolls.push(roll)
+      const group = roll.group
+      const dice = {
+        faces: roll.faces,
+        result: roll.result
+      }
+      delete roll.group
+      delete roll.faces
+      delete roll.result
+      if (typeof damage.rolls[group] === 'undefined') {
+        roll.dice = []
+        damage.rolls.push(roll)
+      }
+      damage.rolls[group].dice.push(dice)
     }
-
     if (!object) return damage
   }
 }
