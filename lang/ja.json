@@ -1363,8 +1363,8 @@
   "CoC7.ErrorRollAlreadyCompleted": "このロールはすでに完了している",
   "CoC7.ErrorNoActorPermission": "あなたはこのアクターの所有者ではない",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "複合ロールでは１人より多いアクターは参加できない",
-  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "対抗カードには２名のアクターが必要"
-  "CoC7.PauseName": "Time Stop",
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "対抗カードには２名のアクターが必要",
+  "CoC7.PauseName": "時間停止",
 
   "CoC7.ClickableEvents.MouseOver.Title": "クリックの許可",
   "CoC7.ClickableEvents.MouseOver.Hint": "クリック許可とマウスカーソル表示にbooleanを返す",
