@@ -24,6 +24,6 @@ results:
 flags:
   CoC7:
     cocidFlag:
-      id: i.status.bouts-of-madness-table-realtime
+      id: rt..bouts-of-madness-table-realtime
       lang: en
       priority: 0
