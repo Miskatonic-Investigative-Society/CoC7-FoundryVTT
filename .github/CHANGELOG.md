@@ -9,6 +9,14 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.2
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix Range Combat damage rolls
+- Update to Japanese localization, thanks to @doumoku #1614
+- Update to Ukrainian localization, thanks to @JornieNonsubia #1611
+
 ## Version 7.1
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
