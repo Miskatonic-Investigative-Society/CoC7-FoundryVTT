@@ -9,7 +9,7 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
-## Version 7.2
+## Version 7.3
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
