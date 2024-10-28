@@ -16,38 +16,36 @@ The following translations have more than 50 untranslated strings [are you able 
 
 [sv.json (418 untranslated strings)](./ABANDONED.md#svjson)
 
-[uk.json (67 untranslated strings)](./ABANDONED.md#ukjson)
-
 [zh-TW.json (79 untranslated strings)](./ABANDONED.md#zhtwjson)
 
 
 
-|Key|de|es|fr|it|ja|pl|
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**5**|**17**|**5**|**22**|**18**|**5**|
-|[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ActorCoCIDItemsBest](#coc7actorcociditemsbest)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules1](#coc7actorcociditemsrules1)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules2](#coc7actorcociditemsrules2)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules3](#coc7actorcociditemsrules3)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ActorCoCIDItemsSceneTokens](#coc7actorcociditemsscenetokens)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ActorCoCIDItemsUnlinkedToken](#coc7actorcociditemsunlinkedtoken)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ActorCoCIDItemsUpdate](#coc7actorcociditemsupdate)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ActorCoCIDItemsWarning](#coc7actorcociditemswarning)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ActorCoCIDItemsWhich](#coc7actorcociditemswhich)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CastHidden](#coc7casthidden)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
-|[CoC7.ClickableEvents.LeftClick.Title](#coc7clickableeventsleftclicktitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ClickableEvents.MouseOver.Hint](#coc7clickableeventsmouseoverhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ClickableEvents.MouseOver.Title](#coc7clickableeventsmouseovertitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ClickableEvents.RightClick.Title](#coc7clickableeventsrightclicktitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.PauseName](#coc7pausename)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
-|[CoC7.SANLossPass](#coc7sanlosspass)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
-|[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
-|[SETTINGS.allowMythosHardenedTitle](#settingsallowmythoshardenedtitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
-|[TYPES.RegionBehavior.coc7ClickableEvents](#typesregionbehaviorcoc7clickableevents)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|Key|de|es|fr|it|ja|pl|uk|
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|**Remaining**:|**5**|**17**|**5**|**22**|**1**|**5**|**5**|
+|[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsBest](#coc7actorcociditemsbest)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules1](#coc7actorcociditemsrules1)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules2](#coc7actorcociditemsrules2)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules3](#coc7actorcociditemsrules3)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsSceneTokens](#coc7actorcociditemsscenetokens)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsUnlinkedToken](#coc7actorcociditemsunlinkedtoken)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsUpdate](#coc7actorcociditemsupdate)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsWarning](#coc7actorcociditemswarning)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsWhich](#coc7actorcociditemswhich)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.CastHidden](#coc7casthidden)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ClickableEvents.LeftClick.Title](#coc7clickableeventsleftclicktitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ClickableEvents.MouseOver.Hint](#coc7clickableeventsmouseoverhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ClickableEvents.MouseOver.Title](#coc7clickableeventsmouseovertitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ClickableEvents.RightClick.Title](#coc7clickableeventsrightclicktitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.PauseName](#coc7pausename)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.SANLossPass](#coc7sanlosspass)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.allowMythosHardenedTitle](#settingsallowmythoshardenedtitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[TYPES.RegionBehavior.coc7ClickableEvents](#typesregionbehaviorcoc7clickableevents)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
 ##### CoC7.ActorCoCIDItemsActorDirectory
 ```  "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",```
 ##### CoC7.ActorCoCIDItemsActorSheets
