@@ -350,7 +350,7 @@
                     <ol class="dice-rolls">
                       {{#each d.rolls as |roll|}}
                         {{#each roll.dice as |die|}}
-                          <li class="roll die d{{die.faces}}">{{die.result}}</li>
+                          <li class="roll die d{{die.faces}}" data-formula="{{roll.formula}}" data-total="{{roll.total}}" data-die="{{roll.die}}" data-critical="{{roll.critical}}">{{die.result}}</li>
                         {{/each}}
                       {{/each}}
                     </ol>
