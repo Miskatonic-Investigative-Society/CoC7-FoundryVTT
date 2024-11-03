@@ -2,6 +2,7 @@
 import { CoC7Dice } from '../dice.js'
 import { CoC7Check } from '../check.js'
 import { chatHelper, CoC7Roll, CoC7Damage } from './helper.js'
+import { CoC7Utilities } from '../utilities.js'
 
 export class CoC7RangeInitiator {
   constructor (actorKey = null, itemId = null, fastForward = false) {
@@ -755,7 +756,7 @@ export class CoC7RangeInitiator {
           damageFormula = damageFormula + '+' + this.actor.db
         }
         if (this.item.system.properties.ahdb) {
-          damageFormula = damageFormula + '+ceil(' + this.actor.db + '/2)'
+          damageFormula = damageFormula + CoC7Utilities.halfDB(this.actor.db)
         }
         const damageDie = CoC7Damage.getMainDie(damageFormula)
         const maxDamage = new Roll(damageFormula)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total

@@ -3,6 +3,7 @@
 // import { chatHelper } from './helper.js';
 import { CoC7Dice } from '../dice.js'
 import { ChatCardActor } from './card-actor.js'
+import { CoC7Utilities } from '../utilities.js'
 
 export class CoC7DamageRoll extends ChatCardActor {
   constructor (itemId, actorKey, options) {
@@ -30,7 +31,7 @@ export class CoC7DamageRoll extends ChatCardActor {
       this.rollString = this.rollString + '+' + this.actor.db
     }
     if (this.weapon.system.properties.ahdb) {
-      this.rollString = this.rollString + '+' + this.actor.db + '/2'
+      this.rollString = this.rollString + CoC7Utilities.halfDB(this.actor.db)
     }
 
     this.maxDamage = new Roll(this.rollString)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true })
