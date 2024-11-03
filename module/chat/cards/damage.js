@@ -2,6 +2,7 @@
 import { CoC7Dice } from '../../dice.js'
 import { InteractiveChatCard } from '../interactive-chat-card.js'
 import { createInlineRoll } from '../helper.js'
+import { CoC7Utilities } from '../../utilities.js'
 
 export class DamageCard extends InteractiveChatCard {
   /**
@@ -244,7 +245,7 @@ export class DamageCard extends InteractiveChatCard {
 
     if (!db.startsWith('-')) db = '+' + db
     if (this.weapon.system.properties.addb) formula = formula + db
-    if (this.weapon.system.properties.ahdb) formula = formula + '+ ceil(' + db + '/2)'
+    if (this.weapon.system.properties.ahdb) formula = formula + CoC7Utilities.halfDB(this.actor.db)
 
     if (formula) {
       const maxDamage = new Roll(formula)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
