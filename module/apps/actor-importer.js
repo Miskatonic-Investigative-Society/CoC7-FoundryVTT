@@ -825,7 +825,7 @@ export class CoC7ActorImporter {
         }
         attack.system.skill.id = null
         items.push(attack)
-        this.weaponSkills.push([skill, attack])
+        this.weaponSkills.push([foundry.utils.duplicate(skill), attack])
       }
     }
     // Skills
@@ -899,7 +899,7 @@ export class CoC7ActorImporter {
         source: this.itemLocations
       })
       if (CONFIG.debug.CoC7Importer) {
-        console.debug(`${weapon.name} uses Handgun skill: ${skill}`)
+        console.debug(`${weapon.name} uses Handgun skill: `, skill)
       }
     } else if (this.getRegEx(this.keys.rifle).exec(weapon.name)) {
       skill = await CoC7Utilities.guessItem('skill', localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameRifleShotgun') + ')', {

@@ -75,7 +75,7 @@ const keys = {
     sectionSpells: '\n(?:' + 'spells' + ')[:\n]',
     handgun:
       '(?<type>' +
-      ' Gun|Revolver|Pistol|Handgun|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
+      ' Gun|Revolver|Pistol|Handgun|Derringer|Beretta|Luger|Desert Eagle|(^| )\\.38' +
       ')',
     rifle:
       '(?<type>' + 'Rifle|Shotgun|Carbine|Gauge |Lee-Enfield|Elephant' + ')',
