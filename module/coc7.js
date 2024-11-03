@@ -311,6 +311,7 @@ Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) =>
 )
 
 Hooks.on('ready', async () => {
+  // CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
   await Updater.checkForUpdate()
 
   // game.CoC7.menus = new CoC7Menu();
