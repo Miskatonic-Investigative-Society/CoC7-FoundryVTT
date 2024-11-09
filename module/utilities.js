@@ -1,4 +1,4 @@
-/* global canvas, ChatMessage, CONFIG, CONST, Dialog, Folder, foundry, fromUuid, fromUuidSync, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
+/* global canvas, ChatMessage, CONFIG, CONST, Dialog, Die, Folder, foundry, fromUuid, fromUuidSync, game, getDocumentClass, Hooks, Macro, NumericTerm, Roll, Token, ui */
 import { COC7 } from './config.js'
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
@@ -956,5 +956,25 @@ export class CoC7Utilities {
         return keepers[0].id
     }
     return keepers[Math.floor(Math.random() * keepers.length)].id
+  }
+
+  static halfDB (db) {
+    db = ((db ?? '').toString().trim() === '' ? 0 : db).toString().trim()
+    const roll = new Roll(db)
+    for (const term of roll.terms) {
+      if (foundry.utils.isNewerVersion(game.version, '12') && term instanceof foundry.dice.terms.Die) {
+        term._faces = Math.floor(term._faces / 2)
+      } else if (term instanceof Die) {
+        // FoundryVTT V11
+        term.faces = Math.floor(term.faces / 2)
+      } else if (term instanceof NumericTerm) {
+        term.number = (term.number < 0 ? Math.ceil(term.number / 2) : Math.floor(term.number / 2))
+      }
+    }
+    let formula = roll.formula.toString().trim()
+    if (!formula.startsWith('-')) {
+      formula = '+' + formula
+    }
+    return formula
   }
 }
