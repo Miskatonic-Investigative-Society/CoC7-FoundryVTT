@@ -42,7 +42,7 @@ export class CoCIDEditor extends FormApplication {
     }
     sheetData.eras.sort(CoC7Utilities.sortByNameKey)
 
-    const CoCIDKeys = foundry.utils.flattenObject(game.i18n.translations.CoC7.CoCIDFlag.keys ?? {})
+    const CoCIDKeys = Object.assign(foundry.utils.flattenObject(game.i18n.translations.CoC7?.CoCIDFlag?.keys ?? {}), foundry.utils.flattenObject(game.i18n._fallback.CoC7?.CoCIDFlag?.keys ?? {}))
     const prefix = new RegExp('^' + CoC7Utilities.quoteRegExp(sheetData.idPrefix))
     sheetData.existingKeys = Object.keys(CoCIDKeys).reduce((obj, k) => {
       if (k.match(prefix)) {
