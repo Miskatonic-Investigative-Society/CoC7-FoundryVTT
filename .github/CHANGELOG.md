@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix CoC ID not working if using fall back translations
+
 ## Version 7.4
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
