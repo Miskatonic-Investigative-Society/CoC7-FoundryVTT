@@ -1364,5 +1364,5 @@
   "CoC7.ErrorNoActorPermission": "Vous n'êtes pes le Proriétaire de cet Acteur",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "Vous ne pouvez pas avoir plus d'un acteur dans un jet combiné",
   "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Une carte de jet opposé demandes deux acteurs",
-  "CoC7.PauseName": "Time Stop"
+  "CoC7.PauseName": "Pause"
 }
