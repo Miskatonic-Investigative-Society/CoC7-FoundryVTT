@@ -9,6 +9,12 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix CoC ID not working if using fall back translations
+
+## Version 7.4
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Allow .38 to be the start of a Firearms (Handgun) name
 - Attempt to add skills when weapon with CoC ID skill names are dropped on Actor sheets
 - Fix half DB calculations for build size 3 and higher

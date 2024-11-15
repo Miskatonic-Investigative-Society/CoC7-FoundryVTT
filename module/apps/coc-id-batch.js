@@ -213,7 +213,8 @@ export class CoCIDBatch extends FormApplication {
       for (const item of items) {
         foundKeys[item.name] = item.flags.CoC7.cocidFlag.id
       }
-      for (const key in foundry.utils.flattenObject(game.i18n.translations.CoC7.CoCIDFlag.keys ?? {})) {
+      const CoCIDKeys = Object.assign(foundry.utils.flattenObject(game.i18n._fallback.CoC7?.CoCIDFlag?.keys ?? {}), foundry.utils.flattenObject(game.i18n.translations.CoC7?.CoCIDFlag?.keys ?? {}))
+      for (const key in CoCIDKeys) {
         foundKeys[game.i18n.format('CoC7.CoCIDFlag.keys.' + key)] = key
       }
       for (const name in missingNames) {
