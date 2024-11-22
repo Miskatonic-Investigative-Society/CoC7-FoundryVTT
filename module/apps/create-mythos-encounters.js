@@ -37,7 +37,7 @@ export class CoC7CreateMythosEncounter extends FormApplication {
       sanityLossEvents.sort(function (left, right) {
         return left.type.localeCompare(right.type)
       })
-      this.object.actor.update({ 'data.sanityLossEvents': sanityLossEvents })
+      this.object.actor.update({ 'system.sanityLossEvents': sanityLossEvents })
     }
     this.close()
   }
