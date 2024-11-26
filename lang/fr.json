@@ -1364,5 +1364,11 @@
   "CoC7.ErrorNoActorPermission": "Vous n'êtes pes le Proriétaire de cet Acteur",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "Vous ne pouvez pas avoir plus d'un acteur dans un jet combiné",
   "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Une carte de jet opposé demandes deux acteurs",
-  "CoC7.PauseName": "Time Stop"
+  "CoC7.PauseName": "Time Stop",
+
+  "CoC7.ClickableEvents.MouseOver.Title": "Permission de cliquer",
+  "CoC7.ClickableEvents.MouseOver.Hint": "Renvoie un booléen si le click est permis et affiche le curseur de la souris",
+  "CoC7.ClickableEvents.LeftClick.Title": "Script sur Click Gauche",
+  "CoC7.ClickableEvents.RightClick.Title": "Script sur Click Droit",
+  "TYPES.RegionBehavior.coc7ClickableEvents": "Evénements clicquables"
 }

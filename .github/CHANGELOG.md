@@ -10,6 +10,8 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Fix CoC ID not working if using fall back translations
+- Fix manually adding sanity loss / immunity reasons
+- Update to French localization, thanks to @vonv #1634
 
 ## Version 7.4
 
