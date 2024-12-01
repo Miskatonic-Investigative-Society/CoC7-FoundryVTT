@@ -137,7 +137,7 @@ export class CoCID {
    */
   static findCocIdInList (cocid, list) {
     let itemName = ''
-    const CoCIDKeys = foundry.utils.flattenObject(game.i18n.translations.CoC7.CoCIDFlag.keys)
+    const CoCIDKeys = Object.assign(foundry.utils.flattenObject(game.i18n._fallback.CoC7?.CoCIDFlag?.keys ?? {}), foundry.utils.flattenObject(game.i18n.translations.CoC7?.CoCIDFlag?.keys ?? {}))
     if (typeof CoCIDKeys[cocid] !== 'undefined') {
       itemName = CoCIDKeys[cocid]
     }
