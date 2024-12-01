@@ -13,7 +13,6 @@ export class CoC7RangeInitiator {
     this.cover = false
     this.surprised = false
     this.autoSuccess = false
-    this.diceModifier = 0
     this.messageId = null
     this.targetCard = null
     this.rolled = false
@@ -23,6 +22,10 @@ export class CoC7RangeInitiator {
     this.fullAuto = false
     this.tokenKey = null
     this.aimed = false
+    this.bonusDieA = false
+    this.bonusDieB = false
+    this.penaltyDieA = false
+    this.penaltyDieB = false
     this.totalBulletsFired = 0
     this._targets = []
     for (const t of [...game.user.targets]) {
@@ -318,7 +321,7 @@ export class CoC7RangeInitiator {
       if (t.longRange) damage = this.weapon.system.range.long.damage
       if (t.extremeRange) damage = this.weapon.system.range.extreme.damage
     }
-    let modifier = parseInt(this.diceModifier, 10) + parseInt(target.modifier, 10)
+    let modifier = parseInt(target.modifier, 10)
     let difficulty
     this.weapon.system.properties.shotgun
       ? (difficulty = 1)
@@ -328,6 +331,10 @@ export class CoC7RangeInitiator {
     if (this.reload) modifier--
     if (this.multipleShots && !this.fullAuto) modifier--
     if (this.fullAuto) modifier -= this.currentShotRank - 1
+    if (this.bonusDieA) modifier++
+    if (this.bonusDieB) modifier++
+    if (this.penaltyDieA) modifier--
+    if (this.penaltyDieB) modifier--
     this._calculatedModifier = modifier
     if (modifier < -2) {
       const excess = Math.abs(modifier + 2)
@@ -436,10 +443,6 @@ export class CoC7RangeInitiator {
     return 'systems/CoC7/templates/chat/combat/range-initiator.html'
   }
 
-  get diceModifierDisplay () {
-    return Math.max(-2, Math.min(2, parseInt(this.diceModifier, 10)))
-  }
-
   async createChatCard () {
     this.calcTargetsDifficulty()
     const html = await renderTemplate(this.template, this)
@@ -505,23 +508,7 @@ export class CoC7RangeInitiator {
       this.burst = !this.burst
     } else {
       this[flag] = !this[flag]
-    }
-    switch (flag) {
-      case 'aiming':
-        if (this.currentShotRank === 1) {
-          this.diceModifier = parseInt(this.diceModifier, 10) + (this[flag] ? 1 : -1)
-        }
-        break
-      case 'multipleShots':
-        if (!this.fullAuto) {
-          this.diceModifier = parseInt(this.diceModifier, 10) + (this[flag] ? -1 : 1)
-        }
-        break
-      case 'fullAuto':
-        if (!this.fullAuto) {
-          this.diceModifier = parseInt(this.diceModifier, 10) + (this[flag] ? -(this.currentShotRank - 1) : (this.currentShotRank - 1))
-        }
-        break
+      console.log(flag, this[flag])
     }
   }
 
@@ -1073,7 +1060,7 @@ export class CoC7RangeTarget {
         this.big = false
       } else this.small = true
     } else this[flag] = !this[flag]
-    if (flag === 'fast' && this.fast && !this.isFast) {
+    if (this.actor && flag === 'fast' && this.fast && !this.isFast) {
       ui.notifications.warn(
         game.i18n.format('CoC7.WarnFastTargetWithWrongMOV', {
           mov: this.actor.mov

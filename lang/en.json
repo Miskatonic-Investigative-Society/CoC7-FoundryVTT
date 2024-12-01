@@ -725,6 +725,8 @@
   "CoC7.OpenObstacleResolutionCard": "Start obstacle resolution flow card.",
   "CoC7.AddBonusDie": "Add bonus die",
   "CoC7.RemoveBonusDie": "Remove bonus die",
+  "CoC7.AdditionalBonusDie": "Additional Bonus Die",
+  "CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
   "CoC7.DecreaseMovementAction": "Decrease movement action",
   "CoC7.IncreaseMovementAction": "Increase movement action",
   "CoC7.CautiousApproach": "Take cautious approach",
