@@ -819,7 +819,18 @@ export class CoC7Check {
     const max = this.dice.unit.total === 0 ? 100 : 90
     const min = this.dice.unit.total === 0 ? 10 : 0
     let selected = this.dice.total - this.dice.unit.total
-
+    let firstValue = (selected === 0 ? 10 : Math.floor(selected / 10))
+    for (const d of this.dice.roll.dice) {
+      if (d instanceof CONFIG.Dice.terms.t) {
+        if (d.results[0].result === firstValue) {
+          firstValue = -1
+          d.results[0].active = true
+        } else {
+          d.results[0].active = false
+        }
+      }
+    }
+    this.dice.roll._total = this.dice.total
     for (let i = 0; i < this.dice.tens.results.length; i++) {
       const die = {}
       die.value = this.dice.tens.results[i]
@@ -1089,6 +1100,11 @@ export class CoC7Check {
 
       this.canIncreaseSuccess = this.increaseSuccess.length > 0
       if (this.isFumble) this.canIncreaseSuccess = false
+    }
+    this.dice.roll.options.coc7Result = {
+      successLevel: Object.keys(CoC7Check.successLevel).find(key => CoC7Check.successLevel[key] === this.successLevel) ?? 'unknown',
+      difficultySet: !this.isUnknown,
+      passed: this.passed
     }
 
     this.canAwardExperience =
