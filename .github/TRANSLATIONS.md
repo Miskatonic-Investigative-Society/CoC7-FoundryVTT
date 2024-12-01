@@ -2,52 +2,52 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The **fr** translation is currently up to date
-
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cn.json (450 untranslated strings)](./ABANDONED.md#cnjson)
+[cn.json (452 untranslated strings)](./ABANDONED.md#cnjson)
 
-[cs.json (635 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (637 untranslated strings)](./ABANDONED.md#csjson)
 
-[ko.json (232 untranslated strings)](./ABANDONED.md#kojson)
+[ko.json (234 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (180 untranslated strings)](./ABANDONED.md#ptbrjson)
+[pt-BR.json (182 untranslated strings)](./ABANDONED.md#ptbrjson)
 
-[ru.json (102 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (104 untranslated strings)](./ABANDONED.md#rujson)
 
-[sv.json (418 untranslated strings)](./ABANDONED.md#svjson)
+[sv.json (420 untranslated strings)](./ABANDONED.md#svjson)
 
-[zh-TW.json (79 untranslated strings)](./ABANDONED.md#zhtwjson)
+[zh-TW.json (81 untranslated strings)](./ABANDONED.md#zhtwjson)
 
 
 
-|Key|de|es|it|ja|pl|uk|
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**5**|**17**|**22**|**1**|**5**|**5**|
-|[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsBest](#coc7actorcociditemsbest)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules1](#coc7actorcociditemsrules1)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules2](#coc7actorcociditemsrules2)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules3](#coc7actorcociditemsrules3)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsSceneTokens](#coc7actorcociditemsscenetokens)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsUnlinkedToken](#coc7actorcociditemsunlinkedtoken)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsUpdate](#coc7actorcociditemsupdate)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsWarning](#coc7actorcociditemswarning)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsWhich](#coc7actorcociditemswhich)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.CastHidden](#coc7casthidden)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ClickableEvents.LeftClick.Title](#coc7clickableeventsleftclicktitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ClickableEvents.MouseOver.Hint](#coc7clickableeventsmouseoverhint)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ClickableEvents.MouseOver.Title](#coc7clickableeventsmouseovertitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ClickableEvents.RightClick.Title](#coc7clickableeventsrightclicktitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.PauseName](#coc7pausename)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
-|[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.SANLossPass](#coc7sanlosspass)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[SETTINGS.allowMythosHardenedTitle](#settingsallowmythoshardenedtitle)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[TYPES.RegionBehavior.coc7ClickableEvents](#typesregionbehaviorcoc7clickableevents)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|Key|de|es|fr|it|ja|pl|uk|
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|**Remaining**:|**7**|**19**|**2**|**24**|**3**|**7**|**7**|
+|[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsBest](#coc7actorcociditemsbest)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules1](#coc7actorcociditemsrules1)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules2](#coc7actorcociditemsrules2)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules3](#coc7actorcociditemsrules3)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsSceneTokens](#coc7actorcociditemsscenetokens)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsUnlinkedToken](#coc7actorcociditemsunlinkedtoken)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsUpdate](#coc7actorcociditemsupdate)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsWarning](#coc7actorcociditemswarning)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsWhich](#coc7actorcociditemswhich)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.AdditionalBonusDie](#coc7additionalbonusdie)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.AdditionalPenaltyDie](#coc7additionalpenaltydie)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CastHidden](#coc7casthidden)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ClickableEvents.LeftClick.Title](#coc7clickableeventsleftclicktitle)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ClickableEvents.MouseOver.Hint](#coc7clickableeventsmouseoverhint)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ClickableEvents.MouseOver.Title](#coc7clickableeventsmouseovertitle)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ClickableEvents.RightClick.Title](#coc7clickableeventsrightclicktitle)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.PauseName](#coc7pausename)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.SANLossPass](#coc7sanlosspass)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.allowMythosHardenedTitle](#settingsallowmythoshardenedtitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[TYPES.RegionBehavior.coc7ClickableEvents](#typesregionbehaviorcoc7clickableevents)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
 ##### CoC7.ActorCoCIDItemsActorDirectory
 ```  "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",```
 ##### CoC7.ActorCoCIDItemsActorSheets
@@ -70,6 +70,10 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",```
 ##### CoC7.ActorCoCIDItemsWhich
 ```  "CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",```
+##### CoC7.AdditionalBonusDie
+```  "CoC7.AdditionalBonusDie": "Additional Bonus Die",```
+##### CoC7.AdditionalPenaltyDie
+```  "CoC7.AdditionalPenaltyDie": "Additional Penalty Die",```
 ##### CoC7.CastHidden
 ```  "CoC7.CastHidden": "Cast Hidden",```
 ##### CoC7.ClickableEvents.LeftClick.Title

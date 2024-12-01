@@ -2,23 +2,23 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (450 untranslated strings)](#cnjson)
+[cn.json (452 untranslated strings)](#cnjson)
 
-[cs.json (635 untranslated strings)](#csjson)
+[cs.json (637 untranslated strings)](#csjson)
 
-[ko.json (232 untranslated strings)](#kojson)
+[ko.json (234 untranslated strings)](#kojson)
 
-[pt-BR.json (180 untranslated strings)](#ptbrjson)
+[pt-BR.json (182 untranslated strings)](#ptbrjson)
 
-[ru.json (102 untranslated strings)](#rujson)
+[ru.json (104 untranslated strings)](#rujson)
 
-[sv.json (418 untranslated strings)](#svjson)
+[sv.json (420 untranslated strings)](#svjson)
 
-[zh-TW.json (79 untranslated strings)](#zhtwjson)
+[zh-TW.json (81 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-450 untranslated strings
+452 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -216,6 +216,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.OpenObstacleResolutionCard": "Start obstacle resolution flow card.",
 "CoC7.AddBonusDie": "Add bonus die",
 "CoC7.RemoveBonusDie": "Remove bonus die",
+"CoC7.AdditionalBonusDie": "Additional Bonus Die",
+"CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
 "CoC7.DecreaseMovementAction": "Decrease movement action",
 "CoC7.IncreaseMovementAction": "Increase movement action",
 "CoC7.CautiousApproach": "Take cautious approach",
@@ -472,7 +474,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## cs.json
-635 untranslated strings
+637 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -720,6 +722,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.OpenObstacleResolutionCard": "Start obstacle resolution flow card.",
 "CoC7.AddBonusDie": "Add bonus die",
 "CoC7.RemoveBonusDie": "Remove bonus die",
+"CoC7.AdditionalBonusDie": "Additional Bonus Die",
+"CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
 "CoC7.DecreaseMovementAction": "Decrease movement action",
 "CoC7.IncreaseMovementAction": "Increase movement action",
 "CoC7.CautiousApproach": "Take cautious approach",
@@ -1111,7 +1115,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ko.json
-232 untranslated strings
+234 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1186,6 +1190,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SanityLossType": "Type",
 "CoC7.SANLossPass": "pass",
 "CoC7.SANLossFail": "fail",
+"CoC7.AdditionalBonusDie": "Additional Bonus Die",
+"CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.RemoveParticipant": "Remove participant",
 "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",
@@ -1347,7 +1353,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-180 untranslated strings
+182 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
@@ -1406,6 +1412,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SanityLossType": "Type",
 "CoC7.SANLossPass": "pass",
 "CoC7.SANLossFail": "fail",
+"CoC7.AdditionalBonusDie": "Additional Bonus Die",
+"CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
@@ -1531,7 +1539,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-102 untranslated strings
+104 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
@@ -1568,6 +1576,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.LocationNotEmpty": "You can't remove a location with an actor",
 "CoC7.LocationInit": "You can't  remove a starting location",
 "CoC7.SomethingInTheWay": "There is something in the way",
+"CoC7.AdditionalBonusDie": "Additional Bonus Die",
+"CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
 "CoC7.allActors": "All Actors",
 "CoC7.restTargets": "Rest Targets",
 "CoC7.startRest": "Start Rest",
@@ -1637,7 +1647,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## sv.json
-418 untranslated strings
+420 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1807,6 +1817,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.OpenObstacleResolutionCard": "Start obstacle resolution flow card.",
 "CoC7.AddBonusDie": "Add bonus die",
 "CoC7.RemoveBonusDie": "Remove bonus die",
+"CoC7.AdditionalBonusDie": "Additional Bonus Die",
+"CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
 "CoC7.DecreaseMovementAction": "Decrease movement action",
 "CoC7.IncreaseMovementAction": "Increase movement action",
 "CoC7.CautiousApproach": "Take cautious approach",
@@ -2059,7 +2071,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## zh-TW.json
-79 untranslated strings
+81 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
@@ -2089,6 +2101,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SanityLossType": "Type",
 "CoC7.SANLossPass": "pass",
 "CoC7.SANLossFail": "fail",
+"CoC7.AdditionalBonusDie": "Additional Bonus Die",
+"CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
