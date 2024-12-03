@@ -341,8 +341,7 @@
                           <li class="roll die d{{die.faces}}" data-group="{{group}}" data-formula="{{roll.formula}}" data-total="{{roll.total}}" data-die="{{roll.die}}" data-critical="{{roll.critical}}" data-faces="{{die.faces}}" data-result="{{die.result}}">{{die.result}}</li>
                         {{/each}}
                         {{#unless roll.dice.length}}
-                        <li class="roll die d6" data-group="{{group}}" data-formula="{{roll.formula}}" data-total="{{roll.total}}" data-die="{{roll.die}}" data-critical="{{roll.critical}}" data-faces="6" data-result="{{roll.total}}">{{roll.total}}</li>
-                          {{log roll}}
+                          <li class="roll die d6" data-group="{{group}}" data-formula="{{roll.formula}}" data-total="{{roll.total}}" data-die="{{roll.die}}" data-critical="{{roll.critical}}" data-faces="6" data-result="{{roll.total}}">{{roll.total}}</li>
                         {{/unless}}
                       {{/each}}
                     </ol>
