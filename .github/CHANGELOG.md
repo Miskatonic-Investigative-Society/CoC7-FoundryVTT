@@ -9,6 +9,9 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add ChatMessage Roll.0 pushing/pushed and luckSpent values
+- Fix ranged combat damage if no dice are rolled
+
 ## Version 7.5
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
