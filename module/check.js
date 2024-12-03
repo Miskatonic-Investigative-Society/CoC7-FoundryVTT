@@ -421,6 +421,15 @@ export class CoC7Check {
     if (oldCheck.parent) pushedRoll.parent = oldCheck.parent
     pushedRoll.pushing = true
     await pushedRoll.roll()
+    if (oldCheck.messageId) {
+      const o = await game.messages.get(oldCheck.messageId)
+      if (typeof o.rolls?.[0]?.options?.coc7Result !== 'undefined') {
+        o.rolls[0].options.coc7Result.pushing = true
+        await o.update({
+          rolls: o.rolls
+        })
+      }
+    }
     if (publish) pushedRoll.toMessage(true, card)
   }
 
@@ -1101,10 +1110,23 @@ export class CoC7Check {
       this.canIncreaseSuccess = this.increaseSuccess.length > 0
       if (this.isFumble) this.canIncreaseSuccess = false
     }
-    this.dice.roll.options.coc7Result = {
-      successLevel: Object.keys(CoC7Check.successLevel).find(key => CoC7Check.successLevel[key] === this.successLevel) ?? 'unknown',
-      difficultySet: !this.isUnknown,
-      passed: this.passed
+    if (this.dice) {
+      this.dice.roll.options.coc7Result = {
+        successLevel: Object.keys(CoC7Check.successLevel).find(key => CoC7Check.successLevel[key] === this.successLevel) ?? 'unknown',
+        difficultySet: !this.isUnknown,
+        passed: this.passed,
+        pushing: false,
+        pushed: this.pushing,
+        luckSpent: this.totalLuckSpent ?? 0
+      }
+    } else if (typeof this.messageId === 'string') {
+      const o = await game.messages.get(this.messageId)
+      if (typeof o.rolls?.[0]?.options?.coc7Result !== 'undefined') {
+        o.rolls[0].options.coc7Result.luckSpent = this.totalLuckSpent ?? 0
+        await o.update({
+          rolls: o.rolls
+        })
+      }
     }
 
     this.canAwardExperience =
