@@ -112,7 +112,6 @@
               <span class="flex1 toggle-switch inMelee target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.inMelee}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.InMeleeTitle'}}" style="text-align:center" data-flag="in-melee" data-selected={{trgt.inMelee}}>{{localize 'CoC7.rangeCombatCard.InMelee'}}</span>
               <span class="flex1 toggle-switch fast target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.fast}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.FastMovingTargetTitle'}}" style="text-align:center" data-flag="fast" data-selected={{trgt.fast}}>{{localize 'CoC7.rangeCombatCard.FastMovingTarget'}}</span>
             </div>
-            {{log ../this}}
             <div class="flexrow range-selection" style="border-top: 2px groove #fff; padding-top: 3px">
               <span class="flex1 toggle-switch {{#unless ../rolled}}simple-flag{{/unless}} {{#if ../bonusDieA}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.AdditionalBonusDie'}}" style="text-align:center" data-flag="bonus-die-a">{{localize 'CoC7.AdditionalBonusDie'}}</span>
               <span class="flex1 toggle-switch {{#unless ../rolled}}simple-flag{{/unless}} {{#if ../bonusDieB}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.AdditionalBonusDie'}}" style="text-align:center" data-flag="bonus-die-b">{{localize 'CoC7.AdditionalBonusDie'}}</span>
@@ -341,6 +340,9 @@
                         {{#each roll.dice as |die|}}
                           <li class="roll die d{{die.faces}}" data-group="{{group}}" data-formula="{{roll.formula}}" data-total="{{roll.total}}" data-die="{{roll.die}}" data-critical="{{roll.critical}}" data-faces="{{die.faces}}" data-result="{{die.result}}">{{die.result}}</li>
                         {{/each}}
+                        {{#unless roll.dice.length}}
+                          <li class="roll die d6" data-group="{{group}}" data-formula="{{roll.formula}}" data-total="{{roll.total}}" data-die="{{roll.die}}" data-critical="{{roll.critical}}" data-faces="6" data-result="{{roll.total}}">{{roll.total}}</li>
+                        {{/unless}}
                       {{/each}}
                     </ol>
                   </div>

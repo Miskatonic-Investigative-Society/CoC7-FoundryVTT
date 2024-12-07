@@ -70,29 +70,24 @@ export class CoC7RangeInitiator {
             t.pointBlankRange = false
             const pbRangeInYd =
               this.actor.system.characteristics.dex.value / 15
-            if (distInYd <= pbRangeInYd) t.pointBlankRange = true
+            if (distInYd <= pbRangeInYd) t.toggleFlag('pointBlankRange')
           }
-          if (this.weapon) {
+          if (t.pointBlankRange !== true && this.weapon) {
             if (this.weapon.baseRange) {
               t.baseRange = false
               t.longRange = false
               t.extremeRange = false
               t.outOfRange = false
               if (this.weapon.system.properties.shotgun) {
-                if (distInYd <= this.weapon.baseRange) t.baseRange = true
-                if (
-                  distInYd > this.weapon.baseRange &&
-                  distInYd <= this.weapon.longRange
-                ) {
+                if (distInYd <= this.weapon.baseRange) {
+                  t.baseRange = true
+                } else if (distInYd <= this.weapon.longRange) {
                   t.longRange = true
-                }
-                if (
-                  distInYd > this.weapon.longRange &&
-                  distInYd <= this.weapon.extremeRange
-                ) {
+                } else if (distInYd <= this.weapon.extremeRange) {
                   t.extremeRange = true
+                } else {
+                  t.outOfRange = true
                 }
-                if (distInYd > this.weapon.extremeRange) t.outOfRange = true
               } else {
                 if (distInYd <= this.weapon.baseRange) t.baseRange = true
                 if (
@@ -801,10 +796,8 @@ export class CoC7RangeInitiator {
         }
         for (let index = 0; index < impalingShots; index++) {
           const roll = new Roll(criticalDamageFormula)
-          /** MODIF 0.8.x **/
-          await roll.evaluate({ async: true })
+          await roll.evaluate()
           await CoC7Dice.showRollDice3d(roll)
-          /*****************/
           const dice = []
           for (const die of roll.dice) {
             for (const result of die.results) {
