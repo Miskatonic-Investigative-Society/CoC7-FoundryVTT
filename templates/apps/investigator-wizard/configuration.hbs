@@ -68,6 +68,12 @@
       </div>
     </div>
   {{/if}}
+  <div class="form-group flexrow">
+    <label for="characteristics-method-4">{{localize 'CoC7.InvestigatorWizard.ChooseAfterRoll'}}:</label>
+    <div class="flex1">
+      <input type="radio" name="characteristics-method" value="4" class="submit_on_change" style="margin-left: -2px; transform: scale(1.5);" {{checked (eq characteristicsMethod characteristicsMethods.METHOD_CHOOSE)}}>
+    </div>
+  </div>
   <h2>{{localize 'CoC7.InvestigatorWizard.Setups'}}</h2>
   <p>{{localize 'CoC7.InvestigatorWizard.SetupCounts' count=setups.length}}</p>
   <div class="form-group">
