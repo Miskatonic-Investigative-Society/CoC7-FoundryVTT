@@ -4,25 +4,25 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cn.json (452 untranslated strings)](./ABANDONED.md#cnjson)
+[cn.json (453 untranslated strings)](./ABANDONED.md#cnjson)
 
-[cs.json (637 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (638 untranslated strings)](./ABANDONED.md#csjson)
 
-[ko.json (234 untranslated strings)](./ABANDONED.md#kojson)
+[ko.json (235 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (182 untranslated strings)](./ABANDONED.md#ptbrjson)
+[pt-BR.json (183 untranslated strings)](./ABANDONED.md#ptbrjson)
 
-[ru.json (104 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (105 untranslated strings)](./ABANDONED.md#rujson)
 
-[sv.json (420 untranslated strings)](./ABANDONED.md#svjson)
+[sv.json (421 untranslated strings)](./ABANDONED.md#svjson)
 
-[zh-TW.json (81 untranslated strings)](./ABANDONED.md#zhtwjson)
+[zh-TW.json (82 untranslated strings)](./ABANDONED.md#zhtwjson)
 
 
 
 |Key|de|es|fr|it|ja|pl|uk|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**7**|**19**|**2**|**24**|**3**|**7**|**7**|
+|**Remaining**:|**8**|**20**|**3**|**25**|**4**|**8**|**8**|
 |[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ActorCoCIDItemsBest](#coc7actorcociditemsbest)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
@@ -41,6 +41,7 @@ The following translations have more than 50 untranslated strings [are you able 
 |[CoC7.ClickableEvents.MouseOver.Hint](#coc7clickableeventsmouseoverhint)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
 |[CoC7.ClickableEvents.MouseOver.Title](#coc7clickableeventsmouseovertitle)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
 |[CoC7.ClickableEvents.RightClick.Title](#coc7clickableeventsrightclicktitle)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.ChooseAfterRoll](#coc7investigatorwizardchooseafterroll)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.PauseName](#coc7pausename)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
 |[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
 |[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
@@ -84,6 +85,8 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "CoC7.ClickableEvents.MouseOver.Title": "Permission to click",```
 ##### CoC7.ClickableEvents.RightClick.Title
 ```  "CoC7.ClickableEvents.RightClick.Title": "Right Click Script",```
+##### CoC7.InvestigatorWizard.ChooseAfterRoll
+```  "CoC7.InvestigatorWizard.ChooseAfterRoll": "Choose where to place rolled characteristics",```
 ##### CoC7.PauseName
 ```  "CoC7.PauseName": "Time Stop",```
 ##### CoC7.PersonalSpecialityPlaceholder
