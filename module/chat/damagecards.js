@@ -39,7 +39,7 @@ export class CoC7DamageRoll extends ChatCardActor {
     this.roll = null
     if (this.critical) {
       if (this.weapon.impale) {
-        this.rollString = this.rollString + '+' + this.maxDamage
+        this.rollString = this.weapon.system.range[range].damage + '+' + this.maxDamage
         this.roll = new Roll(this.rollString)
         await this.roll.roll({ async: true })
         this.result = Math.floor(this.roll.total)

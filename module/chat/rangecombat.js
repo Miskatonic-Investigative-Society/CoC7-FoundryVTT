@@ -734,6 +734,7 @@ export class CoC7RangeInitiator {
       if (volleySize > 0) {
         let damageFormula = String(h.shot.damage)
         if (!damageFormula || damageFormula === '') damageFormula = '0'
+        const damageWithoutDB = damageFormula
         if (this.item.system.properties.addb) {
           damageFormula = damageFormula + '+' + this.actor.db
         }
@@ -743,7 +744,7 @@ export class CoC7RangeInitiator {
         const damageDie = CoC7Damage.getMainDie(damageFormula)
         const maxDamage = new Roll(damageFormula)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
         const criticalDamageFormula = this.weapon.impale
-          ? `${damageFormula} + ${maxDamage}`
+          ? `${damageWithoutDB} + ${maxDamage}`
           : `${maxDamage}`
         const criticalDamageDie = CoC7Damage.getMainDie(criticalDamageFormula)
 

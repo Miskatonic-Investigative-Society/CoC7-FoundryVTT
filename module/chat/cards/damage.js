@@ -252,7 +252,7 @@ export class DamageCard extends InteractiveChatCard {
       let rollString
       if (this.critical) {
         if (this.impale) {
-          rollString = formula + '+' + maxDamage
+          rollString = this.weapon?.system?.range[range]?.damage + '+' + maxDamage
           return rollString
         } else {
           return maxDamage
