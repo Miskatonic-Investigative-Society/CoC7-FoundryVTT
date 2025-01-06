@@ -1373,5 +1373,6 @@
   "CoC7.ClickableEvents.MouseOver.Hint": "Devuelve un booleano si se permite hacer clic y mostrar el cursor del ratón",
   "CoC7.ClickableEvents.LeftClick.Title": "Script de clic izquierdo",
   "CoC7.ClickableEvents.RightClick.Title": "Script de clic derecho",
-  "TYPES.RegionBehavior.coc7ClickableEvents": "Eventos clicables"
+  "TYPES.RegionBehavior.coc7ClickableEvents": "Eventos clicables",
+  "Status": "Estados"
 }
