@@ -1961,6 +1961,10 @@ export class CoC7InvestigatorWizard extends FormApplication {
    * create it's the default way to create the CoC7CharacterWizard
    */
   static async create (options = {}) {
+    // Attempt to fix bad setting
+    if (game.settings.get('CoC7', 'InvestigatorWizardChooseValues') !== true && game.settings.get('CoC7', 'InvestigatorWizardChooseValues') !== false) {
+      await game.settings.set('CoC7', 'InvestigatorWizardChooseValues', game.settings.get('CoC7', 'InvestigatorWizardChooseValues')[0] ?? false)
+    }
     // Try and prerequst as many CoCIDs due to the way they have to be loaded
     options = foundry.utils.mergeObject({
       step: 0,
