@@ -1,4 +1,4 @@
-<div class="coc7 chat-card range initiator" data-actor-key="{{actorKey}}" data-item-id="{{item.id}}" data-fast-forward="{{fastForward}}" data-resolved="{{resolved}}" data-rolled="{{rolled}}" data-cover="{{cover}}" data-surprised="{{surprised}}" data-auto-success="{{autoSuccess}}" data-single-shot="{{singleShot}}" data-multiple-shots="{{multipleShots}}" data-burst="{{burst}}" data-full-auto="{{fullAuto}}" data-dice-modifier="{{diceModifier}}" data-aiming={{aiming}} data-is-GM="{{isKeeper}}" data-aimed="{{aimed}}" data-damage-rolled="{{damageRolled}}" data-damage-dealt="{{damageDealt}}" data-total-bullets-fired="{{totalBulletsFired}}" data-roll-mode="{{rollMode}}" data-is-blind="false" data-volley-size="{{volleySize}}">
+<div class="coc7 chat-card range initiator" data-actor-key="{{actorKey}}" data-item-id="{{item.id}}" data-fast-forward="{{fastForward}}" data-resolved="{{resolved}}" data-rolled="{{rolled}}" data-cover="{{cover}}" data-surprised="{{surprised}}" data-auto-success="{{autoSuccess}}" data-single-shot="{{singleShot}}" data-multiple-shots="{{multipleShots}}" data-burst="{{burst}}" data-full-auto="{{fullAuto}}" data-bonus-die-a="{{bonusDieA}}" data-bonus-die-b="{{bonusDieB}}" data-penalty-die-a="{{penaltyDieA}}" data-penalty-die-b="{{penaltyDieB}}" data-aiming={{aiming}} data-is-GM="{{isKeeper}}" data-aimed="{{aimed}}" data-damage-rolled="{{damageRolled}}" data-damage-dealt="{{damageDealt}}" data-total-bullets-fired="{{totalBulletsFired}}" data-roll-mode="{{rollMode}}" data-is-blind="false" data-volley-size="{{volleySize}}">
   <header class="card-header flexcol">
     <div class="flexrow">
       {{#if displayActorOnCard}}
@@ -52,27 +52,7 @@
         {{/if}}
         <span class="flex1 toggle-switch aiming {{#unless rolled}}simple-flag{{/unless}} {{#if aiming}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.AimingTitle'}}" style="text-align:center" data-flag="aiming" data-selected={{aiming}}>{{localize 'CoC7.rangeCombatCard.aiming'}}</span>
       </div>
-
-      <div style="flex: 1;display: flex;flex-direction: column;margin: 0.5rem 1rem 0;opacity:0.6">
-        <div class="flexrow">
-          <span style="flex: 4; text-align: left">{{localize 'CoC7.PenaltyDice'}}</span>
-          <span style="flex: 1">&nbsp;</span>
-          <span style="flex: 4; text-align: right">{{localize 'CoC7.BonusDice'}}</span>
-        </div>
-        <div class="flexrow">
-          <span style="flex: 1; text-align: left;">-2</span>
-          <span style="flex: 1; text-align: center;"></span>
-          <span style="flex: 1; text-align: center;">-1</span>
-          <span style="flex: 1; text-align: center;"></span>
-          <span style="flex: 1; text-align: center;">0</span>
-          <span style="flex: 1; text-align: center;"></span>
-          <span style="flex: 1; text-align: center;">+1</span>
-          <span style="flex: 1; text-align: center;"></span>
-          <span style="flex: 1; text-align: right;">+2</span>
-        </div>
-        <input type="range" name="diceModifier" min="-2" max="2" value="{{diceModifierDisplay}}" class="slider gm-range-only">
-      </div>
-      {{/if}}
+    {{/if}}
   </header>
 
   <div class="targets">
@@ -131,6 +111,14 @@
               </span>
               <span class="flex1 toggle-switch inMelee target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.inMelee}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.InMeleeTitle'}}" style="text-align:center" data-flag="in-melee" data-selected={{trgt.inMelee}}>{{localize 'CoC7.rangeCombatCard.InMelee'}}</span>
               <span class="flex1 toggle-switch fast target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.fast}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.FastMovingTargetTitle'}}" style="text-align:center" data-flag="fast" data-selected={{trgt.fast}}>{{localize 'CoC7.rangeCombatCard.FastMovingTarget'}}</span>
+            </div>
+            <div class="flexrow range-selection" style="border-top: 2px groove #fff; padding-top: 3px">
+              <span class="flex1 toggle-switch {{#unless ../rolled}}simple-flag{{/unless}} {{#if ../bonusDieA}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.AdditionalBonusDie'}}" style="text-align:center" data-flag="bonus-die-a">{{localize 'CoC7.AdditionalBonusDie'}}</span>
+              <span class="flex1 toggle-switch {{#unless ../rolled}}simple-flag{{/unless}} {{#if ../bonusDieB}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.AdditionalBonusDie'}}" style="text-align:center" data-flag="bonus-die-b">{{localize 'CoC7.AdditionalBonusDie'}}</span>
+            </div>
+            <div class="flexrow range-selection" style="border-bottom: 2px groove #fff; padding-top: 3px">
+              <span class="flex1 toggle-switch {{#unless ../rolled}}simple-flag{{/unless}} {{#if ../penaltyDieA}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.AdditionalPenaltyDie'}}" style="text-align:center" data-flag="penalty-die-a">{{localize 'CoC7.AdditionalPenaltyDie'}}</span>
+              <span class="flex1 toggle-switch {{#unless ../rolled}}simple-flag{{/unless}} {{#if ../penaltyDieB}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.AdditionalPenaltyDie'}}" style="text-align:center" data-flag="penalty-die-b">{{localize 'CoC7.AdditionalPenaltyDie'}}</span>
             </div>
 
             {{#if ../calculatedBonusDice}}
@@ -352,6 +340,9 @@
                         {{#each roll.dice as |die|}}
                           <li class="roll die d{{die.faces}}" data-group="{{group}}" data-formula="{{roll.formula}}" data-total="{{roll.total}}" data-die="{{roll.die}}" data-critical="{{roll.critical}}" data-faces="{{die.faces}}" data-result="{{die.result}}">{{die.result}}</li>
                         {{/each}}
+                        {{#unless roll.dice.length}}
+                          <li class="roll die d6" data-group="{{group}}" data-formula="{{roll.formula}}" data-total="{{roll.total}}" data-die="{{roll.die}}" data-critical="{{roll.critical}}" data-faces="6" data-result="{{roll.total}}">{{roll.total}}</li>
+                        {{/unless}}
                       {{/each}}
                     </ol>
                   </div>

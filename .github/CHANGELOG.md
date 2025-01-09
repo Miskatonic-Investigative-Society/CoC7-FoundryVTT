@@ -9,8 +9,25 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix "Investigator Creation Wizard" method "Quick fire characteristics" values being ignored for players
+- Update extreme damage calculation, thanks to ryotai-trpg #1653
+- Update to Spanish localization, thanks to @zeedif #1660
+
+## Version 7.6
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add ChatMessage Roll.0 pushing/pushed and luckSpent values
+- Fix ranged combat damage if no dice are rolled
+
+## Version 7.5
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Fix CoC ID not working if using fall back translations
 - Fix manually adding sanity loss / immunity reasons
+- Modify Roll to indicated active dice and success level
+- Remove bonus/penalty slider from ranged combat chat message replace with buttons
 - Update to French localization, thanks to @vonv #1634
 
 ## Version 7.4

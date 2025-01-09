@@ -627,6 +627,13 @@ export function registerSettings () {
     type: Array,
     default: []
   })
+  game.settings.register('CoC7', 'InvestigatorWizardChooseValues', {
+    name: 'Choose where to place rolled characteristics',
+    scope: 'world',
+    config: false,
+    type: Boolean,
+    default: false
+  })
   /** Set an initiative formula for the system */
   CONFIG.Combat.initiative = {
     formula: '@characteristics.dex.value',

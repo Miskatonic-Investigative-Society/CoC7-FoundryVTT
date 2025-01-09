@@ -17,13 +17,33 @@
     </div>
   {{/if}}
   {{#if (or object.coreCharacteristic (lt coreCharacteristics.length 1))}}
-    {{#if (eq characteristicsMethod characteristicsMethods.METHOD_VALUES)}}
+    {{#if (or (eq characteristicsMethod characteristicsMethods.METHOD_VALUES) (eq characteristicsMethod characteristicsMethods.METHOD_CHOOSE))}}
       <p>{{localize 'CoC7.InvestigatorWizard.CharacteristicDragInformation'}}</p>
       {{#if object.coreCharacteristic}}
-        <p>{{localize 'CoC7.InvestigatorWizard.CoreCharacteristicName' coreCharacteristic=coreCharacteristic}}</p>
+        <p>{{{localize 'CoC7.InvestigatorWizard.CoreCharacteristicName' coreCharacteristic=coreCharacteristic}}}</p>
       {{/if}}
       <div class="flexcol">
         <ol class="item-list">
+          {{#if (eq characteristicsMethod characteristicsMethods.METHOD_CHOOSE)}}
+            {{#if (or object.rerollsEnabled (not object.rolledValues.length))}}
+              <li class="item flexrow">
+                <div class="flex2"></div>
+                <button class="roll_choose">{{localize 'CoC7.RollDice'}}</button>
+                <div class="flex2"></div>
+              </li>
+            {{/if}}
+            {{#if object.rolledValues.length}}
+              <li class="item flexrow unsorted-characteristics" data-empty="x">
+              {{#each object.rolledValues as |roll offset|}}
+                {{#unless roll.assigned}}
+                  <div draggable="true" class="draggable characteristic" data-offset="{{offset}}">
+                    <div>{{roll.value}}</div>
+                  </div>
+                {{/unless}}
+              {{/each}}
+              </li>
+            {{/if}}
+          {{else}}
           <li class="item flexrow unsorted-characteristics" data-characteristic-key="-">
             &nbsp;
             {{#each object.placeable as |value|}}
@@ -32,6 +52,7 @@
               </div>
             {{/each}}
           </li>
+          {{/if}}
           {{#each setup.characteristics as |characteristic|}}
             <li class="item flexrow" data-characteristic-key="{{characteristic.key}}">
               <div class="item-name flexrow">
