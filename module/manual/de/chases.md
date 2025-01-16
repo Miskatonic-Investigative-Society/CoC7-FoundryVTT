@@ -12,7 +12,7 @@ A hazard will always be crossed but failing the check will slow you down.
 
 A barrier will stop you until you successfully pass or destroy it.
 
-![](../../assets/manual/chases/new_chase.webp)
+![](../../../assets/manual/chases/new_chase.webp)
 
 The chase sheet is divided in 3 parts.
 
@@ -28,7 +28,7 @@ Note that it is not mandatory to have a actor associated with a participant. Thi
 
 To be able to add a token to the chase a few control have been added to character and NPC sheets:
 
-![](../../assets/manual/chases/new_controls.webp)
+![](../../../assets/manual/chases/new_controls.webp)
 
 Those icons will give additional information.
 
@@ -39,41 +39,41 @@ Those icons will give additional information.
 
 Here you can set up your participant. Dragging an actor from the Actors sidebar will set the details. Note that you can select a different initiative and speed check. This is non standard in the CoC, but allows to setup unusual chases (futuristic matrix chase, dreamlands chase...)
 
-![](../../assets/manual/chases/new_participant_drag.webp)
+![](../../../assets/manual/chases/new_participant_drag.webp)
 
 1. Dragging the questionmark onto a token will set the details to that token.
 
 Once you drag an actor or select a token you can set up the participant
 
-![](../../assets/manual/chases/new_participant_setup.webp)
+![](../../../assets/manual/chases/new_participant_setup.webp)
 
 1. Clicking this will change the participant side from prey to chaser.
 2. Clicking this will trigger a speed check. Note that there will be no player entries necessary nor any roll card displayed.
 
 # Participant list
 
-![](../../assets/manual/chases/participant_list.webp)
+![](../../../assets/manual/chases/participant_list.webp)
 
 Here you can have the list of participant to the chase.
 
 1. Will trigger a chase roll. This will create a roll card if the participant has an associated actor (it's not a dummy). Holding shift will fast forward and solve the card.
 2. This will clear the speed roll if any, or delete the participant.
 
-![](../../assets/manual/chases/participant_list_2.webp)
+![](../../../assets/manual/chases/participant_list_2.webp)
 
 1. Roll card waiting to get resolved in the chat.
 2. Speed check rolled. You can click this to get the details.
 3. To reset the speed check.
 
-![](../../assets/manual/chases/roll_card.webp)
+![](../../../assets/manual/chases/roll_card.webp)
 
 # Chase setup
 
-![](../../assets/manual/chases/chase_init.webp)
+![](../../../assets/manual/chases/chase_init.webp)
 
 To setup a chase enter the initial numbers of locations and click initialize.
 
-![](../../assets/manual/chases/chase_initialized.webp)
+![](../../../assets/manual/chases/chase_initialized.webp)
 
 The chase is initialized, you can adjust some options. Locations in white are initial locations and can not be modified.
 
@@ -92,7 +92,7 @@ Starting (white) locations can not be modified during setup.
 
 To modify a location select it by clicking on it. This will display the location details on the header part of the sheet.
 
-![](../../assets/manual/chases/setting_locations_1.webp)
+![](../../../assets/manual/chases/setting_locations_1.webp)
 
 1. This will add a participant. If the chase is started the participant will be on that location. If the chase isn't started the participant will be added on the init track.
 2. This will remove the location. A location has to be empty to be removed.
@@ -104,7 +104,7 @@ To modify a location select it by clicking on it. This will display the location
 
 You can add obstacle after and before a location. You can pre-fill an obstacle with a name, an associated check and some penalties.
 
-![](../../assets/manual/chases/setting_locations_2.webp)
+![](../../../assets/manual/chases/setting_locations_2.webp)
 
 1. Toggle this to add damage to a barrier.
 2. Barrier's hit points.
@@ -115,7 +115,7 @@ You can add obstacle after and before a location. You can pre-fill an obstacle w
 
 When you are ready you can cut to the chase. If not all participant have a speed check this will trigger a warning and will not let you start.
 
-![](../../assets/manual/chases/cut_to_the_chase_1.webp)
+![](../../../assets/manual/chases/cut_to_the_chase_1.webp)
 
 1. Initiative track. The active participant is circled in orange.
 2. Chase track. Active location and participant. You can drag drop participant from the chase track to move them freely. You can drag a new actor or token directly on the chase track. This will pop the import window and add that participant to the chase. In some cases (eg. new prey slower than the slowest participant) all movement action will be recalculated.
@@ -124,26 +124,26 @@ When you are ready you can cut to the chase. If not all participant have a speed
 
 # Obstacle resolution flow
 
-![](../../assets/manual/chases/cut_to_the_chase_2.webp)
+![](../../../assets/manual/chases/cut_to_the_chase_2.webp)
 
 1. When the active participant is facing an obstacle you can trigger the obstacle resolution flow by clicking this. This will open a chat card where keeper and player can interact to pass that obstacle. All changes made to the card can be reflected to the obstacle in the chase at the end of the flow.
 
 Here is a shorten flow example:
 
-![](../../assets/manual/chases/obstalce_flow_1.webp)
-![](../../assets/manual/chases/obstalce_flow_2.webp)
-![](../../assets/manual/chases/obstalce_flow_3.webp)
-![](../../assets/manual/chases/obstalce_flow_4.webp)
+![](../../../assets/manual/chases/obstalce_flow_1.webp)
+![](../../../assets/manual/chases/obstalce_flow_2.webp)
+![](../../../assets/manual/chases/obstalce_flow_3.webp)
+![](../../../assets/manual/chases/obstalce_flow_4.webp)
 
 Once the flow is complete all changes are send to the chase.
 
-![](../../assets/manual/chases/cut_to_the_chase_3.webp)
+![](../../../assets/manual/chases/cut_to_the_chase_3.webp)
 
 This round is finished. All actor have spent their movement action. You can click Next round to proceed.
 
 # Participant controls.
 
-![](../../assets/manual/chases/participant_controls.webp)
+![](../../../assets/manual/chases/participant_controls.webp)
 
 You can modify or move a participant by using the controls button on his card.
 

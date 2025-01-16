@@ -15,7 +15,7 @@ Falls du diese Funktion das erste Mal verwendest, lese bitte auch die folgenden 
 
 # Nichtspielercharakter (NSC/NPC) / Kreatur
 
-![](../../assets/manual/importer/importer.webp)
+![](../../../assets/manual/importer/importer.webp)
 
 1. Wähle NPC oder Kreatur
 2. Soll das System den Charakterblock einer früheren Edition in die 7. Edition konvertieren?
@@ -36,7 +36,7 @@ Click import will create an actor under the Actor directory will be created in t
 
 # The Dhole's House Actor Importer JSON
 
-![](../../assets/manual/importer/actor.webp)
+![](../../../assets/manual/importer/actor.webp)
 
 1. The Dhole's House Actor Importer JSON
 2. When adding skills, items, spells, and weapons the system can attempt to find items in your world with the same name, you can select the order the seconds are searched
