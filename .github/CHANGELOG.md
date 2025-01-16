@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix "Investigator Creation Wizard" method "Quick fire characteristics" values being ignored for players
+- Update extreme damage calculation, thanks to ryotai-trpg #1653
+- Update to Spanish localization, thanks to @zeedif #1660
+
 ## Version 7.6
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

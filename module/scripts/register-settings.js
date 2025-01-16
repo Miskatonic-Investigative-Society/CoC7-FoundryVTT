@@ -631,8 +631,8 @@ export function registerSettings () {
     name: 'Choose where to place rolled characteristics',
     scope: 'world',
     config: false,
-    type: Array,
-    default: []
+    type: Boolean,
+    default: false
   })
   /** Set an initiative formula for the system */
   CONFIG.Combat.initiative = {
