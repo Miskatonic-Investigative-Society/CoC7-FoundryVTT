@@ -1,4 +1,4 @@
-# Sistema de CoC ID
+<!--- This file is auto generated from module/manual/es/sistema_de_coc_id.md --># Sistema de CoC ID
 
 Varios documentos de FoundryVTT tienen un botón de identificación accesible para los roles de usuario "Game Master" y "Asistente".
 

@@ -1,4 +1,4 @@
-# Links
+<!--- This file is auto generated from module/manual/uk/links.md --># Links
 
 - Links are a way for a GM to request for a roll (Characteristic, Attribute, Skill, SAN loss, Weapon).
 - Links can contain an active effect.

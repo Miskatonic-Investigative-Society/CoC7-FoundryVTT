@@ -1,4 +1,4 @@
-# Шпаргалка з командами
+<!--- This file is auto generated from module/manual/uk/commands_cheat_sheet.md --># Шпаргалка з командами
 
 ## Загальні  правила
 

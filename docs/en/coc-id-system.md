@@ -1,4 +1,4 @@
-# CoC ID System
+<!--- This file is auto generated from module/manual/en/coc-id-system.md --># CoC ID System
 
 Several FoundryVTT documents have an ID button accessable to "Game Master" and "Assistant GM" User Roles.
 
