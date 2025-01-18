@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/es/persecuciones.md --># Persecuciones
+<!--- This file is auto generated from module/manual/es/persecuciones.md -->
+# Persecuciones
 
 ## Crear una nueva persecución
 

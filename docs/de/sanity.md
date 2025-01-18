@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/de/sanity.md -->## Proben auf geistige Stabilität
+<!--- This file is auto generated from module/manual/de/sanity.md -->
+## Proben auf geistige Stabilität
 
 Das System besitzt einen integrierten Workflow der Proben auf geistige Stabilität durchführt. Der Workflow beinhaltet folgende Aspekte:
 - Würfeln der Probe auf geistige Stabilität

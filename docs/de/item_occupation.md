@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/de/item_occupation.md -->*TODO: Will be translated*
+<!--- This file is auto generated from module/manual/de/item_occupation.md -->
+*TODO: Will be translated*
 
 # Item Type: Occupation
 

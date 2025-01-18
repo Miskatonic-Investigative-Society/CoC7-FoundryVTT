@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/fr/links.md --># Liens et Jets
+<!--- This file is auto generated from module/manual/fr/links.md -->
+# Liens et Jets
 
 Toutes ces commandes peuvent être glissées/déposées dans un Article (ou toute zone éditable) en mode modification _sauf les modificateurs de seuil_ !\
 Ce qui peut donner: `@coc7.check[type:attribute,name:san,difficulty:1,modifier:-2]`

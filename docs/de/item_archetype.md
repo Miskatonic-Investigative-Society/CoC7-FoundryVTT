@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/de/item_archetype.md --># Item Typ: Pulp Archetyp
+<!--- This file is auto generated from module/manual/de/item_archetype.md -->
+# Item Typ: Pulp Archetyp
 
 Archetypen sind Teil von Pulp Cthulhu. Sie stellen weitere Fertigkeiten und Charakteristika für die Charaktere als Bonus zu, um Charaktere heroischer für den Spieltyp zu gestalten.
 

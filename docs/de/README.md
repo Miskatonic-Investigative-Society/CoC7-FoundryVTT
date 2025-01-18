@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/de/README.md -->*TODO: Will be translated*
+<!--- This file is auto generated from module/manual/de/README.md -->
+*TODO: Will be translated*
 
 # Systemdokumentation für Version 7.0
 

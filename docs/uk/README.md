@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/uk/README.md --># Документація системи для версії 7.0
+<!--- This file is auto generated from module/manual/uk/README.md -->
+# Документація системи для версії 7.0
 
 Цей документ розробляється для ознайомлення з системою CoC7 та не є посібник як використовувати FoundryVTT.
 

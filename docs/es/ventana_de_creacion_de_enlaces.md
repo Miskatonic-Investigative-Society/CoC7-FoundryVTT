@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/es/ventana_de_creacion_de_enlaces.md --># Herramienta de creación de enlaces
+<!--- This file is auto generated from module/manual/es/ventana_de_creacion_de_enlaces.md -->
+# Herramienta de creación de enlaces
 
 El sistema incluye una herramienta para ayudarte a crear enlaces fácilmente.
 Está ubicada en la barra lateral izquierda. Haz clic en el ícono.

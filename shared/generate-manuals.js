@@ -459,7 +459,7 @@ try {
         fs.mkdirSync(rootFolder + '/docs/' + lang + '/')
       }
 
-      fs.writeFileSync(rootFolder + '/docs/' + lang + '/' + sources[lang].pages[page].file, '<!--- This file is auto generated from module/manual/' + lang + '/' + sources[lang].pages[page].file + ' -->' + mdFile, { flag: 'w+' })
+      fs.writeFileSync(rootFolder + '/docs/' + lang + '/' + sources[lang].pages[page].file, '<!--- This file is auto generated from module/manual/' + lang + '/' + sources[lang].pages[page].file + ' -->\n' + mdFile, { flag: 'w+' })
 
       const matches = input.matchAll(/\[(.+?)\]\(((?![a-z]{1,10}:)(.+?))\)/g)
       for (const match of matches) {

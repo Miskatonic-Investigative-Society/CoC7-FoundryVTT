@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/de/commands_cheat_sheet.md -->*TODO: Will be translated*
+<!--- This file is auto generated from module/manual/de/commands_cheat_sheet.md -->
+*TODO: Will be translated*
 
 # Commands Cheat Sheet
 

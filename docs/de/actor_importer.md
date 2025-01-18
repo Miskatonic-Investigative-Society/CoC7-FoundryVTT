@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/de/actor_importer.md -->*TODO: Will be translated*
+<!--- This file is auto generated from module/manual/de/actor_importer.md -->
+*TODO: Will be translated*
 
 # Spielfiguren Importer
 

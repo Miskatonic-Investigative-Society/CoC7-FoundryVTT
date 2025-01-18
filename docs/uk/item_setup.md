@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/uk/item_setup.md --># Тип предмету: Шаблон
+<!--- This file is auto generated from module/manual/uk/item_setup.md -->
+# Тип предмету: Шаблон
 
 Setups are predefined sets of skills and a way to generate the characteristics (this can be by rolling dices or assigning certain amount of points for example).
 

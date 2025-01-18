@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/de/character_creation.md -->*TODO: Will be translated*
+<!--- This file is auto generated from module/manual/de/character_creation.md -->
+*TODO: Will be translated*
 
 # Character Creation
 

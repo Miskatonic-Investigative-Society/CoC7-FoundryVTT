@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/de/combat.md -->*TODO: Will be translated*
+<!--- This file is auto generated from module/manual/de/combat.md -->
+*TODO: Will be translated*
 
 # Combat
 

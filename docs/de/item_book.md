@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/de/item_book.md -->*TODO: Will be translated*
+<!--- This file is auto generated from module/manual/de/item_book.md -->
+*TODO: Will be translated*
 
 # Item Type: Book
 

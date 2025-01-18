@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/uk/effects.md --># Ефекти
+<!--- This file is auto generated from module/manual/uk/effects.md -->
+# Ефекти
 
 Система надає можливість створення активних ефектів.
 Вони можуть змінювати характеристики, атрибути та уміння персонажа.
