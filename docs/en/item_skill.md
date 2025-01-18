@@ -1,4 +1,4 @@
-# Item Type: Skill
+<!--- This file is auto generated from module/manual/en/item_skill.md --># Item Type: Skill
 
 A _skill_ will be rolled during tests.
 

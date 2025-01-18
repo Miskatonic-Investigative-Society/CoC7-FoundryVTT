@@ -1,4 +1,4 @@
-# Hoja de atajos
+<!--- This file is auto generated from module/manual/es/hoja_de_atajos.md --># Hoja de atajos
 
 ## Reglas generales
 

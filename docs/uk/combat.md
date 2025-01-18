@@ -1,4 +1,4 @@
-# Combat
+<!--- This file is auto generated from module/manual/uk/combat.md --># Combat
 
 ## Starting the combat
 

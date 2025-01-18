@@ -1,4 +1,4 @@
-# Імпорт Актора
+<!--- This file is auto generated from module/manual/uk/actor_importer.md --># Імпорт Актора
 
 Ви можете використати імортер акторів, щоб імпортувати декількох НІПів/Монстрів за допомогою блоків з пригод чи використовуючи експорт JSON'у з [The Dholes House](https://www.dholeshouse.org/)
 
