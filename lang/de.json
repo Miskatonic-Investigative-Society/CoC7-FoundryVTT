@@ -725,6 +725,8 @@
   "CoC7.OpenObstacleResolutionCard": "Starte den Ablauf für die Hindernis-Auflösung.",
   "CoC7.AddBonusDie": "Bonuswürfel hinzufügen",
   "CoC7.RemoveBonusDie": "Bonuswürfel entfernen",
+  "CoC7.AdditionalBonusDie": "Zusätzlicher Bonuswürfel",
+  "CoC7.AdditionalPenaltyDie": "Zusätzlicher Strafwürfel",
   "CoC7.DecreaseMovementAction": "Bewegungsaktion verringern",
   "CoC7.IncreaseMovementAction": "Bewegungsaktion erhöhen",
   "CoC7.CautiousApproach": "Vorsichtige Herangehensweise nehmen",
@@ -1260,6 +1262,7 @@
   "CoC7.InvestigatorWizard.UseSetupMethod": "Verwende globale Voreinstellung",
   "CoC7.InvestigatorWizard.EnforcePointBuy": "Erzwinge den Kauf von Attributspunkten",
   "CoC7.InvestigatorWizard.QuickFireValues": "Schnellschuss-Methode für Attribute",
+  "CoC7.InvestigatorWizard.ChooseAfterRoll": "Wähle, an welche Stelle die gewürfelten Merkmale platziert werden sollen",
   "CoC7.InvestigatorWizard.Setups": "Characterbögen",
   "CoC7.InvestigatorWizard.Characteristics": "Attribute",
   "CoC7.InvestigatorWizard.SetupCounts": "Du hast momentan {count} Setup-Optionen. Es ist empfohlen, dass du ein einzelnes Setup für alle Spielenden definierst, um die Standardfertigkeiten der Charakterbögen festzulegen. Das System enhält ein Beispielsetup inkl. CoC IDs. Du kannst weitere Setups mit gültigen CoC-ID-Werten erstellen, indem du die Schaltfläche 'ID' in der Titelzeile verwendest. Entsprechende Items aus Kompendien werden automatisch zur Liste hinzugefügt.",
@@ -1364,5 +1367,11 @@
   "CoC7.ErrorNoActorPermission": "Du besitzt diese Figur nicht",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "Du kannst nicht mehr als eine Figur in einem gemeinsamen Wurf einsetzen",
   "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Ein gegenüberstellender Wurf benötigt zwei Figuren",
-  "CoC7.PauseName": "Zeitstopp"
+  "CoC7.PauseName": "Auszeit",
+
+  "CoC7.ClickableEvents.MouseOver.Title": "Berechtigung zu klicken",
+  "CoC7.ClickableEvents.MouseOver.Hint": "Gibt Wahrheitswert zurück, wenn Klicken und Mauszeiger anzeigen erlaubt werden soll",
+  "CoC7.ClickableEvents.LeftClick.Title": "Linksklick-Skript",
+  "CoC7.ClickableEvents.RightClick.Title": "Rechtsklick-Skript",
+  "TYPES.RegionBehavior.coc7ClickableEvents": "Anklickbare Ereignisse"
 }

@@ -249,6 +249,88 @@ const sources = {
         file: 'sanity.md'
       }
     ]
+  },
+  de: {
+    name: 'Cthulhu 7. Edition',
+    priority: 0,
+    pages: [
+      {
+        name: 'Systemdokumentation',
+        file: 'README.md'
+      },
+      {
+        name: 'Effekte',
+        file: 'effects.md'
+      },
+      {
+        name: 'Figurenimporter',
+        file: 'actor_importer.md'
+      },
+      {
+        name: 'Charaktererstellung',
+        file: 'character_creation.md'
+      },
+      {
+        name: 'Erfahrung und Charakterentwicklung',
+        file: 'experience.md'
+      },
+      {
+        name: 'Verfolgungsjagd',
+        file: 'chases.md'
+      },
+      {
+        name: 'CoC ID System',
+        file: 'coc-id-system.md'
+      },
+      {
+        name: 'Kampf',
+        file: 'combat.md'
+      },
+      {
+        name: 'Kommando Cheat Sheet',
+        file: 'commands_cheat_sheet.md'
+      },
+      {
+        name: 'Erstelle deinen ersten Investigator',
+        file: 'first_investigator.md'
+      },
+      {
+        name: 'Items/Gegenstände',
+        file: 'items.md'
+      },
+      {
+        name: 'Item Type: Archetyp',
+        file: 'item_archetype.md'
+      },
+      {
+        name: 'Item Typ: Buch',
+        file: 'item_book.md'
+      },
+      {
+        name: 'Item Typ: Beruf',
+        file: 'item_occupation.md'
+      },
+      {
+        name: 'Item Typ: Setup',
+        file: 'item_setup.md'
+      },
+      {
+        name: 'Item Typ: Fertigkeit',
+        file: 'item_skill.md'
+      },
+      {
+        name: 'Links',
+        file: 'links.md'
+      },
+      {
+        name: 'Linkerstellungswerkzeug',
+        file: 'link_creation_window.md'
+      },
+      {
+        name: 'Geistige Stabilität',
+        file: 'sanity.md'
+      }
+    ]
   }
 }
 
