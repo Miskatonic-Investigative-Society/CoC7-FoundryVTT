@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/uk/item_archetype.md --># Тип предмету: Архетип Pulp
+<!--- This file is auto generated from module/manual/uk/item_archetype.md -->
+# Тип предмету: Архетип Pulp
 
 Архетипи використовуються у Pulp іграх. Вона надають додаткові вміння та бонуси до характеристик.
 

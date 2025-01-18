@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/de/link_creation_window.md -->*TODO: Will be translated*
+<!--- This file is auto generated from module/manual/de/link_creation_window.md -->
+*TODO: Will be translated*
 
 # Link creation tool
 

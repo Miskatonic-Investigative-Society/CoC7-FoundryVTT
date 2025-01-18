@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/es/combate.md --># Combate
+<!--- This file is auto generated from module/manual/es/combate.md -->
+# Combate
 
 ## Iniciar el combate
 

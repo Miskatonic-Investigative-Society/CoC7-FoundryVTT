@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/en/effects.md --># Effects
+<!--- This file is auto generated from module/manual/en/effects.md -->
+# Effects
 
 The system allows for the creation of Active Effects.
 An active effect will modify an actor characteristic(s), attribute(s), skill(s).

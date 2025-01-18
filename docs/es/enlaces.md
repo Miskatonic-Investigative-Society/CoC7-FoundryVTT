@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/es/enlaces.md --># Enlaces
+<!--- This file is auto generated from module/manual/es/enlaces.md -->
+# Enlaces
 
 - Los enlaces son una forma para que el Director de Juego (GM) solicite un lanzamiento (Característica, Atributo, Habilidad, pérdida de COR, Arma).
 - Los enlaces pueden contener un efecto activo.

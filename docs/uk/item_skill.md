@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/uk/item_skill.md --># Тип предмета: Уміння
+<!--- This file is auto generated from module/manual/uk/item_skill.md -->
+# Тип предмета: Уміння
 
 Уміння будуть використовуватися під час перевірок.
 

@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/de/first_investigator.md -->*TODO: Will be translated*
+<!--- This file is auto generated from module/manual/de/first_investigator.md -->
+*TODO: Will be translated*
 
 # Initial item setup
 

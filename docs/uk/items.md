@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/uk/items.md --># Предмети
+<!--- This file is auto generated from module/manual/uk/items.md -->
+# Предмети
 
 Система підтримує багато різних типів предметів, від звичайних предметів або зброї до вмінь та шаблонів персонажа. Ви можете знайти приклади у системному компендіумі.
 

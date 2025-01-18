@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/es/primer_investigador.md --># Configuración inicial de objetos
+<!--- This file is auto generated from module/manual/es/primer_investigador.md -->
+# Configuración inicial de objetos
 
 El sistema viene con algunos compendios listos para que los personalices. Estos se restablecen cada vez que actualizas o instalas el sistema, por lo que se recomienda que los copies en tu propio compendio y los edites según sea necesario.
 

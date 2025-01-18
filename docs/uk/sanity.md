@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/uk/sanity.md -->## Перевірки Глузду
+<!--- This file is auto generated from module/manual/uk/sanity.md -->
+## Перевірки Глузду
 
 Система має робочу механіку Глузду й може робити перевірки глузду, відстежувати втрату Глузду та робити кидки тимчасового божевілля.
 

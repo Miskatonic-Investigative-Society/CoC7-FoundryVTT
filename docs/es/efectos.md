@@ -1,4 +1,5 @@
-<!--- This file is auto generated from module/manual/es/efectos.md --># Efectos
+<!--- This file is auto generated from module/manual/es/efectos.md -->
+# Efectos
 
 El sistema permite la creación de Efectos Activos.
 Un efecto activo modificará las características, atributos o habilidades de un actor.
