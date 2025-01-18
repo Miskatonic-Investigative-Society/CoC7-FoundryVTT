@@ -2,23 +2,23 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (453 untranslated strings)](#cnjson)
+[cn.json (454 untranslated strings)](#cnjson)
 
-[cs.json (638 untranslated strings)](#csjson)
+[cs.json (639 untranslated strings)](#csjson)
 
-[ko.json (235 untranslated strings)](#kojson)
+[ko.json (236 untranslated strings)](#kojson)
 
-[pt-BR.json (183 untranslated strings)](#ptbrjson)
+[pt-BR.json (184 untranslated strings)](#ptbrjson)
 
-[ru.json (105 untranslated strings)](#rujson)
+[ru.json (106 untranslated strings)](#rujson)
 
-[sv.json (421 untranslated strings)](#svjson)
+[sv.json (422 untranslated strings)](#svjson)
 
-[zh-TW.json (82 untranslated strings)](#zhtwjson)
+[zh-TW.json (83 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-453 untranslated strings
+454 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -58,6 +58,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.rangeCombatCard.SurprisedTargetTitle": "1 bonus die for surprised target",
 "CoC7.EraDarkAgesPulp": "Dark Ages - Pulp",
 "CoC7.EraDownDarkerTrailsPulp": "Down Darker Trails - Pulp",
+"CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraModernPulp": "Modern - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -475,7 +476,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## cs.json
-638 untranslated strings
+639 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -552,6 +553,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.meleeCombatDamageWith": "with",
 "CoC7.EraDarkAgesPulp": "Dark Ages - Pulp",
 "CoC7.EraDownDarkerTrailsPulp": "Down Darker Trails - Pulp",
+"CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraModernPulp": "Modern - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -1117,7 +1119,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ko.json
-235 untranslated strings
+236 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1130,6 +1132,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.rangeCombatCard.SurprisedTargetTitle": "1 bonus die for surprised target",
 "CoC7.EraDarkAgesPulp": "Dark Ages - Pulp",
 "CoC7.EraDownDarkerTrailsPulp": "Down Darker Trails - Pulp",
+"CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraModernPulp": "Modern - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -1356,9 +1359,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-183 untranslated strings
+184 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
+"CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
@@ -1543,9 +1547,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-105 untranslated strings
+106 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
+"CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillRanged": "Ranged",
 "CoC7.RangedSpecializationName": "Ranged",
@@ -1652,7 +1657,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## sv.json
-421 untranslated strings
+422 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1685,6 +1690,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.rangeCombatCard.SurprisedTargetTitle": "1 bonus die for surprised target",
 "CoC7.EraDarkAgesPulp": "Dark Ages - Pulp",
 "CoC7.EraDownDarkerTrailsPulp": "Down Darker Trails - Pulp",
+"CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraModernPulp": "Modern - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -2077,9 +2083,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## zh-TW.json
-82 untranslated strings
+83 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
+"CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
