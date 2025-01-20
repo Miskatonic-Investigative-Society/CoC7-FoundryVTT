@@ -545,7 +545,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   get weaponsOptions () {
     const weapons = []
     this.participant.actor?.itemTypes?.weapon?.forEach(w => {
-      let formula = w.data.data.range.normal.damage
+      let formula = w.system.range.normal.damage
       let db = this.participant.actor.db
       if (db === null || Number(db) === 0) {
         db = ''
@@ -554,8 +554,8 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       }
 
       if (db && !db.startsWith('-')) db = '+' + db
-      if (w.data.data.properties.addb) formula = formula + db
-      if (w.data.data.properties.ahbd) formula = formula + db + '/2'
+      if (w.system.properties.addb) formula = formula + db
+      if (w.system.properties.ahbd) formula = formula + db + '/2'
       weapons.push({
         name: `${w.data.name} (${formula})`,
         damage: formula,
@@ -834,7 +834,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     } else {
       if (typeof this.data.armor === 'undefined' && this.participant.actor) {
         this.data.armor =
-          this.participant.actor.data.data.attribs.armor.value || 0
+          this.participant.actor.system.attribs.armor.value || 0
       }
     }
 

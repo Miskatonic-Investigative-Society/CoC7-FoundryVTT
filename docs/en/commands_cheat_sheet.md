@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/en/commands_cheat_sheet.md -->
 # Commands Cheat Sheet
 
 ## General rules

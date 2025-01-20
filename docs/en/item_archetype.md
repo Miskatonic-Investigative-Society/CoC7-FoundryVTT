@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/en/item_archetype.md -->
 # Item Type: Pulp Archetype
 
 Archetypes are used on Pulp games. They provide skill and characteristic bonuses.

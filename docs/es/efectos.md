@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/es/efectos.md -->
 # Efectos
 
 El sistema permite la creación de Efectos Activos.

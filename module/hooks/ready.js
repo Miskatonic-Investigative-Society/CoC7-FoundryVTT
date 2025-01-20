@@ -15,9 +15,11 @@ export function listen () {
     const instructionsVersion = game.settings.get('CoC7', 'showInstructions')
     let lang = game.i18n.lang
     const readMe = {
+      de: 'PIUXjbPhnfLtqw3I',
       en: 'sxB2OXbfwV6M0nyQ',
       es: '35FM7ZOdzC6L2xlj',
-      fr: 'tdakyzTVOQsAMdSm'
+      fr: 'tdakyzTVOQsAMdSm',
+      uk: '98TuflgZUmQoJdSK'
     }
     if (typeof readMe[lang] === 'undefined') {
       lang = 'en'

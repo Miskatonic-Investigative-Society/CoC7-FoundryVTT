@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/fr/README.md -->
 ## Documentation du Système :squid:
 
 Vous avez installé Foundry VTT (la version stable, les versions en test sont... en test :)

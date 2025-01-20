@@ -21,6 +21,7 @@ COC7.eras = {
   regencyPulp: 'CoC7.EraRegencyPulp',
   reignOfTerror: 'CoC7.EraReignOfTerror',
   gasLight: 'CoC7.EraGasLight',
+  gasLightPulp: 'CoC7.EraGasLightPulp',
   invictus: 'CoC7.EraInvictus'
 }
 

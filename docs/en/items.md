@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/en/items.md -->
 # Items
 
 The system support many different types of items, from basic items or weapons to skills or the complete setup of a type of character. You can see examples on the compendium that comes with the system.

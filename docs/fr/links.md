@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/fr/links.md -->
 # Liens et Jets
 
 Toutes ces commandes peuvent être glissées/déposées dans un Article (ou toute zone éditable) en mode modification _sauf les modificateurs de seuil_ !\

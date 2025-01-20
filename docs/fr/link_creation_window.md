@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/fr/link_creation_window.md -->
 # Création de personnage
 
 ## A la main

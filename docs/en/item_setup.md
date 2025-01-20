@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/en/item_setup.md -->
 # Item Type: Setup
 
 Setups are predefined sets of skills and a way to generate the characteristics (this can be by rolling dices or assigning certain amount of points for example).

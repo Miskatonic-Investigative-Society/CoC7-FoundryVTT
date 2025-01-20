@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/es/objeto_arquetipo.md -->
 # Tipo de objeto: Arquetipo Pulp
 
 Los arquetipos se utilizan en juegos Pulp. Proporcionan bonificaciones a habilidades y características.
