@@ -13,8 +13,10 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Add Ukrainian localization system manual, thanks to @JornieNonsubia #1656
 - Fix "Investigator Creation Wizard" method "Quick fire characteristics" values being ignored for players
 - Update extreme damage calculation, thanks to ryotai-trpg #1653
-- Update to German localization, thanks to @MrViso #1659
+- Update to German localization, thanks to @MrViso #1659 and #1672
+- Update to Japanese localization, thanks to @doumoku #1671
 - Update to Spanish localization, thanks to @zeedif #1660
+- Update to Swedish localization, thanks to @Rangertheman #1674
 - Update to Ukrainian localization, thanks to @JornieNonsubia #1656
 
 ## Version 7.6
