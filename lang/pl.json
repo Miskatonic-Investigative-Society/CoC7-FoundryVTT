@@ -1,5 +1,5 @@
 {
-  "CoC7.title": "Zew Cthulhu 7. Edycja (Nieoficjalna)",
+  "CoC7.title": "Zew Cthulhu 7. Edycja",
 
   "CoC7.Entities.Character": "Postać",
   "CoC7.Entities.Container": "Pojemnik",
@@ -1341,7 +1341,7 @@
   "CoC7.ActorCoCIDItemsActorSheets": "Zaktualizuj otwartą kartę postaci",
   "CoC7.ActorCoCIDItemsActorDirectory": "Zaktualizuj wszystkie postacie w foldere",
   "CoC7.ActorCoCIDItemsUpdate": "Aktualizuj",
-  
+
   "CoC7.TokenCreationRoll.Title": "Wykryto formuły rzutów",
   "CoC7.TokenCreationRoll.Prompt": "Token ma formuły rzutów na cechy i/lub umiejętności.<br>Co chcesz zrobić?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Rzucaj koścmi",
