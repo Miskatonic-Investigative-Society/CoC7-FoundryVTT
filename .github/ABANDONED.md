@@ -2,26 +2,28 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (454 untranslated strings)](#cnjson)
+[cn.json (457 untranslated strings)](#cnjson)
 
-[cs.json (639 untranslated strings)](#csjson)
+[cs.json (642 untranslated strings)](#csjson)
 
-[ko.json (236 untranslated strings)](#kojson)
+[ko.json (239 untranslated strings)](#kojson)
 
-[pt-BR.json (184 untranslated strings)](#ptbrjson)
+[pt-BR.json (187 untranslated strings)](#ptbrjson)
 
-[ru.json (106 untranslated strings)](#rujson)
+[ru.json (109 untranslated strings)](#rujson)
 
-[zh-TW.json (83 untranslated strings)](#zhtwjson)
+[zh-TW.json (86 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-454 untranslated strings
+457 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
 "CoC7.ActorDataNotLinked": "Actor data are NOT linked",
 "CoC7.ActorIsSyntheticActor": "Actor is a synthetic actor (instance of an actor)",
+"CoC7.Actual": "Actual",
+"CoC7.Lck": "Lck",
 "CoC7.MovementAction": "Movement action",
 "CoC7.AdjustedMovement": "Adjusted movement",
 "CoC7.DefinitelyInsane": "Good for the asylum",
@@ -324,6 +326,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ToolTipSanity": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Alt/Option + Left click</strong> roll sanity loss with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li><li><strong>Shift + Alt/Option + Left click</strong> roll sanity loss without dice pool options</li></ol><label>Opposed checks</label><ol><li><strong>Right click</strong> Opposed check with options</li><li><strong>Shift + Right click</strong> Immediate opposed check</li></ol><label>Combined checks</label><ol><li><strong>Alt/Option + Right click</strong> Combined check with options</li><li><strong>Shift + Alt/Option + Right click</strong> Immediate combined check</li></ol>",
 "CoC7.ToolTipCombat": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ol><label>Combat opposed maneuver</label><ol><li><strong>Right click</strong> Combat opposed maneuver with options</li><li><strong>Shift + Right click</strong> Immediate combat opposed maneuver</li></ol>",
 "SETTINGS.TitleChaseSettings": "Chase Settings",
+"SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.TrustedCanModfyChatCard": "Allow trusted user to modify chat card",
 "SETTINGS.TrustedCanModfyChatCardHint": "Enabling this setting will give permission to trusted users to select options on chat card. The GM only section will still not be visible to them",
 "SETTINGS.TrustedCanSeeChatCard": "Allow trusted user to see GM only sections",
@@ -474,7 +477,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## cs.json
-639 untranslated strings
+642 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -497,6 +500,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Entities.Talent": "Talent",
 "CoC7.Entities.Weapon": "Weapon",
 "CoC7.PlayerName": "Player",
+"CoC7.Actual": "Actual",
+"CoC7.Lck": "Lck",
 "CoC7.MovementAction": "Movement action",
 "CoC7.AdjustedMovement": "Adjusted movement",
 "CoC7.DefinitelyInsane": "Good for the asylum",
@@ -947,6 +952,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TitleRollTable": "Roll Table Settings",
 "SETTINGS.TitleChaseSettings": "Chase Settings",
 "SETTINGS.showIconsOnly": "On summarized sheet, show only icons on skills list.",
+"SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.TrustedCanModfyChatCard": "Allow trusted user to modify chat card",
 "SETTINGS.TrustedCanModfyChatCardHint": "Enabling this setting will give permission to trusted users to select options on chat card. The GM only section will still not be visible to them",
 "SETTINGS.TrustedCanSeeChatCard": "Allow trusted user to see GM only sections",
@@ -1117,8 +1123,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ko.json
-236 untranslated strings
+239 untranslated strings
 ```
+"CoC7.Actual": "Actual",
+"CoC7.Lck": "Lck",
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1217,6 +1225,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.DropCoCID.UseCoCID": "Use CoC ID Where Possible",
 "CoC7.Settings.DropCoCID.IgnoreCoCID": "Do Not Use CoC ID",
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
+"SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.TokenDropMode": "When creating NPC :",
@@ -1357,8 +1366,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-184 untranslated strings
+187 untranslated strings
 ```
+"CoC7.Actual": "Actual",
+"CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
@@ -1424,6 +1435,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.Japanese": "Japanese",
 "CoC7.System.Documentation": "View CoC7 System Manual",
+"SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.TokenDropMode": "When creating NPC :",
@@ -1545,8 +1557,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-106 untranslated strings
+109 untranslated strings
 ```
+"CoC7.Actual": "Actual",
+"CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
@@ -1613,6 +1627,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InfoLessSkillThanOptions": "There's only {skillCount} and {optionsCount} options, adding all of them",
 "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 "CoC7.Japanese": "Japanese",
+"SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.TokenDropMode": "When creating NPC :",
@@ -1655,8 +1670,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## zh-TW.json
-83 untranslated strings
+86 untranslated strings
 ```
+"CoC7.Actual": "Actual",
+"CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
@@ -1693,6 +1710,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.Japanese": "Japanese",
 "CoC7.System.Documentation": "View CoC7 System Manual",
+"SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.TokenDropMode": "When creating NPC :",

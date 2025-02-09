@@ -2,55 +2,56 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The **de** translation is currently up to date
-
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cn.json (454 untranslated strings)](./ABANDONED.md#cnjson)
+[cn.json (457 untranslated strings)](./ABANDONED.md#cnjson)
 
-[cs.json (639 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (642 untranslated strings)](./ABANDONED.md#csjson)
 
-[ko.json (236 untranslated strings)](./ABANDONED.md#kojson)
+[ko.json (239 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (184 untranslated strings)](./ABANDONED.md#ptbrjson)
+[pt-BR.json (187 untranslated strings)](./ABANDONED.md#ptbrjson)
 
-[ru.json (106 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (109 untranslated strings)](./ABANDONED.md#rujson)
 
-[zh-TW.json (83 untranslated strings)](./ABANDONED.md#zhtwjson)
+[zh-TW.json (86 untranslated strings)](./ABANDONED.md#zhtwjson)
 
 
 
-|Key|es|fr|it|ja|pl|sv|uk|
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**1**|**4**|**26**|**1**|**9**|**1**|**9**|
-|[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsBest](#coc7actorcociditemsbest)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules1](#coc7actorcociditemsrules1)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules2](#coc7actorcociditemsrules2)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules3](#coc7actorcociditemsrules3)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsSceneTokens](#coc7actorcociditemsscenetokens)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsUnlinkedToken](#coc7actorcociditemsunlinkedtoken)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsUpdate](#coc7actorcociditemsupdate)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsWarning](#coc7actorcociditemswarning)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsWhich](#coc7actorcociditemswhich)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.AdditionalBonusDie](#coc7additionalbonusdie)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.AdditionalPenaltyDie](#coc7additionalpenaltydie)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.CastHidden](#coc7casthidden)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ClickableEvents.LeftClick.Title](#coc7clickableeventsleftclicktitle)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.ClickableEvents.MouseOver.Hint](#coc7clickableeventsmouseoverhint)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.ClickableEvents.MouseOver.Title](#coc7clickableeventsmouseovertitle)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.ClickableEvents.RightClick.Title](#coc7clickableeventsrightclicktitle)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.EraGasLightPulp](#coc7eragaslightpulp)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.InvestigatorWizard.ChooseAfterRoll](#coc7investigatorwizardchooseafterroll)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.PauseName](#coc7pausename)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.SANLossPass](#coc7sanlosspass)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint](#coc7settingspulprulesignoremajorwoundshint)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[SETTINGS.allowMythosHardenedTitle](#settingsallowmythoshardenedtitle)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[TYPES.RegionBehavior.coc7ClickableEvents](#typesregionbehaviorcoc7clickableevents)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|Key|de|es|fr|it|ja|pl|sv|uk|
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|**Remaining**:|**3**|**4**|**7**|**29**|**4**|**12**|**1**|**12**|
+|[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsBest](#coc7actorcociditemsbest)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules1](#coc7actorcociditemsrules1)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules2](#coc7actorcociditemsrules2)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules3](#coc7actorcociditemsrules3)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsSceneTokens](#coc7actorcociditemsscenetokens)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsUnlinkedToken](#coc7actorcociditemsunlinkedtoken)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsUpdate](#coc7actorcociditemsupdate)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsWarning](#coc7actorcociditemswarning)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsWhich](#coc7actorcociditemswhich)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.Actual](#coc7actual)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.AdditionalBonusDie](#coc7additionalbonusdie)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.AdditionalPenaltyDie](#coc7additionalpenaltydie)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CastHidden](#coc7casthidden)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ClickableEvents.LeftClick.Title](#coc7clickableeventsleftclicktitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ClickableEvents.MouseOver.Hint](#coc7clickableeventsmouseoverhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ClickableEvents.MouseOver.Title](#coc7clickableeventsmouseovertitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ClickableEvents.RightClick.Title](#coc7clickableeventsrightclicktitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.EraGasLightPulp](#coc7eragaslightpulp)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.InvestigatorWizard.ChooseAfterRoll](#coc7investigatorwizardchooseafterroll)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Lck](#coc7lck)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.PauseName](#coc7pausename)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.SANLossPass](#coc7sanlosspass)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint](#coc7settingspulprulesignoremajorwoundshint)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.allowMythosHardenedTitle](#settingsallowmythoshardenedtitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.hidePartValues](#settingshidepartvalues)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[TYPES.RegionBehavior.coc7ClickableEvents](#typesregionbehaviorcoc7clickableevents)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
 ##### CoC7.ActorCoCIDItemsActorDirectory
 ```  "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",```
 ##### CoC7.ActorCoCIDItemsActorSheets
@@ -73,6 +74,8 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",```
 ##### CoC7.ActorCoCIDItemsWhich
 ```  "CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",```
+##### CoC7.Actual
+```  "CoC7.Actual": "Actual",```
 ##### CoC7.AdditionalBonusDie
 ```  "CoC7.AdditionalBonusDie": "Additional Bonus Die",```
 ##### CoC7.AdditionalPenaltyDie
@@ -91,6 +94,8 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",```
 ##### CoC7.InvestigatorWizard.ChooseAfterRoll
 ```  "CoC7.InvestigatorWizard.ChooseAfterRoll": "Choose where to place rolled characteristics",```
+##### CoC7.Lck
+```  "CoC7.Lck": "Lck",```
 ##### CoC7.PauseName
 ```  "CoC7.PauseName": "Time Stop",```
 ##### CoC7.PersonalSpecialityPlaceholder
@@ -105,5 +110,7 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",```
 ##### SETTINGS.allowMythosHardenedTitle
 ```  "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",```
+##### SETTINGS.hidePartValues
+```  "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",```
 ##### TYPES.RegionBehavior.coc7ClickableEvents
 ```  "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events",```
