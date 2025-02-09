@@ -1,5 +1,5 @@
 {
-  "CoC7.title": "Call of Cthulhu Sverige (inofficiell)",
+  "CoC7.title": "Call of Cthulhu Sverige",
   "I18N.LANGUAGE": "Svenska",
   "I18N.MAINTAINERS": "@Rangertheman",
 
@@ -315,7 +315,7 @@
   "CoC7.Shoot": "Skjut",
   "CoC7.ShotBullets": "Sköt {bullets} skott mot {actor}.",
   "CoC7.ShotVoley": "Sköt en salva om {bullets} skott mot {actor}.",
-  "CoC7.rangeCombatCard.AimingTitle": "Lågg till en bonustärning för att du siktar",  
+  "CoC7.rangeCombatCard.AimingTitle": "Lågg till en bonustärning för att du siktar",
   "CoC7.rangeCombatCard.CoverTitle": "En strafftärning: Målet är redan i skydd eller har kastat sig i skydd",
   "CoC7.rangeCombatCard.PointBlankRangeTitle": "En bonustärning: Målet är på mycket nära håll.",
   "CoC7.rangeCombatCard.BigTargetTitle": "En bonustärning för ett stort mål (Kroppsbyggnad> 4)",
@@ -909,7 +909,7 @@
   "CoC7.CharCreationDisabled": "Rollpersonsskapande inaktiverat",
   "CoC7.toggleXP": "Erfarenhetsökning",
   "CoC7.XPGainEnabled": "Rollperson kan få XP",
-  "CoC7.XPGainDisabled": "Rollperson kan inte få XP", 
+  "CoC7.XPGainDisabled": "Rollperson kan inte få XP",
   "CoC7.WarnNoActorAvailable": "Du kontrollerar inte någon aktör",
   "CoC7.WarnMacroIncorrectType": "Du kan endast skapa makron för vapen och färdigheter",
   "CoC7.WarnNoGlobalSpec": "Du kan inte skapa makron för ospecificerade specialiseringar",
