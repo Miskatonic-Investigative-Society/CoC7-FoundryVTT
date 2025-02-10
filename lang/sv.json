@@ -1,5 +1,5 @@
 {
-  "CoC7.title": "Call of Cthulhu Sverige (inofficiell)",
+  "CoC7.title": "Call of Cthulhu Sverige",
   "I18N.LANGUAGE": "Svenska",
   "I18N.MAINTAINERS": "@Rangertheman",
 
@@ -57,7 +57,7 @@
   "CoC7.MP": "MP",
   "CoC7.SanityPoints": "Sinneshälsa",
   "CoC7.Sanity": "Sinneshälsa",
-  "CoC7.SAN": "SINNE",
+  "CoC7.SAN": "SIN",
   "CoC7.DailySanLoss": "Daglig belastning",
   "CoC7.DailyLoss": "Daglig belastning",
   "CoC7.Luck": "Tur",
