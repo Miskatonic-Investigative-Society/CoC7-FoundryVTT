@@ -2,27 +2,26 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (457 untranslated strings)](#cnjson)
+[cn.json (456 untranslated strings)](#cnjson)
 
-[cs.json (642 untranslated strings)](#csjson)
+[cs.json (641 untranslated strings)](#csjson)
 
-[ko.json (239 untranslated strings)](#kojson)
+[ko.json (238 untranslated strings)](#kojson)
 
-[pt-BR.json (187 untranslated strings)](#ptbrjson)
+[pt-BR.json (186 untranslated strings)](#ptbrjson)
 
-[ru.json (109 untranslated strings)](#rujson)
+[ru.json (108 untranslated strings)](#rujson)
 
-[zh-TW.json (86 untranslated strings)](#zhtwjson)
+[zh-TW.json (85 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-457 untranslated strings
+456 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
 "CoC7.ActorDataNotLinked": "Actor data are NOT linked",
 "CoC7.ActorIsSyntheticActor": "Actor is a synthetic actor (instance of an actor)",
-"CoC7.Actual": "Actual",
 "CoC7.Lck": "Lck",
 "CoC7.MovementAction": "Movement action",
 "CoC7.AdjustedMovement": "Adjusted movement",
@@ -477,7 +476,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## cs.json
-642 untranslated strings
+641 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -500,7 +499,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Entities.Talent": "Talent",
 "CoC7.Entities.Weapon": "Weapon",
 "CoC7.PlayerName": "Player",
-"CoC7.Actual": "Actual",
 "CoC7.Lck": "Lck",
 "CoC7.MovementAction": "Movement action",
 "CoC7.AdjustedMovement": "Adjusted movement",
@@ -1123,9 +1121,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ko.json
-239 untranslated strings
+238 untranslated strings
 ```
-"CoC7.Actual": "Actual",
 "CoC7.Lck": "Lck",
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1366,9 +1363,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-187 untranslated strings
+186 untranslated strings
 ```
-"CoC7.Actual": "Actual",
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
@@ -1557,9 +1553,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-109 untranslated strings
+108 untranslated strings
 ```
-"CoC7.Actual": "Actual",
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
@@ -1670,9 +1665,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## zh-TW.json
-86 untranslated strings
+85 untranslated strings
 ```
-"CoC7.Actual": "Actual",
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
