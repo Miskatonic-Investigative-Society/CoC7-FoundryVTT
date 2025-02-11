@@ -1848,6 +1848,17 @@ export class CoC7ActorSheet extends ActorSheet {
       }
     }
 
+    const biographyKeyRegex = /^system.biography\.(\d+)\.(.+)$/
+    const biographyKeys = Object.keys(formData).map(k => k.match(biographyKeyRegex)).filter(m => m)
+    if (biographyKeys.length) {
+      const biography = foundry.utils.duplicate(this.actor.system.biography)
+      for (const biographyKey of biographyKeys) {
+        biography[biographyKey[1]][biographyKey[2]] = formData['system.biography.' + biographyKey[1] + '.' + biographyKey[2]]
+        delete formData[biographyKey[0]]
+      }
+      formData['system.biography'] = biography
+    }
+
     if (event.currentTarget) {
       if (event.currentTarget.classList) {
         if (event.currentTarget.classList.contains('skill-adjustment')) {

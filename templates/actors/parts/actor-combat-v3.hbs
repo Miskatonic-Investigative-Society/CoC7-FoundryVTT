@@ -1,0 +1,188 @@
+<h2>{{localize 'CoC7.Combat'}}</h2>
+<div class="combat-panel">
+  <div class="weapon-list melee">
+    <div class="section-header flexrow">
+      <h3>{{localize 'CoC7.MeleeWeapons'}}</h3>
+      {{#unless data.system.flags.locked}}
+        <div class="header-buttons">
+          <a class="add-item" data-type="weapon" title='{{localize "CoC7.AddWeapon"}}' data-melee="true"><i class="fas fa-plus"></i></a>
+        </div>
+      {{/unless}}
+    </div>
+    <ol>
+      {{#each meleeWpn as |weapon id|}}
+        <li class="weapon-row item weapon{{#unless weapon.skillSet}} error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
+          <div class="expand-arrow show-detail"><i class="fa-solid fa-play"></i></div>
+          <div class="item-image" style="background-image: url('{{weapon.img}}')"></div>
+          <div class="flexrow">
+            <div class="weapon-name combat{{#if weapon.skillSet}} rollable{{else}} item-edit{{/if}}">{{weapon.name}}</div>
+            {{#if weapon.system.properties.thrown}}
+              <a class="weapon-name combat alternativ-skill{{#if weapon.skillSet}} rollable{{else}} item-edit{{/if}}" title="Throw"><i class="game-icon game-icon-thrown-knife"></i></a>
+            {{/if}}
+          </div>
+          <div class="weapon-range">
+            {{#each weapon.system.range as |range key|}}
+              {{#if range.damage}}
+                <div class="weapon-damage" data-range="{{key}}">
+                  <a class="roll" data-mode="roll" title="{{range.value}}" data-formula="{{range.damage}}">{{range.damage}}</a>
+                </div>
+              {{else}}
+                <div></div>
+              {{/if}}
+            {{/each}}
+          </div>
+          <div class="weapon-control">
+            {{#if weapon.system.properties.addb}}<span class="tag" title="Add DB">{{localize 'CoC7.WeaponAddb'}}</span>{{/if}}
+            {{#if weapon.system.properties.ahdb}}<span class="tag" title="Add DB">{{localize 'CoC7.WeaponAhdb'}}</span>{{/if}}
+          </div>
+          <div class="item-controls">
+            <a class="item-control item-edit" title="{{localize 'CoC7.EditWeapon'}}"><i class="fas fa-edit"></i></a>
+            {{#unless ../data.system.flags.locked}}
+              <a class="item-control item-delete" title="{{localize 'CoC7.DeleteWeapon'}}"><i class="fas fa-trash"></i></a>
+            {{/unless}}
+          </div>
+        </li>
+      {{/each}}
+    </ol>
+  </div>
+
+  <div class="weapon-list range">
+    <div class="section-header flexrow">
+      <h3>{{localize 'CoC7.RangeWeapons'}}</h3>
+      {{#unless data.system.flags.locked}}
+        <div class="header-buttons">
+          <a class="add-item" data-type="weapon" title='{{localize "CoC7.AddWeapon"}}' data-rngd="true"><i class="fas fa-plus"></i></a>
+        </div>
+      {{/unless}}
+    </div>
+    <ol>
+      {{#each rangeWpn as |weapon id|}}
+        <li class="weapon-row item weapon{{#unless weapon.skillSet}} error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
+          <div class="expand-arrow show-detail"><i class="fa-solid fa-play"></i></div>
+          <div class="item-image" style="background-image: url('{{weapon.img}}')"></div>
+          <div class="flexrow">
+            <div class="weapon-name combat{{#if weapon.skillSet}} rollable{{else}} item-edit{{/if}}">{{weapon.name}}</div>
+            {{#if weapon.usesAlternateSkill}}
+              <a class="weapon-name combat alternativ-skill{{#if weapon.skillSet}} rollable{{else}} item-edit{{/if}}" title="{{localize 'CoC7.AutomaticFire'}}"><i class="game-icon game-icon-machine-gun-magazine"></i></a>
+            {{/if}}
+          </div>
+          <div class="weapon-range">
+            {{#each weapon.system.range as |range key|}}
+              {{#if range.damage}}
+                <div class="weapon-damage" data-range="{{key}}">
+                  <a class="roll" data-mode="roll" title="{{range.value}}" data-formula="{{range.damage}}">{{range.damage}}</a>
+                </div>
+              {{else}}
+                <div></div>
+              {{/if}}
+            {{/each}}
+          </div>
+          <div class="weapon-controls">
+            <div class="ammo">
+              <span class="tag">{{weapon.system.ammo}}</span>
+            </div>
+            <div class="control">
+              <a class="reload-weapon" title="{{localize 'CoC7.Reload'}}"><i class="game-icon game-icon-chaingun"></i></a>
+            </div>
+          </div>
+          <div class="item-controls">
+            <a class="item-control item-edit" title="{{localize 'CoC7.EditWeapon'}}"><i class="fas fa-edit"></i></a>
+            {{#unless ../data.system.flags.locked}}
+              <a class="item-control item-delete" title="{{localize 'CoC7.DeleteWeapon'}}"><i class="fas fa-trash"></i></a>
+            {{/unless}}
+          </div>
+        </li>
+      {{/each}}
+    </ol>
+  </div>
+
+  <div class="weapon-list maneuver">
+
+  </div>
+
+  <div class="skill-list melee">
+    <div class="section-header flexrow">
+      <h3>{{localize 'CoC7.MeleeSkills'}}</h3>
+      {{#unless data.system.flags.locked}}
+        <div class="header-buttons">
+          <a class="add-item" data-type="skill" title='{{localize "CoC7.AddSkill"}}'><i class="fas fa-plus"></i></a>
+        </div>
+      {{/unless}}
+    </div>
+    <ol class="item-list skill melee">
+      {{#each meleeSkills as |skill|}}
+        <li class="item itemV2 skill flexrow" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+          <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
+          {{#if ../data.system.flags.locked}}
+            <div class="item-name skill-name combat rollable">{{skill.name}}</div>
+            <div class="item-score">{{skill.system.value}}</div>
+            <div class="skill-icons">
+              {{#unless skill.system.properties.noxpgain}}
+                {{#if skill.system.flags.developement}}
+                  <a class="item-control development-flag active icon-upgrade" title="{{localize 'CoC7.SkillUnflagForDevelopement'}}"><i class="fas fa-circle-check"></i></a>
+                {{else}}
+                  <a class="item-control development-flag icon-info" title="{{localize 'CoC7.SkillFlagForDevelopement'}}"><i class="fa-light fa-circle"></i></a>
+                {{/if}}
+              {{/unless}}
+              <a class="item-control item-popup" title="{{localize 'CoC7.SkillDetail'}}"><i class="fas fa-info-circle"></i></a>
+            </div>
+          {{else}}
+            <div class="item-name">
+              <input class="skill-name" type="text" value="{{skill.name}}" data-dtype="String">
+            </div>
+            <div class="item-score">
+              <input class="npc-skill-score" type="text" value="{{skill.system.value}}" data-dtype="Number">
+            </div>
+            <div class="item-controls">
+              <a class="item-control item-edit" title="{{localize 'CoC7.EditSkill'}}"><i class="fas fa-edit"></i></a>
+              <a class="item-control item-delete" title="{{localize 'CoC7.DeleteSkill'}}"><i class="fas fa-trash"></i></a>
+            </div>
+          {{/if}}
+        </li>
+      {{/each}}
+    </ol>
+  </div>
+
+  <div class="skill-list range">
+    <div class="section-header flexrow">
+      <h3>{{localize 'CoC7.RangeSkills'}}</h3>
+      {{#unless data.system.flags.locked}}
+        <div class="header-buttons">
+          <a class="add-item" data-type="skill" title='{{localize "CoC7.AddSkill"}}'><i class="fas fa-plus"></i></a>
+        </div>
+      {{/unless}}
+    </div>
+    <ol class="item-list skill range">
+      {{#each rangeSkills as |skill|}}
+        <li class="item itemV2 skill flexrow" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+          <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
+          {{#if ../data.system.flags.locked}}
+            <div class="item-name skill-name combat rollable">{{skill.name}}</div>
+            <div class="item-score">{{skill.system.value}}</div>
+            <div class="skill-icons">
+              {{#unless skill.system.properties.noxpgain}}
+                {{#if skill.system.flags.developement}}
+                  <a class="item-control development-flag active icon-upgrade" title="{{localize 'CoC7.SkillUnflagForDevelopement'}}"><i class="fas fa-circle-check"></i></a>
+                {{else}}
+                  <a class="item-control development-flag icon-info" title="{{localize 'CoC7.SkillFlagForDevelopement'}}"><i class="fa-light fa-circle"></i></a>
+                {{/if}}
+              {{/unless}}
+              <a class="item-control item-popup" title="{{localize 'CoC7.SkillDetail'}}"><i class="fas fa-info-circle"></i></a>
+            </div>
+          {{else}}
+            <div class="item-name">
+              <input class="skill-name" type="text" value="{{skill.name}}" data-dtype="String">
+            </div>
+            <div class="item-score">
+              <input class="npc-skill-score" type="text" value="{{skill.system.value}}" data-dtype="Number">
+            </div>
+            <div class="item-controls">
+              <a class="item-control item-edit" title="{{localize 'CoC7.EditSkill'}}"><i class="fas fa-edit"></i></a>
+              <a class="item-control item-delete" title="{{localize 'CoC7.DeleteSkill'}}"><i class="fas fa-trash"></i></a>
+            </div>
+          {{/if}}
+        </li>
+      {{/each}}
+    </ol>
+  </div>
+</div>

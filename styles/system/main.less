@@ -66,9 +66,6 @@
     margin-right: 5px;
     background-repeat: no-repeat;
     background-position: center;
-    &:hover {
-      background-image: url('/icons/svg/d20-grey.svg') !important;
-    }
   }
   .skill-image {
     &:hover {
@@ -676,6 +673,68 @@
     border: 1px;
     background-color: grey;
     height: 16px;
+  }
+  .sheet-header .infos label,
+  .characteristic-label input,
+  .characteristic-label label {
+    font-family: Voltaire;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    color: black;
+  }
+  .characteristic-label label {
+    color: #6E1417;
+    text-align: center;
+    display: block;
+  }
+  .sheet-header {
+    .char-box input {
+      font-weight: bold;
+    }
+    .infos input {
+      min-width: 2rem;
+      width: max-content;
+    }
+  }
+  div.section-header {
+    border: none;
+    border-bottom: 2px solid #6E1417;
+    background: none;
+  }
+  h3 {
+    color: #6E1417;
+    font-family: Voltaire;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    border-bottom: none
+  }
+  section.sheet-section {
+    &:has(.description) {
+      position: absolute;
+      top: 30px;
+      right: -360px;
+      width: 360px;
+      height: calc(100% - 30px);
+      background: url(/ui/parchment.jpg) repeat;
+      div.section-header {
+        position: absolute;
+        height: 30px;
+        top: 30px;
+      }
+    }
+    .description {
+      position: absolute;
+      top: 60px;
+      height: calc(100% - 60px);
+      display: block;
+    }
+    .resizededitor .editor {
+      min-height: 10rem;
+      height: 100%;
+      min-width: 360px;
+    }
   }
 }
 .coc7.sheet.creature {
