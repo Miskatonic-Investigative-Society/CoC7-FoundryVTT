@@ -1,0 +1,137 @@
+<h2>{{localize 'CoC7.Development'}}</h2>
+<div class="skill-points">
+  {{#if allowCharCreation}}
+    <div class="header-section development-points{{#if invalidPersonalPoints}} warning{{/if}}" title="{{localize 'CoC7.SkillTotalPersonal'}}">
+      <label>{{localize 'CoC7.SkillTotalPersonal'}}:</label>
+      <div class="monitor">
+        <div class="current-value"><span>{{totalPersonal}}</span></div>
+        <div class="separator">/</div>
+        <div class="max-value">
+          {{#if allowCharCreation}}
+            <input type="text" name="system.development.personal" value="{{data.system.development.personal}}" data-dtype="Number" />
+          {{else}}
+            <span>{{data.system.development.personal}}</span>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="header-section occupation-points{{#if invalidOccupationPoints}} warning{{/if}}" title="{{localize 'CoC7.SkillTotalOccupation'}}">
+      <label>{{localize 'CoC7.SkillTotalOccupation'}}:</label>
+      <div>
+        <div class="current-value"><span>{{totalOccupation}}</span></div>
+        <div class="separator">/</div>
+        <div class="max-value">
+          {{#if allowCharCreation}}
+            <input type="text" name="system.development.occupation" value="{{data.system.development.occupation}}" data-dtype="Number" />
+          {{else}}
+            <span>{{data.system.development.occupation}}</span>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{#if pulpRuleArchetype}}
+      <div class="header-section archetype-points{{#if invalidArchetypePoints}} warning{{/if}}" title="{{localize 'CoC7.SkillTotalArchetype'}}">
+        <label>{{localize 'CoC7.SkillTotalArchetype'}}:</label>
+        <div>
+          <div class="current-value"><span>{{totalArchetype}}</span></div>
+          <div class="separator">/</div>
+          <div class="max-value">
+            {{#if allowCharCreation}}
+              <input type="text" name="system.development.archetype" value="{{data.system.development.archetype}}" data-dtype="Number" />
+            {{else}}
+              <span>{{data.system.development.archetype}}</span>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    {{/if}}
+    {{#if data.system.infos.occupationSet}}
+      <div class="header-section occupation-points{{#if invalidCreditRating}} warning{{/if}}" title="{{localize 'CoC7.CoCIDFlag.keys.i.skill.credit-rating'}}">
+        <label>{{creditRatingMin}} &lt {{localize 'CoC7.CoCIDFlag.keys.i.skill.credit-rating'}} &lt {{creditRatingMax}}</label>
+      </div>
+    {{/if}}
+    {{#if data.system.infos.archetypeSet}}
+      <div class="header-section archetype-points{{#if invalidPulpTalents}} warning{{/if}}" title="{{localize 'CoC7.PulpTalents'}}">
+        <label>{{localize 'CoC7.PulpTalents'}}: {{pulpTalentCount}} / {{minPulpTalents}}</label>
+      </div>
+    {{/if}}
+  {{/if}}
+  <div class="header-section experience-points{{#if hasDevelopmentPhase}} flagged4dev{{/if}}" title="{{localize 'CoC7.SkillTotalExperience'}}">
+    <label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
+    <span>{{totalExperience}}</span>
+  </div>
+  {{#if allowDevelopment}}
+    <div class="experience">
+      {{#if hasDevelopmentPhase}}
+        <div class="header-section skill-development-button">
+          <div class="skill-developement button" title="{{localize 'CoC7.DevelopemmentPhase'}}">{{localize 'CoC7.DevelopemmentPhase'}}</div>
+        </div>
+      {{/if}}
+      {{#if developmentRollForLuck}}
+        <div class="header-section skill-development-button">
+          <div class="luck-development button" title="{{localize 'CoC7.RecoverLuckPoints'}}">{{localize 'CoC7.RecoverLuckPoints'}}</div>
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+</div>
+<ol class="skills-list">
+  {{#each skills as |skill id|}}
+    <li class="item{{#if ../pulpRuleArchetype}} pulpCharacter{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+      <div class="item-controls flexrow">
+        {{#unless skill.system.properties.noadjustments}}
+          <div class="item-control occupation-skill-flag{{#if../allowCharCreation}} clickable{{/if}}" title="{{localize 'CoC7.OccupationSkill'}}">
+            {{#if skill.system.flags.occupation}}
+              <i class="fas fa-circle"></i>
+            {{else}}
+              <i class="far fa-circle"></i>
+            {{/if}}
+          </div>
+          {{#if ../pulpRuleArchetype}}
+            <div class="item-control archetype-skill-flag{{#if../allowCharCreation}} clickable{{/if}}" title="{{localize 'CoC7.ArchetypeSkill'}}">
+              {{#if skill.system.flags.archetype}}
+                <i class="fas fa-circle"></i>
+              {{else}}
+                <i class="far fa-circle"></i>
+              {{/if}}
+            </div>
+          {{/if}}
+        {{/unless}}
+      </div>
+
+      <span class="skill-name{{#if skill.system.flags.developement}}{{#if ../allowDevelopment}} rollable{{/if}} flagged4dev{{/if}}">{{skill.name}}{{#if (and skill.system.flags.developement ../allowDevelopment)}}<i class="fas fa-circle-check"></i>{{/if}}</span>
+      <div class="adjustment-value locked" title="{{localize 'CoC7.SkillBase'}}">
+        <span>{{skill.system.base}}</span>
+      </div>
+      <div class="adjustment-value development-points{{#if skill.system.properties.noadjustments}} locked{{/if}}" title="{{localize 'CoC7.SkillPersonal'}}">
+        {{#if (and ../allowCharCreation (not skill.system.properties.noadjustments))}}
+          <input type="text" class="skill-adjustment" name="system.adjustments.personal" value="{{skill.system.adjustments.personal}}" data-dtype="Number">
+        {{else}}
+          <span>{{skill.system.adjustments.personal}}</span>
+        {{/if}}
+      </div>
+      <div class="adjustment-value occupation-points{{#unless skill.system.flags.occupation}} locked{{/unless}}" title="{{localize 'CoC7.SkillOccupation'}}">
+        {{#if (and ../allowCharCreation skill.system.flags.occupation)}}
+          <input type="text" class="skill-adjustment" name="system.adjustments.occupation" value="{{skill.system.adjustments.occupation}}" data-dtype="Number">
+        {{else}}
+          <span>{{skill.system.adjustments.occupation}}</span>
+        {{/if}}
+      </div>
+      {{#if ../pulpRuleArchetype}}
+        <div class="adjustment-value archetype-points{{#unless skill.system.flags.archetype}} locked{{/unless}}" title="{{localize 'CoC7.SkillArchetype'}}">
+          {{#if (and ../allowCharCreation skill.system.flags.archetype)}}
+            <input type="text" class="skill-adjustment" name="system.adjustments.archetype" value="{{skill.system.adjustments.archetype}}" data-dtype="Number">
+          {{else}}
+            <span>{{skill.system.adjustments.archetype}}</span>
+          {{/if}}
+        </div>
+      {{/if}}
+      <div class="adjustment-value experience-points" title="{{localize 'CoC7.SkillExperience'}}">
+        <input type="text" class="skill-adjustment" name="system.adjustments.experience" value="{{skill.system.adjustments.experience}}" data-dtype="Number">
+      </div>
+      <div class="adjustment-value locked" title="{{localize 'CoC7.Value'}}">
+        <span>{{skill.system.value}}</span>
+      </div>
+    </li>
+  {{/each}}
+</ol>

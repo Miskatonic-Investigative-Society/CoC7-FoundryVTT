@@ -13,4 +13,16 @@ export const handlebarsHelper = function () {
     const modifier = (options.hash.modifier > 0 ? `+${options.hash.modifier}` : options.hash.modifier < 0 ? options.hash.modifier.toString() : false)
     return game.i18n.format('CoC7.LinkCheck' + (!difficulty ? '' : 'Diff') + (!modifier ? '' : 'Modif') + (!options.hash.pushing ? '' : 'Pushing'), { difficulty, modifier, name: options.hash.name })
   })
+  Handlebars.registerHelper('calcHard', function (value) {
+    if (value.toString().match(/^\d+$/)) {
+      return Math.floor(value / 2)
+    }
+    return 0
+  })
+  Handlebars.registerHelper('calcExtreme', function (value) {
+    if (value.toString().match(/^\d+$/)) {
+      return Math.floor(value / 5)
+    }
+    return 0
+  })
 }

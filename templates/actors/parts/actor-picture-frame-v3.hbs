@@ -1,0 +1,17 @@
+<!-- Character photo frame and status icons -->
+<div class="photo-frame">
+  <img class="sheet-photo{{#unless data.system.flags.locked}} portrait-frame{{/unless}}" src="{{actor.img}}" title="{{actor.name}}"{{#if data.system.flags.locked}} data-edit="img"{{/if}} style="filter: saturate({{imgSaturation}});{{#if data.flags.CoC7.portraitFrame}}object-fit: {{data.flags.CoC7.portraitFrame}}{{/if}}" />
+  <div class="status-icons">
+    <a class="condition-monitor status-icon fallen {{#if data.system.conditions.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-condition="prone"><i class="game-icon game-icon-falling"></i></a>
+    <a class="condition-monitor status-icon unconscious {{#if data.system.conditions.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars"></i></a>
+    <a class="condition-monitor status-icon injured {{#if data.system.conditions.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-condition="criticalWounds"><i class="game-icon game-icon-arm-sling"></i></a>
+    <a class="condition-monitor status-icon dying {{#if data.system.conditions.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-condition="dying"><i class="game-icon game-icon-heart-beats"></i></a>
+    <a class="condition-monitor status-icon bout-of-madness  {{#if data.system.conditions.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.BoutOfMadness'}}{{#if actor.getTempoInsaneDurationText}}: {{actor.getTempoInsaneDurationText}}{{/if}}" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></a>
+    <a class="condition-monitor status-icon indefinite-insanity {{#if data.system.conditions.indefInsane.value}}status-on{{/if}}" title="{{#if data.system.conditions.indefInsane.value}}{{localize 'CoC7.UnderlyingInsanity'}}{{else}}{{localize 'CoC7.IndefiniteInsanity'}}{{/if}}" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>
+  </div>
+  {{#if data.system.conditions.dead.value}}
+  <a class="condition-monitor status-icon dead status-on" title="{{localize 'CoC7.Dead'}}" data-condition="dead"><i class="game-icon game-icon-tombstone"></i></a>
+  {{else}}
+  <a class="status-icon dead {{#if data.system.conditions.dying.value}}condition-monitor dying-check{{else}}inative-status{{/if}}" title="{{#if data.system.conditions.dying.value}}{{localize 'CoC7.DyingCheck'}}{{/if}}"><i class="game-icon game-icon-d10"></i></a>
+  {{/if}}
+</div>
