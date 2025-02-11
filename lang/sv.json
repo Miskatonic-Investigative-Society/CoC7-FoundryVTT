@@ -1060,6 +1060,7 @@
   "CoC7.Settings.PulpRules.FasterRecovery.Name": "Snabbare återhämtning",
   "CoC7.Settings.PulpRules.FasterRecovery.Hint": "Naturlig läkning ökar till två Kroppspoäng per dag",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "Ignorera allvarliga skador",
+  "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
   "CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignorera åldersbaserade straff",
   "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Minska inte förflyttningen utifrån ålder. När du använder verktyget för utredaren kommer inte förbättringar och justeringar att göras",
   "CoC7.Settings.DholeUpload.Directory.Name": "Mapp för uppladdning av Dhole's House-bilder",
