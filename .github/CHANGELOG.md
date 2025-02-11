@@ -9,6 +9,7 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- New investigator sheet and updated NPC sheet, thanks to @pconcepcion based on investigator sheet design by Gusła Studio and proof of concept webpage by Cthulhu Architect
 - Add German localization system manual, thanks to @MrViso #1659
 - Add Ukrainian localization system manual, thanks to @JornieNonsubia #1656
 - Fix "Investigator Creation Wizard" method "Quick fire characteristics" values being ignored for players
