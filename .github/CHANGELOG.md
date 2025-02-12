@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.7
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - New investigator sheet and updated NPC sheet, thanks to @pconcepcion based on investigator sheet design by Gusła Studio and proof of concept webpage by Cthulhu Architect
 - Add German localization system manual, thanks to @MrViso #1659
 - Add Ukrainian localization system manual, thanks to @JornieNonsubia #1656
@@ -17,7 +21,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Update to German localization, thanks to @MrViso #1659 and #1672
 - Update to Japanese localization, thanks to @doumoku #1671
 - Update to Spanish localization, thanks to @zeedif #1660
-- Update to Swedish localization, thanks to @Rangertheman #1674 and #1678 
+- Update to Swedish localization, thanks to @Rangertheman #1674 and #1678
 - Update to Ukrainian localization, thanks to @JornieNonsubia #1656
 
 ## Version 7.6
