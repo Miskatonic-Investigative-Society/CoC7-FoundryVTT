@@ -557,7 +557,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       if (w.system.properties.addb) formula = formula + db
       if (w.system.properties.ahbd) formula = formula + db + '/2'
       weapons.push({
-        name: `${w.data.name} (${formula})`,
+        name: `${w.name} (${formula})`,
         damage: formula,
         uuid: w.uuid
       })
