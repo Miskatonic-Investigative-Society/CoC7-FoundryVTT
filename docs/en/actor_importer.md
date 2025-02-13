@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/en/actor_importer.md -->
 # Actor Importer
 
 You can use the actor importer to import several NPC/Creatures blocks from adventures and using the JSON exporter from [The Dholes House](https://www.dholeshouse.org/)

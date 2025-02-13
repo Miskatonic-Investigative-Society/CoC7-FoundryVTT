@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/en/first_investigator.md -->
 # Initial item setup
 
 The system comes with some compendiums ready for you to customise. These are reset every time you update or install the system so it is recommended you copy them into your own compendium and edit them as required.

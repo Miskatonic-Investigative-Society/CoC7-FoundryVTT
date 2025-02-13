@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/en/chases.md -->
 # Creating a new chase
 
 To create a chase create a new item of type chase.

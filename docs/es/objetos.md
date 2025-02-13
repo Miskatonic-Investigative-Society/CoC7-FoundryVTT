@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/es/objetos.md -->
 # Objetos
 
 El sistema soporta muchos tipos diferentes de objetos, desde objetos simples o armas hasta habilidades o la configuración completa de un tipo de personaje. Puedes ver ejemplos en el compendio que viene con el sistema.

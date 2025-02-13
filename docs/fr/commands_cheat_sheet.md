@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/fr/commands_cheat_sheet.md -->
 # Tableau des Commandes
 
 Quasiment tout est cliquable: les caractéristiques, les compétences, les armes, les dégâts, la SAN, la Chance...

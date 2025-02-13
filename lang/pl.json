@@ -1,5 +1,5 @@
 {
-  "CoC7.title": "Zew Cthulhu 7. Edycja (Nieoficjalna)",
+  "CoC7.title": "Zew Cthulhu 7. Edycja",
 
   "CoC7.Entities.Character": "Postać",
   "CoC7.Entities.Container": "Pojemnik",
@@ -59,6 +59,7 @@
   "CoC7.DailySanLoss": "Dzienna utrata pocz.:",
   "CoC7.DailyLoss": "Dziennie",
   "CoC7.Luck": "Szczęście",
+  "CoC7.Lck": "Sz",
   "CoC7.Movement": "Ruch",
   "CoC7.MovementAction": "Akcja ruchu",
   "CoC7.AdjustedMovement": "Skorygowany ruch",
@@ -1111,6 +1112,7 @@
   "SETTINGS.CheckDifficultyRegular": "Domyślna trudność",
   "SETTINGS.CheckDifficultyUnknown": "Nieznana trudność",
   "SETTINGS.showIconsOnly": "Na skróconej wersji karty, pokaż tylko ikony na liście umiejętności.",
+  "SETTINGS.hidePartValues": "Na karcie postaci pokazuj połówki i ekstremalne wartości dopiero po najechaniu kursorem.",
   "SETTINGS.UseToken": "Użyj obrazka tokena",
   "SETTINGS.UseTokenHint": "Użyj obrazka tokena zamiast portretów w kartach czatu",
   "SETTINGS.TrustedCanModfyChatCard": "Pozwól zaufanym użytkownikom na edycję kart w czacie",
@@ -1341,7 +1343,7 @@
   "CoC7.ActorCoCIDItemsActorSheets": "Zaktualizuj otwartą kartę postaci",
   "CoC7.ActorCoCIDItemsActorDirectory": "Zaktualizuj wszystkie postacie w foldere",
   "CoC7.ActorCoCIDItemsUpdate": "Aktualizuj",
-  
+
   "CoC7.TokenCreationRoll.Title": "Wykryto formuły rzutów",
   "CoC7.TokenCreationRoll.Prompt": "Token ma formuły rzutów na cechy i/lub umiejętności.<br>Co chcesz zrobić?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Rzucaj koścmi",

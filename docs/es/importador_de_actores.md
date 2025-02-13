@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/es/importador_de_actores.md -->
 # Importador de actores
 
 Puedes utilizar el importador de actores para importar varios bloques de PNJ/Criaturas desde aventuras y utilizando el exportador JSON de [The Dholes House](https://www.dholeshouse.org/)

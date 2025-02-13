@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/en/link_creation_window.md -->
 # Link creation tool
 
 The system includes a tool to help you create links easily.

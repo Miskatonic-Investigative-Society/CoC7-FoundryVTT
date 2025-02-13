@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/en/sanity.md -->
 ## Sanity Checks
 
 The system has integrated the sanity check workflow and can handle sanity rolls, tracking _Sanity_ loss and rolling for temporal insanity.

@@ -221,7 +221,7 @@ export class CoC7MeleeResoltion {
     }
 
     if (this.winner) {
-      if (this.winner.roll.successLevel >= CoC7Check.successLevel.extreme) {
+      if (this.winner.roll.successLevel >= CoC7Check.successLevel.extreme && this.winner.roll.side === 'initiator') {
         this.winner.roll.criticalDamage = true
       } else {
         this.winner.roll.criticalDamage = false

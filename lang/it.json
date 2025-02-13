@@ -1,5 +1,5 @@
 {
-  "CoC7.title": "Il Richiamo di Cthulhu 7a Edizione (Non ufficiale)",
+  "CoC7.title": "Il Richiamo di Cthulhu 7a Edizione",
 
   "CoC7.Entities.Character": "Personaggio",
   "CoC7.Entities.Container": "Contenitore",
@@ -1036,7 +1036,7 @@
   "CoC7.Migrate.ErrorActor": "E' fallita la migrazione del sistema CoC7 per il Personaggio {name}: {message}",
 
   "CoC7.System.Documentation": "Visione del Manuale del Sistema CoC7",
-  
+
   "CoC7.Settings.CoreRules.Title": "Regole opzionali del regolamento base",
   "CoC7.Settings.Rules.Name": "Regole opzionali/variazioni",
   "CoC7.Settings.Rules.Label": "Configurazione delle regole opzionali/variazioni",
@@ -1232,7 +1232,7 @@
 
   "CoC7.EffectNew": "Nuovo effetto",
   "CoC7.EffectAppliedCantOverride": "Viene applicato un effetto attivo. Non puoi modificare [{name}]. Per modificare questo valore devi disattivare l'effetto corrispondente.",
-  
+
   "CoC7.InvestigatorWizard.Title": "Procedura guidata per la creazione dell'Investigatore",
   "CoC7.InvestigatorWizard.TitleKeeperConfiguration": "Configurazione del Custode",
   "CoC7.InvestigatorWizard.TitleSelectSetup": "Impostazione dell'Investigatore",
@@ -1303,7 +1303,7 @@
   "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "Punti Archetipo {count} di {total} rimanenti {remaining}",
   "CoC7.InvestigatorWizard.CreateInstructions": "Clickare Creare per concludere la creazione del personaggio. Il Custode deve essere online affinché il personaggio possa essere creato.",
   "CoC7.InvestigatorWizard.CreatingInvestigator": "Per favore attendere mentre il Custode crea l'investigatore.",
-  
+
   "CoC7.CoCIDFlag.id": "ID",
   "CoC7.CoCIDFlag.title": "Modifica l'ID di Sistema (CoC ID)",
   "CoC7.CoCIDFlag.summary": "Imposta un identificativo di gruppo che può essere usato per cercare la versione più aggiornata di questo/a {type}. L'ID di Sistema dovrebbe usare la traduzione inglese del {type} per favorire la traduzione attraverso tutte le lingue.",
@@ -1323,7 +1323,7 @@
   "CoC7.CoCIDFlag.error.incorrect.type": "Tentativo di convertire il CoC ID con un tipo di documento non esistente. Vedi il registro della console.",
   "CoC7.CoCIDFlag.error.document-not-found": "Documento non trovato nel mondo o nei Compendium corrispondente al CoC ID \"{cocid}\", lingua \"{lang}\", e periodo \"{era}\". Per favore controlla il tuo Periodo per le impostazioni del mondo.",
   "CoC7.CoCIDFlag.error.documents-not-found": "Documenti non trovati nel mondo o nei Compendium corrispondenti ai CoC ID ({cocids}), lingua \"{lang}\", e periodo \"{era}\". Per favore controlla il tuo Periodo per le impostazioni del mondo.",
-  
+
   "CoC7.CoCIDBatch.title": "Impostazione di gruppo dell'ID di Sistema",
   "CoC7.CoCIDBatch.summary": "Il Sistema CoC7 ha introdotto un ID di Sistema (CoC ID). Questo permette al sistema di identificare i documenti di FoundryVTT per abilità di esempio. Questa pagina ti permetterà di impostare l'id per esistenti documenti {type}. L'ID di Sistema dovrebbe usare la traduzione in inglese del nome per supportare la localizzazione per tutte le lingue.",
 

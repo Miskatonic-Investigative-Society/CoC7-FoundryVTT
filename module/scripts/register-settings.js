@@ -290,8 +290,15 @@ export function registerSettings () {
     name: 'CoC7.toolTipDelay',
     scope: 'world',
     config: true,
-    default: 2000,
+    default: 1500,
     type: Number
+  })
+  game.settings.register('CoC7', 'hidePartValues', {
+    name: 'SETTINGS.hidePartValues',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
   })
   game.settings.register('CoC7', 'showIconsOnly', {
     name: 'SETTINGS.showIconsOnly',
@@ -626,6 +633,13 @@ export function registerSettings () {
     config: false,
     type: Array,
     default: []
+  })
+  game.settings.register('CoC7', 'InvestigatorWizardChooseValues', {
+    name: 'Choose where to place rolled characteristics',
+    scope: 'world',
+    config: false,
+    type: Boolean,
+    default: false
   })
   /** Set an initiative formula for the system */
   CONFIG.Combat.initiative = {

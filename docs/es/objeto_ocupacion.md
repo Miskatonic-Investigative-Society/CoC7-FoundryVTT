@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/es/objeto_ocupacion.md -->
 # Tipo de objeto: Ocupación
 
 Una _ocupación_ ayuda a definir el trasfondo del personaje, piensa en ello como la definición del conjunto de _habilidades ocupacionales_ (aquellas en las que el personaje puede gastar sus puntos de ocupación), además de la definición de cómo calcular la cantidad de puntos de ocupación disponibles. Finalmente, la _ocupación_ también permite definir el _crédito_ mínimo y máximo para un personaje con esta _ocupación_.

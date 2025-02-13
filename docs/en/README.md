@@ -1,4 +1,5 @@
-# System documentation for version 7.0
+<!--- This file is auto generated from module/manual/en/README.md -->
+# System documentation for version 7.7
 
 This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
 
@@ -18,7 +19,12 @@ This documentation can be reopened under Game Settings -> Help and Documentation
 
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
 
- - [CoC ID system](coc-id-system.md) - Priority now has more importance over location.
+ - New investigator sheet
+
+# Chaosium Modules
+- [Call of Cthulhu® - Starter Set](https://foundryvtt.com/packages/cha-coc-fvtt-en-starterset) - Contains three senarios (Paper Chase, Edge of Darkness, and Dead Man Stomp) and instructions for playing Call of Cthulhu 7th edition.
+- [Call of Cthulhu® - Quick-Start Rules](https://foundryvtt.com/packages/cha-coc-fvtt-en-quickstart) - Contains The Haunting senario and a beginner guide to FoundryVTT and Call of Cthulhu 7th edition.
+- [Call of Cthulhu® - FoundryVTT - Investigator Wizard](https://foundryvtt.com/packages/call-of-cthulhu-foundryvtt-investigator-wizard) - Released with permission from Chaosium contains archetypes, occupations, setups, and skills for use with the Investigator Creation Wizard.
 
 # Overview sections below
 

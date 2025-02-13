@@ -12,6 +12,88 @@ const rootFolder = fs.realpathSync(path.dirname(url.fileURLToPath(import.meta.ur
 const collisions = {}
 
 const sources = {
+  de: {
+    name: 'Cthulhu 7. Edition',
+    priority: 0,
+    pages: [
+      {
+        name: 'Systemdokumentation',
+        file: 'README.md'
+      },
+      {
+        name: 'Effekte',
+        file: 'effects.md'
+      },
+      {
+        name: 'Figurenimporter',
+        file: 'actor_importer.md'
+      },
+      {
+        name: 'Charaktererstellung',
+        file: 'character_creation.md'
+      },
+      {
+        name: 'Erfahrung und Charakterentwicklung',
+        file: 'experience.md'
+      },
+      {
+        name: 'Verfolgungsjagd',
+        file: 'chases.md'
+      },
+      {
+        name: 'CoC ID System',
+        file: 'coc-id-system.md'
+      },
+      {
+        name: 'Kampf',
+        file: 'combat.md'
+      },
+      {
+        name: 'Kommando Cheat Sheet',
+        file: 'commands_cheat_sheet.md'
+      },
+      {
+        name: 'Erstelle deinen ersten Investigator',
+        file: 'first_investigator.md'
+      },
+      {
+        name: 'Items/Gegenstände',
+        file: 'items.md'
+      },
+      {
+        name: 'Item Type: Archetyp',
+        file: 'item_archetype.md'
+      },
+      {
+        name: 'Item Typ: Buch',
+        file: 'item_book.md'
+      },
+      {
+        name: 'Item Typ: Beruf',
+        file: 'item_occupation.md'
+      },
+      {
+        name: 'Item Typ: Setup',
+        file: 'item_setup.md'
+      },
+      {
+        name: 'Item Typ: Fertigkeit',
+        file: 'item_skill.md'
+      },
+      {
+        name: 'Links',
+        file: 'links.md'
+      },
+      {
+        name: 'Linkerstellungswerkzeug',
+        file: 'link_creation_window.md'
+      },
+      {
+        name: 'Geistige Stabilität',
+        file: 'sanity.md'
+      }
+    ]
+  },
   en: {
     name: 'Call of Cthulhu 7th Edition',
     priority: 0,
@@ -249,6 +331,84 @@ const sources = {
         file: 'sanity.md'
       }
     ]
+  },
+  uk: {
+    name: 'Поклик Ктулху: 7 Видання',
+    priority: 0,
+    pages: [
+      {
+        name: 'Документація про систему',
+        file: 'README.md'
+      },
+      {
+        name: 'Ефекти',
+        file: 'effects.md'
+      },
+      {
+        name: 'Імпорт Акторів',
+        file: 'actor_importer.md'
+      },
+      {
+        name: 'Створення персонажа',
+        file: 'character_creation.md'
+      },
+      {
+        name: 'Гонитва (Не перекладено)',
+        file: 'chases.md'
+      },
+      {
+        name: 'Система CoC ID (Не перекладено)',
+        file: 'coc-id-system.md'
+      },
+      {
+        name: 'Бій (Не перекладено)',
+        file: 'combat.md'
+      },
+      {
+        name: 'Шпаргалка з командами',
+        file: 'commands_cheat_sheet.md'
+      },
+      {
+        name: 'Створення першого дослідника (Не перекладено)',
+        file: 'first_investigator.md'
+      },
+      {
+        name: 'Предмети',
+        file: 'items.md'
+      },
+      {
+        name: 'Тип предмету: Архетип Pulp',
+        file: 'item_archetype.md'
+      },
+      {
+        name: 'Тип предмету: Книга',
+        file: 'item_book.md'
+      },
+      {
+        name: 'Тип предмету: Діяльність (не перекладено)',
+        file: 'item_occupation.md'
+      },
+      {
+        name: 'Тип предмету: Шаблон (Не перекладено)',
+        file: 'item_setup.md'
+      },
+      {
+        name: 'Тип предмету: Вміння',
+        file: 'item_skill.md'
+      },
+      {
+        name: 'Посилання на кидки (Не перекладено)',
+        file: 'links.md'
+      },
+      {
+        name: 'Засіб створення посилань (Не перекладено)',
+        file: 'link_creation_window.md'
+      },
+      {
+        name: 'Глузд',
+        file: 'sanity.md'
+      }
+    ]
   }
 }
 
@@ -299,7 +459,7 @@ try {
         fs.mkdirSync(rootFolder + '/docs/' + lang + '/')
       }
 
-      fs.writeFileSync(rootFolder + '/docs/' + lang + '/' + sources[lang].pages[page].file, mdFile, { flag: 'w+' })
+      fs.writeFileSync(rootFolder + '/docs/' + lang + '/' + sources[lang].pages[page].file, '<!--- This file is auto generated from module/manual/' + lang + '/' + sources[lang].pages[page].file + ' -->\n' + mdFile, { flag: 'w+' })
 
       const matches = input.matchAll(/\[(.+?)\]\(((?![a-z]{1,10}:)(.+?))\)/g)
       for (const match of matches) {

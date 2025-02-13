@@ -1,0 +1,50 @@
+<h2>{{localize 'CoC7.Background'}}</h2>
+{{#if oneBlockBackStory}}
+  {{editor enrichedBackstory target="system.backstory" engine="prosemirror" button=true owner=owner editable=editable}}
+{{else}}
+  {{#unless data.system.flags.locked}}
+    <div class='bio-control' style='flex:initial;'>
+      <div class='add-new-section-scroll button'>{{localize 'CoC7.BackgroundNewSection'}}</div>
+    </div>
+  {{/unless}}
+  {{#each biographySections as |section index|}}
+    <div class="section-header bio-section flexrow" data-index='{{index}}'>
+      {{#if ../data.system.flags.locked}}
+        <h3>{{section.title}}</h3>
+      {{else}}
+        <input class='bio-section-title' type="text" value="{{section.title}}" placeholder="{{localize 'CoC7.BackgroundSectionNameHolder'}}">
+        <div class="header-buttons">
+          {{#unless section.isFirst}}<a class="move-section-up" title="{{localize 'CoC7.BackgroundSectionMoveUp'}}"><i class="fas fa-caret-up"></i></a>{{/unless}}
+          {{#unless section.isLast}}<a class="move-section-down" title="{{localize 'CoC7.BackgroundSectionMoveDown'}}"><i class="fas fa-caret-down"></i></a>{{/unless}}
+          <a class="delete-section" title="{{localize 'CoC7.BackgroundDeleteSection'}}"><i class="fas fa-trash"></i></a>
+        </div>
+      {{/if}}
+    </div>
+    <div>
+      {{editor section.enriched target=(concat "system.biography." index ".value") engine="prosemirror" button=true owner=owner editable=editable}}
+    </div>
+  {{/each}}
+{{/if}}
+{{#if data.system.sanityLossEvents}}
+  <div class="section-header flexrow">
+    <h3>{{localize 'CoC7.BackgroundEncounters'}}</h3>
+  </div>
+  <div class="bio-section-events">
+    {{#each data.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
+      <div class="flexrow">
+        <div>{{sanityLossEvent.type}}</div>
+        <div class="bio-section-values">
+          {{#if sanityLossEvent.immunity}}
+            <i class="fas fa-shield-alt" title="{{localize 'CoC7.SanityLossImmunity'}}"></i>
+          {{else}}
+            {{sanityLossEvent.totalLoss}}
+          {{/if}}
+        </div>
+      </div>
+    {{else}}
+      <div class="flexrow">
+        -
+      </div>
+    {{/each}}
+  </div>
+{{/if}}

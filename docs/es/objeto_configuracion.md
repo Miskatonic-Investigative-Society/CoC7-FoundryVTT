@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/es/objeto_configuracion.md -->
 # Tipo de objeto: Configuración
 
 Las configuraciones son conjuntos predefinidos de habilidades y una forma de generar las características (esto puede ser lanzando dados o asignando una cierta cantidad de puntos, por ejemplo).

@@ -1,0 +1,17 @@
+<!-- Character Characteristics -->
+<div class="character-attributes{{#if showPartValues}} show-part-values{{/if}}">
+  <div class="attributes-top-line"></div>
+  <div class="characteristics-grid">
+    {{#each actor.characteristics as |characteristic key|}}
+      <div class="char-box attribute characteristic-{{key}}" data-characteristic="{{key}}" draggable="true" data-context-menu="skill-roll" data-target-type="characteristic">
+        <label class="charac-name characteristic-label rollable detail-label" draggable="true">{{characteristic.shortName}}</label>
+        <div class="char-box-values">
+          <input class="characteristic-score detail-value" type="text" name="system.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number" />
+          <span class="part-detail-value half-score">{{characteristic.hard}}</span>
+          <span class="part-detail-value fith-score">{{characteristic.extreme}}</span>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  <div class="attributes-bottom-line"></div>
+</div>

@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/es/creacion_de_personaje.md -->
 # Creación de personajes
 
 El sistema incluye algunos compendios listos para que los personalices. Estos se restablecen cada vez que actualizas o instalas el sistema, por lo que se recomienda que los copies en tu propio compendio y los edites según sea necesario.

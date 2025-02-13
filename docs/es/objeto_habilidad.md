@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/es/objeto_habilidad.md -->
 # Tipo de objeto: Habilidad
 
 Una _habilidad_ se lanzará durante las pruebas.

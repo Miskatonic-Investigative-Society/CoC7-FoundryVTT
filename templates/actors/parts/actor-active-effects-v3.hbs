@@ -1,0 +1,51 @@
+<h2>{{localize 'CoC7.Effects' }}</h2>
+<ol class="items-list effects-list">
+  {{#each effects as |section sid|}}
+    {{#unless section.hidden}}
+      <li class="items-header flexrow" data-effect-type="{{section.type}}">
+        <h3 class="item-name effect-name flexrow">{{localize section.label}}</h3>
+        <div class="effect-source">{{localize "CoC7.Source"}}</div>
+        <div class="effect-source">{{localize "CoC7.Duration"}}</div>
+        <div class="item-controls effect-controls flexrow">
+          {{#if @root.editable}}
+            <a class="effect-control" data-action="create" title="{{localize 'CoC7.Create'}}">
+              <i class="fas fa-plus"></i> {{localize "CoC7.Add"}}
+            </a>
+          {{/if}}
+        </div>
+      </li>
+      {{#if section.info}}
+        <li>
+          <ol class="info">
+            {{#each section.info}}
+              <li class="notification info">{{this}}</li>
+            {{/each}}
+          </ol>
+        </li>
+      {{/if}}
+      {{#each section.effects as |effect|}}
+        <li class="item effect flexrow" data-effect-id="{{effect.id}}">
+          <div class="item-name effect-name flexrow">
+            <img class="item-image" src="{{effect.icon}}" />
+            <h4>{{#if effect.name}}{{effect.name}}{{!-- // FoundryVTT v10 --}}{{else}}{{effect.label}}{{/if}}</h4>
+          </div>
+          <div class="effect-source">{{effect.sourceName}}</div>
+          <div class="effect-duration">{{effect.duration.label}}</div>
+          <div class="item-controls effect-controls flexrow">
+            {{#if @root.editable}}
+              <a class="effect-control" data-action="toggle" title="{{#if effect.disabled}}{{localize 'CoC7.Enable'}}{{else}}{{localize 'CoC7.Disable'}}{{/if}}">
+                <i class="fas {{#if effect.disabled}}fa-check{{else}}fa-times{{/if}}"></i>
+              </a>
+              <a class="effect-control" data-action="edit" title="{{localize 'CoC7.Edit'}}">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a class="effect-control" data-action="delete" title="{{localize 'CoC7.Delete'}}">
+                <i class="fas fa-trash"></i>
+              </a>
+            {{/if}}
+          </div>
+        </li>
+      {{/each}}
+    {{/unless}}
+  {{/each}}
+</ol>

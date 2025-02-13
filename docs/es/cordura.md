@@ -1,3 +1,4 @@
+<!--- This file is auto generated from module/manual/es/cordura.md -->
 ## Tiradas de Cordura
 
 El sistema ha integrado el flujo para las tiradas de cordura y puede manejar tiradas de cordura, realizar un seguimiento de la pérdida de _Cordura_ y realizar tiradas para la locura temporal.

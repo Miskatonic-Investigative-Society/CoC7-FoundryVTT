@@ -46,7 +46,8 @@ export class CoC7InvestigatorWizard extends FormApplication {
       METHOD_DEFAULT: 1,
       METHOD_ROLL: 1,
       METHOD_POINTS: 2,
-      METHOD_VALUES: 3
+      METHOD_VALUES: 3,
+      METHOD_CHOOSE: 4
     }
   }
 
@@ -244,6 +245,8 @@ export class CoC7InvestigatorWizard extends FormApplication {
           sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_DEFAULT
           if (sheetData.object.enforcePointBuy) {
             sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_POINTS
+          } else if (this.object.chooseRolledValues) {
+            sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_CHOOSE
           } else if (this.object.quickFireValues.length) {
             sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_VALUES
           }
@@ -336,6 +339,8 @@ export class CoC7InvestigatorWizard extends FormApplication {
           if (typeof setup !== 'undefined') {
             if (setup.system.characteristics.points.enabled || this.object.enforcePointBuy) {
               sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_POINTS
+            } else if (this.object.chooseRolledValues) {
+              sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_CHOOSE
             } else if (this.object.quickFireValues.length) {
               sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_VALUES
             }
@@ -423,7 +428,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
               sheetData.coreCharacteristic = this.object.coreCharacteristic.toLocaleUpperCase()
             }
             if (!empties && this.object.age >= 15) {
-              if ([sheetData.characteristicsMethods.METHOD_ROLL, sheetData.characteristicsMethods.METHOD_VALUES].includes(sheetData.characteristicsMethod)) {
+              if ([sheetData.characteristicsMethods.METHOD_ROLL, sheetData.characteristicsMethods.METHOD_VALUES, sheetData.characteristicsMethods.METHOD_CHOOSE].includes(sheetData.characteristicsMethod)) {
                 sheetData.canNext = true
               } else if (sheetData.setup.total.toString() === sheetData.setup.points.toString()) {
                 sheetData.canNext = true
@@ -908,6 +913,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
     html.find('.decrease-characteristic').click(this._onDecreaseCharacteristic.bind(this))
     html.find('.decrease-10-characteristic').click(this._onDecreaseCharacteristic10.bind(this))
     html.find('button.roll_all').click(this._onRollAll.bind(this))
+    html.find('button.roll_choose').click(this._onRollChoose.bind(this))
     html.find('button.roll_edu').click(this._onRollEdu.bind(this))
     html.find('button.roll_luck').click(this._onRollLuck.bind(this))
     html.find('.item input.submit_on_blur').blur(this._onChangeSubmit.bind(this))
@@ -995,6 +1001,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
     for (const key in this.object.setupPoints) {
       this.object.setupPoints[key] = ''
     }
+    this.object.rolledValues = []
   }
 
   async setSkillLists () {
@@ -1063,6 +1070,9 @@ export class CoC7InvestigatorWizard extends FormApplication {
     if (event.currentTarget.dataset.characteristicKey) {
       const dragData = { type: 'investigatorCharacteristic', key: event.currentTarget.dataset.characteristicKey, value: event.currentTarget.dataset.value }
       event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
+    } else if (event.currentTarget.dataset.offset) {
+      const dragData = { type: 'investigatorValue', offset: event.currentTarget.dataset.offset }
+      event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
     }
   }
 
@@ -1079,8 +1089,21 @@ export class CoC7InvestigatorWizard extends FormApplication {
       const dataList = JSON.parse(event.dataTransfer.getData('text/plain'))
       if (typeof dataList.type !== 'undefined' && dataList.type === 'investigatorCharacteristic') {
         dataList.destination = event.target.closest('li').dataset.characteristicKey
+        if (typeof dataList.destination === 'undefined') {
+          dataList.destination = event.target.closest('li').dataset.empty
+        }
         dataList.okay = false
-        if (dataList.key === '-' && typeof this.object.setupPoints[dataList.destination] !== 'undefined') {
+        if (dataList.destination === 'x') {
+          const offset = this.object.rolledValues.findIndex(i => i.assigned === true)
+          if (offset > -1) {
+            this.object.rolledValues[offset] = {
+              value: this.object.setupPoints[dataList.key],
+              assigned: false
+            }
+            this.object.setupPoints[dataList.key] = ''
+          }
+          dataList.okay = true
+        } else if (dataList.key === '-' && typeof this.object.setupPoints[dataList.destination] !== 'undefined') {
           const index = this.object.placeable.indexOf(parseInt(dataList.value, 10))
           if (index !== -1) {
             this.object.placeable.splice(index, 1)
@@ -1102,6 +1125,26 @@ export class CoC7InvestigatorWizard extends FormApplication {
           const temp = (this.object.setupPoints[dataList.key] === '' ? '' : parseInt(this.object.setupPoints[dataList.key], 10))
           this.object.setupPoints[dataList.key] = (this.object.setupPoints[dataList.destination] === '' ? '' : parseInt(this.object.setupPoints[dataList.destination], 10))
           this.object.setupPoints[dataList.destination] = temp
+          dataList.okay = true
+        }
+        if (dataList.okay) {
+          this.render(true)
+          return
+        }
+      } else if (typeof dataList.type !== 'undefined' && dataList.type === 'investigatorValue') {
+        dataList.destination = event.target.closest('li').dataset.characteristicKey
+        dataList.okay = false
+        if (this.object.rolledValues[dataList.offset].assigned === false) {
+          let old
+          if (this.object.setupPoints[dataList.destination] !== '') {
+            old = this.object.setupPoints[dataList.destination]
+          }
+          this.object.setupPoints[dataList.destination] = this.object.rolledValues[dataList.offset].value
+          if (typeof old !== 'undefined') {
+            this.object.rolledValues[dataList.offset].value = old
+          } else {
+            this.object.rolledValues[dataList.offset].assigned = true
+          }
           dataList.okay = true
         }
         if (dataList.okay) {
@@ -1333,6 +1376,53 @@ export class CoC7InvestigatorWizard extends FormApplication {
     this.render(true)
   }
 
+  async _onRollChoose (event) {
+    event.preventDefault()
+    if (this.object.setup !== '') {
+      const setup = await this.getCacheItemByCoCID(this.object.setup)
+      if (typeof setup !== 'undefined') {
+        const rollFormulas = {}
+        for (const key of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu']) {
+          rollFormulas[key] = setup.system.characteristics.rolls[key]
+        }
+        if (this.object.archetype !== '') {
+          const archetype = await this.getCacheItemByCoCID(this.object.archetype)
+          if (typeof archetype !== 'undefined') {
+            if (this.object.coreCharacteristic !== '') {
+              if (archetype.system.coreCharacteristicsFormula.enabled) {
+                rollFormulas[this.object.coreCharacteristic] = archetype.system.coreCharacteristicsFormula.value
+              }
+            }
+          }
+        }
+        this.object.rolledValues = []
+        const html = []
+        for (const key in rollFormulas) {
+          const roll = new Roll(rollFormulas[key].toString())
+          await roll.evaluate({ async: true })
+          this.object.rolledValues.push({
+            value: roll.total,
+            assigned: false
+          })
+          html.push(await renderTemplate(Roll.CHAT_TEMPLATE, {
+            formula: rollFormulas[key].toString(),
+            tooltip: await roll.getTooltip(),
+            total: roll.total
+          }))
+        }
+        ChatMessage.create({
+          user: game.user.id,
+          speaker: {
+            alias: game.user.name
+          },
+          content: html.join('<div>&nbsp;</div>'),
+          whisper: ChatMessage.getWhisperRecipients('GM')
+        })
+      }
+    }
+    this.render(true)
+  }
+
   async _onIncreaseCharacteristic10 (event) {
     event.preventDefault()
     const li = event.currentTarget.closest('.item')
@@ -1503,20 +1593,28 @@ export class CoC7InvestigatorWizard extends FormApplication {
         const type = Number(formData['characteristics-method'])
         if (type === this.characteristicsMethods.METHOD_DEFAULT) {
           this.object.enforcePointBuy = false
+          this.object.chooseRolledValues = false
           this.object.quickFireValues = []
         } else if (type === this.characteristicsMethods.METHOD_POINTS) {
           this.object.enforcePointBuy = true
+          this.object.chooseRolledValues = false
           this.object.quickFireValues = []
         } else if (type === this.characteristicsMethods.METHOD_VALUES) {
           this.object.enforcePointBuy = false
+          this.object.chooseRolledValues = false
           if (game.settings.get('CoC7', 'pulpRuleArchetype')) {
             this.object.quickFireValues = [90, 80, 70, 60, 60, 50, 50, 40]
           } else {
             this.object.quickFireValues = [80, 70, 60, 60, 50, 50, 50, 40]
           }
+        } else if (type === this.characteristicsMethods.METHOD_CHOOSE) {
+          this.object.enforcePointBuy = false
+          this.object.chooseRolledValues = true
+          this.object.quickFireValues = []
         }
         game.settings.set('CoC7', 'InvestigatorWizardPointBuy', this.object.enforcePointBuy)
         game.settings.set('CoC7', 'InvestigatorWizardQuickFire', this.object.quickFireValues)
+        game.settings.set('CoC7', 'InvestigatorWizardChooseValues', this.object.chooseRolledValues)
       }
       this.object.rerollsEnabled = (typeof formData['rerolls-enabled'] === 'string')
       game.settings.set('CoC7', 'InvestigatorWizardRerolls', this.object.rerollsEnabled)
@@ -1863,6 +1961,10 @@ export class CoC7InvestigatorWizard extends FormApplication {
    * create it's the default way to create the CoC7CharacterWizard
    */
   static async create (options = {}) {
+    // Attempt to fix bad setting
+    if (game.settings.get('CoC7', 'InvestigatorWizardChooseValues') !== true && game.settings.get('CoC7', 'InvestigatorWizardChooseValues') !== false) {
+      await game.settings.set('CoC7', 'InvestigatorWizardChooseValues', game.settings.get('CoC7', 'InvestigatorWizardChooseValues')[0] ?? false)
+    }
     // Try and prerequst as many CoCIDs due to the way they have to be loaded
     options = foundry.utils.mergeObject({
       step: 0,
@@ -1873,6 +1975,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       rerollsEnabled: game.settings.get('CoC7', 'InvestigatorWizardRerolls'),
       enforcePointBuy: game.settings.get('CoC7', 'InvestigatorWizardPointBuy'),
       quickFireValues: game.settings.get('CoC7', 'InvestigatorWizardQuickFire'),
+      chooseRolledValues: game.settings.get('CoC7', 'InvestigatorWizardChooseValues'),
       placeable: foundry.utils.duplicate(game.settings.get('CoC7', 'InvestigatorWizardQuickFire')),
       cacheCoCID: CoC7InvestigatorWizard.loadCacheItemByCoCID(),
       cacheBackstories: game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: /^rt\.\.backstory-/, type: 'rt' }),
@@ -1903,6 +2006,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         edu: 0,
         luck: 0
       },
+      rolledValues: [],
       archetype: '',
       coreCharacteristic: '',
       occupation: '',
