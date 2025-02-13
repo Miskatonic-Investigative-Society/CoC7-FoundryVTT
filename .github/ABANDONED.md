@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (457 untranslated strings)](#cnjson)
+[cn.json (459 untranslated strings)](#cnjson)
 
-[cs.json (642 untranslated strings)](#csjson)
+[cs.json (644 untranslated strings)](#csjson)
 
-[ko.json (239 untranslated strings)](#kojson)
+[ko.json (241 untranslated strings)](#kojson)
 
-[pt-BR.json (187 untranslated strings)](#ptbrjson)
+[pt-BR.json (189 untranslated strings)](#ptbrjson)
 
-[ru.json (109 untranslated strings)](#rujson)
+[ru.json (111 untranslated strings)](#rujson)
 
-[zh-TW.json (86 untranslated strings)](#zhtwjson)
+[zh-TW.json (88 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-457 untranslated strings
+459 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -332,6 +332,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TrustedCanSeeChatCardHint": "Enabling this setting will give permission to trusted users to see GM only section on chat card. Use this with caution!",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
+"SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",
+"SETTINGS.DoNotPromptNoTargetSelectedHit": "When rolling weapon attacks without tokens do not requestion confirmation of no targets",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
@@ -477,7 +479,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## cs.json
-642 untranslated strings
+644 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -959,6 +961,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.displayPlayerNameOnSheet": "Display player's name on sheet",
+"SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",
+"SETTINGS.DoNotPromptNoTargetSelectedHit": "When rolling weapon attacks without tokens do not requestion confirmation of no targets",
 "SETTINGS.OverrideGameArtwork": "Override game Artwork",
 "SETTINGS.OverrideGameArtworkHint": "!!RESTART REQUIRED!! gives access to advance game config, leave blank for default",
 "SETTINGS.ArtPauseImage": "Pause image",
@@ -1123,7 +1127,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ko.json
-239 untranslated strings
+241 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
@@ -1227,6 +1231,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
+"SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",
+"SETTINGS.DoNotPromptNoTargetSelectedHit": "When rolling weapon attacks without tokens do not requestion confirmation of no targets",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
@@ -1366,7 +1372,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-187 untranslated strings
+189 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1437,6 +1443,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
+"SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",
+"SETTINGS.DoNotPromptNoTargetSelectedHit": "When rolling weapon attacks without tokens do not requestion confirmation of no targets",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
@@ -1557,7 +1565,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-109 untranslated strings
+111 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1629,6 +1637,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
+"SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",
+"SETTINGS.DoNotPromptNoTargetSelectedHit": "When rolling weapon attacks without tokens do not requestion confirmation of no targets",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
@@ -1670,7 +1680,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## zh-TW.json
-86 untranslated strings
+88 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1712,6 +1722,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
+"SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",
+"SETTINGS.DoNotPromptNoTargetSelectedHit": "When rolling weapon attacks without tokens do not requestion confirmation of no targets",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
