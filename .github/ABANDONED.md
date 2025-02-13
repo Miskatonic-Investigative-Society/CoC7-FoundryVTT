@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (456 untranslated strings)](#cnjson)
+[cn.json (457 untranslated strings)](#cnjson)
 
-[cs.json (641 untranslated strings)](#csjson)
+[cs.json (642 untranslated strings)](#csjson)
 
-[ko.json (238 untranslated strings)](#kojson)
+[ko.json (239 untranslated strings)](#kojson)
 
-[pt-BR.json (186 untranslated strings)](#ptbrjson)
+[pt-BR.json (187 untranslated strings)](#ptbrjson)
 
-[ru.json (108 untranslated strings)](#rujson)
+[ru.json (109 untranslated strings)](#rujson)
 
-[zh-TW.json (85 untranslated strings)](#zhtwjson)
+[zh-TW.json (86 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-456 untranslated strings
+457 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -448,6 +448,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
 "CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
@@ -476,7 +477,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## cs.json
-641 untranslated strings
+642 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -1093,6 +1094,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
 "CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
@@ -1121,7 +1123,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ko.json
-238 untranslated strings
+239 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
@@ -1335,6 +1337,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
 "CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
@@ -1363,7 +1366,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-186 untranslated strings
+187 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1525,6 +1528,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
 "CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
@@ -1553,7 +1557,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-108 untranslated strings
+109 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1642,6 +1646,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
 "CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
 "CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
@@ -1665,7 +1670,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## zh-TW.json
-85 untranslated strings
+86 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1726,6 +1731,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
 "CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
