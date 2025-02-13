@@ -4,23 +4,23 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cn.json (457 untranslated strings)](./ABANDONED.md#cnjson)
+[cn.json (459 untranslated strings)](./ABANDONED.md#cnjson)
 
-[cs.json (642 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (644 untranslated strings)](./ABANDONED.md#csjson)
 
-[ko.json (239 untranslated strings)](./ABANDONED.md#kojson)
+[ko.json (241 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (187 untranslated strings)](./ABANDONED.md#ptbrjson)
+[pt-BR.json (189 untranslated strings)](./ABANDONED.md#ptbrjson)
 
-[ru.json (109 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (111 untranslated strings)](./ABANDONED.md#rujson)
 
-[zh-TW.json (86 untranslated strings)](./ABANDONED.md#zhtwjson)
+[zh-TW.json (88 untranslated strings)](./ABANDONED.md#zhtwjson)
 
 
 
 |Key|de|es|fr|it|ja|pl|sv|uk|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**3**|**3**|**7**|**29**|**4**|**10**|**1**|**12**|
+|**Remaining**:|**5**|**5**|**9**|**31**|**6**|**12**|**3**|**14**|
 |[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ActorCoCIDItemsAny](#coc7actorcociditemsany)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
@@ -47,6 +47,8 @@ The following translations have more than 50 untranslated strings [are you able 
 |[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
 |[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.SANLossPass](#coc7sanlosspass)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.DoNotPromptNoTargetSelected](#settingsdonotpromptnotargetselected)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[SETTINGS.DoNotPromptNoTargetSelectedHit](#settingsdonotpromptnotargetselectedhit)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[SETTINGS.allowMythosHardenedTitle](#settingsallowmythoshardenedtitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[SETTINGS.hidePartValues](#settingshidepartvalues)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|
@@ -103,6 +105,10 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "CoC7.SANLossFail": "fail",```
 ##### CoC7.SANLossPass
 ```  "CoC7.SANLossPass": "pass",```
+##### SETTINGS.DoNotPromptNoTargetSelected
+```  "SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",```
+##### SETTINGS.DoNotPromptNoTargetSelectedHit
+```  "SETTINGS.DoNotPromptNoTargetSelectedHit": "When rolling weapon attacks without tokens do not requestion confirmation of no targets",```
 ##### SETTINGS.allowMythosHardenedHint
 ```  "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",```
 ##### SETTINGS.allowMythosHardenedTitle
