@@ -22,9 +22,9 @@ export class Updater {
             if (runMigrate || !Object.prototype.hasOwnProperty.call(this.updatedModules, module.id) || String(this.updatedModules[module.id]) !== String(module.version)) {
               // A migration is required, module has not been updated before, or the version number has changed, check against known good values
               const knownModuleVersions = {
-                'call-of-cthulhu-foundryvtt-investigator-wizard': '1.0.3',
-                'cha-coc-fvtt-en-quickstart': '7.0',
-                'cha-coc-fvtt-en-starterset': '7.0'
+                'call-of-cthulhu-foundryvtt-investigator-wizard': '1.0.5',
+                'cha-coc-fvtt-en-quickstart': '5.0.5',
+                'cha-coc-fvtt-en-starterset': '5.0.5'
               }
               if (typeof knownModuleVersions[module.id] === 'string') {
                 if (foundry.utils.isNewerVersion(module.version, knownModuleVersions[module.id])) {
