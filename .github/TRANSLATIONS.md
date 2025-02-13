@@ -2,60 +2,61 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The **sv** translation is currently up to date
-
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cn.json (456 untranslated strings)](./ABANDONED.md#cnjson)
+[cn.json (457 untranslated strings)](./ABANDONED.md#cnjson)
 
-[cs.json (641 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (642 untranslated strings)](./ABANDONED.md#csjson)
 
-[ko.json (238 untranslated strings)](./ABANDONED.md#kojson)
+[ko.json (239 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (186 untranslated strings)](./ABANDONED.md#ptbrjson)
+[pt-BR.json (187 untranslated strings)](./ABANDONED.md#ptbrjson)
 
-[ru.json (108 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (109 untranslated strings)](./ABANDONED.md#rujson)
 
-[zh-TW.json (85 untranslated strings)](./ABANDONED.md#zhtwjson)
+[zh-TW.json (86 untranslated strings)](./ABANDONED.md#zhtwjson)
 
 
 
-|Key|de|es|fr|it|ja|pl|uk|
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**2**|**2**|**6**|**28**|**3**|**9**|**11**|
-|[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsBest](#coc7actorcociditemsbest)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules1](#coc7actorcociditemsrules1)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules2](#coc7actorcociditemsrules2)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsRules3](#coc7actorcociditemsrules3)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsSceneTokens](#coc7actorcociditemsscenetokens)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsUnlinkedToken](#coc7actorcociditemsunlinkedtoken)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsUpdate](#coc7actorcociditemsupdate)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsWarning](#coc7actorcociditemswarning)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ActorCoCIDItemsWhich](#coc7actorcociditemswhich)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.AdditionalBonusDie](#coc7additionalbonusdie)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.AdditionalPenaltyDie](#coc7additionalpenaltydie)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.CastHidden](#coc7casthidden)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ClickableEvents.LeftClick.Title](#coc7clickableeventsleftclicktitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ClickableEvents.MouseOver.Hint](#coc7clickableeventsmouseoverhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ClickableEvents.MouseOver.Title](#coc7clickableeventsmouseovertitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ClickableEvents.RightClick.Title](#coc7clickableeventsrightclicktitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.EraGasLightPulp](#coc7eragaslightpulp)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.InvestigatorWizard.ChooseAfterRoll](#coc7investigatorwizardchooseafterroll)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.Lck](#coc7lck)|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.PauseName](#coc7pausename)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
-|[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.SANLossPass](#coc7sanlosspass)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[SETTINGS.allowMythosHardenedTitle](#settingsallowmythoshardenedtitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[SETTINGS.hidePartValues](#settingshidepartvalues)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
-|[TYPES.RegionBehavior.coc7ClickableEvents](#typesregionbehaviorcoc7clickableevents)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|Key|de|es|fr|it|ja|pl|sv|uk|
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|**Remaining**:|**3**|**3**|**7**|**29**|**4**|**10**|**1**|**12**|
+|[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsAny](#coc7actorcociditemsany)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ActorCoCIDItemsBest](#coc7actorcociditemsbest)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules1](#coc7actorcociditemsrules1)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules2](#coc7actorcociditemsrules2)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsRules3](#coc7actorcociditemsrules3)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsSceneTokens](#coc7actorcociditemsscenetokens)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsUnlinkedToken](#coc7actorcociditemsunlinkedtoken)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsUpdate](#coc7actorcociditemsupdate)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsWarning](#coc7actorcociditemswarning)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ActorCoCIDItemsWhich](#coc7actorcociditemswhich)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.AdditionalBonusDie](#coc7additionalbonusdie)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.AdditionalPenaltyDie](#coc7additionalpenaltydie)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CastHidden](#coc7casthidden)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ClickableEvents.LeftClick.Title](#coc7clickableeventsleftclicktitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ClickableEvents.MouseOver.Hint](#coc7clickableeventsmouseoverhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ClickableEvents.MouseOver.Title](#coc7clickableeventsmouseovertitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ClickableEvents.RightClick.Title](#coc7clickableeventsrightclicktitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.EraGasLightPulp](#coc7eragaslightpulp)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.InvestigatorWizard.ChooseAfterRoll](#coc7investigatorwizardchooseafterroll)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Lck](#coc7lck)|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.PauseName](#coc7pausename)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.SANLossPass](#coc7sanlosspass)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.allowMythosHardenedTitle](#settingsallowmythoshardenedtitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.hidePartValues](#settingshidepartvalues)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|
+|[TYPES.RegionBehavior.coc7ClickableEvents](#typesregionbehaviorcoc7clickableevents)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
 ##### CoC7.ActorCoCIDItemsActorDirectory
 ```  "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",```
 ##### CoC7.ActorCoCIDItemsActorSheets
 ```  "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",```
+##### CoC7.ActorCoCIDItemsAny
+```  "CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",```
 ##### CoC7.ActorCoCIDItemsBest
 ```  "CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",```
 ##### CoC7.ActorCoCIDItemsRules1
