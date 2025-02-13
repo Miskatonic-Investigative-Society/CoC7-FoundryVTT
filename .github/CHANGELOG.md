@@ -9,6 +9,9 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- CoC ID: Actor Item replacement - add toggle for (Any) specialization skills
+- Fix invalid weapon name in chase response preventing "Attempt to break down !!" rolls being sent to players
+
 ## Version 7.7
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
