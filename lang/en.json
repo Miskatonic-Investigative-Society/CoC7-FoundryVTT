@@ -1346,6 +1346,7 @@
   "CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
   "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
   "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+  "CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
   "CoC7.ActorCoCIDItemsUpdate": "Update",
 
   "CoC7.TokenCreationRoll.Title": "Rollable detected",
