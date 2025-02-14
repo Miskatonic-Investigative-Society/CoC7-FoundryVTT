@@ -1559,8 +1559,8 @@ export class CoC7ActorSheet extends ActorSheet {
       }
       CoC7ContentLinkDialog.create(linkData, { actors: [this.actor] })
     } else {
-      let proceedWithoutTarget
-      if (game.user.targets.size <= 0) {
+      let proceedWithoutTarget = game.settings.get('CoC7', 'disregardNoTargets')
+      if (!proceedWithoutTarget && game.user.targets.size <= 0) {
         proceedWithoutTarget = await new Promise(resolve => {
           const data = {
             title: ' ',

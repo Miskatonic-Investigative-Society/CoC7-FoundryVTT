@@ -9,6 +9,15 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.8
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add toggle to prevent prompt when no targets are selected for a weapon attack
+- CoC ID: Actor Item replacement - add toggle for (Any) specialization skills
+- Fix invalid weapon name in chase response preventing "Attempt to break down !!" rolls being sent to players
+- Fix push option missing from GM standby rolls
+
 ## Version 7.7
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

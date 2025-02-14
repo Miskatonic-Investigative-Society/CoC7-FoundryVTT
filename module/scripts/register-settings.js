@@ -466,6 +466,14 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
+  game.settings.register('CoC7', 'disregardNoTargets', {
+    name: 'SETTINGS.DoNotPromptNoTargetSelected',
+    hint: 'SETTINGS.DoNotPromptNoTargetSelectedHit',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
 
   /**
    * Chases

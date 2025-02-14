@@ -487,6 +487,7 @@ export class CoC7ChatMessage {
           config.options.hasPlayerOwner
         if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL) {
           check.skill = config.options.skillId
+          check.canBePushed = (check._getItemFromId(check.skill)?.system?.properties?.push ?? false)
           await check.roll()
         } else if (
           config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE

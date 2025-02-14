@@ -1143,6 +1143,8 @@
   "SETTINGS.DisregardAmmoHint": "Enabling this will not take in account the number of bullets loaded in the gun.",
   "SETTINGS.DisregardUsePerRound": "Disregard Uses per Rounds.",
   "SETTINGS.DisregardUsePerRoundHint": "Enabling this will allow you to fire as much as you want, regardless of the uses per round of the weapon.",
+  "SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",
+  "SETTINGS.DoNotPromptNoTargetSelectedHit": "When rolling weapon attacks without tokens do not requestion confirmation of no targets",
   "SETTINGS.RestrictGridSpaces": "Restrict measurement to grid spaces",
   "SETTINGS.RestrictGridSpacesHint": "For range combat, if selected the distances will be measured in grid spaces, if not the 'real' (euclidean) distance will be used.",
   "SETTINGS.StatusPlayerEditable": "Player can modify status",
@@ -1346,6 +1348,7 @@
   "CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
   "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
   "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+  "CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
   "CoC7.ActorCoCIDItemsUpdate": "Update",
 
   "CoC7.TokenCreationRoll.Title": "Rollable detected",

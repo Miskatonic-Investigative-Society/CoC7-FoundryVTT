@@ -67,7 +67,7 @@ export default class CoCIDActorUpdateItems extends FormApplication {
     return output
   }
 
-  async updateActors (actorList, parent) {
+  async updateActors (actorList, parent, any) {
     if (parent) {
       const unlinkedActors = await actorList.filter(a => a.token?.actorLink === false).map(a => a.id).filter((a, o, v) => v.indexOf(a) === o).reduce(async (c, i) => {
         c.push(await fromUuid('Actor.' + i))
@@ -80,7 +80,7 @@ export default class CoCIDActorUpdateItems extends FormApplication {
     for (const actor of actorList) {
       for (const item of actor.items.contents) {
         if (typeof item.flags?.CoC7?.cocidFlag?.id === 'string') {
-          if (item.flags.CoC7.cocidFlag.id.match(/-any$/)) {
+          if (!any && item.flags.CoC7.cocidFlag.id.match(/-any$/)) {
             if (!Object.prototype.hasOwnProperty.call(anys, item.flags.CoC7.cocidFlag.id)) {
               anys[item.flags.CoC7.cocidFlag.id] = []
             }
@@ -127,16 +127,17 @@ export default class CoCIDActorUpdateItems extends FormApplication {
       }
       event.submitter.className = event.submitter.className + ' currently-submitting'
       const parent = typeof formData['coc-id-actor-update-items-parent'] === 'string'
+      const any = typeof formData['coc-id-actor-update-items-any'] === 'string'
       const which = (formData['coc-id-actor-update-items-which'] ?? '').toString()
       switch (which) {
         case '1':
-          await this.updateActors(canvas.scene.tokens.contents.map(d => d.object.actor), parent)
+          await this.updateActors(canvas.scene.tokens.contents.map(d => d.object.actor), parent, any)
           break
         case '2':
-          await this.updateActors(Object.values(ui.windows).filter(s => s instanceof ActorSheet).map(s => s.object), parent)
+          await this.updateActors(Object.values(ui.windows).filter(s => s instanceof ActorSheet).map(s => s.object), parent, any)
           break
         case '3':
-          await this.updateActors(game.actors.contents, false)
+          await this.updateActors(game.actors.contents, false, any)
           break
       }
     }
