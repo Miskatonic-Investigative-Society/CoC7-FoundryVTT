@@ -1,5 +1,4 @@
-/* global $, CONFIG, FormApplication, foundry, game, Hooks, ui, FileReader */
-
+/* global $, CONFIG, FileReader, FormApplication, foundry, game, Hooks, ui */
 import { CoC7ActorImporter } from './actor-importer.js'
 import { CoC7DholeHouseActorImporter } from './dholehouse_importer.js'
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'

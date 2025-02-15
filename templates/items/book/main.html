@@ -1,22 +1,22 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
+<form class="{{cssClass}} flexcol-coc7" autocomplete="off">
   <div class="container">
     <div class="portrait">
       <img src="{{item.img}}" title="{{item.name}}" data-edit="img" />
     </div>
     <div class="information">
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <input class="name" name="name" type="text" value="{{item.name}}" />
       </div>
       {{#if (or isKeeper initialReading)}}
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           <label>{{localize "CoC7.Author"}}:</label>
           <input type="text" name="system.author" value="{{data.system.author}}" />
         </div>
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           <label>{{localize "CoC7.Date"}}:</label>
           <input type="text" name="system.date" value="{{data.system.date}}" />
         </div>
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           <label>{{localize "CoC7.language"}}:</label>
           <input type="text" name="system.language" value="{{data.system.language}}" />
         </div>
@@ -24,7 +24,7 @@
     </div>
     <div class="aside">
       {{#if data.system.initialReading}}
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           <span>
             <label>
               {{localize "CoC7.InitialReading"}}
@@ -32,7 +32,7 @@
           </span>
           <i class="fas fa-check"></i>
         </div>
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           <span>
             <label>
               {{localize "CoC7.FullStudies"}}:
@@ -50,7 +50,7 @@
           </span>
         </div>
       {{else}}
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           {{#if (and hasOwner (or isKeeper isOwner))}}
             <span id="attempt-initial-reading">
               <label>

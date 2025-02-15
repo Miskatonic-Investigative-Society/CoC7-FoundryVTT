@@ -1,4 +1,4 @@
-<div class="flexrow">
+<div class="flexrow-coc7">
   <div class="header-buttons"></div>
   <h2>{{localize 'CoC7.Skills'}}</h2>
   <div class="header-buttons">
@@ -16,7 +16,7 @@
 <ol class="item-list{{#if showPartValues}} show-part-values{{/if}}">
   {{#if skillListModeValue}}
     {{#each skillsByValue as |skill|}}
-      <li class="item itemV2 skill flexrow" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+      <li class="item itemV2 skill flexrow-coc7" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
         <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
         <div class="item-name skill-name rollable flex3" title="{{skill.name}}">{{skill.name}}</div>
         <div class="skill-value item-score">{{skill.system.value}}</div>
@@ -36,9 +36,9 @@
   {{else}}
     {{#each skillList as |skill|}}
       {{#if skill.isSpecialization}}
-        <li class="specialization-header flexrow"> {{skill.name}} </li>
+        <li class="specialization-header flexrow-coc7"> {{skill.name}} </li>
       {{else}}
-        <li class="item itemV2 skill flexrow {{#if skill.system.properties.special}}specialization{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+        <li class="item itemV2 skill flexrow-coc7 {{#if skill.system.properties.special}}specialization{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
           <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
           {{#if ../data.system.flags.locked}}
             <div class="item-name skill-name rollable flex1" title="{{skill.name}}">{{#if skill.system.properties.special}}{{skill.system.skillName}}{{else}}{{skill.name}}{{/if}}</div>

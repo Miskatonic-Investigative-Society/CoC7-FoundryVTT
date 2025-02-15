@@ -12,9 +12,6 @@ import { CoC7Check } from './check.js'
 import { CoC7Menu } from './menu.js'
 import { DamageCard } from './chat/cards/damage.js'
 import { CoC7Canvas } from './apps/canvas.js'
-import { CoC7SettingsDirectory } from './settings-directory.js'
-import { CoC7CompendiumDirectory } from './compendium-directory.js'
-import { CoC7ActorDirectory } from './actor-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
@@ -24,8 +21,16 @@ import { CoC7SystemSocket } from './apps/coc7-system-socket.js'
 import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 import CoC7ClickableEvents from './apps/coc7-clickable-events.js'
 import DrawNote from './hooks/draw-note.js'
+import GetJournalSheetHeaderButtons from './hooks/get-journal-sheet-header-buttons.js'
+import GetMacroConfigHeaderButtons from './hooks/get-macro-config-header-buttons.js'
+import GetPlaylistConfigHeaderButtons from './hooks/get-playlist-config-header-buttons.js'
+import GetRollTableConfigHeaderButtons from './hooks/get-roll-table-config-header-buttons.js'
+import GetSceneConfigHeaderButtons from './hooks/get-scene-config-header-buttons.js'
+import RenderActorDirectory from './hooks/render-actor-directory.js'
 import RenderCoC7JournalSheet from './hooks/render-coc7-journal-sheet.js'
+import RenderCompendiumDirectory from './hooks/render-compendium-directory.js'
 import RenderJournalTextPageSheet from './hooks/render-journal-text-page-sheet.js'
+import RenderSettings from './hooks/render-settings.js'
 
 // Card init
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
@@ -226,6 +231,19 @@ Hooks.once('setup', function () {
     }
   )
 })
+
+Hooks.on('getHeaderControlsJournalEntrySheet', GetJournalSheetHeaderButtons)
+Hooks.on('getHeaderControlsMacroConfig', GetMacroConfigHeaderButtons)
+Hooks.on('getHeaderControlsPlaylistConfig', GetPlaylistConfigHeaderButtons)
+Hooks.on('getHeaderControlsRollTableSheet', GetRollTableConfigHeaderButtons)
+Hooks.on('getHeaderControlsSceneConfig', GetSceneConfigHeaderButtons)
+
+/* // FoundryVTT v12 */
+Hooks.on('getJournalSheetHeaderButtons', GetJournalSheetHeaderButtons)
+Hooks.on('getMacroConfigHeaderButtons', GetMacroConfigHeaderButtons)
+Hooks.on('getPlaylistConfigHeaderButtons', GetPlaylistConfigHeaderButtons)
+Hooks.on('getRollTableConfigHeaderButtons', GetRollTableConfigHeaderButtons)
+Hooks.on('getSceneConfigHeaderButtons', GetSceneConfigHeaderButtons)
 
 Hooks.on('createActiveEffect', (data, options, userId) => {
   if (game.userId === userId) {
@@ -502,10 +520,9 @@ function _onLeftClick (event) {
   return event.shiftKey
 }
 
-CONFIG.ui.settings = CoC7SettingsDirectory
-CONFIG.ui.compendium = CoC7CompendiumDirectory
-CONFIG.ui.actors = CoC7ActorDirectory
-
 Hooks.on('drawNote', DrawNote)
+Hooks.on('renderActorDirectory', RenderActorDirectory)
 Hooks.on('renderCoC7JournalSheet', RenderCoC7JournalSheet)
+Hooks.on('renderCompendiumDirectory', RenderCompendiumDirectory)
 Hooks.on('renderJournalTextPageSheet', RenderJournalTextPageSheet)
+Hooks.on('renderSettings', RenderSettings)

@@ -1,11 +1,11 @@
 {{#if data.system.sanityLossEvents}}
-  <div class="flexcol bio-section" style="flex: 0 0 50%;">
-    <div class="flexrow" style="flex: initial;">
+  <div class="flexcol-coc7 bio-section" style="flex: 0 0 50%;">
+    <div class="flexrow-coc7" style="flex: initial;">
       <label style="height: 1rem;margin: 0;border: 0;font-family: customSheetFont, 'Palatino Linotype', serif;font-size: .75rem;">{{localize 'CoC7.BackgroundEncounters'}}</label>
     </div>
     <div class="bio-section-value" style="min-height: 80px;">
       {{#each data.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           <div>{{sanityLossEvent.type}}</div>
           <div class="bio-section-values">
             {{#if sanityLossEvent.immunity}}
@@ -16,7 +16,7 @@
           </div>
         </div>
       {{else}}
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           -
         </div>
       {{/each}}

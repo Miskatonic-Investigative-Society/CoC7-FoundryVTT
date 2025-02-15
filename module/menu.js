@@ -33,7 +33,7 @@ export class CoC7Menu {
     canvas.coc7gmtools = new CoC7MenuLayer()
     const isKeeper = game.user.isGM
     const showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
-    controls.push({
+    const menu = {
       name: 'coc7menu',
       title: 'CoC7.GmTools',
       layer: 'coc7gmtools',
@@ -102,10 +102,15 @@ export class CoC7Menu {
           onClick: async () => await CoC7Utilities.getTarget()
         }
       ]
-    })
+    }
+    if (Array.isArray(controls)) {
+      controls.push(menu)
+    } else {
+      controls.coc7menu = menu
+    }
     if (showHiddenDevMenu) {
       canvas.coc7DevTools = new CoC7MenuLayer()
-      controls.push({
+      const menu = {
         name: 'coc7DevMenu',
         title:
           "Dev tools. If you don't know what it is, you don't need it and you shouldn't use it !!",
@@ -136,31 +141,59 @@ export class CoC7Menu {
             }
           }
         ]
-      })
+      }
+      if (Array.isArray(controls)) {
+        controls.push(menu)
+      } else {
+        controls.coc7DevTools = menu
+      }
     }
   }
 
   static renderControls (app, html, data) {
     const isKeeper = game.user.isGM
-    const keeperMenu = html.find('.game-icon-tentacle-strike').parent()
-    keeperMenu.addClass('coc7-menu')
-    if (isKeeper) {
+    if (foundry.utils.isNewerVersion(game.version, '13')) {
+      const keeperMenu = html.querySelector('.game-icon-tentacle-strike').parentNode
+      keeperMenu.classList.add('coc7-menu')
+      if (isKeeper) {
+        const menuLi = document.createElement('li')
+        const menuButton = document.createElement('button')
+        menuButton.classList.add('control', 'ui-control', 'tool', 'icon', 'coc7-menu', 'coc7-create-link', 'fas', 'fa-link')
+        menuButton.type = 'button'
+        menuButton.dataset.tooltip = 'CoC7.CreateLink'
+        menuLi.appendChild(menuButton)
+        keeperMenu.insertAdjacentHTML('afterend', menuLi.outerHTML)
+        html.addEventListener('click', event => CoC7ContentLinkDialog.create(event))
+      }
+      const menuLi = document.createElement('li')
+      const menuButton = document.createElement('button')
+      menuButton.classList.add('control', 'ui-control', 'tool', 'icon', 'coc7-menu', 'coc7-dice-roll', 'game-icon', 'game-icon-d10')
+      menuButton.type = 'button'
+      menuButton.dataset.tooltip = 'CoC7.RollDice'
+      menuLi.appendChild(menuButton)
+      keeperMenu.insertAdjacentHTML('afterend', menuLi.outerHTML)
+      html.querySelector('.coc7-menu.coc7-dice-roll').addEventListener('click', event => CoC7Utilities.rollDice(event))
+    } else {
+      const keeperMenu = html.find('.game-icon-tentacle-strike').parent()
+      keeperMenu.addClass('coc7-menu')
+      if (isKeeper) {
+        keeperMenu.after(
+          '<li class="scene-control coc7-menu coc7-create-link" title="' +
+            game.i18n.localize('CoC7.CreateLink') +
+            '"><i class="fas fa-link"></i></li>'
+        )
+      }
       keeperMenu.after(
-        '<li class="scene-control coc7-menu coc7-create-link" title="' +
-          game.i18n.localize('CoC7.CreateLink') +
-          '"><i class="fas fa-link"></i></li>'
+        '<li class="scene-control coc7-menu coc7-dice-roll" title="' +
+          game.i18n.localize('CoC7.RollDice') +
+          '"><i class="game-icon game-icon-d10"></i></li>'
       )
+      html
+        .find('.coc7-menu.coc7-dice-roll')
+        .click(event => CoC7Utilities.rollDice(event))
+      html
+        .find('.coc7-menu.coc7-create-link')
+        .click(event => CoC7ContentLinkDialog.create(event))
     }
-    keeperMenu.after(
-      '<li class="scene-control coc7-menu coc7-dice-roll" title="' +
-        game.i18n.localize('CoC7.RollDice') +
-        '"><i class="game-icon game-icon-d10"></i></li>'
-    )
-    html
-      .find('.coc7-menu.coc7-dice-roll')
-      .click(event => CoC7Utilities.rollDice(event))
-    html
-      .find('.coc7-menu.coc7-create-link')
-      .click(event => CoC7ContentLinkDialog.create(event))
   }
 }
