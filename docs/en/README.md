@@ -22,8 +22,8 @@ For a full list of changes checkout the [changelog](https://github.com/Miskatoni
  - New investigator sheet
 
 # Chaosium Modules
-- [Call of Cthulhu® - Starter Set](https://foundryvtt.com/packages/cha-coc-fvtt-en-starterset) - Contains three senarios (Paper Chase, Edge of Darkness, and Dead Man Stomp) and instructions for playing Call of Cthulhu 7th edition.
-- [Call of Cthulhu® - Quick-Start Rules](https://foundryvtt.com/packages/cha-coc-fvtt-en-quickstart) - Contains The Haunting senario and a beginner guide to FoundryVTT and Call of Cthulhu 7th edition.
+- [Call of Cthulhu® - Starter Set](https://foundryvtt.com/packages/cha-coc-fvtt-en-starterset) - Contains three scenarios (Paper Chase, Edge of Darkness, and Dead Man Stomp) and instructions for playing Call of Cthulhu 7th edition.
+- [Call of Cthulhu® - Quick-Start Rules](https://foundryvtt.com/packages/cha-coc-fvtt-en-quickstart) - Contains The Haunting scenario and a beginner guide to FoundryVTT and Call of Cthulhu 7th edition.
 - [Call of Cthulhu® - FoundryVTT - Investigator Wizard](https://foundryvtt.com/packages/call-of-cthulhu-foundryvtt-investigator-wizard) - Released with permission from Chaosium contains archetypes, occupations, setups, and skills for use with the Investigator Creation Wizard.
 
 # Overview sections below
