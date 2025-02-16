@@ -219,6 +219,8 @@
   "CoC7.RollDifficultyExtremeTitle": "Extreme difficulty",
   "CoC7.RollDifficultyCritical": "Critical",
   "CoC7.RollDifficultyCriticalTitle": "Critical difficulty",
+  "CoC7.RollDifficultyImpossible": "Impossible",
+  "CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
   "CoC7.RollResult.LuckSpendText": "{luckAmount} luck spend, {successLevel} success",
   "CoC7.RollDice": "Roll !",
   "CoC7.CreateLink": "Create link",
