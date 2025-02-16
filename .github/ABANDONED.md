@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (459 untranslated strings)](#cnjson)
+[cn.json (461 untranslated strings)](#cnjson)
 
-[cs.json (644 untranslated strings)](#csjson)
+[cs.json (646 untranslated strings)](#csjson)
 
-[ko.json (241 untranslated strings)](#kojson)
+[ko.json (243 untranslated strings)](#kojson)
 
-[pt-BR.json (189 untranslated strings)](#ptbrjson)
+[pt-BR.json (191 untranslated strings)](#ptbrjson)
 
-[ru.json (111 untranslated strings)](#rujson)
+[ru.json (113 untranslated strings)](#rujson)
 
-[zh-TW.json (88 untranslated strings)](#zhtwjson)
+[zh-TW.json (90 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-459 untranslated strings
+461 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -44,6 +44,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyHardTitle": "Hard difficulty",
 "CoC7.RollDifficultyExtremeTitle": "Extreme difficulty",
 "CoC7.RollDifficultyCriticalTitle": "Critical difficulty",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.CardType": "Roll type",
 "CoC7.GroupRollCard": "Group roll card",
 "CoC7.RegularRollCard": "Regular roll card",
@@ -479,7 +481,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## cs.json
-644 untranslated strings
+646 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -535,6 +537,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyHardTitle": "Hard difficulty",
 "CoC7.RollDifficultyExtremeTitle": "Extreme difficulty",
 "CoC7.RollDifficultyCriticalTitle": "Critical difficulty",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.CardType": "Roll type",
 "CoC7.GroupRollCard": "Group roll card",
 "CoC7.RegularRollCard": "Regular roll card",
@@ -1127,7 +1131,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ko.json
-241 untranslated strings
+243 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
@@ -1136,6 +1140,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyHardTitle": "Hard difficulty",
 "CoC7.RollDifficultyExtremeTitle": "Extreme difficulty",
 "CoC7.RollDifficultyCriticalTitle": "Critical difficulty",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.combatCard.automaticSuccess": "Automatic Success",
 "CoC7.Damage": "Damage",
 "CoC7.rangeCombatCard.SurprisedTargetTitle": "1 bonus die for surprised target",
@@ -1372,10 +1378,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-189 untranslated strings
+191 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -1565,10 +1573,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-111 untranslated strings
+113 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillRanged": "Ranged",
@@ -1680,10 +1690,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## zh-TW.json
-88 untranslated strings
+90 untranslated strings
 ```
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
