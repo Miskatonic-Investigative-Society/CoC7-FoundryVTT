@@ -12,6 +12,7 @@
   "CoC7.ActorIsSyntheticActor": "Actor is a synthetic actor (instance of an actor)",
 
   "CoC7.Entities.Archetype": "Archetype",
+  "CoC7.Entities.Armor": "Armor",
   "CoC7.Entities.Book": "Book",
   "CoC7.Entities.Chase": "Chase",
   "CoC7.Entities.Item": "Item",
@@ -491,6 +492,7 @@
   "CoC7.AddBook": "Add book",
   "CoC7.NewSpellName": "new spell",
   "CoC7.AddSpell": "Add spell",
+  "CoC7.AddArmor": "Add armor",
 
   "CoC7.AddWeapon": "Add weapon",
   "CoC7.NewWeaponName": "new weapon",
