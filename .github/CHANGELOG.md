@@ -10,6 +10,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Added range localization to combat flow, thanks to @lozanoje #1699
+- Prevent same colour for text and background when viewing Development tab (skills base and total values)
 - Update to French localization, thanks to @vonv #1696
 
 ## Version 7.8
