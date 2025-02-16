@@ -469,6 +469,7 @@ export class CoC7ActorSheet extends ActorSheet {
     sheetData.showInventoryTalents = false
     sheetData.showInventoryStatuses = false
     sheetData.showInventoryWeapons = false
+    sheetData.showInventoryArmor = false
 
     sheetData.hasConditions =
       this.actor.effects.size > 0 ||

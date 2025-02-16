@@ -1276,9 +1276,11 @@ export class CoC7InvestigatorWizard extends FormApplication {
     if (typeof this.object.bioSections[index] !== 'undefined') {
       const rolltable = await game.system.api.cocid.fromCoCID(key)
       if (rolltable.length === 1) {
-        const tableResult = await rolltable[0].roll()
-        if (tableResult.results[0].type === CONST.TABLE_RESULT_TYPES.TEXT) {
-          this.object.bioSections[index].value = (this.object.bioSections[index].value + '\n' + tableResult.results[0].text.trim()).trim()
+        const tableResults = await rolltable[0].roll()
+        for (const tableResult of tableResults.results) {
+          if (tableResult.type === CONST.TABLE_RESULT_TYPES.TEXT) {
+            this.object.bioSections[index].value = (this.object.bioSections[index].value + '\n' + tableResult.text.trim()).trim()
+          }
         }
       }
     }

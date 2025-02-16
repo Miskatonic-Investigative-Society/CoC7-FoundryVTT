@@ -129,16 +129,22 @@ div.investigator-wizard {
       }
     }
 
-    div.form-group.status {
-      border: 1px solid #000;
+    div.form-group {
+      &.status {
+        border: 1px solid #000;
 
-      i.fa-solid.fa-circle-check,
-      i.fa-solid.fa-circle-xmark {
-        margin: 0 0.5rem;
+        i.fa-solid.fa-circle-check,
+        i.fa-solid.fa-circle-xmark {
+          margin: 0 0.5rem;
+        }
+
+        i.fa-solid.fa-circle-xmark {
+          color: red;
+        }
       }
 
-      i.fa-solid.fa-circle-xmark {
-        color: red;
+      textarea.backstory-text {
+        height: 6rem;
       }
     }
   }

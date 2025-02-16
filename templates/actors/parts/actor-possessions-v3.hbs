@@ -113,6 +113,29 @@
           {{/each}}
         </ol>
       {{/if}}
+      {{#if showInventoryArmor}}
+        <div class="section-header flexrow">
+          <h3>{{localize 'CoC7.Armor'}}</h3>
+          {{#unless data.system.flags.locked}}
+            <div class="header-buttons">
+              <a class="add-item" data-type="armor" title='{{localize "CoC7.AddArmor"}}'><i class="fas fa-plus"></i></a>
+            </div>
+          {{/unless}}
+        </div>
+        <ol class="item-list">
+          {{#each itemsByType.armor as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+              <div class="item-image" style="background-image: url({{item.img}})"></div>
+              <h4 class="item-name show-detail">{{item.name}}</h4>
+              <div class="item-controls">
+                <a class="item-control item-trade" title="{{localize 'CoC7.TradeItem'}}"><i class="game-icon game-icon-trade"></i></a>
+                <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+              </div>
+            </li>
+          {{/each}}
+        </ol>
+      {{/if}}
       {{#if showInventoryStatuses}}
         <div class="section-header flexrow">
           <h3>{{localize 'CoC7.Status'}}</h3>
