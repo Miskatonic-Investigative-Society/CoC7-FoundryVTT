@@ -4,23 +4,23 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cn.json (461 untranslated strings)](./ABANDONED.md#cnjson)
+[cn.json (463 untranslated strings)](./ABANDONED.md#cnjson)
 
-[cs.json (646 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (648 untranslated strings)](./ABANDONED.md#csjson)
 
-[ko.json (243 untranslated strings)](./ABANDONED.md#kojson)
+[ko.json (245 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (191 untranslated strings)](./ABANDONED.md#ptbrjson)
+[pt-BR.json (193 untranslated strings)](./ABANDONED.md#ptbrjson)
 
-[ru.json (113 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (115 untranslated strings)](./ABANDONED.md#rujson)
 
-[zh-TW.json (90 untranslated strings)](./ABANDONED.md#zhtwjson)
+[zh-TW.json (92 untranslated strings)](./ABANDONED.md#zhtwjson)
 
 
 
 |Key|de|es|fr|it|ja|pl|sv|uk|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**7**|**5**|**2**|**33**|**8**|**14**|**5**|**16**|
+|**Remaining**:|**9**|**7**|**4**|**35**|**10**|**16**|**7**|**18**|
 |[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ActorCoCIDItemsAny](#coc7actorcociditemsany)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
@@ -33,6 +33,7 @@ The following translations have more than 50 untranslated strings [are you able 
 |[CoC7.ActorCoCIDItemsUpdate](#coc7actorcociditemsupdate)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ActorCoCIDItemsWarning](#coc7actorcociditemswarning)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ActorCoCIDItemsWhich](#coc7actorcociditemswhich)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.AddArmor](#coc7addarmor)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.AdditionalBonusDie](#coc7additionalbonusdie)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.AdditionalPenaltyDie](#coc7additionalpenaltydie)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.CastHidden](#coc7casthidden)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
@@ -40,6 +41,7 @@ The following translations have more than 50 untranslated strings [are you able 
 |[CoC7.ClickableEvents.MouseOver.Hint](#coc7clickableeventsmouseoverhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ClickableEvents.MouseOver.Title](#coc7clickableeventsmouseovertitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ClickableEvents.RightClick.Title](#coc7clickableeventsrightclicktitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Entities.Armor](#coc7entitiesarmor)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.EraGasLightPulp](#coc7eragaslightpulp)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.InvestigatorWizard.ChooseAfterRoll](#coc7investigatorwizardchooseafterroll)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.Lck](#coc7lck)|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|
@@ -79,6 +81,8 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",```
 ##### CoC7.ActorCoCIDItemsWhich
 ```  "CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",```
+##### CoC7.AddArmor
+```  "CoC7.AddArmor": "Add armor",```
 ##### CoC7.AdditionalBonusDie
 ```  "CoC7.AdditionalBonusDie": "Additional Bonus Die",```
 ##### CoC7.AdditionalPenaltyDie
@@ -93,6 +97,8 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "CoC7.ClickableEvents.MouseOver.Title": "Permission to click",```
 ##### CoC7.ClickableEvents.RightClick.Title
 ```  "CoC7.ClickableEvents.RightClick.Title": "Right Click Script",```
+##### CoC7.Entities.Armor
+```  "CoC7.Entities.Armor": "Armor",```
 ##### CoC7.EraGasLightPulp
 ```  "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",```
 ##### CoC7.InvestigatorWizard.ChooseAfterRoll
