@@ -11,6 +11,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 - Added range localization to combat flow, thanks to @lozanoje #1699
 - Prevent same colour for text and background when viewing Development tab (skills base and total values)
+- Prevent tooltip showing for skills flagged for development in development tab
 - Update to French localization, thanks to @vonv #1696
 
 ## Version 7.8
