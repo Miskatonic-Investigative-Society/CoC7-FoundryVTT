@@ -857,7 +857,7 @@ export class CoC7ActorSheet extends ActorSheet {
     })
 
     html
-      .find('.skill-name.rollable')
+      .find('.skill-name.rollable:not(.withouttooltip)')
       .mouseenter(this.toolTipSkillEnter.bind(this))
       .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
     html

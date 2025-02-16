@@ -99,7 +99,7 @@
         {{/unless}}
       </div>
 
-      <span class="skill-name{{#if skill.system.flags.developement}}{{#if ../allowDevelopment}} rollable{{/if}} flagged4dev{{/if}}">{{skill.name}}{{#if (and skill.system.flags.developement ../allowDevelopment)}}<i class="fas fa-circle-check"></i>{{/if}}</span>
+      <span class="skill-name{{#if skill.system.flags.developement}}{{#if ../allowDevelopment}} rollable withouttooltip{{/if}} flagged4dev{{/if}}">{{skill.name}}{{#if (and skill.system.flags.developement ../allowDevelopment)}}<i class="fas fa-circle-check"></i>{{/if}}</span>
       <div class="adjustment-value uneditable locked" title="{{localize 'CoC7.SkillBase'}}">
         <span>{{skill.system.base}}</span>
       </div>
