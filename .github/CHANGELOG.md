@@ -9,6 +9,9 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Added range localization to combat flow, thanks to @lozanoje #1699
+- Update to French localization, thanks to @vonv #1696
+
 ## Version 7.8
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
