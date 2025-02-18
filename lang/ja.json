@@ -6,7 +6,7 @@
   "CoC7.Entities.Creature": "クリーチャー",
   "CoC7.Entities.Npc": "NPC",
   "CoC7.Entities.Vehicle": "乗り物",
-  "CoC7.ActorIsTokenHint": "アクターはトークンである。",
+  "CoC7.ActorIsTokenHint": "アクターはコマである。",
   "CoC7.ActorDataLinked": "アクターデータがリンクされた。",
   "CoC7.ActorDataNotLinked": "アクターデータがリンクされていない。",
   "CoC7.ActorIsSyntheticActor": "アクターは複製である (アクターのインスタンツ)",
