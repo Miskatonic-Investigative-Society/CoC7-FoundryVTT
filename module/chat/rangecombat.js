@@ -343,17 +343,19 @@ export class CoC7RangeInitiator {
     }
 
     if (CoC7Check.difficultyLevel.regular === difficulty) {
-      difficultyName = 'Regular'
+      difficultyName = `${game.i18n.localize('CoC7.RollDifficultyRegular')}`
     }
-    if (CoC7Check.difficultyLevel.hard === difficulty) difficultyName = 'Hard'
+    if (CoC7Check.difficultyLevel.hard === difficulty) {
+      difficultyName = `${game.i18n.localize('CoC7.RollDifficultyHard')}`
+    }
     if (CoC7Check.difficultyLevel.extreme === difficulty) {
-      difficultyName = 'Extreme'
+      difficultyName = `${game.i18n.localize('CoC7.RollDifficultyExtreme')}`
     }
     if (CoC7Check.difficultyLevel.critical === difficulty) {
-      difficultyName = 'Critical'
+      difficultyName = `${game.i18n.localize('CoC7.RollDifficultyCritical')}`
     }
     if (CoC7Check.difficultyLevel.impossible === difficulty) {
-      difficultyName = 'Impossible'
+      difficultyName = `${game.i18n.localize('CoC7.RollDifficultyImpossible')}`
     }
 
     return {

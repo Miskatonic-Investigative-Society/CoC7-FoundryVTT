@@ -43,6 +43,11 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
     sheetData.showInventoryStatuses =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'status') ||
       !sheetData.data.system.flags.locked
+
+    sheetData.showInventoryArmor =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'armor') ||
+      !sheetData.data.system.flags.locked
+
     sheetData.showInventoryWeapons = false
     sheetData.hasInventory =
       sheetData.showInventoryItems ||
@@ -50,7 +55,8 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       sheetData.showInventorySpells ||
       sheetData.showInventoryTalents ||
       sheetData.showInventoryStatuses ||
-      sheetData.showInventoryWeapons
+      sheetData.showInventoryWeapons ||
+      sheetData.showInventoryArmor
 
     sheetData.enrichedBiographyPersonalDescription = await TextEditor.enrichHTML(
       sheetData.data.system.biography.personalDescription?.value,

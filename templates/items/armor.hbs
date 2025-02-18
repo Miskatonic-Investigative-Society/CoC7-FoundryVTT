@@ -1,0 +1,38 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+  <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
+    <div class="header-details flexrow">
+      <h1 class="name" style="height: 48px;">
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}" />
+      </h1>
+    </div>
+    <img class="profile" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64" />
+  </header>
+
+  {{!-- Item Sheet Navigation --}}
+  <nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;" class="sheet-navigation tabs" data-group="primary">
+    <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.Description" }}</a>
+    <a class="keeper-only-tab" data-tab="effects" title="{{localize 'CoC7.Effects'}}">
+      <div class="tab-name"><span><i class="game-icon game-icon-aura"></i></span></div>
+    </a>
+    {{#if isKeeper}}
+      <a style="line-height: 24px;" class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
+    {{/if}}
+  </nav>
+
+  {{!-- Item Sheet Body --}}
+  <section style="overflow: hidden;flex: 1;" class="sheet-body">
+    <div class="tab flexrow active" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="description">
+      {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
+    </div>
+
+    <div class="tab coc7" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="effects">
+      {{> "systems/CoC7/templates/common/active-effects.hbs"}}
+    </div>
+
+    {{#if isKeeper}}
+      <div class="tab keeper" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
+        {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
+      </div>
+    {{/if}}
+  </section>
+</form>

@@ -219,6 +219,8 @@
   "CoC7.RollDifficultyExtremeTitle": "Dificultad extrema",
   "CoC7.RollDifficultyCritical": "Crítica",
   "CoC7.RollDifficultyCriticalTitle": "Dificultad crítica",
+  "CoC7.RollDifficultyImpossible": "Imposible",
+  "CoC7.RollDifficultyImpossibleTitle": "Dificultad imposible",
   "CoC7.RollResult.LuckSpendText": "{luckAmount} de Suerte gastados, éxito {successLevel}",
   "CoC7.RollDice": "Tirar dados",
   "CoC7.CreateLink": "Crear enlace a tirada",

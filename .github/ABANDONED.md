@@ -2,26 +2,27 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (459 untranslated strings)](#cnjson)
+[cn.json (463 untranslated strings)](#cnjson)
 
-[cs.json (644 untranslated strings)](#csjson)
+[cs.json (648 untranslated strings)](#csjson)
 
-[ko.json (241 untranslated strings)](#kojson)
+[ko.json (245 untranslated strings)](#kojson)
 
-[pt-BR.json (189 untranslated strings)](#ptbrjson)
+[pt-BR.json (193 untranslated strings)](#ptbrjson)
 
-[ru.json (111 untranslated strings)](#rujson)
+[ru.json (115 untranslated strings)](#rujson)
 
-[zh-TW.json (88 untranslated strings)](#zhtwjson)
+[zh-TW.json (92 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-459 untranslated strings
+463 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
 "CoC7.ActorDataNotLinked": "Actor data are NOT linked",
 "CoC7.ActorIsSyntheticActor": "Actor is a synthetic actor (instance of an actor)",
+"CoC7.Entities.Armor": "Armor",
 "CoC7.Lck": "Lck",
 "CoC7.MovementAction": "Movement action",
 "CoC7.AdjustedMovement": "Adjusted movement",
@@ -44,6 +45,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyHardTitle": "Hard difficulty",
 "CoC7.RollDifficultyExtremeTitle": "Extreme difficulty",
 "CoC7.RollDifficultyCriticalTitle": "Critical difficulty",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.CardType": "Roll type",
 "CoC7.GroupRollCard": "Group roll card",
 "CoC7.RegularRollCard": "Regular roll card",
@@ -84,6 +87,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CleanSkillList": "Clean skill list",
 "CoC7.CleanSkillListHint": "<p>This will Clean your skill list by removing specialization from skill name.</p> <p>This will avoid to display skill as : 'specialization(specialization(skill))'</p>",
 "CoC7.ReduceSanityLimits": "Reduced all sanity limits by one",
+"CoC7.AddArmor": "Add armor",
 "CoC7.WeaponSkillMain": "Main skill",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
@@ -479,7 +483,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## cs.json
-644 untranslated strings
+648 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -491,6 +495,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorDataNotLinked": "Actor data are NOT linked",
 "CoC7.ActorIsSyntheticActor": "Actor is a synthetic actor (instance of an actor)",
 "CoC7.Entities.Archetype": "Archetype",
+"CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.Book": "Book",
 "CoC7.Entities.Chase": "Chase",
 "CoC7.Entities.Item": "Item",
@@ -535,6 +540,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyHardTitle": "Hard difficulty",
 "CoC7.RollDifficultyExtremeTitle": "Extreme difficulty",
 "CoC7.RollDifficultyCriticalTitle": "Critical difficulty",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.CardType": "Roll type",
 "CoC7.GroupRollCard": "Group roll card",
 "CoC7.RegularRollCard": "Regular roll card",
@@ -596,6 +603,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AddBook": "Add book",
 "CoC7.NewSpellName": "new spell",
 "CoC7.AddSpell": "Add spell",
+"CoC7.AddArmor": "Add armor",
 "CoC7.WeaponSkillMain": "Main skill",
 "CoC7.InventoryIsCurrentlyEmpty": "Inventory is currently empty.",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
@@ -1127,8 +1135,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ko.json
-241 untranslated strings
+245 untranslated strings
 ```
+"CoC7.Entities.Armor": "Armor",
 "CoC7.Lck": "Lck",
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1136,6 +1145,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyHardTitle": "Hard difficulty",
 "CoC7.RollDifficultyExtremeTitle": "Extreme difficulty",
 "CoC7.RollDifficultyCriticalTitle": "Critical difficulty",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.combatCard.automaticSuccess": "Automatic Success",
 "CoC7.Damage": "Damage",
 "CoC7.rangeCombatCard.SurprisedTargetTitle": "1 bonus die for surprised target",
@@ -1162,6 +1173,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SkillNameSmb": "Submachine Gun",
 "CoC7.SkillNameMachinGun": "Machine Gun",
 "CoC7.SkillNameLaunch": "Launch",
+"CoC7.AddArmor": "Add armor",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
@@ -1372,10 +1384,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-189 untranslated strings
+193 untranslated strings
 ```
+"CoC7.Entities.Armor": "Armor",
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -1391,6 +1406,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SkillNameSmb": "Submachine Gun",
 "CoC7.SkillNameMachinGun": "Machine Gun",
 "CoC7.SkillNameLaunch": "Launch",
+"CoC7.AddArmor": "Add armor",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
@@ -1565,10 +1581,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-111 untranslated strings
+115 untranslated strings
 ```
+"CoC7.Entities.Armor": "Armor",
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillRanged": "Ranged",
@@ -1581,6 +1600,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SkillNameSmb": "Submachine Gun",
 "CoC7.SkillNameMachinGun": "Machine Gun",
 "CoC7.SkillNameLaunch": "Launch",
+"CoC7.AddArmor": "Add armor",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
@@ -1680,10 +1700,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## zh-TW.json
-88 untranslated strings
+92 untranslated strings
 ```
+"CoC7.Entities.Armor": "Armor",
 "CoC7.Lck": "Lck",
 "CoC7.CastHidden": "Cast Hidden",
+"CoC7.RollDifficultyImpossible": "Impossible",
+"CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -1698,6 +1721,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SkillNameSmb": "Submachine Gun",
 "CoC7.SkillNameMachinGun": "Machine Gun",
 "CoC7.SkillNameLaunch": "Launch",
+"CoC7.AddArmor": "Add armor",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",

@@ -99,8 +99,8 @@
         {{/unless}}
       </div>
 
-      <span class="skill-name{{#if skill.system.flags.developement}}{{#if ../allowDevelopment}} rollable{{/if}} flagged4dev{{/if}}">{{skill.name}}{{#if (and skill.system.flags.developement ../allowDevelopment)}}<i class="fas fa-circle-check"></i>{{/if}}</span>
-      <div class="adjustment-value locked" title="{{localize 'CoC7.SkillBase'}}">
+      <span class="skill-name{{#if skill.system.flags.developement}}{{#if ../allowDevelopment}} rollable withouttooltip{{/if}} flagged4dev{{/if}}">{{skill.name}}{{#if (and skill.system.flags.developement ../allowDevelopment)}}<i class="fas fa-circle-check"></i>{{/if}}</span>
+      <div class="adjustment-value uneditable locked" title="{{localize 'CoC7.SkillBase'}}">
         <span>{{skill.system.base}}</span>
       </div>
       <div class="adjustment-value development-points{{#if skill.system.properties.noadjustments}} locked{{/if}}" title="{{localize 'CoC7.SkillPersonal'}}">
@@ -129,7 +129,7 @@
       <div class="adjustment-value experience-points" title="{{localize 'CoC7.SkillExperience'}}">
         <input type="text" class="skill-adjustment" name="system.adjustments.experience" value="{{skill.system.adjustments.experience}}" data-dtype="Number">
       </div>
-      <div class="adjustment-value locked" title="{{localize 'CoC7.Value'}}">
+      <div class="adjustment-value uneditable locked" title="{{localize 'CoC7.Value'}}">
         <span>{{skill.system.value}}</span>
       </div>
     </li>
