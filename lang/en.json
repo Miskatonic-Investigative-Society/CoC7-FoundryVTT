@@ -1068,6 +1068,9 @@
   "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
   "CoC7.Settings.WorldEra.Name": "Era for the world",
   "CoC7.Settings.WorldEra.Hint": "Skills can vary slightly between eras, please select the era for this world so system searches for skills find the correct ones.",
+  "CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
+  "CoC7.Settings.ShowWorldEra.Hint": "",
+
   "CoC7.Settings.DropCoCID.Name": "Use CoC ID on item drops",
   "CoC7.Settings.DropCoCID.Hint": "When dropping items with a CoC ID prompt to store the CoC ID instead of the item",
   "CoC7.Settings.DropCoCID.Dialog": "Use the CoC ID for dropped items where possible? This allows the system to select the correct item for your world era.",
