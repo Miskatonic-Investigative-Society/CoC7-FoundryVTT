@@ -14,6 +14,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Prevent same colour for text and background when viewing Development tab (skills base and total values)
 - Prevent tooltip showing for skills flagged for development in development tab
 - Update to French localization, thanks to @vonv #1696
+- Update to Ukrainian localization, thanks to @JornieNonsubia #1713
 
 ## Version 7.8
 
