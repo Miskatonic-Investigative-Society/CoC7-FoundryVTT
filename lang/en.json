@@ -12,6 +12,7 @@
   "CoC7.ActorIsSyntheticActor": "Actor is a synthetic actor (instance of an actor)",
 
   "CoC7.Entities.Archetype": "Archetype",
+  "CoC7.Entities.Armor": "Armor",
   "CoC7.Entities.Book": "Book",
   "CoC7.Entities.Chase": "Chase",
   "CoC7.Entities.Item": "Item",
@@ -219,6 +220,8 @@
   "CoC7.RollDifficultyExtremeTitle": "Extreme difficulty",
   "CoC7.RollDifficultyCritical": "Critical",
   "CoC7.RollDifficultyCriticalTitle": "Critical difficulty",
+  "CoC7.RollDifficultyImpossible": "Impossible",
+  "CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
   "CoC7.RollResult.LuckSpendText": "{luckAmount} luck spend, {successLevel} success",
   "CoC7.RollDice": "Roll !",
   "CoC7.CreateLink": "Create link",
@@ -489,6 +492,7 @@
   "CoC7.AddBook": "Add book",
   "CoC7.NewSpellName": "new spell",
   "CoC7.AddSpell": "Add spell",
+  "CoC7.AddArmor": "Add armor",
 
   "CoC7.AddWeapon": "Add weapon",
   "CoC7.NewWeaponName": "new weapon",
@@ -1064,6 +1068,9 @@
   "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
   "CoC7.Settings.WorldEra.Name": "Era for the world",
   "CoC7.Settings.WorldEra.Hint": "Skills can vary slightly between eras, please select the era for this world so system searches for skills find the correct ones.",
+  "CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
+  "CoC7.Settings.ShowWorldEra.Hint": "",
+
   "CoC7.Settings.DropCoCID.Name": "Use CoC ID on item drops",
   "CoC7.Settings.DropCoCID.Hint": "When dropping items with a CoC ID prompt to store the CoC ID instead of the item",
   "CoC7.Settings.DropCoCID.Dialog": "Use the CoC ID for dropped items where possible? This allows the system to select the correct item for your world era.",

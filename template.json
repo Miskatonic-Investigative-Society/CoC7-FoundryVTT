@@ -377,7 +377,8 @@
       "spell",
       "talent",
       "status",
-      "chase"
+      "chase",
+      "armor"
     ],
     "item": {
       "description": {
@@ -804,6 +805,12 @@
       "started": false,
       "vehicle": false,
       "participants": []
+    },
+    "armor": {
+      "description": {
+        "value": "",
+        "keeper": ""
+      }
     }
   }
 }

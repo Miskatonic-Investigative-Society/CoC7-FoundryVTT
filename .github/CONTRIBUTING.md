@@ -99,6 +99,8 @@ And with this you can create a system build that will be sent directly to your F
 
 If you do not configure this file, all the builds will be built in the build folder, on the root directory.
 
+Run `npm run build-compendiums` to generate the binary packs as they are not included.
+
 Run `npm run build` to perform a one off compile/build.
 
 Now everything is ready for you to make any changes or additions you want.

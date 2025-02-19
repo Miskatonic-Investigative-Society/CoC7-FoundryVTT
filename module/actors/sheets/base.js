@@ -469,6 +469,7 @@ export class CoC7ActorSheet extends ActorSheet {
     sheetData.showInventoryTalents = false
     sheetData.showInventoryStatuses = false
     sheetData.showInventoryWeapons = false
+    sheetData.showInventoryArmor = false
 
     sheetData.hasConditions =
       this.actor.effects.size > 0 ||
@@ -856,7 +857,7 @@ export class CoC7ActorSheet extends ActorSheet {
     })
 
     html
-      .find('.skill-name.rollable')
+      .find('.skill-name.rollable:not(.withouttooltip)')
       .mouseenter(this.toolTipSkillEnter.bind(this))
       .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
     html
