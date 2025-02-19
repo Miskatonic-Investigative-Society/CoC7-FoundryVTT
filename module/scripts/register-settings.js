@@ -50,6 +50,18 @@ export function registerSettings () {
     }
   })
 
+  game.settings.register('CoC7', 'showWorldEra', {
+    name: 'CoC7.Settings.ShowWorldEra.Name',
+    hint: 'CoC7.Settings.ShowWorldEra.Hint',
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean,
+    onChange: () => {
+      ui.players.render(true)
+    }
+  })
+
   game.settings.register('CoC7', 'dropCoCID', {
     name: 'CoC7.Settings.DropCoCID.Name',
     hint: 'CoC7.Settings.DropCoCID.Hint',
