@@ -9,7 +9,12 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.9
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Added range localization to combat flow, thanks to @lozanoje #1699
+- Add toggle to hide world era on player list
 - Fix switching linked actors Summarize sheet token distance calculations
 - Prevent same colour for text and background when viewing Development tab (skills base and total values)
 - Prevent tooltip showing for skills flagged for development in development tab
