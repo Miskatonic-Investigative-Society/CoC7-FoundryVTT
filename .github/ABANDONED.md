@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (463 untranslated strings)](#cnjson)
+[cn.json (465 untranslated strings)](#cnjson)
 
-[cs.json (648 untranslated strings)](#csjson)
+[cs.json (650 untranslated strings)](#csjson)
 
-[ko.json (245 untranslated strings)](#kojson)
+[ko.json (247 untranslated strings)](#kojson)
 
-[pt-BR.json (193 untranslated strings)](#ptbrjson)
+[pt-BR.json (195 untranslated strings)](#ptbrjson)
 
-[ru.json (115 untranslated strings)](#rujson)
+[ru.json (117 untranslated strings)](#rujson)
 
-[zh-TW.json (92 untranslated strings)](#zhtwjson)
+[zh-TW.json (94 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-463 untranslated strings
+465 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -317,6 +317,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
 "CoC7.Settings.WorldEra.Name": "Era for the world",
 "CoC7.Settings.WorldEra.Hint": "Skills can vary slightly between eras, please select the era for this world so system searches for skills find the correct ones.",
+"CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
+"CoC7.Settings.ShowWorldEra.Hint": "",
 "CoC7.Settings.DropCoCID.Name": "Use CoC ID on item drops",
 "CoC7.Settings.DropCoCID.Hint": "When dropping items with a CoC ID prompt to store the CoC ID instead of the item",
 "CoC7.Settings.DropCoCID.Dialog": "Use the CoC ID for dropped items where possible? This allows the system to select the correct item for your world era.",
@@ -483,7 +485,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## cs.json
-648 untranslated strings
+650 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -921,6 +923,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
 "CoC7.Settings.WorldEra.Name": "Era for the world",
 "CoC7.Settings.WorldEra.Hint": "Skills can vary slightly between eras, please select the era for this world so system searches for skills find the correct ones.",
+"CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
+"CoC7.Settings.ShowWorldEra.Hint": "",
 "CoC7.Settings.DropCoCID.Name": "Use CoC ID on item drops",
 "CoC7.Settings.DropCoCID.Hint": "When dropping items with a CoC ID prompt to store the CoC ID instead of the item",
 "CoC7.Settings.DropCoCID.Dialog": "Use the CoC ID for dropped items where possible? This allows the system to select the correct item for your world era.",
@@ -1135,7 +1139,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ko.json
-245 untranslated strings
+247 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Lck": "Lck",
@@ -1232,6 +1236,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When using the investigator wizard improvements and characteristic adjustments are not made",
 "CoC7.Settings.WorldEra.Name": "Era for the world",
 "CoC7.Settings.WorldEra.Hint": "Skills can vary slightly between eras, please select the era for this world so system searches for skills find the correct ones.",
+"CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
+"CoC7.Settings.ShowWorldEra.Hint": "",
 "CoC7.Settings.DropCoCID.Name": "Use CoC ID on item drops",
 "CoC7.Settings.DropCoCID.Hint": "When dropping items with a CoC ID prompt to store the CoC ID instead of the item",
 "CoC7.Settings.DropCoCID.Dialog": "Use the CoC ID for dropped items where possible? This allows the system to select the correct item for your world era.",
@@ -1384,7 +1390,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-193 untranslated strings
+195 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Lck": "Lck",
@@ -1456,6 +1462,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.Japanese": "Japanese",
 "CoC7.System.Documentation": "View CoC7 System Manual",
+"CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
+"CoC7.Settings.ShowWorldEra.Hint": "",
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
@@ -1581,7 +1589,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-115 untranslated strings
+117 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Lck": "Lck",
@@ -1654,6 +1662,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InfoLessSkillThanOptions": "There's only {skillCount} and {optionsCount} options, adding all of them",
 "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 "CoC7.Japanese": "Japanese",
+"CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
+"CoC7.Settings.ShowWorldEra.Hint": "",
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
@@ -1700,7 +1710,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## zh-TW.json
-92 untranslated strings
+94 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Lck": "Lck",
@@ -1743,6 +1753,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.Japanese": "Japanese",
 "CoC7.System.Documentation": "View CoC7 System Manual",
+"CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
+"CoC7.Settings.ShowWorldEra.Hint": "",
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
