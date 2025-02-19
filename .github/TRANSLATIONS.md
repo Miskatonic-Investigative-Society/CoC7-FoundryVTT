@@ -4,23 +4,23 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cn.json (463 untranslated strings)](./ABANDONED.md#cnjson)
+[cn.json (465 untranslated strings)](./ABANDONED.md#cnjson)
 
-[cs.json (648 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (650 untranslated strings)](./ABANDONED.md#csjson)
 
-[ko.json (245 untranslated strings)](./ABANDONED.md#kojson)
+[ko.json (247 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (193 untranslated strings)](./ABANDONED.md#ptbrjson)
+[pt-BR.json (195 untranslated strings)](./ABANDONED.md#ptbrjson)
 
-[ru.json (115 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (117 untranslated strings)](./ABANDONED.md#rujson)
 
-[zh-TW.json (92 untranslated strings)](./ABANDONED.md#zhtwjson)
+[zh-TW.json (94 untranslated strings)](./ABANDONED.md#zhtwjson)
 
 
 
 |Key|de|es|fr|it|ja|pl|sv|uk|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**9**|**7**|**4**|**35**|**10**|**16**|**7**|**4**|
+|**Remaining**:|**11**|**9**|**6**|**37**|**12**|**18**|**9**|**6**|
 |[CoC7.ActorCoCIDItemsActorDirectory](#coc7actorcociditemsactordirectory)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ActorCoCIDItemsActorSheets](#coc7actorcociditemsactorsheets)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ActorCoCIDItemsAny](#coc7actorcociditemsany)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
@@ -51,6 +51,8 @@ The following translations have more than 50 untranslated strings [are you able 
 |[CoC7.RollDifficultyImpossibleTitle](#coc7rolldifficultyimpossibletitle)|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SANLossFail](#coc7sanlossfail)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.SANLossPass](#coc7sanlosspass)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.Settings.ShowWorldEra.Hint](#coc7settingsshowworlderahint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Settings.ShowWorldEra.Name](#coc7settingsshowworlderaname)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[SETTINGS.DoNotPromptNoTargetSelected](#settingsdonotpromptnotargetselected)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
 |[SETTINGS.DoNotPromptNoTargetSelectedHit](#settingsdonotpromptnotargetselectedhit)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
 |[SETTINGS.allowMythosHardenedHint](#settingsallowmythoshardenedhint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
@@ -117,6 +119,10 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "CoC7.SANLossFail": "fail",```
 ##### CoC7.SANLossPass
 ```  "CoC7.SANLossPass": "pass",```
+##### CoC7.Settings.ShowWorldEra.Hint
+```  "CoC7.Settings.ShowWorldEra.Hint": "",```
+##### CoC7.Settings.ShowWorldEra.Name
+```  "CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",```
 ##### SETTINGS.DoNotPromptNoTargetSelected
 ```  "SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",```
 ##### SETTINGS.DoNotPromptNoTargetSelectedHit
