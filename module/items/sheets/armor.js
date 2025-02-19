@@ -38,6 +38,14 @@ export class CoC7ArmorSheet extends ItemSheet {
       }
     )
 
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      {
+        async: true,
+        secrets: sheetData.editable
+      }
+    )
+
     sheetData.effects = CoC7ActiveEffect.prepareActiveEffectCategories(
       this.item.effects
     )
