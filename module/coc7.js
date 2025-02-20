@@ -24,6 +24,7 @@ import { CoC7SystemSocket } from './apps/coc7-system-socket.js'
 import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 import CoC7ClickableEvents from './apps/coc7-clickable-events.js'
 import DrawNote from './hooks/draw-note.js'
+import PopOutLoaded from './hooks/popout-loaded.js'
 import RenderCoC7JournalSheet from './hooks/render-coc7-journal-sheet.js'
 import RenderJournalTextPageSheet from './hooks/render-journal-text-page-sheet.js'
 
@@ -509,3 +510,5 @@ CONFIG.ui.actors = CoC7ActorDirectory
 Hooks.on('drawNote', DrawNote)
 Hooks.on('renderCoC7JournalSheet', RenderCoC7JournalSheet)
 Hooks.on('renderJournalTextPageSheet', RenderJournalTextPageSheet)
+
+Hooks.on('PopOut:loaded', PopOutLoaded)
