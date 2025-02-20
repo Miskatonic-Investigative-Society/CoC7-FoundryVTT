@@ -22,18 +22,18 @@
       {{#if object.coreCharacteristic}}
         <p>{{{localize 'CoC7.InvestigatorWizard.CoreCharacteristicName' coreCharacteristic=coreCharacteristic}}}</p>
       {{/if}}
-      <div class="flexcol">
+      <div class="flexcol-coc7">
         <ol class="item-list">
           {{#if (eq characteristicsMethod characteristicsMethods.METHOD_CHOOSE)}}
             {{#if (or object.rerollsEnabled (not object.rolledValues.length))}}
-              <li class="item flexrow">
+              <li class="item flexrow-coc7">
                 <div class="flex2"></div>
                 <button class="roll_choose">{{localize 'CoC7.RollDice'}}</button>
                 <div class="flex2"></div>
               </li>
             {{/if}}
             {{#if object.rolledValues.length}}
-              <li class="item flexrow unsorted-characteristics" data-empty="x">
+              <li class="item flexrow-coc7 unsorted-characteristics" data-empty="x">
               {{#each object.rolledValues as |roll offset|}}
                 {{#unless roll.assigned}}
                   <div draggable="true" class="draggable characteristic" data-offset="{{offset}}">
@@ -44,7 +44,7 @@
               </li>
             {{/if}}
           {{else}}
-          <li class="item flexrow unsorted-characteristics" data-characteristic-key="-">
+          <li class="item flexrow-coc7 unsorted-characteristics" data-characteristic-key="-">
             &nbsp;
             {{#each object.placeable as |value|}}
               <div draggable="true" class="draggable characteristic" data-characteristic-key="-" data-value="{{value}}">
@@ -54,8 +54,8 @@
           </li>
           {{/if}}
           {{#each setup.characteristics as |characteristic|}}
-            <li class="item flexrow" data-characteristic-key="{{characteristic.key}}">
-              <div class="item-name flexrow">
+            <li class="item flexrow-coc7" data-characteristic-key="{{characteristic.key}}">
+              <div class="item-name flexrow-coc7">
                 <label class="flex2">{{localize characteristic.label}}:</label>
                 <div class="nothing-characteristic"></div>
                 <div draggable="true" class="{{#if (eq (lookup ../object.setupPoints characteristic.key) '')}}notdraggable{{else}}draggable{{/if}}" data-characteristic-key="{{characteristic.key}}">
@@ -65,8 +65,8 @@
               </div>
             </li>
           {{/each}}
-          <li class="item flexrow" data-key="luck" data-roll="{{setup.luck.roll}}">
-            <div class="item-name flexrow">
+          <li class="item flexrow-coc7" data-key="luck" data-roll="{{setup.luck.roll}}">
+            <div class="item-name flexrow-coc7">
               <label class="flex2">{{localize setup.luck.label}} - {{setup.luck.roll}}:</label>
               <div class="nothing-characteristic"></div>
               <input class="flex1 save-characteristic-on-blur" type="text" name="luck" value="{{lookup object.setupPoints 'luck'}}" placeholder="{{localize 'CoC7.Value'}}" />
@@ -77,7 +77,7 @@
               {{/if}}
             </div>
           </li>
-          <li class="item flexrow">
+          <li class="item flexrow-coc7">
             <label for="age" class="flex2">{{localize 'CoC7.InvestigatorWizard.AgeRange'}}</label>
             <div class="nothing-characteristic"></div>
             <input type="number" class="submit_on_blur" name="age" value="{{object.age}}">
@@ -86,11 +86,11 @@
         </ol>
       </div>
     {{else}}
-      <div class="flexcol">
+      <div class="flexcol-coc7">
         <ol class="item-list">
           {{#each setup.characteristics as |characteristic|}}
-            <li class="item flexrow" data-key="{{characteristic.key}}" data-roll="{{characteristic.roll}}">
-              <div class="item-name flexrow">
+            <li class="item flexrow-coc7" data-key="{{characteristic.key}}" data-roll="{{characteristic.roll}}">
+              <div class="item-name flexrow-coc7">
                 <label class="flex2">{{localize characteristic.label}}{{#if (eq ../characteristicsMethod ../characteristicsMethods.METHOD_ROLL)}} - {{characteristic.roll}}{{/if}}:</label>
                 {{#if (eq ../characteristicsMethod ../characteristicsMethods.METHOD_POINTS)}}
                   <a class="decrease-10-characteristic"><i class="fas fa-angles-down"></i></a>
@@ -110,8 +110,8 @@
               </div>
             </li>
           {{/each}}
-          <li class="item flexrow" data-key="luck" data-roll="{{setup.luck.roll}}">
-            <div class="item-name flexrow">
+          <li class="item flexrow-coc7" data-key="luck" data-roll="{{setup.luck.roll}}">
+            <div class="item-name flexrow-coc7">
               <label class="flex2">{{localize setup.luck.label}} - {{setup.luck.roll}}:</label>
               {{#if (eq characteristicsMethod characteristicsMethods.METHOD_POINTS)}}
                 <div class="nothing-10-characteristic"></div>
@@ -128,12 +128,12 @@
               {{/if}}
             </div>
           </li>
-          <li class="item flexrow">
+          <li class="item flexrow-coc7">
             &nbsp;
           </li>
           {{#if (eq characteristicsMethod characteristicsMethods.METHOD_POINTS)}}
-            <li class="item flexrow">
-              <div class="item-name flexrow">
+            <li class="item flexrow-coc7">
+              <div class="item-name flexrow-coc7">
                 <label class="flex2">{{localize 'CoC7.CharacteristicsPoints'}}:</label>
                 {{#if (eq characteristicsMethod characteristicsMethods.METHOD_POINTS)}}
                   <div class="nothing-characteristic"></div>
@@ -146,30 +146,30 @@
                 <div class="nothing-characteristic"></div>
               </div>
             </li>
-            <li class="item flexrow">
+            <li class="item flexrow-coc7">
               &nbsp;
             </li>
           {{else}}
-            <li class="item flexrow">
-              <div class="item-name flexrow">
+            <li class="item flexrow-coc7">
+              <div class="item-name flexrow-coc7">
                 <label class="flex2">{{localize 'CoC7.CharacteristicsPoints'}}:</label>
                 <span class='total'>{{setup.total}}</span>
                 <div class="nothing-characteristic"></div>
               </div>
             </li>
-            <li class="item flexrow">
+            <li class="item flexrow-coc7">
               &nbsp;
             </li>
-            <li class="item flexrow">
+            <li class="item flexrow-coc7">
               <label class="flex2">&nbsp;</label>
               <button class="roll_all">{{localize 'CoC7.RollDice'}}</button>
               <div class="nothing-characteristic"></div>
             </li>
-            <li class="item flexrow">
+            <li class="item flexrow-coc7">
               &nbsp;
             </li>
           {{/if}}
-          <li class="item flexrow">
+          <li class="item flexrow-coc7">
             <label for="age" class="flex2">{{localize 'CoC7.InvestigatorWizard.AgeRange'}}</label>
             <div class="nothing-characteristic"></div>
             <input type="number" class="submit_on_blur" name="age" value="{{object.age}}">

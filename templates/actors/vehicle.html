@@ -1,4 +1,4 @@
-<form class="{{cssClass}} sheetV2 flexcol" autocomplete="off">
+<form class="{{cssClass}} sheetV2 flexcol-coc7" autocomplete="off">
   <div class="token-extras">
     {{#if canDragToken}}
       <div draggable="true" class="token-drag-handle" title="{{ localize 'CoC7.ActorIsTokenHint'}}"><i class="fas fa-user-circle"></i></div>
@@ -28,28 +28,28 @@
       </div>
 
       <div class="infos">
-        <div class="row flexrow">
+        <div class="row flexrow-coc7">
           <input class="name" name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CoC7.Name' }}" />
         </div>
 
-        <div class="row flexrow">
+        <div class="row flexrow-coc7">
           <input class="name" type="text" name="system.infos.type" value="{{data.system.infos.type}}" placeholder="{{ localize 'CoC7.Type' }}" />
         </div>
-        <div class="row flexrow">
+        <div class="row flexrow-coc7">
           <input class="name" type="text" name="system.infos.origin" value="{{data.system.infos.origin}}" placeholder="{{ localize 'CoC7.Origin' }}" />
         </div>
-        <div class="row flexrow">
+        <div class="row flexrow-coc7">
           <label>{{ localize 'CoC7.Crew' }} :</label>
           <input type="text" name="system.crew.total" value="{{data.system.crew.total}}" />
         </div>
       </div>
 
       <div class="flex1" style="padding: 1px, 3px;">
-        <div class="attribute flexrow">
+        <div class="attribute flexrow-coc7">
           <div class="flex1"><label>{{localize "CoC7.Movement"}} :</label></div>
           <div class="flex1"><span>{{actor.mov}}</span></div>
           <div class="flex1"><label>{{localize "CoC7.Build"}} :</label></div>
-          <div class="flex2 flexrow"><input class="attribute-value" type="text" value="{{actor.hp}}" name="system.attribs.build.current" /><span>/{{actor.build}}</span></div>
+          <div class="flex2 flexrow-coc7"><input class="attribute-value" type="text" value="{{actor.hp}}" name="system.attribs.build.current" /><span>/{{actor.build}}</span></div>
         </div>
         {{#if data.system.attribs.armor.localized}}
           <label>{{ localize 'CoC7.ArmourPlating'}} :</label>
@@ -64,7 +64,7 @@
             {{/each}}
           </div>
         {{else}}
-          <div class="flexrow">
+          <div class="flexrow-coc7">
             <label>{{localize "CoC7.Armor"}} :</label>
             <span>{{data.system.attribs.armor.value}}</span>
           </div>

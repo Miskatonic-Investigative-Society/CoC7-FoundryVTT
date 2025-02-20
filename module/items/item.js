@@ -1,4 +1,4 @@
-/* global CONFIG, foundry, game, Item, Roll, TextEditor, Token, ui, fromUuid */
+/* global CONFIG, foundry, fromUuid, game, Item, Roll, TextEditor, Token, ui */
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
 import { CoCIDEditor } from '../apps/coc-id-editor.js'

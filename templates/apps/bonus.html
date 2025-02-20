@@ -1,9 +1,9 @@
 <form id="bonus-roll-form">
 
-  <div class="flexcol">
+  <div class="flexcol-coc7">
 
     {{#if cardTypes}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize 'CoC7.CardType'}}</label>
         <select name="cardType">
           {{selectOptions cardTypes selected=options.cardType localize=true}}
@@ -12,14 +12,14 @@
     {{/if}}
 
     {{#if options.askValue}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize 'CoC7.RollThreshold'}}</label>
         <input type="number" name="threshold" value="{{options.threshold}}" />
       </div>
     {{/if}}
 
     {{#unless hideDifficulty}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize 'CoC7.RollDifficulty'}}</label>
         <select name="difficulty">
           {{#if options.difficulty}}
@@ -38,23 +38,23 @@
     {{/unless}}
 
     {{#if allowFlatDiceModifier}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize 'CoC7.FlatDiceModifier'}}</label>
         <input type="number" name="flatDiceModifier" value="{{#if options.flatDiceModifier}}{{options.flatDiceModifier}}{{else}}0{{/if}}" />
       </div>
     {{/if}}
 
     {{#if allowFlatThresholdModifier}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize 'CoC7.FlatModifier'}}</label>
         <input type="number" name="flatThresholdModifier" value="{{#if options.flatThresholdModifier}}{{options.flatThresholdModifier}}{{else}}0{{/if}}" />
       </div>
     {{/if}}
 
-    <div class="flexrow" style="padding: 4px 0;">
+    <div class="flexrow-coc7" style="padding: 4px 0;">
       <div style="flex: 1;"><label>{{localize 'CoC7.BonusDice'}}</label></div>
       <div style="flex: 1;display: flex;flex-direction: column;">
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           <span style="flex: 1; text-align: left;">-2</span>
           <span style="flex: 1; text-align: center;"></span>
           <span style="flex: 1; text-align: center;">-1</span>

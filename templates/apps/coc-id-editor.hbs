@@ -4,7 +4,7 @@
   <input type="hidden" name="id" value="{{id}}">
   <div class="form-group">
     <label for="_existing">{{localize 'CoC7.CoCIDFlag.key'}}:</label>
-    <div class="flexrow" style="flex: 2; border: 1px solid transparent; padding: 1px 3px 1px 0;">
+    <div class="flexrow-coc7" style="flex: 2; border: 1px solid transparent; padding: 1px 3px 1px 0;">
       {{#if existingKeys.length}}
         <select style="margin-left: -2px;" name="known">
           <option value="">{{localize 'CoC7.CoCIDFlag.new'}}</option>
@@ -26,7 +26,7 @@
   {{#if (and existingKeys.length (not isSystemID))}}
     <div class="form-group">
       <label>&nbsp;</label>
-      <div class="flexrow" style="flex: 2; border: 1px solid transparent; padding: 1px 3px 1px 0;">
+      <div class="flexrow-coc7" style="flex: 2; border: 1px solid transparent; padding: 1px 3px 1px 0;">
         <span style="flex: 0; margin-top: 2px;">{{idPrefix}}</span>
         <input type="text" style="flex: 2;" name="_existing" value="{{_existing}}" data-prefix="{{idPrefix}}">
       </div>
@@ -128,7 +128,7 @@
     </div>
     <div class="form-group">
       <label>{{localize 'CoC7.CoCIDFlag.foundry-id'}}:</label>
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <input type="text" value="{{object.id}}" readonly>
         <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
           <i class="fas fa-copy"></i>
@@ -137,7 +137,7 @@
     </div>
     <div class="form-group">
       <label>{{localize 'CoC7.CoCIDFlag.foundry-uuid'}}:</label>
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <input type="text" value="{{object.uuid}}" readonly>
         <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
           <i class="fas fa-copy"></i>
@@ -146,7 +146,7 @@
     </div>
     <div class="form-group">
       <label>{{localize 'CoC7.CoCIDFlag.get-this-document'}}:</label>
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <input type="text" value="await fromUuid('{{object.uuid}}')" readonly>
         <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
           <i class="fas fa-copy"></i>
@@ -156,7 +156,7 @@
     {{#if (or id)}}
       <div class="form-group">
         <label>{{localize 'CoC7.CoCIDFlag.get-document-like-this'}}:</label>
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           <input type="text" value="await game.system.api.cocid.fromCoCID('{{id}}', '{{lang}}')" readonly>
           <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
             <i class="fas fa-copy"></i>

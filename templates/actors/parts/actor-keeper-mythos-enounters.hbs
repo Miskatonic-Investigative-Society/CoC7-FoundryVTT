@@ -1,5 +1,5 @@
-<div class="flexcol bio-section" style="flex: 0 0 50%;">
-  <div class="flexrow" style="flex: initial;">
+<div class="flexcol-coc7 bio-section" style="flex: 0 0 50%;">
+  <div class="flexrow-coc7" style="flex: initial;">
     <label style="height: 1rem;margin: 0;border: 0;font-family: customSheetFont, 'Palatino Linotype', serif;font-size: .75rem;flex: 1;">{{localize 'CoC7.SanityLossEncounters'}}</label>
     <div class="item-controls" style="height: fit-content;font-size: 10px;flex: 0 0 16px;">
       <a class="sanity-loss-type-add" title="{{localize 'CoC7.AddSanityLossEncounter'}}" data-type="encounter"><i class="fas fa-plus-square"></i></a>
@@ -8,7 +8,7 @@
   <div class="bio-section-value" style="min-height: 80px;">
     {{#each data.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
       {{#unless sanityLossEvent.immunity}}
-        <div class="flexrow" data-offset="{{mythosOffset}}">
+        <div class="flexrow-coc7" data-offset="{{mythosOffset}}">
           <div class="bio-section-type">{{sanityLossEvent.type}}</div>
           <div class="bio-section-values">
             <input class="mythosEncountersTotalLoss" type="text" value="{{sanityLossEvent.totalLoss}}" data-dtype="Number">
@@ -21,8 +21,8 @@
     {{/each}}
   </div>
 </div>
-<div class="flexcol bio-section" style="flex: 0 0 50%;">
-  <div class="flexrow" style="flex: initial;">
+<div class="flexcol-coc7 bio-section" style="flex: 0 0 50%;">
+  <div class="flexrow-coc7" style="flex: initial;">
     <label style="height: 1rem;margin: 0;border: 0;font-family: customSheetFont, 'Palatino Linotype', serif;font-size: .75rem;flex: 1;">{{localize 'CoC7.SanityLossImmunities'}}</label>
     <div class="item-controls" style="height: fit-content;font-size: 10px;flex: 0 0 16px;">
       <a class="sanity-loss-type-add" title="{{localize 'CoC7.AddSanityLossImmunity'}}" data-type="immunity"><i class="fas fa-plus-square"></i></a>
@@ -31,7 +31,7 @@
   <div class="bio-section-value" style="min-height: 80px;">
     {{#each data.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
       {{#if sanityLossEvent.immunity}}
-        <div class="flexrow" data-offset="{{mythosOffset}}">
+        <div class="flexrow-coc7" data-offset="{{mythosOffset}}">
           <div class="bio-section-type">{{sanityLossEvent.type}}</div>
           <div class="item-controls">
             <a class="item-control sanity-loss-type-delete" title="{{localize 'CoC7.DeleteSanityLossImmunity'}}"><i class="fas fa-trash"></i></a>

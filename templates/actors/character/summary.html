@@ -1,7 +1,7 @@
 <form class="summarized" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}}>
   <div class="container">
-    <div class="header flexrow" style="flex-wrap: nowrap;">
-      <div class="flexrow attribute" data-attrib="lck" style="flex-wrap: nowrap;">
+    <div class="header flexrow-coc7" style="flex-wrap: nowrap;">
+      <div class="flexrow-coc7 attribute" data-attrib="lck" style="flex-wrap: nowrap;">
         <label class="attribute-label rollable">{{localize 'CoC7.Luck'}}</label>
         <div class="current-value">
           <input class="attribute-value" type="text" name="system.attribs.lck.value" value="{{data.system.attribs.lck.value}}" data-dtype="Number" />
@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <div class="flexrow" data-attrib="hp" style="flex-wrap: nowrap;">
+      <div class="flexrow-coc7" data-attrib="hp" style="flex-wrap: nowrap;">
         <label class="attribute-label">{{localize 'CoC7.HitPoints'}}</label>
         <div class="current-value">
           <input class="attribute-value" type="text" name="system.attribs.hp.value" value="{{data.system.attribs.hp.value}}" data-dtype="Number" />
@@ -43,7 +43,7 @@
         {{/if}}
       </div>
 
-      <div class="flexrow attribute" data-attrib="san" style="flex-wrap: nowrap;">
+      <div class="flexrow-coc7 attribute" data-attrib="san" style="flex-wrap: nowrap;">
         <label class="attribute-label rollable">{{localize 'CoC7.Sanity'}}</label>
         <div class="current-value">
           <input class="attribute-value" type="text" name="system.attribs.san.value" value="{{data.system.attribs.san.value}}" data-dtype="Number" />
@@ -67,7 +67,7 @@
         <a class="condition-monitor {{#if data.system.conditions.indefInsane.value}}status-on{{/if}}" title="{{#if data.system.conditions.indefInsane.value}}{{localize 'CoC7.UnderlyingInsanity'}}{{else}}{{localize 'CoC7.IndefiniteInsanity'}}{{/if}}" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>
       </div>
 
-      <div class="flexrow" data-attrib="mp" style="flex-wrap: nowrap;">
+      <div class="flexrow-coc7" data-attrib="mp" style="flex-wrap: nowrap;">
         <label class="attribute-label">{{localize 'CoC7.MagicPoints'}}</label>
         <div class="current-value">
           <input class="attribute-value" type="text" name="system.attribs.mp.value" value="{{data.system.attribs.mp.value}}" data-dtype="Number" />
@@ -164,7 +164,7 @@
           {{#if weapon.system.properties.melee}}
             <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
               <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
-              <div class="flexrow">
+              <div class="flexrow-coc7">
                 <div class="weapon-name combat {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
                 {{#if weapon.system.properties.thrown}}
                   <a class="weapon-name combat alternativ-skill {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}" title="Throw"><i class="game-icon game-icon-thrown-knife"></i></a>
@@ -181,7 +181,7 @@
           {{else}}
             <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
               <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
-              <div class="flexrow">
+              <div class="flexrow-coc7">
                 <div class="weapon-name combat {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
                 {{#if weapon.usesAlternateSkill}}
                   <a class="weapon-name combat alternativ-skill {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}" title="{{localize 'CoC7.AutomaticFire'}}"><i class="game-icon game-icon-machine-gun-magazine"></i></a>
@@ -202,7 +202,7 @@
           {{/if}}
         {{/each}}
       </ol>
-      <div class="flexrow cash-row">
+      <div class="flexrow-coc7 cash-row">
         <label>{{localize 'CoC7.MonetarySpendingLevel'}}</label>
         {{#if data.system.flags.manualCredit}}
           <input type="text" name="system.monetary.spendingLevel" value="{{data.system.monetary.spendingLevel}}">
@@ -210,7 +210,7 @@
           <span>{{monetary.spendingLevel}}</span>
         {{/if}}
       </div>
-      <div class="flexrow cash-row">
+      <div class="flexrow-coc7 cash-row">
         <label>{{localize 'CoC7.MonetaryCash'}}</label>
         {{#if data.system.flags.manualCredit}}
           <input type="text" name="system.monetary.cash" value="{{data.system.monetary.cash}}">

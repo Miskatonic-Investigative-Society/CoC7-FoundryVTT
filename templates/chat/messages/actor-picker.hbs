@@ -1,8 +1,8 @@
-<div class="directory flexcol">
+<div class="directory flexcol-coc7">
   <p style="flex: 0 0 auto;">{{localize 'CoC7.PickWhichActorDesc'}}</p>
   <ol class="directory-list">
     {{#each object.options}}
-    <li class="directory-item document actor flexrow{{#if (eq ../object.selected this.uuid)}} picked{{/if}}{{#if this.canPing}} can-ping{{/if}}" data-entry-uuid="{{this.uuid}}">
+    <li class="directory-item document actor flexrow-coc7{{#if (eq ../object.selected this.uuid)}} picked{{/if}}{{#if this.canPing}} can-ping{{/if}}" data-entry-uuid="{{this.uuid}}">
       <img class="thumbnail" title="{{this.name}}" src="{{this.img}}">
       <h4 class="entry-name document-name">{{this.name}}</h4>
     </li>

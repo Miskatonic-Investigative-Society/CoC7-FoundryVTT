@@ -1,5 +1,5 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
-  <div class="item-header flexrow" style="flex: 0 0 110px;">
+<form class="{{cssClass}} flexcol-coc7" autocomplete="off">
+  <div class="item-header flexrow-coc7" style="flex: 0 0 110px;">
     <div class="item-property" style="display: flex; flex-direction: column; flex: 1;">
       <div class="item-name" style="display: flex; flex-direction: row; height: 24px;">
         <input type="hidden" name="name" value="{{item.name}}" />
@@ -29,7 +29,7 @@
       </div>
 
       {{#unless hasOwner}}
-        <div class="flexrow" style="margin: 4px 0;">
+        <div class="flexrow-coc7" style="margin: 4px 0;">
           <label style="margin-right: 10px;">{{ localize "CoC7.Eras" }}</label>
           <div class="skill-attributes" data-set="eras">
             {{#each _eras as |era key|}}
@@ -53,14 +53,14 @@
   </nav>
 
   <section class="sheet-body">
-    <div class="tab description flexrow active" style="border-top: 2px groove #eeede0;padding: 0 0 0 5px;overflow: auto;" data-group="primary" data-tab="description">
+    <div class="tab description flexrow-coc7 active" style="border-top: 2px groove #eeede0;padding: 0 0 0 5px;overflow: auto;" data-group="primary" data-tab="description">
       {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
     <div class="tab coc7" data-group="primary" data-tab="effects">
       {{> "systems/CoC7/templates/common/active-effects.hbs"}}
     </div>
     {{#if isKeeper}}
-      <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
+      <div class="tab keeper flexcol-coc7" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
         {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
     {{/if}}

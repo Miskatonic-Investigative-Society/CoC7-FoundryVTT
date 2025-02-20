@@ -1,6 +1,6 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
-  <header class="sheet-header flexrow" style="flex: 0 0 80px;padding-bottom: 2px;">
-    <div class="header-details flexrow">
+<form class="{{cssClass}} flexcol-coc7" autocomplete="off">
+  <header class="sheet-header flexrow-coc7" style="flex: 0 0 80px;padding-bottom: 2px;">
+    <div class="header-details flexrow-coc7">
       <h1 class="name">
         <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CoC7.Name' }}" style="margin:0; padding:0;" />
       </h1>
@@ -31,11 +31,11 @@
     <div class="tab active" data-group="primary" data-tab="items">
       {{> "systems/CoC7/templates/actors/parts/actor-inventory-items.html"}}
     </div>
-    <div class="tab flexrow" data-group="primary" data-tab="description">
+    <div class="tab flexrow-coc7" data-group="primary" data-tab="description">
       {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
     {{#if isKeeper}}
-      <div class="tab flexcol" data-group="primary" data-tab="keeper">
+      <div class="tab flexcol-coc7" data-group="primary" data-tab="keeper">
         {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
     {{/if}}

@@ -1,11 +1,11 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
-  <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
-    <div class="header-details flexrow">
+<form class="{{cssClass}} flexcol-coc7" autocomplete="off">
+  <header class="sheet-header flexrow-coc7" style="flex: 0 0 64px;padding-bottom: 2px;">
+    <div class="header-details flexrow-coc7">
       <h1 class="name" style="height: 48px;">
         <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}" />
       </h1>
 
-      <ul class="summary flexrow">
+      <ul class="summary flexrow-coc7">
         <li class="flex2">
           <input type="text" name="system.source" value="{{data.system.source}}" placeholder="{{ localize 'CoC7.Source' }}" />
         </li>
@@ -32,7 +32,7 @@
   <section style="overflow: hidden;flex: 1;" class="sheet-body">
 
     {{!-- Description Tab --}}
-    <div class="tab flexrow active" data-group="primary" data-tab="description">
+    <div class="tab flexrow-coc7 active" data-group="primary" data-tab="description">
 
       <div class="item-properties">
         <ol class="properties-list">
@@ -121,8 +121,8 @@
 
         <ol class="item-list">
           {{#each data.system.skills as |skill|}}
-            <li class="item flexrow" data-item-id="{{skill._id}}" data-cocid="{{skill.flags.CoC7.cocidFlag.id}}">
-              <div class="item-name flexrow">
+            <li class="item flexrow-coc7" data-item-id="{{skill._id}}" data-cocid="{{skill.flags.CoC7.cocidFlag.id}}">
+              <div class="item-name flexrow-coc7">
                 <h4>{{skill.name}} ({{skill.system.base}}%)</h4>
               </div>
 

@@ -1,11 +1,11 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
-  <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
-    <div class="header-details flexrow">
+<form class="{{cssClass}} flexcol-coc7" autocomplete="off">
+  <header class="sheet-header flexrow-coc7" style="flex: 0 0 64px;padding-bottom: 2px;">
+    <div class="header-details flexrow-coc7">
       <h1 class="name" style="height: 48px;">
         <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}" />
       </h1>
 
-      <ul class="summary flexrow">
+      <ul class="summary flexrow-coc7">
         <li class="flex1">
           <input type="text" name="system.source" value="{{data.system.source}}" placeholder="{{ localize 'CoC7.Source' }}" />
         </li class="flex1">
@@ -29,7 +29,7 @@
   <section class="sheet-body">
 
     {{!-- Description Tab --}}
-    <div class="tab flexrow active" data-group="primary" data-tab="description">
+    <div class="tab flexrow-coc7 active" data-group="primary" data-tab="description">
 
       <div class="item-properties">
         <ol class="properties-list">
@@ -49,7 +49,7 @@
       {{!-- Talent Type --}}
       <div class="spell-type form-group stacked">
         <label>{{ localize "CoC7.InsanityType" }}</label>
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           <label class="checkbox">
             <input type="checkbox" name="system.type.mania" {{checked data.system.type.mania}} /> {{ localize "CoC7.Mania" }}
           </label>
@@ -66,7 +66,7 @@
       {{> "systems/CoC7/templates/common/active-effects.hbs"}}
     </div>
     {{#if isKeeper}}
-      <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
+      <div class="tab keeper flexcol-coc7" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
         {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
     {{/if}}

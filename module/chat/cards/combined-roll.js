@@ -5,22 +5,34 @@ import { RollCard } from './roll-card.js'
 
 export class CombinedCheckCard extends RollCard {
   static async bindListerners (html) {
-    html.on(
-      'click',
-      '.roll-card.combined .toggle-switch',
-      this._onToggle.bind(this)
-    )
-    // html.find('.roll-card a').click(async (event) => CombinedCheckCard._onClick( event));
-    html.on(
-      'click',
-      '.roll-card.combined a',
-      CombinedCheckCard._onClick.bind(this)
-    )
-    html.on(
-      'click',
-      '.roll-card.combined button',
-      CombinedCheckCard._onClick.bind(this)
-    )
+    if (foundry.utils.isNewerVersion(game.version, '13')) {
+      html.addEventListener('click', function (event) {
+        if (event.target.querySelector('.roll-card.combined .toggle-switch')) {
+          this._onToggle.bind(this)
+        } else if (event.target.querySelector('.roll-card.combined a')) {
+          CombinedCheckCard._onClick.bind(this)
+        } else if (event.target.querySelector('.roll-card.combined button')) {
+          CombinedCheckCard._onClick.bind(this)
+        }
+      })
+    } else {
+      html.on(
+        'click',
+        '.roll-card.combined .toggle-switch',
+        this._onToggle.bind(this)
+      )
+      // html.find('.roll-card a').click(async (event) => CombinedCheckCard._onClick( event));
+      html.on(
+        'click',
+        '.roll-card.combined a',
+        CombinedCheckCard._onClick.bind(this)
+      )
+      html.on(
+        'click',
+        '.roll-card.combined button',
+        CombinedCheckCard._onClick.bind(this)
+      )
+    }
   }
 
   static get defaultConfig () {

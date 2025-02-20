@@ -1,10 +1,10 @@
 <form id="char-selection-form" class="coc7 skill-selector">
-    <div class="flexcol">
+    <div class="flexcol-coc7">
         <ol class="item-list">
             {{#each characteristics as |characteristic|}}
-                <li class="item flexrow selectable" data-key="{{characteristic.key}}">
-                    <div class="item-name flexrow">
-                        <h4>{{characteristic.label}} {{#if characteristic.value}}({{characteristic.value}}){{/if}}</h4>    
+                <li class="item flexrow-coc7 selectable" data-key="{{characteristic.key}}">
+                    <div class="item-name flexrow-coc7">
+                        <h4>{{characteristic.label}} {{#if characteristic.value}}({{characteristic.value}}){{/if}}</h4>
                     </div>
                 </li>
             {{/each}}

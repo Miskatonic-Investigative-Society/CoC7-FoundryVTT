@@ -1,4 +1,4 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
+<form class="{{cssClass}} flexcol-coc7" autocomplete="off">
   <nav class="tabs sheet-nav" data-group="primary">
     <div class="tab tab-green">
       <a class="tab-label" data-tab="background" data-group="primary">{{localize 'CoC7.Background'}}</a>
@@ -56,7 +56,7 @@
     {{/if}}
   </div>
 
-  <section class="sheet flexcol">
+  <section class="sheet flexcol-coc7">
     <div class="ornament-top"></div>
     <div class="sheet-inner">
       <section class="sheet-header">
@@ -120,7 +120,7 @@
             </div>
           </div>
           {{~> 'systems/CoC7/templates/actors/parts/actor-characteristics-v3.hbs'}}
-          <div class="secondary-attributes flexrow">
+          <div class="secondary-attributes flexrow-coc7">
             <div class="secondary-attribute attribute attr-hp{{#unless (and data.system.flags.locked data.system.attribs.hp.auto)}} manual-override{{/unless}}" data-attrib="hp">
               <div class="attribute-label{{#unless data.system.flags.locked}} auto-toggle{{/unless}}">{{localize 'CoC7.HP'}}</div>
               <input class="attribute-value" type="text" name="system.attribs.hp.value" value="{{data.system.attribs.hp.value}}" data-dtype="Number" />
@@ -199,7 +199,7 @@
           </div>
         </div>
       </section>
-      <div class="sheet-main flexcol">
+      <div class="sheet-main flexcol-coc7">
         <div class="tab-top-line"></div>
         <section class="sheet-body">
           <!-- Development -->
@@ -235,7 +235,7 @@
           {{#unless data.system.flags.locked}}
             <div class="tab portrait-frame" data-tab="portrait-frame">
               <h2>Portrait Options</h2>
-              <div class="flexrow">
+              <div class="flexrow-coc7">
                 <div class="optionbox">
                   <div class="photo-frame" data-object-fit="contain">
                     <img class="sheet-photo portrait-frame" src="{{actor.img}}" style="object-fit: contain;">
@@ -247,7 +247,7 @@
                   </div>
                 </div>
               </div>
-              <div class="flexrow">
+              <div class="flexrow-coc7">
                 <div class="optionbox">
                   <div class="photo-frame" data-object-fit="fill">
                     <img class="sheet-photo portrait-frame" src="{{actor.img}}" style="object-fit: fill;">

@@ -1,7 +1,7 @@
 <div class="coc7 chat-card melee target" data-actor-key="{{actorKey}}" data-initiator-key="{{initiatorKey}}" data-fast-forward="{{fastForward}}" data-resolved="{{resolved}}" data-outnumbered="{{outnumbered}}" data-surprised="{{surprised}}" data-auto-success="{{autoSuccess}}" data-dice-modifier="{{diceModifier}}" data-parent-message-id="{{parentMessageId}}" data-skill-id="{{skillId}}" data-item-id="{{itemId}}" data-dodging="{{dodging}}" data-not-responding="{{notResponding}}" data-fighting-back="{{fightingBack}}" data-maneuvering="{{maneuvering}}" data-resolution-card="{{resolutionCard}}" data-is-blind="false">
 
-  <header class="card-header flexcol">
-    <div class="flexrow">
+  <header class="card-header flexcol-coc7">
+    <div class="flexrow-coc7">
       {{#if displayActorOnCard}}
         <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36" />
       {{/if}}
@@ -43,11 +43,11 @@
   </header>
 
   {{#unless rolled}}
-    <div class="flexrow response-selection owner-only">
+    <div class="flexrow-coc7 response-selection owner-only">
       <span class="flex1 toggle-switch dodge {{#if actor.dodgeSkill.id}}{{#unless rolled}}simple-toggle{{/unless}}{{else}}inactive{{/if}} {{#if dodging}}switched-on{{/if}}" data-action="dodge" data-skill-id="{{actor.dodgeSkill.id}}">{{localize 'CoC7.Dodge'}}</span>
       <span class="flex1 toggle-switch no-response simple-toggle {{#if notResponding}}switched-on{{/if}}" data-action="noResponse">{{localize 'CoC7.NoResponse'}}</span>
     </div>
-    <div class="flexrow response-selection owner-only">
+    <div class="flexrow-coc7 response-selection owner-only">
       <div class="flex1 toggle-switch fight-back {{#unless rolled}}dropdown{{/unless}} {{#if fightingBack}}switched-on{{/if}}">
         <span class="combat-action {{#unless rolled}}dropbtn{{/unless}}">{{localize 'CoC7.FightBack'}}</span>
         <div class="actor-skill dropdown-content">
@@ -68,12 +68,12 @@
   {{/unless}}
   {{#unless (or rolled notResponding)}}
     <div class="owner-only" style="flex: 1;display: flex;flex-direction: column;margin: 0.5rem 1rem 0;opacity:0.6">
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <span style="flex: 4; text-align: left">{{localize 'CoC7.PenaltyDice'}}</span>
         <span style="flex: 1">&nbsp;</span>
         <span style="flex: 4; text-align: right">{{localize 'CoC7.BonusDice'}}</span>
       </div>
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <span style="flex: 1; text-align: left;">-2</span>
         <span style="flex: 1; text-align: center;"></span>
         <span style="flex: 1; text-align: center;">-1</span>
@@ -95,7 +95,7 @@
         <div class="dice-tooltip" style="display: none;">
           <section class="tooltip-part">
             <div class="dice">
-              <span class="part-formula part-header flexrow">
+              <span class="part-formula part-header flexrow-coc7">
                 {{#if check.dices.tenOnlyOneDie}}
                   {{localize 'CoC7.TensDie'}}
                 {{else}}
@@ -113,7 +113,7 @@
           </section>
           <section class="tooltip-part">
             <div class="dice">
-              <span class="part-formula part-header flexrow">
+              <span class="part-formula part-header flexrow-coc7">
                 {{localize 'CoC7.UnitsDie'}}
                 <div class="flex1"></div>
                 <span class="part-total flex0">{{check.dices.unit.value}}</span>

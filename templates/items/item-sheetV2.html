@@ -1,18 +1,18 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
+<form class="{{cssClass}} flexcol-coc7" autocomplete="off">
   <div class="container expanded">
     <header class="sheet-header">
       <div class="sheet-portrait">
         <img class="photo" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
       </div>
       <div class="infos">
-        <div class="row flexrow">
+        <div class="row flexrow-coc7">
           <input class="name" name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}" />
         </div>
-        <div class="row flexrow">
+        <div class="row flexrow-coc7">
           <label>{{localize 'CoC7.ItemQuantity'}}</label>
           <input type="text" name="system.quantity" value="{{data.system.quantity}}" data-dtype="Number" />
         </div>
-        <div class="row flexrow">
+        <div class="row flexrow-coc7">
           <label>{{localize 'CoC7.ItemWeight'}}</label>
           <input type="text" name="system.weight" value="{{data.system.weight}}" data-dtype="Number" />
         </div>
@@ -29,14 +29,14 @@
     </nav>
 
     <section class="sheet-body">
-      <div class="tab description flexrow active" style="border-top: 2px groove #eeede0;padding: 0 0 0 5px;overflow: auto;" data-group="primary" data-tab="description">
+      <div class="tab description flexrow-coc7 active" style="border-top: 2px groove #eeede0;padding: 0 0 0 5px;overflow: auto;" data-group="primary" data-tab="description">
         {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
       <div class="tab effects" data-group="primary" data-tab="effects">
         {{> "systems/CoC7/templates/common/active-effects.hbs"}}
       </div>
       {{#if isKeeper}}
-        <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
+        <div class="tab keeper flexcol-coc7" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
           {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
         </div>
       {{/if}}

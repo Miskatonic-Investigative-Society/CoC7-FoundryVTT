@@ -12,7 +12,7 @@ export default function RenderCoC7JournalSheet (application, html, data) {
         obj.find('article.journal-entry-page.text.level1')?.before('<div style="padding: 0.5em;"></div>')
       } else {
         const short = subheading.trim().length === 0
-        obj.find('article.journal-entry-page.text.level1')?.before('<div class="adventure-heading-section flexrow"><div class="bookmark' + (short ? ' short' : '') + '"><img src="systems/CoC7/assets/art/' + (short ? 'bookmarks.webp' : 'bookmark.webp') + '"></div><div class="adventure-heading"><div class="heading">' + data.title + '</div>' + (short ? '' : '<div class="subheading">' + subheading + '</div>') + '</div></div>')
+        obj.find('article.journal-entry-page.text.level1')?.before('<div class="adventure-heading-section flexrow-coc7"><div class="bookmark' + (short ? ' short' : '') + '"><img src="systems/CoC7/assets/art/' + (short ? 'bookmarks.webp' : 'bookmark.webp') + '"></div><div class="adventure-heading"><div class="heading">' + data.title + '</div>' + (short ? '' : '<div class="subheading">' + subheading + '</div>') + '</div></div>')
       }
     }
   }

@@ -1,5 +1,5 @@
 <div class="coc7 chat-card chat-card-v2 roll-card-v2 opposed{{#if isCombat}} combat{{/if}}">
-  <div class="title flexrow">
+  <div class="title flexrow-coc7">
     <div class="opposed-card-flag visible-only-gm{{#if isCombat}} active{{/if}}">
       {{#if isEditable}}
         <a class="toggle-link select-only-gm" data-key="isCombat"><i class="game-icon game-icon-crossed-swords"></i></a>
@@ -12,7 +12,7 @@
   {{#if isCombat}}
     {{#if (and isEditable allRollsCompleted)}}
       {{#if needsTieBreaker}}
-        <div class="flexrow toggle visible-only-gm">
+        <div class="flexrow-coc7 toggle visible-only-gm">
           <button class="flex1 toggle-switch select-only-gm{{#if advantageAttacker}} switched-on{{/if}}" title="{{localize 'CoC7.AdvantageAttacker'}}" data-key="advantageAttacker">{{localize 'CoC7.AdvantageAttacker'}}</button>
           <button class="flex1 toggle-switch select-only-gm{{#if advantageDefender}} switched-on{{/if}}" title="{{localize 'CoC7.AdvantageDefender'}}" data-key="advantageDefender">{{localize 'CoC7.AdvantageDefender'}}</button>
         </div>

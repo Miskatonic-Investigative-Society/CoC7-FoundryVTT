@@ -8,8 +8,8 @@
     data-target-card="{{targetCard}}"
     data-result="{{result}}">
 
-    <header class="card-header flexcol">
-        <div class="flexrow">
+    <header class="card-header flexcol-coc7">
+        <div class="flexrow-coc7">
             {{#if displayActorOnCard}}
             <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36"/>
             {{/if}}
@@ -37,7 +37,7 @@
                 {{#each roll._dice as |die key| }}
                 <section class="tooltip-part">
                     <div class="dice">
-                        <span class="part-formula part-header flexrow">
+                        <span class="part-formula part-header flexrow-coc7">
                             {{die.formula}}
                             <div class="flex1"></div>
                             <span class="part-total flex0">{{die.total}}</span>
@@ -54,10 +54,10 @@
 
             <div class="dice-total success {{#if critical}} critical{{/if}}">
                 {{result}}
-            </div> 
+            </div>
         </div>
     </div>
- 
+
     {{#if targetKey}}
     <div class="card-buttons gm-visible-only">
         <button data-action="deal-melee-damage">{{ localize 'CoC7.InflictPain' }}</button>

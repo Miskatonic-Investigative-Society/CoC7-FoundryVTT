@@ -1,6 +1,6 @@
-<div class="flexrow combat-header" style="border-bottom: 1px groove;text-align: center;font-weight: bold;">
+<div class="flexrow-coc7 combat-header" style="border-bottom: 1px groove;text-align: center;font-weight: bold;">
   <div class="flex2" style="border-right: 1px groove; padding-left: 2px;">{{localize 'CoC7.WeaponName'}}</div>
-  <div class="flex4 flexrow" style="border-right: 1px groove; padding-left: 2px;">
+  <div class="flex4 flexrow-coc7" style="border-right: 1px groove; padding-left: 2px;">
     <div class="flex1">{{localize 'CoC7.WeaponSkill'}}</div>
     <div class="flex1">{{localize 'CoC7.WeaponSkillAlt'}}</div>
   </div>
@@ -9,10 +9,10 @@
 <ol class="weapons-list" style="padding: 0; margin: 0;">
   {{#each weapons as |weapon id|}}
     {{#if ../data.system.flags.locked}}
-      <li class="item weapon flexcol" data-item-id="{{weapon._id}}">
-        <div class="flexrow" style="align-items: center;">
+      <li class="item weapon flexcol-coc7" data-item-id="{{weapon._id}}">
+        <div class="flexrow-coc7" style="align-items: center;">
           <div class="flex2 weapon-name combat rollable" style="border-right: 1px groove;">{{weapon.name}}</div>
-          <div class="flexrow flex4 weapon-skills" style="border-right: 1px groove; padding-left: 2px;">
+          <div class="flexrow-coc7 flex4 weapon-skills" style="border-right: 1px groove; padding-left: 2px;">
             {{#if weapon.skillSet}}
               <div class="item-tag weapon-skill rollable" style="flex: 0 0 49%" data-skill-id="{{weapon.system.skill.main.id}}" title="Roll {{weapon.system.skill.main.name}} skill">{{weapon.system.skill.main.name}} ({{weapon.system.skill.main.value}}%)</div>
               {{#if weapon.usesAlternateSkill}}
@@ -25,7 +25,7 @@
               {{/if}}
             {{/if}}
           </div>
-          <div class="flexrow flex2" style="font-size: 10px; padding-left: 2px;">
+          <div class="flexrow-coc7 flex2" style="font-size: 10px; padding-left: 2px;">
             {{#if weapon.system.properties.rngd}}
               {{#if weapon.system.properties.shotgun}}
                 {{#each weapon.system.range as |range key|}}
@@ -38,9 +38,9 @@
                   <a class="roll" data-mode="roll" title="{{weapon.system.range.normal.value}}" data-formula="{{weapon.system.range.normal.damage}}"><i class="fas fa-dice-d20"></i> {{weapon.system.range.normal.damage}}</a>
                 </div>
               {{/if}}
-              <div class='flexrow' style='flex: 0 0 35px;'>
+              <div class='flexrow-coc7' style='flex: 0 0 35px;'>
                 <span class="tag" style='line-height: 16px;font-size: 10px;'>{{weapon.system.ammo}}</span>
-                <div class='flexcol' style='font-size: 9px;'>
+                <div class='flexcol-coc7' style='font-size: 9px;'>
                   <i class="fas fa-redo-alt reload-weapon" title="Reload"></i>
                   <i class="far fa-plus-square add-ammo" title="Add 1 ammunition"></i>
                 </div>
@@ -59,14 +59,14 @@
         </div>
       </li>
     {{else}}
-      <li class="item flexcol" style="border-bottom: 1px groove; margin-bottom: 2px; padding-bottom: 2px;" data-item-id="{{weapon._id}}">
-        <div class="flexrow" style="align-items: center;">
+      <li class="item flexcol-coc7" style="border-bottom: 1px groove; margin-bottom: 2px; padding-bottom: 2px;" data-item-id="{{weapon._id}}">
+        <div class="flexrow-coc7" style="align-items: center;">
           <div class="flex2">
             <input class="weapon-name" style="display: flex; height: fit-content;padding: 0 1px;text-align: left;" type="text" value="{{weapon.name}}">
           </div>
-          <div class="flexrow flex4 weapon-skills" style="flex-wrap: nowrap;">
+          <div class="flexrow-coc7 flex4 weapon-skills" style="flex-wrap: nowrap;">
 
-            <div class="flex1 flexrow">
+            <div class="flex1 flexrow-coc7">
               <select class="item-tag weapon-skill {{#unless weapon.skillSet}}no-skill-set{{/unless}}" data-skill="main" data-skill-id="{{weapon.system.skill.main.id}}">
                 {{#select weapon.system.skill.main.id}}
                   {{#unless weapon.skillSet}}
@@ -78,7 +78,7 @@
                 {{/select}}
               </select>
             </div>
-            <div class="flex1 flexrow">
+            <div class="flex1 flexrow-coc7">
               {{#if weapon.usesAlternateSkill}}
                 <select class="item-tag weapon-skill {{#unless weapon.skillSet}}no-skill-set{{/unless}}" data-skill="alternativ" data-skill-id="{{weapon.system.skill.alternativ.id}}">
                   {{#select weapon.system.skill.alternativ.id}}
@@ -94,7 +94,7 @@
             </div>
 
           </div>
-          <div class="flexrow flex2" style="font-size: 10px;">
+          <div class="flexrow-coc7 flex2" style="font-size: 10px;">
             {{#if weapon.system.properties.shotgun}}
               {{#each weapon.system.range as |range key|}}
                 <div class="flex1">
