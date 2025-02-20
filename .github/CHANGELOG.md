@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Prevent new Investigator sheet tabs being hidden with PopOut module
+
 ## Version 7.9
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
