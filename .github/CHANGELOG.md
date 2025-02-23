@@ -9,6 +9,15 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.10
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Prevent new Investigator sheet tabs being hidden with PopOut module
+- Restore viewing a limited permission investigator sheet only shows the image
+- Update to German localization, thanks to @MrViso #1723
+- Update to Ukrainian localization, thanks to @JornieNonsubia #1722
+
 ## Version 7.9
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
