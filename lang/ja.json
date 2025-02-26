@@ -12,6 +12,7 @@
   "CoC7.ActorIsSyntheticActor": "アクターは複製である (アクターのインスタンツ)",
 
   "CoC7.Entities.Archetype": "アーキタイプ",
+  "CoC7.Entities.Armor": "装甲",
   "CoC7.Entities.Book": "本",
   "CoC7.Entities.Chase": "チェイス",
   "CoC7.Entities.Item": "アイテム",
@@ -220,6 +221,8 @@
   "CoC7.RollDifficultyCritical": "クリティカル",
   "CoC7.RollDifficultyCriticalTitle": "クリティカルの難易度",
   "CoC7.RollResult.LuckSpendText": "{luckAmount}ポイントの幸運を消費して{successLevel}成功した",
+  "CoC7.RollDifficultyImpossible": "不可能",
+  "CoC7.RollDifficultyImpossibleTitle": "不可能な難易度",
   "CoC7.RollDice": "ロール !",
   "CoC7.CreateLink": "リンク作成",
   "CoC7.SuccesLevelHint": "成功レベル {value}",
@@ -489,6 +492,7 @@
   "CoC7.AddBook": "本追加",
   "CoC7.NewSpellName": "新たな呪文",
   "CoC7.AddSpell": "呪文追加",
+  "CoC7.AddArmor": "装甲追加",
 
   "CoC7.AddWeapon": "武器追加",
   "CoC7.NewWeaponName": "新しい武器",
@@ -1063,7 +1067,10 @@
   "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House 画像アップロードディレクトリ",
   "CoC7.Settings.DholeUpload.Directory.Hint": "The Dhole's Houseで設定した自画像をアップロードするディレクトリ。 Foundry/Data ディレクトリのようなもの。",
   "CoC7.Settings.WorldEra.Name": "ワールドの時代",
-  "CoC7.Settings.WorldEra.Hint": "技能は時代により微妙に変わる。システムが正しい技能を探せるようにこのワールドで使用する時代を選択してください。",
+  "CoC7.Settings.WorldEra.Hint": "取得できる技能は時代により微妙に変わります。システムが正しい技能を探せるようにこのワールドで使用する時代を選択してください。",
+  "CoC7.Settings.ShowWorldEra.Name": "ワールドの時代設定をプレイヤー一覧に表示",
+  "CoC7.Settings.ShowWorldEra.Hint": "",
+  
   "CoC7.Settings.DropCoCID.Name": "アイテムのドロップ時、CoC IDを使用",
   "CoC7.Settings.DropCoCID.Hint": "CoC IDをもつアイテムをドロップした際、代わりにCoC IDを格納するようにプロンプトする",
   "CoC7.Settings.DropCoCID.Dialog": "可能ならドロップしたアイテムにCoC IDを使用する? これによりシステムがワールドに設定した時代に沿ったアイテムを選んでくれる。",
