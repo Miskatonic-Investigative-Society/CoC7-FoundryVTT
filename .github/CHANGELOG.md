@@ -9,6 +9,14 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.11
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Update to French localization, thanks to @vonv #1728
+- Update to Japanese localization, thanks to @doumoku #1730
+- Update to Swedish localization, thanks to @Rangertheman #1729
+
 ## Version 7.10
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
