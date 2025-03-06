@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Investigator Wizard: Prevent dragging unassigned values to unassigned values removing the first value
+
 ## Version 7.11
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
