@@ -1087,7 +1087,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
   async _onDrop (event) {
     try {
       const dataList = JSON.parse(event.dataTransfer.getData('text/plain'))
-      if (typeof dataList.type !== 'undefined' && dataList.type === 'investigatorCharacteristic') {
+      if (dataList.type === 'investigatorCharacteristic') {
         dataList.destination = event.target.closest('li').dataset.characteristicKey
         if (typeof dataList.destination === 'undefined') {
           dataList.destination = event.target.closest('li').dataset.empty
@@ -1131,10 +1131,10 @@ export class CoC7InvestigatorWizard extends FormApplication {
           this.render(true)
           return
         }
-      } else if (typeof dataList.type !== 'undefined' && dataList.type === 'investigatorValue') {
+      } else if (dataList.type === 'investigatorValue') {
         dataList.destination = event.target.closest('li').dataset.characteristicKey
         dataList.okay = false
-        if (this.object.rolledValues[dataList.offset].assigned === false) {
+        if (typeof dataList.destination !== 'undefined' && this.object.rolledValues[dataList.offset].assigned === false) {
           let old
           if (this.object.setupPoints[dataList.destination] !== '') {
             old = this.object.setupPoints[dataList.destination]
