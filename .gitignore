@@ -6,10 +6,11 @@
 *.todo
 build/
 coverage/
-dist/
-fvtt.config.js
-node_modules/
-package-lock.json
 target/
 yarn.lock
+/dist/
+/fvtt.config.js
+/node_modules/
+/package-lock.json
 /packs/
+/temp/
