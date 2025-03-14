@@ -1,4 +1,5 @@
 /* global $, Combat, CONFIG, foundry, game, Hooks, ItemDirectory */
+import '../styles/system/index.less'
 import CoC7ActiveEffect from './active-effect.js'
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
@@ -14,7 +15,6 @@ import { DamageCard } from './chat/cards/damage.js'
 import { CoC7Canvas } from './apps/canvas.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
-import '../styles/system/index.less'
 import { CoC7ChaseSheet } from './items/chase/sheet.js'
 import { CoC7Socket } from './hooks/socket.js'
 import { CoC7SystemSocket } from './apps/coc7-system-socket.js'
@@ -32,104 +32,12 @@ import RenderCoC7JournalSheet from './hooks/render-coc7-journal-sheet.js'
 import RenderCompendiumDirectory from './hooks/render-compendium-directory.js'
 import RenderJournalTextPageSheet from './hooks/render-journal-text-page-sheet.js'
 import RenderSettings from './hooks/render-settings.js'
+import RenderSettingsConfig from './hooks/render-settings-config.js'
 
 // Card init
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
 import { ChaseObstacleCard } from './chat/cards/chase-obstacle.js'
 import { CoC7ContextMenu } from './context-menu.js'
-
-Hooks.on('renderSettingsConfig', (app, html, options) => {
-  const systemTab = $(app.form).find('.tab[data-tab=system]')
-  systemTab
-    .find('input[name=CoC7\\.displayInitDices]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleInitiative') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.stanbyGMRolls]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleRoll') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.trustedCanModfyChatCard]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleChatCards') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.enableStatusIcons]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleScene') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.overrideGameArtwork]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleGameArtwork') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.displayPlayerNameOnSheet]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleSheet') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.disregardUsePerRound]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleWeapon') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.syncDice3d]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleDiceSoNice') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.debugmode]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleDeveloperDebug') +
-        '</h2>'
-    )
-  systemTab
-    .find('select[name=CoC7\\.boutOfMadnessSummaryTable]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleRollTable') +
-        '</h2>'
-    )
-  // MOVED TO CHASSE INDIVIDUAL SETTING
-  // systemTab
-  //   .find('input[name=CoC7\\.chaseShowTokenMovement]')
-  //   .closest('div.form-group')
-  //   .before(
-  //     '<h2 class="setting-header">' +
-  //       game.i18n.localize('SETTINGS.TitleChaseSettings') +
-  //       '</h2>'
-  //   )
-})
 
 Hooks.once('init', async function () {
   game.CoC7 = {
@@ -527,4 +435,5 @@ Hooks.on('renderCoC7JournalSheet', RenderCoC7JournalSheet)
 Hooks.on('renderCompendiumDirectory', RenderCompendiumDirectory)
 Hooks.on('renderJournalTextPageSheet', RenderJournalTextPageSheet)
 Hooks.on('renderSettings', RenderSettings)
+Hooks.on('renderSettingsConfig', RenderSettingsConfig)
 Hooks.on('PopOut:loaded', PopOutLoaded)
