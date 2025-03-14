@@ -1,6 +1,6 @@
 <form id="skill-selection-form" class="coc7 skill-selector">
-  <div class="flexcol">
-    <div class='flexrow header counter'>
+  <div class="flexcol-coc7">
+    <div class='flexrow-coc7 header counter'>
       <label>{{ localize 'CoC7.Chosen' }} :</label>
       <span class="count">0</span>
       <span class="sep">/</span>
@@ -9,8 +9,8 @@
 
     <ol class="item-list">
       {{#each skills as |skill i|}}
-        <li class="item flexrow" data-index="{{i}}">
-          <div class="item-name flexrow">
+        <li class="item flexrow-coc7" data-index="{{i}}">
+          <div class="item-name flexrow-coc7">
             <h4>{{skill.name}} ({{skill.system.base}}%)</h4>
           </div>
           <div class="item-controls">

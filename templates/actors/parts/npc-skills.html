@@ -1,6 +1,6 @@
-<div class="flexrow">
+<div class="flexrow-coc7">
   {{#each skills as |skill id|}}
-    <div class="item flexrow {{#if skill.system.properties.combat}}combat-skill{{/if}}" style="flex: 0 0 33%;flex-wrap: wrap;border-right: 1px groove;" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}" data-context-menu="skill-roll" data-target-type="skill">
+    <div class="item flexrow-coc7 {{#if skill.system.properties.combat}}combat-skill{{/if}}" style="flex: 0 0 33%;flex-wrap: wrap;border-right: 1px groove;" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}" data-context-menu="skill-roll" data-target-type="skill">
       {{#if skill.system.properties.special}}
         <div class="npc-specialization">{{skill.system.specialization}}</div>
       {{/if}}

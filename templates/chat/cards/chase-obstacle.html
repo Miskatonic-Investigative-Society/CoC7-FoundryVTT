@@ -1,5 +1,5 @@
 <div class="coc7 chat-card chat-card-v2">
-  <form class="flexcol">
+  <form class="flexcol-coc7">
     <header class="card-header">
       <div class="left-portrait">
         {{#if displayActorOnCard}}
@@ -91,7 +91,7 @@
                 <div class="flex3">
                   <span>{{localize 'CoC7.ObstacleDamage'}} : {{{inlineDamageRoll}}} (<i class="icon game-icon game-icon-life-bar" title="{{localize 'CoC7.HitPoints'}}"></i>{{data.obstacle.HitPoints}})</span>
                 </div>
-                <div class="flexrow flex1">
+                <div class="flexrow-coc7 flex1">
                   <input type="text" data-ecc-permissions="gm" name="data.totalObstacleDamage" value="{{data.totalObstacleDamage}}" data-dtype="Number">
                   <a data-ecc-permissions="gm" data-flag="obstacleDestoyed" class="flex0 icon bigger ecc-switch" title="{{ localize 'CoC7.RemoveObstacle' }}"><i class="game-icon game-icon-wrecking-ball"></i></a>
                 </div>
@@ -135,7 +135,7 @@
                         {{#if data.obstacle.hasDamage }}
                           {{!-- Armor relevant only if there's some damage --}}
                           <div class="form-group armor">
-                            <div class="flexrow flex-end">
+                            <div class="flexrow-coc7 flex-end">
                               <a data-ecc-permissions="gm" data-flag="ignoreArmor" class="ecc-switch" title="{{ localize 'CoC7.IgnoreArmor' }}">
                                 {{#if data.flags.ignoreArmor}}
                                   <i class="game-icon game-icon-armor-downgrade"></i>
@@ -151,7 +151,7 @@
                           </div>
                         {{/if}}
                         <div class="form-group small">
-                          <div class="flexrow flex1">
+                          <div class="flexrow-coc7 flex1">
                             {{#if data.obstacle.hazard}}
                               <a data-ecc-permissions="gm" data-name="data.obstacle.hasActionCost" class="icon ecc-switch" title="{{ localize 'CoC7.ActionCostOnFail' }}">
                                 <i class="fas fa-bahai"></i>
@@ -161,7 +161,7 @@
                               {{/if}}
                             {{/if}}
                           </div>
-                          <div class="flexrow flex1">
+                          <div class="flexrow-coc7 flex1">
                             <a data-ecc-permissions="gm" data-name="data.obstacle.hasDamage" class="icon ecc-switch" title="{{ localize 'CoC7.DamageOnFail' }}">
                               <i class="game-icon game-icon-broken-bone"></i>
                             </a>
@@ -239,7 +239,7 @@
                   {{#if customWeapon}}
                     <div class="form-group small">
                       <div class="flex1"></div>
-                      <div class="flex1 flexrow">
+                      <div class="flex1 flexrow-coc7">
                         <span class="icon bigger" title="{{ localize 'CoC7.DamageInflicted' }}"><i class="game-icon game-icon-rolling-dices"></i></span>
                         <input type="text" data-ecc-permissions="gm" name="data.customWeaponDamage" value="{{data.customWeaponDamage}}">
                       </div>

@@ -1,5 +1,5 @@
 <div class="coc7 chat-card chat-card-v2 roll-card opposed {{#if combat}}combat{{/if}}">
-  <div class="title flexrow">
+  <div class="title flexrow-coc7">
     <div class="opposed-card-flag gm-visible-only {{#if combat}}active{{/if}}">
       <a data-action='toggle-combat'><i class="game-icon game-icon-crossed-swords"></i></a>
     </div>
@@ -18,7 +18,7 @@
       </div>
     {{else}}
       {{#if needsTieBreaker}}
-        <div class="flexrow gm-visible-only toggle">
+        <div class="flexrow-coc7 gm-visible-only toggle">
           <span class="flex1 toggle-switch gm-select-only {{#if advantageAttacker}}switched-on{{/if}} " title="{{localize 'CoC7.AdvantageAttacker'}}" data-flag="advantageAttacker" data-selected={{advantageAttacker}}>{{localize 'CoC7.AdvantageAttacker'}}</span>
           <span class="flex1 toggle-switch gm-select-only {{#if advantageDefender}}switched-on{{/if}}" title="{{localize 'CoC7.AdvantageDefender'}}" data-flag="advantageDefender" data-selected={{advantageDefender}}>{{localize 'CoC7.AdvantageDefender'}}</span>
         </div>
@@ -63,7 +63,7 @@
               {{#if ../closed}}
                 {{{r._htmlRoll}}}
               {{else}}
-                <div class='flexrow owner-only'>{{{r._htmlRoll}}}</div>
+                <div class='flexrow-coc7 owner-only'>{{{r._htmlRoll}}}</div>
               {{/if}}
             {{else}}
               {{{r._htmlRoll}}}

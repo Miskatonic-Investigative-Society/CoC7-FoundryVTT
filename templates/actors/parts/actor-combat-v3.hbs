@@ -1,7 +1,7 @@
 <h2>{{localize 'CoC7.Combat'}}</h2>
 <div class="combat-panel">
   <div class="weapon-list melee">
-    <div class="section-header flexrow">
+    <div class="section-header flexrow-coc7">
       <h3>{{localize 'CoC7.MeleeWeapons'}}</h3>
       {{#unless data.system.flags.locked}}
         <div class="header-buttons">
@@ -14,7 +14,7 @@
         <li class="weapon-row item weapon{{#unless weapon.skillSet}} error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
           <div class="expand-arrow show-detail"><i class="fa-solid fa-play"></i></div>
           <div class="item-image" style="background-image: url('{{weapon.img}}')"></div>
-          <div class="flexrow">
+          <div class="flexrow-coc7">
             <div class="weapon-name combat{{#if weapon.skillSet}} rollable{{else}} item-edit{{/if}}">{{weapon.name}}</div>
             {{#if weapon.system.properties.thrown}}
               <a class="weapon-name combat alternativ-skill{{#if weapon.skillSet}} rollable{{else}} item-edit{{/if}}" title="Throw"><i class="game-icon game-icon-thrown-knife"></i></a>
@@ -47,7 +47,7 @@
   </div>
 
   <div class="weapon-list range">
-    <div class="section-header flexrow">
+    <div class="section-header flexrow-coc7">
       <h3>{{localize 'CoC7.RangeWeapons'}}</h3>
       {{#unless data.system.flags.locked}}
         <div class="header-buttons">
@@ -60,7 +60,7 @@
         <li class="weapon-row item weapon{{#unless weapon.skillSet}} error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
           <div class="expand-arrow show-detail"><i class="fa-solid fa-play"></i></div>
           <div class="item-image" style="background-image: url('{{weapon.img}}')"></div>
-          <div class="flexrow">
+          <div class="flexrow-coc7">
             <div class="weapon-name combat{{#if weapon.skillSet}} rollable{{else}} item-edit{{/if}}">{{weapon.name}}</div>
             {{#if weapon.usesAlternateSkill}}
               <a class="weapon-name combat alternativ-skill{{#if weapon.skillSet}} rollable{{else}} item-edit{{/if}}" title="{{localize 'CoC7.AutomaticFire'}}"><i class="game-icon game-icon-machine-gun-magazine"></i></a>
@@ -101,7 +101,7 @@
   </div>
 
   <div class="skill-list melee">
-    <div class="section-header flexrow">
+    <div class="section-header flexrow-coc7">
       <h3>{{localize 'CoC7.MeleeSkills'}}</h3>
       {{#unless data.system.flags.locked}}
         <div class="header-buttons">
@@ -111,7 +111,7 @@
     </div>
     <ol class="item-list skill melee">
       {{#each meleeSkills as |skill|}}
-        <li class="item itemV2 skill flexrow" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+        <li class="item itemV2 skill flexrow-coc7" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
           <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
           {{#if ../data.system.flags.locked}}
             <div class="item-name skill-name combat rollable">{{skill.name}}</div>
@@ -144,7 +144,7 @@
   </div>
 
   <div class="skill-list range">
-    <div class="section-header flexrow">
+    <div class="section-header flexrow-coc7">
       <h3>{{localize 'CoC7.RangeSkills'}}</h3>
       {{#unless data.system.flags.locked}}
         <div class="header-buttons">
@@ -154,7 +154,7 @@
     </div>
     <ol class="item-list skill range">
       {{#each rangeSkills as |skill|}}
-        <li class="item itemV2 skill flexrow" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+        <li class="item itemV2 skill flexrow-coc7" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
           <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
           {{#if ../data.system.flags.locked}}
             <div class="item-name skill-name combat rollable">{{skill.name}}</div>
