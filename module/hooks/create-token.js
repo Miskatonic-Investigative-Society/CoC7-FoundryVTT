@@ -1,4 +1,4 @@
-/* global Hooks, Dialog, game, ui */
+/* global Dialog, game, Hooks, ui */
 export function listen () {
   Hooks.on('createToken', async (tokenDocument, options, craetorId) => {
     // Only token creator can roll
