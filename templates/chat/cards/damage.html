@@ -1,7 +1,7 @@
 <div class="coc7 chat-card damage">
 
-  <header class="card-header flexcol">
-    <div class="flexrow">
+  <header class="card-header flexcol-coc7">
+    <div class="flexrow-coc7">
       {{#if displayActorOnCard}}
         <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36" />
       {{/if}}
@@ -36,8 +36,8 @@
           <span class='tag owner-visible-only'>{{localize 'CoC7.Armor'}}: {{armor}}</span>
         {{/if}}
       {{else}}
-        <div class="armor flexrow">
-          <div class="flexrow flex-end gm-visible-only">
+        <div class="armor flexrow-coc7">
+          <div class="flexrow-coc7 flex-end gm-visible-only">
             <a class='ic-switch gm-visible-only{{#unless ignoreArmor}} switched-on{{/unless}}' data-flag='ignoreArmor'>
               {{#if ignoreArmor}}
                 <i class="game-icon game-icon-armor-downgrade"></i>
@@ -57,7 +57,7 @@
               {{/if}}
             {{/unless}}
           </div>
-          <div class="flexrow flex-end owner-visible-only owner-info" data-actor-key="{{targetKey}}">
+          <div class="flexrow-coc7 flex-end owner-visible-only owner-info" data-actor-key="{{targetKey}}">
             {{#unless ignoreArmor}}
               <label>{{localize 'CoC7.Armor'}}:</label>
               <span>{{armor}}</span>

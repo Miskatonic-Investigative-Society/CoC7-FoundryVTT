@@ -1,11 +1,11 @@
 <h2>{{ localize 'CoC7.Possessions'}}</h2>
-<div class="inventory flexrow">
+<div class="inventory flexrow-coc7">
   <div class="flex3">
     {{#unless hasInventory}}
       <h3 class="warning">{{localize 'CoC7.InventoryIsCurrentlyEmpty'}}</h3>
     {{else}}
       {{#if showInventoryItems}}
-        <div class="section-header flexrow">
+        <div class="section-header flexrow-coc7">
           <h3>{{localize 'CoC7.Items'}}</h3>
           {{#unless data.system.flags.locked}}
             <div class="header-buttons">
@@ -15,7 +15,7 @@
         </div>
         <ol class="item-list">
           {{#each itemsByType.item as |item id|}}
-            <li class="item flexrow" data-item-id="{{item._id}}">
+            <li class="item flexrow-coc7" data-item-id="{{item._id}}">
               <div class="item-image" style="background-image: url({{item.img}})"></div>
               <h4 class="item-name show-detail">{{system.quantity}} x {{item.name}}</h4>
               <div class="item-controls">
@@ -28,7 +28,7 @@
         </ol>
       {{/if}}
       {{#if showInventoryBooks}}
-        <div class="section-header flexrow">
+        <div class="section-header flexrow-coc7">
           <h3>{{localize 'CoC7.Books'}}</h3>
           {{#unless data.system.flags.locked}}
             <div class="header-buttons">
@@ -38,7 +38,7 @@
         </div>
         <ol class="item-list">
           {{#each itemsByType.book as |item id|}}
-            <li class="item flexrow" data-item-id="{{item._id}}">
+            <li class="item flexrow-coc7" data-item-id="{{item._id}}">
               <div class="item-image" style="background-image: url({{item.img}})"></div>
               <h4 class="item-name show-detail">{{item.name}}</h4>
               <div class="item-controls">
@@ -51,7 +51,7 @@
         </ol>
       {{/if}}
       {{#if showInventorySpells}}
-        <div class="section-header flexrow">
+        <div class="section-header flexrow-coc7">
           <h3>{{localize 'CoC7.Spells'}}</h3>
           {{#unless data.system.flags.locked}}
             <div class="header-buttons">
@@ -61,7 +61,7 @@
         </div>
         <ol class="item-list">
           {{#each itemsByType.spell as |item id|}}
-            <li class="item flexrow" data-item-id="{{item._id}}">
+            <li class="item flexrow-coc7" data-item-id="{{item._id}}">
               <div class="item-image" style="background-image: url({{item.img}})"></div>
               <h4 class="item-name show-detail">{{item.name}}</h4>
               <div class="item-controls">
@@ -74,12 +74,12 @@
         </ol>
       {{/if}}
       {{#if showInventoryTalents}}
-        <div class="section-header flexrow">
+        <div class="section-header flexrow-coc7">
           <h3>{{localize 'CoC7.PulpTalents'}}</h3>
         </div>
         <ol class="item-list">
           {{#each itemsByType.talent as |item id|}}
-            <li class="item flexrow" data-item-id="{{item._id}}">
+            <li class="item flexrow-coc7" data-item-id="{{item._id}}">
               <div class="item-image" style="background-image: url({{item.img}})"></div>
               <h4 class="item-name show-detail">{{item.name}}</h4>
               <div class="item-controls">
@@ -91,7 +91,7 @@
         </ol>
       {{/if}}
       {{#if showInventoryWeapons}}
-        <div class="section-header flexrow">
+        <div class="section-header flexrow-coc7">
           <h3>{{localize 'CoC7.Weapons'}}</h3>
           {{#unless data.system.flags.locked}}
             <div class="header-buttons">
@@ -101,7 +101,7 @@
         </div>
         <ol class="item-list">
           {{#each itemsByType.weapon as |item id|}}
-            <li class="item flexrow" data-item-id="{{item._id}}">
+            <li class="item flexrow-coc7" data-item-id="{{item._id}}">
               <div class="item-image" style="background-image: url({{item.img}})"></div>
               <h4 class="item-name show-detail">{{item.name}}</h4>
               <div class="item-controls">
@@ -114,7 +114,7 @@
         </ol>
       {{/if}}
       {{#if showInventoryArmor}}
-        <div class="section-header flexrow">
+        <div class="section-header flexrow-coc7">
           <h3>{{localize 'CoC7.Armor'}}</h3>
           {{#unless data.system.flags.locked}}
             <div class="header-buttons">
@@ -124,7 +124,7 @@
         </div>
         <ol class="item-list">
           {{#each itemsByType.armor as |item id|}}
-            <li class="item flexrow" data-item-id="{{item._id}}">
+            <li class="item flexrow-coc7" data-item-id="{{item._id}}">
               <div class="item-image" style="background-image: url({{item.img}})"></div>
               <h4 class="item-name show-detail">{{item.name}}</h4>
               <div class="item-controls">
@@ -137,12 +137,12 @@
         </ol>
       {{/if}}
       {{#if showInventoryStatuses}}
-        <div class="section-header flexrow">
+        <div class="section-header flexrow-coc7">
           <h3>{{localize 'CoC7.Status'}}</h3>
         </div>
         <ol class="item-list">
           {{#each itemsByType.status as |item id|}}
-            <li class="item flexrow" data-item-id="{{item._id}}">
+            <li class="item flexrow-coc7" data-item-id="{{item._id}}">
               <div class="item-image" style="background-image: url({{item.img}})"></div>
               <h4 class="item-name show-detail">{{item.name}}</h4>
               <div class="item-controls">
@@ -159,7 +159,7 @@
   </div>
   <div class="flex2 cash">
     {{#unless data.system.flags.locked}}
-      <div class="flexrow cash-row">
+      <div class="flexrow-coc7 cash-row">
         {{#if data.system.flags.manualCredit}}
           <label>{{localize 'CoC7.ManualCreditValues'}}</label>
           <div class='flex1'></div>
@@ -169,7 +169,7 @@
         </div>
       </div>
     {{/unless}}
-    <div class="flexrow cash-row">
+    <div class="flexrow-coc7 cash-row">
       <label>{{localize 'CoC7.MonetarySpendingLevel'}}</label>
       {{#if data.system.flags.manualCredit}}
         <input type="text" name="system.monetary.spendingLevel" value="{{data.system.monetary.spendingLevel}}">
@@ -177,7 +177,7 @@
         <span>{{monetary.spendingLevel}}</span>
       {{/if}}
     </div>
-    <div class="flexrow cash-row">
+    <div class="flexrow-coc7 cash-row">
       <label>{{localize 'CoC7.MonetaryCash'}}</label>
       {{#if data.system.flags.manualCredit}}
         <input type="text" name="system.monetary.cash" value="{{data.system.monetary.cash}}">
@@ -185,10 +185,10 @@
         <span>{{monetary.cash}}</span>
       {{/if}}
     </div>
-    <div class="flexrow cash-row">
+    <div class="flexrow-coc7 cash-row">
       <label>{{localize 'CoC7.MonetarySpent'}}</label><input type="text" name="system.monetary.spent" value="{{data.system.monetary.spent}}">
     </div>
-    <div class="flexrow  cash-row">
+    <div class="flexrow-coc7  cash-row">
       <label>{{localize 'CoC7.MonetaryAssets'}}</label>
       {{#if data.system.flags.manualCredit}}
         <input type="text" name="system.monetary.assets" value="{{data.system.monetary.assets}}">

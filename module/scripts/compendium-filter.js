@@ -218,8 +218,8 @@ export function compendiumFilter () {
         .find('header.directory-header')
         .after(
           '<div class="compendiumfilter">' +
-          '<div class="header-search flexrow"><i class="fas fa-layer-group"></i><select name="coc7type' + app.appId + '" style="">' + select.join('') + '</select></div>' +
-          '<div class="header-search flexrow era_select" style="display:none"><i class="fas fa-layer-group"></i><select name="coc7era' + app.appId + '" style="">' + eras.join('') + '</select></div>' +
+          '<div class="header-search flexrow-coc7"><i class="fas fa-layer-group"></i><select name="coc7type' + app.appId + '" style="">' + select.join('') + '</select></div>' +
+          '<div class="header-search flexrow-coc7 era_select" style="display:none"><i class="fas fa-layer-group"></i><select name="coc7era' + app.appId + '" style="">' + eras.join('') + '</select></div>' +
           '</div>'
         )
       html.find('select').change(app.options.filters[0].callback.bind(app))

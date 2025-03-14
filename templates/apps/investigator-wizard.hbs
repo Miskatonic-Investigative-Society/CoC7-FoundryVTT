@@ -1,5 +1,5 @@
-<form autocomplete="off" class="flexcol">
-  <div class="panel flexcol">
+<form autocomplete="off" class="flexcol-coc7">
+  <div class="panel flexcol-coc7">
     {{#if (eq object.step pages.PAGE_INTRODUCTION)}}
       {{!-- This page is mainly here to make cache population less obvious --}}
       {{> 'systems/CoC7/templates/apps/investigator-wizard/introduction.hbs'}}
@@ -33,7 +33,7 @@
       {{> 'systems/CoC7/templates/apps/investigator-wizard/create.hbs'}}
     {{/if}}
   </div>
-  <div class="dialog-buttons flexrow">
+  <div class="dialog-buttons flexrow-coc7">
     {{#unless (gt object.step 0)}}
       <div class="no-button"></div>
     {{else}}

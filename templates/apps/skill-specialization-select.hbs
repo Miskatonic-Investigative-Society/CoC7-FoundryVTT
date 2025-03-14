@@ -1,7 +1,7 @@
 <form>
-  <div class="flexcol">
+  <div class="flexcol-coc7">
     {{#if object.allowSelect}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <select name="existing-skill">
           <option value="">{{localize 'CoC7.SkillPickNameOnly'}}</option>
           {{#select object.selected}}
@@ -15,17 +15,17 @@
     {{/if}}
 
     {{#if (and object.allowCustom (eq object.selected ''))}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize 'CoC7.CustomSpecialisationLabel' specialisation=object.label}}</label>
       </div>
 
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <input name="new-skill-name" type="text" value="{{object.name}}" placeholder="{{ localize 'CoC7.CreateNewSkill' }}"/>
       </div>
 
       {{#unless object.fixedBaseValue}}
         <br>
-        <div class="flexrow">
+        <div class="flexrow-coc7">
           <label>{{localize 'CoC7.BaseSkillValue'}} :</label>
           <input name="base-value" type="text" value="{{object.baseValue}}" placeholder="{{ localize 'CoC7.SkillBase' }}"/>
         </div>

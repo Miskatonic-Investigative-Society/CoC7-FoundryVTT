@@ -155,7 +155,7 @@
 
         {{!-- Effects Tab --}}
         <section class="tab" data-tab="effects">
-          <header class="effect-change effects-header flexrow">
+          <header class="effect-change effects-header flexrow-coc7">
             <div class="key">{{ localize "EFFECT.ChangeKey" }}</div>
             <div class="mode">{{ localize "EFFECT.ChangeMode" }}</div>
             <div class="value">{{ localize "EFFECT.ChangeValue" }}</div>
@@ -165,7 +165,7 @@
           </header>
           <ol class="changes-list">
             {{#each link.effect.changes as |change i|}}
-              <li class="effect-change flexrow" data-index="{{i}}">
+              <li class="effect-change flexrow-coc7" data-index="{{i}}">
                 <div class="key">
                   <input type="text" name="effect.changes.{{i}}.key" value="{{change.key}}" />
                 </div>
@@ -249,7 +249,7 @@
           <div class='form-group subgroup'>
             <label>{{localize 'CoC7.BonusDice'}}</label>
             <div class="penalty-selector">
-              <div class="flexrow">
+              <div class="flexrow-coc7">
                 <span style="flex: 1; text-align: left;">-2</span>
                 <span style="flex: 1; text-align: center;"></span>
                 <span style="flex: 1; text-align: center;">-1</span>

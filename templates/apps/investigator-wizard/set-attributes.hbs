@@ -7,13 +7,13 @@
       {{else}}
         <h2>{{localize 'CoC7.InvestigatorWizard.MakeEDUImprovementChecks' total=object.requiresAgeAdjustments.edu.total}}</h2>
       {{/if}}
-      <div class="flexcol">
+      <div class="flexcol-coc7">
         <ol class="item-list">
-          <li class="item flexrow">
+          <li class="item flexrow-coc7">
             <label class="flex2">{{localize 'CHARAC.Education'}} ({{object.setupPoints.edu}}%):</label>
             <div>{{points.edu.value}}%</div>
           </li>
-          <li class="item flexrow" style="min-height: 2.1rem;">
+          <li class="item flexrow-coc7" style="min-height: 2.1rem;">
             <label class="flex2">&nbsp;</label>
             {{#unless object.requiresAgeAdjustments.edu.rolled}}
               <button class="roll_edu">{{localize 'CoC7.RollDice'}}</button>
@@ -25,11 +25,11 @@
     {{/if}}
     {{#if object.requiresAgeAdjustments.deduct}}
       <h2>{{localize 'CoC7.InvestigatorWizard.DeductPointsFromCharacteristics' total=object.requiresAgeAdjustments.deduct.total from=deductFrom}}</h2>
-      <div class="flexcol">
+      <div class="flexcol-coc7">
         <ol class="item-list">
           {{#each object.requiresAgeAdjustments.deduct.from as |characteristic|}}
-            <li class="item flexrow" data-offset="{{characteristic}}" data-min="{{lookup (lookup ../points characteristic) 'min'}}" data-max="0">
-              <div class="item-name flexrow">
+            <li class="item flexrow-coc7" data-offset="{{characteristic}}" data-min="{{lookup (lookup ../points characteristic) 'min'}}" data-max="0">
+              <div class="item-name flexrow-coc7">
                 <label class="flex2">{{localize (lookup (lookup ../points characteristic) 'label')}} ({{lookup ../object.setupPoints characteristic}}%):</label>
                 <a class="decrease-10-characteristic"><i class="fas fa-angles-down"></i></a>
                 <a class="decrease-characteristic"><i class="fas fa-minus-circle"></i></a>
@@ -39,8 +39,8 @@
               </div>
             </li>
           {{/each}}
-          <li class="item flexrow">
-            <div class="item-name flexrow">
+          <li class="item flexrow-coc7">
+            <div class="item-name flexrow-coc7">
               <label class="flex2">{{localize 'CoC7.CharacteristicsPoints'}}:</label>
               <div class="nothing-10-characteristic"></div>
               <div class="nothing-characteristic"></div>
@@ -59,10 +59,10 @@
     {{/if}}
     {{#if object.requiresAgeAdjustments.reduce}}
       <h2>{{localize 'CoC7.InvestigatorWizard.ReducePointsFromCharacteristic' total=object.requiresAgeAdjustments.reduce.total from=reduceFrom}}</h2>
-      <div class="flexcol">
+      <div class="flexcol-coc7">
         <ol class="item-list">
-          <li class="item flexrow">
-            <div class="item-name flexrow">
+          <li class="item flexrow-coc7">
+            <div class="item-name flexrow-coc7">
               <label class="flex2">{{localize (lookup (lookup points object.requiresAgeAdjustments.reduce.from) 'label')}} ({{lookup object.setupPoints object.requiresAgeAdjustments.reduce.from}}%):</label>
               <div>{{lookup (lookup points object.requiresAgeAdjustments.reduce.from) 'value'}}%</div>
             </div>
@@ -73,13 +73,13 @@
     {{/if}}
     {{#if object.requiresAgeAdjustments.luck}}
       <h2>{{localize 'CoC7.InvestigatorWizard.RollTwiceForLuck'}}</h2>
-      <div class="flexcol">
+      <div class="flexcol-coc7">
         <ol class="item-list">
-          <li class="item flexrow">
+          <li class="item flexrow-coc7">
             <label class="flex2">{{localize 'CoC7.Luck'}} ({{object.setupPoints.luck}}% / {{object.setupModifiers.luck}}%):</label>
             <div>{{luckValue}}%</div>
           </li>
-          <li class="item flexrow" style="min-height: 2.1rem;">
+          <li class="item flexrow-coc7" style="min-height: 2.1rem;">
             <label class="flex2">&nbsp;</label>
             {{#unless object.setupModifiers.luck}}
               <button class="roll_luck">{{localize 'CoC7.RollDice'}}</button>

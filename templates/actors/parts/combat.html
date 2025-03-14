@@ -13,7 +13,7 @@
         <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
           <div class="expand-arrow show-detail"></div>
           <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
-          <div class="flexrow">
+          <div class="flexrow-coc7">
             <div class="weapon-name combat {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
             {{#if weapon.system.properties.thrown}}
               <a class="weapon-name combat alternativ-skill {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}" title="Throw"><i class="game-icon game-icon-thrown-knife"></i></a>
@@ -57,7 +57,7 @@
         <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
           <div class="expand-arrow show-detail"></div>
           <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
-          <div class="flexrow">
+          <div class="flexrow-coc7">
             <div class="weapon-name combat {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
             {{#if weapon.usesAlternateSkill}}
               <a class="weapon-name combat alternativ-skill {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}" title="{{localize 'CoC7.AutomaticFire'}}"><i class="game-icon game-icon-machine-gun-magazine"></i></a>

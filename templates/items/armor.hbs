@@ -1,6 +1,6 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
-  <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
-    <div class="header-details flexrow">
+<form class="{{cssClass}} flexcol-coc7" autocomplete="off">
+  <header class="sheet-header flexrow-coc7" style="flex: 0 0 64px;padding-bottom: 2px;">
+    <div class="header-details flexrow-coc7">
       <h1 class="name" style="height: 48px;">
         <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}" />
       </h1>
@@ -21,7 +21,7 @@
 
   {{!-- Item Sheet Body --}}
   <section style="overflow: hidden;flex: 1;" class="sheet-body">
-    <div class="tab flexrow active" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="description">
+    <div class="tab flexrow-coc7 active" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="description">
       {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 

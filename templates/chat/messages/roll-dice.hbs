@@ -35,7 +35,7 @@
           </section>
           <section class="tooltip-part">
             <div class="dice ten-dice">
-              <span class="part-formula part-header flexrow">
+              <span class="part-formula part-header flexrow-coc7">
                 {{#if rollStatus.completed.dices.tenOnlyOneDie}}
                   {{localize 'CoC7.TensDie'}}
                 {{else}}
@@ -53,7 +53,7 @@
           </section>
           <section class="tooltip-part">
             <div class="dice unit-die">
-              <span class="part-formula part-header flexrow">
+              <span class="part-formula part-header flexrow-coc7">
                 {{localize 'CoC7.UnitsDie'}}
                 <div class="flex1"></div>
                 <span class="part-total flex0">{{rollStatus.completed.dices.unit.value}}</span>
@@ -65,7 +65,7 @@
           </section>
           {{#if rollStatus.completed.totalLuckSpent}}
             <section class="tooltip-part">
-              <div class="part-formula part-header flexrow">
+              <div class="part-formula part-header flexrow-coc7">
                 {{localize 'CoC7.LuckSpentAlt'}}
                 <div class="flex1"></div>
                 <div class="part-total flex0">-{{rollStatus.completed.totalLuckSpent}}</div>
