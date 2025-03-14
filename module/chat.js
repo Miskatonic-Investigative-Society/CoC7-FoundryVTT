@@ -74,11 +74,6 @@ export class CoC7Chat {
    *  Init sockets                                *
    *---------------------------------------------- */
 
-  static ready () {
-    // console.log('-->CoC7Chat.ready');
-    game.CoC7 = 'init'
-  }
-
   // static onMessage( data) {
   //  console.log('-->CoC7Chat.onMessage');
   //  console.log(`message received send&er :${data.user} message type : ${data.action} for message :${data.messageId}`);
