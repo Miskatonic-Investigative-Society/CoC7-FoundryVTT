@@ -94,6 +94,62 @@ html {
     margin: 0 !important;
     flex: none !important;
   }
+
+  .toggle-attributes {
+    flex: 0 0 auto;
+    margin: 0.4rem 0;
+
+    .toggle-property {
+      display: inline-block;
+      margin: 0 0.2rem 0 0;
+      padding: 0 0.3rem;
+      font-size: 10px;
+      line-height: 16px;
+      border: 1px solid whitesmoke;
+      border-radius: 0.2rem;
+      background: transparent;
+      font-style: italic;
+      color: grey;
+      cursor: pointer;
+    }
+  }
+
+  &.sheet.armor {
+    .section-value {
+      .form-group.item {
+        margin-bottom: 0.1rem;
+      }
+    }
+
+    .item-controls {
+      flex: 0 0 3rem;
+      text-align: right;
+    }
+    .optional-skills.form-group {
+      label {
+        height: 16px;
+      }
+    }
+    .group-control {
+      width: 18px;
+      flex: 0 0 18px;
+      line-height: 16px;
+      float: right;
+      text-align: right;
+      color: #7a7971;
+    }
+    .optional-skills {
+      .form-group {
+        border-bottom: 1px groove;
+        margin: 1px 0;
+        padding-right: 5px;
+        font-size: 12px;
+      }
+    }
+    h3.warning {
+      text-align: center;
+    }
+  }
 }
 
 .sheetV2 {
@@ -248,6 +304,7 @@ html {
     }
   }
 }
+
 // .coc7.actor {
 //   .skill-name.rollable,
 //   .characteristic-label,

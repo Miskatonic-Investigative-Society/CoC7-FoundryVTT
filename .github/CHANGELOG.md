@@ -9,6 +9,37 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Investigator Wizard: Prevent dragging unassigned values to unassigned values removing the first value
+
+## Version 7.11
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Update to French localization, thanks to @vonv #1728
+- Update to Japanese localization, thanks to @doumoku #1730
+- Update to Swedish localization, thanks to @Rangertheman #1729
+
+## Version 7.10
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Prevent new Investigator sheet tabs being hidden with PopOut module
+- Restore viewing a limited permission investigator sheet only shows the image
+- Update to German localization, thanks to @MrViso #1723
+- Update to Ukrainian localization, thanks to @JornieNonsubia #1722
+
+## Version 7.9
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Added range localization to combat flow, thanks to @lozanoje #1699
+- Add toggle to hide world era on player list
+- Fix switching linked actors Summarize sheet token distance calculations
+- Prevent same colour for text and background when viewing Development tab (skills base and total values)
+- Prevent tooltip showing for skills flagged for development in development tab
+- Update to French localization, thanks to @vonv #1696
+- Update to Ukrainian localization, thanks to @JornieNonsubia #1713
+
 ## Version 7.8
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

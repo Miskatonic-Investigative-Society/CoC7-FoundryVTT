@@ -147,6 +147,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     sheetData.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
     sheetData.summarized = this.summarized && !sheetData.permissionLimited
+    sheetData.isSummarized = this.summarized
     sheetData.skillList = []
     let previousSpec = ''
     for (const skill of sheetData.skills) {
@@ -204,6 +205,9 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     sheetData.showInventoryStatuses =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'status') ||
       !sheetData.data.system.flags.locked
+    sheetData.showInventoryArmor =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'armor') ||
+      !sheetData.data.system.flags.locked
 
     sheetData.hasInventory =
     sheetData.showInventoryItems ||
@@ -211,7 +215,8 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       sheetData.showInventorySpells ||
       sheetData.showInventoryTalents ||
       sheetData.showInventoryStatuses ||
-      sheetData.showInventoryWeapons
+      sheetData.showInventoryWeapons ||
+      sheetData.showInventoryArmor
 
     sheetData.enrichedBackstory = await TextEditor.enrichHTML(
       sheetData.data.system.backstory,

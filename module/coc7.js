@@ -26,6 +26,7 @@ import GetMacroConfigHeaderButtons from './hooks/get-macro-config-header-buttons
 import GetPlaylistConfigHeaderButtons from './hooks/get-playlist-config-header-buttons.js'
 import GetRollTableConfigHeaderButtons from './hooks/get-roll-table-config-header-buttons.js'
 import GetSceneConfigHeaderButtons from './hooks/get-scene-config-header-buttons.js'
+import PopOutLoaded from './hooks/popout-loaded.js'
 import RenderActorDirectory from './hooks/render-actor-directory.js'
 import RenderCoC7JournalSheet from './hooks/render-coc7-journal-sheet.js'
 import RenderCompendiumDirectory from './hooks/render-compendium-directory.js'
@@ -526,3 +527,4 @@ Hooks.on('renderCoC7JournalSheet', RenderCoC7JournalSheet)
 Hooks.on('renderCompendiumDirectory', RenderCompendiumDirectory)
 Hooks.on('renderJournalTextPageSheet', RenderJournalTextPageSheet)
 Hooks.on('renderSettings', RenderSettings)
+Hooks.on('PopOut:loaded', PopOutLoaded)

@@ -360,8 +360,14 @@
       </section>
     </div>
   {{else}}
-    <div class="sheet-portrait flexrow-coc7">
-      <img class="photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />
-    </div>
+    {{#if isSummarized}}
+      <div class="sheet-portrait flexcol-coc7">
+        <img src="{{actor.img}}" title="{{actor.name}}" style="flex: auto !important; height: 1px !important; border: 0; width: 100% !important;">
+      </div>
+    {{else}}
+      <div class="sheet-portrait flexcol-coc7">
+        <img class="photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" style="object-fit: fill; max-height: 100%;" />
+      </div>
+    {{/if}}
   {{/unless}}
 </form>

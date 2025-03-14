@@ -1087,7 +1087,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
   async _onDrop (event) {
     try {
       const dataList = JSON.parse(event.dataTransfer.getData('text/plain'))
-      if (typeof dataList.type !== 'undefined' && dataList.type === 'investigatorCharacteristic') {
+      if (dataList.type === 'investigatorCharacteristic') {
         dataList.destination = event.target.closest('li').dataset.characteristicKey
         if (typeof dataList.destination === 'undefined') {
           dataList.destination = event.target.closest('li').dataset.empty
@@ -1131,10 +1131,10 @@ export class CoC7InvestigatorWizard extends FormApplication {
           this.render(true)
           return
         }
-      } else if (typeof dataList.type !== 'undefined' && dataList.type === 'investigatorValue') {
+      } else if (dataList.type === 'investigatorValue') {
         dataList.destination = event.target.closest('li').dataset.characteristicKey
         dataList.okay = false
-        if (this.object.rolledValues[dataList.offset].assigned === false) {
+        if (typeof dataList.destination !== 'undefined' && this.object.rolledValues[dataList.offset].assigned === false) {
           let old
           if (this.object.setupPoints[dataList.destination] !== '') {
             old = this.object.setupPoints[dataList.destination]
@@ -1276,9 +1276,11 @@ export class CoC7InvestigatorWizard extends FormApplication {
     if (typeof this.object.bioSections[index] !== 'undefined') {
       const rolltable = await game.system.api.cocid.fromCoCID(key)
       if (rolltable.length === 1) {
-        const tableResult = await rolltable[0].roll()
-        if (tableResult.results[0].type === CONST.TABLE_RESULT_TYPES.TEXT) {
-          this.object.bioSections[index].value = (this.object.bioSections[index].value + '\n' + tableResult.results[0].text.trim()).trim()
+        const tableResults = await rolltable[0].roll()
+        for (const tableResult of tableResults.results) {
+          if (tableResult.type === CONST.TABLE_RESULT_TYPES.TEXT) {
+            this.object.bioSections[index].value = (this.object.bioSections[index].value + '\n' + tableResult.text.trim()).trim()
+          }
         }
       }
     }

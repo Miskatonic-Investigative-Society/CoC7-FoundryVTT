@@ -41,7 +41,7 @@
         <li class="item itemV2 skill flexrow-coc7 {{#if skill.system.properties.special}}specialization{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
           <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
           {{#if ../data.system.flags.locked}}
-            <div class="item-name skill-name rollable flex1" title="{{skill.name}}">{{#if skill.system.properties.special}}{{skill.system.skillName}}{{else}}{{skill.name}}{{/if}}</div>
+            <div class="item-name skill-name rollable flex1">{{#if skill.system.properties.special}}{{skill.system.skillName}}{{else}}{{skill.name}}{{/if}}</div>
             <div class="skill-value item-score">{{skill.system.value}}</div>
             <div class="skill-calc">({{calcHard skill.system.value 2}}/{{calcExtreme skill.system.value 1}})</div>
             <div class="skill-icons">

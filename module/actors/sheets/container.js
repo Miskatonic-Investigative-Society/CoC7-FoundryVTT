@@ -97,13 +97,17 @@ export class CoC7ContainerSheet extends ActorSheet {
     sheetData.showInventoryWeapons =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'weapon') ||
       !sheetData.data.system.flags.locked
+    sheetData.showInventoryArmor =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'armor') ||
+      !sheetData.data.system.flags.locked
 
     sheetData.hasInventory =
       sheetData.showInventoryItems ||
       sheetData.showInventoryBooks ||
       sheetData.showInventorySpells ||
       sheetData.showInventoryTalents ||
-      sheetData.showInventoryWeapons
+      sheetData.showInventoryWeapons ||
+      sheetData.showInventoryArmor
 
     sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,

@@ -1,5 +1,6 @@
 /* global Actors, ActorSheet, Items, ItemSheet */
 import { CoC7ArchetypeSheet } from '../items/sheets/archetype.js'
+import { CoC7ArmorSheet } from '../items/sheets/armor.js'
 import { CoC7BookSheet } from '../items/book/sheet.js'
 import { CoC7CharacterSheet } from '../actors/sheets/character.js'
 import { CoC7CharacterSheetV3 } from '../actors/sheets/character-v3.js'
@@ -87,6 +88,10 @@ export function registerSheets () {
   })
   Items.registerSheet('CoC7', CoC7ChaseSheet, {
     types: ['chase'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7ArmorSheet, {
+    types: ['armor'],
     makeDefault: true
   })
   Items.registerSheet('CoC7', CoC7ItemSheet, { types: ['item'] })
