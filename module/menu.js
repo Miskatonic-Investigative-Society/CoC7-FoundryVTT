@@ -104,6 +104,7 @@ export class CoC7Menu {
       ]
     }
     if (Array.isArray(controls)) {
+      /* // FoundryVTT v12 */
       controls.push(menu)
     } else {
       controls.coc7menu = menu
@@ -143,6 +144,7 @@ export class CoC7Menu {
         ]
       }
       if (Array.isArray(controls)) {
+        /* // FoundryVTT v12 */
         controls.push(menu)
       } else {
         controls.coc7DevTools = menu
