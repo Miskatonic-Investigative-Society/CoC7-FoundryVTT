@@ -1,6 +1,5 @@
 import * as CreateToken from './create-token.js'
 import * as DiceSoNiceReady from './dice-so-nice-ready.js'
-import * as Ready from './ready.js'
 import * as RenderActorSheet from './render-actor-sheet.js'
 import * as RenderChatMessage from './render-chat-message.js'
 import * as RenderDialog from './render-dialog.js'
@@ -13,7 +12,6 @@ export const CoC7Hooks = {
   listen () {
     CreateToken.listen()
     DiceSoNiceReady.listen()
-    Ready.listen()
     RenderActorSheet.listen()
     RenderChatMessage.listen()
     RenderDialog.listen()

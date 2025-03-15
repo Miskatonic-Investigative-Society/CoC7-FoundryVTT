@@ -3363,18 +3363,8 @@ export class CoCActor extends Actor {
             icon: effect[0].icon,
             disabled: false
           }
-          if (!foundry.utils.isNewerVersion(game.version, '11')) {
-            // FoundryVTT v10
-            source.label = game.i18n.localize(effect[0].label)
-            source.flags = {
-              core: {
-                statusId: effect[0].id
-              }
-            }
-          } else {
-            source.name = game.i18n.localize(effect[0].name)
-            source.statuses = [effect[0].id]
-          }
+          source.name = game.i18n.localize(effect[0].name)
+          source.statuses = [effect[0].id]
           const effectData = foundry.utils.mergeObject(source, custom)
           await super.createEmbeddedDocuments('ActiveEffect', [effectData])
         } else {
