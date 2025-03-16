@@ -139,7 +139,7 @@ Wenn der Ablauf abgeschlossen ist, werden alle Änderungen in die Verfolgungsjag
 
 Wenn alle Spieler ihre Bewegungsaktionen ausgeführt haben, ist die Runde beendet. Mit einem Klick auf nächste Runde kann die Jagd fortgesetzt werden.
 
-# Die Teilnehmer Kontrollen
+# Teilnehmer kontrollieren
 
 ![](../../../assets/manual/chases/participant_controls.webp)
 
