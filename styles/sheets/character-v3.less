@@ -585,7 +585,7 @@
 
             .sheet-body {
               background-color: rgba(0, 0, 0, 0.08);
-              overflow-y: scroll;
+              overflow-y: auto;
               font-family: 'Lusitana';
               scrollbar-color: var(--main-sheet-back-color) var(--official-coc-label-color);
               scrollbar-width: thin;
@@ -1207,7 +1207,11 @@
                   }
 
                   .cash {
-                    overflow-x: scroll;
+                    textarea {
+                      width: 100%;
+                      resize: vertical;
+                    }
+                    overflow-x: auto;
                   }
                 }
               }
