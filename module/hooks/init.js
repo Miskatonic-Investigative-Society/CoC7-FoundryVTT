@@ -1,4 +1,4 @@
-/* global Combat, CONFIG, fromUuid, game, TextEditor */
+/* global Combat, CONFIG, fromUuid, game, Hooks, TextEditor */
 import { configureDocuments } from '../scripts/configure-documents.js'
 import { preloadHandlebarsTemplates } from '../scripts/load-templates.js'
 import { registerSettings } from '../scripts/register-settings.js'
@@ -10,7 +10,7 @@ import { COC7 } from '../config.js'
 import { CoC7Link } from '../apps/coc7-link.js'
 import { CoC7Utilities } from '../utilities.js'
 import { CoCID } from '../scripts/coc-id.js'
-import * as DiceSoNiceReadyLast from './dice-so-nice-ready-last.js'
+import DiceSoNiceReadyLast from './dice-so-nice-ready-last.js'
 import CoC7ClickableEvents from '../apps/coc7-clickable-events.js'
 import { DamageCard } from '../chat/cards/damage.js'
 
@@ -52,7 +52,7 @@ export default function () {
   compendiumFilter()
   CoCID.init()
   CoC7Link.init()
-  DiceSoNiceReadyLast.listen()
+  Hooks.once('diceSoNiceReady', DiceSoNiceReadyLast)
   CoC7ClickableEvents.initSelf()
 
   CONFIG.TextEditor.enrichers.push({

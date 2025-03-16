@@ -1,7 +1,7 @@
 /* global game, socketlib, ui */
 import { CoC7MeleeTarget } from '../chat/combat/melee-target.js'
 
-export function CoC7Socket () {
+export default function () {
   game.CoC7socket = socketlib.registerSystem('CoC7')
   game.CoC7socket.register('gmcreatemessageas', gmcreatemessageas)
   game.CoC7socket.register('gmtradeitemto', gmtradeitemto)

@@ -1,5 +1,5 @@
 /* global game */
-export function DropActorSheetData (actor, sheet, data) {
+export default function (actor, sheet, data) {
   if (data.type === 'Item' && data.actorId) {
     if (actor.data._id === data.actorId) {
       return

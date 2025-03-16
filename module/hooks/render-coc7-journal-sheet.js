@@ -1,5 +1,5 @@
 /* global $ */
-export default function RenderCoC7JournalSheet (application, html, data) {
+export default function (application, html, data) {
   if ((application.object.getFlag('CoC7', 'css-adventure-entry') ?? false)) {
     if (!html.hasClass('coc7-adventure-entry')) {
       html.addClass('coc7-adventure-entry')
