@@ -9,7 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Allow custom sheet fonts on investigator sheet V3, thanks to @pconcepcion #1746
+- Fix possesions textareas style on investigator sheet V3 to prevent side scrolling, thanks to @pconcepcion #1746
 - Investigator Wizard: Prevent dragging unassigned values to unassigned values removing the first value
+- Set character sheet V3 minimum height on investigator sheet V3, thanks to @pconcepcion #1746
 
 ## Version 7.11
 
