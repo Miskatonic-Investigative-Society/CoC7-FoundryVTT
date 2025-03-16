@@ -21,7 +21,7 @@ Eine Verfolgungsjagd unterteilt sich in drei Teile.
 
 # Einen Teilnehmer hinzufügen
 
-Um einen Teilnehmer hinzuzufügen muss das "Plus"-Symbol in der Teilnehmerliste betätigt werden oder alternativ die Figur oder ihre Spielfigur (Token) hineingezogen werden.
+Um einen Teilnehmer hinzuzufügen, muss das "Plus"-Symbol in der Teilnehmerliste betätigt werden oder alternativ die Figur oder ihre Spielfigur (Token) hineingezogen werden.
 
 Hierbei ist zu erwähnen, dass es nicht nötig ist, dass ein Teilnehmer mit einer Figur verknüpft ist. Das ermöglicht es eine Verfolgungsjagd schnell einzurichten und gegebenenfalls jemanden spontan hinzuzufügen.
 
@@ -34,9 +34,9 @@ Diese Symbole geben folgenden weiteren Informationen über die Spielfiguren:
 1. Zeigt an, dass die Spielfigur eine Instanz der Spielfigur ist.
 2. Zeigt an, dass die Daten der Spielfigur nicht mit ihrem Charakterbogen fest verbunden sind. Jede Instanz hat ihre eigenen Eigenschaften und Parameter.
 3. Zeigt an, dass diese Spielfigur einen verknüpften Token besitzt. **Du kannst diesen einfach in die Teilnehmerliste der Verfolgungsjagd hineinziehen.**
-4. Zeigt an, dass die Spielfigur mit einer Figur/Charakterbogen aus dem Akteure-Seitenleiste verlinkt ist.
+4. Zeigt an, dass die Spielfigur mit einer Figur/Charakterbogen aus der Akteure-Seitenleiste verlinkt ist.
 
-Hier können Sie Ihren Teilnehmer einrichten. Wenn Sie eine Figur aus der Seitenleiste „Akteure“ ziehen, werden die Details festgelegt. Beachten Sie, dass Sie eine andere Initiative und Geschwindigkeitsprüfung wählen können. Dies ist kein Standard im CoC, ermöglicht aber ungewöhnliche Verfolgungsjagden (futuristische Matrix-Verfolgungsjagd, Traumland-Verfolgungsjagd...)
+Hier können Sie Ihren Teilnehmer einrichten. Wenn Sie eine Figur aus der Seitenleiste „Akteure“ ziehen, werden die Details festgelegt. Beachten Sie, dass Sie eine andere Initiative und Geschwindigkeitsprüfung wählen können. Dies ist kein Standard im CoC, ermöglicht aber ungewöhnliche Verfolgungsjagden (futuristische Matrix-Verfolgungsjagd, Traumland-Verfolgungsjagd, ...)
 
 ![](../../../assets/manual/chases/new_participant_drag.webp)
 
@@ -61,7 +61,7 @@ In dieser Ansicht zeigt sich nun die Teilnehmerliste für die Verfolgungsjagd.
 ![](../../../assets/manual/chases/participant_list_2.webp)
 
 1. Die Würfelkarte muss noch durch den entsprechenden Verantwortlichen betätigt werden.
-2. Die Geschwindigkeitsprobe wurde durchgeführt. Mit einem Klick hierauf, lassen sich nähere Informationen zum Ergebnis der Probe anzeigen.
+2. Die Geschwindigkeitsprobe wurde durchgeführt. Mit einem Klick hierauf lassen sich nähere Informationen zum Ergebnis der Probe anzeigen.
 3. Diese Schaltfläche erlaubt es die Probe zurückzusetzen.
 
 ![](../../../assets/manual/chases/roll_card.webp)
@@ -76,11 +76,11 @@ Um eine Verfolgungsjagd einzurichten ist es nötig erstmal die Anzahl an vorgese
 
 Die Verfolgungsjagd wurde initialisiert, nun kannst du weitere Optionen anpassen. Schauplätze in weißer Farbe sind die Start-Schauplätze und können nicht angepasst werden.
 
-1. Dies ist die Verfolgungsstrecke, die weißen Schauplätze sind Startorte. Die Schauplätze in grau stellen die echten Schauplätze der Verfolgungsjagd dar.
+1. Dies ist die Verfolgungsstrecke, die weißen Schauplätze sind Startorte. Die Schauplätze in grauer Farbe stellen die echten Schauplätze der Verfolgungsjagd dar.
 2. Wenn diese Option aktiviert ist, werden auch Teilnehmer in die Jagd integriert, die eigentlich laut Regelwerk fliehen konnten.
-3. Wenn diese Option aktiviert ist, werden auch Teilnehmer berücksichtigt die eigentlich zu langsam sind um fliehen zu können.
+3. Wenn diese Option aktiviert ist, werden auch Teilnehmer berücksichtigt, die eigentlich zu langsam sind, um fliehen zu können.
 4. Dies gibt an, wie viele Schauplätze zwischen dem langsamsten Gejagten und dem schnellsten Verfolger liegen.
-5. Hiermit wird festgelegt, auf welcher Position der schnellste Gejagte startet. Position 0 liegt direkt vor dem Startpunkt der Verfolgungsjagd. Position 1 ist der Startpunkt. Position -1 ist ein Schauplatz vor dem Start.
+5. Hiermit wird festgelegt, auf welcher Position der schnellste Gejagte startet. Position 0 liegt direkt vor dem Startpunkt der Verfolgungsjagd. Die Position "1" ist der Startpunkt. Die Position "-1" liegt einen Schauplatz vor dem Start.
 6. Dadurch werden ein Token animiert, wenn es sich an einen neuen Ort bewegt.
 
 # Schauplätze einrichten
@@ -93,9 +93,9 @@ Um einen Schauplatz anzupassen, muss dieser angeklickt werden. Dies zeigt die De
 
 ![](../../../assets/manual/chases/setting_locations_1.webp)
 
-1. Diese Schaltfläche erlaubt es einen Teilnehmer hinzuzufügen. Wenn eine Verfolgungsjagd gestartet wurde, werden die Teilnehmer an dieser Position sein. Wenn die Verfolgungjagd noch nicht gestartet wurde, befinden sich die neuen Teilnehmer weiterhin auf den Startfeldern.
+1. Diese Schaltfläche erlaubt es einen Teilnehmer hinzuzufügen. Wenn eine Verfolgungsjagd gestartet wurde, werden die Teilnehmer an dieser Position sein. Wenn die Verfolgungsjagd noch nicht gestartet wurde, befinden sich die neuen Teilnehmer weiterhin auf den Startfeldern.
 2. Diese Schaltfläche entfernt einen Schauplatz, wenn sich gegenwärtig kein Teilnehmer auf ihm befindet.
-3. Du kannst die Pinnadel greifen und auf eine Szene ziehen. Damit werden die Koordinaten für diese Position dem Schauplatz zugeordnet. Eine rote Pinnadel zeigt an, dass Koordinaten gesetzt wurden. Ein Rechtsklick setzt die Koordinaten für die Szene zurück. Wenn Koordinaten gesetzt wurden und ein Teilnehmer mit verknüpften Token diese betritt, wird er zu diesem Schauplatz bewegt.
+3. Du kannst die Pinnnadel greifen und auf eine Szene ziehen. Damit werden die Koordinaten für diese Position dem Schauplatz zugeordnet. Eine rote Pinnnadel zeigt an, dass Koordinaten gesetzt wurden. Ein Rechtsklick setzt die Koordinaten für die Szene zurück. Wenn Koordinaten gesetzt wurden und ein Teilnehmer mit verknüpften Token diese betritt, wird er zu diesem Schauplatz bewegt.
 4. Füge einen neuen Schauplatz hinzu.
 5. Aktiviere den Schauplatz
 
@@ -110,14 +110,14 @@ Hindernisse können vor und nach einem Schauplatz eingefügt werden. Du kannst H
 3. Kosten von Bewegungsaktionen, wenn die Probe nicht geschafft wird.
 4. Fertigkeit die verwendet wird, um das Hindernis zu überwinden. Rote Schrift zeigt, dass der Charakter die Fertigkeit nicht besitzt.
 
-# Zur Sache kommen...
+# Zur Sache kommen ...
 
 "Zur Sache kommen" bedeutet, dass die Verfolgungsjagd gestartet wird. Wenn nicht alle Teilnehmer bereits eine Geschwindigkeitsprobe abgelegt haben, wird hierbei eine Warnung ausgegeben und die Jagd kann nicht gestartet werden.
 
 ![](../../../assets/manual/chases/cut_to_the_chase_1.webp)
 
-1. Initiative Tracker. Der aktive Teilnehmer wird in orange hervorgehoben.
-2. Der Verfolgungsjagd Tracker. Zeigt den aktiven Schauplatz und die Teilnehmer. Du kannst Teilnehmer frei hin und her bewegen auf der Verfolgungstrecke. Du kannst auch einen neuen Charakter direkt auf die Strecke ziehen, wodurch das Fenster sich öffnen wird, mit dem ein Teilnehmer hinzugefügt werden kann. In manchen Fällen (beispielsweise, wenn ein neuer Gejagter langsamer ist als der langsamste Teilnehmer), werden alle Bewegungskationen neu berechnet und zugewiesen.
+1. Initiative Tracker. Der aktive Teilnehmer wird in oranger Farbe hervorgehoben.
+2. Der Verfolgungsjagd Tracker. Zeigt den aktiven Schauplatz und die Teilnehmer. Du kannst Teilnehmer frei hin und her bewegen auf der Strecke. Du kannst auch einen neuen Charakter direkt auf die Strecke ziehen, wodurch das Fenster sich öffnen wird, mit dem ein Teilnehmer hinzugefügt werden kann. In manchen Fällen (beispielsweise, wenn ein neuer Gejagter langsamer ist als der langsamste Teilnehmer), werden alle Bewegungskationen neu berechnet und zugewiesen.
 3. Eine Barriere.
 4. Ein Hindernis.
 
