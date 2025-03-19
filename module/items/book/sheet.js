@@ -63,6 +63,63 @@ export class CoC7BookSheet extends ItemSheet {
       }
     )
 
+    sheetData.difficultyLevels = [
+      {
+        key: 'regular',
+        label: 'CoC7.RollDifficultyRegular'
+      },
+      {
+        key: 'hard',
+        label: 'CoC7.RollDifficultyHard'
+      },
+      {
+        key: 'extreme',
+        label: 'CoC7.RollDifficultyExtreme'
+      },
+      {
+        key: 'critical',
+        label: 'CoC7.RollDifficultyCritical'
+      },
+      {
+        key: 'unreadable',
+        label: 'CoC7.Unreadable'
+      }
+    ]
+
+    sheetData.studyUnits = [
+      {
+        key: 'CoC7.months',
+        label: 'CoC7.months'
+      },
+      {
+        key: 'CoC7.weeks',
+        label: 'CoC7.weeks'
+      },
+      {
+        key: 'CoC7.days',
+        label: 'CoC7.days'
+      },
+      {
+        key: 'CoC7.hours',
+        label: 'CoC7.hours'
+      }
+    ]
+
+    sheetData.otherGains = [
+      {
+        key: 'development',
+        label: 'CoC7.Development'
+      },
+      {
+        key: '1d6',
+        label: '+1D6'
+      },
+      {
+        key: '1d10',
+        label: '+1D10'
+      }
+    ]
+
     return sheetData
   }
 

@@ -213,6 +213,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       case sheetData.pages.PAGE_CONFIGURATION:
         if (game.user.isGM) {
           sheetData.setups = await this.filterCacheItemByCoCID(/^i\.setup\./)
+          sheetData.setupOptions = sheetData.setups.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
           sheetData.occupations = await this.filterCacheItemByCoCID(/^i\.occupation\./)
           sheetData.archetypes = await this.filterCacheItemByCoCID(/^i\.archetype\./)
           setup = sheetData.setups.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.defaultSetup)
@@ -260,6 +261,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         if (sheetData.object.defaultSetup === '') {
           sheetData.setups = await this.filterCacheItemByCoCID(/^i\.setup\./)
           sheetData.setups.sort(CoC7Utilities.sortByNameKey)
+          sheetData.setupOptions = sheetData.setups.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
           if (sheetData.object.setup !== '') {
             setup = sheetData.setups.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.setup)
             if (typeof setup !== 'undefined') {
@@ -282,6 +284,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
           sheetData.canNext = true
         } else {
           sheetData.archetypes.sort(CoC7Utilities.sortByNameKey)
+          sheetData.archetypeOptions = sheetData.archetypes.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
           if (sheetData.object.archetype !== '') {
             archetype = sheetData.archetypes.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.archetype)
             if (typeof archetype !== 'undefined') {
@@ -533,6 +536,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       case sheetData.pages.PAGE_OCCUPATIONS:
         sheetData.occupations = await this.filterCacheItemByCoCID(/^i\.occupation\./)
         sheetData.occupations.sort(CoC7Utilities.sortByNameKey)
+        sheetData.occupationOptions = sheetData.occupations.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
         if (sheetData.object.occupation !== '') {
           occupation = sheetData.occupations.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.occupation)
           if (typeof occupation !== 'undefined') {

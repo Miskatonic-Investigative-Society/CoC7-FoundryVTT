@@ -11,10 +11,7 @@
     <label>{{localize 'SETTINGS.InitiativeRule'}}</label>
     <div class="form-fields">
       <select name="initiativeRule" data-dtype="String">
-        {{#select initiativeRule.value}}
-          <option value="basic">{{localize 'SETTINGS.InitiativeRuleBasic'}}</option>
-          <option value="optional">{{localize 'SETTINGS.InitiativeRuleOptional'}}</option>
-        {{/select}}
+        {{selectOptions initiativeRuleOptions selected=initiativeRule.value localize=true valueAttr="key" labelAttr="label"}}
       </select>
     </div>
     <p class="notes">{{localize 'SETTINGS.InitiativeRuleHint'}}</p>
@@ -32,11 +29,7 @@
     <label>{{localize 'SETTINGS.PulpRules'}}</label>
     <div class="form-fields">
       <select id="pulpRulesSelect">
-        {{#select pulpSelection}}
-          <option value="none">{{localize 'None'}}</option>
-          <option value="some">{{localize 'Partial'}}</option>
-          <option value="all">{{localize 'All'}}</option>
-        {{/select}}
+        {{selectOptions pulpSelectionOptions selected=pulpSelection localize=true valueAttr="key" labelAttr="label"}}
       </select>
     </div>
     <p class="notes">{{localize 'SETTINGS.PulpRulesHint'}}</p>
