@@ -6,7 +6,7 @@ The system includes a tool to help you create links easily.
 It's located on the left side bar. Click on the icon.
 This tools is available to GM only.
 
-![Creation tool](../../../assets/manual/links/links-creation-tool.webp)
+![Creation tool](../../assets/manual/links/links-creation-tool.webp)
 
 using this you can create [link](links.md) for skill check, san check, effects ...
 alternatively you can open the tool by holding CTRL while clicking no an item or a skill.
@@ -15,7 +15,7 @@ alternatively you can open the tool by holding CTRL while clicking no an item or
 
 Clicking on the tool icon will open a window :
 
-![Main window](../../../assets/manual/links/main-window.webp)
+![Main window](../../assets/manual/links/main-window.webp)
 
 You can there select options for you link.
 
@@ -29,7 +29,7 @@ You can there select options for you link.
 
 If you do not supply a label and/or an icon, a default label and icon will be added.
 
-![default label](../../../assets/manual/links/default-label.webp)
+![default label](../../assets/manual/links/default-label.webp)
 
 ## Effects window
 
@@ -40,14 +40,14 @@ Select the options the same way you will be doing for a regular effect.
 
 - Once your link is created and valid it will appear in a white box in the middle of the window.
 
-![link created](../../../assets/manual/links/effect-link-creation.webp)
+![link created](../../assets/manual/links/effect-link-creation.webp)
 
 - You are now ready to whisper it to your players, copy it in your clipboard so you can add it to your items or journal entries or send it to the chat.
 
-![link in the chat](../../../assets/manual/links/link-effect-chat.webp)
+![link in the chat](../../assets/manual/links/link-effect-chat.webp)
 
 - When a player clicks a link the corresponding action will be performed by his character.
 - When a GM clicks a link the corresponding action will be performed by his selected tokens.
 - A link drag/dropped in journal entries, on a token etc...
 
-![link drop](../../../assets/manual/links/effect-drop.webp)
+![link drop](../../assets/manual/links/effect-drop.webp)

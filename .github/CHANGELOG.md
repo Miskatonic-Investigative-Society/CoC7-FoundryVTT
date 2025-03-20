@@ -7,12 +7,16 @@ Happy gaming !
 
 ## Upcoming Release
 
+**_!! This is intended to be the last release to support FoundryVTT v11 !!_**
+
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Allow custom sheet fonts on investigator sheet V3, thanks to @pconcepcion #1746
 - Fix possesions textareas style on investigator sheet V3 to prevent side scrolling, thanks to @pconcepcion #1746
 - Investigator Wizard: Prevent dragging unassigned values to unassigned values removing the first value
+- New bonus dice dialog style in the same style as the v3 character sheet, thanks to @pconcepcion #1749
 - Set character sheet V3 minimum height on investigator sheet V3, thanks to @pconcepcion #1746
+- Additional Translations of the DE Manual, thanks to @MrViso #1748
 
 ## Version 7.11
 
