@@ -13,7 +13,7 @@ Falls du diese Funktion das erste Mal verwendest, lese bitte auch die folgenden 
 
 # Nichtspielercharakter (NSC/NPC) / Kreatur
 
-![](../../../assets/manual/importer/importer.webp)
+![](../../assets/manual/importer/importer.webp)
 
 1. Wähle NPC oder Kreatur
 2. Soll das System den Charakterblock einer früheren Edition in die 7. Edition konvertieren?
@@ -34,7 +34,7 @@ Das Betätigen der "Import"-Schaltfläche wird den Charakter erstellen und den C
 
 # The Dhole's House Actor Importer JSON
 
-![](../../../assets/manual/importer/actor.webp)
+![](../../assets/manual/importer/actor.webp)
 
 "The Dhole's House" ist eine offizielle Webseite auf der Werkzeuge für Spieler und Spielleiter (Keeper) für das Call of Cthulhu Spielsystem bereitgestellt werden. Auf ihr ist es möglich einen Investigator für das Spielsystem mit allerlei vorliegenden Inhalten zu erstellen. Um die Inhalte im Anschluss in diesem Spielsystem unter FoundryVTT verwenden zu können, gibt es die Möglichkeit Charakterbögen von der Webseite in einem maschinenlesbaren Format herunterzuladen.
 
