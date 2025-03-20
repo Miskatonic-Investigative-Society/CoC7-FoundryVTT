@@ -159,6 +159,32 @@ export class CoC7GameRuleSettings extends FormApplication {
         ? 'some'
         : 'all'
       : 'none'
+
+    options.initiativeRuleOptions = [
+      {
+        key: 'basic',
+        label: 'SETTINGS.InitiativeRuleBasic'
+      },
+      {
+        key: 'optional',
+        label: 'SETTINGS.InitiativeRuleOptional'
+      }
+    ]
+
+    options.pulpSelectionOptions = [
+      {
+        key: 'none',
+        label: 'None'
+      },
+      {
+        key: 'some',
+        label: 'Partial'
+      },
+      {
+        key: 'all',
+        label: 'All'
+      }
+    ]
     return options
   }
 

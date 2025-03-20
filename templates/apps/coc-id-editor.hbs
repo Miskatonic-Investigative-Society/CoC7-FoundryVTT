@@ -8,11 +8,7 @@
       {{#if existingKeys.length}}
         <select style="margin-left: -2px;" name="known">
           <option value="">{{localize 'CoC7.CoCIDFlag.new'}}</option>
-          {{#select id}}
-            {{#each existingKeys as |value|}}
-              <option value="{{value.k}}">{{value.name}}</option>
-            {{/each}}
-          {{/select}}
+          {{selectOptions existingKeys selected=id localize=true valueAttr="k" labelAttr="name"}}
         </select>
       {{else}}
         <span style="flex: 0; margin-top: 2px;">{{idPrefix}}</span>
@@ -35,11 +31,7 @@
   <div class="form-group">
     <label for="lang">{{localize 'CoC7.language'}}:</label>
     <select style="flex: 2;" name="lang">
-      {{#select lang}}
-        {{#each supportedLanguages}}
-          <option value="{{@key}}">{{this}} ({{@key}})</option>
-        {{/each}}
-      {{/select}}
+      {{selectOptions supportedLanguages selected=lang}}
     </select>
   </div>
   <div class="form-group">

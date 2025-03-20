@@ -12,42 +12,27 @@
   <div class="form-group">
     <label for="coc-entity-type">{{localize 'CoC7.SelectActorType'}}:</label>
     <select id="coc-entity-type" name="coc-entity-type">
-      {{#select importType}}
-        <option value="npc">{{localize 'CoC7.NonPlayingCharacter'}}</option>
-        <option value="creature">{{localize 'CoC7.Creature'}}</option>
-        <option value="dholehouse">{{localize 'CoC7.DholeHouseActorImporter'}}</option>
-      {{/select}}
+      {{selectOptions importTypeOptions selected=importType localize=true valueAttr="key" labelAttr="label"}}
     </select>
   </div>
   {{#if (or (eq importType "npc") (eq importType "creature"))}}
     <div class="form-group">
       <label for="coc-convert-6E">{{localize 'CoC7.ConvertFrom6Edition'}}:</label>
       <select id="coc-convert-6E" name="coc-convert-6E">
-        {{#select convert6E}}
-          <option value="coc-guess">{{localize 'CoC7.Guess'}}</option>
-          <option value="coc-convert">{{localize 'CoC7.Convert'}}</option>
-          <option value="coc-no-convert">{{localize 'CoC7.NoConvert'}}</option>
-        {{/select}}
+        {{selectOptions convert6EOptions selected=convert6E localize=true valueAttr="key" labelAttr="label"}}
       </select>
     </div>
     <div class="form-group">
       <label for="coc-entity-lang">{{localize 'CoC7.SelectSourceLanguage'}}:</label>
       <select id="coc-entity-lang" name="coc-entity-lang">
-        {{#each languages as |key id|}}
-          <option value="{{id}}"{{#if (eq ../language id)}} selected="selected"{{/if}}>{{localize key}}</option>
-        {{/each}}
+        {{selectOptions languages selected=../language localize=true}}
       </select>
     </div>
   {{/if}}
   <div class="form-group">
     <label for="source">{{localize 'CoC7.ImportSkillItemLocations'}}:</label>
     <select id="source" name="source">
-      {{#select source}}
-        <option value="">{{localize 'CoC7.ImportActorItemsNone'}}</option>
-        <option value="i">{{localize 'CoC7.ImportActorItemsItem'}}</option>
-        <option value="iwms">{{localize 'CoC7.ImportActorItemsItemWorldModuleSystem'}}</option>
-        <option value="wmis">{{localize 'CoC7.ImportActorItemsWorldModuleItemSystem'}}</option>
-      {{/select}}
+      {{selectOptions sourceOptions selected=source localize=true valueAttr="key" labelAttr="label"}}
     </select>
   </div>
   {{#if (eq importType "dholehouse")}}

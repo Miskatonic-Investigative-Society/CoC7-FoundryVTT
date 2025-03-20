@@ -97,7 +97,28 @@ export class CoC7ContentLinkDialog extends FormApplication {
 
     sheetData.isSetFromGame = (sheetData.link.id && (sheetData.fromDirectory || sheetData.fromCompendium))
 
-    sheetData.difficultyLevel = CoC7Check.difficultyLevel
+    sheetData.difficultyLevels = [
+      {
+        key: CoC7Check.difficultyLevel.unknown,
+        label: 'CoC7.RollDifficultyUnknown'
+      },
+      {
+        key: CoC7Check.difficultyLevel.regular,
+        label: 'CoC7.RollDifficultyRegular'
+      },
+      {
+        key: CoC7Check.difficultyLevel.hard,
+        label: 'CoC7.RollDifficultyHard'
+      },
+      {
+        key: CoC7Check.difficultyLevel.extreme,
+        label: 'CoC7.RollDifficultyExtreme'
+      },
+      {
+        key: CoC7Check.difficultyLevel.critical,
+        label: 'CoC7.RollDifficultyCritical'
+      }
+    ]
 
     sheetData.actorNames = sheetData.object.actors.map(a => a.name).join(', ')
 

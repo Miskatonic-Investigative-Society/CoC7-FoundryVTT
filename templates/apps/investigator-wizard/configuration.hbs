@@ -16,21 +16,13 @@
   <div class="form-group">
     <label for="default-ownership">{{localize 'CoC7.InvestigatorWizard.OtherPlayerOwnership'}}:</label>
     <select name="default-ownership" class="submit_on_change">
-      {{#select object.defaultOwnership}}
-        {{#each ownership as |name id|}}
-          <option value="{{id}}">{{localize name}}</option>
-        {{/each}}
-      {{/select}}
+      {{selectOptions ownership selected=object.defaultOwnership localize=true}}
     </select>
   </div>
   <div class="form-group">
     <label for="world-era">{{localize 'CoC7.Settings.WorldEra.Name'}}:</label>
     <select name="world-era" class="submit_on_change">
-      {{#select object.defaultEra}}
-        {{#each _eras as |era|}}
-          <option value="{{era.id}}">{{era.name}}</option>
-        {{/each}}
-      {{/select}}
+      {{selectOptions _eras selected=object.defaultEra valueAttr="id" labelAttr="name"}}
     </select>
   </div>
   <h2>{{localize 'CoC7.InvestigatorWizard.Characteristics'}}</h2>
@@ -80,11 +72,7 @@
     <label for="default-setup">{{localize 'CoC7.InvestigatorWizard.SetupSelect'}}:</label>
     <select name="default-setup" class="submit_on_change">
       <option value="">{{localize 'CoC7.InvestigatorWizard.SetupAny'}}</option>
-      {{#select object.defaultSetup}}
-        {{#each setups as |setup|}}
-          <option value="{{setup.flags.CoC7.cocidFlag.id}}">{{setup.name}}</option>
-        {{/each}}
-      {{/select}}
+      {{selectOptions setupOptions selected=object.defaultSetup valueAttr="key" labelAttr="name"}}
     </select>
   </div>
   {{#if object.defaultSetup}}

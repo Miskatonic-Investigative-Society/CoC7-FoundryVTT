@@ -4,11 +4,7 @@
     <div class="form-group">
       <label>{{ localize 'CoC7.Type' }} :</label>
       <select name="type">
-        {{#select link.checkType}}
-          {{#each checkType as |ct|}}
-            <option value="{{ct.key}}">{{ct.label}}</option>
-          {{/each}}
-        {{/select}}
+        {{selectOptions checkType selected=link.checkType valueAttr="key" labelAttr="label"}}
       </select>
     </div>
 
@@ -16,11 +12,7 @@
       <div class="form-group">
         <label>{{ localize 'CoC7.Check' }} :</label>
         <select name="check">
-          {{#select link.linkType}}
-            {{#each linkType as |lt|}}
-              <option value="{{lt.key}}">{{lt.label}}</option>
-            {{/each}}
-          {{/select}}
+          {{selectOptions linkType selected=link.linkType valueAttr="key" labelAttr="label"}}
         </select>
       </div>
 
@@ -28,11 +20,7 @@
         <div class="form-group">
           <label>{{ localize 'CoC7.Characteristic' }} :</label>
           <select name="characteristicKey">
-            {{#select link.checkName}}
-              {{#each characteristicType as |c|}}
-                <option value="{{c.key}}">{{c.label}}</option>
-              {{/each}}
-            {{/select}}
+            {{selectOptions characteristicType selected=link.checkName valueAttr="key" labelAttr="label"}}
           </select>
         </div>
       {{/if}}
@@ -41,11 +29,7 @@
         <div class="form-group">
           <label>{{ localize 'CoC7.Attribute' }} :</label>
           <select name="attributeKey">
-            {{#select link.checkName}}
-              {{#each attributeType as |at|}}
-                <option value="{{at.key}}">{{at.label}}</option>
-              {{/each}}
-            {{/select}}
+            {{selectOptions attributeType selected=link.checkName valueAttr="key" labelAttr="label"}}
           </select>
         </div>
       {{/if}}
@@ -237,13 +221,7 @@
           <div class='form-group subgroup'>
             <label>{{localize 'CoC7.RollDifficulty'}}</label>
             <select name="difficulty">
-              {{#select link.difficulty}}
-                <option value="{{difficultyLevel.unknown}}">{{localize 'CoC7.RollDifficultyUnknown'}}</option>
-                <option value="{{difficultyLevel.regular}}">{{localize 'CoC7.RollDifficultyRegular'}}</option>
-                <option value="{{difficultyLevel.hard}}">{{localize 'CoC7.RollDifficultyHard'}}</option>
-                <option value="{{difficultyLevel.extreme}}">{{localize 'CoC7.RollDifficultyExtreme'}}</option>
-                <option value="{{difficultyLevel.critical}}">{{localize 'CoC7.RollDifficultyCritical'}}</option>
-              {{/select}}
+              {{selectOptions difficultyLevels selected=link.difficulty localize=true valueAttr="key" labelAttr="label"}}
             </select>
           </div>
           <div class='form-group subgroup'>

@@ -16,13 +16,7 @@
     <div class="flexrow-coc7">
       <label>{{localize "CoC7.DifficultyLevel"}}:</label>
       <select name="system.difficultyLevel">
-        {{#select data.system.difficultyLevel}}
-          <option value="regular">{{localize "CoC7.RollDifficultyRegular"}}</option>
-          <option value="hard">{{localize "CoC7.RollDifficultyHard"}}</option>
-          <option value="extreme">{{localize "CoC7.RollDifficultyExtreme"}}</option>
-          <option value="critical">{{localize "CoC7.RollDifficultyCritical"}}</option>
-          <option value="unreadable">{{localize "CoC7.Unreadable"}}</option>
-        {{/select}}
+        {{selectOptions difficultyLevels selected=data.system.difficultyLevel localize=true valueAttr="key" labelAttr="label"}}
       </select>
     </div>
     {{#if data.system.type.mythos}}
@@ -30,12 +24,7 @@
         <label>{{localize "CoC7.StudyTime"}}:</label>
         <input type="number" name="system.study.necessary" value="{{data.system.study.necessary}}" />
         <select name="system.study.units">
-          {{#select data.system.study.units}}
-            <option value="CoC7.months">{{localize "CoC7.months"}}</option>
-            <option value="CoC7.weeks">{{localize "CoC7.weeks"}}</option>
-            <option value="CoC7.days">{{localize "CoC7.days"}}</option>
-            <option value="CoC7.hours">{{localize "CoC7.hours"}}</option>
-          {{/select}}
+          {{selectOptions studyUnits selected=data.system.study.units localize=true valueAttr="key" labelAttr="label"}}
         </select>
       </div>
     {{/if}}
@@ -84,11 +73,7 @@
               <td><input class="change-other-gains" type="text" value="{{skill.name}}"></td>
               <td>
                 <select class="change-other-gains">
-                  {{#select skill.value}}
-                    <option value="development">{{localize "CoC7.Development"}}</option>
-                    <option value="1d6">+1D6</option>
-                    <option value="1d10">+1D10</option>
-                  {{/select}}
+                  {{selectOptions ../otherGains selected=skill.value localize=true valueAttr="key" labelAttr="label"}}
                 </select>
               </td>
               <td><i class="fas fa-trash remove-other-gains"></i></td>

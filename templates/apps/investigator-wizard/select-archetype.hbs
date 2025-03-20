@@ -5,11 +5,7 @@
     <label for="coc-archetype">{{localize 'CoC7.InvestigatorWizard.ArchetypeSelect'}}:</label>
     <select name="coc-archetype" class="submit_on_change">
       <option value="">&nbsp;</option>
-      {{#select object.archetype}}
-        {{#each archetypes as |archetype|}}
-          <option value="{{archetype.flags.CoC7.cocidFlag.id}}">{{archetype.name}}</option>
-        {{/each}}
-      {{/select}}
+      {{selectOptions archetypeOptions selected=object.archetype valueAttr="key" labelAttr="name"}}
     </select>
   </div>
   {{#if object.archetype}}

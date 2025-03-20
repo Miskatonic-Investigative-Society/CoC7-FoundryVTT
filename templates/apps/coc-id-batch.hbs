@@ -14,11 +14,7 @@
           <div class="value">
             <select class="existing">
               <option value="">{{localize 'CoC7.CoCIDFlag.new'}}</option>
-              {{#select row.custom}}
-                {{#each ../foundKeys as |option|}}
-                  <option value="{{option.key}}">{{option.name}}</option>
-                {{/each}}
-              {{/select}}
+              {{selectOptions ../foundKeys selected=row.custom valueAttr="key" labelAttr="name"}}
             </select>
           </div>
           <div class="value flexrow-coc7">
