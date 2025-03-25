@@ -1,4 +1,4 @@
-/* global $, foundry, game, ItemSheet, TextEditor */
+/* global $, foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
@@ -7,7 +7,7 @@ import { DropCoCID } from '../../apps/drop-coc-id.js'
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
-export class CoC7ArchetypeSheet extends ItemSheet {
+export class CoC7ArchetypeSheet extends foundry.appv1.sheets.ItemSheet {
   /**
    * Activate event listeners using the prepared sheet HTML
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM

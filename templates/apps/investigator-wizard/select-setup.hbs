@@ -5,7 +5,7 @@
     <label for="coc-setup">{{localize 'CoC7.InvestigatorWizard.SetupSelect'}}:</label>
     <select name="coc-setup" class="submit_on_change">
       <option value="">&nbsp;</option>
-      {{selectOptions setupOptions selected=object.setup valueAttr="key" labelAttr="name"}}
+      {{selectOptions setupOptions selected=object.setup valueAttr="key" nameAttr="key" labelAttr="name"}}
     </select>
   </div>
   {{#if object.setup}}

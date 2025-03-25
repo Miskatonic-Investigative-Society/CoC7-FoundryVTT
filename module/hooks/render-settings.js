@@ -27,6 +27,7 @@ function showDialog () {
 
 export default function (application, html, data) {
   if (game.user.isGM) {
+    /* // FoundryVTT V12 */
     if (foundry.utils.isNewerVersion(game.version, '13')) {
       {
         const menuButton = document.createElement('button')

@@ -1,5 +1,6 @@
-/* global File, FilePicker, foundry, game, ui */
-export class CoC7DirectoryPicker extends FilePicker {
+/* global FilePicker, foundry, game, ui */
+/* // FoundryVTT V12 */
+export class CoC7DirectoryPicker extends (foundry.applications.apps?.FilePicker ?? FilePicker) {
   constructor (options = {}) {
     options.type = 'folder'
     super(options)
@@ -20,10 +21,6 @@ export class CoC7DirectoryPicker extends FilePicker {
       path
     })
     this.close()
-  }
-
-  static DefaultDirectory (val) {
-    return val === null ? '' : String(val)
   }
 
   static format (value) {
@@ -59,7 +56,10 @@ export class CoC7DirectoryPicker extends FilePicker {
       inputs = html[0].querySelectorAll('input[name=CoC7\\.dholeUploadDirectory]')
     }
     for (const input of inputs) {
-      input.setAttribute('readonly', true)
+      /* // FoundryVTT v11 */
+      if (foundry.utils.isNewerVersion(game.version, '12')) {
+        input.setAttribute('readonly', true)
+      }
       if (!input.nextElementSibling) {
         const picker = new CoC7DirectoryPicker({
           field: input,

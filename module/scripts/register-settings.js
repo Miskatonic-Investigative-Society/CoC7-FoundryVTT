@@ -1,9 +1,8 @@
-/* global $, CONFIG, CONST, game, ui */
+/* global $, CONFIG, CONST, foundry, game, ui */
 import { COC7 } from '../config.js'
 import { CoC7DecaderDie } from '../apps/decader-die.js'
 import { CoC7DecaderDieOther } from '../apps/decader-die-other.js'
 import { CoC7GameRuleSettings } from './game-rules.js'
-import { CoC7DirectoryPicker } from './coc7-directory-picker.js'
 
 export function registerSettings () {
   /**
@@ -33,8 +32,10 @@ export function registerSettings () {
     hint: 'CoC7.Settings.DholeUpload.Directory.Hint',
     scope: 'world',
     config: true,
-    type: CoC7DirectoryPicker.DefaultDirectory,
-    default: '[data] worlds/' + game.world.id + '/dhole-images'
+    type: String,
+    // filePicker: 'folder',
+    /* // FoundryVTT V11 */
+    default: (foundry.utils.isNewerVersion(game.version, '12') ? '' : '[data] ') + 'worlds/' + game.world.id + '/dhole-images'
   })
 
   game.settings.register('CoC7', 'worldEra', {

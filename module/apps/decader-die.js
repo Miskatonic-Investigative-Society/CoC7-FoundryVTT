@@ -1,6 +1,5 @@
-/* global Die */
-
-export class CoC7DecaderDie extends Die {
+/* global foundry */
+export class CoC7DecaderDie extends foundry.dice.terms.Die {
   constructor (termData) {
     termData.faces = 10
     super(termData)

@@ -4,7 +4,7 @@
     <div class="form-group">
       <label>{{ localize 'CoC7.Type' }} :</label>
       <select name="type">
-        {{selectOptions checkType selected=link.checkType valueAttr="key" labelAttr="label"}}
+        {{selectOptions checkType selected=link.checkType valueAttr="key" nameAttr="key" labelAttr="label"}}
       </select>
     </div>
 
@@ -12,7 +12,7 @@
       <div class="form-group">
         <label>{{ localize 'CoC7.Check' }} :</label>
         <select name="check">
-          {{selectOptions linkType selected=link.linkType valueAttr="key" labelAttr="label"}}
+          {{selectOptions linkType selected=link.linkType valueAttr="key" nameAttr="key" labelAttr="label"}}
         </select>
       </div>
 
@@ -20,7 +20,7 @@
         <div class="form-group">
           <label>{{ localize 'CoC7.Characteristic' }} :</label>
           <select name="characteristicKey">
-            {{selectOptions characteristicType selected=link.checkName valueAttr="key" labelAttr="label"}}
+            {{selectOptions characteristicType selected=link.checkName valueAttr="key" nameAttr="key" labelAttr="label"}}
           </select>
         </div>
       {{/if}}
@@ -29,7 +29,7 @@
         <div class="form-group">
           <label>{{ localize 'CoC7.Attribute' }} :</label>
           <select name="attributeKey">
-            {{selectOptions attributeType selected=link.checkName valueAttr="key" labelAttr="label"}}
+            {{selectOptions attributeType selected=link.checkName valueAttr="key" nameAttr="key" labelAttr="label"}}
           </select>
         </div>
       {{/if}}
@@ -221,7 +221,7 @@
           <div class='form-group subgroup'>
             <label>{{localize 'CoC7.RollDifficulty'}}</label>
             <select name="difficulty">
-              {{selectOptions difficultyLevels selected=link.difficulty localize=true valueAttr="key" labelAttr="label"}}
+              {{selectOptions difficultyLevels selected=link.difficulty localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
             </select>
           </div>
           <div class='form-group subgroup'>

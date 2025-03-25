@@ -6,7 +6,6 @@ import { CoC7MeleeTarget } from './chat/combat/melee-target.js'
 import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js'
 import { CoC7RangeInitiator } from './chat/rangecombat.js'
 import { CoC7Roll, chatHelper, isCtrlKey } from './chat/helper.js'
-// import { CoC7DamageRoll } from './chat/damagecards.js';
 import { CoC7ConCheck } from './chat/concheck.js'
 import { SanCheckCard } from './chat/cards/san-check.js'
 import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
@@ -19,6 +18,7 @@ const CHAT_COC7_MESSAGE = {
   FAKEROLL:
     '<div class="dice-roll"><div class="dice-result"><div class="dice-formula">???</div><h4 class="dice-total">?</h4></div></div>'
 }
+
 export class CoC7Chat {
   static renderChatMessageHook (chatMessage, html) {
     if (chatMessage.getFlag('CoC7', 'GMSelfRoll') && !game.user.isGM) {

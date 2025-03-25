@@ -1,4 +1,4 @@
-/* global foundry, game, ItemSheet, TextEditor */
+/* global foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { COC7 } from '../../config.js'
 import { isCtrlKey } from '../../chat/helper.js'
@@ -7,7 +7,7 @@ import { CoC7Utilities } from '../../utilities.js'
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
-export class CoC7WeaponSheet extends ItemSheet {
+export class CoC7WeaponSheet extends foundry.appv1.sheets.ItemSheet {
   /**
    *
    */

@@ -143,40 +143,4 @@ export class CoC7Skill extends CoC7Item {
       })
     }
   }
-
-  // get value () {
-  //   let pValue
-  //   if( this.parent){
-
-  //   }
-  //   const value = super.value
-  //   let updated = value
-  //   for (const change of this.activeEffects) {
-  //     const modifier = Number.fromString(change.value)
-  //     if (!isNaN(modifier)) {
-  //       const modes = CONST.ACTIVE_EFFECT_MODES
-  //       switch (change.mode) {
-  //         case modes.ADD:
-  //           updated += modifier
-  //           break
-  //         case modes.MULTIPLY:
-  //           updated = Math.round(updated * modifier)
-  //           break
-  //         case modes.OVERRIDE:
-  //           updated = modifier
-  //           break
-  //         case modes.UPGRADE:
-  //           if (modifer > updated) updated = modifier
-  //           break
-  //         case modes.DOWNGRADE:
-  //           if (modifer < updated) updated = modifier
-  //           break
-  //       }
-  //     }
-  //   }
-  //   if (!isNaN(updated) && updated != value) {
-  //     if (updated < 0) updated = 0
-  //     return updated
-  //   } return value
-  // }
 }

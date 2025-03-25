@@ -1,5 +1,4 @@
 /* global canvas, ChatMessage, CONST, foundry, fromUuid, game, Ray, Token, ui */
-
 import { CoC7Check } from '../check.js'
 import { CoC7Utilities } from '../utilities.js'
 

@@ -1,5 +1,5 @@
-/* global MathTerm, NumericTerm, ParentheticalTerm, Roll, RollTerm */
-class AverageParentheticalTerm extends ParentheticalTerm {
+/* global foundry, MathTerm, Roll */
+class AverageParentheticalTerm extends foundry.dice.terms.ParentheticalTerm {
   /** @inheritdoc */
   _evaluateSync ({ minimize = false, maximize = false } = {}) {
     // Evaluate the inner Roll
@@ -25,7 +25,7 @@ export class AverageRoll extends Roll {
   _evaluateSync ({ minimize = false, maximize = false } = {}) {
     // Step 1 - Replace intermediate terms with evaluated numbers
     this.terms = this.terms.map(term => {
-      if (!(term instanceof RollTerm)) {
+      if (!(term instanceof foundry.dice.terms.RollTerm)) {
         throw new Error('Roll evaluation encountered an invalid term which was not a RollTerm instance')
       }
       if (term.isIntermediate) {
@@ -38,7 +38,7 @@ export class AverageRoll extends Roll {
           total = Math.floor((term.dice[0].faces + 1) / 2 * term.total)
         }
 
-        return new NumericTerm({ number: total, options: term.options })
+        return new foundry.dice.terms.NumericTerm({ number: total, options: term.options })
       }
       return term
     })
@@ -50,7 +50,7 @@ export class AverageRoll extends Roll {
     this.terms = this.terms.map(term => {
       if (!term._evaluated) {
         if (typeof term.faces !== 'undefined') {
-          return new NumericTerm({ number: Math.floor((term.faces + 1) / 2 * term.number), options: term.options })
+          return new foundry.dice.terms.NumericTerm({ number: Math.floor((term.faces + 1) / 2 * term.number), options: term.options })
         } else {
           term.evaluate({ minimize, maximize, async: false })
         }

@@ -541,18 +541,36 @@ export class CoCID {
    */
   static async onlyDocuments (candidates, showLoading) {
     const len = candidates.length
-    let count = 0
-    for (const offset in candidates) {
+    if (len > 0) {
+      let count = 0
+      let progressBar = false
+      /* // FoundryVTT V12 */
+      if (showLoading && foundry.utils.isNewerVersion(game.version, '13')) {
+        progressBar = ui.notifications.info('SETUP.PackagesLoading', { localize: true, progress: true })
+      }
+      for (const offset in candidates) {
+        if (showLoading) {
+          /* // FoundryVTT V12 */
+          if (!progressBar) {
+            SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: Math.floor(count / len) })
+            count = count + 100
+          } else {
+            progressBar.update({ pct: count / len })
+            count++
+          }
+        }
+        if (!(candidates[offset] instanceof foundry.abstract.DataModel)) {
+          candidates[offset] = await fromUuid(candidates[offset].uuid)
+        }
+      }
       if (showLoading) {
-        SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: Math.floor(count / len) })
-        count = count + 100
+        /* // FoundryVTT V12 */
+        if (!progressBar) {
+          SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: 100 })
+        } else {
+          progressBar.update({ pct: 1 })
+        }
       }
-      if (!(candidates[offset] instanceof foundry.abstract.DataModel)) {
-        candidates[offset] = await fromUuid(candidates[offset].uuid)
-      }
-    }
-    if (showLoading) {
-      SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: 100 })
     }
     return candidates
   }

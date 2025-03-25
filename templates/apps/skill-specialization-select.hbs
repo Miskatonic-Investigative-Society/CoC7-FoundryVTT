@@ -4,11 +4,7 @@
       <div class="flexrow-coc7">
         <select name="existing-skill">
           <option value="">{{localize 'CoC7.SkillPickNameOnly'}}</option>
-          {{#select object.selected}}
-            {{#each object.skills as |skill|}}
-              <option value="{{skill.id}}" data-base="{{skill.base}}">{{skill.name}}</option>
-            {{/each}}
-          {{/select}}
+          {{selectOptions object.skills selected=object.selected valueAttr="id" nameAttr="id" labelAttr="name"}}
         </select>
       </div>
       <br>

@@ -1,4 +1,4 @@
-/* global foundry */
+/* global foundry, game */
 import { CoC7Tour } from '../apps/coc7-tour.js'
 
 export class EnableVariantRulesEn extends CoC7Tour {
@@ -11,14 +11,16 @@ export class EnableVariantRulesEn extends CoC7Tour {
       steps: [
         {
           id: 'goto-settings',
-          selector: '.tabs>a[data-tab="settings"]',
+          /* // FoundryVTT V12 */
+          selector: (foundry.utils.isNewerVersion(game.version, '13') ? 'button.ui-control[data-action="tab"][data-tab="settings"]' : '.tabs>a[data-tab="settings"]'),
           title: 'COC7.Tour.GotoSettingsTitle',
           content: 'COC7.Tour.GotoSettingsContent',
           sidebarTab: 'settings'
         },
         {
           id: 'goto-configure',
-          selector: '[data-action="configure"]',
+          /* // FoundryVTT V12 */
+          selector: (foundry.utils.isNewerVersion(game.version, '13') ? 'button[data-action="openApp"][data-app="configure"]' : '[data-action="configure"]'),
           title: 'COC7.Tour.GotoConfigureTitle',
           content: 'COC7.Tour.GotoConfigureContent',
           action: 'click'
