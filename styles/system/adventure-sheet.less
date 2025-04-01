@@ -7,8 +7,40 @@
 @colourAdventureSheetKeeperReadaloudDark: rgba(127,127,127,0.2);
 @colourAdventureSheetExample: rgb(102,77,42);
 
+div.coc7.dialog {
+  .filepicker .tiles-list {
+    display: grid;
+    margin: 1em 0;
+    padding: 0;
+    border-left: 1px solid var(--color-border-dark-primary);
+    border-top: 1px solid var(--color-border-dark-primary);
+
+    li {
+      width: 100px;
+      height: 100px;
+      padding: 0;
+      border: 1px solid transparent;
+      border-right: 1px solid var(--color-border-dark-primary);
+      border-bottom: 1px solid var(--color-border-dark-primary);
+      list-style-type: none;
+
+      &.picked {
+        box-shadow: 0 0 6px inset var(--color-shadow-highlight);
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      img {
+        border: none;
+        margin: 0;
+        object-fit: contain;
+      }
+    }
+  }
+}
+
 form.coc7-adventure-entry.sheet,
 div.coc7-adventure-entry.sheet {
+  &.fixed-adventure-heading header.journal-header,
   &.fixed-adventure-heading form.journal-header {
     display: none;
   }

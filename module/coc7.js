@@ -40,6 +40,7 @@ import RenderCompendiumDirectory from './hooks/render-compendium-directory.js'
 import RenderDialog from './hooks/render-dialog.js'
 import RenderGamePause from './hooks/render-game-pause.js'
 import RenderItemSheet from './hooks/render-item-sheet.js'
+import RenderJournalEntryPageTextSheet from './hooks/render-journal-entry-page-text-sheet.js'
 import RenderJournalEntrySheet from './hooks/render-journal-entry-sheet.js'
 import RenderJournalSheet from './hooks/render-journal-sheet.js'
 import RenderJournalTextPageSheet from './hooks/render-journal-text-page-sheet.js'
@@ -97,9 +98,10 @@ Hooks.on('renderCompendiumDirectory', RenderCompendiumDirectory)
 Hooks.on('renderDialog', RenderDialog)
 Hooks.on('renderGamePause', RenderGamePause)
 Hooks.on('renderItemSheet', RenderItemSheet)
+Hooks.on('renderJournalEntryPageTextSheet', RenderJournalEntryPageTextSheet)
 Hooks.on('renderJournalEntrySheet', RenderJournalEntrySheet)
 Hooks.on('renderJournalSheet', RenderJournalSheet) /* // FoundryVTT v12 */
-Hooks.on('renderJournalTextPageSheet', RenderJournalTextPageSheet)
+Hooks.on('renderJournalTextPageSheet', RenderJournalTextPageSheet) /* // FoundryVTT v12 */
 Hooks.on('renderPause', RenderPause) /* // FoundryVTT v12 */
 Hooks.on('renderPlayerList', RenderPlayerList) /* // FoundryVTT v12 */
 Hooks.on('renderPlayers', RenderPlayers)
