@@ -1,10 +1,10 @@
 /* global $ */
 export default function (application, html, data) {
-  if ((application.object.getFlag('CoC7', 'css-adventure-entry') ?? false)) {
+  if ((application.document.getFlag('CoC7', 'css-adventure-entry') ?? false)) {
     if (!html.hasClass('coc7-adventure-entry')) {
       html.addClass('coc7-adventure-entry')
     }
-    if ((application.object.getFlag('CoC7', 'fixed-adventure-heading') ?? false) && !html.hasClass('fixed-adventure-heading')) {
+    if ((application.document.getFlag('CoC7', 'fixed-adventure-heading') ?? false) && !html.hasClass('fixed-adventure-heading')) {
       const obj = $(html)
       obj.addClass('fixed-adventure-heading')
       const subheading = data.pages?.[0]?.flags?.CoC7?.['fixed-adventure-subheading'] ?? ''
