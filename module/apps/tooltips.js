@@ -12,7 +12,7 @@ export class CoC7Tooltips {
         let left = bounds.left
         let top = bounds.top
         const heightText = $(this.ToolTipHover).outerHeight()
-        $('body').append('<div id="help-tooltip">' + toolTip + '</div>')
+        $('body').append('<div id="help-tooltip" class="themed theme-light">' + toolTip + '</div>')
         const tip = $('#help-tooltip')
         const heightTip = tip.outerHeight()
         const widthTip = tip.outerWidth()
