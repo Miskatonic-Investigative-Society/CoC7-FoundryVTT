@@ -8,7 +8,7 @@
       {{#if existingKeys.length}}
         <select style="margin-left: -2px;" name="known">
           <option value="">{{localize 'CoC7.CoCIDFlag.new'}}</option>
-          {{selectOptions existingKeys selected=id localize=true valueAttr="k" labelAttr="name"}}
+          {{selectOptions existingKeys selected=id localize=true valueAttr="k" nameAttr="k" labelAttr="name"}}
         </select>
       {{else}}
         <span style="flex: 0; margin-top: 2px;">{{idPrefix}}</span>

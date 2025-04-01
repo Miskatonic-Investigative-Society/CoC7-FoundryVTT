@@ -1,5 +1,4 @@
 /* global Dialog, FormData, game, renderTemplate */
-
 export class SanDataDialog extends Dialog {
   activateListeners (html) {
     super.activateListeners(html)

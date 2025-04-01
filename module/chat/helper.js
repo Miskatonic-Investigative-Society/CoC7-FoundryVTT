@@ -1,5 +1,4 @@
 /* global canvas, ChatMessage, CONST, foundry, fromUuid, game, Ray, Token, ui */
-
 import { CoC7Check } from '../check.js'
 import { CoC7Utilities } from '../utilities.js'
 
@@ -31,34 +30,6 @@ export function createInlineRoll (roll) {
   }
   a.innerHTML = `<i class="fas fa-dice-d20"></i> ${data.result}`
   return a
-}
-
-/**
- * Function used for JSON.stringify replacer.
- * Exclude any key starting with _
- * @param {*} key     The object's property Key
- * @param {*} value   The associated value
- */
-export function exclude_ (key, value) {
-  // convert RegExp to string
-  if (key.startsWith('_')) {
-    return undefined // remove from result
-  }
-  return value // return as is
-}
-
-/**
- * Function used for JSON.stringify replacer.
- * Exclude any key starting with __
- * @param {*} key     The object's property Key
- * @param {*} value   The associated value
- */
-export function exclude__ (key, value) {
-  // convert RegExp to string
-  if (key.startsWith('__')) {
-    return undefined // remove from result
-  }
-  return value // return as is
 }
 
 /**

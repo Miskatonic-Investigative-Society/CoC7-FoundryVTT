@@ -22,14 +22,16 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
   activateListeners (html) {
     super.activateListeners(html)
 
-    const participantDragDrop = new DragDrop({
+    /* // FoundryVTT V12 */
+    const participantDragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
       dropSelector: '.form-container',
       permissions: { drop: game.user.isGM },
       callbacks: { drop: this._onDropParticipant.bind(this) }
     })
     participantDragDrop.bind(html[0])
 
-    const tokenSelectorDragDrop = new DragDrop({
+    /* // FoundryVTT V12 */
+    const tokenSelectorDragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
       dragSelector: '.chase-token',
       permissions: {
         dragstart: game.user.isGM

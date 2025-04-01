@@ -1,4 +1,4 @@
-/* global foundry, game, ItemSheet, TextEditor */
+/* global foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
@@ -6,7 +6,7 @@ import { COC7 } from '../../config.js'
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
-export class CoC7StatusSheet extends ItemSheet {
+export class CoC7StatusSheet extends foundry.appv1.sheets.ItemSheet {
   /**
    *
    */

@@ -1,5 +1,4 @@
 /* global Dialog, FormData, game, renderTemplate */
-
 import { CoC7ChatMessage } from './coc7-chat-message.js'
 import { CoC7Check } from '../check.js'
 

@@ -707,6 +707,30 @@ export class CoCActor extends Actor {
     return created
   }
 
+  async createEmptyArmor (event = null) {
+    const showSheet = event ? !event.shiftKey : true
+    const data = {
+      name: game.i18n.localize('CoC7.Entities.Armor'),
+      type: 'armor',
+      effects: [
+        {
+          name: game.i18n.localize('CoC7.Entities.Armor'),
+          changes: [
+            {
+              key: 'system.attribs.armor.value',
+              mode: 2,
+              value: '0'
+            }
+          ]
+        }
+      ]
+    }
+    const created = await this.createEmbeddedDocuments('Item', [data], {
+      renderSheet: showSheet
+    })
+    return created
+  }
+
   async createEmptyBook (event = null) {
     const showSheet = event ? !event.shiftKey : true
     if (!this.getItemIdByName(game.i18n.localize(COC7.newBookName))) {
@@ -1674,7 +1698,7 @@ export class CoCActor extends Actor {
 
   static getCharacteristicDefinition () {
     const characteristics = []
-    // FoundryVTT v11
+    /* // FoundryVTT v11 */
     const characteristicList = (!foundry.utils.isNewerVersion(game.version, '12') ? game.system.template.Actor.templates.characteristics.characteristics : game.system.template.Actor.character.characteristics)
     for (const [key, value] of Object.entries(characteristicList)) {
       characteristics.push({

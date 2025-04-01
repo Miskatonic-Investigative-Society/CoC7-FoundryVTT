@@ -6,13 +6,14 @@ import { RollCard } from './roll-card.js'
 export class CombinedCheckCard extends RollCard {
   static async bindListerners (html) {
     if (foundry.utils.isNewerVersion(game.version, '13')) {
+      const app = this
       html.addEventListener('click', function (event) {
-        if (event.target.querySelector('.roll-card.combined .toggle-switch')) {
-          this._onToggle.bind(this)
-        } else if (event.target.querySelector('.roll-card.combined a')) {
-          CombinedCheckCard._onClick.bind(this)
-        } else if (event.target.querySelector('.roll-card.combined button')) {
-          CombinedCheckCard._onClick.bind(this)
+        if (event.target.classList.contains('toggle-switch') && !!event.target.closest('.roll-card.combined')) {
+          app._onToggle(event)
+        } else if (event.target.tagName === 'A' && !!event.target.closest('.roll-card.combined')) {
+          CombinedCheckCard._onClick(event)
+        } else if (event.target.tagName === 'BUTTON' && !!event.target.closest('.roll-card.combined')) {
+          CombinedCheckCard._onClick(event)
         }
       })
     } else {
@@ -131,7 +132,7 @@ export class CombinedCheckCard extends RollCard {
   static async _onClick (event) {
     event.preventDefault()
 
-    const a = event.currentTarget
+    const a = event.target
     const action = a.dataset.action
     const li = a.closest('li.actor-roll')
     const message = a.closest('.chat-message')

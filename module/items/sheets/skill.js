@@ -1,4 +1,4 @@
-/* global foundry, game, ItemSheet, TextEditor */
+/* global foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
@@ -8,7 +8,7 @@ import { isCtrlKey } from '../../chat/helper.js'
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
-export class CoC7SkillSheet extends ItemSheet {
+export class CoC7SkillSheet extends foundry.appv1.sheets.ItemSheet {
   constructor (...args) {
     super(...args)
     this._sheetTab = 'items'
@@ -128,65 +128,6 @@ export class CoC7SkillSheet extends ItemSheet {
       isCtrlKey(event)
     )
   }
-
-  // async _onClickAttributeControl(event) {
-  //   event.preventDefault();
-  //   const a = event.currentTarget;
-  //   const action = a.dataset.action;
-  //   const attrs = this.object.data.data.attributes;
-  //   const form = this.form;
-
-  //   // Add new attribute
-  //   if (action === "create") {
-  //     const nk = Object.keys(attrs).length + 1;
-  //     let newKey = document.createElement("div");
-  //     newKey.innerHTML = `<input type="text" name="data.attributes.attr${nk}.key" value="attr${nk}"/>`;
-  //     newKey = newKey.children[0];
-  //     form.appendChild(newKey);
-  //     await this._onSubmit(event);
-  //   }
-
-  //   // Remove existing attribute
-  //   else if (action === "delete") {
-  //     const li = a.closest(".attribute");
-  //     li.parentElement.removeChild(li);
-  //     await this._onSubmit(event);
-  //   }
-  // }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Implement the _updateObject method as required by the parent class spec
-   * This defines how to update the subject of the form when the form is submitted
-   * @private
-   */
-  // _updateObject(event, formData) {
-  //   // Handle the free-form attributes list
-  //   const ford = foundry.utils.expandObject(formData);
-  //   const formAttrs = foundry.utils.expandObject(formData).data.attributes || {};
-  //   const attributes = Object.values(formAttrs).reduce((obj, v) => {
-  //     let k = v["key"].trim();
-  //     if (/[\s\.]/.test(k)) return ui.notifications.error("Attribute keys may not contain spaces or periods");
-  //     delete v["key"];
-  //     obj[k] = v;
-  //     return obj;
-  //   }, {});
-
-  //   // Remove attributes which are no longer used
-  //   for (let k of Object.keys(this.object.data.data.attributes)) {
-  //     if (!attributes.hasOwnProperty(k)) attributes[`-=${k}`] = null;
-  //   }
-
-  //   // Re-combine formData
-  //   formData = Object.entries(formData).filter(e => !e[0].startsWith("data.attributes")).reduce((obj, e) => {
-  //     obj[e[0]] = e[1];
-  //     return obj;
-  //   }, { _id: this.object._id, "data.attributes": attributes });
-
-  //   // Update the Item
-  //   return this.object.update(formData);
-  // }
 
   async _updateObject (event, formData) {
     const skillName = formData['system.skillName'] || this.item.system.skillName

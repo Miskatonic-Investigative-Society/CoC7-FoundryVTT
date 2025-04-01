@@ -233,7 +233,7 @@
                   <div class="form-group small">
                     <span class="icon bigger" title="{{ localize 'CoC7.ChooseWeapon' }}"><i class="game-icon game-icon-gooey-impact"></i></span>
                     <select name="data.weaponChoice">
-                      {{selectOptions card.weaponsOptions valueAttr="uuid" labelAttr="name" selected=data.weaponChoice}}
+                      {{selectOptions card.weaponsOptions valueAttr="uuid" nameAttr="uuid" labelAttr="name" selected=data.weaponChoice}}
                     </select>
                   </div>
                   {{#if customWeapon}}

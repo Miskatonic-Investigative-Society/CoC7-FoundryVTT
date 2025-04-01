@@ -95,11 +95,7 @@
     <div class="form-group">
       <label>{{localize 'CoC7.MonetaryFormatTitle'}}</label>
       <select name="system.monetary.format">
-        {{#select data.system.monetary.format}}
-          {{#each _monetaryFormats as |monetaryFormat|}}
-            <option value="{{monetaryFormat.key}}">{{monetaryFormat.val}}</option>
-          {{/each}}
-        {{/select}}
+        {{selectOptions _monetaryFormats selected=data.system.monetary.format localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
       </select>
     </div>
     {{#if showCurrencySymbol}}
@@ -114,27 +110,15 @@
         <input name="system.monetary.values.{{index}}.min" value="{{value.min}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMin'}}">
         <input name="system.monetary.values.{{index}}.max" value="{{value.max}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMax'}}">
         <select name="system.monetary.values.{{index}}.cashType" class="cash-assets-type">
-          {{#select value.cashType}}
-            {{#each ../_monetaryTypes as |monetaryType|}}
-              <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
-            {{/each}}
-          {{/select}}
+          {{selectOptions ../_monetaryTypes selected=value.cashType localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
         </select>
         <input name="system.monetary.values.{{index}}.cashValue" value="{{value.cashValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueCash'}}">
         <select name="system.monetary.values.{{index}}.assetsType" class="cash-assets-type">
-          {{#select value.assetsType}}
-            {{#each ../_monetaryTypes as |monetaryType|}}
-              <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
-            {{/each}}
-          {{/select}}
+          {{selectOptions ../_monetaryTypes selected=value.assetsType localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
         </select>
         <input name="system.monetary.values.{{index}}.assetsValue" value="{{value.assetsValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueAssets'}}">
         <select name="system.monetary.values.{{index}}.spendingType" class="cash-assets-type">
-          {{#select value.spendingType}}
-            {{#each ../_monetaryTypes as |monetaryType|}}
-              <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
-            {{/each}}
-          {{/select}}
+          {{selectOptions ../_monetaryTypes selected=value.spendingType localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
         </select>
         <input name="system.monetary.values.{{index}}.spendingValue" value="{{value.spendingValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueSpendingLevel'}}">
         {{#unless ../data.system.flags.locked}}

@@ -1,5 +1,6 @@
 /* global game */
 export default function (actor, sheet, data) {
+  /* // FoundryVTT V10 */
   if (data.type === 'Item' && data.actorId) {
     if (actor.data._id === data.actorId) {
       return

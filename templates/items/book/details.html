@@ -16,7 +16,7 @@
     <div class="flexrow-coc7">
       <label>{{localize "CoC7.DifficultyLevel"}}:</label>
       <select name="system.difficultyLevel">
-        {{selectOptions difficultyLevels selected=data.system.difficultyLevel localize=true valueAttr="key" labelAttr="label"}}
+        {{selectOptions difficultyLevels selected=data.system.difficultyLevel localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
       </select>
     </div>
     {{#if data.system.type.mythos}}
@@ -24,7 +24,7 @@
         <label>{{localize "CoC7.StudyTime"}}:</label>
         <input type="number" name="system.study.necessary" value="{{data.system.study.necessary}}" />
         <select name="system.study.units">
-          {{selectOptions studyUnits selected=data.system.study.units localize=true valueAttr="key" labelAttr="label"}}
+          {{selectOptions studyUnits selected=data.system.study.units localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
         </select>
       </div>
     {{/if}}
@@ -73,7 +73,7 @@
               <td><input class="change-other-gains" type="text" value="{{skill.name}}"></td>
               <td>
                 <select class="change-other-gains">
-                  {{selectOptions ../otherGains selected=skill.value localize=true valueAttr="key" labelAttr="label"}}
+                  {{selectOptions ../otherGains selected=skill.value localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
                 </select>
               </td>
               <td><i class="fas fa-trash remove-other-gains"></i></td>

@@ -12,14 +12,14 @@
   <div class="form-group">
     <label for="coc-entity-type">{{localize 'CoC7.SelectActorType'}}:</label>
     <select id="coc-entity-type" name="coc-entity-type">
-      {{selectOptions importTypeOptions selected=importType localize=true valueAttr="key" labelAttr="label"}}
+      {{selectOptions importTypeOptions selected=importType localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
     </select>
   </div>
   {{#if (or (eq importType "npc") (eq importType "creature"))}}
     <div class="form-group">
       <label for="coc-convert-6E">{{localize 'CoC7.ConvertFrom6Edition'}}:</label>
       <select id="coc-convert-6E" name="coc-convert-6E">
-        {{selectOptions convert6EOptions selected=convert6E localize=true valueAttr="key" labelAttr="label"}}
+        {{selectOptions convert6EOptions selected=convert6E localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
       </select>
     </div>
     <div class="form-group">
@@ -32,7 +32,7 @@
   <div class="form-group">
     <label for="source">{{localize 'CoC7.ImportSkillItemLocations'}}:</label>
     <select id="source" name="source">
-      {{selectOptions sourceOptions selected=source localize=true valueAttr="key" labelAttr="label"}}
+      {{selectOptions sourceOptions selected=source localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
     </select>
   </div>
   {{#if (eq importType "dholehouse")}}

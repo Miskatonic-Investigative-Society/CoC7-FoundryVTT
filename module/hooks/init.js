@@ -1,4 +1,4 @@
-/* global Combat, CONFIG, fromUuid, game, Hooks, TextEditor */
+/* global Combat, CONFIG, foundry, fromUuid, game, Hooks, TextEditor */
 import { configureDocuments } from '../scripts/configure-documents.js'
 import { preloadHandlebarsTemplates } from '../scripts/load-templates.js'
 import { registerSettings } from '../scripts/register-settings.js'
@@ -15,6 +15,14 @@ import CoC7ClickableEvents from '../apps/coc7-clickable-events.js'
 import { DamageCard } from '../chat/cards/damage.js'
 
 export default function () {
+  if (foundry.utils.isNewerVersion(game.version, '13')) {
+    const link = document.createElement('link')
+    link.setAttribute('href', 'https://fonts.googleapis.com/css?family=Noto%20Sans|Voltaire|Lusitana')
+    link.setAttribute('rel', 'stylesheet')
+    link.setAttribute('type', 'text/css')
+    link.setAttribute('media', 'all')
+    document.head.append(link)
+  }
   game.CoC7 = {
     macros: {
       skillCheck: CoC7Utilities.skillCheckMacro,
@@ -33,6 +41,7 @@ export default function () {
     eras: (era, name) => {
       COC7.eras[era] = name
     },
+    tables: {},
     ClickRegionLeftUuid: CoC7ClickableEvents.ClickRegionLeftUuid,
     ClickRegionRightUuid: CoC7ClickableEvents.ClickRegionRightUuid,
     hasPermissionDocument: CoC7ClickableEvents.hasPermissionDocument,

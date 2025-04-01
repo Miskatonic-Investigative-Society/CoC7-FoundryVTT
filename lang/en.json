@@ -1327,6 +1327,7 @@
   "CoC7.CoCIDFlag.keys.i.skill.dodge": "Dodge",
   "CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos": "Cthulhu Mythos",
   "CoC7.CoCIDFlag.keys.i.skill.credit-rating": "Credit Rating",
+  "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
   "CoC7.CoCIDFlag.new": "- Custom System ID -",
   "CoC7.CoCIDFlag.guess": "Create System ID (CoC ID) based on current document.",
   "CoC7.CoCIDFlag.priority": "System ID Priority",

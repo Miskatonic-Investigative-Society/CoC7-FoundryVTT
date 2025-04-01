@@ -581,7 +581,8 @@ export class EnhancedChatCard {
     let updates = false
     for (let i = 0; i < forms.length; i++) {
       const form = forms[i]
-      const fd = new FormDataExtended(form)
+      /* // FoundryVTT V12 */
+      const fd = new (foundry.applications.ux?.FormDataExtended ?? FormDataExtended)(form)
       const data = fd.object
       // data = foundry.utils.diffObject(
       //   this.data,

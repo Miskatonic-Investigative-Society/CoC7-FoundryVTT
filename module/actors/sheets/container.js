@@ -1,8 +1,8 @@
-/* global $, ActorSheet, CONST, Dialog, FormData, foundry, game, TextEditor */
+/* global $, CONST, Dialog, FormData, foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7Utilities } from '../../utilities.js'
 
-export class CoC7ContainerSheet extends ActorSheet {
+export class CoC7ContainerSheet extends foundry.appv1.sheets.ActorSheet {
   /**
    * Extend and override the default options used by the 5e Actor Sheet
    * @returns {Object}

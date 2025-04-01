@@ -22,7 +22,7 @@
   <div class="form-group">
     <label for="world-era">{{localize 'CoC7.Settings.WorldEra.Name'}}:</label>
     <select name="world-era" class="submit_on_change">
-      {{selectOptions _eras selected=object.defaultEra valueAttr="id" labelAttr="name"}}
+      {{selectOptions _eras selected=object.defaultEra valueAttr="id" nameAttr="id" labelAttr="name"}}
     </select>
   </div>
   <h2>{{localize 'CoC7.InvestigatorWizard.Characteristics'}}</h2>
@@ -72,7 +72,7 @@
     <label for="default-setup">{{localize 'CoC7.InvestigatorWizard.SetupSelect'}}:</label>
     <select name="default-setup" class="submit_on_change">
       <option value="">{{localize 'CoC7.InvestigatorWizard.SetupAny'}}</option>
-      {{selectOptions setupOptions selected=object.defaultSetup valueAttr="key" labelAttr="name"}}
+      {{selectOptions setupOptions selected=object.defaultSetup valueAttr="key" nameAttr="key" labelAttr="name"}}
     </select>
   </div>
   {{#if object.defaultSetup}}

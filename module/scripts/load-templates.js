@@ -1,4 +1,4 @@
-/* global loadTemplates */
+/* global foundry, loadTemplates */
 
 /**
  * Define a set of template paths to pre-load
@@ -59,5 +59,6 @@ export const preloadHandlebarsTemplates = async function () {
   ]
 
   /** Load the template parts */
-  return loadTemplates(templatePaths)
+  /* // FoundryVTT V12 */
+  return (foundry.applications.handlebars?.loadTemplates ?? loadTemplates)(templatePaths)
 }

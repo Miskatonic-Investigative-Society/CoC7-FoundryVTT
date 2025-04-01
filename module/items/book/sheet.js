@@ -1,8 +1,8 @@
-/* global $, foundry, game, ItemSheet, TextEditor */
+/* global $, foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7Utilities } from '../../utilities.js'
 
-export class CoC7BookSheet extends ItemSheet {
+export class CoC7BookSheet extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       template: 'systems/CoC7/templates/items/book/main.html',

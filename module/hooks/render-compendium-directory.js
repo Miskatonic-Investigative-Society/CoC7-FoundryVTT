@@ -11,16 +11,12 @@ export default function (application, html, data) {
     }
   }
   if (!translated) {
-    html
-      .find('footer.directory-footer')
-      .append(
-        '<a class="compendium-translation" title="' +
-          game.i18n.localize('CoC7.HowToTranslateTitle') +
-          '">' +
-          game.i18n.localize('CoC7.HowToTranslateTitle') +
-          '</a>'
-      )
-    html.find('.compendium-translation').click(() => {
+    let footer = false
+
+    const button = document.createElement('a')
+    button.classList.add('compendium-translation')
+    button.innerText = game.i18n.localize(game.i18n.localize('CoC7.HowToTranslateTitle'))
+    button.onclick = () => {
       const message =
         '<p>' +
         game.i18n.localize('CoC7.HowToTranslateWarning') +
@@ -46,6 +42,15 @@ export default function (application, html, data) {
         },
         {}
       ).render(true)
-    })
+    }
+    try {
+      footer = html.querySelector('footer.directory-footer')
+    } catch (e) {
+      /* // FoundryVTT v12 */
+      footer = html[0].querySelector('footer.directory-footer')
+    }
+    if (footer) {
+      footer.append(button)
+    }
   }
 }

@@ -1,4 +1,4 @@
-/* global $, Dialog, DragDrop, FormDataExtended, foundry, game, ItemSheet, TextEditor, ui */
+/* global $, Dialog, DragDrop, FormDataExtended, foundry, game, TextEditor, ui */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7ChaseParticipantImporter } from '../../apps/chase-participant-importer.js'
 import { CoC7Chat } from '../../chat.js'
@@ -6,7 +6,7 @@ import { chatHelper } from '../../chat/helper.js'
 import { CoC7Check } from '../../check.js'
 import { _participant } from './participant.js'
 
-export class CoC7ChaseSheet extends ItemSheet {
+export class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
   /**
    * Extend and override the default options used by the Simple Item Sheet
    * @returns {Object}
@@ -28,9 +28,6 @@ export class CoC7ChaseSheet extends ItemSheet {
     })
 
     return options
-
-    // closeOnSubmit: false,
-    // submitOnClose: true,
   }
 
   /* -------------------------------------------- */
@@ -216,7 +213,8 @@ export class CoC7ChaseSheet extends ItemSheet {
     // .find('.pin-location')
     // .on('dragstart', event => this._onPinLocationDragStart(event))
 
-    const pinLocationSelectorDragDrop = new DragDrop({
+    /* // FoundryVTT V12 */
+    const pinLocationSelectorDragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
       dragSelector: '.pin-location',
       permissions: {
         dragstart: this._canPinLocationDragStart.bind(this)
@@ -227,13 +225,15 @@ export class CoC7ChaseSheet extends ItemSheet {
     })
     pinLocationSelectorDragDrop.bind(html[0])
 
-    const participantDragDrop = new DragDrop({
+    /* // FoundryVTT V12 */
+    const participantDragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
       dropSelector: '.participant',
       callbacks: { drop: this._onDropParticipant.bind(this) }
     })
     participantDragDrop.bind(html[0])
 
-    const newParticipantDragDrop = new DragDrop({
+    /* // FoundryVTT V12 */
+    const newParticipantDragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
       dropSelector: '.new-participant',
       callbacks: { drop: this._onAddParticipant.bind(this) }
     })
@@ -244,7 +244,8 @@ export class CoC7ChaseSheet extends ItemSheet {
         .find('.chase-location .chase-participant')
         .click(this._onChaseParticipantClick.bind(this))
 
-      const chaseParticipantDragpDrop = new DragDrop({
+      /* // FoundryVTT V12 */
+      const chaseParticipantDragpDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
         dragSelector: '.chase-participant',
         dropSelector: '.chase-location',
         permissions: {
@@ -272,7 +273,8 @@ export class CoC7ChaseSheet extends ItemSheet {
   /** @override */
   _getSubmitData (updateData = {}) {
     // Create the expanded update data object
-    const fd = new FormDataExtended(this.form, { editors: this.editors })
+    /* // FoundryVTT V12 */
+    const fd = new (foundry.applications.ux?.FormDataExtended ?? FormDataExtended)(this.form, { editors: this.editors })
     let data = fd.object
     if (updateData) {
       data = foundry.utils.mergeObject(data, updateData)

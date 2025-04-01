@@ -1303,7 +1303,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
   async _onRollLuck (event) {
     const setup = await this.getCacheItemByCoCID(this.object.setup)
     if (setup) {
-      const die = await new Roll(setup.system.characteristics.rolls.luck.toString()).evaluate({ async: true })
+      const die = await new Roll(setup.system.characteristics.rolls.luck.toString()).evaluate()
       this.object.setupModifiers.luck = [die.total]
       const html = await renderTemplate(Roll.CHAT_TEMPLATE, {
         formula: game.i18n.localize('CoC7.InvestigatorWizard.RollTwiceForLuck') + ': ' + setup.system.characteristics.rolls.luck.toString(),
@@ -1329,9 +1329,9 @@ export class CoC7InvestigatorWizard extends FormApplication {
         let value = parseInt(this.object.setupPoints.edu, 10)
         const message = []
         for (let rolls = this.object.requiresAgeAdjustments.edu.total; rolls > 0; rolls--) {
-          const die = await new Roll('1d100').evaluate({ async: true })
+          const die = await new Roll('1d100').evaluate()
           if (die.total > value) {
-            const augmentDie = await new Roll('1d10').evaluate({ async: true })
+            const augmentDie = await new Roll('1d10').evaluate()
             message.push(`<span class="upgrade-success">${game.i18n.format(
               'CoC7.DevSuccess',
               {
@@ -1405,7 +1405,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         const html = []
         for (const key in rollFormulas) {
           const roll = new Roll(rollFormulas[key].toString())
-          await roll.evaluate({ async: true })
+          await roll.evaluate()
           this.object.rolledValues.push({
             value: roll.total,
             assigned: false
@@ -1504,7 +1504,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
     if (input && formula) {
       if (this.object.rerollsEnabled || this.object.setupPoints[key] === '') {
         const roll = new Roll(formula.toString())
-        await roll.evaluate({ async: true })
+        await roll.evaluate()
         input.val(roll.total)
         this.object.setupPoints[key] = Number(roll.total)
         return [key, formula.toString(), roll]

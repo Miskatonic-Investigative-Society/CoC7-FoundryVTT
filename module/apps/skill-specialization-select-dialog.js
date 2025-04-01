@@ -1,5 +1,4 @@
 /* global $, FormApplication, foundry, game */
-
 export class SkillSpecializationSelectDialog extends FormApplication {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
