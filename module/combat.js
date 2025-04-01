@@ -1,98 +1,115 @@
-/* global $, game */
+/* global game */
 import { CoC7Check } from './check.js'
 
 export class CoC7Combat {
   static renderCombatTracker (app, html, data) {
-    const currentCombat = data.combats[data.currentIndex - 1]
-    if (!currentCombat) return
-
-    // TODO : Si le combat est deja debuté avant chargement la fonction d'initiative pointe vers l'ancienne.
-    // la fonction attribuée est data.combat.rollInitiative
-    html.find('.combatant').each((i, el) => {
-      // if( game.combat.started){
-
-      const combId = el.getAttribute('data-combatant-id')
-      const combatantControlsDiv = el.querySelector('.combatant-controls')
-      // const combatant = game.combat.getCombatant(combId);
-      const combatant = currentCombat.combatants.get(combId)
-
-      if (combatant.getFlag('CoC7', 'hasGun')) {
-        $(combatantControlsDiv).prepend(
-          `<a class="combatant-control active add-init" title="${game.i18n.localize(
-            'CoC7.PutGunAway'
-          )}" data-control="drawGun"><i class="game-icon game-icon-revolver"></i></a>`
-        )
-      } else {
-        $(combatantControlsDiv).prepend(
-          `<a class="combatant-control add-init" title="${game.i18n.localize(
-            'CoC7.DrawGun'
-          )}" data-control="drawGun"><i class="game-icon game-icon-revolver"></i></a>`
-        )
-      }
-      if (
-        game.settings.get('CoC7', 'initiativeRule') === 'optional' &&
-        game.settings.get('CoC7', 'displayInitAsText')
-      ) {
-        if (combatant.initiative) {
-          const tokenInitiative = el.querySelector('.token-initiative')
-          const initiativeTest = tokenInitiative.querySelector('.initiative')
-          const roll =
-            100 * combatant.initiative - 100 * Math.floor(combatant.initiative)
-          switch (Math.floor(combatant.initiative)) {
-            case CoC7Check.successLevel.fumble:
-              tokenInitiative.classList.add('fumble')
-              initiativeTest.innerText = game.i18n.localize('CoC7.Fumble')
-              initiativeTest.title = roll
-              break
-            case CoC7Check.successLevel.failure:
-              tokenInitiative.classList.add('failure')
-              initiativeTest.innerText = game.i18n.localize('CoC7.Failure')
-              initiativeTest.title = roll
-              break
-            case CoC7Check.successLevel.regular:
-              tokenInitiative.classList.add('regular-success')
-              initiativeTest.innerText = game.i18n.localize(
-                'CoC7.RollDifficultyRegular'
-              )
-              initiativeTest.title = roll
-              break
-            case CoC7Check.successLevel.hard:
-              tokenInitiative.classList.add('hard-success')
-              initiativeTest.innerText = game.i18n.localize(
-                'CoC7.RollDifficultyHard'
-              )
-              initiativeTest.title = roll
-              break
-            case CoC7Check.successLevel.extreme:
-              tokenInitiative.classList.add('extreme-success')
-              initiativeTest.innerText = game.i18n.localize(
-                'CoC7.RollDifficultyExtreme'
-              )
-              initiativeTest.title = roll
-              break
-            case CoC7Check.successLevel.critical:
-              tokenInitiative.classList.add('critical')
-              initiativeTest.innerText = game.i18n.localize(
-                'CoC7.RollDifficultyCritical'
-              )
-              initiativeTest.title = roll
-              break
-          }
+    let combatants
+    let aButton
+    try {
+      combatants = html.querySelectorAll('.combatant')
+      aButton = document.createElement('button')
+      aButton.setAttribute('type', 'button')
+      aButton.classList.add('inline-control', 'combatant-control', 'icon', 'game-icon', 'game-icon-revolver')
+      aButton.dataset.control = 'drawGun'
+    } catch (e) {
+      /* // FoundryVTT v12 */
+      combatants = html[0].querySelectorAll('.combatant')
+      aButton = document.createElement('a')
+      aButton.classList.add('combatant-control')
+      aButton.dataset.control = 'drawGun'
+      aButton.innerHTML = '<i class="game-icon game-icon-revolver"></i>'
+    }
+    if (combatants) {
+      for (const el of combatants) {
+        const combId = el.getAttribute('data-combatant-id')
+        const combatantControlsDiv = el.querySelector('.combatant-controls')
+        const combatant = data.combat.combatants.get(combId)
+        const theButton = aButton.cloneNode(true)
+        if (combatant.getFlag('CoC7', 'hasGun')) {
+          theButton.setAttribute('title', game.i18n.localize('CoC7.PutGunAway'))
+          theButton.classList.add('active')
+        } else {
+          theButton.setAttribute('title', game.i18n.localize('CoC7.DrawGun'))
         }
-      } else if (combatant.initiative < 0) {
-        const h4 = el.querySelector('.token-name').querySelector('h4')
-        const span = el.querySelector('span.initiative')
-        h4.style.fontWeight = '900'
-        h4.style.textShadow = '1px 1px 4px darkred'
-        span.style.fontWeight = '900'
-        span.style.textShadow = '1px 1px 4px darkred'
-
-        el.style.color = 'darkred'
-        el.style.background = 'black'
-        el.style.fontWeight = '900'
+        combatantControlsDiv.prepend(theButton)
+        theButton.onclick = CoC7Combat._onToggleGun
+        if (
+          game.settings.get('CoC7', 'initiativeRule') === 'optional' &&
+          game.settings.get('CoC7', 'displayInitAsText')
+        ) {
+          if (combatant.initiative) {
+            const tokenInitiative = el.querySelector('.token-initiative')
+            /* // FoundryVTT V12 */
+            let initiativeTest = tokenInitiative.querySelector('.initiative')
+            if (!initiativeTest) {
+              initiativeTest = tokenInitiative.querySelector('span')
+            }
+            const roll =
+              100 * combatant.initiative - 100 * Math.floor(combatant.initiative)
+            switch (Math.floor(combatant.initiative)) {
+              case CoC7Check.successLevel.fumble:
+                tokenInitiative.classList.add('fumble')
+                initiativeTest.innerText = game.i18n.localize('CoC7.Fumble')
+                initiativeTest.title = roll
+                break
+              case CoC7Check.successLevel.failure:
+                tokenInitiative.classList.add('failure')
+                initiativeTest.innerText = game.i18n.localize('CoC7.Failure')
+                initiativeTest.title = roll
+                break
+              case CoC7Check.successLevel.regular:
+                tokenInitiative.classList.add('regular-success')
+                initiativeTest.innerText = game.i18n.localize(
+                  'CoC7.RollDifficultyRegular'
+                )
+                initiativeTest.title = roll
+                break
+              case CoC7Check.successLevel.hard:
+                tokenInitiative.classList.add('hard-success')
+                initiativeTest.innerText = game.i18n.localize(
+                  'CoC7.RollDifficultyHard'
+                )
+                initiativeTest.title = roll
+                break
+              case CoC7Check.successLevel.extreme:
+                tokenInitiative.classList.add('extreme-success')
+                initiativeTest.innerText = game.i18n.localize(
+                  'CoC7.RollDifficultyExtreme'
+                )
+                initiativeTest.title = roll
+                break
+              case CoC7Check.successLevel.critical:
+                tokenInitiative.classList.add('critical')
+                initiativeTest.innerText = game.i18n.localize(
+                  'CoC7.RollDifficultyCritical'
+                )
+                initiativeTest.title = roll
+                break
+            }
+          }
+        } else if (combatant.initiative < 0) {
+          /* // FoundryVTT V10 */
+          // What causes this?
+          let h4 = el.querySelector('.token-name').querySelector('h4')
+          let span
+          if (h4) {
+            span = el.querySelector('span.initiative')
+          } else {
+            h4 = el.querySelector('.token-name').querySelector('.name')
+            span = el.querySelector('div.token-initiative span')
+          }
+          h4.style.fontWeight = '900'
+          h4.style.textShadow = '1px 1px 4px darkred'
+          if (span) {
+            span.style.fontWeight = '900'
+            span.style.textShadow = '1px 1px 4px darkred'
+          }
+          el.style.color = 'darkred'
+          el.style.background = 'black'
+          el.style.fontWeight = '900'
+        }
       }
-    })
-    html.find('.add-init').click(event => CoC7Combat._onToggleGun(event))
+    }
   }
 
   static async _onToggleGun (event) {

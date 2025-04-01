@@ -45,7 +45,7 @@ export class RollCard {
   static async _onToggle (event) {
     event.preventDefault()
 
-    const span = event.currentTarget
+    const span = event.target
     if (span && span.classList.contains('gm-select-only') && !game.user.isGM) {
       return
     }

@@ -33,34 +33,6 @@ export function createInlineRoll (roll) {
 }
 
 /**
- * Function used for JSON.stringify replacer.
- * Exclude any key starting with _
- * @param {*} key     The object's property Key
- * @param {*} value   The associated value
- */
-export function exclude_ (key, value) {
-  // convert RegExp to string
-  if (key.startsWith('_')) {
-    return undefined // remove from result
-  }
-  return value // return as is
-}
-
-/**
- * Function used for JSON.stringify replacer.
- * Exclude any key starting with __
- * @param {*} key     The object's property Key
- * @param {*} value   The associated value
- */
-export function exclude__ (key, value) {
-  // convert RegExp to string
-  if (key.startsWith('__')) {
-    return undefined // remove from result
-  }
-  return value // return as is
-}
-
-/**
  * Return true is CTRL key is pressed
  * Used for MAC compat.
  * @param {S.Event} event

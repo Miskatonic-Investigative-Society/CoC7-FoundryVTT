@@ -1,7 +1,8 @@
 /* global Hooks */
 import '../styles/system/index.less'
 import './polyfill.js'
-import * as DiceBot from './dicebot.js'
+/* // FoundryVTT V10 */
+// import * as DiceBot from './dicebot.js'
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
 import { ChaseObstacleCard } from './chat/cards/chase-obstacle.js'
 
@@ -58,7 +59,8 @@ Hooks.once('ready', Ready)
 Hooks.once('setup', Setup)
 
 initECC(ChaseObstacleCard)
-DiceBot.listen()
+/* // FoundryVTT V10 */
+// DiceBot.listen()
 
 Hooks.on('changeSidebarTab', ChangeSidebarTab)
 Hooks.on('chatMessage', ChatMessage)

@@ -31,10 +31,13 @@ export default class CoC7ClickableEvents extends RegionBehaviorTypeClass {
       }
     )
 
-    const oldOnClickLeft = TokenLayer.prototype._onClickLeft
-    TokenLayer.prototype._onClickLeft = function (event) {
+    /* // FoundryVTT V12 */
+    const polyfillTokenLayer = (foundry.canvas?.layers?.TokenLayer ?? TokenLayer)
+
+    const oldOnClickLeft = polyfillTokenLayer.prototype._onClickLeft
+    polyfillTokenLayer.prototype._onClickLeft = function (event) {
       oldOnClickLeft.call(this, event)
-      if (canvas.activeLayer instanceof TokenLayer) {
+      if (canvas.activeLayer instanceof polyfillTokenLayer) {
         const destination = canvas.activeLayer.toLocal(event)
         for (const region of canvas.scene.regions.contents) {
           if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents) && region.object.polygonTree.testPoint(destination)) {
@@ -44,10 +47,10 @@ export default class CoC7ClickableEvents extends RegionBehaviorTypeClass {
       }
     }
 
-    const oldOnClickRight = TokenLayer.prototype._onClickRight
-    TokenLayer.prototype._onClickRight = function (event) {
+    const oldOnClickRight = polyfillTokenLayer.prototype._onClickRight
+    polyfillTokenLayer.prototype._onClickRight = function (event) {
       oldOnClickRight.call(this, event)
-      if (canvas.activeLayer instanceof TokenLayer) {
+      if (canvas.activeLayer instanceof polyfillTokenLayer) {
         const destination = canvas.activeLayer.toLocal(event)
         for (const region of canvas.scene.regions.contents) {
           if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents) && region.object.polygonTree.testPoint(destination)) {
@@ -58,7 +61,7 @@ export default class CoC7ClickableEvents extends RegionBehaviorTypeClass {
     }
 
     document.body.addEventListener('mousemove', async function (event) {
-      if (canvas.activeLayer instanceof TokenLayer) {
+      if (canvas.activeLayer instanceof polyfillTokenLayer) {
         const pointer = canvas?.app?.renderer?.events?.pointer
         if (!pointer) {
           return
