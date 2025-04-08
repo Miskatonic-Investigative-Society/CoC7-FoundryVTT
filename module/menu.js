@@ -180,8 +180,8 @@ export class CoC7Menu {
   static renderControls (app, html, data) {
     const isKeeper = game.user.isGM
     if (foundry.utils.isNewerVersion(game.version, '13')) {
-      const keeperMenu = html.querySelector('.game-icon-tentacle-strike').parentNode
-      if (!keeperMenu.classList.contains('coc7-menu')) {
+      const keeperMenu = html.querySelector('.game-icon-tentacle-strike')?.parentNode
+      if (keeperMenu && !keeperMenu.classList.contains('coc7-menu')) {
         keeperMenu.classList.add('coc7-menu')
         if (isKeeper) {
           const menuLi = document.createElement('li')
