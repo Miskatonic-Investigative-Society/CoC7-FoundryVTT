@@ -1327,6 +1327,7 @@
   "CoC7.CoCIDFlag.keys.i.skill.dodge": "Ausweichen",
   "CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos": "Cthulhu-Mythos",
   "CoC7.CoCIDFlag.keys.i.skill.credit-rating": "Finanzkraft",
+  "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Verletzungen & Narben",
   "CoC7.CoCIDFlag.new": "- Benutzerdefinierte System ID -",
   "CoC7.CoCIDFlag.guess": "Erzeuge System ID (CoC ID) basierend auf dem aktuellen Dokument.",
   "CoC7.CoCIDFlag.priority": "System ID Priorität",
