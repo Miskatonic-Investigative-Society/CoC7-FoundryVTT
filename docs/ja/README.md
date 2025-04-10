@@ -1,19 +1,19 @@
 <!--- This file is auto generated from module/manual/en/README.md -->
 # バージョン7.7 システム資料
 
-This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
+この資料はCoC7システムの概略（作成中）であり、FVTTの操作説明に関するものではありません。
 
-You will need one of the following to play the game
+ゲームを遊ぶには、以下の内１つが必要です。
 
-- Chaosium's Call of Cthulhu 7th Edition - Keeper's Rulebook
-- Chaosium's Call of Cthulhu 7th Edition - Call of Cthulhu Starter Set
-- Chaosium's Call of Cthulhu 7th Edition - Quick-Start Rules
+- KADOKAWA 新クトゥルフ神話TRPG ルールブック
+- KADOKAWA 新クトゥルフ神話TRPG スタートセット
+- KADOKAWA 新クトゥルフTRPG クイックスタート・ルールブック
 
-The system automates most of the regular tasks and rules involved with running a game.
+このシステムは新クトゥルフ神話TRPGのゲーム運用における一般的なタスクやルールを自動化します。
 
-Several parts of the actor sheets have pop up tooltips that trigger after two seconds, this delay can be changed in the settings
+アクターシートのいくつかの箇所で2秒間マウスオーバーすると、ツールチップがポップアップされます。表示されるまでの時間は設定で変更できます。
 
-This documentation can be reopened under Game Settings -> Help and Documentation -> View CoC7 System Manual
+このドキュメントは次の場所からも開くことができます：ゲーム設定 -> ヘルプ ドキュメント -> CoC7 システムマニュアルを閲覧
 
 # Recent changes
 
