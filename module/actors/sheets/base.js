@@ -199,7 +199,8 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
         sheetData.data.system.development = {
           personal: null,
           occupation: null,
-          archetype: null
+          archetype: null,
+          experiencePackage: null
         }
       }
 
@@ -210,6 +211,13 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
         'CoC7',
         'pulpRuleOrganization'
       )
+      if (!sheetData.pulpRuleArchetype) {
+        if (this.actor.experiencePackage) {
+          const doc = this.actor.experiencePackage
+          sheetData.hasExperiencePackage = true
+          sheetData.nameExperiencePackage = doc.name
+        }
+      }
     }
 
     sheetData.isDead = this.actor.dead

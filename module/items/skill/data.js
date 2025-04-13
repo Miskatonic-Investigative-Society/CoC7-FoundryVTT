@@ -102,6 +102,8 @@ export class CoC7Skill extends CoC7Item {
         this.system.adjustments?.archetype
       ) {
         value += parseInt(this.system.adjustments?.archetype)
+      } else {
+        value += parseInt(this.system.adjustments?.experiencePackage ?? 0, 10)
       }
     } else {
       // For all others actor we store the value directly

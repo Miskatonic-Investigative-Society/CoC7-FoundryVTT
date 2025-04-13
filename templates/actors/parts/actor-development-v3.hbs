@@ -44,6 +44,21 @@
           </div>
         </div>
       </div>
+    {{else if hasExperiencePackage}}
+      <div class="header-section archetype-points{{#if invalidExperiencePackagePoints}} warning{{/if}}" title="{{localize 'CoC7.SkillTotalExperiencePackagePoints'}}">
+        <label>{{localize 'CoC7.SkillTotalExperiencePackagePoints'}}:</label>
+        <div>
+          <div class="current-value"><span>{{totalExperiencePackage}}</span></div>
+          <div class="separator">/</div>
+          <div class="max-value">
+            {{#if allowCharCreation}}
+              <input type="text" name="system.development.experiencePackage" value="{{data.system.development.experiencePackage}}" data-dtype="Number" />
+            {{else}}
+              <span>{{data.system.development.experiencePackage}}</span>
+            {{/if}}
+          </div>
+        </div>
+      </div>
     {{/if}}
     {{#if data.system.infos.occupationSet}}
       <div class="header-section occupation-points{{#if invalidCreditRating}} warning{{/if}}" title="{{localize 'CoC7.CoCIDFlag.keys.i.skill.credit-rating'}}">
@@ -77,7 +92,7 @@
 </div>
 <ol class="skills-list">
   {{#each skills as |skill id|}}
-    <li class="item{{#if ../pulpRuleArchetype}} pulpCharacter{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+    <li class="item{{#if (or ../pulpRuleArchetype ../hasExperiencePackage)}} pulpCharacter{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
       <div class="item-controls flexrow-coc7">
         {{#unless skill.system.properties.noadjustments}}
           <div class="item-control occupation-skill-flag{{#if../allowCharCreation}} clickable{{/if}}" title="{{localize 'CoC7.OccupationSkill'}}">
@@ -90,6 +105,14 @@
           {{#if ../pulpRuleArchetype}}
             <div class="item-control archetype-skill-flag{{#if../allowCharCreation}} clickable{{/if}}" title="{{localize 'CoC7.ArchetypeSkill'}}">
               {{#if skill.system.flags.archetype}}
+                <i class="fas fa-circle"></i>
+              {{else}}
+                <i class="far fa-circle"></i>
+              {{/if}}
+            </div>
+          {{else if hasExperiencePackage}}
+            <div class="item-control archetype-skill-flag{{#if../allowCharCreation}} clickable{{/if}}" title="{{localize 'CoC7.ExperiencePackageSkill'}}">
+              {{#if skill.system.flags.experiencePackage}}
                 <i class="fas fa-circle"></i>
               {{else}}
                 <i class="far fa-circle"></i>
@@ -123,6 +146,14 @@
             <input type="text" class="skill-adjustment" name="system.adjustments.archetype" value="{{skill.system.adjustments.archetype}}" data-dtype="Number">
           {{else}}
             <span>{{skill.system.adjustments.archetype}}</span>
+          {{/if}}
+        </div>
+      {{else if ../hasExperiencePackage}}
+        <div class="adjustment-value archetype-points{{#unless skill.system.flags.experiencePackage}} locked{{/unless}}" title="{{localize 'CoC7.SkillExperiencePackage'}}">
+          {{#if (and ../allowCharCreation skill.system.flags.experiencePackage)}}
+            <input type="text" class="skill-adjustment" name="system.adjustments.experiencePackage" value="{{skill.system.adjustments.experiencePackage}}" data-dtype="Number">
+          {{else}}
+            <span>{{skill.system.adjustments.experiencePackage}}</span>
           {{/if}}
         </div>
       {{/if}}
