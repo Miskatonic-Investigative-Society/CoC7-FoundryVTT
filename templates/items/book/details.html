@@ -2,7 +2,7 @@
   <div class="traits">
     <div class="type">
       <label>{{localize "CoC7.BookType"}}</label>
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <input id="mythos" type="checkbox" name="system.type.mythos" {{checked data.system.type.mythos}} />
         <label class="option" for="system.type.mythos">{{localize "CoC7.Mythos"}}</label>
 
@@ -13,34 +13,23 @@
         <label class="option" for="system.type.other">{{localize "CoC7.Other"}}</label>
       </div>
     </div>
-    <div class="flexrow">
+    <div class="flexrow-coc7">
       <label>{{localize "CoC7.DifficultyLevel"}}:</label>
       <select name="system.difficultyLevel">
-        {{#select data.system.difficultyLevel}}
-          <option value="regular">{{localize "CoC7.RollDifficultyRegular"}}</option>
-          <option value="hard">{{localize "CoC7.RollDifficultyHard"}}</option>
-          <option value="extreme">{{localize "CoC7.RollDifficultyExtreme"}}</option>
-          <option value="critical">{{localize "CoC7.RollDifficultyCritical"}}</option>
-          <option value="unreadable">{{localize "CoC7.Unreadable"}}</option>
-        {{/select}}
+        {{selectOptions difficultyLevels selected=data.system.difficultyLevel localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
       </select>
     </div>
     {{#if data.system.type.mythos}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize "CoC7.StudyTime"}}:</label>
         <input type="number" name="system.study.necessary" value="{{data.system.study.necessary}}" />
         <select name="system.study.units">
-          {{#select data.system.study.units}}
-            <option value="CoC7.months">{{localize "CoC7.months"}}</option>
-            <option value="CoC7.weeks">{{localize "CoC7.weeks"}}</option>
-            <option value="CoC7.days">{{localize "CoC7.days"}}</option>
-            <option value="CoC7.hours">{{localize "CoC7.hours"}}</option>
-          {{/select}}
+          {{selectOptions studyUnits selected=data.system.study.units localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
         </select>
       </div>
     {{/if}}
     {{#if (or data.system.type.mythos data.system.type.occult)}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize "CoC7.SANLoss"}}:</label>
         <input type="text" name="system.sanityLoss" value="{{data.system.sanityLoss}}" />
       </div>
@@ -50,21 +39,21 @@
     <label>{{localize "CoC7.Gains"}}</label>
     <br>
     {{#if data.system.type.mythos}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize "CoC7.CthulhuMythosInitial"}}:</label>
         <input type="number" name="system.gains.cthulhuMythos.initial" value="{{data.system.gains.cthulhuMythos.initial}}" />
       </div>
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize "CoC7.CthulhuMythosFinal"}}:</label>
         <input type="number" name="system.gains.cthulhuMythos.final" value="{{data.system.gains.cthulhuMythos.final}}" />
       </div>
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize "CoC7.MythosRating"}}:</label>
         <input type="number" name="system.mythosRating" value="{{data.system.mythosRating}}" />
       </div>
     {{/if}}
     {{#if data.system.type.occult}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize "CoC7.Occult"}}:</label>
         <input type="number" name="system.gains.occult" value="{{data.system.gains.occult}}" />
       </div>
@@ -72,7 +61,7 @@
   </div>
   <div class="other">
     {{#if data.system.type.other}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <table>
           <tr>
             <th><label>{{localize "CoC7.Skill"}}</label></th>
@@ -84,11 +73,7 @@
               <td><input class="change-other-gains" type="text" value="{{skill.name}}"></td>
               <td>
                 <select class="change-other-gains">
-                  {{#select skill.value}}
-                    <option value="development">{{localize "CoC7.Development"}}</option>
-                    <option value="1d6">+1D6</option>
-                    <option value="1d10">+1D10</option>
-                  {{/select}}
+                  {{selectOptions ../otherGains selected=skill.value localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
                 </select>
               </td>
               <td><i class="fas fa-trash remove-other-gains"></i></td>

@@ -1,5 +1,4 @@
 /* global foundry */
-
 import { CoC7ItemSheetV2 } from './item-sheetV2.js'
 
 /**

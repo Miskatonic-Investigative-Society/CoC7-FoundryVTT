@@ -5,11 +5,7 @@
     <label for="coc-occupation">{{localize 'CoC7.InvestigatorWizard.OccupationSelect'}}:</label>
     <select name="coc-occupation" class="submit_on_change">
       <option value="">&nbsp;</option>
-      {{#select object.occupation}}
-        {{#each occupations as |occupation|}}
-          <option value="{{occupation.flags.CoC7.cocidFlag.id}}">{{occupation.name}}</option>
-        {{/each}}
-      {{/select}}
+      {{selectOptions occupationOptions selected=object.occupation valueAttr="key" nameAttr="key" labelAttr="name"}}
     </select>
   </div>
   {{#if object.occupation}}

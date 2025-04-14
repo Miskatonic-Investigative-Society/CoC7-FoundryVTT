@@ -10,7 +10,7 @@ Effects can be created as a [link](links.md) using the [Link creation tool](link
 
 Effects will be display in the effect tabs on the character sheet.
 
-![effects tab](../../../assets/manual/effects/effects-tab.webp)
+![effects tab](../../assets/manual/effects/effects-tab.webp)
 
 Effect are broken down in 4 categories for PC :
 
@@ -30,15 +30,15 @@ This windows has 3 tabs
 
 ### Details tab
 
-![Details tab](../../../assets/manual/effects/details-tab.webp)
+![Details tab](../../assets/manual/effects/details-tab.webp)
 
 ### Duration tab
 
-![Duration tab](../../../assets/manual/effects/duration-tab.webp)
+![Duration tab](../../assets/manual/effects/duration-tab.webp)
 
 ### Changes tab
 
-![Changes tab](../../../assets/manual/effects/changes-tab.webp)
+![Changes tab](../../assets/manual/effects/changes-tab.webp)
 
 This last tab will includes all changes made to the character sheet.
 

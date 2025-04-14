@@ -5,10 +5,7 @@
   <div class="form-group">
     <label>{{ localize 'CoC7.SanityLossType' }}</label>
     <select class="field_type">
-      {{#select object.type}}
-        <option value="encounter">{{ localize 'CoC7.SanityLossEncounter' }}</option>
-        <option value="immunity">{{ localize 'CoC7.SanityLossImmunity' }}</option>
-      {{/select}}
+      {{selectOptions encounterTypes selected=object.type localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
     </select>
   </div>
   <div class="form-group">
@@ -21,7 +18,7 @@
       <input type="text" class="field_value" value="{{object.value}}" data-dtype="Number">
     </div>
   {{/unless}}
-  <div class="flexrow" style="margin: 10px 0 0;">
+  <div class="flexrow-coc7" style="margin: 10px 0 0;">
     <button class="dialog-button add" type="button" data-button="add">
       <i class="fas fa-check"></i>
       {{ localize 'CoC7.Add' }}

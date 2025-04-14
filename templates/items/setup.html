@@ -1,11 +1,11 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
-  <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
-    <div class="header-details flexrow">
+<form class="{{cssClass}} flexcol-coc7" autocomplete="off">
+  <header class="sheet-header flexrow-coc7" style="flex: 0 0 64px;padding-bottom: 2px;">
+    <div class="header-details flexrow-coc7">
       <h1 class="name" style="height: 48px;">
         <input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'CoC7.Name'}}" />
       </h1>
 
-      <ul class="summary flexrow">
+      <ul class="summary flexrow-coc7">
         <li class="flex2">
           <input type="text" name="system.source" value="{{data.system.source}}" placeholder="{{localize 'CoC7.Source'}}" />
         </li>
@@ -30,7 +30,7 @@
   <section style="overflow: hidden;flex: 1;" class="sheet-body">
 
     {{!-- Description Tab --}}
-    <div class="tab flexrow active" data-group="primary" data-tab="description">
+    <div class="tab flexrow-coc7 active" data-group="primary" data-tab="description">
 
       <div class="item-properties">
         <ol class="properties-list">
@@ -69,11 +69,7 @@
         <div class="form-group">
           <label>{{localize 'CoC7.MonetaryFormatTitle'}}</label>
           <select name="system.monetary.format">
-            {{#select data.system.monetary.format}}
-              {{#each _monetaryFormats as |monetaryFormat|}}
-                <option value="{{monetaryFormat.key}}">{{monetaryFormat.val}}</option>
-              {{/each}}
-            {{/select}}
+            {{selectOptions _monetaryFormats selected=data.system.monetary.format valueAttr="key" nameAttr="key" labelAttr="val"}}
           </select>
         </div>
         {{#if showCurrencySymbol}}
@@ -83,32 +79,20 @@
           </div>
         {{/if}}
         {{#each data.system.monetary.values as |value index|}}
-          <div class="flexrow form-group item" data-index="{{index}}">
+          <div class="flexrow-coc7 form-group item" data-index="{{index}}">
             <input name="system.monetary.values.{{index}}.name" value="{{localize value.name}}" type="text" placeholder="{{localize 'CoC7.Name'}}">
             <input name="system.monetary.values.{{index}}.min" value="{{value.min}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMin'}}">
             <input name="system.monetary.values.{{index}}.max" value="{{value.max}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMax'}}">
             <select name="system.monetary.values.{{index}}.cashType" class="cash-assets-type">
-              {{#select value.cashType}}
-                {{#each ../_monetaryTypes as |monetaryType|}}
-                  <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
-                {{/each}}
-              {{/select}}
+              {{selectOptions ../_monetaryTypes selected=value.cashType valueAttr="key" nameAttr="key" labelAttr="val"}}
             </select>
             <input name="system.monetary.values.{{index}}.cashValue" value="{{value.cashValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueCash'}}">
             <select name="system.monetary.values.{{index}}.assetsType" class="cash-assets-type">
-              {{#select value.assetsType}}
-                {{#each ../_monetaryTypes as |monetaryType|}}
-                  <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
-                {{/each}}
-              {{/select}}
+              {{selectOptions ../_monetaryTypes selected=value.assetsType valueAttr="key" nameAttr="key" labelAttr="val"}}
             </select>
             <input name="system.monetary.values.{{index}}.assetsValue" value="{{value.assetsValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueAssets'}}">
             <select name="system.monetary.values.{{index}}.spendingType" class="cash-assets-type">
-              {{#select value.spendingType}}
-                {{#each ../_monetaryTypes as |monetaryType|}}
-                  <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
-                {{/each}}
-              {{/select}}
+              {{selectOptions ../_monetaryTypes selected=value.spendingType valueAttr="key" nameAttr="key" labelAttr="val"}}
             </select>
             <input name="system.monetary.values.{{index}}.spendingValue" value="{{value.spendingValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueSpendingLevel'}}">
             <a class="item-control remove-monetary"><i class="fas fa-minus"></i></a>
@@ -145,8 +129,8 @@
 
         <ol class="item-list">
           {{#each otherItems as |item|}}
-            <li class="item flexrow" data-item-id="{{item._id}}" data-cocid="{{item.flags.CoC7.cocidFlag.id}}">
-              <div class="item-name flexrow">
+            <li class="item flexrow-coc7" data-item-id="{{item._id}}" data-cocid="{{item.flags.CoC7.cocidFlag.id}}">
+              <div class="item-name flexrow-coc7">
                 <h4>{{item.name}} ({{item.type}})</h4>
               </div>
 
@@ -169,8 +153,8 @@
 
         <ol class="item-list">
           {{#each skills as |skill|}}
-            <li class="item flexrow" data-item-id="{{skill._id}}" data-cocid="{{skill.flags.CoC7.cocidFlag.id}}">
-              <div class="item-name flexrow">
+            <li class="item flexrow-coc7" data-item-id="{{skill._id}}" data-cocid="{{skill.flags.CoC7.cocidFlag.id}}">
+              <div class="item-name flexrow-coc7">
                 <h4>{{skill.name}} ({{skill.system.base}}%)</h4>
               </div>
 
@@ -237,7 +221,7 @@
       </div>
     </div>
     {{#if isKeeper}}
-      <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
+      <div class="tab keeper flexcol-coc7" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
         {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
     {{/if}}

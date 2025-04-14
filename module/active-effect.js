@@ -1,4 +1,4 @@
-/* global ActiveEffect, foundry, game */
+/* global ActiveEffect, game */
 import { COC7 } from './config.js'
 
 export default class CoC7ActiveEffect extends ActiveEffect {
@@ -65,19 +65,12 @@ export default class CoC7ActiveEffect extends ActiveEffect {
   }
 
   static filterActiveEffects (effect, conditionName) {
-    if (!foundry.utils.isNewerVersion(game.version, '11')) {
-      // FoundryVTT v10
-      return effect.flags.core?.statusId === conditionName
-    }
     return effect.statuses.has(conditionName)
   }
 
   static getStatusKey (effect) {
     let options = []
-    if (!foundry.utils.isNewerVersion(game.version, '11')) {
-      // FoundryVTT v10
-      options = [effect.getFlag('core', 'statusId')]
-    } else if (effect.statuses.size > 0) {
+    if (effect.statuses.size > 0) {
       options = [...effect.statuses.values()]
     }
     return options.find(v => Object.prototype.hasOwnProperty.call(COC7.status, v))

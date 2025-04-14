@@ -1,4 +1,4 @@
-/* global canvas, ChatMessage, CONFIG, CONST, Dialog, Die, Folder, foundry, fromUuid, fromUuidSync, game, getDocumentClass, Hooks, Macro, NumericTerm, Roll, Token, ui */
+/* global canvas, ChatMessage, CONFIG, CONST, Dialog, Folder, foundry, fromUuid, fromUuidSync, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
 import { COC7 } from './config.js'
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
@@ -111,45 +111,47 @@ export class CoC7Utilities {
     check.toMessage()
   }
 
-  static async test () {
-    ui.notifications.infos('Do some stuff')
-  }
+  /* // FoundryVTT V10 */
+  // static async test () {
+  //   ui.notifications.infos('Do some stuff')
+  // }
 
-  static getActorFromString (actorString) {
-    let actor
+  /* // FoundryVTT V10 */
+  // static getActorFromString (actorString) {
+  //   let actor
 
-    // Token is better than actor.
-    // Case 1 : trying with ID.
-    // Case 1.1 : token found.
-    if (game.actors.tokens[actorString]) return game.actors.tokens[actorString]
-    // Case 1.2 : actor found.
-    actor = game.actors.get(actorString)
-    if (actor) return actor
+  //   // Token is better than actor.
+  //   // Case 1 : trying with ID.
+  //   // Case 1.1 : token found.
+  //   if (game.actors.tokens[actorString]) return game.actors.tokens[actorString]
+  //   // Case 1.2 : actor found.
+  //   actor = game.actors.get(actorString)
+  //   if (actor) return actor
 
-    // Case 2 : trying with name
-    // Case 2.1 : token found.
-    actor = Object.values(game.actors.tokens).find(t => {
-      if (t.name.toLowerCase() === actorString.toLowerCase()) return true
-      return false
-    })
-    if (!actor) {
-      // Case 2.2 : actor found.
-      actor = game.actors.find(a => {
-        if (a.name.toLowerCase() === actorString.toLowerCase()) return true
-        return false
-      })
-    }
-    if (actor) return actor
+  //   // Case 2 : trying with name
+  //   // Case 2.1 : token found.
+  //   actor = Object.values(game.actors.tokens).find(t => {
+  //     if (t.name.toLowerCase() === actorString.toLowerCase()) return true
+  //     return false
+  //   })
+  //   if (!actor) {
+  //     // Case 2.2 : actor found.
+  //     actor = game.actors.find(a => {
+  //       if (a.name.toLowerCase() === actorString.toLowerCase()) return true
+  //       return false
+  //     })
+  //   }
+  //   if (actor) return actor
 
-    // // Case 3 string maybe an actorKey
-    // if (creature.includes('.')) {
-    //   const [, actorId] = key.split('.')
-    //   return CoC7Utilities.getActorFromString(actorId)
-    // }
+  //   // // Case 3 string maybe an actorKey
+  //   // if (creature.includes('.')) {
+  //   //   const [, actorId] = key.split('.')
+  //   //   return CoC7Utilities.getActorFromString(actorId)
+  //   // }
 
-    // No joy
-    return null
-  }
+  //   // No joy
+  //   return null
+  // }
 
   static getCharacteristicNames (char) {
     const charKey = char.toLowerCase()
@@ -691,31 +693,33 @@ export class CoC7Utilities {
     return qString
   }
 
-  static setByPath (obj, path, value) {
-    const parts = path.split('.')
-    let o = obj
-    if (parts.length > 1) {
-      for (let i = 0; i < parts.length - 1; i++) {
-        if (!o[parts[i]]) o[parts[i]] = {}
-        o = o[parts[i]]
-      }
-    }
+  /* // FoundryVTT V10 */
+  // static setByPath (obj, path, value) {
+  //   const parts = path.split('.')
+  //   let o = obj
+  //   if (parts.length > 1) {
+  //     for (let i = 0; i < parts.length - 1; i++) {
+  //       if (!o[parts[i]]) o[parts[i]] = {}
+  //       o = o[parts[i]]
+  //     }
+  //   }
 
-    o[parts[parts.length - 1]] = value
-  }
+  //   o[parts[parts.length - 1]] = value
+  // }
 
-  static getByPath (obj, path) {
-    const parts = path.split('.')
-    let o = obj
-    if (parts.length > 1) {
-      for (let i = 0; i < parts.length - 1; i++) {
-        if (!o[parts[i]]) return undefined
-        o = o[parts[i]]
-      }
-    }
+  /* // FoundryVTT V10 */
+  // static getByPath (obj, path) {
+  //   const parts = path.split('.')
+  //   let o = obj
+  //   if (parts.length > 1) {
+  //     for (let i = 0; i < parts.length - 1; i++) {
+  //       if (!o[parts[i]]) return undefined
+  //       o = o[parts[i]]
+  //     }
+  //   }
 
-    return o[parts[parts.length - 1]]
-  }
+  //   return o[parts[parts.length - 1]]
+  // }
 
   /**
    * Retrieve a Document by its Universally Unique Identifier (uuid).
@@ -964,10 +968,10 @@ export class CoC7Utilities {
     for (const term of roll.terms) {
       if (foundry.utils.isNewerVersion(game.version, '12') && term instanceof foundry.dice.terms.Die) {
         term._faces = Math.floor(term._faces / 2)
-      } else if (term instanceof Die) {
+      } else if (term instanceof foundry.dice.terms.Die) {
         // FoundryVTT V11
         term.faces = Math.floor(term.faces / 2)
-      } else if (term instanceof NumericTerm) {
+      } else if (term instanceof foundry.dice.terms.NumericTerm) {
         term.number = (term.number < 0 ? Math.ceil(term.number / 2) : Math.floor(term.number / 2))
       }
     }

@@ -1,4 +1,4 @@
-/* global $, DragDrop, foundry, game, ItemSheet, TextEditor */
+/* global $, DragDrop, foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
@@ -8,7 +8,7 @@ import { DropCoCID } from '../../apps/drop-coc-id.js'
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
-export class CoC7OccupationSheet extends ItemSheet {
+export class CoC7OccupationSheet extends foundry.appv1.sheets.ItemSheet {
   /**
    * Activate event listeners using the prepared sheet HTML
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
@@ -28,7 +28,8 @@ export class CoC7OccupationSheet extends ItemSheet {
     html.find('.group-item-delete').click(this._onGroupItemDelete.bind(this))
     html.find('.group-control').click(this._onGroupControl.bind(this))
 
-    const dragDrop = new DragDrop({
+    /* // FoundryVTT V12 */
+    const dragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
       dropSelector: '.droppable',
       callbacks: { drop: this._onDrop.bind(this) }
     })

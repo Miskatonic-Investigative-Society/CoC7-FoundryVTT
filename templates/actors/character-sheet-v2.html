@@ -1,4 +1,4 @@
-<form class="{{cssClass}} flexcol {{#if permissionLimited}}permission-limited{{/if}}" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}}>
+<form class="{{cssClass}} flexcol-coc7 {{#if permissionLimited}}permission-limited{{/if}}" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}}>
   {{#if showHiddenDevMenu}}
     <div class="floating-debug">
       <a class="test-trigger" title='Test Icon, if you see that and do not know why, then you should not click it'>
@@ -28,18 +28,18 @@
         </div>
 
         <div class="infos">
-          <div class="row flexrow">
+          <div class="row flexrow-coc7">
             <label>{{ localize 'CoC7.Name' }} :</label>
             <input name="name" type="text" value="{{actor.name}}" />
           </div>
           {{#if displayPlayerName}}
-            <div class="row flexrow">
+            <div class="row flexrow-coc7">
               <label>{{ localize 'CoC7.PlayerName' }} :</label>
               <input name="system.infos.playername" type="text" value="{{data.system.infos.playername}}" />
             </div>
           {{/if}}
           {{#if pulpRuleArchetype}}
-            <div class="row flexrow">
+            <div class="row flexrow-coc7">
               <label>{{ localize 'CoC7.Archetype' }} :</label>
               {{#if data.system.infos.archetypeSet}}
                 <span class="rollable open-item" data-type="archetype">{{data.system.infos.archetype}}</span>
@@ -52,12 +52,12 @@
             </div>
           {{/if}}
           {{#if pulpRuleOrganization}}
-            <div class="row flexrow">
+            <div class="row flexrow-coc7">
               <label>{{ localize 'CoC7.Organization' }} :</label>
               <input name="system.infos.organization" type="text" value="{{data.system.infos.organization}}" />
             </div>
           {{/if}}
-          <div class="row flexrow">
+          <div class="row flexrow-coc7">
             <label>{{ localize 'CoC7.Occupation' }} :</label>
             {{#if data.system.infos.occupationSet}}
               <span class="rollable open-item" data-type="occupation">{{data.system.infos.occupation}}</span>
@@ -68,17 +68,17 @@
               <input name="system.infos.occupation" type="text" value="{{data.system.infos.occupation}}" />
             {{/if}}
           </div>
-          <div class="row flexrow">
+          <div class="row flexrow-coc7">
             <label>{{ localize 'CoC7.Age' }} :</label>
             <input name="system.infos.age" type="text" value="{{data.system.infos.age}}" />
             <label>{{ localize 'CoC7.Sex' }} :</label>
             <input name="system.infos.sex" type="text" value="{{data.system.infos.sex}}" />
           </div>
-          <div class="row flexrow">
+          <div class="row flexrow-coc7">
             <label>{{ localize 'CoC7.Residence' }} :</label>
             <input name="system.infos.residence" type="text" value="{{data.system.infos.residence}}" />
           </div>
-          <div class="row flexrow">
+          <div class="row flexrow-coc7">
             <label>{{ localize 'CoC7.Birthplace' }} :</label>
             <input name="system.infos.birthplace" type="text" value="{{data.system.infos.birthplace}}" />
           </div>
@@ -262,14 +262,14 @@
                 {{#if hasConditions}}
                   <div><a class="clear_conditions button">{{localize 'CoC7.ClearAllConditions'}}</a></div>
                 {{/if}}
-                <div class="flexrow">
+                <div class="flexrow-coc7">
                   {{> "systems/CoC7/templates/actors/parts/actor-keeper-mythos-enounters.hbs"}}
-                  <div class="flexcol bio-section" style="flex: 0 0 50%;">
-                    <div class="flexrow" style="flex: initial;">
+                  <div class="flexcol-coc7 bio-section" style="flex: 0 0 50%;">
+                    <div class="flexrow-coc7" style="flex: initial;">
                       <label style="height: 1rem;margin: 0;border: 0;font-family: customSheetFont, 'Palatino Linotype', serif;font-size: .75rem;flex: 1;">{{localize 'CoC7.BackgroundFlags'}}</label>
                     </div>
                     <div class="bio-section-value" style="min-height: 80px;">
-                      <div class="flexrow">
+                      <div class="flexrow-coc7">
                         <div class="bio-section-type">{{localize 'CoC7.BackgroundFlagsMythosExperienced'}}</div>
                         <div class="item-controls">
                           <a class="item-control toggle-keeper-flags" title="{{localize 'CoC7.BackgroundFlagsMythosExperienced'}}" data-flag="mythosInsanityExperienced">
@@ -281,7 +281,7 @@
                           </a>
                         </div>
                       </div>
-                      <div class="flexrow">
+                      <div class="flexrow-coc7">
                         <div class="bio-section-type">{{localize 'CoC7.BackgroundFlagsMythosHardened'}}</div>
                         <div class="item-controls">
                           <a class="item-control toggle-keeper-flags" title="{{localize 'CoC7.BackgroundFlagsMythosHardened'}}" data-flag="mythosHardened">
@@ -306,11 +306,7 @@
                     <div class="form-group">
                       <label>{{localize 'CoC7.MonetaryFormatTitle'}}</label>
                       <select name="system.monetary.format">
-                        {{#select data.system.monetary.format}}
-                          {{#each _monetaryFormats as |monetaryFormat|}}
-                            <option value="{{monetaryFormat.key}}">{{monetaryFormat.val}}</option>
-                          {{/each}}
-                        {{/select}}
+                        {{selectOptions _monetaryFormats selected=data.system.monetary.format localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
                       </select>
                     </div>
                     {{#if showCurrencySymbol}}
@@ -320,32 +316,20 @@
                       </div>
                     {{/if}}
                     {{#each data.system.monetary.values as |value index|}}
-                      <div class="flexrow form-group item" data-index="{{index}}">
+                      <div class="flexrow-coc7 form-group item" data-index="{{index}}">
                         <input name="system.monetary.values.{{index}}.name" value="{{localize value.name}}" type="text" placeholder="{{localize 'CoC7.Name'}}">
                         <input name="system.monetary.values.{{index}}.min" value="{{value.min}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMin'}}">
                         <input name="system.monetary.values.{{index}}.max" value="{{value.max}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMax'}}">
                         <select name="system.monetary.values.{{index}}.cashType" class="cash-assets-type">
-                          {{#select value.cashType}}
-                            {{#each ../_monetaryTypes as |monetaryType|}}
-                              <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
-                            {{/each}}
-                          {{/select}}
+                          {{selectOptions ../_monetaryTypes selected=value.cashType localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
                         </select>
                         <input name="system.monetary.values.{{index}}.cashValue" value="{{value.cashValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueCash'}}">
                         <select name="system.monetary.values.{{index}}.assetsType" class="cash-assets-type">
-                          {{#select value.assetsType}}
-                            {{#each ../_monetaryTypes as |monetaryType|}}
-                              <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
-                            {{/each}}
-                          {{/select}}
+                          {{selectOptions ../_monetaryTypes selected=value.assetsType localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
                         </select>
                         <input name="system.monetary.values.{{index}}.assetsValue" value="{{value.assetsValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueAssets'}}">
                         <select name="system.monetary.values.{{index}}.spendingType" class="cash-assets-type">
-                          {{#select value.spendingType}}
-                            {{#each ../_monetaryTypes as |monetaryType|}}
-                              <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
-                            {{/each}}
-                          {{/select}}
+                          {{selectOptions ../_monetaryTypes selected=value.spendingType localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
                         </select>
                         <input name="system.monetary.values.{{index}}.spendingValue" value="{{value.spendingValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueSpendingLevel'}}">
                         <a class="item-control remove-monetary"><i class="fas fa-minus"></i></a>
@@ -361,11 +345,11 @@
     </div>
   {{else}}
     {{#if isSummarized}}
-      <div class="sheet-portrait flexcol">
+      <div class="sheet-portrait flexcol-coc7">
         <img src="{{actor.img}}" title="{{actor.name}}" style="flex: auto !important; height: 1px !important; border: 0; width: 100% !important;">
       </div>
     {{else}}
-      <div class="sheet-portrait flexcol">
+      <div class="sheet-portrait flexcol-coc7">
         <img class="photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" style="object-fit: fill; max-height: 100%;" />
       </div>
     {{/if}}

@@ -5,10 +5,12 @@
   --occupation-points-color: #101345;
   --archetype-points-color: #79501c;
   --experience-points-color: #2e4b1f;
+  --sheet-v3-main-font: customSheetFont, "MODESTO CONDENSED";
+  --sheet-v3-secondary-font: customSheetFont, 'Lusitana';
 }
 
 .sheetV3.window-app {
-  min-height: 640px;
+  min-height: 800px;
   min-width: 762px;
 
   header {
@@ -98,7 +100,7 @@
 
           .tab-label {
             text-transform: uppercase;
-            font-family: "MODESTO CONDENSED";
+            font-family: var(--sheet-v3-main-font);
             width: 100%;
             height: 100%;
             padding-top: 30px;
@@ -164,7 +166,7 @@
         .sheet-inner {
           height: calc(100% - 57px);
           margin-bottom: 5px;
-          .flexrow();
+          .flexrow-coc7();
 
           .auto-toggle:hover {
             text-shadow: 0 0 10px var(--main-sheet-interactive-color);
@@ -307,11 +309,11 @@
                 margin-bottom: 0.3rem;
 
                 .detail-wrapper {
-                  .flexrow();
+                  .flexrow-coc7();
                   align-items: center;
 
                   .detail-label {
-                    font-family: "MODESTO CONDENSED";
+                    font-family: var(--sheet-v3-main-font);
                     font-size: 1.4rem;
                     text-transform: uppercase;
                     flex: none;
@@ -322,7 +324,7 @@
                   }
 
                   .detail-value {
-                    font-family: 'Lusitana';
+                    font-family: var(--sheet-v3-secondary-font);
                     font-size: 20px;
                     color: var(--official-coc-label-color);
                     margin-left: 0.3rem;
@@ -341,14 +343,14 @@
               }
 
               .character-attributes {
-                font-family: "MODESTO CONDENSED";
+                font-family: var(--sheet-v3-main-font);
                 display: flex;
                 justify-content: space-between;
                 background: rgba(0, 0, 0, 0.08);
                 border-radius: 15px;
                 overflow: hidden;
                 margin-bottom: 0.3rem;
-                .flexcol();
+                .flexcol-coc7();
 
                 &.show-part-values {
                   .characteristics-grid .char-box .char-box-values {
@@ -436,16 +438,16 @@
               }
 
               .secondary-attributes {
-                font-family: "MODESTO CONDENSED";
+                font-family: var(--sheet-v3-main-font);
                 border-radius: 15px;
                 column-gap: 0.4rem;
 
                 .secondary-attribute {
-                  font-family: "MODESTO CONDENSED";
+                  font-family: var(--sheet-v3-main-font);
                   background: rgba(0, 0, 0, 0.08);
                   border-radius: 15px;
                   margin-bottom: 0.3rem;
-                  .flexcol();
+                  .flexcol-coc7();
 
                   .attribute-label {
                     color: var(--official-coc-label-color);
@@ -506,8 +508,8 @@
                 border-radius: 8px;
                 overflow: hidden;
                 font-size: 1.1rem;
-                font-family: "MODESTO CONDENSED";
-                .flexcol();
+                font-family: var(--sheet-v3-main-font);
+                .flexcol-coc7();
 
                 .derived-attributes-top-line {
                   background-image: var(--investigator-sheet-red-line);
@@ -585,8 +587,8 @@
 
             .sheet-body {
               background-color: rgba(0, 0, 0, 0.08);
-              overflow-y: scroll;
-              font-family: 'Lusitana';
+              overflow-y: auto;
+              font-family: var(--sheet-v3-secondary-font);
               scrollbar-color: var(--main-sheet-back-color) var(--official-coc-label-color);
               scrollbar-width: thin;
               padding: 0 0.5rem 0 0.5rem;
@@ -664,7 +666,7 @@
 
               h2 {
                 color: var(--main-sheet-interactive-color);
-                font-family: "MODESTO CONDENSED";
+                font-family: var(--sheet-v3-main-font);
                 font-weight: bold;
                 text-transform: uppercase;
                 margin-top: 0.6rem;
@@ -674,7 +676,7 @@
               }
 
               h3 {
-                font-family: "MODESTO CONDENSED";
+                font-family: var(--sheet-v3-main-font);
                 font-size: 1.4rem;
                 text-transform: uppercase;
               }
@@ -720,7 +722,7 @@
                   text-align: center;
                   margin-bottom: 2px;
                   color: #fff;
-                  font-family: "MODESTO CONDENSED";
+                  font-family: var(--sheet-v3-main-font);
                   font-size: 1.4rem;
 
                   &.warning {
@@ -740,12 +742,12 @@
                       width: 100%;
                       height: 100%;
                       cursor: pointer;
-                      font-family: "MODESTO CONDENSED";
+                      font-family: var(--sheet-v3-main-font);
                     }
                   }
 
                   label {
-                    font-family: "MODESTO CONDENSED";
+                    font-family: var(--sheet-v3-main-font);
                     font-size: 1.2rem;
                   }
 
@@ -817,7 +819,7 @@
                     }
 
                     .weapon-range {
-                      .flexrow();
+                      .flexrow-coc7();
 
                       .weapon-damage {
                         text-align: center;
@@ -834,7 +836,7 @@
                     }
 
                     .weapon-controls {
-                      .flexrow();
+                      .flexrow-coc7();
 
                       a.reload-weapon {
                         vertical-align: middle;
@@ -974,7 +976,7 @@
                   }
 
                   .skill-icons {
-                    .flexrow();
+                    .flexrow-coc7();
                     flex: 0 0 2.3rem;
                     text-align: right;
 
@@ -1079,7 +1081,7 @@
               .tab.background,
               .tab.keeper-notes {
                 input[type='text'].bio-section-title {
-                  font-family: "MODESTO CONDENSED";
+                  font-family: var(--sheet-v3-main-font);
                   font-size: 18px;
                   height: 1.5rem;
                 }
@@ -1104,7 +1106,7 @@
                 }
 
                 .bio-section-boxes {
-                  .flexrow();
+                  .flexrow-coc7();
                   gap: 0.4rem;
 
                   .bio-section-events {
@@ -1207,7 +1209,11 @@
                   }
 
                   .cash {
-                    overflow-x: scroll;
+                    textarea {
+                      width: 100%;
+                      resize: vertical;
+                    }
+                    overflow-x: auto;
                   }
                 }
               }

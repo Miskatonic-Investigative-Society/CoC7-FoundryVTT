@@ -8,7 +8,7 @@
     </div>
   {{/unless}}
   {{#each biographySections as |section index|}}
-    <div class="section-header bio-section flexrow" data-index='{{index}}'>
+    <div class="section-header bio-section flexrow-coc7" data-index='{{index}}'>
       {{#if ../data.system.flags.locked}}
         <h3>{{section.title}}</h3>
       {{else}}
@@ -26,12 +26,12 @@
   {{/each}}
 {{/if}}
 {{#if data.system.sanityLossEvents}}
-  <div class="section-header flexrow">
+  <div class="section-header flexrow-coc7">
     <h3>{{localize 'CoC7.BackgroundEncounters'}}</h3>
   </div>
   <div class="bio-section-events">
     {{#each data.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <div>{{sanityLossEvent.type}}</div>
         <div class="bio-section-values">
           {{#if sanityLossEvent.immunity}}
@@ -42,7 +42,7 @@
         </div>
       </div>
     {{else}}
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         -
       </div>
     {{/each}}

@@ -1,4 +1,4 @@
-/* global $, ChatMessage, CONST, game, Token, tokenData, ui */
+/* global $, ChatMessage, CONST, foundry, game, Token, tokenData, ui */
 import { CoC7Check } from './check.js'
 import { COC7 } from './config.js'
 import { CoC7MeleeInitiator } from './chat/combat/melee-initiator.js'
@@ -6,7 +6,6 @@ import { CoC7MeleeTarget } from './chat/combat/melee-target.js'
 import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js'
 import { CoC7RangeInitiator } from './chat/rangecombat.js'
 import { CoC7Roll, chatHelper, isCtrlKey } from './chat/helper.js'
-// import { CoC7DamageRoll } from './chat/damagecards.js';
 import { CoC7ConCheck } from './chat/concheck.js'
 import { SanCheckCard } from './chat/cards/san-check.js'
 import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
@@ -19,6 +18,7 @@ const CHAT_COC7_MESSAGE = {
   FAKEROLL:
     '<div class="dice-roll"><div class="dice-result"><div class="dice-formula">???</div><h4 class="dice-total">?</h4></div></div>'
 }
+
 export class CoC7Chat {
   static renderChatMessageHook (chatMessage, html) {
     if (chatMessage.getFlag('CoC7', 'GMSelfRoll') && !game.user.isGM) {
@@ -74,11 +74,6 @@ export class CoC7Chat {
    *  Init sockets                                *
    *---------------------------------------------- */
 
-  static ready () {
-    // console.log('-->CoC7Chat.ready');
-    game.CoC7 = 'init'
-  }
-
   // static onMessage( data) {
   //  console.log('-->CoC7Chat.onMessage');
   //  console.log(`message received send&er :${data.user} message type : ${data.action} for message :${data.messageId}`);
@@ -89,53 +84,90 @@ export class CoC7Chat {
    * -------------------------------------------- */
 
   static async chatListeners (app, html) {
-    html.on(
-      'click',
-      '.card-buttons button',
-      CoC7Chat._onChatCardAction.bind(this)
-    )
-    html.on(
-      'change',
-      'input[type=range].slider',
-      CoC7Chat._onChatCardRange.bind(this)
-    )
-    // html.on('click', '.card-buttons button', CoC7Chat._onChatCardTest.bind(this));
-    html.on(
-      'click',
-      '.card-title',
-      CoC7Chat._onChatCardToggleContent.bind(this)
-    )
-    html.on(
-      'click',
-      '.radio-switch',
-      CoC7Chat._onChatCardRadioSwitch.bind(this)
-    )
-    html.on(
-      'click',
-      '.panel-switch',
-      CoC7Chat._onChatCardToggleSwitch.bind(this)
-    )
+    /* // FoundryVTT v12 */
+    if (foundry.utils.isNewerVersion(game.version, '13')) {
+      html.addEventListener('click', function (event) {
+        if (event.target.querySelector('.card-buttons button')) {
+          CoC7Chat._onChatCardAction.bind(this)
+        } else if (event.target.querySelector('.card-title')) {
+          CoC7Chat._onChatCardToggleContent.bind(this)
+        } else if (event.target.querySelector('.radio-switch')) {
+          CoC7Chat._onChatCardRadioSwitch.bind(this)
+        } else if (event.target.querySelector('.panel-switch')) {
+          CoC7Chat._onChatCardToggleSwitch.bind(this)
+        } else if (event.target.querySelector('.simple-flag')) {
+          CoC7Chat._onChatCardToggleSwitch.bind(this)
+        } else if (event.target.querySelector('.volley-size')) {
+          CoC7Chat._onChatCardVolleySize.bind(this)
+        } else if (event.target.querySelector('.dropdown-element')) {
+          CoC7Chat._onDropDownElementSelected.bind(this)
+        } else if (event.target.querySelector('.simple-toggle')) {
+          CoC7Chat._onToggleSelected.bind(this)
+        } else if (event.target.querySelector('.target-selector')) {
+          CoC7Chat._onTargetSelect.bind(this)
+        } else if (event.target.querySelector('coc7-inline-result')) {
+          CoC7Chat._onInline.bind(this)
+        }
+      })
+      html.addEventListener('selectionchange', function (event) {
+        if (event.target.querySelector('input[type=range].slider')) {
+          CoC7Chat._onChatCardRange.bind(this)
+        }
+      })
+      html.addEventListener('dblclick', function (event) {
+        if (event.target.querySelector('.open-actor')) {
+          CoC7Chat._onOpenActor.bind(this)
+        }
+      })
+    } else {
+      html.on(
+        'click',
+        '.card-buttons button',
+        CoC7Chat._onChatCardAction.bind(this)
+      )
+      html.on(
+        'change',
+        'input[type=range].slider',
+        CoC7Chat._onChatCardRange.bind(this)
+      )
+      // html.on('click', '.card-buttons button', CoC7Chat._onChatCardTest.bind(this));
+      html.on(
+        'click',
+        '.card-title',
+        CoC7Chat._onChatCardToggleContent.bind(this)
+      )
+      html.on(
+        'click',
+        '.radio-switch',
+        CoC7Chat._onChatCardRadioSwitch.bind(this)
+      )
+      html.on(
+        'click',
+        '.panel-switch',
+        CoC7Chat._onChatCardToggleSwitch.bind(this)
+      )
 
-    html.on(
-      'click',
-      '.simple-flag',
-      CoC7Chat._onChatCardToggleSwitch.bind(this)
-    )
-    html.on('click', '.volley-size', CoC7Chat._onChatCardVolleySize.bind(this))
+      html.on(
+        'click',
+        '.simple-flag',
+        CoC7Chat._onChatCardToggleSwitch.bind(this)
+      )
+      html.on('click', '.volley-size', CoC7Chat._onChatCardVolleySize.bind(this))
 
-    html.on(
-      'click',
-      '.dropdown-element',
-      CoC7Chat._onDropDownElementSelected.bind(this)
-    )
-    html.on('click', '.simple-toggle', CoC7Chat._onToggleSelected.bind(this))
-    // html.on('click', '.is-outnumbered', CoC7Chat._onOutnumberedSelected.bind(this));
+      html.on(
+        'click',
+        '.dropdown-element',
+        CoC7Chat._onDropDownElementSelected.bind(this)
+      )
+      html.on('click', '.simple-toggle', CoC7Chat._onToggleSelected.bind(this))
+      // html.on('click', '.is-outnumbered', CoC7Chat._onOutnumberedSelected.bind(this));
 
-    html.on('click', '.target-selector', CoC7Chat._onTargetSelect.bind(this))
+      html.on('click', '.target-selector', CoC7Chat._onTargetSelect.bind(this))
 
-    html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
+      html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
 
-    html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this))
+      html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this))
+    }
 
     // RollCard.bindListerners( html);
     OpposedCheckCard.bindListerners(html)

@@ -1,5 +1,4 @@
-/* global $, CONFIG, FormApplication, foundry, game, Hooks, ui, FileReader */
-
+/* global $, CONFIG, FileReader, FormApplication, foundry, game, Hooks, ui */
 import { CoC7ActorImporter } from './actor-importer.js'
 import { CoC7DholeHouseActorImporter } from './dholehouse_importer.js'
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
@@ -34,6 +33,55 @@ export class CoC7ActorImporterDialog extends FormApplication {
       )
       data.placeholder = CoC7ActorImporterRegExp.getExampleText(data.language)
     }
+
+    data.importTypeOptions = [
+      {
+        key: 'npc',
+        label: 'CoC7.NonPlayingCharacter'
+      },
+      {
+        key: 'creature',
+        label: 'CoC7.Creature'
+      },
+      {
+        key: 'dholehouse',
+        label: 'CoC7.DholeHouseActorImporter'
+      }
+    ]
+
+    data.convert6EOptions = [
+      {
+        key: 'coc-guess',
+        label: 'CoC7.Guess'
+      },
+      {
+        key: 'coc-convert',
+        label: 'CoC7.Convert'
+      },
+      {
+        key: 'coc-no-convert',
+        label: 'CoC7.NoConvert'
+      }
+    ]
+
+    data.sourceOptions = [
+      {
+        key: '',
+        label: 'CoC7.ImportActorItemsNone'
+      },
+      {
+        key: 'i',
+        label: 'CoC7.ImportActorItemsItem'
+      },
+      {
+        key: 'iwms',
+        label: 'CoC7.ImportActorItemsItemWorldModuleSystem'
+      },
+      {
+        key: 'wmis',
+        label: 'CoC7.ImportActorItemsWorldModuleItemSystem'
+      }
+    ]
 
     return data
   }

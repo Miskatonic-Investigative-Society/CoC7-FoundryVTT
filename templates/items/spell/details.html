@@ -1,7 +1,7 @@
 <div class="details">
   <div class="type">
     <label>{{localize "CoC7.SpellType"}}</label>
-    <div class="flexrow">
+    <div class="flexrow-coc7">
       <input id="bind" type="checkbox" name="system.type.bind" {{checked data.system.type.bind}} />
       <label class="option" for="system.type.bind">{{localize "CoC7.BindSpell"}}</label>
       <input id="call" type="checkbox" name="system.type.call" {{checked data.system.type.call}} />
@@ -22,28 +22,28 @@
   </div>
   <div class="cost">
     <div class="left">
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize "CoC7.SanityCost"}}:</label>
         <input type="text" name="system.costs.sanity" value="{{data.system.costs.sanity}}" />
       </div>
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize "CoC7.PowerCost"}}:</label>
         <input type="text" name="system.costs.power" value="{{data.system.costs.power}}" />
       </div>
     </div>
     <div class="right">
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize "CoC7.HitPointsCost"}}:</label>
         <input type="text" name="system.costs.hitPoints" value="{{data.system.costs.hitPoints}}" />
       </div>
-      <div class="flexrow">
+      <div class="flexrow-coc7">
         <label>{{localize "CoC7.MagicPointsCost"}}:</label>
         <input type="text" name="system.costs.magicPoints" value="{{data.system.costs.magicPoints}}" />
       </div>
     </div>
   </div>
   <div class="other">
-    <div class="flexrow">
+    <div class="flexrow-coc7">
       <label>{{localize "CoC7.OtherCosts"}}:</label>
       <input type="text" name="system.costs.others" value="{{data.system.costs.others}}" />
     </div>

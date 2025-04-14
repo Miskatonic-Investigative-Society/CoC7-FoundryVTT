@@ -185,23 +185,25 @@ export class CoCIDBatch extends FormApplication {
       const sceneData = scene.toObject()
       for (const token of sceneData.tokens ?? []) {
         if (token.actorId && !token.actorLink) {
-          const actorData = foundry.utils.duplicate(token.actorData)
-          for (const item of actorData.items ?? []) {
-            const itemData = item instanceof CONFIG.Item.documentClass ? item.toObject() : item
-            if (itemData.type === 'skill') {
-              if (!itemData.flags.CoC7?.cocidFlag?.id?.match(/^i.skill/)) {
-                if (typeof missingNames[itemData.name] === 'undefined') {
-                  missingNames[itemData.name] = ''
+          if (token.actorData) {
+            const actorData = foundry.utils.duplicate(token.actorData)
+            for (const item of actorData.items ?? []) {
+              const itemData = item instanceof CONFIG.Item.documentClass ? item.toObject() : item
+              if (itemData.type === 'skill') {
+                if (!itemData.flags.CoC7?.cocidFlag?.id?.match(/^i.skill/)) {
+                  if (typeof missingNames[itemData.name] === 'undefined') {
+                    missingNames[itemData.name] = ''
+                  }
+                  updateList.push({
+                    scene: sceneData._id,
+                    token: token._id,
+                    item: itemData._id,
+                    name: itemData.name,
+                    cocidFlag: itemData.flags.CoC7?.cocidFlag ?? {}
+                  })
+                } else {
+                  foundKeys[itemData.name] = itemData.flags.CoC7.cocidFlag.id
                 }
-                updateList.push({
-                  scene: sceneData._id,
-                  token: token._id,
-                  item: itemData._id,
-                  name: itemData.name,
-                  cocidFlag: itemData.flags.CoC7?.cocidFlag ?? {}
-                })
-              } else {
-                foundKeys[itemData.name] = itemData.flags.CoC7.cocidFlag.id
               }
             }
           }

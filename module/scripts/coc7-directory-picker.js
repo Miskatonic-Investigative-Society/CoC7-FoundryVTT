@@ -1,5 +1,11 @@
-/* global $, File, FilePicker, game, ui */
-export class CoC7DirectoryPicker extends FilePicker {
+/* global FilePicker, foundry, game, ui */
+/* // FoundryVTT V12 */
+export class CoC7DirectoryPicker extends (foundry.applications.apps?.FilePicker ?? FilePicker) {
+  constructor (options = {}) {
+    options.type = 'folder'
+    super(options)
+  }
+
   get title () {
     return game.i18n.localize('CoC7.PickDirectory')
   }
@@ -15,10 +21,6 @@ export class CoC7DirectoryPicker extends FilePicker {
       path
     })
     this.close()
-  }
-
-  static DefaultDirectory (val) {
-    return val === null ? '' : String(val)
   }
 
   static format (value) {
@@ -46,36 +48,41 @@ export class CoC7DirectoryPicker extends FilePicker {
   }
 
   static processHtml (html) {
-    $(html)
-      .find('input[data-dtype="DefaultDirectory"]')
-      .each((i, el) => {
-        const input = $(el)
-        input.prop('readonly', true)
-        if (!input.next().length) {
-          const picker = new CoC7DirectoryPicker({
-            field: input[0],
-            ...CoC7DirectoryPicker.parse(input.val())
-          })
-          const pickerButton = $(
-            '<button type="button" class="file-picker" title="' +
-              game.i18n.localize('CoC7.PickDirectory') +
-              '"><i class="fas fa-file-import fa-fw"></i></button>'
-          )
-          CoC7DirectoryPicker.createDefaultDirectory()
-          pickerButton.on('click', () => {
-            picker.render(true)
-          })
-          input.parent().append(pickerButton)
+    let inputs
+    try {
+      inputs = html.querySelectorAll('input[name=CoC7\\.dholeUploadDirectory]')
+    } catch (e) {
+      /* // FoundryVTT v12 */
+      inputs = html[0].querySelectorAll('input[name=CoC7\\.dholeUploadDirectory]')
+    }
+    for (const input of inputs) {
+      /* // FoundryVTT v11 */
+      if (foundry.utils.isNewerVersion(game.version, '12')) {
+        input.setAttribute('readonly', true)
+      }
+      if (!input.nextElementSibling) {
+        const picker = new CoC7DirectoryPicker({
+          field: input,
+          ...CoC7DirectoryPicker.parse(input.value)
+        })
+        const pickerButton = document.createElement('button')
+        pickerButton.classList.add('file-picker')
+        pickerButton.setAttribute('title', game.i18n.localize('CoC7.PickDirectory'))
+        /* // FoundryVTT v12 */
+        if (foundry.utils.isNewerVersion(game.version, '13')) {
+          pickerButton.setAttribute('style', 'flex: 0 0 auto;')
         }
-      })
-  }
-
-  activateListeners (html) {
-    super.activateListeners(html)
-
-    $(html).find('ol.files-list').remove()
-    $(html).find('footer div').remove()
-    $(html).find('footer button').text(game.i18n.localize('CoC7.PickDirectory'))
+        const pickerIcon = document.createElement('i')
+        pickerIcon.classList.add('fas', 'fa-file-import', 'fa-fw')
+        pickerButton.append(pickerIcon)
+        CoC7DirectoryPicker.createDefaultDirectory()
+        pickerButton.onclick = (event) => {
+          event.preventDefault()
+          picker.render(true)
+        }
+        input.after(pickerButton)
+      }
+    }
   }
 
   static async createDefaultDirectory () {
@@ -116,5 +123,11 @@ export class CoC7DirectoryPicker extends FilePicker {
       return false
     }
     return parsed.current + '/' + filename
+  }
+
+  get canUpload () {
+    if (this.options.allowUpload === false) return false
+    if (!['data', 's3'].includes(this.activeSource)) return false
+    return !game.user || game.user.can('FILES_UPLOAD')
   }
 }

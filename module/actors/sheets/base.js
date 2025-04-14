@@ -1,4 +1,4 @@
-/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, Hooks, Roll, TextEditor, ui */
+/* global $, ChatMessage, CONST, Dialog, FormData, foundry, game, Hooks, Roll, TextEditor, ui */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
@@ -20,7 +20,7 @@ import { CoC7Utilities } from '../../utilities.js'
 /**
  * Extend the basic ActorSheet with some very simple modifications
  */
-export class CoC7ActorSheet extends ActorSheet {
+export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
   _getHeaderButtons () {
     const headerButtons = super._getHeaderButtons()
     addCoCIDSheetHeaderButton(headerButtons, this)
@@ -721,6 +721,9 @@ export class CoC7ActorSheet extends ActorSheet {
     html.find('.add-item').click(ev => {
       ev.stopPropagation()
       switch (ev.currentTarget.dataset.type) {
+        case 'armor':
+          this.actor.createEmptyArmor(ev)
+          break
         case 'book':
           this.actor.createEmptyBook(ev)
           break

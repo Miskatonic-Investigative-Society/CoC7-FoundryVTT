@@ -1,4 +1,4 @@
-<form class="flexcol" autocomplete="off">
+<form class="flexcol-coc7" autocomplete="off">
   <h2>{{localize 'CoC7.Settings.CoreRules.Title'}}</h2>
   <div class="form-group">
     <label>{{localize 'SETTINGS.developmentRollForLuck'}}</label>
@@ -11,10 +11,7 @@
     <label>{{localize 'SETTINGS.InitiativeRule'}}</label>
     <div class="form-fields">
       <select name="initiativeRule" data-dtype="String">
-        {{#select initiativeRule.value}}
-          <option value="basic">{{localize 'SETTINGS.InitiativeRuleBasic'}}</option>
-          <option value="optional">{{localize 'SETTINGS.InitiativeRuleOptional'}}</option>
-        {{/select}}
+        {{selectOptions initiativeRuleOptions selected=initiativeRule.value localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
       </select>
     </div>
     <p class="notes">{{localize 'SETTINGS.InitiativeRuleHint'}}</p>
@@ -32,11 +29,7 @@
     <label>{{localize 'SETTINGS.PulpRules'}}</label>
     <div class="form-fields">
       <select id="pulpRulesSelect">
-        {{#select pulpSelection}}
-          <option value="none">{{localize 'None'}}</option>
-          <option value="some">{{localize 'Partial'}}</option>
-          <option value="all">{{localize 'All'}}</option>
-        {{/select}}
+        {{selectOptions pulpSelectionOptions selected=pulpSelection localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
       </select>
     </div>
     <p class="notes">{{localize 'SETTINGS.PulpRulesHint'}}</p>
@@ -106,7 +99,7 @@
     </div>
     <p class="notes">{{localize 'SETTINGS.OpposedRollTieBreakerHint'}}</p>
   </div>
-  <footer class="sheet-footer flexrow">
+  <footer class="sheet-footer flexrow-coc7">
     <button type="submit" name="submit">
       <i class="far fa-save"></i> {{localize "Save Changes"}}
     </button>

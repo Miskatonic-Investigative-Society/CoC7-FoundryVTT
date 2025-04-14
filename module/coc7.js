@@ -1,514 +1,124 @@
-/* global $, Combat, CONFIG, foundry, game, Hooks, ItemDirectory */
-import CoC7ActiveEffect from './active-effect.js'
-import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
-import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
-import { CoC7CharacterSheet } from './actors/sheets/character.js'
-import { CoC7Chat } from './chat.js'
-import { CoC7Combat, rollInitiative } from './combat.js'
-import { COC7 } from './config.js'
-import { Updater } from './updater.js'
-import { CoC7Utilities } from './utilities.js'
-import { CoC7Check } from './check.js'
-import { CoC7Menu } from './menu.js'
-import { DamageCard } from './chat/cards/damage.js'
-import { CoC7Canvas } from './apps/canvas.js'
-import { CoC7SettingsDirectory } from './settings-directory.js'
-import { CoC7CompendiumDirectory } from './compendium-directory.js'
-import { CoC7ActorDirectory } from './actor-directory.js'
-import { CoC7Hooks } from './hooks/index.js'
-import * as DiceBot from './dicebot.js'
+/* global Hooks */
 import '../styles/system/index.less'
-import { CoC7ChaseSheet } from './items/chase/sheet.js'
-import { CoC7Socket } from './hooks/socket.js'
-import { CoC7SystemSocket } from './apps/coc7-system-socket.js'
-import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
-import CoC7ClickableEvents from './apps/coc7-clickable-events.js'
-import DrawNote from './hooks/draw-note.js'
-import PopOutLoaded from './hooks/popout-loaded.js'
-import RenderCoC7JournalSheet from './hooks/render-coc7-journal-sheet.js'
-import RenderJournalTextPageSheet from './hooks/render-journal-text-page-sheet.js'
-
-// Card init
+import './polyfill.js'
+/* // FoundryVTT V10 */
+// import * as DiceBot from './dicebot.js'
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
 import { ChaseObstacleCard } from './chat/cards/chase-obstacle.js'
-import { CoC7ContextMenu } from './context-menu.js'
 
-Hooks.on('renderSettingsConfig', (app, html, options) => {
-  const systemTab = $(app.form).find('.tab[data-tab=system]')
-  systemTab
-    .find('input[name=CoC7\\.displayInitDices]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleInitiative') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.stanbyGMRolls]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleRoll') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.trustedCanModfyChatCard]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleChatCards') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.enableStatusIcons]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleScene') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.overrideGameArtwork]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleGameArtwork') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.displayPlayerNameOnSheet]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleSheet') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.disregardUsePerRound]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleWeapon') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.syncDice3d]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleDiceSoNice') +
-        '</h2>'
-    )
-  systemTab
-    .find('input[name=CoC7\\.debugmode]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleDeveloperDebug') +
-        '</h2>'
-    )
-  systemTab
-    .find('select[name=CoC7\\.boutOfMadnessSummaryTable]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleRollTable') +
-        '</h2>'
-    )
-  // MOVED TO CHASSE INDIVIDUAL SETTING
-  // systemTab
-  //   .find('input[name=CoC7\\.chaseShowTokenMovement]')
-  //   .closest('div.form-group')
-  //   .before(
-  //     '<h2 class="setting-header">' +
-  //       game.i18n.localize('SETTINGS.TitleChaseSettings') +
-  //       '</h2>'
-  //   )
-})
+import ChangeSidebarTab from './hooks/change-sidebar-tab.js'
+import ChatMessage from './hooks/chat-message.js'
+import CloseActorSheet from './hooks/close-actor-sheet.js'
+import CloseCoC7ChaseSheet from './hooks/close-coc7-chase-sheet.js'
+import CreateActiveEffect from './hooks/create-active-effect.js'
+import CreateToken from './hooks/create-token.js'
+import DeleteActiveEffect from './hooks/delete-active-effect.js'
+import DiceSoNiceReady from './hooks/dice-so-nice-ready.js'
+import DrawNote from './hooks/draw-note.js'
+import DropActorSheetData from './hooks/drop-actor-sheet-data.js'
+import DropCanvasData from './hooks/drop-canvas-data.js'
+import GetHeaderControlsJournalEntrySheet from './hooks/get-header-controls-journal-entry-sheet.js'
+import GetHeaderControlsMacroConfig from './hooks/get-header-controls-macro-config.js'
+import GetHeaderControlsPlaylistConfig from './hooks/get-header-controls-playlist-config.js'
+import GetHeaderControlsRollTableSheet from './hooks/get-header-controls-roll-table-sheet.js'
+import GetHeaderControlsSceneConfig from './hooks/get-header-controls-scene-config.js'
+import GetSceneControlButtons from './hooks/get-scene-control-buttons.js'
+import HotbarDrop from './hooks/hotbar-drop.js'
+import Init from './hooks/init.js'
+import PopOutLoaded from './hooks/popout-loaded.js'
+import Ready from './hooks/ready.js'
+import RenderActorDirectory from './hooks/render-actor-directory.js'
+import RenderActorSheet from './hooks/render-actor-sheet.js'
+import RenderChatLog from './hooks/render-chat-log.js'
+import RenderChatMessage from './hooks/render-chat-message.js'
+import RenderCoC7ChaseSheet from './hooks/render-coc7-chase-sheet.js'
+import RenderCoC7CreatureSheet from './hooks/render-coc7-creature-sheet.js'
+import RenderCoC7DirectoryPicker from './hooks/render-coc7-directory-picker.js'
+import RenderCoC7NPCSheet from './hooks/render-coc7-npc-sheet.js'
+import RenderCombatTracker from './hooks/render-combat-tracker.js'
+import RenderCompendiumDirectory from './hooks/render-compendium-directory.js'
+import RenderDialog from './hooks/render-dialog.js'
+import RenderGamePause from './hooks/render-game-pause.js'
+import RenderItemSheet from './hooks/render-item-sheet.js'
+import RenderJournalEntryPageTextSheet from './hooks/render-journal-entry-page-text-sheet.js'
+import RenderJournalEntrySheet from './hooks/render-journal-entry-sheet.js'
+import RenderJournalSheet from './hooks/render-journal-sheet.js'
+import RenderJournalTextPageSheet from './hooks/render-journal-text-page-sheet.js'
+import RenderPause from './hooks/render-pause.js'
+import RenderPlayerList from './hooks/render-player-list.js'
+import RenderPlayers from './hooks/render-players.js'
+import RenderRealRoll from './hooks/render-real-roll.js'
+import RenderSceneControls from './hooks/render-scene-controls.js'
+import RenderSettings from './hooks/render-settings.js'
+import RenderSettingsConfig from './hooks/render-settings-config.js'
+import Setup from './hooks/setup.js'
+import SocketlibReady from './hooks/socketlib-ready.js'
+import UpdateChatMessage from './hooks/update-chat-message.js'
 
-Hooks.once('init', async function () {
-  game.CoC7 = {
-    macros: {
-      skillCheck: CoC7Utilities.skillCheckMacro,
-      weaponCheck: CoC7Utilities.weaponCheckMacro,
-      check: CoC7Utilities.checkMacro
-    },
-    cards: {
-      DamageCard
-    },
-    dev: {
-      dice: {
-        alwaysCrit: false,
-        alwaysFumble: false
-      }
-    },
-    eras: (era, name) => {
-      COC7.eras[era] = name
-    },
-    ClickRegionLeftUuid: CoC7ClickableEvents.ClickRegionLeftUuid,
-    ClickRegionRightUuid: CoC7ClickableEvents.ClickRegionRightUuid,
-    hasPermissionDocument: CoC7ClickableEvents.hasPermissionDocument,
-    InSceneRelativeTeleport: CoC7ClickableEvents.InSceneRelativeTeleport,
-    MapPinToggle: CoC7ClickableEvents.MapPinToggle,
-    openDocument: CoC7ClickableEvents.openDocument,
-    toggleTileJournalPages: CoC7ClickableEvents.toggleTileJournalPages,
-    toScene: CoC7ClickableEvents.toScene
-  }
-  Combat.prototype.rollInitiative = rollInitiative
-})
+Hooks.once('init', Init)
+Hooks.once('ready', Ready)
+Hooks.once('setup', Setup)
 
 initECC(ChaseObstacleCard)
+/* // FoundryVTT V10 */
+// DiceBot.listen()
 
-Hooks.on('renderCombatTracker', (app, html, data) =>
-  CoC7Combat.renderCombatTracker(app, html, data)
-)
-
-DiceBot.listen()
-CoC7Hooks.listen()
-
-Hooks.once('socketlib.ready', CoC7Socket)
-
-Hooks.once('setup', function () {
-  // Localize CONFIG objects once up-front
-  const toLocalize = [
-    'spellProperties',
-    'bookType',
-    'talentType',
-    'occupationProperties',
-    'statusType'
-  ]
-
-  for (const o of toLocalize) {
-    const localized = Object.entries(COC7[o]).map(e => {
-      return [e[0], game.i18n.localize(e[1])]
-    })
-    COC7[o] = localized.reduce((obj, e) => {
-      obj[e[0]] = e[1]
-      return obj
-    }, {})
-  }
-
-  let effectIndex = CONFIG.statusEffects.findIndex(
-    t => t.id === COC7.status.dead
-  )
-  if (effectIndex !== -1) {
-    CONFIG.statusEffects[effectIndex].icon =
-      'systems/CoC7/assets/icons/tombstone.svg'
-  }
-  effectIndex = CONFIG.statusEffects.findIndex(
-    t => t.id === COC7.status.unconscious
-  )
-  if (effectIndex !== -1) {
-    CONFIG.statusEffects[effectIndex].icon =
-      'systems/CoC7/assets/icons/knocked-out-stars.svg'
-  }
-  // FoundryVTT v10
-  const effectNameKey = (!foundry.utils.isNewerVersion(game.version, '11') ? 'label' : 'name')
-  CONFIG.statusEffects.unshift(
-    {
-      id: COC7.status.tempoInsane,
-      [effectNameKey]: 'CoC7.BoutOfMadnessName',
-      icon: 'systems/CoC7/assets/icons/hanging-spider.svg'
-    },
-    {
-      id: COC7.status.indefInsane,
-      [effectNameKey]: 'CoC7.InsanityName',
-      icon: 'systems/CoC7/assets/icons/tentacles-skull.svg'
-    },
-    {
-      id: COC7.status.criticalWounds,
-      [effectNameKey]: 'CoC7.CriticalWounds',
-      icon: 'systems/CoC7/assets/icons/arm-sling.svg'
-    },
-    {
-      id: COC7.status.dying,
-      [effectNameKey]: 'CoC7.Dying',
-      icon: 'systems/CoC7/assets/icons/heart-beats.svg'
-    }
-  )
-})
-
-Hooks.on('createActiveEffect', (data, options, userId) => {
-  if (game.userId === userId) {
-    const statusKey = CoC7ActiveEffect.getStatusKey(data)
-    if (statusKey) {
-      switch (statusKey) {
-        case COC7.status.indefInsane:
-        case COC7.status.unconscious:
-        case COC7.status.criticalWounds:
-        case COC7.status.dying:
-        case COC7.status.prone:
-        case COC7.status.dead:
-          data.parent.setCondition(statusKey, {
-            forceValue: true
-          })
-          break
-        case COC7.status.tempoInsane:
-          {
-            const realTime = data.flags.CoC7?.realTime
-            let duration = null
-            if (realTime === true) {
-              duration = data.duration?.rounds
-            } else if (realTime === false) {
-              duration = data.duration?.seconds
-              if (!isNaN(duration)) {
-                duration = Math.floor(duration / 3600)
-              }
-            }
-            data.parent.setCondition(COC7.status.tempoInsane, {
-              forceValue: true,
-              realTime,
-              duration
-            })
-          }
-          break
-      }
-    }
-  }
-})
-
-Hooks.on('deleteActiveEffect', (data, options, userId) => {
-  if (game.userId === userId) {
-    const statusKey = CoC7ActiveEffect.getStatusKey(data)
-    if (statusKey) {
-      switch (statusKey) {
-        case COC7.status.tempoInsane:
-        case COC7.status.indefInsane:
-        case COC7.status.unconscious:
-        case COC7.status.criticalWounds:
-        case COC7.status.dying:
-        case COC7.status.prone:
-        case COC7.status.dead:
-          data.parent.unsetCondition(statusKey, {
-            forceValue: true
-          })
-      }
-    }
-  }
-})
-
-// This will hide the item called '__CoC7InternalItem__'
-// This item is used for internal purposes and should not be seen by anyone
-Hooks.on('changeSidebarTab', directory => {
-  if (directory instanceof ItemDirectory) {
-    const item = game.items.find(i => i.name === '__CoC7InternalItem__')
-    if (item) {
-      const html = directory._element
-      const itemElement = html.find(`[data-document-id='${item.id}']`)
-      if (itemElement) itemElement[0].style.display = 'none'
-    }
-  }
-})
-
-Hooks.on('hotbarDrop', (bar, data, slot) => {
-  return CoC7Utilities.createMacro(bar, data, slot)
-})
-
-Hooks.on('renderChatLog', (app, html, data) =>
-  CoC7Chat.chatListeners(app, html, data)
-)
-Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) =>
-  CoC7Chat.onUpdateChatMessage(chatMessage, chatData, diff, speaker)
-)
-
-Hooks.on('ready', async () => {
-  // CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
-  await Updater.checkForUpdate()
-
-  // game.CoC7.menus = new CoC7Menu();
-
-  activateGlobalListener()
-
-  // setGlobalCssVar()
-
-  game.CoC7.skillList = await game.packs.get('CoC7.skills')?.getDocuments()
-
-  game.socket.on('system.CoC7', async data => {
-    CoC7SystemSocket.callSocket(data)
-  })
-
-  // "SETTINGS.BoutOfMadnessPhobiasIndex": "Phobias index",
-  // "SETTINGS.BoutOfMadnessPhobiasIndexHint": "The index (roll result) that will trigger a roll in the phobias table",
-  // "SETTINGS.BoutOfMadnessManiasIndex": "Manias index",
-  // "SETTINGS.BoutOfMadnessManiasIndexHint": "The index (roll result) that will trigger a roll in the manias table",
-  // "SETTINGS.SamplePhobiasTable": "Sample phobias table",
-  // "SETTINGS.SampleManiasTable": "Sample Manias table",
-
-  function _tableSettingsChanged (table, id) {
-    if (id === 'none') game.CoC7.tables[table] = null
-    else game.CoC7.tables[table] = game.tables.get(id)
-  }
-
-  // function _tableIndexChanged( table, index){
-  //  game.CoC7.tables[table]=index;
-  // }
-
-  const tableChoice = { none: 'SETTINGS.LetKeeperDecide' }
-  for (const t of game.tables) {
-    tableChoice[t._id] = t.name
-  }
-
-  game.settings.register('CoC7', 'boutOfMadnessSummaryTable', {
-    name: 'SETTINGS.BoutOfMadnessSummaryTable',
-    scope: 'world',
-    config: true,
-    default: 'none',
-    type: String,
-    choices: tableChoice,
-    onChange: id => _tableSettingsChanged('boutOfMadness_Summary', id)
-  })
-
-  game.settings.register('CoC7', 'boutOfMadnessRealTimeTable', {
-    name: 'SETTINGS.BoutOfMadnessRealTimeTable',
-    scope: 'world',
-    config: true,
-    default: 'none',
-    type: String,
-    choices: tableChoice,
-    onChange: id => _tableSettingsChanged('boutOfMadness_RealTime', id)
-  })
-
-  // game.settings.register('CoC7', 'boutOfMadnessPhobiasIndex',{
-  //  name: 'SETTINGS.BoutOfMadnessPhobiasIndex',
-  //  hint: 'SETTINGS.BoutOfMadnessPhobiasIndexHint',
-  //  scope: 'world',
-  //  config: true,
-  //  default: 9,
-  //  type: Number,
-  //  onChange:  id => _tableIndexChanged( 'phobiasIndex', id)
-  // });
-
-  // game.settings.register('CoC7', 'boutOfMadnessManiasIndex',{
-  //  name: 'SETTINGS.BoutOfMadnessManiasIndex',
-  //  hint: 'SETTINGS.BoutOfMadnessManiasIndexHint',
-  //  scope: 'world',
-  //  config: true,
-  //  default: 10,
-  //  type: Number,
-  //  onChange:  id => _tableIndexChanged( 'maniasIndex', id)
-  // });
-
-  // game.settings.register('CoC7', 'samplePhobiasTable',{
-  //  name: 'SETTINGS.SamplePhobiasTable',
-  //  scope: 'world',
-  //  config: true,
-  //  default: 'none',
-  //  type: String,
-  //  choices: tableChoice,
-  //  onChange:  id => _tableSettingsChanged( 'phobias', id)
-  // });
-
-  // game.settings.register('CoC7', 'sampleManiasTable',{
-  //  name: 'SETTINGS.SampleManiasTable',
-  //  scope: 'world',
-  //  config: true,
-  //  default: 'none',
-  //  type: String,
-  //  choices: tableChoice,
-  //  onChange:  id => _tableSettingsChanged( 'manias', id)
-  // });
-
-  game.CoC7.tables = {
-    boutOfMadness_Summary:
-      game.settings.get('CoC7', 'boutOfMadnessSummaryTable') === 'none'
-        ? null
-        : game.tables.get(
-          game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
-        ),
-    boutOfMadness_RealTime:
-      game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') === 'none'
-        ? null
-        : game.tables.get(
-          game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
-        )
-    // maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
-    // phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
-    // phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),
-    // manias: ('none' == game.settings.get('CoC7', 'sampleManiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'sampleManiasTable')),
-  }
-})
-
-// Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
-
-Hooks.on(
-  'renderCoC7ChaseSheet',
-  /** async */ (app, html, data) =>
-    /** await */ CoC7ChaseSheet.setScroll(app, html, data)
-)
-
-Hooks.on('closeCoC7ChaseSheet', (app, html) =>
-  CoC7ChaseSheet.onClose(app, html)
-)
-
-// Called on closing a character sheet to lock it on getting it to display values
-Hooks.on('closeActorSheet', characterSheet => characterSheet.onCloseSheet())
-Hooks.on('renderCoC7CreatureSheet', (app, html, data) =>
-  CoC7CreatureSheet.forceAuto(app, html, data)
-)
-Hooks.on('renderCoC7NPCSheet', (app, html, data) =>
-  CoC7NPCSheet.forceAuto(app, html, data)
-)
-// Hooks.on('updateActor', (actor, dataUpdate) => CoCActor.updateActor( actor, dataUpdate));
-// Hooks.on('updateToken', (scene, token, dataUpdate) => CoCActor.updateToken( scene, token, dataUpdate));
-
-Hooks.on('chatMessage', CoC7Utilities.ParseChatEntry)
-// Hooks.on('preCreateToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
-// Hooks.on('createToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
-// Hooks.on("renderChatLog", (app, html, data) => CoC7Item.chatListeners(html));
-
-Hooks.on('getSceneControlButtons', (/* controls */) => {
-  // if( game.user.isGM){
-  //  let group = controls.find(b => b.name == 'token');
-  //  group.tools.push({
-  //    toggle: true,
-  //    icon : 'fas fa-angle-double-up',
-  //    name: 'devphase',
-  //    active: game.settings.get('CoC7', 'developmentEnabled'),
-  //    title: game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled'),
-  //    onClick :async () => await CoC7Utilities.toggleDevPhase()
-  //  });
-  //  group.tools.push({
-  //    toggle: true,
-  //    icon : 'fas fas fa-user-edit',
-  //    name: 'charcreate',
-  //    active: game.settings.get('CoC7', 'charCreationEnabled'),
-  //    title: game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'),
-  //    onClick :async () => await CoC7Utilities.toggleCharCreation()
-  //  });
-  // }
-})
-
-// Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
-// Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
-// Sheet css options
-// Hooks.on('renderCoC7CharacterSheet', CoC7CharacterSheet.renderSheet);
-Hooks.on('renderActorSheet', CoC7CharacterSheet.renderSheet)
-Hooks.on('renderItemSheet', CoC7CharacterSheet.renderSheet)
-
-Hooks.on('getSceneControlButtons', CoC7Menu.getButtons)
-Hooks.on('renderSceneControls', CoC7Menu.renderControls)
-
-Hooks.on('dropCanvasData', CoC7Canvas.onDropSomething)
-
-Hooks.on('dropActorSheetData', DropActorSheetData)
-
-function activateGlobalListener () {
-  const body = $('body')
-  document.addEventListener('click', CoC7ContextMenu.closeAll)
-  body.on('click', 'a.coc7-inline-check', CoC7Check._onClickInlineRoll)
-  document.addEventListener('mousedown', _onLeftClick)
-}
-
-function _onLeftClick (event) {
-  return event.shiftKey
-}
-
-CONFIG.ui.settings = CoC7SettingsDirectory
-CONFIG.ui.compendium = CoC7CompendiumDirectory
-CONFIG.ui.actors = CoC7ActorDirectory
-
+Hooks.on('changeSidebarTab', ChangeSidebarTab)
+Hooks.on('chatMessage', ChatMessage)
+Hooks.on('closeActorSheet', CloseActorSheet)
+Hooks.on('closeCoC7ChaseSheet', CloseCoC7ChaseSheet)
+Hooks.on('createActiveEffect', CreateActiveEffect)
+Hooks.on('createToken', CreateToken)
+Hooks.on('deleteActiveEffect', DeleteActiveEffect)
 Hooks.on('drawNote', DrawNote)
-Hooks.on('renderCoC7JournalSheet', RenderCoC7JournalSheet)
-Hooks.on('renderJournalTextPageSheet', RenderJournalTextPageSheet)
+Hooks.on('dropActorSheetData', DropActorSheetData)
+Hooks.on('dropCanvasData', DropCanvasData)
+Hooks.on('getHeaderControlsJournalEntrySheet', GetHeaderControlsJournalEntrySheet)
+Hooks.on('getJournalSheetHeaderButtons', GetHeaderControlsJournalEntrySheet) /* // FoundryVTT v12 */
+Hooks.on('getHeaderControlsMacroConfig', GetHeaderControlsMacroConfig)
+Hooks.on('getMacroConfigHeaderButtons', GetHeaderControlsMacroConfig) /* // FoundryVTT v12 */
+Hooks.on('getHeaderControlsPlaylistConfig', GetHeaderControlsPlaylistConfig)
+Hooks.on('getPlaylistConfigHeaderButtons', GetHeaderControlsPlaylistConfig) /* // FoundryVTT v12 */
+Hooks.on('getHeaderControlsRollTableSheet', GetHeaderControlsRollTableSheet)
+Hooks.on('getRollTableConfigHeaderButtons', GetHeaderControlsRollTableSheet) /* // FoundryVTT v12 */
+Hooks.on('getHeaderControlsSceneConfig', GetHeaderControlsSceneConfig)
+Hooks.on('getSceneConfigHeaderButtons', GetHeaderControlsSceneConfig) /* // FoundryVTT v12 */
+Hooks.on('getSceneControlButtons', GetSceneControlButtons)
+Hooks.on('hotbarDrop', HotbarDrop)
+Hooks.on('renderActorDirectory', RenderActorDirectory)
+Hooks.on('renderActorSheet', RenderActorSheet)
+Hooks.on('renderChatLog', RenderChatLog)
+Hooks.on('renderChatMessage', RenderChatMessage)
+Hooks.on('renderCoC7ChaseSheet', RenderCoC7ChaseSheet)
+Hooks.on('renderCoC7CreatureSheet', RenderCoC7CreatureSheet)
+Hooks.on('renderCoC7DirectoryPicker', RenderCoC7DirectoryPicker)
+Hooks.on('renderCoC7NPCSheet', RenderCoC7NPCSheet)
+Hooks.on('renderCombatTracker', RenderCombatTracker)
+Hooks.on('renderCompendiumDirectory', RenderCompendiumDirectory)
+Hooks.on('renderDialog', RenderDialog)
+Hooks.on('renderGamePause', RenderGamePause)
+Hooks.on('renderItemSheet', RenderItemSheet)
+Hooks.on('renderJournalEntryPageTextSheet', RenderJournalEntryPageTextSheet)
+Hooks.on('renderJournalEntrySheet', RenderJournalEntrySheet)
+Hooks.on('renderJournalSheet', RenderJournalSheet) /* // FoundryVTT v12 */
+Hooks.on('renderJournalTextPageSheet', RenderJournalTextPageSheet) /* // FoundryVTT v12 */
+Hooks.on('renderPause', RenderPause) /* // FoundryVTT v12 */
+Hooks.on('renderPlayerList', RenderPlayerList) /* // FoundryVTT v12 */
+Hooks.on('renderPlayers', RenderPlayers)
+Hooks.on('renderSceneControls', RenderSceneControls)
+Hooks.on('renderSettings', RenderSettings)
+Hooks.on('renderSettingsConfig', RenderSettingsConfig)
+Hooks.on('updateChatMessage', UpdateChatMessage)
 
+// Module: Dice So Nice
+Hooks.once('diceSoNiceReady', DiceSoNiceReady)
+
+// Module: PopOut
 Hooks.on('PopOut:loaded', PopOutLoaded)
+
+// Real Dice - Manual Rolling
+/* // FoundryVTT v11 */
+Hooks.on('renderRealRoll', RenderRealRoll)
+
+// Module: socketlib
+Hooks.once('socketlib.ready', SocketlibReady)

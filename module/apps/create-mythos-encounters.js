@@ -12,6 +12,17 @@ export class CoC7CreateMythosEncounter extends FormApplication {
   async getData () {
     const data = await super.getData()
     data.isImmunity = data.object.type === 'immunity'
+
+    data.encounterTypes = [
+      {
+        key: 'encounter',
+        label: 'CoC7.SanityLossEncounter'
+      },
+      {
+        key: 'immunity',
+        label: 'CoC7.SanityLossImmunity'
+      }
+    ]
     return data
   }
 

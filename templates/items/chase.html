@@ -1,4 +1,4 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
+<form class="{{cssClass}} flexcol-coc7" autocomplete="off">
   <div class="container expanded">
     <header class="sheet-header">
       {{#unless started}}
@@ -8,11 +8,11 @@
         </div>
       {{/unless}}
       {{#if activeLocation.uuid}}
-        <div class="flexrow chase-location" data-uuid="{{activeLocation.uuid}}">
+        <div class="flexrow-coc7 chase-location" data-uuid="{{activeLocation.uuid}}">
           {{#unless activeLocation.init}}
             <div class="location-controls"><a class="location-control" data-action="add-before" title="{{localize 'CoC7.InsertLocation'}}"><i class="icon fas fa-plus-circle"></i></a></div>
           {{/unless}}
-          <div class="active-location flexcol">
+          <div class="active-location flexcol-coc7">
             {{#if activeLocation}}
               <datalist id="check-all-options">
                 {{#each item.allSkillsAndCharacteristics as |o|}}
@@ -41,8 +41,8 @@
                   <i class="icon game-icon game-icon-pin"></i>
                 </a>
               </div>
-              <div class="details flexrow">
-                <div class="obstacle flexcol" data-uuid="{{activeLocation.uuid}}">
+              <div class="details flexrow-coc7">
+                <div class="obstacle flexcol-coc7" data-uuid="{{activeLocation.uuid}}">
                   {{#unless activeLocation.first}}
                     <div class="form-group">
                       <div class="tag obstacle-type barrier {{#if activeLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
@@ -61,7 +61,7 @@
                         {{/if}}
                       </div>
                       <div class="form-group">
-                        <div class="flexrow flex1">
+                        <div class="flexrow-coc7 flex1">
                           <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}" title="{{ localize 'CoC7.DamageOnFail' }}">
                             <i class="game-icon game-icon-broken-bone"></i>
                           </a>
@@ -70,7 +70,7 @@
                           {{/if}}
                         </div>
                         {{#if activeLocation.obstacleDetails.barrier}}
-                          <div class="flexrow flex1">
+                          <div class="flexrow-coc7 flex1">
                             <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasHitPoints" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}" title="{{ localize 'CoC7.ObstacleHasHitPoint' }}">
                               <i class="game-icon game-icon-life-bar"></i>
                             </a>
@@ -79,7 +79,7 @@
                             {{/if}}
                           </div>
                         {{else}}
-                          <div class="flexrow flex1">
+                          <div class="flexrow-coc7 flex1">
                             <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}" title="{{ localize 'CoC7.ActionCostOnFail' }}">
                               <i class="fas fa-bahai"></i>
                             </a>
@@ -92,7 +92,7 @@
                     {{/if}}
                   {{/unless}}
                 </div>
-                <div class="obstacle flexcol" data-uuid="{{nextLocation.uuid}}" data-caca="true">
+                <div class="obstacle flexcol-coc7" data-uuid="{{nextLocation.uuid}}" data-caca="true">
                   {{#unless activeLocation.last}}
                     <div class="form-group">
                       <div class="tag obstacle-type barrier {{#if nextLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
@@ -111,7 +111,7 @@
                         {{/if}}
                       </div>
                       <div class="form-group">
-                        <div class="flexrow flex1">
+                        <div class="flexrow-coc7 flex1">
                           <a toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if nextLocation.obstacleDetails.hasDamage}}switched-on{{/if}}" title="{{ localize 'CoC7.DamageOnFail' }}">
                             <i class="game-icon game-icon-broken-bone"></i>
                           </a>
@@ -120,7 +120,7 @@
                           {{/if}}
                         </div>
                         {{#if nextLocation.obstacleDetails.barrier}}
-                          <div class="flexrow flex1">
+                          <div class="flexrow-coc7 flex1">
                             <a toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasHitPoints" class="flex0 icon toggle {{#if nextLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}" title="{{ localize 'CoC7.ObstacleHasHitPoint' }}">
                               <i class="game-icon game-icon-life-bar"></i>
                             </a>
@@ -129,7 +129,7 @@
                             {{/if}}
                           </div>
                         {{else}}
-                          <div class="flexrow flex1">
+                          <div class="flexrow-coc7 flex1">
                             <a toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasActionCost" class="flex0 icon toggle {{#if nextLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}" title="{{ localize 'CoC7.ActionCostOnFail' }}">
                               <i class="fas fa-bahai"></i>
                             </a>
@@ -173,7 +173,7 @@
             <div class="initiative-track">
               {{#each item.participantsByInitiative as |p i|}}
                 <div class="initiative-block {{p.cssClass}}" data-uuid="{{p.uuid}}">
-                  <div class="header flexrow">
+                  <div class="header flexrow-coc7">
                     <div class="name">{{p.name}}</div>
                     <div class="participant-controls">
                       <a class="participant-control" title="{{localize 'CoC7.Remove'}}" data-action="removeParticipant">
@@ -187,11 +187,11 @@
                       </a>
                     </div>
                   </div>
-                  <div class="participant flexrow">
+                  <div class="participant flexrow-coc7">
                     <div class="portrait">
                       <img src="{{p.icon}}" title="{{p.name}}" />
                     </div>
-                    <div class="infos flexcol">
+                    <div class="infos flexcol-coc7">
                       <div>{{localize 'CoC7.Chase.InitiativeShort' value=p.initiative}}</div>
                       <div>{{localize 'CoC7.Chase.AdjustedMovementShort' value=p.adjustedMov}}</div>
                       <div>{{localize 'CoC7.HP'}}: <input type="text" name="system.participants.{{p.uuid}}.hp" value="{{p.hp}}" data-dtype="Number" />
@@ -245,7 +245,7 @@
           <div class="chase-track">
             {{#each locations as |location i|}}
               <div class="chase-location" data-uuid="{{location.uuid}}">
-                <div class="flexrow people">
+                <div class="flexrow-coc7 people">
                   {{#unless location.first}}
                     {{#if location.obstacle}}
                       <div class="spacer"></div>
@@ -261,10 +261,10 @@
                     {{/each}}
                   </div>
                 </div>
-                <div class="flexrow">
+                <div class="flexrow-coc7">
                   {{#unless location.first}}
                     {{#if location.obstacle}}
-                      <div class="flexrow obstalce flex-content" title="{{location.obstacleDetails.name}}">
+                      <div class="flexrow-coc7 obstalce flex-content" title="{{location.obstacleDetails.name}}">
                         <div class="warning">
                           {{#if location.obstacleDetails.barrier}}
                             <i class="game-icon game-icon-barrier"></i>
@@ -276,7 +276,7 @@
                     {{/if}}
                   {{/unless}}
 
-                  <div class="flexrow name flex1">
+                  <div class="flexrow-coc7 name flex1">
                     {{#if location.first}}
                       <div class="spacer"></div>
                     {{else}}

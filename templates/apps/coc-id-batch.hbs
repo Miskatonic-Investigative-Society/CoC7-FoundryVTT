@@ -3,25 +3,21 @@
   <p>{{{localize 'CoC7.CoCIDBatch.summary' type=object.typeName}}}</p>
   <div class="scrollsection">
     <ol class="skills-list">
-      <li class="item pointsrow flexrow">
+      <li class="item pointsrow flexrow-coc7">
         <span class="name" style="font-weight: bold;">{{type}}</span>
         <div class="value" style="font-weight: bold;">{{localize 'CoC7.CoCIDFlag.key'}}</div>
         <div class="value" style="font-weight: bold;">&nbsp;</div>
       </li>
       {{#each missingNames as |row|}}
-        <li class="item pointsrow flexrow" data-name="{{row.name}}">
+        <li class="item pointsrow flexrow-coc7" data-name="{{row.name}}">
           <span class="skill-name">{{row.name}}</span>
           <div class="value">
             <select class="existing">
               <option value="">{{localize 'CoC7.CoCIDFlag.new'}}</option>
-              {{#select row.custom}}
-                {{#each ../foundKeys as |option|}}
-                  <option value="{{option.key}}">{{option.name}}</option>
-                {{/each}}
-              {{/select}}
+              {{selectOptions ../foundKeys selected=row.custom valueAttr="key" nameAttr="key" labelAttr="name"}}
             </select>
           </div>
-          <div class="value flexrow">
+          <div class="value flexrow-coc7">
             {{#if row.key}}
               {{row.custom}}
             {{else}}

@@ -1,6 +1,6 @@
 <div class="coc7 roll-result">
   {{#if isUnknown}}
-    <div class="flexrow difficulty-selector gm-visible-only" style="padding-bottom: 2px;">
+    <div class="flexrow-coc7 difficulty-selector gm-visible-only" style="padding-bottom: 2px;">
       <span class="flex1 toggle-switch simple-flag {{#if gmDifficultyRegular}}switched-on{{/if}}"
         title="{{localize 'CoC7.RollDifficultyRegularTitle'}}"
         style="text-align:center;white-space: nowrap;"
@@ -44,7 +44,7 @@
         </section>
         <section class="tooltip-part">
           <div class="dice ten-dice">
-            <span class="part-formula part-header flexrow">
+            <span class="part-formula part-header flexrow-coc7">
               {{#if dices.tenOnlyOneDie}}
                 {{localize 'CoC7.TensDie'}}
               {{else}}
@@ -67,7 +67,7 @@
         </section>
         <section class="tooltip-part">
           <div class="dice unit-die">
-            <span class="part-formula part-header flexrow">
+            <span class="part-formula part-header flexrow-coc7">
               {{localize 'CoC7.UnitsDie'}}
               <div class="flex1"></div>
               <span class="part-total flex0">{{dices.unit.value}}</span>
