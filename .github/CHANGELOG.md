@@ -9,6 +9,9 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Update Dice So Nice decader formatting for Dice So Nice v5.0.0
+- Update to Swedish localization, thanks to @Rangertheman #1766
+
 ## Version 7.12
 
 **_!! This is intended to be the last release to support FoundryVTT v11 !!_**
