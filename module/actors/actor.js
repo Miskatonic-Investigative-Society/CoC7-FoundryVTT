@@ -3724,6 +3724,52 @@ export class CoCActor extends Actor {
     return skillList
   }
 
+  weaponSkillGroups (rangedFirst = false) {
+    const skills = []
+    for (const item of this.items) {
+      if (item.type === 'skill') {
+        let sort = 3
+        let group = 'CoC7.Skills'
+        let name = item.name
+        if (item.system.properties.fighting) {
+          sort = (rangedFirst ? 2 : 0)
+          group = 'CoC7.SkillFighting'
+          name = item.system.skillName
+        } else if (item.system.properties.firearm) {
+          sort = (rangedFirst ? 0 : 1)
+          group = 'CoC7.SkillFirearm'
+          name = item.system.skillName
+        } else if (item.system.properties.ranged) {
+          sort = (rangedFirst ? 1 : 2)
+          group = 'CoC7.SkillRanged'
+          name = item.system.skillName
+        }
+        skills.push({
+          id: item.id,
+          name,
+          group,
+          sort
+        })
+      }
+    }
+    skills.sort((a, b) => {
+      if (a.sort === b.sort) {
+        return a.name
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLocaleLowerCase()
+          .localeCompare(
+            b.name
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .toLocaleLowerCase()
+          )
+      }
+      return a.sort - b.sort
+    })
+    return skills
+  }
+
   get user () {
     // is that actor impersonanted by a user ?
     return game.users.find(user => {
