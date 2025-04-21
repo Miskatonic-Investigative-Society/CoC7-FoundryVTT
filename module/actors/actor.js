@@ -3734,15 +3734,24 @@ export class CoCActor extends Actor {
         if (item.system.properties.fighting) {
           sort = (rangedFirst ? 2 : 0)
           group = 'CoC7.SkillFighting'
-          name = item.system.skillName
+          /* // FoundryVTT V11 */
+          if (foundry.utils.isNewerVersion(game.version, '12')) {
+            name = item.system.skillName
+          }
         } else if (item.system.properties.firearm) {
           sort = (rangedFirst ? 0 : 1)
           group = 'CoC7.SkillFirearm'
-          name = item.system.skillName
+          /* // FoundryVTT V11 */
+          if (foundry.utils.isNewerVersion(game.version, '12')) {
+            name = item.system.skillName
+          }
         } else if (item.system.properties.ranged) {
           sort = (rangedFirst ? 1 : 2)
           group = 'CoC7.SkillRanged'
-          name = item.system.skillName
+          /* // FoundryVTT V11 */
+          if (foundry.utils.isNewerVersion(game.version, '12')) {
+            name = item.system.skillName
+          }
         }
         skills.push({
           id: item.id,
