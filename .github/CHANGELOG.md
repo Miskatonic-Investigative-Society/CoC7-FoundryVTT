@@ -7,6 +7,13 @@ Happy gaming !
 
 ## Upcoming Release
 
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Update Dice So Nice decader formatting for Dice So Nice v5.0.0
+- Update to Swedish localization, thanks to @Rangertheman #1766
+
+## Version 7.12
+
 **_!! This is intended to be the last release to support FoundryVTT v11 !!_**
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
@@ -17,6 +24,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - New bonus dice dialog style in the same style as the v3 character sheet, thanks to @pconcepcion #1749
 - Set character sheet V3 minimum height on investigator sheet V3, thanks to @pconcepcion #1746
 - Additional Translations of the DE Manual, thanks to @MrViso #1748
+- Update to Czech localization, thanks to @robertjunek #1761
 - Update to German localization, thanks to @MrViso #1758
 
 ## Version 7.11
