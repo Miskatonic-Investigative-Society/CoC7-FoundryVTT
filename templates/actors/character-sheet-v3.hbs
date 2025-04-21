@@ -103,6 +103,14 @@
                     <input name="system.infos.archetype" type="text" class="detail-value" value="{{data.system.infos.archetype}}" />
                   {{/if}}
                 </div>
+              {{else if hasExperiencePackage}}
+                <div class="detail-wrapper">
+                  <span class="detail-label">{{ localize 'CoC7.SheetExperiencePackageName' }}</span>
+                  <span class="rollable open-item detail-value" data-type="experiencePackage">{{nameExperiencePackage}}</span>
+                  {{#unless data.system.flags.locked}}
+                    <a class="reset-experience-package" title="{{ localize 'CoC7.ClearExperiencePackageName'}}" data-type="experiencePackage"><i class="far fa-times-circle"></i></a>
+                  {{/unless}}
+                </div>
               {{/if}}
               {{#if pulpRuleOrganization}}
                 <div class="detail-wrapper">

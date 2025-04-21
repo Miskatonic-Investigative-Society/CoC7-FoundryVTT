@@ -88,6 +88,8 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     sheetData.invalidArchetypePoints =
       Number(this.actor.archetypePointsSpent) !==
       Number(this.actor.system.development?.archetype)
+    sheetData.totalExperiencePackage = Number(this.actor.ExperiencePackagePointsSpent)
+    sheetData.invalidExperiencePackagePoints = Number(this.actor.ExperiencePackagePointsSpent) !== Number(this.actor.ExperiencePackagePoints)
     sheetData.totalPersonal = this.actor.personalPointsSpent
     sheetData.invalidPersonalPoints =
       Number(this.actor.personalPointsSpent) !==
@@ -291,6 +293,9 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       html
         .find('.reset-occupation')
         .click(async () => await this.actor.resetOccupation())
+      html
+        .find('.reset-experience-package')
+        .click(async () => await this.actor.resetExperiencePackage())
       html
         .find('.reset-archetype')
         .click(async () => await this.actor.resetArchetype())

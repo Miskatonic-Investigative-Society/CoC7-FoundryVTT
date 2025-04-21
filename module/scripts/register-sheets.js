@@ -8,6 +8,7 @@ import { CoC7CharacterSheetMinimized } from '../actors/sheets/character-minimize
 import { CoC7ContainerSheet } from '../actors/sheets/container.js'
 import { CoC7ChaseSheet } from '../items/chase/sheet.js'
 import { CoC7CreatureSheet } from '../actors/sheets/creature-sheet.js'
+import { CoC7ExperiencePackageSheet } from '../items/sheets/experience-package.js'
 import { CoC7ItemSheet } from '../items/sheets/item-sheet.js'
 import { CoC7ItemSheetV2 } from '../items/sheets/item-sheetV2.js'
 import { CoC7NPCSheet } from '../actors/sheets/npc-sheet.js'
@@ -96,6 +97,10 @@ export function registerSheets () {
   })
   ItemsPolyfill.registerSheet('CoC7', CoC7ArmorSheet, {
     types: ['armor'],
+    makeDefault: true
+  })
+  ItemsPolyfill.registerSheet('CoC7', CoC7ExperiencePackageSheet, {
+    types: ['experiencePackage'],
     makeDefault: true
   })
   ItemsPolyfill.registerSheet('CoC7', CoC7ItemSheet, { types: ['item'] })
