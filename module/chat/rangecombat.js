@@ -573,6 +573,7 @@ export class CoC7RangeInitiator {
     check.actorKey = this.actorKey
     check.actor = this.actorKey
     check.item = this.itemId
+    check.canBePushed = false
     // Combat roll cannot be blind or unknown
     check.isBlind = false
     check.isUnkonwn = false

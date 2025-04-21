@@ -95,6 +95,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
     check.actor = this.actorKey
     check.item = this.itemId
     check.skill = skillId
+    check.canBePushed = false
     check.difficulty = CoC7Check.difficultyLevel.regular
     check.diceModifier = 0
 
