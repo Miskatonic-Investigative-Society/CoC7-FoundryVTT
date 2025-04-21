@@ -309,6 +309,7 @@
   "CoC7.rangeCombatCard.InMelee": "In melee",
   "CoC7.rangeCombatCard.aiming": "Aiming",
   "CoC7.rangeCombatDamage": "{name} takes {total} points of damage",
+  "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
   "CoC7.rangeCombatDamageArmor": "{name} takes {total} damage. ({armor} mitigated)",
   "CoC7.RollDamage": "Roll damage",
   "CoC7.BulletsFired": "Bullets fired",
