@@ -9,6 +9,7 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Show damage ranges for blast weapons instead of single target inflict button
 - Update Dice So Nice decader formatting for Dice So Nice v5.0.0
 - Update to Swedish localization, thanks to @Rangertheman #1766
 
