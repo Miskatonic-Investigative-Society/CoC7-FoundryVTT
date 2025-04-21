@@ -4,23 +4,23 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cn.json (485 untranslated strings)](./ABANDONED.md#cnjson)
+[cn.json (486 untranslated strings)](./ABANDONED.md#cnjson)
 
-[it.json (57 untranslated strings)](./ABANDONED.md#itjson)
+[it.json (58 untranslated strings)](./ABANDONED.md#itjson)
 
-[ko.json (267 untranslated strings)](./ABANDONED.md#kojson)
+[ko.json (268 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (215 untranslated strings)](./ABANDONED.md#ptbrjson)
+[pt-BR.json (216 untranslated strings)](./ABANDONED.md#ptbrjson)
 
-[ru.json (137 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (138 untranslated strings)](./ABANDONED.md#rujson)
 
-[zh-TW.json (114 untranslated strings)](./ABANDONED.md#zhtwjson)
+[zh-TW.json (115 untranslated strings)](./ABANDONED.md#zhtwjson)
 
 
 
 |Key|cs|de|es|fr|ja|pl|sv|uk|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**19**|**19**|**29**|**20**|**21**|**38**|**19**|**20**|
+|**Remaining**:|**20**|**20**|**30**|**21**|**22**|**39**|**20**|**21**|
 |[CoC7.ActorCoCIDItemsAny](#coc7actorcociditemsany)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
 |[CoC7.AddArmor](#coc7addarmor)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
 |[CoC7.AdditionalBonusDie](#coc7additionalbonusdie)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
@@ -57,6 +57,7 @@ The following translations have more than 50 untranslated strings [are you able 
 |[CoC7.SheetExperiencePackageName](#coc7sheetexperiencepackagename)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SkillExperiencePackage](#coc7skillexperiencepackage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SkillTotalExperiencePackagePoints](#coc7skilltotalexperiencepackagepoints)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.rangeCombatBlastDamage](#coc7rangecombatblastdamage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[SETTINGS.DoNotPromptNoTargetSelected](#settingsdonotpromptnotargetselected)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
 |[SETTINGS.DoNotPromptNoTargetSelectedHit](#settingsdonotpromptnotargetselectedhit)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
 |[SETTINGS.hidePartValues](#settingshidepartvalues)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|
@@ -133,6 +134,8 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "CoC7.SkillExperiencePackage": "Experience Package",```
 ##### CoC7.SkillTotalExperiencePackagePoints
 ```  "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",```
+##### CoC7.rangeCombatBlastDamage
+```  "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",```
 ##### SETTINGS.DoNotPromptNoTargetSelected
 ```  "SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",```
 ##### SETTINGS.DoNotPromptNoTargetSelectedHit

@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (485 untranslated strings)](#cnjson)
+[cn.json (486 untranslated strings)](#cnjson)
 
-[it.json (57 untranslated strings)](#itjson)
+[it.json (58 untranslated strings)](#itjson)
 
-[ko.json (267 untranslated strings)](#kojson)
+[ko.json (268 untranslated strings)](#kojson)
 
-[pt-BR.json (215 untranslated strings)](#ptbrjson)
+[pt-BR.json (216 untranslated strings)](#ptbrjson)
 
-[ru.json (137 untranslated strings)](#rujson)
+[ru.json (138 untranslated strings)](#rujson)
 
-[zh-TW.json (114 untranslated strings)](#zhtwjson)
+[zh-TW.json (115 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-485 untranslated strings
+486 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -58,6 +58,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CheckFailed": "Check failed",
 "CoC7.CheckPassed": "Check passed",
 "CoC7.CheckMemoryRepressed": "Memory repressed",
+"CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
 "CoC7.rangeCombatCard.SurprisedTargetTitle": "1 bonus die for surprised target",
 "CoC7.SkillExperiencePackage": "Experience Package",
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
@@ -505,7 +506,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SheetExperiencePackageName": "Experience"
 ```
 ## it.json
-57 untranslated strings
+58 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -513,6 +514,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.RollDifficultyImpossible": "Impossible",
 "CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
+"CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
 "CoC7.SkillExperiencePackage": "Experience Package",
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
@@ -566,7 +568,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SheetExperiencePackageName": "Experience"
 ```
 ## ko.json
-267 untranslated strings
+268 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -581,6 +583,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
 "CoC7.combatCard.automaticSuccess": "Automatic Success",
 "CoC7.Damage": "Damage",
+"CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
 "CoC7.rangeCombatCard.SurprisedTargetTitle": "1 bonus die for surprised target",
 "CoC7.SkillExperiencePackage": "Experience Package",
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
@@ -837,7 +840,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SheetExperiencePackageName": "Experience"
 ```
 ## pt-BR.json
-215 untranslated strings
+216 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -845,6 +848,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.RollDifficultyImpossible": "Impossible",
 "CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
+"CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
 "CoC7.SkillExperiencePackage": "Experience Package",
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
@@ -1056,7 +1060,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SheetExperiencePackageName": "Experience"
 ```
 ## ru.json
-137 untranslated strings
+138 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -1064,6 +1068,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.RollDifficultyImpossible": "Impossible",
 "CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
+"CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
 "CoC7.SkillExperiencePackage": "Experience Package",
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
@@ -1197,7 +1202,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SheetExperiencePackageName": "Experience"
 ```
 ## zh-TW.json
-114 untranslated strings
+115 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -1205,6 +1210,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.RollDifficultyImpossible": "Impossible",
 "CoC7.RollDifficultyImpossibleTitle": "Impossible difficulty",
+"CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
 "CoC7.SkillExperiencePackage": "Experience Package",
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
