@@ -1231,7 +1231,7 @@
   "CoC7.SkillNameRifleShotgun": "步槍/霰彈槍",
   "CoC7.SkillNameSmb": "衝鋒槍",
   "CoC7.SkillNameMachinGun": "機槍",
-  "CoC7.SkillNameLaunch": "發射器",
+  "CoC7.SkillNameLaunch": "射擊",
   "CoC7.LinkCheckPushing": " {name} 檢定 - 孤注一擲",
   "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} 檢定 - 孤注一擲",
   "CoC7.LinkCheckModifPushing": " {name} 檢定 - 孤注一擲({modifier})",
