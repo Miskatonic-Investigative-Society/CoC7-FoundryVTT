@@ -1,0 +1,35 @@
+name: i18n Translation Check
+
+on:
+  push:
+    paths:
+      - 'lang/**.json'
+  pull_request:
+    paths:
+      - 'lang/**.json'
+
+jobs:
+  check-translations:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          
+      - name: Create checker directory
+        run: mkdir -p lang/checker
+          
+      - name: Check translations and generate reports
+        run: node scripts/check-translations.js
+        
+      - name: Commit and push if there are changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add lang/checker/
+          git commit -m "Update translation reports" || exit 0
+          git push 
