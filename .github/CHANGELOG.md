@@ -12,7 +12,11 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Allow weapons to use any skills
 - Show damage ranges for blast weapons instead of single target inflict button
 - Update Dice So Nice decader formatting for Dice So Nice v5.0.0
+- Update to French localization, thanks to @vonv #1779
+- Update to German localization, thanks to @MrViso #1776
+- Update to Polish localization, thanks to @everyonecancode #1777
 - Update to Swedish localization, thanks to @Rangertheman #1766
+- Update to Taiwanese localization, thanks to @zeteticl. #1780
 
 ## Version 7.12
 
