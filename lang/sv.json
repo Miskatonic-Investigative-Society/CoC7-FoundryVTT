@@ -17,6 +17,7 @@
   "CoC7.Entities.Armor": "Rustning",
   "CoC7.Entities.Book": "Bok",
   "CoC7.Entities.Chase": "Jakt",
+  "CoC7.Entities.ExperiencePackage": "Erfarenhetspaket",
   "CoC7.Entities.Item": "Föremål",
   "CoC7.Entities.Occupation": "Yrke",
   "CoC7.Entities.Setup": "Uppsättning",
@@ -311,6 +312,7 @@
   "CoC7.rangeCombatCard.InMelee": "I närstrid",
   "CoC7.rangeCombatCard.aiming": "Siktar",
   "CoC7.rangeCombatDamage": "{name} får {total} KP i skada",
+  "CoC7.rangeCombatBlastDamage": "{min} till {max} meter får {total} KP i skada",
   "CoC7.rangeCombatDamageArmor": "{name} får {total} KP i skada. ({armor} skyddade)",
   "CoC7.RollDamage": "Slå för skada",
   "CoC7.BulletsFired": "Kulor avlossade",
@@ -341,6 +343,7 @@
   "CoC7.BaseSkillValue": "Utgångsvärde",
   "CoC7.SkillExperience": "Erfarenhet",
   "CoC7.SkillArchetype": "Arketyp",
+  "CoC7.SkillExperiencePackage": "Erfarenhetspaket",
   "CoC7.SkillOccupation": "Yrke",
   "CoC7.SkillPersonal": "Persolig",
 
@@ -512,6 +515,7 @@
   "CoC7.CharacterDevelopment": "Utveckling",
   "CoC7.OccupationSkill": "Yrkesfärdighet",
   "CoC7.ArchetypeSkill": "Arketypfärdighet",
+  "CoC7.ExperiencePackageSkill": "Erfarenhetspaktesfärdighet",
   "CoC7.UseFormula": "Använd tärningsformel",
   "CoC7.EnterFormula": "Skriv in tärningsformel",
   "CoC7.SanRollHint": "Slå sinnebelastning för målen",
@@ -1390,5 +1394,22 @@
   "CoC7.ClickableEvents.MouseOver.Hint": "Returnerar ett booleanskt värde vid behörighet att klicka och att visa muspekaren",
   "CoC7.ClickableEvents.LeftClick.Title": "Skript för vänsterklick",
   "CoC7.ClickableEvents.RightClick.Title": "Skript för högerklick",
-  "TYPES.RegionBehavior.coc7ClickableEvents": "Klickbara händelser"
+  "TYPES.RegionBehavior.coc7ClickableEvents": "Klickbara händelser",
+
+  "CoC7.SANSameLossAsMythosGain": "Sinnesförlusten är lika stor som ökningen i Cthulhumyten",
+  "CoC7.ExperiencePackageBackground": "Lägg erfarenheten till Utredarens bakgrundshistoria.",
+  "CoC7.ExperiencePackageDialogTitle": "Välj alternativ för Erfarenhetspaket",
+  "CoC7.ExperiencePackageSpellList": "Kända besvärjelser",
+  "CoC7.ExperiencePackageApplySanity": "Dra av Sinnesförlusten",
+  "CoC7.EmptySpellList": "Lägg till en besvärjelse genom att släppa den här.",
+  "CoC7.EmptyStatusList": "Lägg till en fobi/mani genom att släppa den här.",
+
+  "CoC7.PromptAddInjuryScar": "Lägg till en skada/ett ärr",
+  "CoC7.PromptAddStatus": "Lägg till en fobi/mani",
+  "CoC7.PromptAddSpells": "Lägg till en besvärjelse",
+  "CoC7.ErrorExperiencePackageArchetype": "Du kan inte använda Erfarenhetspaket om inte Arketyper är aktiverade",
+  "CoC7.ErrorExperiencePackageNotInvestigator": "Du kan bara använda Erfarenhetspaket på Utredare",
+  "CoC7.ErrorExperiencePackageNotGM": "Spelledaren måste lägga till Erfarenhetspaket",
+  "CoC7.ClearExperiencePackageName": "Ta bort Erfarenhetspaketet",
+  "CoC7.SheetExperiencePackageName": "Erfarenhet"
 }
