@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Ensure checker directory exists
 const checkerDir = path.join(__dirname, '../lang/checker');
@@ -8,7 +12,7 @@ if (!fs.existsSync(checkerDir)) {
 }
 
 // Read English base file
-const enTranslations = require('../lang/en.json');
+const enTranslations = JSON.parse(fs.readFileSync(path.join(__dirname, '../lang/en.json'), 'utf8'));
 
 // Read other language files
 const langDir = path.join(__dirname, '../lang');
@@ -18,7 +22,7 @@ const langFiles = fs.readdirSync(langDir)
 // Process each language file
 langFiles.forEach(langFile => {
     const lang = path.basename(langFile, '.json');
-    const translations = require(`../lang/${langFile}`);
+    const translations = JSON.parse(fs.readFileSync(path.join(langDir, langFile), 'utf8'));
     
     const report = {
         language: lang,
@@ -108,7 +112,7 @@ summaryMarkdown += `|----------|----------|--------------|------------|\n`;
 
 langFiles.forEach(langFile => {
     const lang = path.basename(langFile, '.json');
-    const status = require(path.join(checkerDir, `${lang}-status.json`));
+    const status = JSON.parse(fs.readFileSync(path.join(checkerDir, `${lang}-status.json`), 'utf8'));
     summaryMarkdown += `| ${lang} | ${status.translationProgress}% | ${status.missingKeys.length} | ${status.extraKeys.length} |\n`;
 });
 
