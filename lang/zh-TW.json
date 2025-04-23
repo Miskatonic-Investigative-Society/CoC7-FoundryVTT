@@ -1256,7 +1256,7 @@
   "SETTINGS.allowMythosHardenedTitle": "神話固化",
   "SETTINGS.allowMythosHardenedHint": "允許神話固化理智損失減免",
   "SETTINGS.TokenDropMode": "新增 NPC 時：",
-  "SETTINGS.TokenDropModeHint": "定義當可擲骰抽選特徵或技能的 NPC 被放置到場景時的默認行為。",
+  "SETTINGS.TokenDropModeHint": "定義當可經由擲骰產生特徵或技能的 NPC 被放置到場景時的默認行為。",
   "SETTINGS.TokenDropModeAsk": "詢問如何處理",
   "SETTINGS.TokenDropModeRoll": "投擲所有可擲骰項目",
   "SETTINGS.TokenDropModeAverage": "使用平均值",
