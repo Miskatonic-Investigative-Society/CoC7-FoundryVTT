@@ -2,7 +2,7 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The following translations are currently up to date **de**, **fr**, **pl**
+The following translations are currently up to date **de**, **fr**, **pl**, **sv**
 
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
@@ -18,43 +18,43 @@ The following translations have more than 50 untranslated strings [are you able 
 
 
 
-|Key|cs|es|ja|sv|uk|zh-TW|
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**20**|**30**|**22**|**1**|**21**|**32**|
-|[CoC7.ActorCoCIDItemsAny](#coc7actorcociditemsany)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.AddArmor](#coc7addarmor)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.ClearExperiencePackageName](#coc7clearexperiencepackagename)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars](#coc7cocidflagkeysrtbackstoryinjuriesandscars)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.EmptySpellList](#coc7emptyspelllist)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.EmptyStatusList](#coc7emptystatuslist)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.Entities.Armor](#coc7entitiesarmor)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.Entities.ExperiencePackage](#coc7entitiesexperiencepackage)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.EraGasLightPulp](#coc7eragaslightpulp)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ErrorExperiencePackageArchetype](#coc7errorexperiencepackagearchetype)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ErrorExperiencePackageNotGM](#coc7errorexperiencepackagenotgm)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ErrorExperiencePackageNotInvestigator](#coc7errorexperiencepackagenotinvestigator)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ExperiencePackageApplySanity](#coc7experiencepackageapplysanity)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ExperiencePackageBackground](#coc7experiencepackagebackground)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ExperiencePackageDialogTitle](#coc7experiencepackagedialogtitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ExperiencePackageSkill](#coc7experiencepackageskill)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.ExperiencePackageSpellList](#coc7experiencepackagespelllist)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.Lck](#coc7lck)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.PromptAddInjuryScar](#coc7promptaddinjuryscar)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.PromptAddSpells](#coc7promptaddspells)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.PromptAddStatus](#coc7promptaddstatus)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.RollDifficultyImpossible](#coc7rolldifficultyimpossible)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.RollDifficultyImpossibleTitle](#coc7rolldifficultyimpossibletitle)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.SANSameLossAsMythosGain](#coc7sansamelossasmythosgain)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.Settings.ShowWorldEra.Hint](#coc7settingsshowworlderahint)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.Settings.ShowWorldEra.Name](#coc7settingsshowworlderaname)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.SheetExperiencePackageName](#coc7sheetexperiencepackagename)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.SkillExperiencePackage](#coc7skillexperiencepackage)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.SkillTotalExperiencePackagePoints](#coc7skilltotalexperiencepackagepoints)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.rangeCombatBlastDamage](#coc7rangecombatblastdamage)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[SETTINGS.DoNotPromptNoTargetSelected](#settingsdonotpromptnotargetselected)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[SETTINGS.DoNotPromptNoTargetSelectedHit](#settingsdonotpromptnotargetselectedhit)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[SETTINGS.hidePartValues](#settingshidepartvalues)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|Key|cs|es|ja|uk|zh-TW|
+|:---|:---:|:---:|:---:|:---:|:---:|
+|**Remaining**:|**20**|**30**|**22**|**21**|**32**|
+|[CoC7.ActorCoCIDItemsAny](#coc7actorcociditemsany)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.AddArmor](#coc7addarmor)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.ClearExperiencePackageName](#coc7clearexperiencepackagename)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars](#coc7cocidflagkeysrtbackstoryinjuriesandscars)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.EmptySpellList](#coc7emptyspelllist)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.EmptyStatusList](#coc7emptystatuslist)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Entities.Armor](#coc7entitiesarmor)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.Entities.ExperiencePackage](#coc7entitiesexperiencepackage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.EraGasLightPulp](#coc7eragaslightpulp)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ErrorExperiencePackageArchetype](#coc7errorexperiencepackagearchetype)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ErrorExperiencePackageNotGM](#coc7errorexperiencepackagenotgm)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ErrorExperiencePackageNotInvestigator](#coc7errorexperiencepackagenotinvestigator)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ExperiencePackageApplySanity](#coc7experiencepackageapplysanity)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ExperiencePackageBackground](#coc7experiencepackagebackground)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ExperiencePackageDialogTitle](#coc7experiencepackagedialogtitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ExperiencePackageSkill](#coc7experiencepackageskill)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ExperiencePackageSpellList](#coc7experiencepackagespelllist)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Lck](#coc7lck)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.PromptAddInjuryScar](#coc7promptaddinjuryscar)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.PromptAddSpells](#coc7promptaddspells)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.PromptAddStatus](#coc7promptaddstatus)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.RollDifficultyImpossible](#coc7rolldifficultyimpossible)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.RollDifficultyImpossibleTitle](#coc7rolldifficultyimpossibletitle)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.SANSameLossAsMythosGain](#coc7sansamelossasmythosgain)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Settings.ShowWorldEra.Hint](#coc7settingsshowworlderahint)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.Settings.ShowWorldEra.Name](#coc7settingsshowworlderaname)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.SheetExperiencePackageName](#coc7sheetexperiencepackagename)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.SkillExperiencePackage](#coc7skillexperiencepackage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.SkillTotalExperiencePackagePoints](#coc7skilltotalexperiencepackagepoints)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.rangeCombatBlastDamage](#coc7rangecombatblastdamage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[SETTINGS.DoNotPromptNoTargetSelected](#settingsdonotpromptnotargetselected)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
+|[SETTINGS.DoNotPromptNoTargetSelectedHit](#settingsdonotpromptnotargetselectedhit)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
+|[SETTINGS.hidePartValues](#settingshidepartvalues)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
 ##### CoC7.ActorCoCIDItemsAny
 ```  "CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",```
 ##### CoC7.AddArmor
