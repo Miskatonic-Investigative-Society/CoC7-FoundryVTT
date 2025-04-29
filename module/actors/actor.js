@@ -10,6 +10,7 @@ import { SkillSelectDialog } from '../apps/skill-selection-dialog.js'
 import { PointSelectDialog } from '../apps/point-selection-dialog.js'
 import { CharacSelectDialog } from '../apps/char-selection-dialog.js'
 import { CharacRollDialog } from '../apps/char-roll-dialog.js'
+import { ExperiencePackageDialog } from '../apps/experience-package-dialog.js'
 import { SkillSpecSelectDialog } from '../apps/skill-spec-select-dialog.js'
 import { SkillSpecializationSelectDialog } from '../apps/skill-specialization-select-dialog.js'
 import { SkillValueDialog } from '../apps/skill-value-dialog.js'
@@ -928,6 +929,8 @@ export class CoCActor extends Actor {
     let baseCalculated = 0
     let archetype = false
     let occupation = false
+    const actorChanges = {}
+    const itemChanges = []
     for (let data of dataArray) {
       switch (data.type) {
         case 'skill': {
@@ -1583,6 +1586,130 @@ export class CoCActor extends Actor {
           }
           break
 
+        case 'experiencePackage':
+          if (this.experiencePackage) {
+            // NOP
+          } else if (game.settings.get('CoC7', 'pulpRuleArchetype')) {
+            ui.notifications.error('CoC7.ErrorExperiencePackageArchetype', { localize: true })
+          } else if (this.type !== 'character') {
+            ui.notifications.error('CoC7.ErrorExperiencePackageNotInvestigator', { localize: true })
+          } else if (!game.user.isGM) {
+            ui.notifications.error('CoC7.ErrorExperiencePackageNotGM', { localize: true })
+          } else {
+            const rolled = await ExperiencePackageDialog.create(data.system)
+            if (rolled) {
+              data.system.skills = await game.system.api.cocid.expandItemArray({ itemList: data.system.skills })
+              // Add optional skills
+              for (let index = 0; index < data.system.groups.length; index++) {
+                // Convert CoCIds to items
+                data.system.groups[index].skills = await game.system.api.cocid.expandItemArray({ itemList: data.system.groups[index].skills })
+
+                const dialogData = {}
+                dialogData.skills = []
+                dialogData.type = 'experiencePackage'
+                dialogData.actorId = this.id
+                dialogData.optionsCount = Number(data.system.groups[index].options)
+                dialogData.title = game.i18n.localize('CoC7.SkillSelectionWindow')
+
+                // Select only skills that are not present or are not flagged as occupation.
+                for (const value of data.system.groups[index].skills) {
+                  if (CoC7Item.isAnySpec(value)) {
+                    // If it's a generic spec we always add it
+                    dialogData.skills.push(value)
+                  } else {
+                    const skill = this.items.find(item => {
+                      return item.name === value.name && item.type === 'skill'
+                    })
+                    if (!skill || !skill.system.flags?.occupation) {
+                      // if skill was added to skill list previously, remove it
+                      const alreadySelectedSkill = data.system.skills.find(item => {
+                        return item.name === value.name
+                      })
+                      if (!alreadySelectedSkill) dialogData.skills.push(value)
+                    }
+                  }
+                }
+
+                // if there's none, do nothing.
+                if (dialogData.skills.length !== 0) {
+                  if (dialogData.skills.length <= dialogData.optionsCount) {
+                    // If there's is less skill than options, add them all.
+                    ui.notifications.info(
+                      game.i18n.format('CoC7.InfoLessSkillThanOptions', {
+                        skillCount: dialogData.skills.length,
+                        optionsCount: dialogData.optionsCount
+                      })
+                    )
+                    const merged = CoC7Item.mergeOptionalSkills(
+                      data.system.skills,
+                      dialogData.skills
+                    )
+                    data.system.skills = merged
+                  } else {
+                    // Wait for skill selection.
+                    const selected = await SkillSelectDialog.create(dialogData)
+                    if (!selected) return
+                    const merged = CoC7Item.mergeOptionalSkills(
+                      data.system.skills,
+                      selected
+                    )
+                    data.system.skills = merged
+                  }
+                } else {
+                  ui.notifications.info(
+                    game.i18n.localize('CoC7.InfoAllSkillsAlreadySelected')
+                  )
+                }
+              }
+              // Add all skills
+              await this.addUniqueItems(data.system.skills, 'experiencePackage')
+              if (rolled['i.skill.cthulhu-mythos'] > 0) {
+                let skill = this.getFirstItemByCoCID('i.skill.cthulhu-mythos')
+                if (typeof skill === 'undefined') {
+                  const skills = await game.system.api.cocid.fromCoCIDBest({ cocid: 'i.skill.cthulhu-mythos', showLoading: true })
+                  if (skills.length) {
+                    skill = foundry.utils.duplicate(skills[0])
+                    skill.system.adjustments.experience = rolled['i.skill.cthulhu-mythos']
+                    skill.system.value = Object.values(skill.system.adjustments).filter(v => v).reduce((c, v) => { c = c + parseInt(v, 10); return c }, 0)
+                    console.log('skill', skill, skill.system.adjustments, skill.system.value)
+                    processedDataArray.push(skill)
+                  }
+                } else {
+                  itemChanges.push({
+                    'system.adjustments.experience': parseInt(skill.system.adjustments.experience ?? 0, 10) + rolled['i.skill.cthulhu-mythos'],
+                    'system.value': Object.values(skill.system.adjustments).filter(v => v).reduce((c, v) => { c = c + parseInt(v, 10); return c }, rolled['i.skill.cthulhu-mythos']),
+                    _id: skill._id
+                  })
+                }
+              }
+              if (rolled.SAN > 0) {
+                actorChanges['system.attribs.san.value'] = parseInt(this.system.attribs.san.value, 10) - rolled.SAN
+              }
+              if (rolled.encounters.length > 0) {
+                actorChanges['system.sanityLossEvents'] = this.system.sanityLossEvents.concat(rolled.encounters)
+              }
+              if (rolled.backstory.length > 0) {
+                actorChanges['system.biography'] = this.system.biography
+                const name = game.i18n.localize('CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars')
+                const index = actorChanges['system.biography'].findIndex(b => b.title === name)
+                if (index > -1) {
+                  actorChanges['system.biography'][index].value = actorChanges['system.biography'][index].value + rolled.backstory.join('')
+                } else {
+                  actorChanges['system.biography'].push({
+                    title: name,
+                    value: rolled.backstory.join('')
+                  })
+                }
+              }
+              for (const doc of rolled.items) {
+                processedDataArray.push(foundry.utils.duplicate(doc))
+              }
+              actorChanges['system.development.experiencePackage'] = data.system.points
+              processedDataArray.push(foundry.utils.duplicate(data))
+            }
+          }
+          break
+
         default:
           processedDataArray.push(foundry.utils.duplicate(data))
       }
@@ -1610,6 +1737,19 @@ export class CoCActor extends Actor {
         'system.development.personal': this.personalPoints
       })
       Hooks.call('occupationFinishedCoC7')
+    }
+
+    if (Object.keys(actorChanges).length > 0 || itemChanges.length > 0) {
+      // Doesn't work without delay (with other changes)
+      const actor = this
+      setTimeout(async function () {
+        if (Object.keys(actorChanges).length > 0) {
+          await actor.update(actorChanges, { renderSheet: true })
+        }
+        if (itemChanges.length > 0) {
+          await actor.updateEmbeddedDocuments('Item', itemChanges, { renderSheet: true })
+        }
+      }, 1000)
     }
 
     return processed
@@ -1784,6 +1924,20 @@ export class CoCActor extends Actor {
   get archetype () {
     const archetype = this.items.filter(item => item.type === 'archetype')
     return archetype[0]
+  }
+
+  get experiencePackage () {
+    return this.items.find(item => item.type === 'experiencePackage')
+  }
+
+  async resetExperiencePackage () {
+    const skills = this.items.filter(item =>
+      item.getItemFlag('experiencePackage')
+    )
+    for (let index = 0; index < skills.length; index++) {
+      await skills[index].unsetItemFlag('occupation')
+    }
+    if (this.experiencePackage) await this.experiencePackage.delete()
   }
 
   async resetOccupation (eraseOld = true) {
@@ -2128,6 +2282,21 @@ export class CoCActor extends Actor {
     await this.update({
       'system.development.personal': this.personalPoints
     })
+  }
+
+  get ExperiencePackagePointsSpent () {
+    let count = 0
+    for (const skill of this.skills) {
+      if (skill.system.adjustments?.experiencePackage) {
+        count += skill.system.adjustments.experiencePackage
+      }
+    }
+    return count
+  }
+
+  get ExperiencePackagePoints () {
+    if (!this.experiencePackage) return 0
+    return this.experiencePackage.system.points
   }
 
   get archetypePointsSpent () {
@@ -3553,6 +3722,61 @@ export class CoCActor extends Actor {
     skillList.sort(CoC7Utilities.sortByNameKey)
 
     return skillList
+  }
+
+  weaponSkillGroups (rangedFirst = false) {
+    const skills = []
+    for (const item of this.items) {
+      if (item.type === 'skill') {
+        let sort = 3
+        let group = 'CoC7.Skills'
+        let name = item.name
+        if (item.system.properties.fighting) {
+          sort = (rangedFirst ? 2 : 0)
+          group = 'CoC7.SkillFighting'
+          /* // FoundryVTT V11 */
+          if (foundry.utils.isNewerVersion(game.version, '12')) {
+            name = item.system.skillName
+          }
+        } else if (item.system.properties.firearm) {
+          sort = (rangedFirst ? 0 : 1)
+          group = 'CoC7.SkillFirearm'
+          /* // FoundryVTT V11 */
+          if (foundry.utils.isNewerVersion(game.version, '12')) {
+            name = item.system.skillName
+          }
+        } else if (item.system.properties.ranged) {
+          sort = (rangedFirst ? 1 : 2)
+          group = 'CoC7.SkillRanged'
+          /* // FoundryVTT V11 */
+          if (foundry.utils.isNewerVersion(game.version, '12')) {
+            name = item.system.skillName
+          }
+        }
+        skills.push({
+          id: item.id,
+          name,
+          group,
+          sort
+        })
+      }
+    }
+    skills.sort((a, b) => {
+      if (a.sort === b.sort) {
+        return a.name
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLocaleLowerCase()
+          .localeCompare(
+            b.name
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .toLocaleLowerCase()
+          )
+      }
+      return a.sort - b.sort
+    })
+    return skills
   }
 
   get user () {

@@ -5,34 +5,22 @@ import { RollCard } from './roll-card.js'
 
 export class OpposedCheckCard extends RollCard {
   static async bindListerners (html) {
-    if (foundry.utils.isNewerVersion(game.version, '13')) {
-      html.addEventListener('click', function (event) {
-        if (event.target.querySelector('.roll-card.opposed .toggle-switch')) {
-          this._onToggle.bind(this)
-        } else if (event.target.querySelector('.roll-card.opposed a')) {
-          OpposedCheckCard._onClick.bind(this)
-        } else if (event.target.querySelector('.roll-card.opposed button')) {
-          OpposedCheckCard._onClick.bind(this)
-        }
-      })
-    } else {
-      html.on(
-        'click',
-        '.roll-card.opposed .toggle-switch',
-        this._onToggle.bind(this)
-      )
-      // super.bindListerners( html);
-      html.on(
-        'click',
-        '.roll-card.opposed a',
-        OpposedCheckCard._onClick.bind(this)
-      )
-      html.on(
-        'click',
-        '.roll-card.opposed button',
-        OpposedCheckCard._onClick.bind(this)
-      )
-    }
+    html.on(
+      'click',
+      '.roll-card.opposed .toggle-switch',
+      this._onToggle.bind(this)
+    )
+    // super.bindListerners( html);
+    html.on(
+      'click',
+      '.roll-card.opposed a',
+      OpposedCheckCard._onClick.bind(this)
+    )
+    html.on(
+      'click',
+      '.roll-card.opposed button',
+      OpposedCheckCard._onClick.bind(this)
+    )
   }
 
   static get defaultConfig () {

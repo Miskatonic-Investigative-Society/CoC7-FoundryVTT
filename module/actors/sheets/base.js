@@ -199,7 +199,8 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
         sheetData.data.system.development = {
           personal: null,
           occupation: null,
-          archetype: null
+          archetype: null,
+          experiencePackage: null
         }
       }
 
@@ -210,6 +211,13 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
         'CoC7',
         'pulpRuleOrganization'
       )
+      if (!sheetData.pulpRuleArchetype) {
+        if (this.actor.experiencePackage) {
+          const doc = this.actor.experiencePackage
+          sheetData.hasExperiencePackage = true
+          sheetData.nameExperiencePackage = doc.name
+        }
+      }
     }
 
     sheetData.isDead = this.actor.dead
@@ -376,8 +384,8 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
           } else {
             // TODO : avant d'assiger le skill vérifier qu'il existe toujours.
             // si il n'existe plus il faut le retrouver ou passer skillset a false.
-            if (sheetData.combatSkills[weapon.system.skill.main.id]) {
-              const skill = this.actor.items.get(weapon.system.skill.main.id)
+            const skill = this.actor.items.get(weapon.system.skill.main.id)
+            if (skill) {
               weapon.system.skill.main.name = skill.system.skillName
               weapon.system.skill.main.value = skill.value
             } else {
@@ -385,10 +393,8 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
             }
 
             if (weapon.system.skill.alternativ.id !== '') {
-              if (sheetData.combatSkills[weapon.system.skill.alternativ.id]) {
-                const skill = this.actor.items.get(
-                  weapon.system.skill.alternativ.id
-                )
+              const skill = this.actor.items.get(weapon.system.skill.alternativ.id)
+              if (skill) {
                 weapon.system.skill.alternativ.name = skill.system.skillName
                 weapon.system.skill.alternativ.value = skill.value
               }

@@ -47,22 +47,9 @@ export class CoC7WeaponSheet extends foundry.appv1.sheets.ItemSheet {
   async getData () {
     const sheetData = super.getData()
 
-    sheetData.combatSkill = []
-
     sheetData.hasOwner = this.item.isEmbedded === true
     if (sheetData.hasOwner) {
-      sheetData.firearmSkills = this.actor.firearmSkills
-      sheetData.fightingSkills = this.actor.fightingSkills
-      sheetData.combatSkill = this.item.actor.items.filter(item => {
-        if (item.type === 'skill') {
-          if (item.system.properties.combat) {
-            return true
-          }
-        }
-        return false
-      })
-
-      sheetData.combatSkill.sort(CoC7Utilities.sortByNameKey)
+      sheetData.weaponSkillGroups = this.actor.weaponSkillGroups(this.item.system.properties.rngd)
     }
 
     sheetData._properties = []

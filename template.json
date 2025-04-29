@@ -259,7 +259,8 @@
       "development": {
         "personal": null,
         "occupation": null,
-        "archetype": null
+        "archetype": null,
+        "experiencePackage": null
       },
       "biography": [],
       "sanityLossEvents": [],
@@ -378,7 +379,8 @@
       "talent",
       "status",
       "chase",
-      "armor"
+      "armor",
+      "experiencePackage"
     ],
     "item": {
       "description": {
@@ -452,6 +454,7 @@
         "personal": null,
         "occupation": null,
         "archetype": null,
+        "experiencePackage": null,
         "experience": null
       },
       "value": -1,
@@ -811,6 +814,29 @@
         "value": "",
         "keeper": ""
       }
+    },
+    "experiencePackage": {
+      "description": {
+        "value": "",
+        "keeper": ""
+      },
+      "age": "",
+      "properties": {
+        "cthulhuGain": false,
+        "sanityLoss": false,
+        "sanitySame": false
+      },
+      "cthulhuGain": "",
+      "sanityLoss": "",
+      "backgroundQty": 1,
+      "backgroundInjury": false,
+      "backgroundStatus": false,
+      "backgroundEncounter": false,
+      "immunity": [],
+      "addSpells": false,
+      "points": 0,
+      "skills": [],
+      "groups": []
     }
   }
 }

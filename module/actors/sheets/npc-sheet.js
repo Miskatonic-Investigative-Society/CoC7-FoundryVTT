@@ -74,6 +74,8 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       }
     )
 
+    sheetData.weaponSkillGroups = this.actor.weaponSkillGroups()
+
     return sheetData
   }
 

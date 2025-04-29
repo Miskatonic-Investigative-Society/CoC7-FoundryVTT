@@ -68,27 +68,19 @@
 
             <div class="flex1 flexrow-coc7">
               <select class="item-tag weapon-skill {{#unless weapon.skillSet}}no-skill-set{{/unless}}" data-skill="main" data-skill-id="{{weapon.system.skill.main.id}}">
-                {{#select weapon.system.skill.main.id}}
-                  {{#unless weapon.skillSet}}
-                    <option></option>
-                  {{/unless}}
-                  {{#each ../combatSkills as |cbs|}}
-                    <option value="{{cbs._id}}">{{cbs.name}}</option>
-                  {{/each}}
-                {{/select}}
+                {{#unless weapon.skillSet}}
+                  <option></option>
+                {{/unless}}
+                {{selectOptions ../weaponSkillGroups selected=weapon.system.skill.main.id localize=true valueAttr="id" nameAttr="id" labelAttr="name"}}
               </select>
             </div>
             <div class="flex1 flexrow-coc7">
               {{#if weapon.usesAlternateSkill}}
                 <select class="item-tag weapon-skill {{#unless weapon.skillSet}}no-skill-set{{/unless}}" data-skill="alternativ" data-skill-id="{{weapon.system.skill.alternativ.id}}">
-                  {{#select weapon.system.skill.alternativ.id}}
-                    {{#unless weapon.skillSet}}
-                      <option></option>
-                    {{/unless}}
-                    {{#each ../combatSkills as |cbs|}}
-                      <option value="{{cbs._id}}">{{cbs.name}}</option>
-                    {{/each}}
-                  {{/select}}
+                  {{#unless weapon.skillSet}}
+                    <option></option>
+                  {{/unless}}
+                  {{selectOptions ../weaponSkillGroups selected=weapon.system.skill.alternativ.id localize=true valueAttr="id" nameAttr="id" labelAttr="name"}}
                 </select>
               {{/if}}
             </div>
