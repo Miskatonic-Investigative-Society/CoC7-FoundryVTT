@@ -1,32 +1,30 @@
 <!--- This file is auto generated from module/manual/de/commands_cheat_sheet.md -->
-*TODO: Will be translated*
+# Befehlskürzel
 
-# Commands Cheat Sheet
+## Allgemeine Regeln
 
-## General rules
+Die meisten Bogenkomponenten können angeklickt werden und lösen eine Probe/ einen Wurf aus.
+Als eine generelle Regel können Sie diese Anfragen modifizieren:
 
-Most sheet component can be clicked on the trigger a check/roll.
-As a general rule you can modify those requests:
+- `Shift` wird die Anfrage direkt weitersenden.
+- `Strg` [Nur SL] wird einen Link im Chat erstellen, welcher einen Wurf der Spieler fordert.
 
-- `Shift` will fast forward the request.
-- `Ctrl` [GM only] will create a link in the chat with that request a roll to the players.
+## Geistige Stabilität
 
-## Sanity
+| Befehl                              | Aktion                                                                          |
+|-------------------------------------|---------------------------------------------------------------------------------|
+| `Strg+Shift` + _Linksklick STA_     | Fordert eine Probe auf Geistige Stabilität für den Charakter                    |
+| `Strg+Shift+Alt` + _Linksklick STA_ | Fordert eine Probe auf Geistige Stabilität und definiert den Stabilitätsverlust |
 
-| Command                            | Action                                            |
-| ---------------------------------- | ------------------------------------------------- |
-| `Ctrl+Shift` + _left click SAN_    | Request a Sanity Check for the character          |
-| `Ctr+Shift+Alt` + _left click SAN_ | Request a Sanity Check and define the sanity loss |
+## Kombinierte / Vergleichende Würfelwürfe
 
-## Combined / Opposed rolls
+| Befehl                                | Aktion                                                                        |
+|---------------------------------------|-------------------------------------------------------------------------------|
+| _Rechtsklick auf ein Element_         | Beginnen/ Einbeziehen des Würfelwurfes in einen **vergleichenden** Würfelwurf |
+| `Alt` + _Rechtsklick auf ein Element_ | Beginnen/ Einbeziehen des Würfelwurfs in einen **kombinierten** Würfelwurf    |
 
-| Command                             | Action                                          |
-| ----------------------------------- | ----------------------------------------------- |
-| _Right Click on an element_         | Start/ Include the roll on an **opposed** roll  |
-| `Alt` + _Right Click on an element_ | Start/ Include the roll on an **combined** roll |
+## Andere
 
-## Other
-
-| Command | Action                        |
-| ------- | ----------------------------- |
-| `c`     | Show _my own_ character sheet |
+| Befehl | Aktion                                |
+|--------|---------------------------------------|
+| `c`    | Zeige _meinen eigenen_ Charakterbogen |

@@ -1,102 +1,100 @@
 <!--- This file is auto generated from module/manual/de/effects.md -->
-*TODO: Will be translated*
+# Effekte
 
-# Effects
+Das System erlaubt die Erstellung von aktiven Effekten (Active Effects).
+Ein aktiver Effekt wird die Charakteristik(en), Attribut(e), Fertigkeit(en) des Charakters modifizieren.
+Effekte können als [Link](links.md) erstellt werden durch das Nutzen des [Link Erstellungswerkzeuges](link_creation_window.md) oder direkt im Charakterbogen durch das Klicken auf den `+` Knopf.
 
-The system allows for the creation of Active Effects.
-An active effect will modify an actor characteristic(s), attribute(s), skill(s).
-Effects can be created as a [link](links.md) using the [Link creation tool](link_creation_window.md) or directly in the character sheet by clicking the  button.
+## Reiter Effekte
 
-## Effects tab
+Effekte werden im Reiter Effekte auf dem Charakterbogen angezeigt.
 
-Effects will be display in the effect tabs on the character sheet.
+![Reiter Effekte](../../assets/manual/effects/effects-tab.webp)
 
-![effects tab](../../assets/manual/effects/effects-tab.webp)
+Effekte sind in 4 Kategorien einzugruppieren für den Spielercharakter:
 
-Effect are broken down in 4 categories for PC :
+- Status: Diese Effekte werden vom System genutzt und erstellt (Wundenstatus, liegend, verrückt, ...). Diese Effekte beinhalten keine Änderung.
+- vorübergehend: Dies sind Effekte mit einer Zeitdauer.
+- passiv: Dies sind permanente Effekte.
+- inaktiv: Dies sind deaktivierte Effekte
 
-- Status: those are effects used and created by the system (Wounds status, prone, insane ...). Those effects do not include any changes.
-- Temporary: those are effects with duration.
-- Passive: those are permanent effects.
-- Inactive: those are disabled effects.
+Für NSCs/ Kreaturen werden Sie nur 2 Abschnitte sehen: aktiv und inaktive Effekte.
+Wenn ein Effekt nicht inaktiv ist, werden die entsprechenden Änderungen auf den Akteur angewandt.
 
-For NPC/Creatures you will only see 2 sections: active and inactive effects.
-When an effect is not inactive, the corresponding changes will be applied to the actor.
+## Erstellung von Effekten
 
-## Creating effects
+Sie können Effekte erstellen durch das Klicken auf den Hinzufügen Knopf.
+Dies wird das Effekt erstellen Fenster öffnen.
+Das Fenster hat 3 Reiter
 
-You can create effect by clicking the Add button.
-This will bring the effect creation window.
-This windows has 3 tabs
+### Reiter Details
 
-### Details tab
+![Reiter Details](../../assets/manual/effects/details-tab.webp)
 
-![Details tab](../../assets/manual/effects/details-tab.webp)
+### Reiter Dauer
 
-### Duration tab
+![Reiter Dauer](../../assets/manual/effects/duration-tab.webp)
 
-![Duration tab](../../assets/manual/effects/duration-tab.webp)
+### Reiter Änderungen
 
-### Changes tab
+![Reiter Änderungen](../../assets/manual/effects/changes-tab.webp)
 
-![Changes tab](../../assets/manual/effects/changes-tab.webp)
+Dieser letzte Reiter wird alle Änderungen am Charakterbogen beinhalten.
 
-This last tab will includes all changes made to the character sheet.
+## Änderungen
 
-## Changes
+Ein Effekt beinhaltet eine Liste von Änderungen. Jede Änderung muss mit dem entsprechenden Systempfad adressiert werden.
+Die verfügbaren Änderungen sind:
 
-An effect includes a list of changes. Each change needs to be addressed with the corresponding system path.
-The available changes are :
-
-- Characteristics:
-  - Strength:
-    - system.characteristics.str.value
-    - system.characteristics.str.bonusDice
-  - Constitution:
-    - system.characteristics.con.value
-    - system.characteristics.con.bonusDice
-  - Size:
-    - system.characteristics.siz.value
-    - system.characteristics.siz.bonusDice
-  - Dexterity:
-    - system.characteristics.dex.value
-    - system.characteristics.dex.bonusDice
-  - Appearance:
-    - system.characteristics.app.value
-    - system.characteristics.app.bonusDice
-  - Intelligence:
-    - system.characteristics.int.value
-    - system.characteristics.int.bonusDice
-  - Power:
-    - system.characteristics.pow.value
-    - system.characteristics.pow.bonusDice
-  - Education:
-    - system.characteristics.edu.value
-    - system.characteristics.edu.bonusDice
-- Attributes:
-  - Luck:
-    - system.attribs.lck.value
-    - system.attribs.lck.bonusDice
-  - Sanity:
-    - system.attribs.san.value
-    - system.attribs.san.bonusDice
-  - Movement Rate:
-    - system.attribs.mov.value
-  - Build:
-    - system.attribs.build.value
-  - Damage Bonus:
-    - system.attribs.db.value
-  - Armor:
-    - system.attribs.armor.value
-- Derived attributes. Only the maximum value of those attributes should be modified. Those changes are applied after all other changes have been made. If that attibute is in auto mode, it will be recalculated with the previous characteristics changes before having it's value affected.
-  - Hit Points:
-    - system.attribs.hp.max
-  - Sanity:
-    - system.attribs.san.max
-- Skills. Skills are identified by their full names and are case sensitive!
-  - Charm
-    - system.skills.Charm.value
-    - system.skills.Charm.bonusDice
-  - Fighting (Brawl)
-    - system.skills.Fighting (Brawl).value
-    - system.skills.Fighting (Brawl).bonusDice
+- Charakteristiken:
+	- Stärke:
+		- system.characteristics.str.value
+		- system.characteristics.str.bonusDice
+	- Konstitution:
+		- system.characteristics.con.value
+		- system.characteristics.con.bonusDice
+	- Größe:
+		- system.characteristics.siz.value
+		- system.characteristics.siz.bonusDice
+	- Geschicklichkeit:
+		- system.characteristics.dex.value
+		- system.characteristics.dex.bonusDice
+	- Aussehen:
+		- system.characteristics.app.value
+		- system.characteristics.app.bonusDice
+	- Intelligenz:
+		- system.characteristics.int.value
+		- system.characteristics.int.bonusDice
+	- Mana:
+		- system.characteristics.pow.value
+		- system.characteristics.pow.bonusDice
+	- Bildung:
+		- system.characteristics.edu.value
+		- system.characteristics.edu.bonusDice
+- Attribute:
+	- Glück:
+		- system.attribs.lck.value
+		- system.attribs.lck.bonusDice
+	- Geistige Stabilität:
+		- system.attribs.san.value
+		- system.attribs.san.bonusDice
+	- Bewegungsweite:
+		- system.attribs.mov.value
+	- Statur:
+		- system.attribs.build.value
+	- Schadensbonus:
+		- system.attribs.db.value
+	- Panzerung:
+		- system.attribs.armor.value
+- Abgeleitete Attribute. Nur der Maximalwert dieser Attribute sollte modifiziert werden. Diese Änderungen werden angewandt, wenn alle anderen Änderungen gemacht wurden. Falls sich das Attribut im automatischen Modus befindet, wird es mit den vorherigen Änderungen der Charakteristiken neu berechnet, bevor sein Wert beeinflusst wird.
+	- Trefferpunkte:
+		- system.attribs.hp.max
+	- Geistige Stabilität:
+		- system.attribs.san.max
+- Fertigkeiten. Fertigkeiten werden durch ihren vollständigen Namen identifiziert unter der Berücksichtigung der Groß- und Kleinschreibung!
+	- Charm
+		- system.skills.Charm.value
+		- system.skills.Charm.bonusDice
+	- Fighting (Brawl)
+		- system.skills.Fighting (Brawl).value
+		- system.skills.Fighting (Brawl).bonusDice

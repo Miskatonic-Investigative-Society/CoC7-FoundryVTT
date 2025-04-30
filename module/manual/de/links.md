@@ -1,64 +1,61 @@
-*TODO: Will be translated*
-
 # Links
 
-- Links are a way for a GM to request for a roll (Characteristic, Attribute, Skill, SAN loss, Weapon).
-- Links can contain an active effect.
-- Links are created in the chat log. When you click a link it will trigger a check for your(s) controlled/impersonated character(s).
-- Links can be included in any editor, mainly journal entries.
-- Link can be created in 5 ways:
-  - By manually typing it (read details below).
-  - By CTRL+click on any sheet element (Characteristic, Attribute, skill, SAN loss).
-  - By dragging a sheet element (Characteristic, Attribute, skill (+CTRL)) on an editor (Journal entry)
-  - By CTRL + dragging an item (skill or weapon) from a compendium or an item directory on an editor. When a link is created that way and the used as a GM, if your controlled character doesn't hold the weapon/skill you'll be prompted to create the corresponding item.
-  - By using the included compendium written by Lozalojo.
-- Links can be dragged from chat log on an editor.
-- When a link is created the difficulty/penalty selection windows will open. Hold SHIFT to bypass that comportment.
-- When a link is created, the roll mode will be check. If the roll mode is set to 'blind GM roll' the link will be created as blind.
-- When a link is created with a difficulty and a penalty, the difficulty/penalty windows will not pop.
-- When a link is created without a difficulty or a penalty, the difficulty/penalty windows will pop. Holding SHIFT will fastforward the roll (regular/no penalty).
+- Links sind eine Möglichkeit für den Spielleiter eine Probe anzufordern (Charakteristik, Attribut, Fertigkeit, Stabilitätsverlust, Waffe).
+- Links können aktive Effekte beinhalten.
+- Links sind im Chatprotokoll erstellt. Wenn Sie auf einen Link klicken wird dies eine Probe auslösen für Ihre(n) kontrollierten/ personifizierten Charakter(e).
+- Links können in jedem Editor eingefügt werden, hauptsächlich in Journaleinträgen.
+- Links können auf 5 Arten erstellt werden:
+	- Durch manuelles schreiben (lesen Sie hierzu die Einzelheiten weiter unten).
+	- Durch Drucken der STRG Tasten + das Klicken auf ein Bogenelement (Charakteristik, Attribut, Fertigkeit, Stabilitätsverlust).
+	- Durch das Ziehen eines Bogenelements (Charakteristik, Attribut, Fertigkeit (+STRG)) in einen Editor (Journaleintrag).
+	- Durch STRG + Ziehen eines Items (Fertigkeit oder Waffe) von einem Kompendium oder einem Item-Verzeichnis in einen Editor. Wenn ein Link mit dieser Methode erstellt und vom Spielleiter verwendet wird, werden Sie aufgefordert die Waffe/ Fertigkeit zu erstellen, falls der kontrollierte Charakter diese nicht besitzt.
+	- Durch das Benutzen des im System enthaltenen Kompendiums von Lozalojo.
+- Links können vom Chat in einen Editor gezogen werden.
+- Wenn ein Link erstellt wird, wird sich das Auswahlfenster Schwierigkeit/ Strafe öffnen. Halten Sie die Umschalttaste um dieses Verhalten zu überspringen.
+- Wenn ein Link erstellt wird, wird der Würfelmodus Probe sein. Falls der Würfelmodus auf 'blinder Spielleiterwurf' gesetzt ist, wird der Link als 'blind' erstellt.
+- Wenn ein Link erstellt wird mit einer Schwierigkeit und einer Strafe, wird das Auswahlfenster Schwierigkeit/ Strafe sich nicht öffnen.
+- Wenn ein Link erstellt wird mit weder einer Schwierigkeit noch einer Strafe, wird sich das Auswahlfenster Schwierigkeit/ Strafe öffnen. Das Halten der Umschalttaste wird den Würfelwurf beschleunigen (reguläre Schwierigkeit/ keine Strafe).
 
-## Writing links
+## Links schreiben
 
-- Links should be written using the [Link creation tool](link_creation_window.md). The link creation window is a tool for GM. It's located in the left side bar.
+- Links sollten geschrieben werden durch die Nutzung des [Link Erstellungswerkzeuges](link_creation_window.md). Das Link Erstellungsfenster ist ein Werkzeug für die Spielleitung. Es befindet sich in der linken Seitenleiste.
 
-Links for chat messages and sheet editors (NPC, Journal entries...).
-Format of link is `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
+Links für Chatnachrichten und Bogeneditoren (NSC, Journaleinträge, ...) haben folgendes Format: `@coc7.TYPE_OF_REQUEST[OPTION]{TEXT_TO_DISPLAY}`
 
-- `TYPE_OF_REQUEST` :
-  - `sanloss`: trigger a san check, upon failure will propose to deduct the corresponding SAN.
-  - `check`: trigger a check depending on the options.
-  - `item`: trigger use of a weapon. Only items of type weapon can be triggered.
-- `OPTIONS: []` = optional, default
-  - `sanloss`:
-    - `sanMax`: max SAN loss
-    - `sanMin`: min SAN loss
-  - `check`:
-    - `type`: type of check ( `characteristic`, `skill`, `attrib`).
-    - `name`: name of the skill/characteristic/attrib.
-    - [`blind`]: will force a blind check, if not present the check will depend on your selected roll mode.
-  - all:
-    - [`difficulty`]: `?` (blind), `0` (regular), `+` (hard), `++` (extreme), `+++` (critical).
-    - [`modifier`]: `-x` (x penalty dice), `+x` (x bonus dice), `0` (no modifier).
-    - [`icon`]: icon tu use ([font awesome](https://fontawesome.com/icons), `fas fa-dice`).
-- `TEXT_TO_DISPLAY`: Name to display, this is optional.
+- `TYPE_OF_REQUEST`
+	- `sanloss`: löst eine geistige Stabilitätsprobe aus, bei Misserfolg wird vorgeschlagen die entsprechende geistige Stabilität abzuziehen.
+	- `check`: wird eine Probe auslösen abhängig von den Optionen.
+	- `item`: wird die Benutzung einer Waffe auslösen. Nur Items vom Typ Waffe können ausgelöst werden.
+- `OPTIONS: []` = optional, standardmäßig leer
+	- `sanloss`:
+		- `sanMax`: maximal verlorene geistige Stabilität
+		- `sanMin`: minimal verlorene geistige Stabilität
+	- `check`:
+		- `type`: Art der Probe ( `characteristic`, `skill`, `attrib`).
+		- `name`: Name der Fertigkeit/ Charakteristik/ des Attributs.
+		- [`blind`]: wird eine blinde Probe erzwingen, ist dies nicht der Fall, hängt die Probe von Ihrem gewählten Würfelmodus ab.
+	- all:
+		- [`difficutly`]: `?` (blind), `0` (regulär), `+` (schwierig), `++` (extrem), `+++` (kritisch).
+		- [`modifier`]: `-x` (x, entspricht der Anzahl der Strafwürfel), `+x` (x, entspricht der Anzahl der Bonuswürfel), `0` (kein Modifikator).
+		- [`icon`]: Icon, welches verwendet werden soll ([font awesome](https://fontawesome.com/icons), `fas fa-dice`).
+- `TEXT_TO_DISPLAY`: anzuzeigender Name, dies ist optional.
 
-### Examples
+### Beispiele
 
-| Link                                                                                                    | Result                                                             |
-| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| `@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]`                                          | {Hard San Loss (-1) 1/1D6}                                         |
-| `@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]`                                            | {Hard STR check(-1)}                                               |
-| `@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]`                                            | {Hard luck check(-1)}                                              |
-| `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]` | {Hard Anthropology check(-1)} (with icon)                          |
-| `@coc7.sanloss[sanMax:1D6,sanMin:1]`                                                                    | {San Loss (-1) 1/1D6} (without name, difficulty nor modifier)      |
-| `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`              | {Anthropology check (+1)} (with icon, without name nor difficulty) |
+| Link                                                                                                    | Ergebnis                                                                          |
+|---------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| `@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]`                                          | {schwierige Probe geistige Stabilität (-1) 1/1D6}                                 |
+| `@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]`                                            | {Schwierige Stärkeprobe (-1)}                                                     |
+| `@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]`                                            | {Schwierige Glücksprobe (-1)}                                                     |
+| `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]` | {Schwierige Anthropologieprobe (-1)} (mit Icon)                                   |
+| `@coc7.sanloss[sanMax:1D6,sanMin:1]`                                                                    | {Probe geistige Stabilität 1/1D6} (ohne Name, Schwierigkeit und ohne Modifikator) |
+| `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`              | {Anthropologieprobe (+1)} (mit Icon, ohne Name, Schwierigkeit, mit Bonuswürfel)   |
 
-### Using links
+### Links benutzen
 
-- You can drag/drop links from chat to sheets and between sheets.
-- You can drag/drop a link directly on a token.
-- You can drag/drop items and skills on a journal entry while holding CTRL, this will create the corresponding check with regular difficulty and 0 modifier.
-- You can create link in the chat by clicking and holding CTRL from any sheet (PC/NPC/Creature) corresponding characteristic/luck/SAN/Competence/weapon/San loss.
-  - This will open the select penalty/difficulty dialogue. Clicking on the generated link will then trigger the check with all parameters.
-  - Holding Shift on top will not open the penalty/difficulty dialogue. Clicking on the generated link will open the penalty/difficulty dialogue then trigger the check.
+- Sie können Links Ziehen und Ablegen vom Chat in Bögen, bzw. zwischen Bögen.
+- Sie können einen Link direkt auf ein Token Ziehen und Ablegen.
+- Sie können Items und Fertigkeiten in einen Journaleintrag Ziehen und Ablegen während Sie STRG halten, dies wird die entsprechende Probe mit regulärer Schwierigkeit und ohne Modifikator (0) erstellen.
+- Sie können einen Link im Chat erstellen durch das Halten von STRG und dem Klicken auf einen entsprechenden Charakterbogeneintrag (SC/ NSC/ Kreatur) entsprechend Charakteristik/ Glück/ geistige Stabilität/ Kompetenz/ Waffe/ Stabilitätsverlust.
+	- Es wird sich das Auswahlfenster öffnen für Schwierigkeit/ Strafe. Das Klicken auf den erstellten Link wird die Probe mit allen Parametern auslösen.
+	- Das zusätzliche Halten der Umschalttaste wird das Auswahlfenster Schwierigkeit/ Strafe nicht öffnen. Das Klicken auf den erstellten Link wird das Auswahlfenster Schwierigkeit/ Strafe öffnen und danach die Probe auslösen.

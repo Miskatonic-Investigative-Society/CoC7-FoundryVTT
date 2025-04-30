@@ -1,153 +1,153 @@
 <!--- This file is auto generated from module/manual/de/chases.md -->
-# Erstellen einer neuen Verfolgungsjagd
+# Erstellen einer Neuen Verfolgungsjagd
 
-Um eine neue Verfolgungsjagd anzulegen. Erstelle einen neuen Gegenstand vom Typ "Verfolgungsjagd" (Chase)
+Um eine neue Verfolgungsjagd zu initiieren, erstellen Sie ein Item vom Typ Verfolgungsjagd.
 
-Nur der Spielleiter (Keeper) sollte Zugriff auf den Gegenstand haben.
+Nur der Spielleiter sollte Zugriff auf das Item haben.
 
-Eine Verfolgungsjagd besteht aus einer Abfolge von Schauplätzen. Jeder Ort kann durch ein Hindernis (Barriere oder Hindernis) getrennt sein.
+Eine Verfolgungsjagd ist zusammengestellt aus einer Folge von Orten. Jeder Ort kann durch eine Hürde (Hindernis oder Gefahr) von einem anderen getrennt werden.
 
-Ein Hindernis wird immer überwunden, aber wenn die Probe nicht bestanden wird, wird die Figur langsamer und/oder nimmt schaden.
+Eine Gefahr wird immer überwunden, eine nicht geschaffte Probe wird Sie jedoch ausbremsen.
 
-Eine Barriere hält derweil eine Figur immer so lange auf, bis sie mit einer erfolgreichen Probe überwunden oder zerstört wird.
+Ein Hindernis wird Sie stoppen, bis Sie es erfolgreich überwinden, oder es zerstören.
 
 ![](../../assets/manual/chases/new_chase.webp)
 
-Eine Verfolgungsjagd unterteilt sich in drei Teile.
+Der Verfolgungsjagdbogen ist aufgeteilt in 3 Teile.
 
-- Eine Kopfzeile in der du die Informationen zur gegenwärtigen Lokalität siehst, wenn eine Verfolgungsjagd gestartet wurde
-- Der "Setup"-Reiter der Verfolgungsjagd: Dieser ermöglicht es die Parameter für die Verfolgungsjagd einzustellen und zu verfolgen.
-- Die Teilnehmer Liste, in der festgelegt werden kann, welche Teilnehmer an der Verfolgungsjagd mitmachen. Dieser Reiter funktioniert nicht mehr, wenn die Verfolgungsjagd gestartet wurde.
+- In einer Kopfzeile werden Sie die Information des aktuellen Ortes sehen, sobald die Verfolgungsjagd gestartet ist.
+- Ein Reiter Verfolgungsjagd einrichten. Dieser erlaubt es Ihnen die Erstellung und Verfolgung der Verfolgungsjagd.
+- Eine Teilnehmerliste, in welcher Sie die Teilnehmenden hinzufügen können. Dieser Reiter wird nicht mehr funktionieren, sobald die Verfolgungsjagd gestartet ist.
 
 # Einen Teilnehmer hinzufügen
 
-Um einen Teilnehmer hinzuzufügen, muss das "Plus"-Symbol in der Teilnehmerliste betätigt werden oder alternativ die Figur oder ihre Spielfigur (Token) hineingezogen werden.
+Um einen Teilnehmer hinzuzufügen klicken Sie auf das Plus Zeichen der Teilnehmerliste oder Ziehen Sie einen Akteur bzw. einen Token darauf.
 
-Hierbei ist zu erwähnen, dass es nicht nötig ist, dass ein Teilnehmer mit einer Figur verknüpft ist. Das ermöglicht es eine Verfolgungsjagd schnell einzurichten und gegebenenfalls jemanden spontan hinzuzufügen.
+Beachten Sie, dass es nicht zwingend notwendig ist, einen Akteur mit einem Teilnehmer zu verbinden. Dies erlaubt es, eine Verfolgungsjagd schnell aufsetzen oder jemanden spontan hinzuzufügen.
 
-Um der Verfolgungsjagd eine Spielfigur/Token hinzufügen zu können, wurden den Charakter- und NPC-Bögen ein paar Kontrollsymbole hinzugefügt:
+Um in der Lage zu sein, einen Token zur Verfolgungsjagd hinzuzufügen wurden einige Bedienelemente dem Charakterbogen, sowie dem NSC-Bogen hinzugefügt:
 
 ![](../../assets/manual/chases/new_controls.webp)
 
-Diese Symbole geben folgenden weiteren Informationen über die Spielfiguren:
+Diese Icons geben zusätzliche Informationen.
 
-1. Zeigt an, dass die Spielfigur eine Instanz der Spielfigur ist.
-2. Zeigt an, dass die Daten der Spielfigur nicht mit ihrem Charakterbogen fest verbunden sind. Jede Instanz hat ihre eigenen Eigenschaften und Parameter.
-3. Zeigt an, dass diese Spielfigur einen verknüpften Token besitzt. **Du kannst diesen einfach in die Teilnehmerliste der Verfolgungsjagd hineinziehen.**
-4. Zeigt an, dass die Spielfigur mit einer Figur/Charakterbogen aus der Akteure-Seitenleiste verlinkt ist.
+1. Kennzeichnet, dass dieser Akteur ein synthetischer Akteur ist (Instanz eines Akteurs)
+2. Kennzeichnet, dass die Akteurdaten nicht verknüpft sind. Jede Instanz des Akteurs hat seine eigenen Eigenschaften.
+3. Kennzeichnet, dass dieser Akteur ein ensprechendes Token hat. **Sie können dieses auf die Verfolgung oder die Teilnehmerliste ziehen und ablegen**.
+4. Kennzeichnet, dass die Akteurdaten verknüpft sind mit dem Akteur im Akteur-Verzeichnis.
 
-Hier können Sie Ihren Teilnehmer einrichten. Wenn Sie eine Figur aus der Seitenleiste „Akteure“ ziehen, werden die Details festgelegt. Beachten Sie, dass Sie eine andere Initiative und Geschwindigkeitsprüfung wählen können. Dies ist kein Standard im CoC, ermöglicht aber ungewöhnliche Verfolgungsjagden (futuristische Matrix-Verfolgungsjagd, Traumland-Verfolgungsjagd, ...)
+Hier können Sie ihre Teilnehmer festlegen. Das Ziehen eines Charakters aus der Akteur Seitenleiste wird die Details festlegen. Beachten Sie, dass Sie eine abweichende Initiative und Geschweindigkeitsprüfung auswählen können. Dies ist nicht der Standard in CoC, aber erlaubt ein Setup ungewöhnlicher Verfolgungsjagden (futuristische Matrix Verfolgungsjagd, Traumlande Verfolgungsjagd, ...)
 
-![](../../assets/manual/chases/new_participant_drag.webp)
+![](../../assets/manual/chases/new_participants_drag.webp)
 
-1. Das Fragezeichen lässt sich auf eine Spielfigur (Token) ziehen und übernimmt damit die Charakterdetails der Spielfigur.
+1. Wenn Sie das Fragezeichen auf den Token ziehen werden die Details dem Token zugeordnet.
 
-Sobald eine Spielfigur oder Akteur hineingezogen wurde, kann der Teilnehmer eingerichtet werden.
+Sobald Sie einen Akteur Ziehen oder ein Token auswählen können Sie den Teilnehmer einrichten.
 
 ![](../../assets/manual/chases/new_participant_setup.webp)
 
-1. Durch das Betätigen dieser Schaltfläche kann festgelegt werden, ob der Teilnehmer ein Verfolger oder Gejagter ist.
-2. Das Betätigen dieses Würfels führt eine Geschwindigkeitsprobe aus. Hinweis! Wenn über diese Schaltfläche die Probe gestartet wird, kommt es zu keiner Würfelkarte im Chat und Spieler werden auch nicht entsprechend angefragt, eine Probe auszuwürfeln. Sie eignet sich also vor allem für NPCs/Kreaturen oder wenn der Spielleiter (Keeper) selbstständig die Probe veranlassen möchte.
+1. Wenn Sie dies Klicken wird der Teilnehmer die Seite wechseln vom Gejagten zum Jäger.
+2. Wenn Sie dies Klicken wird dies eine Geschwindigkeitsprobe auslösen. Beachten Sie, dass dabei weder Spielereinträge notwendig sind noch eine Würfelproben als Nachricht angezeigt wird.
 
 # Teilnehmerliste
 
 ![](../../assets/manual/chases/participant_list.webp)
 
-In dieser Ansicht zeigt sich nun die Teilnehmerliste für die Verfolgungsjagd.
+Hier können Sie die Liste der Teilnehmer an der Verfolgungsjagd einsehen.
 
-1. Die Schaltfläche löst eine Verfolgungsjagd Probe aus. In diesem Fall wird eine Würfelkarte im Chat für den entsprechenden Teilnehmer und den damit verbundenen Spieler erstellt. Wenn Shift bei der Betätigung gehalten wird, wird die Karte direkt ausgewürfelt.
-2. Diese Schaltfläche erlaubt es einen Teilnehmer aus der Verfolgungsjagd zu entfernen oder wenn eine Geschwindigkeitsprobe durchgeführt wurde diese zurückzusetzen.
+1. Dies wird einen Verfolgungsprobe auslösen. Dies wird eine Würfelwurfnachricht erstellen, falls der Teilnehmer einen zugeordneten Akteur hat (und es kein `Dummy` ist). Das Halten der Umschalttaste wird das Modifikationsfenster überspringen und den Wurf ausführen.
+2. Dies wird die Geschwindigkeitsprobe leeren, falls einer existiert, oder den Teilnehmer löschen.
 
 ![](../../assets/manual/chases/participant_list_2.webp)
 
-1. Die Würfelkarte muss noch durch den entsprechenden Verantwortlichen betätigt werden.
-2. Die Geschwindigkeitsprobe wurde durchgeführt. Mit einem Klick hierauf lassen sich nähere Informationen zum Ergebnis der Probe anzeigen.
-3. Diese Schaltfläche erlaubt es die Probe zurückzusetzen.
+1. Probennachricht wartet im Nachrichtenbereich ausgeführt zu werden.
+2. Geschwindigkeitsprobe wird gewürfelt. Sie können für mehr diese Anklicken für mehr Details.
+3. Die Geschwindigkeitsprobe zurücksetzten.
 
-![](../../assets/manual/chases/roll_card.webp)
+![](../../assets/manual/chases/_roll_card.webp)
 
-# Verfolgungsjagd einrichten
+# Verfolgungsjagd Setup
 
 ![](../../assets/manual/chases/chase_init.webp)
 
-Um eine Verfolgungsjagd einzurichten ist es nötig erstmal die Anzahl an vorgesehenen Schauplätzen zu festzulegen und damit die Jagd zu initialisieren.
+Um eine Verfolgungsjagd aufzusetzen geben Sie die Anzahl der Orte ein und klicken Sie auf initialisieren.
 
 ![](../../assets/manual/chases/chase_initialized.webp)
 
-Die Verfolgungsjagd wurde initialisiert, nun kannst du weitere Optionen anpassen. Schauplätze in weißer Farbe sind die Start-Schauplätze und können nicht angepasst werden.
+Die Verfolgungsjagd ist initialisiert, nun können Sie einige Optionen anpassen. Orte in weiß sind initiale Orte und können nicht modifiziert werden.
 
-1. Dies ist die Verfolgungsstrecke, die weißen Schauplätze sind Startorte. Die Schauplätze in grauer Farbe stellen die echten Schauplätze der Verfolgungsjagd dar.
-2. Wenn diese Option aktiviert ist, werden auch Teilnehmer in die Jagd integriert, die eigentlich laut Regelwerk fliehen konnten.
-3. Wenn diese Option aktiviert ist, werden auch Teilnehmer berücksichtigt, die eigentlich zu langsam sind, um fliehen zu können.
-4. Dies gibt an, wie viele Schauplätze zwischen dem langsamsten Gejagten und dem schnellsten Verfolger liegen.
-5. Hiermit wird festgelegt, auf welcher Position der schnellste Gejagte startet. Position 0 liegt direkt vor dem Startpunkt der Verfolgungsjagd. Die Position "1" ist der Startpunkt. Die Position "-1" liegt einen Schauplatz vor dem Start.
-6. Dadurch werden ein Token animiert, wenn es sich an einen neuen Ort bewegt.
+1. Dies ist die Übersicht der Verfolgungsjagd, weiße Orte sind initiale Orte. Die grauen Orte sind die aktiven Verfolgungsjagdorte.
+2. Durch diese Auswahl werden die Teilnehmer berücksichtigt, welchen es sonst möglich wäre zu entkommen.
+3. Durch diese Auswahl werden die Teilnehmer berücksichtigt, welche ausgeschlossen worden wären, weil sie zu langsam waren.
+4. Dies ist die Anzahl der Orte zwischen dem langsamsten Gejagten und dem schnellsten Verfolger.
+5. Dies ist der Startpunkt des schnellsten Gejagten. Wenn Sie dies auf 0 festlegen, wird das den Gejagten kurz vor dem Startpunkt platzieren. 1, wird ihn auf dem Startpunkt platzieren. -1, wird ihn 1en Ort for dem Start platzieren.
+6. Dies wird die Token animieren bei der Bewegung zu einem neuen Ort.
 
-# Schauplätze einrichten
+# Das Aufsetzten von Orten
 
-Während der Einrichtung einer Verfolgungsjagd können Schauplätze ausgewählt und angepasst werden.
+Während des Aufsetzens oder der Jagd können sie Orte auswählen um diese zu modifizieren.
 
-Weiße Schauplätze können nicht während der Einrichtung angepasst werden.
+(Weiße) Startpunkte können während des Aufsetzens nicht modifiziert werden.
 
-Um einen Schauplatz anzupassen, muss dieser angeklickt werden. Dies zeigt die Details zum Schauplatz in der Kopfzeile an.
+Um einen Ort zu modifizieren, wählen sie diesen durch Klicken darauf aus. Dies wird die Einzelheiten des Ortes im Kopfbereich des Bogens darstellen.
 
 ![](../../assets/manual/chases/setting_locations_1.webp)
 
-1. Diese Schaltfläche erlaubt es einen Teilnehmer hinzuzufügen. Wenn eine Verfolgungsjagd gestartet wurde, werden die Teilnehmer an dieser Position sein. Wenn die Verfolgungsjagd noch nicht gestartet wurde, befinden sich die neuen Teilnehmer weiterhin auf den Startfeldern.
-2. Diese Schaltfläche entfernt einen Schauplatz, wenn sich gegenwärtig kein Teilnehmer auf ihm befindet.
-3. Du kannst die Pinnnadel greifen und auf eine Szene ziehen. Damit werden die Koordinaten für diese Position dem Schauplatz zugeordnet. Eine rote Pinnnadel zeigt an, dass Koordinaten gesetzt wurden. Ein Rechtsklick setzt die Koordinaten für die Szene zurück. Wenn Koordinaten gesetzt wurden und ein Teilnehmer mit verknüpften Token diese betritt, wird er zu diesem Schauplatz bewegt.
-4. Füge einen neuen Schauplatz hinzu.
-5. Aktiviere den Schauplatz
+1. Dies wird einen Teilnehmer hinzufügen. Falls die Verfolgungsjagd gestartet wird, wird sich der Teilnehmer auf dieser Position befinden. Falls die Verfolgungsjagd nicht gestartet ist, wird der Teilnehmer auf der Einstiegsposition hinzugefügt.
+2. Dies wird den Ort entfernen. Ein Ort muss leer sein, dass er gelöscht werden kann.
+3. Sie können dies auf eine Szene ziehen und ablegen. Dies wird die Koordinaten des Ortes definieren. Eine rote Stecknadel zeigt an, dass die Koordinaten gesetzt wurden. Ein Rechtsklick auf eine rote Stecknadel wird dessen Koordinaten zurücksetzten. Falls Koordinaten gesetzt wurden und ein Teilnehmer mit einem entsprechenden Token den Ort betritt, wird sein Token auf den Ort bewegt.
+4. Fügen Sie einen neuen Ort hinzu.
+5. Aktivieren Sie den Ort.
 
-# Einrichten von Hindernissen und Barrieren
+# Das Aufsetzen von Hindernissen
 
-Hindernisse können vor und nach einem Schauplatz eingefügt werden. Du kannst Hindernisse bereits vorbereiten und auch mit einem Namen benennen. Hierbei kann eine Fertigkeit mit dem Hindernis verknüpft werden und auch die zugehörigen Strafen, wenn diese nicht geschafft werden.
+Sie können Hindernisse vor und nach einem Ort hinzufügen. Sie können ein Hindernis vorab mit einem Namen, einer entsprechenden Probe und einigen Nachteilen befüllen.
 
 ![](../../assets/manual/chases/setting_locations_2.webp)
 
-1. Schaden den die Barriere nimmt.
-2. Lebenspunkte der Barriere
-3. Kosten von Bewegungsaktionen, wenn die Probe nicht geschafft wird.
-4. Fertigkeit die verwendet wird, um das Hindernis zu überwinden. Rote Schrift zeigt, dass der Charakter die Fertigkeit nicht besitzt.
+1. Schalten Sie dies um, um einem Hindernis Schaden zuzufügen.
+2. Die Trefferpunkte des Hindernisses
+3. Die Bewegungskosten im Falle eines Fehlschlags
+4. Die Probe, die notwendig ist das Hindernis zu überwinden. Falls es rot ist, hat der aktive Akteur keine solche entsprechende Probe.
 
-# Zur Sache kommen ...
+# Zur Sache kommen
 
-"Zur Sache kommen" bedeutet, dass die Verfolgungsjagd gestartet wird. Wenn nicht alle Teilnehmer bereits eine Geschwindigkeitsprobe abgelegt haben, wird hierbei eine Warnung ausgegeben und die Jagd kann nicht gestartet werden.
+Wenn Sie bereit sind, können Sie zum Sache kommen. Falls nicht alle Teilnehmer eine Geschwindigkeitsprobe durchgeführt haben wird dies eine Warnung erzeugen und Sie nicht starten lassen.
 
 ![](../../assets/manual/chases/cut_to_the_chase_1.webp)
 
-1. Initiative Tracker. Der aktive Teilnehmer wird in oranger Farbe hervorgehoben.
-2. Der Verfolgungsjagd Tracker. Zeigt den aktiven Schauplatz und die Teilnehmer. Du kannst Teilnehmer frei hin und her bewegen auf der Strecke. Du kannst auch einen neuen Charakter direkt auf die Strecke ziehen, wodurch das Fenster sich öffnen wird, mit dem ein Teilnehmer hinzugefügt werden kann. In manchen Fällen (beispielsweise, wenn ein neuer Gejagter langsamer ist als der langsamste Teilnehmer), werden alle Bewegungskationen neu berechnet und zugewiesen.
-3. Eine Barriere.
-4. Ein Hindernis.
+1. Aktionsschiene. Der aktive Teilnehmer orange umkreist.
+2. Verfolgungsjagd. Aktiver Ort und Teilnehmer. Sie können Teilnehmer ziehen und ablegen von der Verfolgungsjagd um diese frei zu bewegen. Sie können einen neuen Akteur oder Token direkt in die Verfolgungsjagd ziehen. Dies wird ein Importfenster öffnen und den Teilnehmer zur Verfolgungsjagd hinzufügen. In einigen Fällen (z. B. wenn ein neuer Gejagter langsamer ist als der langsamste Teilnehmer) werden alle Bewegungsaktionen neu berechnet.
+3. Ein Hindernis
+4. Eine Gefahr
 
-# Ablauf der Hindernisbeseitigung
+# Ablauf des Überwindens des Hindernisses
 
 ![](../../assets/manual/chases/cut_to_the_chase_2.webp)
 
-1. Wenn der aktive Teilnehmer vor einem Hindernis steht, können Sie den Hindernisauflösungsfluss auslösen, indem Sie darauf klicken. Dadurch wird eine Chat-Karte geöffnet, auf der Spielleiter und Spieler interagieren können, um das Hindernis zu überwinden. Alle Änderungen, die an der Karte vorgenommen werden, können am Ende des Ablaufs auf das Hindernis in der Verfolgungsjagd übertragen werden.
+1. Wenn der aktive Teilnehmer auf ein Hindernis trifft, können Sie den Ablauf des Überwindens des Hindernisses auslösen, wenn Sie dies Klicken. Es wird eine Nachricht erstellen, mit welcher Spielleiter und Spieler interagieren können um das Hindernis zu überwinden. Alle Änderungen an der Chatnachricht können auf das Hindernis der Verfolgungsjagd zurückgeworfen werden am Ende des Ablaufes.
 
-Wie folgt ein kleines Beispiel für einen solchen Ablauf:
+Im Folgenden ein kurzes Ablaufbeispiel:
 
 ![](../../assets/manual/chases/obstalce_flow_1.webp)
 ![](../../assets/manual/chases/obstalce_flow_2.webp)
 ![](../../assets/manual/chases/obstalce_flow_3.webp)
 ![](../../assets/manual/chases/obstalce_flow_4.webp)
 
-Wenn der Ablauf abgeschlossen ist, werden alle Änderungen in die Verfolgungsjagd eingebunden.
+Wenn der Ablauf komplettiert ist, werden alle Änderungen an die Verfolgungsjagd gesendet.
 
 ![](../../assets/manual/chases/cut_to_the_chase_3.webp)
 
-Wenn alle Spieler ihre Bewegungsaktionen ausgeführt haben, ist die Runde beendet. Mit einem Klick auf nächste Runde kann die Jagd fortgesetzt werden.
+Die Runde ist abgeschlossen. Alle Charaktere haben ihre Bewegungsaktionen aufgebraucht. Sie können nächste Runde anklicken, um weiterzumachen.
 
-# Teilnehmer kontrollieren
+# Teilnehmersteuerung
 
 ![](../../assets/manual/chases/participant_controls.webp)
 
-Du kannst einen Teilnehmer anpassen oder bewegen, indem du die Kontrollschaltflächen auf seiner Karte verwendest.
+Sie können einen Teilnehmer modifizieren oder bewegen durch das Verwenden der Steuerungsknöpfe auf der Karte.
 
-1. Diese drei Zeichen ermöglichen es den Teilnehmer zu löschen, modifizieren oder aktivieren.
-2. Bewegungsaktionen. Gelbe Symbole sind verfügbar. Graue wurden verwendet. Rote sind Defizite aus vorangegangenen Runden.
-3. Hiermit kann der Spieler Bonuswürfel erhalten oder seine Waffe ziehen.
-4. Diese Schaltflächen erlauben es die Bewegungsaktionen zu erhöhen oder zu reduzieren.
-5. Bewegungsaktionen einsetzen: Mit diesen Schaltflächen kann der Teilnehmer seine Bewegungsaktionen einsetzen. Er kann sich vorwärts oder rückwärts bewegen. Ebenfalls kann ein Verbündeter unterstützt werden mit einem Bonuswürfel oder der Teilnehmer kann selbst vorsichtig voranschreiten und damit ebenfalls einen Bonuswürfel sich verdienen.
+1. Diese 3 Icons erlauben es den Teilnehmer zu löschen, modifizieren und zu aktivieren.
+2. Bewegungsaktion. Gelb ist verfügbar, Grau ist verbraucht, rot ist ein Defizit.
+3. Dies kontrolliert den Bonus Ihres Teilnehmers. Er kann eine Waffe ziehen oder einen Bonuswürfel gewähren.
+4. Bewegungsaktionssteuerung. Hier können Sie die Bewegungsaktionen erhöhen oder verringern.
+5. Bewegungssteuerung. Sie können sich rückwärts oder vorwärts bewegen. Sie können einen Verbündeten unterstützen (verbrauchen Sie dazu eine Aktion und gewähren Sie einen Bonuswürfel) oder gehen Sie behutsam vor.

@@ -1,54 +1,52 @@
 <!--- This file is auto generated from module/manual/de/link_creation_window.md -->
-*TODO: Will be translated*
+# Werkzeug zur Linkerstellung
 
-# Link creation tool
+Das System enthält ein Werkzeug, welches die Erstellung von Links vereinfacht.
+Es befindet sich in der linken Seitenleiste. Klicken Sie auf das Icon.
+Dieses Werkzeug ist nur für den Spielleiter verfügbar.
 
-The system includes a tool to help you create links easily.
-It's located on the left side bar. Click on the icon.
-This tools is available to GM only.
+![Erstellungswerkzeug](../../assets/manual/links/links-creation-tool.webp)
 
-![Creation tool](../../assets/manual/links/links-creation-tool.webp)
+Benutzen Sie dies um [Links](links.md) für Fertigkeitsproben, Proben auf geistige Stabilität, Effekte, ... zu erstellen.
+Alternativ können Sie das Werkzeug öffnen, durch Drücken der STRG Taste, während Sie auf ein Item oder eine Fertigkeit klicken.
 
-using this you can create [link](links.md) for skill check, san check, effects ...
-alternatively you can open the tool by holding CTRL while clicking no an item or a skill.
+## Hauptfenster
 
-## Main window
+Das Klicken auf das Werkzeugicon wird folgendes Fenster öffnen:
 
-Clicking on the tool icon will open a window :
+![Hauptfenster](../../assets/manual/links/main-window.webp)
 
-![Main window](../../assets/manual/links/main-window.webp)
+Sie können hier Optionen für Ihren Link auswählen:
 
-You can there select options for you link.
+- "Kompendium Pakete" und "Item-Verzeichnisse" erlaubt Ihnen die Referenzierung eines Objekts des entsprechenden Ordners.
+- "Modifikatoren" erlaubt es der Probe einen Modifikator hinzuzufügen
+- "blind" wird den Würfelmodus "blind" erzwingen.
+- "Beschriftung" erlaubt es Ihnen, die dargestellte Beschriftung zu ändern.
+- "Icon" erlaubt es Ihnen, das Icon für Ihren Link auszuwählen. Folgendes können Icons sein:
+	- Eine beeindruckende Schriftart oder ein Spielicon als Referenz: "fas fa-ankh" oder "game-icon game-icon-tentacle-strike".
+	- Ein Link zu einem Bild in der Systemablage oder dem Hauptsystem: "icons/magic/symbols/arrowhead-green.webp".
 
-- "Compendium packs"  and "Items directory" allows you to reference an object from corresponding folder.
-- "Modifiers" will allows you to add modifiers to your check.
-- "blind" will force the roll mode to be blind.
-- "Label" will allows you to change the display label.
-- "Icon" will allows you to choose an icon for your link. Icons can be :
-  - A font awesome or a game-icons reference : "fas fa-ankh" or "game-icon game-icon-tentacle-strike".
-  - A link to an image in the system data or system core: "icons/magic/symbols/arrowhead-green.webp".
+Falls Sie keine Beschriftung und/ oder ein Icon bereitstellen, wird eine standardmäßige Beschriftung und ein Standardicon hinzugefügt.
 
-If you do not supply a label and/or an icon, a default label and icon will be added.
+![Standardbeschriftung](../../assets/manual/links/default-label.webp)
 
-![default label](../../assets/manual/links/default-label.webp)
+## Effektfenster
 
-## Effects window
+Das Auswählen von Effekten wird ein weiteres Fenster öffnen, in welchem Sie einen Link für [aktive Effekte](effects.md) erstellen können.
+Wählen Sie die Optionen auf die gleiche Art und Weise, wie Sie es für einen regulären Effekt tun.
 
-Selecting effects will open an advance window where you can create links for [active effects](effects.md).
-Select the options the same way you will be doing for a regular effect.
+## Benutzung von Links
 
-## Using links
+- Sobald Ihr Link erstellt und gültig ist, wird er in einem weißen Feld in der Mitte des Fensters angezeigt.
 
-- Once your link is created and valid it will appear in a white box in the middle of the window.
+![Linkerstellung](../../assets/manual/links/effect-link-creation.webp)
 
-![link created](../../assets/manual/links/effect-link-creation.webp)
+- Sie sind nun bereit den Link ihren Spielern zu flüstern. Kopieren Sie den Link in ihre Zwischenablage, dass Sie ihn Ihren Items oder Ihren Journaleinträgen hinzufügen können, oder ihn als Nachricht versenden können.
 
-- You are now ready to whisper it to your players, copy it in your clipboard so you can add it to your items or journal entries or send it to the chat.
+![Link im Chat](../../assets/manual/links/link-effect-chat.webp)
 
-![link in the chat](../../assets/manual/links/link-effect-chat.webp)
+- Wenn ein Spieler auf den Link klickt, wird die entsprechende Aktion von seinem Charakter ausgeführt.
+- Wenn ein Spielleiter auf den Link klickt, wird die entsprechende Aktion von dem von ihm angewählten Token ausgeführt.
+- Ein Link kann abgelegt werden in Journaleinträgen, auf einem Token, etc. ...
 
-- When a player clicks a link the corresponding action will be performed by his character.
-- When a GM clicks a link the corresponding action will be performed by his selected tokens.
-- A link drag/dropped in journal entries, on a token etc...
-
-![link drop](../../assets/manual/links/effect-drop.webp)
+![Linkablage](../../assets/manual/links/effect-drop.webp)
