@@ -37,7 +37,7 @@ export class CoC7ContainerSheet extends foundry.appv1.sheets.ActorSheet {
       if (!item || !item.system) {
         continue
       }
-      if (!['book', 'item', 'spell', 'weapon'].includes(item.type)) {
+      if (!['book', 'item', 'spell', 'weapon', 'armor'].includes(item.type)) {
         continue
       }
       items.push(item.toObject())
@@ -153,6 +153,9 @@ export class CoC7ContainerSheet extends foundry.appv1.sheets.ActorSheet {
 
     html.find('.add-item').click(ev => {
       switch (ev.currentTarget.dataset.type) {
+        case 'armor':
+          this.actor.createEmptyArmor(ev)
+          break
         case 'book':
           this.actor.createEmptyBook(ev)
           break
