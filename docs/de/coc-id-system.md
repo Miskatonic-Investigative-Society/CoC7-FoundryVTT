@@ -1,32 +1,30 @@
 <!--- This file is auto generated from module/manual/de/coc-id-system.md -->
-*TODO: Will be translated*
-
 # CoC ID System
 
-Several FoundryVTT documents have an ID button accessable to "Game Master" and "Assistant GM" User Roles.
+Verschiedene FoundryVTT Dokumente haben einen ID Knopf, welcher den Rollen "Spielleiter" und "Spielleiterassistenz" zugänglich ist.
 
-**System ID (CoC ID)**: Setting a skill's ID to i.skill.dodge will let the system know to treat that skill as Dodge on the combat card.
+**System ID (CoC ID)**: Das Festlegen einer Fertigkeits-ID auf i.skill.dodge wird dem System mitteilen, dass diese Fertigkeit als Ausweichen auf der Kampfkarte zu verarbeiten ist.
 
-**Language**: Which languge is this version of the Item in.
+**Sprache**: Welcher Sprache diese Version des Items entspricht.
 
-**Cthulhu Flavors**: You can also control the era a skill is for, Animal Handling has different base values based on the era
+**Cthulhu Ära**: Sie können auch kontrollieren, für welchen Zeitraum die Fertigkeit ist, der Umgang mit Tieren hat unterschiedliche Basiswerte je nach Zeitraum.
 
-**System ID Priority**: The highest number will be considered best
+**System ID Priorität**: Die höchste Nummer wird als beste berücksichtigt.
 
-## Item
-i.setup.example - The Investigator Wizard will use these you need to pick a single era to assign it to
+##Item (Gegenstand)
+i.setup.example - Der Investigatorassistent verwendet diese, Sie müssen einen einzelnen Zeitraum auswählen, um diese zuzuordnen.
 
-i.archetype.example - The Investigator Wizard will use these if the archetype optional rule is enabled
+i.achetype.example - Der Investigatorassistent verwendet diese, falls die optionale Regel des Archetypes aktiviert ist
 
-i.occupation.example - The Investigator Wizard will list these
+i.occupation.example - Der Investigatorassistent wird diese auflisten
 
-i.skill.example - Setups, Investigator Wizard, and creating Actors will use these if the era matches
+i.skill.example - Das Setup, der Investigatorassistent und das Erstellen von Akteuren wird diese verwenden, falls die Zeiträume übereinstimmen
 
-## RollTable
-rt..backstory-example - If the example part matches the backstory title in kebab case it will give a roll option in the backstory section of the Investigator Wizard
+##Würfeltabelle
+rt..backstory-example - Falls der "example" Teil mit dem Titel der Hintergrundgeschichte übereinstimmt, wird im Abschnitt Hintergrundgeschichte des Investigatorassistenten eine Wurfoption angezeigt.
 
-## Translations
-You can use the Keeper's tools on the left hand menu to update Actors based on CoC ID Items you have in your world, you need a scene to be able to access this menu
+## Übersetzungen
+Sie können das Spielleiterwerkzeug auf der linken Seite des Menüs benutzen um Akteure zu aktualisieren basierend auf den CoC Items in Ihrer Welt. Sie benötigen eine Szene, um die Möglichkeit zu haben auf das Menü zuzugreifen.
 
 ## RQID
-This system is based on RQID from the "[Runequest Glorantha](https://foundryvtt.com/packages/rqg)" system, documentation for it can be found here [https://sun-dragon-cult.github.io/rqg-system/api/rqid](https://sun-dragon-cult.github.io/rqg-system/api/rqid)
+Dieses System basiert auf der RQID des "[Runequest Glorantha](https://foundryvtt.com/packages/rqg)" Systems. Die Dokumentation kann hier eingesehen werden: [https://sun-dragon-cult.github.io/rqg-system/api/rqid](https://sun-dragon-cult.github.io/rqg-system/api/rqid)

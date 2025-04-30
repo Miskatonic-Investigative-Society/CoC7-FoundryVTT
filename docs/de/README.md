@@ -1,133 +1,132 @@
 <!--- This file is auto generated from module/manual/de/README.md -->
-*TODO: Will be translated*
-
 # Systemdokumentation für Version 7.0
 
-*TODO: Under Translation*
+Dieses Dokument ist ein in Arbeit befindlicher Überblick über das CoC7-System und stellt keine Anleitung zur Verwendung von FoundryVTT dar.
 
-This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
+Sie benötigen eines dieser folgenden Bücher, um das Spiel zu spielen:
 
-You will need one of the following to play the game
+- Cthulhu - Grundregelwerk
+- Cthulhu - Einsteigerbox
+- Cthulhu - Schnellstartregeln
 
-- Chaosium's Call of Cthulhu 7th Edition - Keeper's Rulebook
-- Chaosium's Call of Cthulhu 7th Edition - Call of Cthulhu Starter Set
-- Chaosium's Call of Cthulhu 7th Edition - Quick-Start Rules
+Das System automatisiert die meisten üblichen Aufgaben und Regeln, welche benötigt werden um das Spiel zu spielen.
 
-The system automates most of the regular tasks and rules involved with running a game.
+Mehrere Teile des Charakterbogens haben auftauchende Tooltips, welche nach zwei Sekunden erscheinen, diese Verzögerung kann in den Einstellungen geändert werden.
 
-Several parts of the actor sheets have pop up tooltips that trigger after two seconds, this delay can be changed in the settings
+Dieses Dokument kann erneut geöffnet werden unter Spieleinstellungen -> Hilfe und Dokumentation -> CoC7 System Handbuch ansehen
 
-This documentation can be reopened under Game Settings -> Help and Documentation -> View CoC7 System Manual
+# Kürzliche Änderungen
 
-# Recent changes
+Für eine vollständige Liste der Änderungen überprüfen Sie das [Änderungsprotokoll](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) auf github
 
-For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
+- Neuer Charakterbogen
 
- - [CoC ID system](coc-id-system.md) - Priority now has more importance over location.
+# Module von Chaosium
 
-# Overview sections below
+- [Call of Cthulhu® - Starter Set](https://foundryvtt.com/packages/cha-coc-fvtt-en-starterset) - Enthält drei Szenarien (Paper Chase, Edge of Darkness, and Dead Man Stomp) und Anleitungen zum Spielen der 7ten Edition von Call of Cthulhu.
+- [Call of Cthulhu® - Quick-Start Rules](https://foundryvtt.com/packages/cha-coc-fvtt-en-quickstart) - Enthält das Szenario Spuk im Corbitt-Haus und eine Anleitung für Einsteiger für FoundryVTT und die 7te Edition von Call of Cthulhu.
+- [Call of Cthulhu® - FoundryVTT - Investigator Wizard](https://foundryvtt.com/packages/call-of-cthulhu-foundryvtt-investigator-wizard) - Veröffentlicht mit der Erlaubnis von Chaosium. Enthält Archetypen, Berufe, Setups und Fertigkeiten für die Benutzung im Assistenten für die Charaktererstellung.
 
-If this is your first time it is recommends you also read the following sections on this page.
+# Übersichtsabschnitte
 
-Foundry VTT is based in actors and items. This module includes a number of system specific actors and items, and some examples of them can be found in the included system compendiums.
+Falls dies Ihr erstes Mal ist, ist es empfohlen, dass Sie die folgenden Abschnitte lesen.
 
-- [Actor overview](#actor-overview)
-- [Items overview](#items-overview)
-- [Settings overview](#settings-overview)
-- [Scene menu overview](#call-of-cthulhu-scene-menu)
-- [Keyboard and mouse shortcuts](#keyboard-and-mouse-shortcuts)
-- [Creating your first investigator](first_investigator.md)
-- [Character creation](character_creation.md)
+FoundryVTT basiert auf Charakteren und Items. Dieses Modul enthält eine Reihe von systemspezifischen Charakteren und Items, von denen einige Beispiele in den beigefügten Systemkompendien zu finden sind.
 
-# How to use the system
+- [Charakterübersicht](#actor-overview)
+- [Items Übersicht](#items-overview)
+- [Einstellungsübersicht](#settings-overview)
+- [Übersicht Szenenmenü](#call-of-cthulhu-scene-menu)
+- [Tastatur- und Mauskürzel](#keyboard-and-mouse-shortcuts)
+- [Erstellung Ihres ersten Investigators](first_investigator.md)
+- [Charaktererstellung](character_creation.md)
 
-- [Active effects](effects.md) - An active effect will modify an actor characteristic(s), attribute(s), skill(s).
-- [Actor importer](actor_importer.md)
-- Actor Type: Character (TODO)
-- Actor Type: Container (TODO)
-- Actor Type: Creature (TODO)
-- Actor Type: NPC (TODO)
-- Chat link creator (TODO)
-- Character creation mode (TODO)
-- [Combat](combat.md) (TODO)
-- Development phase (TODO)
-- [Item Types](items.md) (TODO)
-- [Item Type: Archetype](item_archetype.md) (TODO)
-- [Item Type: Book](item_book.md) (TODO)
-- [Item Type: Chases](chases.md)
-- Item Type: Item (TODO)
-- [Item Type: Occupation](item_occupation.md)
-- [Item Type: Setup](item_setup.md)
-- [Item Type: Skill](item_skill.md) (TODO)
-- Item Type: Spell (TODO)
-- Item Type: Status (TODO)
-- Item Type: Talent (TODO)
-- Item Type: Weapon (TODO)
-- [Link Creation Tool](link_creation_window.md)
+# Wie man das System benutzt
+
+- [Aktive Effekte](effects.md) - Ein aktiver Effekt wird die Charaktercharakteristiken, -attribute, -fertigkeiten modifizieren.
+- [Charakterimporter](actor_importer.md)
+- Charaktertyp: Charakter (TODO)
+- Charaktertyp: Container (TODO)
+- Charaktertyp: Kreatur (TODO)
+- Charaktertyp: NSC (TODO)
+- Charakter Erstellmodus (TODO)
+- [Kampf](combat.md) (TODO)
+- Entwicklungsphase (TODO)
+- [Item Typen](items.md)
+- [Item Typ: Archetyp](item_archetype.md) (TODO)
+- [Item Typ: Buch](item_book.md) (TODO)
+- [Item Typ: Verfolgungsjagd](chases.md)
+- Item Typ: Item (Gegenstand) (TODO)
+- [Item Typ: Beruf](item_occupation.md)
+- [Item Typ: Setup](item_setup.md)
+- [Item Typ: Fertigkeit](item_skill.md) (TODO)
+- Item Typ: Zauber (TODO)
+- Item Typ: Status (TODO)
+- Item Typ: Talent (TODO)
+- Item Typ: Waffe (TODO)
+- [Linkerstellungswerkzeug](link_creation_window.md)
 - [Links](links.md) (TODO)
 - Macros (TODO)
-- Rolls (TODO)
-- [Sanity](sanity.md) (TODO)
-- Start Rest (TODO)
-- XP Gain (TODO)
+- Würfelwürfe (TODO)
+- [geistige Stabilität](sanity.md) (TODO)
+- Pause starten (TODO)
+- Erfahrungsgewinn (TODO)
 
-# Actor overview
+# Charakterübersicht
 
-- _Character_ - A complete character, usually an investigator. [_Example Character_]
-- _Container_ - An inventory container. [_Example Container_]
-- _Creature_ - A more simple character, suitable for creatures. [_Example Creature_]
-- _NPC_ - A more simple character, suitable for NPCs. [_Example NPC_]
+- _Charakter_ - Ein kompletter Charakter, in der Regel ein Investigator. [_Beispielcharakter_]
+- _Container_ - Ein Aufbewahrungsbehälter. [_Beispielcontainer_]
+- _Kreatur_ - Ein einfacherer Charakter, geeignet für Kreaturen. [_Beispielkreatur_]
+- _NSC_ - Ein einfacherer Charakter, geeignet für NSCs. [_Beispiel NSC_]
 
-# Items overview
+# Items (Gegenstands-) Übersicht
 
-- _Archetype_ - A set of skills and other stats that implement a Pulp Cthulhu archetype. These do not trigger automation in the system. [_Example Archetype_]
-- _Book_ - An arcane tome that can hold spells and character improvements.
-- _Item_ - A piece of equipment.
-- _Occupation_ - A set of skills and other stats that implement a CoC occupation. [_Example Occupation_]
-- _Setup_ - A set of default configurations for character, creature, or NPC creation. [_Example Setup_]
-- _Skill_ - A skill with a base percentage and some tags. [_Example Skill_]
-- _Spell_ - A magic spell.
-- _Status_ - An phobia or mania condition. [_Example Mania_]
-- _Talent_ -A special power for Pulp Cthulhu. These do not trigger automation in the system. [_Example Talent_]
-- _Weapon_ - An item with weapon statistics (this includes unarmed attacks). [_Example Weapon_]
+- _Archetyp_ - Eine Reihe von Fertigkeiten und anderen Werten, die ein Pulp Cthulhu Archetyp implementiert. Diese lösen keine Automatisierung im System aus. [_Beispiel Archetyp_]
+- _Buch_ - Ein arkaner Foliant, der Zaubersprüche oder Charakterverbesserungen enthalten kann.
+- _Item_ - Ein Teil des Equipments.
+- _Beruf_ - Eine Reihe von Fertigkeiten und anderen Werten, die ein CoC-Beruf implementiert. [_Beispielberuf_]
+- _Setup_ - Eine Reihe von Standardkonfigurationen für die Erstellung eines Charakters, einer Kreatur, oder eines NSCs. [_Beispiel Setup_]
+- _Fertigkeit_ - Eine Fertigkeit mit einem Basisprozentsatz und einigen Kennzeichnen. [_Beispielfertigkeit_]
+- _Zauber_ - Ein magischer Zauber.
+- _Status_ - Ein Phobiezustand oder Maniezustand. [_Beispielmanie_]
+- _Talent_ - Eine besondere Kraft für Pulp Cthulhu. Diese lösen keine Automatisierung im System aus. [_Beispieltalent_]
+- _Waffe_ - Ein Item mit Waffenstatistiken (dies schließt unbewaffnete Angriffe mit ein). [_Beispielwaffe_]
 
-# Settings overview
+# Einstellungsübersicht
 
-Click on the Game Settings tab then under the Game Settings heading click on Configure Settings.
+Klicken Sie auf den Reiter Spieleinstellungen, dann unter der Überschrift Spieleinstellungen auf Einstellungen konfigurieren.
 
-Click on System Settings
+Klicken Sie auf Systemeinstellungen
 
-- _Variant/Optional Rules_ - Here you can turn on individual Pulp Cthulhu rules and other optional rules
-- _Initiative Settings_ - Additional settings for optional initiative rule
-- _Roll Settings_ - Default options for rolls
-- _Chat Cards Settings_ - Configure chat messages
-- _Scene Settings_ - Scene Settings
-- _Game Artwork Settings_ - This allows you to set a custom pause icon and message
-- _Sheet Settings_ - This allows you to change character sheet settings and optional CSS
-- _Weapon Settings_ - Weapon Settings
-- _Developer And Debug Settings_ - These settings can break your world when new updates are released so only use them on test worlds
-- _Roll Table Settings_ - When sanity rolls are made the system can automatically roll for a bout of madness. You can see example roll tables in the Sanity Roll Table compendiums
+- _Regelvarianten/ optionale Regeln_ - Hier können sie individuelle Pulp Cthulhu Regeln aktivieren, sowie andere optionale Regeln.
+- _Initiativeeinstellungen_ - Zusätzliche Einstellungen für optionale Initiativeregeln
+- _Würfelwurfeinstellungen_ - Standardoptionen für Würfelwürfe
+- _Chatnachrichteneinstellungen_ - Konfigurieren Sie Chatnachrichten
+- _Szeneneinstellungen_ - Szeneneinstellungen
+- _Einstellungen zu Spielegrafiken_ - Dies erlaubt es Ihnen ein angepasstes Pause Icon und eine angepasste Pausenachricht
+- _Bogeneinstellungen_ - Dies erlaubt es Ihnen die Einstellungen des Charakterbogens anzupassen und optionales CSS
+- _Waffeneinstellungen_ - Waffeneinstellungen
+- _Entwickler- und Debug-Einstellungen_ - Diese Einstellungen können Ihre Welt zerstören, wenn neue Aktualisierungen veröffentlicht werden. Benutzen Sie diese Einstellungen nur in Testwelten.
+- _Würfeltabelleneinstellungen_ - Wenn geistige Stabilitätsproben durchgeführt werden, kann das System automatisch auf einen Anfall des Wahnsinns würfeln. Sie können eine Beispielwürfeltabelle im Kompendium für Würfeltabellen der geistigen Stabilität finden.
 
-# Call of Cthulhu Scene Menu
+# Übersicht Szenenmenü
 
-To access this menu you will need to have an active scene which can be created in the Scenes Directory. These options are only available to the Keeper.
+Um auf dieses Menü zugreifen zu können, müssen Sie über eine aktive Szene verfügen, die Sie im Szenenverzeichnis erstellen können. Diese Optionen sind nur für den Spielleiter verfügbar.
 
-- _Keeper's tools_
-  - _Development phase_: When enabled, players can make improvement rolls for their marked skills.
-  - _Character creation mode_: When enabled, players can distribute points among their skills.
-  - _XP gain_: When enabled, a skill will be marked for improvement after a successful check.
-  - _Send a decoy roll to players_: When clicked, players will see a fake GM private roll.
-  - _Start Rest_: When click, pick characters to perform a rest and roll for XP gains.
-- _Roll !_: Used to roll 1d100 with a threshold, difficulty and bonus or penalty dice.
-- _Create link_: Create a roll link for players to click
+- _Spielleiterwerkzeuge_
+	- _Entwicklungsphase_: Wenn diese aktiviert ist, können Spieler Verbesserungswürfe für ihre markierten Fertigkeiten durchführen.
+	- _Charaktererstellungsmodus_: Wenn dieser aktiviert ist, können Spieler Punkte unter ihren Fertigkeiten verteilen.
+	- _Erfahrungsgewinn_: Wenn dies aktiviert ist, wird eine Fertigkeit markiert zur Verbesserung nach einer erfolgreichen Probe.
+	- _Den Spielern einen Scheinwurf senden_: Wenn dies geklickt wird, werden die Spieler einen 'Fake' privaten Würfelwurf des Spielleiters sehen.
+	- _Würfelwurf !_: Wird verwendet, um einen 1d100 mit einem Schwellenwert, einer Schwierigkeit und einem Bonus oder Strafwürfel zu würfeln.
+	- _Linkerstellung_: Erstellen Sie einen Würfelwurflink für Spieler zum Anklicken.
 
-# Keyboard and mouse shortcuts
+# Tastatur- und Mauskürzel
 
-There are many elements in the sheets that trigger a dice roll when clicked. Usually a dialog is shown to prompt the user for a difficulty and a possible bonus or penalty. This behavior is modified with the following controls:
+Es gibt viele Elemente in den Bögen, die einen Würfelwurf auslösen, wenn sie angeklickt werden. Normalerweise wird ein Dialog angezeigt, der den Nutzer zur Eingabe der Schwierigkeit und eines möglichen Bonus oder Malus auffordert. Dieses Verhalten wird mit den folgenden Steuerelementen geändert:
 
-- Right click on any rollable element to include it in an opposed roll. As long as the card is open, all rolls made
-  with a right click will be added to the opposed roll.
-- Alt + Right click on any rollable element to include it in a combined roll.
-- Shift + Left click on a rollable element will make a roll without asking for difficulty or bonus/penalty.
-- Ctrl + Left click on a rollable element will create a roll request. Only available for the GM.
-- Alt + Left click on sanity will prompt the player for minimum and maximum sanity loss.
+- Rechtsklick auf ein Element mit Würfelwurf um einen konkurrierenden Würfelwurf hinzuzufügen. Solange die Karte offen ist, werden alle Würfelwürfe, welche mit einem Rechtsklick gemacht werden dem Kräftemessen hinzugefügt.
+- Alt + Rechtsklick auf ein Element mit Würfelwurf um dies in einen kombinierten Würfelwurf einzuschließen.
+- Shift + Linksklick auf ein Element mit Würfelwurf wird einen Würfelwurf ausführen ohne vorher nach der Schwierigkeit, dem Bonus oder dem Malus zu fragen.
+- Strg + Linksklick auf ein Element mit Würfelwurf wird eine Würfelwurfanfrage erstellen. Dies ist nur für den Spielleiter verfügbar.
+- Alt + Linksklick auf die geistige Gesundheit wird den Spieler auffordern den minimalen und maximalen Verlust der geistigen Stabilität anzugeben.
