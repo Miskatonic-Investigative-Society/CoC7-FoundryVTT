@@ -7,7 +7,12 @@ Happy gaming !
 
 ## Upcoming Release
 
+**_!! This is intended to be the last release to support FoundryVTT v11 !!_**
+
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix language selection issue in Actor Importer, thanks to @ryotai-trpg #1791
+- Update to German manual, thanks to @Reloader975 #1787
 
 ## Version 7.13
 
