@@ -11,6 +11,7 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Allow armor be added to containers
 - Fix language selection issue in Actor Importer, thanks to @ryotai-trpg #1791
 - Update to German manual, thanks to @Reloader975 #1787
 
