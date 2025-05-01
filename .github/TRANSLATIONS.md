@@ -12,19 +12,19 @@ The following translations have more than 50 untranslated strings [are you able 
 
 [ko.json (268 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (216 untranslated strings)](./ABANDONED.md#ptbrjson)
+[pt-BR.json (216 untranslated strings)](./ABANDONED.md#pt-brjson)
 
 [ru.json (138 untranslated strings)](./ABANDONED.md#rujson)
 
 
 
-|Key|[cs](./MISSING.md#csjson)|[es](./MISSING.md#esjson)|[ja](./MISSING.md#jajson)|[uk](./MISSING.md#ukjson)|[zh-TW](./MISSING.md#zhtwjson)|
+|Key|[cs](./MISSING.md#csjson)|[es](./MISSING.md#esjson)|[ja](./MISSING.md#jajson)|[uk](./MISSING.md#ukjson)|[zh-TW](./MISSING.md#zh-twjson)|
 |:---|:---:|:---:|:---:|:---:|:---:|
 |**Remaining**:|**20**|**30**|**22**|**21**|**32**|
 |[CoC7.ActorCoCIDItemsAny](#coc7actorcociditemsany)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
 |[CoC7.AddArmor](#coc7addarmor)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
 |[CoC7.ClearExperiencePackageName](#coc7clearexperiencepackagename)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars](#coc7cocidflagkeysrtbackstoryinjuriesandscars)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars](#coc7cocidflagkeysrtbackstory-injuries-and-scars)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.EmptySpellList](#coc7emptyspelllist)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.EmptyStatusList](#coc7emptystatuslist)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Entities.Armor](#coc7entitiesarmor)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
