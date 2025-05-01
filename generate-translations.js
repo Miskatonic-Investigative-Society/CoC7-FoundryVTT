@@ -67,14 +67,14 @@ glob('./lang/*.json', {}, async function (er, files) {
   if (Object.keys(abandoned).length > 0) {
     output = output + 'The following translations have more than ' + maxMissingKeys + ' untranslated strings [are you able to help?](./ABANDONED.md)\n\n'
     Object.entries(abandoned).forEach(([key, values]) => {
-      output = output + '[' + key + '.json (' + Object.entries(abandoned[key]).length + ' untranslated strings)](./ABANDONED.md#' + (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') + ')\n\n'
+      output = output + '[' + key + '.json (' + Object.entries(abandoned[key]).length + ' untranslated strings)](./ABANDONED.md#' + (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9-]+/g, '') + ')\n\n'
     })
     output = output + '\n\n'
   }
   if (missing.length > 0) {
     output = output + '|Key|'
     Object.entries(langs).forEach(([key, value]) => {
-      output = output + '[' + key + '](./MISSING.md#' + (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') + ')|'
+      output = output + '[' + key + '](./MISSING.md#' + (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9-]+/g, '') + ')|'
     })
     output = output + '\n'
     output = output + '|:---|'
@@ -98,7 +98,7 @@ glob('./lang/*.json', {}, async function (er, files) {
           '|[' +
           key +
           '](#' +
-          key.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') +
+          key.toLowerCase().replace(/[^a-zA-Z0-9-]+/g, '') +
           ')|'
         Object.entries(langs).forEach(([lang, value]) => {
           output = output + (value.includes(key) ? '&#x274C;' : '&#9989;') + '|'
@@ -139,7 +139,7 @@ glob('./lang/*.json', {}, async function (er, files) {
         '[' +
         key +
         '.json (' + Object.entries(unordered[key]).length + ' untranslated strings)](#' +
-        (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') +
+        (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9-]+/g, '') +
         ')\n\n'
     })
     output = output + '\n'
@@ -175,7 +175,7 @@ glob('./lang/*.json', {}, async function (er, files) {
         '[' +
         key +
         '.json (' + Object.entries(abandoned[key]).length + ' untranslated strings)](#' +
-        (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') +
+        (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9-]+/g, '') +
         ')\n\n'
     })
     output = output + '\n'

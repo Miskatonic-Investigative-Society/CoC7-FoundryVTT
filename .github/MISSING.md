@@ -10,7 +10,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 [uk.json (21 untranslated strings)](#ukjson)
 
-[zh-TW.json (32 untranslated strings)](#zhtwjson)
+[zh-TW.json (32 untranslated strings)](#zh-twjson)
 
 
 ## cs.json

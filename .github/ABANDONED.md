@@ -8,7 +8,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 [ko.json (268 untranslated strings)](#kojson)
 
-[pt-BR.json (216 untranslated strings)](#ptbrjson)
+[pt-BR.json (216 untranslated strings)](#pt-brjson)
 
 [ru.json (138 untranslated strings)](#rujson)
 
