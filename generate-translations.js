@@ -74,7 +74,7 @@ glob('./lang/*.json', {}, async function (er, files) {
   if (missing.length > 0) {
     output = output + '|Key|'
     Object.entries(langs).forEach(([key, value]) => {
-      output = output + key + '|'
+      output = output + '[' + key + '](./MISSING.md#' + (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') + ')|'
     })
     output = output + '\n'
     output = output + '|:---|'
@@ -117,6 +117,49 @@ glob('./lang/*.json', {}, async function (er, files) {
     output = output + anchors
   }
   write('./.github/TRANSLATIONS.md', output)
+  const missingPerLang = Object.keys(unordered)
+    .filter(lang => unordered[lang].length > 0)
+    .sort()
+    .reduce((obj, key) => {
+      obj[key] = unordered[key]
+      return obj
+    }, {})
+  if (Object.keys(missingPerLang).length > 0) {
+    output = ''
+    output = output + '# Missing Translations.\n\n'
+    output =
+      output +
+      'Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better!'
+    output =
+      output +
+      ' Below is a list of translations keys on existing files that still need translated, based on `en.json`.\n\n'
+    Object.entries(missingPerLang).forEach(([key, values]) => {
+      output =
+        output +
+        '[' +
+        key +
+        '.json (' + Object.entries(unordered[key]).length + ' untranslated strings)](#' +
+        (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') +
+        ')\n\n'
+    })
+    output = output + '\n'
+    Object.entries(missingPerLang).forEach(([key, values]) => {
+      output = output + '## ' + key + '.json\n' + Object.entries(missingPerLang[key]).length + ' untranslated strings\n```\n'
+      values.forEach(sourceKey => {
+        output =
+          output +
+          '"' +
+          sourceKey +
+          '": "' +
+          source[sourceKey].replace(/\n/g, '\\n') +
+          '",\n'
+      })
+      output = output.substring(0, output.length - 2) + '\n```\n'
+    })
+    write('./.github/MISSING.md', output)
+  } else {
+    deleteAsync('./.github/MISSING.md')
+  }
   if (Object.keys(abandoned).length > 0) {
     output = ''
     output = output + '# Abandoned Translations.\n\n'

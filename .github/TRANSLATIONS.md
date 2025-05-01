@@ -18,7 +18,7 @@ The following translations have more than 50 untranslated strings [are you able 
 
 
 
-|Key|cs|es|ja|uk|zh-TW|
+|Key|[cs](./MISSING.md#csjson)|[es](./MISSING.md#esjson)|[ja](./MISSING.md#jajson)|[uk](./MISSING.md#ukjson)|[zh-TW](./MISSING.md#zhtwjson)|
 |:---|:---:|:---:|:---:|:---:|:---:|
 |**Remaining**:|**20**|**30**|**22**|**21**|**32**|
 |[CoC7.ActorCoCIDItemsAny](#coc7actorcociditemsany)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
