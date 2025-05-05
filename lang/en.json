@@ -1409,5 +1409,7 @@
   "CoC7.ErrorExperiencePackageNotInvestigator": "You can only use Experience Package on Investigators",
   "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
   "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
-  "CoC7.SheetExperiencePackageName": "Experience"
+  "CoC7.SheetExperiencePackageName": "Experience",
+
+  "CoC7.AlternativeNames": "Alternative names"
 }
