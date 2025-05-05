@@ -2,19 +2,19 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (486 untranslated strings)](#cnjson)
+[cn.json (497 untranslated strings)](#cnjson)
 
-[it.json (58 untranslated strings)](#itjson)
+[it.json (69 untranslated strings)](#itjson)
 
-[ko.json (268 untranslated strings)](#kojson)
+[ko.json (279 untranslated strings)](#kojson)
 
-[pt-BR.json (216 untranslated strings)](#pt-brjson)
+[pt-BR.json (227 untranslated strings)](#pt-brjson)
 
-[ru.json (138 untranslated strings)](#rujson)
+[ru.json (149 untranslated strings)](#rujson)
 
 
 ## cn.json
-486 untranslated strings
+497 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -432,7 +432,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.title": "Edit System ID (CoC ID)",
 "CoC7.CoCIDFlag.summary": "Set a group identifier that can be used to find the the most up to date version of this {type}. The System ID should use the English translation of the {type} to support localization across all languages.",
 "CoC7.CoCIDFlag.key": "System ID (CoC ID)",
+"CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
+"CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
+"CoC7.CoCIDFlag.keys.rt..backstory-significant-people": "Significant People",
+"CoC7.CoCIDFlag.keys.rt..backstory-traits": "Traits",
+"CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Treasured Possessions",
 "CoC7.CoCIDFlag.new": "- Custom System ID -",
 "CoC7.CoCIDFlag.guess": "Create System ID (CoC ID) based on current document.",
 "CoC7.CoCIDFlag.priority": "System ID Priority",
@@ -462,6 +467,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
 "CoC7.ActorCoCIDItemsUpdate": "Update",
+"CoC7.CoCIDCompendiumPopulate": "Set up your compendium",
+"CoC7.CoCIDCompendiumPopulateWarning": "This action can not be undone, please backup your module before populating it. Make sure your world era, language, and modules are set correctly.",
+"CoC7.CoCIDCompendiumPopulateDestination": "Destination Module",
+"CoC7.CoCIDCompendiumPopulateTypes": "Types",
+"CoC7.CoCIDCompendiumPopulateButton": "Populate",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
@@ -501,10 +511,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorExperiencePackageNotInvestigator": "You can only use Experience Package on Investigators",
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
-"CoC7.SheetExperiencePackageName": "Experience"
+"CoC7.SheetExperiencePackageName": "Experience",
+"CoC7.AlternativeNames": "Alternative names"
 ```
 ## it.json
-58 untranslated strings
+69 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -530,7 +541,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",
 "SETTINGS.DoNotPromptNoTargetSelectedHit": "When rolling weapon attacks without tokens do not requestion confirmation of no targets",
 "CoC7.InvestigatorWizard.ChooseAfterRoll": "Choose where to place rolled characteristics",
+"CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
+"CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
+"CoC7.CoCIDFlag.keys.rt..backstory-significant-people": "Significant People",
+"CoC7.CoCIDFlag.keys.rt..backstory-traits": "Traits",
+"CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Treasured Possessions",
 "CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
 "CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
 "CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
@@ -543,6 +559,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
 "CoC7.ActorCoCIDItemsUpdate": "Update",
+"CoC7.CoCIDCompendiumPopulate": "Set up your compendium",
+"CoC7.CoCIDCompendiumPopulateWarning": "This action can not be undone, please backup your module before populating it. Make sure your world era, language, and modules are set correctly.",
+"CoC7.CoCIDCompendiumPopulateDestination": "Destination Module",
+"CoC7.CoCIDCompendiumPopulateTypes": "Types",
+"CoC7.CoCIDCompendiumPopulateButton": "Populate",
 "CoC7.PauseName": "Time Stop",
 "CoC7.ClickableEvents.MouseOver.Title": "Permission to click",
 "CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",
@@ -563,10 +584,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorExperiencePackageNotInvestigator": "You can only use Experience Package on Investigators",
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
-"CoC7.SheetExperiencePackageName": "Experience"
+"CoC7.SheetExperiencePackageName": "Experience",
+"CoC7.AlternativeNames": "Alternative names"
 ```
 ## ko.json
-268 untranslated strings
+279 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -766,7 +788,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.title": "Edit System ID (CoC ID)",
 "CoC7.CoCIDFlag.summary": "Set a group identifier that can be used to find the the most up to date version of this {type}. The System ID should use the English translation of the {type} to support localization across all languages.",
 "CoC7.CoCIDFlag.key": "System ID (CoC ID)",
+"CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
+"CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
+"CoC7.CoCIDFlag.keys.rt..backstory-significant-people": "Significant People",
+"CoC7.CoCIDFlag.keys.rt..backstory-traits": "Traits",
+"CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Treasured Possessions",
 "CoC7.CoCIDFlag.new": "- Custom System ID -",
 "CoC7.CoCIDFlag.guess": "Create System ID (CoC ID) based on current document.",
 "CoC7.CoCIDFlag.priority": "System ID Priority",
@@ -796,6 +823,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
 "CoC7.ActorCoCIDItemsUpdate": "Update",
+"CoC7.CoCIDCompendiumPopulate": "Set up your compendium",
+"CoC7.CoCIDCompendiumPopulateWarning": "This action can not be undone, please backup your module before populating it. Make sure your world era, language, and modules are set correctly.",
+"CoC7.CoCIDCompendiumPopulateDestination": "Destination Module",
+"CoC7.CoCIDCompendiumPopulateTypes": "Types",
+"CoC7.CoCIDCompendiumPopulateButton": "Populate",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
@@ -835,10 +867,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorExperiencePackageNotInvestigator": "You can only use Experience Package on Investigators",
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
-"CoC7.SheetExperiencePackageName": "Experience"
+"CoC7.SheetExperiencePackageName": "Experience",
+"CoC7.AlternativeNames": "Alternative names"
 ```
 ## pt-BR.json
-216 untranslated strings
+227 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -1001,7 +1034,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "Archetype points {count} of {total} remaining {remaining}",
 "CoC7.InvestigatorWizard.CreateInstructions": "Click create to create your character. You Keeper needs to be online for the character to be created.",
 "CoC7.InvestigatorWizard.CreatingInvestigator": "Please wait while the keeper creates your investigator.",
+"CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
+"CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
+"CoC7.CoCIDFlag.keys.rt..backstory-significant-people": "Significant People",
+"CoC7.CoCIDFlag.keys.rt..backstory-traits": "Traits",
+"CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Treasured Possessions",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
 "CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
@@ -1016,6 +1054,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
 "CoC7.ActorCoCIDItemsUpdate": "Update",
+"CoC7.CoCIDCompendiumPopulate": "Set up your compendium",
+"CoC7.CoCIDCompendiumPopulateWarning": "This action can not be undone, please backup your module before populating it. Make sure your world era, language, and modules are set correctly.",
+"CoC7.CoCIDCompendiumPopulateDestination": "Destination Module",
+"CoC7.CoCIDCompendiumPopulateTypes": "Types",
+"CoC7.CoCIDCompendiumPopulateButton": "Populate",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
@@ -1055,10 +1098,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorExperiencePackageNotInvestigator": "You can only use Experience Package on Investigators",
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
-"CoC7.SheetExperiencePackageName": "Experience"
+"CoC7.SheetExperiencePackageName": "Experience",
+"CoC7.AlternativeNames": "Alternative names"
 ```
 ## ru.json
-138 untranslated strings
+149 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -1150,7 +1194,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TokenDropModeAverage": "Average rolls",
 "SETTINGS.TokenDropModeIgnore": "Do nothing",
 "CoC7.InvestigatorWizard.ChooseAfterRoll": "Choose where to place rolled characteristics",
+"CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
+"CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
+"CoC7.CoCIDFlag.keys.rt..backstory-significant-people": "Significant People",
+"CoC7.CoCIDFlag.keys.rt..backstory-traits": "Traits",
+"CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Treasured Possessions",
 "CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
 "CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
 "CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
@@ -1163,6 +1212,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
 "CoC7.ActorCoCIDItemsUpdate": "Update",
+"CoC7.CoCIDCompendiumPopulate": "Set up your compendium",
+"CoC7.CoCIDCompendiumPopulateWarning": "This action can not be undone, please backup your module before populating it. Make sure your world era, language, and modules are set correctly.",
+"CoC7.CoCIDCompendiumPopulateDestination": "Destination Module",
+"CoC7.CoCIDCompendiumPopulateTypes": "Types",
+"CoC7.CoCIDCompendiumPopulateButton": "Populate",
 "CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
 "CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
 "CoC7.Temporary": "Temporary",
@@ -1197,5 +1251,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorExperiencePackageNotInvestigator": "You can only use Experience Package on Investigators",
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
-"CoC7.SheetExperiencePackageName": "Experience"
+"CoC7.SheetExperiencePackageName": "Experience",
+"CoC7.AlternativeNames": "Alternative names"
 ```
