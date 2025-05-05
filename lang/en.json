@@ -1363,6 +1363,11 @@
   "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
   "CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",
   "CoC7.ActorCoCIDItemsUpdate": "Update",
+  "CoC7.CoCIDCompendiumPopulate": "Set up your compendium",
+  "CoC7.CoCIDCompendiumPopulateWarning": "This action can not be undone, please backup your module before populating it. Make sure your world era, language, and modules are set correctly.",
+  "CoC7.CoCIDCompendiumPopulateDestination": "Destination Module",
+  "CoC7.CoCIDCompendiumPopulateTypes": "Types",
+  "CoC7.CoCIDCompendiumPopulateButton": "Populate",
 
   "CoC7.TokenCreationRoll.Title": "Rollable detected",
   "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
