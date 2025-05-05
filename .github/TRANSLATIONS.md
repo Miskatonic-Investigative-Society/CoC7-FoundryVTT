@@ -2,67 +2,98 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The following translations are currently up to date **de**, **fr**, **pl**, **sv**
-
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cn.json (486 untranslated strings)](./ABANDONED.md#cnjson)
+[cn.json (497 untranslated strings)](./ABANDONED.md#cnjson)
 
-[it.json (58 untranslated strings)](./ABANDONED.md#itjson)
+[it.json (69 untranslated strings)](./ABANDONED.md#itjson)
 
-[ko.json (268 untranslated strings)](./ABANDONED.md#kojson)
+[ko.json (279 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (216 untranslated strings)](./ABANDONED.md#pt-brjson)
+[pt-BR.json (227 untranslated strings)](./ABANDONED.md#pt-brjson)
 
-[ru.json (138 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (149 untranslated strings)](./ABANDONED.md#rujson)
 
 
 
-|Key|[cs](./MISSING.md#csjson)|[es](./MISSING.md#esjson)|[ja](./MISSING.md#jajson)|[uk](./MISSING.md#ukjson)|[zh-TW](./MISSING.md#zh-twjson)|
-|:---|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**20**|**30**|**22**|**21**|**32**|
-|[CoC7.ActorCoCIDItemsAny](#coc7actorcociditemsany)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.AddArmor](#coc7addarmor)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.ClearExperiencePackageName](#coc7clearexperiencepackagename)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars](#coc7cocidflagkeysrtbackstory-injuries-and-scars)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.EmptySpellList](#coc7emptyspelllist)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.EmptyStatusList](#coc7emptystatuslist)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.Entities.Armor](#coc7entitiesarmor)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.Entities.ExperiencePackage](#coc7entitiesexperiencepackage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.EraGasLightPulp](#coc7eragaslightpulp)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ErrorExperiencePackageArchetype](#coc7errorexperiencepackagearchetype)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ErrorExperiencePackageNotGM](#coc7errorexperiencepackagenotgm)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ErrorExperiencePackageNotInvestigator](#coc7errorexperiencepackagenotinvestigator)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ExperiencePackageApplySanity](#coc7experiencepackageapplysanity)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ExperiencePackageBackground](#coc7experiencepackagebackground)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ExperiencePackageDialogTitle](#coc7experiencepackagedialogtitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ExperiencePackageSkill](#coc7experiencepackageskill)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ExperiencePackageSpellList](#coc7experiencepackagespelllist)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.Lck](#coc7lck)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
-|[CoC7.PromptAddInjuryScar](#coc7promptaddinjuryscar)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.PromptAddSpells](#coc7promptaddspells)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.PromptAddStatus](#coc7promptaddstatus)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.RollDifficultyImpossible](#coc7rolldifficultyimpossible)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.RollDifficultyImpossibleTitle](#coc7rolldifficultyimpossibletitle)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.SANSameLossAsMythosGain](#coc7sansamelossasmythosgain)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.Settings.ShowWorldEra.Hint](#coc7settingsshowworlderahint)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.Settings.ShowWorldEra.Name](#coc7settingsshowworlderaname)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.SheetExperiencePackageName](#coc7sheetexperiencepackagename)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.SkillExperiencePackage](#coc7skillexperiencepackage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.SkillTotalExperiencePackagePoints](#coc7skilltotalexperiencepackagepoints)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.rangeCombatBlastDamage](#coc7rangecombatblastdamage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[SETTINGS.DoNotPromptNoTargetSelected](#settingsdonotpromptnotargetselected)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
-|[SETTINGS.DoNotPromptNoTargetSelectedHit](#settingsdonotpromptnotargetselectedhit)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
-|[SETTINGS.hidePartValues](#settingshidepartvalues)|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
+|Key|[cs](./MISSING.md#csjson)|[de](./MISSING.md#dejson)|[es](./MISSING.md#esjson)|[fr](./MISSING.md#frjson)|[ja](./MISSING.md#jajson)|[pl](./MISSING.md#pljson)|[sv](./MISSING.md#svjson)|[uk](./MISSING.md#ukjson)|[zh-TW](./MISSING.md#zh-twjson)|
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|**Remaining**:|**31**|**11**|**41**|**11**|**33**|**11**|**11**|**32**|**43**|
+|[CoC7.ActorCoCIDItemsAny](#coc7actorcociditemsany)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.AddArmor](#coc7addarmor)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.AlternativeNames](#coc7alternativenames)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ClearExperiencePackageName](#coc7clearexperiencepackagename)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDCompendiumPopulate](#coc7cocidcompendiumpopulate)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDCompendiumPopulateButton](#coc7cocidcompendiumpopulatebutton)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDCompendiumPopulateDestination](#coc7cocidcompendiumpopulatedestination)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDCompendiumPopulateTypes](#coc7cocidcompendiumpopulatetypes)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDCompendiumPopulateWarning](#coc7cocidcompendiumpopulatewarning)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs](#coc7cocidflagkeysrtbackstory-ideology-and-beliefs)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars](#coc7cocidflagkeysrtbackstory-injuries-and-scars)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations](#coc7cocidflagkeysrtbackstory-meaningful-locations)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDFlag.keys.rt..backstory-significant-people](#coc7cocidflagkeysrtbackstory-significant-people)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDFlag.keys.rt..backstory-traits](#coc7cocidflagkeysrtbackstory-traits)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions](#coc7cocidflagkeysrtbackstory-treasured-possessions)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.EmptySpellList](#coc7emptyspelllist)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.EmptyStatusList](#coc7emptystatuslist)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.Entities.Armor](#coc7entitiesarmor)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.Entities.ExperiencePackage](#coc7entitiesexperiencepackage)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.EraGasLightPulp](#coc7eragaslightpulp)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ErrorExperiencePackageArchetype](#coc7errorexperiencepackagearchetype)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ErrorExperiencePackageNotGM](#coc7errorexperiencepackagenotgm)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ErrorExperiencePackageNotInvestigator](#coc7errorexperiencepackagenotinvestigator)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ExperiencePackageApplySanity](#coc7experiencepackageapplysanity)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ExperiencePackageBackground](#coc7experiencepackagebackground)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ExperiencePackageDialogTitle](#coc7experiencepackagedialogtitle)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ExperiencePackageSkill](#coc7experiencepackageskill)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ExperiencePackageSpellList](#coc7experiencepackagespelllist)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.Lck](#coc7lck)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
+|[CoC7.PromptAddInjuryScar](#coc7promptaddinjuryscar)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.PromptAddSpells](#coc7promptaddspells)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.PromptAddStatus](#coc7promptaddstatus)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.RollDifficultyImpossible](#coc7rolldifficultyimpossible)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.RollDifficultyImpossibleTitle](#coc7rolldifficultyimpossibletitle)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.SANSameLossAsMythosGain](#coc7sansamelossasmythosgain)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.Settings.ShowWorldEra.Hint](#coc7settingsshowworlderahint)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.Settings.ShowWorldEra.Name](#coc7settingsshowworlderaname)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.SheetExperiencePackageName](#coc7sheetexperiencepackagename)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.SkillExperiencePackage](#coc7skillexperiencepackage)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.SkillTotalExperiencePackagePoints](#coc7skilltotalexperiencepackagepoints)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.rangeCombatBlastDamage](#coc7rangecombatblastdamage)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[SETTINGS.DoNotPromptNoTargetSelected](#settingsdonotpromptnotargetselected)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[SETTINGS.DoNotPromptNoTargetSelectedHit](#settingsdonotpromptnotargetselectedhit)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[SETTINGS.hidePartValues](#settingshidepartvalues)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
 ##### CoC7.ActorCoCIDItemsAny
 ```  "CoC7.ActorCoCIDItemsAny": "Update (Any) specialization skills",```
 ##### CoC7.AddArmor
 ```  "CoC7.AddArmor": "Add armor",```
+##### CoC7.AlternativeNames
+```  "CoC7.AlternativeNames": "Alternative names",```
 ##### CoC7.ClearExperiencePackageName
 ```  "CoC7.ClearExperiencePackageName": "Clear Experience Package name",```
+##### CoC7.CoCIDCompendiumPopulate
+```  "CoC7.CoCIDCompendiumPopulate": "Set up your compendium",```
+##### CoC7.CoCIDCompendiumPopulateButton
+```  "CoC7.CoCIDCompendiumPopulateButton": "Populate",```
+##### CoC7.CoCIDCompendiumPopulateDestination
+```  "CoC7.CoCIDCompendiumPopulateDestination": "Destination Module",```
+##### CoC7.CoCIDCompendiumPopulateTypes
+```  "CoC7.CoCIDCompendiumPopulateTypes": "Types",```
+##### CoC7.CoCIDCompendiumPopulateWarning
+```  "CoC7.CoCIDCompendiumPopulateWarning": "This action can not be undone, please backup your module before populating it. Make sure your world era, language, and modules are set correctly.",```
+##### CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs
+```  "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",```
 ##### CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars
 ```  "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",```
+##### CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations
+```  "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",```
+##### CoC7.CoCIDFlag.keys.rt..backstory-significant-people
+```  "CoC7.CoCIDFlag.keys.rt..backstory-significant-people": "Significant People",```
+##### CoC7.CoCIDFlag.keys.rt..backstory-traits
+```  "CoC7.CoCIDFlag.keys.rt..backstory-traits": "Traits",```
+##### CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions
+```  "CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Treasured Possessions",```
 ##### CoC7.EmptySpellList
 ```  "CoC7.EmptySpellList": "Add a spell by dropping it here.",```
 ##### CoC7.EmptyStatusList
