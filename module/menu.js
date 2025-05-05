@@ -5,6 +5,7 @@ import { CoC7ActorImporterDialog } from './apps/actor-importer-dialog.js'
 import { CoC7ContentLinkDialog } from './apps/coc7-content-link-dialog.js'
 import { CoC7InvestigatorWizard } from './apps/investigator-wizard.js'
 import CoCIDActorUpdateItems from './apps/coc-id-actor-update-items.js'
+import CoCIDCompendiumPopulate from './apps/coc-id-compendium-populate.js'
 
 class CoC7MenuLayer extends (foundry.canvas?.layers?.PlaceablesLayer ?? PlaceablesLayer) {
   constructor () {
@@ -76,6 +77,13 @@ export class CoC7Menu {
           name: 'actor-coc-id-best',
           title: 'CoC7.ActorCoCIDItemsBest',
           onClick: async () => await CoCIDActorUpdateItems.create()
+        },
+        'cocid-compendium-import': {
+          button: true,
+          icon: 'fas fa-book-user',
+          name: 'cocid-compendium-import',
+          title: 'CoC7.CoCIDCompendiumPopulate',
+          onClick: async () => await CoCIDCompendiumPopulate.create()
         },
         'actor-import': {
           button: true,
