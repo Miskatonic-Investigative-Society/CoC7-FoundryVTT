@@ -14,6 +14,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Add alternative names text block to spell sheet
 - Allow armor be added to containers
 - Fix language selection issue in Actor Importer, thanks to @ryotai-trpg #1791
+- Update to German localization, thanks to @MrViso #1803
 - Update to German manual, thanks to @Reloader975 #1787
 
 ## Version 7.13
