@@ -1,8 +1,8 @@
 <form class="{{cssClass}} flexcol-coc7" autocomplete="off">
-  <div class="container expanded">
+  <div class="flexcol container expanded">
     <header class="sheet-header">
-      <div class="sheet-portrait">
-        <img class="photo" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
+      <div class="sheet-portrait" style="flex: 0 0 110px;">
+        <img class="photo" src="{{item.img}}" title="{{item.name}}" data-edit="img" style="height: 100px;" />
       </div>
       <div class="infos">
         <div class="row flexrow-coc7">
@@ -10,19 +10,22 @@
         </div>
         <div class="row flexrow-coc7">
           <label>{{localize 'CoC7.ItemQuantity'}}</label>
-          <input type="text" name="system.quantity" value="{{data.system.quantity}}" data-dtype="Number" />
+          <input type="text" name="system.quantity" value="{{data.system.quantity}}" data-dtype="Number" style="flex: 0 0 40px;" />
         </div>
         <div class="row flexrow-coc7">
           <label>{{localize 'CoC7.ItemWeight'}}</label>
-          <input type="text" name="system.weight" value="{{data.system.weight}}" data-dtype="Number" />
+          <input type="text" name="system.weight" value="{{data.system.weight}}" data-dtype="Number" style="flex: 0 0 40px;" />
+        </div>
+        <div class="row flexrow-coc7">
+          <label>{{localize 'CoC7.ItemPrice'}}</label>
+          <input class="item-price" style="flex: 0 0 80px;" type="text" value="{{lookup data.system.price worldEra}}" placeholder="0" readonly="readonly" />
         </div>
       </div>
-      <div class="flex1"></div>
     </header>
-
     <nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;" class="sheet-navigation tabs" data-group="primary">
       <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.Description" }}</a>
       <a style="line-height: 24px;" class="keeper-only-tab item" data-tab="effects" title="{{localize 'CoC7.Effects'}}"><i class="game-icon game-icon-aura"></i></a>
+      <a style="line-height: 24px;" class="keeper-only-tab item" data-tab="costs" title="{{localize 'CoC7.ItemPrice'}}"><i class="fas fa-tag"></i></a>
       {{#if isKeeper}}
         <a style="line-height: 24px;" class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
       {{/if}}
@@ -32,8 +35,28 @@
       <div class="tab description flexrow-coc7 active" style="border-top: 2px groove #eeede0;padding: 0 0 0 5px;overflow: auto;" data-group="primary" data-tab="description">
         {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
-      <div class="tab effects" data-group="primary" data-tab="effects">
+      <div class="tab effects" style="border-top: 2px groove #eeede0;padding: 0 0 0 5px;overflow: auto;" data-group="primary" data-tab="effects">
         {{> "systems/CoC7/templates/common/active-effects.hbs"}}
+      </div>
+      <div class="tab effects" style="border-top: 2px groove #eeede0;padding: 0 0 0 5px;overflow: auto;" data-group="primary" data-tab="costs">
+        <div class="form-group" style="align-items: flex-start;">
+          <label>{{ localize "CoC7.EraAvailability" }}</label>
+          <div class="skill-attributes" style="margin-bottom: 6px;flex:3;" data-set="eras">
+            {{#each _eras as |era key|}}
+              <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{era.name}}</span>
+            {{/each}}
+          </div>
+        </div>
+        <div class="form-group">
+          {{log _eras}}
+          {{#each _eras as |era key|}}
+            {{#if era.isEnabled}}
+              <div style="display: flex; flex: 0 0 48%;">
+                <span class="item-era-price flex1" style="line-height: 20px;">{{localize era.name}} :</span><input class="item-price" style="flex: 0 0 80px;" type="text" name="system.price.{{era.id}}" value="{{era.price}}" placeholder="0" />
+              </div>
+            {{/if}}
+          {{/each}}
+        </div>
       </div>
       {{#if isKeeper}}
         <div class="tab keeper flexcol-coc7" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
