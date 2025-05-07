@@ -1,7 +1,7 @@
 export default function (application, html, data) {
   if ((application.document.getFlag('CoC7', 'css-adventure-entry') ?? false)) {
     if (!html.classList.contains('coc7-adventure-entry')) {
-      html.classList.add('coc7-adventure-entry', 'theme-light')
+      html.classList.add('coc7-adventure-entry')
     }
     if ((application.document.getFlag('CoC7', 'fixed-adventure-heading') ?? false) && !html.classList.contains('fixed-adventure-heading')) {
       html.classList.add('fixed-adventure-heading')
