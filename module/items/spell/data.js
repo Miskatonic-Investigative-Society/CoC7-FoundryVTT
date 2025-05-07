@@ -1,5 +1,4 @@
-/* global ChatMessage, Dialog, foundry, game, Roll, renderTemplate, ui */
-import { CoC7Utilities } from '../../utilities.js'
+/* global ChatMessage, foundry, game, renderTemplate, ui */
 import { CoC7Item } from '../item.js'
 import { SanCheckCard } from '../../chat/cards/san-check.js'
 
@@ -19,55 +18,71 @@ export class CoC7Spell extends CoC7Item {
     }
     const costs = foundry.utils.duplicate(this.system.costs)
     const losses = []
-    let convertSurplusIntoHitPoints
-    costs.magicPoints = CoC7Utilities.isFormula(costs.magicPoints)
-      ? (await new Roll(costs.magicPoints).roll({ async: true })).total
-      : parseInt(costs.magicPoints)
-    if (
-      costs.magicPoints &&
-      costs.magicPoints > this.actor.system.attribs.mp.value
-    ) {
-      convertSurplusIntoHitPoints = await new Promise(resolve => {
-        const convertedHitPoints =
-          costs.magicPoints - this.actor.system.attribs.mp.value
-        const convertedMagicPoints = costs.magicPoints - convertedHitPoints
-        const data = {
-          title: ' ',
-          content: game.i18n.format('CoC7.NotEnoughMagicPoints', {
-            actorMagicPoints: this.actor.system.attribs.mp.value,
-            convertedHitPoints,
-            convertedMagicPoints,
-            originalMagicPoints: costs.magicPoints,
-            spell: this.name
-          }),
-          buttons: {
-            cancel: {
-              icon: '<i class="fas fa-times"></i>',
-              label: game.i18n.localize('CoC7.Cancel'),
-              callback: () => {
-                return resolve(false)
-              }
-            },
-            proceed: {
-              icon: '<i class="fas fa-check"></i>',
-              label: game.i18n.localize('CoC7.Proceed'),
-              callback: () => {
-                costs.hitPoints = convertedHitPoints
-                costs.magicPoints = convertedMagicPoints
-                return resolve(true)
-              }
-            }
-          },
-          default: 'cancel',
-          classes: ['coc7', 'dialog']
-        }
-        new Dialog(data).render(true)
-      })
-      if (!convertSurplusIntoHitPoints) return
-    }
-    for (const [key, value] of Object.entries(costs)) {
-      if (!value || Number(value) === 0) continue
-      losses.push(await this.resolveLosses(key, value, priv))
+    // TODO: Temporary disabled while automation is improved
+    // let convertSurplusIntoHitPoints
+    // costs.magicPoints = CoC7Utilities.isFormula(costs.magicPoints)
+    //   ? (await new Roll(costs.magicPoints).roll({ async: true })).total
+    //   : parseInt(costs.magicPoints)
+    // if (
+    //   costs.magicPoints &&
+    //   costs.magicPoints > this.actor.system.attribs.mp.value
+    // ) {
+    //   convertSurplusIntoHitPoints = await new Promise(resolve => {
+    //     const convertedHitPoints =
+    //       costs.magicPoints - this.actor.system.attribs.mp.value
+    //     const convertedMagicPoints = costs.magicPoints - convertedHitPoints
+    //     const data = {
+    //       title: ' ',
+    //       content: game.i18n.format('CoC7.NotEnoughMagicPoints', {
+    //         actorMagicPoints: this.actor.system.attribs.mp.value,
+    //         convertedHitPoints,
+    //         convertedMagicPoints,
+    //         originalMagicPoints: costs.magicPoints,
+    //         spell: this.name
+    //       }),
+    //       buttons: {
+    //         cancel: {
+    //           icon: '<i class="fas fa-times"></i>',
+    //           label: game.i18n.localize('CoC7.Cancel'),
+    //           callback: () => {
+    //             return resolve(false)
+    //           }
+    //         },
+    //         proceed: {
+    //           icon: '<i class="fas fa-check"></i>',
+    //           label: game.i18n.localize('CoC7.Proceed'),
+    //           callback: () => {
+    //             costs.hitPoints = convertedHitPoints
+    //             costs.magicPoints = convertedMagicPoints
+    //             return resolve(true)
+    //           }
+    //         }
+    //       },
+    //       default: 'cancel',
+    //       classes: ['coc7', 'dialog']
+    //     }
+    //     new Dialog(data).render(true)
+    //   })
+    //   if (!convertSurplusIntoHitPoints) return
+    // }
+    for (const [key, loss] of Object.entries(costs)) {
+      console.log('costs', key, loss)
+      if (!loss || Number(loss) === 0) continue
+      let characteristicName = game.i18n.localize('CoC7.OtherCosts')
+      switch (key) {
+        case 'hitPoints':
+          characteristicName = game.i18n.localize('CoC7.HitPoints')
+          break
+        case 'sanity':
+          characteristicName = game.i18n.localize('CoC7.SanityPoints')
+          break
+        case 'magicPoints':
+          characteristicName = game.i18n.localize('CoC7.MagicPoints')
+          break
+        case 'power':
+          characteristicName = game.i18n.localize('CHARAC.Power')
+      }
+      losses.push({ characteristicName, loss })
     }
     const template = 'systems/CoC7/templates/items/spell/chat.html'
     const description = this.system.description.value
@@ -84,37 +99,38 @@ export class CoC7Spell extends CoC7Item {
     return await ChatMessage.create(chatData)
   }
 
-  async resolveLosses (characteristic, value, priv) {
-    let characteristicName
-    let loss
-    if (CoC7Utilities.isFormula(value)) {
-      loss = (await new Roll(value).roll({ async: true })).total
-    } else {
-      loss = parseInt(value)
-    }
-    const actorData = this.actor.system
-    switch (characteristic) {
-      case 'hitPoints':
-        characteristicName = game.i18n.localize('CoC7.HitPoints')
-        this.actor.dealDamage(loss, { ignoreArmor: true })
-        break
-      case 'sanity':
-        characteristicName = game.i18n.localize('CoC7.SanityPoints')
-        loss = await this.grantSanityLoss(loss, priv)
-        break
-      case 'magicPoints':
-        characteristicName = game.i18n.localize('CoC7.MagicPoints')
-        this.actor.setMp(actorData.attribs.mp.value - loss)
-        break
-      case 'power':
-        characteristicName = game.i18n.localize('CHARAC.Power')
-        this.actor.update({
-          'system.characteristics.pow.value':
-            actorData.characteristics.pow.value - loss
-        })
-    }
-    return { characteristicName, loss }
-  }
+  // TODO: Temporary disabled while automation is improved
+  // async resolveLosses (characteristic, value, priv) {
+  //   let characteristicName
+  //   let loss
+  //   if (CoC7Utilities.isFormula(value)) {
+  //     loss = (await new Roll(value).roll({ async: true })).total
+  //   } else {
+  //     loss = parseInt(value)
+  //   }
+  //   const actorData = this.actor.system
+  //   switch (characteristic) {
+  //     case 'hitPoints':
+  //       characteristicName = game.i18n.localize('CoC7.HitPoints')
+  //       this.actor.dealDamage(loss, { ignoreArmor: true })
+  //       break
+  //     case 'sanity':
+  //       characteristicName = game.i18n.localize('CoC7.SanityPoints')
+  //       loss = await this.grantSanityLoss(loss, priv)
+  //       break
+  //     case 'magicPoints':
+  //       characteristicName = game.i18n.localize('CoC7.MagicPoints')
+  //       this.actor.setMp(actorData.attribs.mp.value - loss)
+  //       break
+  //     case 'power':
+  //       characteristicName = game.i18n.localize('CHARAC.Power')
+  //       this.actor.update({
+  //         'system.characteristics.pow.value':
+  //           actorData.characteristics.pow.value - loss
+  //       })
+  //   }
+  //   return { characteristicName, loss }
+  // }
 
   /** Bypass the Sanity check and just roll the damage */
   async grantSanityLoss (value, priv) {
