@@ -12,6 +12,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Add alternative names text block to spell sheet
+- Add price tab to items, show world era price in header
 - Allow armor be added to containers
 - Fix dark theme journal link colours
 - Fix language selection issue in Actor Importer, thanks to @ryotai-trpg #1791

@@ -1,5 +1,7 @@
 /* global foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
+import { COC7 } from '../../config.js'
+import { CoC7Utilities } from '../../utilities.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 
 /**
@@ -12,7 +14,7 @@ export class CoC7ItemSheetV2 extends foundry.appv1.sheets.ItemSheet {
    */
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheetV2', 'item'],
+      classes: ['coc7', 'sheet', 'item'],
       template: 'systems/CoC7/templates/items/item-sheetV2.html',
       width: 500,
       height: 450,
@@ -58,7 +60,20 @@ export class CoC7ItemSheetV2 extends foundry.appv1.sheets.ItemSheet {
       }
     )
 
+    sheetData._eras = []
+    for (const [key, value] of Object.entries(COC7.eras)) {
+      sheetData._eras.push({
+        price: this.item.system.price[key] ?? 0,
+        id: key,
+        name: game.i18n.localize(value),
+        isEnabled: (this.item.flags?.CoC7?.cocidFlag?.eras ?? {})[key] === true
+      })
+    }
+    sheetData._eras.sort(CoC7Utilities.sortByNameKey)
+
     sheetData.isKeeper = game.user.isGM
+
+    sheetData.worldEra = game.settings.get('CoC7', 'worldEra')
 
     return sheetData
   }
@@ -72,8 +87,19 @@ export class CoC7ItemSheetV2 extends foundry.appv1.sheets.ItemSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return
 
+    html.find('.toggle-switch').click(this._onClickToggle.bind(this))
+
     html
       .find('.effect-control')
       .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.item))
+  }
+
+  async _onClickToggle (event) {
+    event.preventDefault()
+    const propertyId = event.currentTarget.closest('.toggle-switch').dataset.property
+    await this.item.toggleProperty(
+      propertyId,
+      false
+    )
   }
 }
