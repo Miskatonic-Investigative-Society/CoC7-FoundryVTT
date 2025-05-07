@@ -18,7 +18,7 @@ export class CoC7Spell extends CoC7Item {
     }
     const costs = foundry.utils.duplicate(this.system.costs)
     const losses = []
-    // TODO: Temporary disabled while automation is improved
+    // TODO: Temporary disable while automation is improved
     // let convertSurplusIntoHitPoints
     // costs.magicPoints = CoC7Utilities.isFormula(costs.magicPoints)
     //   ? (await new Roll(costs.magicPoints).roll({ async: true })).total
@@ -99,7 +99,7 @@ export class CoC7Spell extends CoC7Item {
     return await ChatMessage.create(chatData)
   }
 
-  // TODO: Temporary disabled while automation is improved
+  // TODO: Temporary disable while automation is improved
   // async resolveLosses (characteristic, value, priv) {
   //   let characteristicName
   //   let loss
