@@ -38,6 +38,16 @@ div.coc7.dialog {
   }
 }
 
+.theme-light {
+  form.coc7-adventure-entry.sheet,
+  div.coc7-adventure-entry.sheet {
+    section.journal-entry-content,
+    div.editor.prosemirror {
+      background: url(./assets/art/page.webp) repeat;
+    }
+  }
+}
+
 form.coc7-adventure-entry.sheet,
 div.coc7-adventure-entry.sheet {
   &.fixed-adventure-heading header.journal-header,
@@ -47,11 +57,6 @@ div.coc7-adventure-entry.sheet {
 
   nav.pages-list {
     font-family: Voltaire;
-  }
-
-  section.journal-entry-content,
-  div.editor.prosemirror {
-      background: url(./assets/art/page.webp) repeat;
   }
 
   section.journal-entry-content {
@@ -364,10 +369,11 @@ div.coc7-adventure-entry.sheet {
     }
 
     section.tmi-toggleable p.toggle {
-      background: #DDD;
+      background: var(--content-link-background);
+      color: var(--content-link-text-color);
       padding: 1px 0.8em;
       display: inline;
-      border: 1px solid var(--color-border-dark-tertiary);
+      border: 1px solid var(--content-link-border-color);
       border-radius: 2px;
       cursor: pointer;
     }

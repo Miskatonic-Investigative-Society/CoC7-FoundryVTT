@@ -573,6 +573,7 @@ export class CoC7RangeInitiator {
     check.actorKey = this.actorKey
     check.actor = this.actorKey
     check.item = this.itemId
+    check.canBePushed = false
     // Combat roll cannot be blind or unknown
     check.isBlind = false
     check.isUnkonwn = false
@@ -825,6 +826,28 @@ export class CoC7RangeInitiator {
         if (!target) target = chatHelper.getActorFromKey(h.roll.targetKey) // REFACTORING (2)
         if (target) targetName = target.name
 
+        const blastRangeDamage = []
+        if (this.weapon.system?.properties?.blst ?? false) {
+          const blastRadius = parseInt(this.weapon.system.blastRadius)
+          if (!isNaN(blastRadius)) {
+            blastRangeDamage.push(game.i18n.format('CoC7.rangeCombatBlastDamage', {
+              min: 0,
+              max: blastRadius,
+              total
+            }))
+            blastRangeDamage.push(game.i18n.format('CoC7.rangeCombatBlastDamage', {
+              min: blastRadius,
+              max: 2 * blastRadius,
+              total: Math.floor(total / 2)
+            }))
+            blastRangeDamage.push(game.i18n.format('CoC7.rangeCombatBlastDamage', {
+              min: 2 * blastRadius,
+              max: 3 * blastRadius,
+              total: Math.floor(total / 4)
+            }))
+          }
+        }
+
         this.damage.push({
           targetKey: h.roll.targetKey,
           targetName,
@@ -835,7 +858,8 @@ export class CoC7RangeInitiator {
           resultString: game.i18n.format('CoC7.rangeCombatDamage', {
             name: targetName,
             total
-          })
+          }),
+          blastRangeDamage
         })
       }
     }

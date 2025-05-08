@@ -206,13 +206,15 @@
       .details {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr auto auto 3fr;
         gap: 0 0.1rem;
         grid-auto-flow: row;
         grid-template-areas:
           'type'
           'cost'
-          'other';
+          'other'
+          'flags'
+          'names';
 
         .type {
           justify-content: center;
@@ -284,6 +286,14 @@
           input {
             flex: 1;
           }
+        }
+
+        .combat {
+          grid-area: flags;
+        }
+
+        .names {
+          grid-area: names;
         }
       }
     }

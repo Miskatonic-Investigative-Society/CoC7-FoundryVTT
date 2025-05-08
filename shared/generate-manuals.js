@@ -131,6 +131,10 @@ const sources = {
         file: 'commands_cheat_sheet.md'
       },
       {
+        name: 'Compendiums',
+        file: 'compendiums.md'
+      },
+      {
         name: 'Creating your first investigator',
         file: 'first_investigator.md'
       },

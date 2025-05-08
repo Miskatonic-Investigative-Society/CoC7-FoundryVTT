@@ -48,6 +48,14 @@ export class CoC7SpellSheet extends foundry.appv1.sheets.ItemSheet {
       }
     )
 
+    sheetData.enrichedDescriptionAlternativeNames = await TextEditor.enrichHTML(
+      sheetData.data.system.description.alternativeNames,
+      {
+        async: true,
+        secrets: sheetData.editable
+      }
+    )
+
     return sheetData
   }
 

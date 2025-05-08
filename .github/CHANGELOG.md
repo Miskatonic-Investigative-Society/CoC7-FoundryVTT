@@ -7,10 +7,33 @@ Happy gaming !
 
 ## Upcoming Release
 
+**_!! This is intended to be the last release to support FoundryVTT v11 !!_**
+
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add alternative names text block to spell sheet
+- Add price tab to items, show world era price in header
+- Allow armor be added to containers
+- Fix dark theme journal link colours
+- Fix language selection issue in Actor Importer, thanks to @ryotai-trpg #1791
+- Temporary disable spell cost automation
+- Update to German localization, thanks to @MrViso #1803
+- Update to German manual, thanks to @Reloader975 #1787
+
+## Version 7.13
+
+**_!! This is intended to be the last release to support FoundryVTT v11 !!_**
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Allow weapons to use any skills
+- Show damage ranges for blast weapons instead of single target inflict button
 - Update Dice So Nice decader formatting for Dice So Nice v5.0.0
-- Update to Swedish localization, thanks to @Rangertheman #1766
+- Update to French localization, thanks to @vonv #1779
+- Update to German localization, thanks to @MrViso #1776
+- Update to Polish localization, thanks to @everyonecancode #1777
+- Update to Swedish localization, thanks to @Rangertheman #1766, #1783, and #1785
+- Update to Taiwanese localization, thanks to @zeteticl. #1780
 
 ## Version 7.12
 

@@ -322,9 +322,15 @@
         <div class="coc7 damage-results" data-target-name="{{d.targetName}}" data-target-key="{{targetKey}}" data-total="{{d.total}}" data-critical="{{d.critical}}" data-dealt="{{d.dealt}}" data-result-string="{{resultString}}">
           <div class="dice-roll">
             <div class="dice-result">
+              {{#each d.blastRangeDamage as |blast|}}
+                <div class="dice-formula" style="line-height:16px;margin-bottom:2px">
+                  {{blast}}
+                </div>
+              {{else}}
               <div class="dice-formula {{#if d.critical}}critical{{/if}}" style="line-height: 16px;margin-bottom: 2px;">
                 {{resultString}} {{#if d.dealt}}<i class="fas fa-check"></i>{{/if}}
               </div>
+              {{/each}}
               <div class="dice-tooltip" style="display: none;">
                 <section class="tooltip-part">
                   <div class="dice ten-dice">
@@ -354,13 +360,15 @@
           </div>
         </div>
       {{/each}}
-      {{#unless damageDealt}}
-        {{#if didAnyShotHit}}
-          <div class="card-buttons gm-visible-only">
-            <button data-action="deal-range-damage">{{ localize 'CoC7.InflictPain' }}</button>
-          </div>
-        {{/if}}
+      {{#unless weapon.system.properties.blst}}
+        {{#unless damageDealt}}
+          {{#if didAnyShotHit}}
+            <div class="card-buttons gm-visible-only">
+              <button data-action="deal-range-damage">{{ localize 'CoC7.InflictPain' }}</button>
+            </div>
+          {{/if}}
+        {{/unless}}
       {{/unless}}
     {{/if}}
-  </div>
+   </div>
 </div>

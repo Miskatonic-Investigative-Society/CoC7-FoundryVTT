@@ -1,0 +1,31 @@
+<form autocomplete="off" class="flexcol-coc7">
+  <div class="form-fields">
+    <p style="background-color: rgba(255, 166, 0, 0.5); outline: 2px dashed rgba(255, 100, 0, 0.3); padding: 0.5rem;"><i class="fas fa-exclamation-triangle"></i> {{localize 'CoC7.CoCIDCompendiumPopulateWarning'}}</p>
+    <div class="form-group flexrow-coc7">
+      <label for="coc-id-actor-update-items-parent" style="flex: 1">{{localize 'CoC7.CoCIDCompendiumPopulateDestination'}}:</label>
+      <div style="flex: 2">
+        <select name="pack">
+          {{selectOptions object.packLists selected=object.packList}}
+        </select>
+      </div>
+    </div>
+    <div class="flexrow-coc7" style="margin: 4px 0;">
+      <label style="flex: 1">{{localize 'CoC7.CoCIDCompendiumPopulateTypes'}}</label>
+      <div style="flex: 2">
+        {{#each object.types as |type|}}
+          <span class="toggle-switch{{#if type.toggle}} switched-on{{/if}}" data-property="{{type.id}}" style="cursor: pointer">{{type.label}}</span>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="dialog-buttons flexrow-coc7">
+      <button class="submit-button" data-button="update">
+        <i class="fas fa-check"></i>
+        {{localize 'CoC7.CoCIDCompendiumPopulateButton'}}
+      </button>
+      <button class="submit-button" data-button="cancel">
+        <i class="fas fa-ban"></i>
+        {{localize 'Cancel'}}
+      </button>
+  </div>
+</form>

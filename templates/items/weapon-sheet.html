@@ -7,32 +7,12 @@
         <div class="flexrow-coc7" style="flex: 2;flex-wrap: nowrap;">
           {{#if hasOwner}}
             <select class="attribute-dtype" name="system.skill.main.id">
-              {{#select data.system.skill.main.id}}
-                {{#if data.system.properties.rngd}}
-                  {{#each firearmSkills as |cbs|}}
-                    <option value="{{cbs.id}}">{{cbs.name}}</option>
-                  {{/each}}
-                {{else}}
-                  {{#each fightingSkills as |cbs|}}
-                    <option value="{{cbs.id}}">{{cbs.name}}</option>
-                  {{/each}}
-                {{/if}}
-              {{/select}}
+              {{selectOptions weaponSkillGroups selected=data.system.skill.main.id localize=true valueAttr="id" nameAttr="id" labelAttr="name"}}
             </select>
 
             {{#if usesAlternateSkill}}
               <select class="attribute-dtype" name="system.skill.alternativ.id">
-                {{#select data.system.skill.alternativ.id}}
-                  {{#if data.system.properties.rngd}}
-                    {{#each firearmSkills as |cbs|}}
-                      <option value="{{cbs.id}}">{{cbs.name}}</option>
-                    {{/each}}
-                  {{else}}
-                    {{#each fightingSkills as |cbs|}}
-                      <option value="{{cbs.id}}">{{cbs.name}}</option>
-                    {{/each}}
-                  {{/if}}
-                {{/select}}
+                {{selectOptions weaponSkillGroups selected=data.system.skill.alternativ.id localize=true valueAttr="id" nameAttr="id" labelAttr="name"}}
               </select>
             {{/if}}
           {{else}}

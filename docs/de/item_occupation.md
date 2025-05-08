@@ -1,32 +1,27 @@
 <!--- This file is auto generated from module/manual/de/item_occupation.md -->
-*TODO: Will be translated*
+# Item Typ: Beruf
 
-# Item Type: Occupation
+Ein _Beruf_ hilft den Charakterhintergrund zu definieren. Betrachten Sie es als eine Reihe von _beruflichen Fertigkeiten_ (auf welche der Charakter seine Punkte für Berufsfertigkeiten verteilen kann) und die Definition, wie die Menge an verfügbaren beruflichen Punkte errechnet werden kann. Schließlich erlaubt der _Beruf_ auch die Definition der minimalen und maximalen _Finanzkraft_ des Charakters mit diesem _Beruf_.
 
-An _occupation_ helps to define the character background, think about it as the definition of the set of _occupational skills_ (the ones where the character can spend their occupation points) plus the definition of how to calculate the amount of available occupation points. Finally the _occupation_ also allows to define the minimum and the maximum _credit_ for a character with this _occupation_.
+Das System erlaubt es, den _Beruf_ so zu konfigurieren, dass er, wenn er auf einen Charakterbogen gezogen wird, die Möglichkeit bietet, eine oder mehrere Fertigkeiten aus einer geschlossenen Liste auszuwählen, oder sogar eine vordefinierte Anzahl von Fertigkeiten hinzuzufügen, um aus allen verfügbaren auszuwählen.
 
-Keep in mind that the set of _occupational skills_ doesn't need to be fixed, the system allows to configure the _occupation_ so when it's dragged to a Character sheet will give the option of selecting one or more skills from a closed list, or even add a pre defined number of skills to select from all the available ones.
+1. Gehen Sie in das Item-Verzeichnis
+2. Klicken Sie auf Item erstellen
 
-1. Go to the Items Directory tab
-2. Click on Create Item
+	1. Geben Sie dem Beruf einen Namen, z. B. _Bibliothekar_
+	2. Setzen Sie den _Typ_ auf _Beruf_
 
-   1. Give the set up a name e.g. _Librarian_
-   2. Set _Type_ to _Occupation_
+3. Im Reiter _Beschreibung_ können Sie den Namen, das Icon, den Namen des Quellenbandes und die Beschreibung ändern
+4. Im Reiter _Details_ können Sie folgendes kontrollieren:
 
-3. On the _Description_ tab you can change the name, icon, name of the source book, and description
-4. On the _Details_ tab you can control
+	1. Wählen sie den _Berufstyp_
+	2. Definieren Sie die Charakteristiken, welche benutzt werden, um die _Punkte für Berufsfertigkeiten_ zu berechnen. Sie können die Charakteristiken markieren, welche Sie nutzen wollen und den Multiplikator definieren. Der Spieler muss zwischen den _optional_ markierten Charakteristiken wählen, während der Erstellung.
 
-   1. Select the _Occupation Type_
-   2. Define the characteristics used to calculate the _occupation points_, you can check the characteristics you want and define the multiplier, for the ones with _Optional_ marked, the player will have to choose one at creation time.
+		1. Zum Beispiel, falls ein Beruf die Berechnung _BI * 2 + (ST oder GE) * 2_ nutzt, müssen Sie _Bildung_ auswählen und _2_ als den _Multiplikator_ eintragen, ohne _optional_ zu markieren. Für _Stärke_ und _Geschicklichkeit_ müssen Sie beide auswählen und bei beiden _optional_ markieren, sowie _2_ als den _Multiplikator_ bei beiden eintragen.
+		2. Schließlich müssen Sie das _Minimum_ und das _Maximum_ des Wertes der _Finanzkraft_ Fertigkeit festlegen für diesen Beruf.
 
-      1. For instance if an occupation uses _EDU * 2 + (STR or DEX) * 2_ You have to select _Education_ and put _2_ on the _Multiplier_ without marking _Optional_ and then for _Strength_ and _Dexterity_ you have to check both, check _Optional_ on both, and put _2_ on the Multiplier on both.
-      2. Finally you will have to define the _Minimum_ and _Maximum_ value for the _Credit Rating_ skill for this occupation.
+5. Im Reiter _Fertigkeiten_ können Sie in mehrere Sektionen ziehen und ablegen. Ein typischer Beruf hat 8 Fertigkeiten und eine _Finanzkraft_.
 
-   3. Names of biography sections (click on the `+` to add extra Biography sections), this can be replaced with a single block biography in settings
-   4. Under items you can drag and drop default items and weapons
-
-5. On the _Skills_ you can drag and drop skills in to multiple sections, A typical occupation has 8 skills plus the _Credit Rating_ skill.
-
-   1. The _Common Skills_ includes the default occupation skills that can't be changed
-   2. The _Optional skills groups_ section allows to add groups (you can create several of them) of skills for the player to choose from. Once you click on the `+` sign a group is created and you can define the _Number to chose from_ (number of skills to select) and create a pool of skills available for the selection by dragging them on the group.
-   3. Finally the _Additional Skills_ allows you to enter a number of skills the player can choose from the rest of the available skills.
+	1. Die _gewöhnliche Fertigkeiten_ beinhalten die standardmäßigen beruflichen Fertigkeiten, welche nicht geändert werden können
+	2. Der Abschnitt _optionalen Fertigkeitsbereiche_ erlaubt das Hinzufügen einer Gruppe (Sie können auch mehrere von diesen erstellen) von Fertigkeiten, aus welchen der Spieler auswählen kann. Sobald Sie auf das `+` Zeichen klicken, wird eine Gruppe erstellt und Sie können die _auszuwählende Anzahl_ (Anzahl der aus der Gruppe auszuwählenden Fertigkeiten) definieren und eine Auflistung an verfügbaren Fertigkeiten für die Auswahl des Spielers erstellen, durch das Ziehen der Fertigkeiten in die Gruppe.
+	3. Schließlich erlaubt Ihnen die Option _zusätzliche Fertigkeiten_ eine Zahl an Fertigkeiten einzugeben, welche der Spieler aus den restlich verfügbaren Fertigkeiten auswählen kann.
