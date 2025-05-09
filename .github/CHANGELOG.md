@@ -14,9 +14,11 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Add alternative names text block to spell sheet
 - Add price tab to items, show world era price in header
 - Allow armor be added to containers
+- Fix batch CoC ID Actor update on unlinked tokens
 - Fix dark theme journal link colours
 - Fix language selection issue in Actor Importer, thanks to @ryotai-trpg #1791
 - Temporary disable spell cost automation
+- Update to French localization, thanks to @vonv #1809
 - Update to German localization, thanks to @MrViso #1803
 - Update to German manual, thanks to @Reloader975 #1787
 
