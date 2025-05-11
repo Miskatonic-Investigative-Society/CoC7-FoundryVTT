@@ -7,6 +7,10 @@ Happy gaming !
 
 ## Upcoming Release
 
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+## Version 7.14
+
 **_!! This is intended to be the last release to support FoundryVTT v11 !!_**
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
