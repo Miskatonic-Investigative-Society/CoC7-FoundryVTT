@@ -1,21 +1,19 @@
-*TODO: Will be translated*
+# Item Typ: Fertigkeit
 
-# Item Type: Skill
+Eine _Fertigkeit_ wird während Proben gewürfelt.
 
-A _skill_ will be rolled during tests.
+1. Gehen Sie in das Item-Verzeichnis
+2. Klicken Sie auf Item erstellen
 
-1. Go to the Items Directory tab
-2. Click on Create Item
+	1. Geben Sie der Fertigkeit einen Namen z. B. _Handwerk/Kunst (Tanzen)_
+	2. Setzten Sie den _Typ_ auf _Fertigkeit_
 
-    1. Give the skill a name e.g. _Art/Craft (Dancing)_
-    2. Set _Type_ to _Skill_
+3. Im Reiter _Beschreibung_ können Sie den Namen, das Icon, die Cthulhu Ären (in welchen Editionen dieser erscheint) und die Beschreibung ändern.
 
-3. On the _Description_ tab you can change the name, icon, Cthulhu Flavors (which editions this appears in), and description
-
-    1. _No adjustment_ - Can not be assigned personal skill points.
-    2. _No XP gain_ - You do not mark this skill for improvement on a success.
-    3. _Specialization_ - This skill is part of a group like Pilot or Flighting.
-    4. _Uncommon_ - This skill is uncommon and can be automatically hidden on the character sheet.
-    5. _Pushed_ - This skill can be pushed.
-    6. _Fighting_ - Automatically set Specialization, Combat, and the specialization name to Fighting.
-    7. _Firearms_ - Automatically set Specialization, Combat, and the specialization name to Firearms.
+	1. _Keine Anpassung_ - Keine persönlichen Fertigkeitspunkte können zugewiesen werden
+	2. _Kein Erfahrungsgewinn_ - Die Fertigkeit wird nicht markiert für eine Verbesserung bei einer erfolgreichen Probe.
+	3. _Spezialisierung_ - Diese Fertigkeit ist Teil einer Gruppe wie beispielsweise Steuern oder Nahkampf
+	4. _ungewöhnlich_ - Diese Fertigkeit ist ungewöhnlich und kann automatisch versteckt werden auf dem Charakterbogen
+	5. _forcierbar_ - Diese Fertigkeit kann forciert werden.
+	6. _Nahkampf_ - Spezialisierung, Kampf und Nahkampf als Name der Spezialisierung, werden automatisch gewählt
+	7. _Fernkampf_ - Spezialisierung, Kampf und Fernkampf als Name der Spezialisierung, werden automatisch gewählt

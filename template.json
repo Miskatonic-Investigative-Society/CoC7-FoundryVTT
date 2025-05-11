@@ -389,6 +389,7 @@
       },
       "quantity": 1,
       "weight": 0,
+      "price": {},
       "attributes": {}
     },
     "weapon": {
@@ -701,7 +702,8 @@
       "description": {
         "chat": "",
         "value": "",
-        "keeper": ""
+        "keeper": "",
+        "alternativeNames": ""
       },
       "effects": [],
       "source": "",

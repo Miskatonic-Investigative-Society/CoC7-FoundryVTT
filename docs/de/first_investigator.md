@@ -1,70 +1,68 @@
 <!--- This file is auto generated from module/manual/de/first_investigator.md -->
-*TODO: Will be translated*
+# Initiales Item Setup
 
-# Initial item setup
+Das System kommt mit einigen Kompendien, die Sie selbst anpassen können. Diese werden bei jeder Aktualisierung oder Installation des Systems zurückgesetzt. Es wird daher empfohlen, diese in Ihr eigenes Kompendium zu kopieren und nach Bedarf zu bearbeiten.
 
-The system comes with some compendiums ready for you to customise. These are reset every time you update or install the system so it is recommended you copy them into your own compendium and edit them as required.
+Diese Seite erstellt einen Investigator unter Verwendung der bereitgestellten Kompendien. Falls Sie bereit sind Ihre Charaktere völlig anzupassen, lesen Sie [Charaktererstellung](character_creation.md) stattdessen.
 
-This page creates an investigator using the provided compendiums, if you are ready to full customise your character people read [Character creation](character_creation.md) instead.
+# Fertigkeit
 
-# Skill
+Klicken Sie auf die Registerkarte Kompendium-Pakete und öffnen Sie dann unter der Überschrift Item das Item Fertigkeiten (CoC7). Hier finden Sie die Fertigkeiten, welche auf den Charakterbögen auf der Website von Chaosium zu finden sind.
 
-Click on the Compendium Packs tab then under the Item heading open up the Skills Item (CoC7). Here you will find the skills shown on the characters sheets available from Chaosium's website.
+- _Keine Anpassung_ - Keine persönlichen Fertigkeitspunkte können zugewiesen werden
+- _Kein Erfahrungsgewinn_ - Die Fertigkeit wird nicht markiert für eine Verbesserung bei einer erfolgreichen Probe.
+- _Spezialisierung_ - Diese Fertigkeit ist Teil einer Gruppe wie beispielsweise Steuern oder Nahkampf
+- _ungewöhnlich_ - Diese Fertigkeit ist ungewöhnlich und kann automatisch versteckt werden auf dem Charakterbogen
+- _forcierbar_ - Diese Fertigkeit kann forciert werden.
+- _Nahkampf_ - Spezialisierung, Kampf und Nahkampf als Name der Spezialisierung, werden automatisch gewählt
+- _Fernkampf_ - Spezialisierung, Kampf und Fernkampf als Name der Spezialisierung, werden automatisch gewählt
 
-- _No adjustment_ - Can not be assigned personal skill points.
-- _No XP gain_ - You do not mark this skill for improvement on a success.
-- _Specialization_ - This skill is part of a group like Pilot or Flighting.
-- _Uncommon_ - This skill is uncommon and can be automatically hidden on the character sheet.
-- _Pushed_ - This skill can be pushed.
-- _Fighting_ - Automatically set Specialization, Combat, and the specialization name to Fighting.
-- _Firearms_ - Automatically set Specialization, Combat, and the specialization name to Firearms.
-
-You can create a new Item Compendium and copy the skills you require into it allowing you to edit them. You can also create new skills by creating new Skill Items (Click on the Items Directory tab then Create Item give this a name e.g. Gardening and set the Type to Skill).
+Sie können ein neues Item Kompendium erstellen und die benötigten Fertigkeiten dorthin kopieren, damit Sie sie bearbeiten können. Sie können auch neue Fertigkeiten erstellen, indem Sie neue Fertigkeitsitems erstellen (klicken Sie auf die Registerkarte Item-Verzeichnis und dann auf Item erstellen, geben Sie dem Item einen Namen, z. B. Gartenarbeit, und stellen Sie den Typ auf Fertigkeit ein).
 
 ## Setup
 
-Once you have set up your skills next create up a Setup, here is an example from the Items Examples compendium [_1920's Setup Example_]
+Sobald Sie Ihre Fertigkeiten vorbereitet haben ist der nächste Schritt ein Setup zu erstellen. Hier ist ein Beispiel aus dem Beispielkompendium [_1920's Setup Example_].
 
-Setups allow to you standardise what skills, items, biography sections, and characteristics the investigators start with.
+Setups erlauben es Ihnen die Fertigkeiten, Gegenstände, Hintergrundgeschichten und Charakteristiken zu standardisieren mit welchen ein Investigator startet.
 
-Click on the Items Directory tab then Create Item give this a name e.g. New Investigator Setup and set the Type to Setup
+Klicken Sie auf das Item-Verzeichnis und erstellen Sie anschließend ein Item, welchem Sie einen Namen geben, beispielsweise 'New Investigator Setup' und ändern Sie den Typ auf Setup.
 
-On the Description tab to set the description click the button to get an editor.
+Klicken Sie im Reiter Beschreibung auf die Taste, um einen Editor zu öffnen, um die Beschreibung zu verfassen.
 
-On the Details tab click the on the Biography Sections to add any sections you require from the Create a Backstory step of investigator creation. Click on the Compendium Packs tab then under the Item heading open up the Items Examples Item (CoC7) and drag the [_Punch_] onto the setup.
+Klicken Sie im Reiter Details auf die Hintergrundgeschichte, um alle Abschnitte hinzuzufügen, welche Sie beim Erstellen der Hintergrundgeschichte des Investigators benötigen. Klicken Sie auf den Reiter Kompendium-Pakete und öffnen Sie dann unter der Überschrift Item das Item (CoC7) in den Beispielitems und ziehen Sie das [_Handgemenge_] auf das Setup.
 
-On the Characteristics tab you can customise how investigator characteristics are rolled / bought
+Im Reiter Charakteristiken können Sie anpassen, wie die Charakteristiken des Investigators ausgewürfelt, bzw. verteilt werden.
 
-On the Skills tab you can drag the skills the investigator will have.
+Sie können die Fertigkeiten, welche der Investigator haben wird, in den Reiter Fertigkeiten ziehen.
 
-All actor and item sheets have a tab which can be used by the Keepers to store notes, only users that are set to GM can see this tab
+Alle Charaktere und Itembögen haben einen Reiter, welcher vom Spielleiter genutzt werden kann, um Notizen darin zu speichern. Nur Benutzer, welche die Berechtigung Spielleiter besitzen können diesen Reiter sehen.
 
-## Occupation
+## Beruf
 
-Occupations allow you set how many the occupation points, credit rating range, and skills the investigator starts with. Here is an example from the Items Examples compendium [_Occupation Example_]
+Berufe erlauben es Ihnen die Punkte für Berufsfertigkeiten, den Rahmen der Finanzkraft und die Fertigkeiten, mit welchen der Investigator startet festzulegen. Es gibt ein Beispiel im Kompendium Beispielitems mit dem Namen [_Berufsbeispiel_].
 
-Click on the Items Directory tab then Create Item give this a name e.g. Driver and set the Type to Occupation
+Klicken Sie auf das Item-Verzeichnis, erstellen Sie ein Item und geben Sie diesem einen Namen, z. B. Fahrer und setzen Sie den Typ auf Beruf.
 
-On the Description tab to set the description click the button to get an editor.
+Um eine Beschreibung im Reiter Beschreibung zu erstellen, klicken Sie auf die Taste um einen Editor zu öffnen.
 
-On the Details tab you can set the Occupation Points calculation and Minimum/Maximum Credit Rating
+Im Reiter Details können Sie die Kalkulation der Punkte für Berufsfertigkeiten und das Minimum/ Maximum der Finanzkraft festlegen.
 
-On the Skills tab you can drag skills from the Compendiums or Item Directory to Common skills, you can also set up multiple Optional skill groups deciding how many the investigator must select.
+Im Reiter Fertigkeiten können Sie Fertigkeiten aus den Kompendien oder dem Item-Verzeichnis ablegen. Sie können auch mehrere optionale Fertigkeitsgruppen festlegen aus welchen der Investigator eine bestimmte Anzahl auswählen muss.
 
-# Creating your first investigator
+# Erstellung Ihres ersten Investigators
 
-## Character
+## Charakter
 
-To complete your character you need to have an active scene which can be created in the Scenes Directory.
+Um Ihren Charakter zu vervollständigen benötigen Sie eine aktive Szene, welche im Szenenverzeichnis erstellt werden kann.
 
-Click on the Actors Directory tab then Create Item give this a name e.g. New Investigator and set the Type to Character.
+Klicken Sie auf das Charakterverzeichnis und Erstellen Sie ein Item, geben Sie diesem einen Namen, z. B. Neuer Investigator und legen Sie den Typ auf Charakter fest.
 
-You can drag your setup created above on to the character for the initial setup or drag this example instead [_1920's Setup Example_]
+Sie können Ihr oben erstelltes Setup auf den Charakter ziehen und ablegen für ein initiales Setup. Alternativ können Sie dieses Beispiel verwenden [_1920's Setup Example_].
 
-Next drag your occupation created above on to the character or drag this example instead [_Occupation Example_]
+Ziehen Sie als nächstes ihren oben erstellten Beruf auf den Charakter. Alternativ können Sie auch dieses Beispiel nutzen [_Berufsbeispiel_].
 
-On the left hand menu bar select Keeper's tools then select Character creation mode.
+Wählen Sie im linken Seitenleistenmenü das Spielleiterwerkzeug, danach den Charaktererstellungsmodus.
 
-On the character sheet select the Development tab. The first dot indicates this is an occupation skill, the first column of numbers is the base value, next if where you assign personal points, third is for occupation points, the fourth is for experience gained during the investigator improvement phase, the final column is the total skill percent.
+Wählen Sie den Entwicklungsreiter auf dem Charakterbogen. Der erste Punkt gibt an, dass es sich um eine berufliche Fertigkeit handelt, die erste Nummernspalte beinhaltet die Basiswerte, in der nächsten Spalte weisen Sie die Punkte der Hobbyfertigkeiten zu, die dritte Spalte ist für Punkte für Berufsfertigkeiten, die Vierte ist für gewonnene Erfahrung während der Entwicklungsphase des Investigators, die finale Spalte zeigt den gesamten prozentualen Wert der Fertigkeit.
 
-You can see how many personal and occupation points you have spent so far, once you have spent all your points you need to toggle off Character creation mode to allow characters to see their HP, MP, Sanity, and luck
+Sie können sehen wie viele Punkt für Hobbyfertigkeiten und Berufsfertigkeiten Sie bereits ausgegeben haben. Sobald Sie all Ihre Punkte aufgebraucht haben, müssen Sie den Erstellmodus des Investigators ausschalten, um die Anzeige der TP, MP, geistigen Stabilität und des Glücks für den Charakter zu ermöglichen.

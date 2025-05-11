@@ -36,7 +36,6 @@ import RenderCoC7CreatureSheet from './hooks/render-coc7-creature-sheet.js'
 import RenderCoC7DirectoryPicker from './hooks/render-coc7-directory-picker.js'
 import RenderCoC7NPCSheet from './hooks/render-coc7-npc-sheet.js'
 import RenderCombatTracker from './hooks/render-combat-tracker.js'
-import RenderCompendiumDirectory from './hooks/render-compendium-directory.js'
 import RenderDialog from './hooks/render-dialog.js'
 import RenderGamePause from './hooks/render-game-pause.js'
 import RenderItemSheet from './hooks/render-item-sheet.js'
@@ -94,7 +93,6 @@ Hooks.on('renderCoC7CreatureSheet', RenderCoC7CreatureSheet)
 Hooks.on('renderCoC7DirectoryPicker', RenderCoC7DirectoryPicker)
 Hooks.on('renderCoC7NPCSheet', RenderCoC7NPCSheet)
 Hooks.on('renderCombatTracker', RenderCombatTracker)
-Hooks.on('renderCompendiumDirectory', RenderCompendiumDirectory)
 Hooks.on('renderDialog', RenderDialog)
 Hooks.on('renderGamePause', RenderGamePause)
 Hooks.on('renderItemSheet', RenderItemSheet)

@@ -1,32 +1,30 @@
 <!--- This file is auto generated from module/manual/de/items.md -->
-*TODO: Will be translated*
-
 # Items
 
-The system support many different types of items, from basic items or weapons to skills or the complete setup of a type of character. You can see examples on the compendium that comes with the system.
+Das System unterstützt viele verschiedene Arten von Items, von Basis-Items oder Waffen bis hin zu Fertigkeiten oder dem kompletten Setup eines Charaktertyps. Sie können Beispiele im mitgelieferten Kompendium des Systems einsehen.
 
-To create any of the types of items you always start the same way
+Um irgendeine Art von Item zu erstellen starten Sie immer auf dieselbe Weise:
 
-1. Go to the items directory
-2. Click on _Create Item_
-   - Give it a name
-   - Select the item _Type_ (see below for details on each one)
-   - Select the destination folder.
+1. Gehen Sie in das Item-Verzeichnis
+2. Klicken Sie auf _Item erstellen_
+	- Geben Sie ihm einen Namen
+	- Wählen Sie den _Typ_ des Items aus (siehe unten für mehr Details des jeweiligen Typs)
+	- Wählen Sie den Zielordner
 
-And have some common structure so on all of them:
+Haben Sie so eine gemeinsame Struktur für alle:
 
-- You can add a textual description on the _Description_ tab or just on the main window if it doesn't have tabs.
-- If you click on the _icon_ you can pick or upload a new one
+- Sie können eine strukturelle Beschreibung im Reiter _Beschreibung_ hinzufügen oder im Hauptfenster, falls es keine Reiter hat.
+- Wenn Sie auf das _Icon_ klicken, können Sie ein neues auswählen oder hochladen.
 
-# Available types
-- [Item Type: Archetype](item_archetype.md)
-- [Item Type: Book](item_book.md)
-- [Item Type: Chases](chases.md)
-- Item Type: Item
-- [Item Type: Occupation](item_occupation.md)
-- [Item Type: Setup](item_setup.md)
-- [Item Type: Skill](item_skill.md)
-- Item Type: Spell
-- Item Type: Status
-- Item Type: Talent
-- Item Type: Weapon
+# Mögliche Typen
+- [Item-Typ: Archetyp](item_archetype.md)
+- [Item-Typ: Buch](item_book.md)
+- [Item-Typ: Verfolgungsjagd](chases.md)
+- Item-Typ: Item (Gegenstand)
+- [Item-Typ: Beruf](item_occupation.md)
+- [Item-Typ: Setup](item_setup.md)
+- [Item-Typ: Fertigkeit](item_skill.md)
+- Item-Typ: Zauberspruch
+- Item-Typ: Status
+- Item-Typ: Talent
+- Item-Typ: Waffe

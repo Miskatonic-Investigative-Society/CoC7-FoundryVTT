@@ -1,5 +1,3 @@
-*TODO: Will be translated*
+# Item Typ: Buch
 
-# Item Type: Book
-
-The system has a special type of item for the books to be able to define the _Sanity Loss_, if it's a Mythos Tome or an Occult book, what _Spells_ or _Skills_ it provides and of curse a description and the book image.
+Das System hat eine spezielle Art von Items für Bücher, um einen _Stabilitätsverlust_ zu definieren, falls es sich um ein Mythosband oder ein okkultes Buch handelt, welche _Zaubersprüche_ oder _Fertigkeiten_ es bereitstellt und natürlich eine Beschreibung, sowie ein Bild des Buches.

@@ -9,6 +9,23 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.14
+
+**_!! This is intended to be the last release to support FoundryVTT v11 !!_**
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add alternative names text block to spell sheet
+- Add price tab to items, show world era price in header
+- Allow armor be added to containers
+- Fix batch CoC ID Actor update on unlinked tokens
+- Fix dark theme journal link colours
+- Fix language selection issue in Actor Importer, thanks to @ryotai-trpg #1791
+- Temporary disable spell cost automation
+- Update to French localization, thanks to @vonv #1809
+- Update to German localization, thanks to @MrViso #1803
+- Update to German manual, thanks to @Reloader975 #1787
+
 ## Version 7.13
 
 **_!! This is intended to be the last release to support FoundryVTT v11 !!_**

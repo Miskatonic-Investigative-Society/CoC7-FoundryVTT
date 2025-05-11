@@ -98,25 +98,41 @@ export default class CoCIDActorUpdateItems extends FormApplication {
     if (Object.keys(anys).length) {
       console.log('Invalid any keys on Actors', anys)
     }
-    const allUpdates = []
+    const actorUpdates = []
+    const tokenUpdates = []
     for (const actor of actorList) {
       const updates = []
       for (const item of actor.items.contents) {
-        if (Object.prototype.hasOwnProperty.call(ids, item.flags?.CoC7?.cocidFlag?.id)) {
+        if (Object.prototype.hasOwnProperty.call(ids, item.flags?.CoC7?.cocidFlag?.id) && Object.keys(ids[item.flags.CoC7.cocidFlag.id]).length) {
           updates.push(foundry.utils.mergeObject({
             _id: item.id
           }, ids[item.flags.CoC7.cocidFlag.id]))
         }
       }
       if (updates.length) {
-        allUpdates.push({
-          _id: actor.id,
-          items: updates
-        })
+        if (actor.parent) {
+          tokenUpdates.push({
+            updates: {
+              _id: actor.id,
+              items: updates
+            },
+            operation: {
+              parent: actor.parent
+            }
+          })
+        } else {
+          actorUpdates.push({
+            _id: actor.id,
+            items: updates
+          })
+        }
       }
     }
-    if (allUpdates.length) {
-      Actor.updateDocuments(allUpdates)
+    if (actorUpdates.length) {
+      await Actor.updateDocuments(actorUpdates)
+    }
+    for (const tokenUpdate of tokenUpdates) {
+      await Actor.updateDocuments([tokenUpdate.updates], tokenUpdate.operation)
     }
   }
 
