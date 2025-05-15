@@ -52,6 +52,75 @@ export class DamageCard extends InteractiveChatCard {
     this._impale = x
   }
 
+  async cancelDamage (options = { update: true }) {
+    if (!this.targetActor || !this.damageInflicted) return false;
+    
+    // Cancel the damage by restoring the actor's HP
+    const currentDamage = Number(this.totalDamageString);
+    const currentHp = this.targetActor.hp;
+    const newHp = Math.min(currentHp + currentDamage, this.targetActor.hpMax);
+    
+    // Use setHp instead of dealDamage with negative value
+    await this.targetActor.setHp(newHp);
+    
+    this.damageInflicted = false;
+    
+    // Send a chat message indicating who canceled the damage
+    ChatMessage.create({
+      content: game.i18n.format('CoC7.DamageCanceled', {
+        user: game.user.name,
+        target: this.targetActor.name,
+        damage: currentDamage
+      })
+    });
+    
+    options.update = typeof options.update === 'undefined' ? true : options.update;
+    if (options.update) this.updateChatCard();
+    return true;
+  }
+  
+  async increaseDamage (options = { update: true }) {
+    if (!this.targetActor) return false;
+    
+    // Apply one additional point of damage
+    const currentHp = this.targetActor.hp;
+    const newHp = Math.max(0, currentHp - 1);
+    await this.targetActor.setHp(newHp);
+    
+    // Send a chat message indicating who increased the damage
+    ChatMessage.create({
+      content: game.i18n.format('CoC7.DamageIncreased', {
+        user: game.user.name,
+        target: this.targetActor.name
+      })
+    });
+    
+    options.update = typeof options.update === 'undefined' ? true : options.update;
+    if (options.update) this.updateChatCard();
+    return true;
+  }
+  
+  async decreaseDamage (options = { update: true }) {
+    if (!this.targetActor) return false;
+    
+    // Reduce damage by one point
+    const currentHp = this.targetActor.hp;
+    const newHp = Math.min(currentHp + 1, this.targetActor.hpMax);
+    await this.targetActor.setHp(newHp);
+    
+    // Send a chat message indicating who decreased the damage
+    ChatMessage.create({
+      content: game.i18n.format('CoC7.DamageDecreased', {
+        user: game.user.name,
+        target: this.targetActor.name
+      })
+    });
+    
+    options.update = typeof options.update === 'undefined' ? true : options.update;
+    if (options.update) this.updateChatCard();
+    return true;
+  }
+
   get isDamageFormula () {
     if (typeof this.damageFormula !== 'string') return false
     if (!isNaN(Number(this.damageFormula))) return false

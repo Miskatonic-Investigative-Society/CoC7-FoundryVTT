@@ -1426,5 +1426,12 @@
 
   "CoC7.NoTokenTargeted": "No token targeted.",
   "CoC7.NoTargetsAvailable": "No targets available.",
-  "CoC7.Targeted": "Targeted"
+  "CoC7.Targeted": "Targeted",
+
+  "CoC7.CancelDamage": "Damage has been canceled for {target} ({damage} points) by {user}",
+  "CoC7.DamageCanceled": "Damage has been canceled for {target} ({damage} points) by {user}",
+  "CoC7.DamageIncreased": "{target} has received 1 point of damage by {user}",
+  "CoC7.DamageDecreased": "{target} has reduced 1 point of damage by {user}",
+
+  "CoC7.WillLoseSanity": "{name} will lose {sanMin}{sanMax} sanity"
 }
