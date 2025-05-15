@@ -72,3 +72,52 @@
     }
   }
 }
+
+.range.initiator {
+  .damage-controls {
+    display: inline-flex;
+    margin-left: 8px;
+    position: relative;
+    z-index: 10;
+    
+    button {
+      width: 24px;
+      height: 24px;
+      margin: 0 2px;
+      padding: 0;
+      line-height: 1;
+      font-size: 12px;
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid #999;
+      border-radius: 3px;
+      position: relative;
+      
+      &:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      
+      &[data-action="cancelDamage"] {
+        color: #008800;
+      }
+      
+      &[data-action="increaseDamage"] {
+        color: #aa0000;
+      }
+      
+      &[data-action="decreaseDamage"] {
+        color: #008800;
+      }
+    }
+  }
+  
+  .damage-control-btn {
+    cursor: pointer;
+    pointer-events: auto !important;
+  }
+  
+  .dice-formula {
+    .damage-controls {
+      pointer-events: auto;
+    }
+  }
+}

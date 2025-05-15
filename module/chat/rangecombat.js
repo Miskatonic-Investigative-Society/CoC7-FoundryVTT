@@ -895,41 +895,167 @@ export class CoC7RangeInitiator {
   }
 
   async dealDamage () {
-    for (let dIndex = 0; dIndex < this.damage.length; dIndex++) {
-      const actor = chatHelper.getActorFromKey(this.damage[dIndex].targetKey) // REFACTORING (2)
-      if (actor === null) {
-        ui.notifications.error(game.i18n.localize('CoC7.NoTargetToDamage'))
-      } else {
-        this.damage[dIndex].totalTaken = 0
-        this.damage[dIndex].totalAbsorbed = 0
-        for (
-          let rIndex = 0;
-          rIndex < this.damage[dIndex].rolls.length;
-          rIndex++
-        ) {
-          const dealtAmount = await actor.dealDamage(
-            this.damage[dIndex].rolls[rIndex].total
-          )
-          this.damage[dIndex].totalTaken += dealtAmount
-          this.damage[dIndex].rolls[rIndex].taken = dealtAmount
-          this.damage[dIndex].rolls[rIndex].absorbed =
-            this.damage[dIndex].rolls[rIndex].total - dealtAmount
-          this.damage[dIndex].totalAbsorbed +=
-            this.damage[dIndex].rolls[rIndex].total - dealtAmount
-        }
-        this.damage[dIndex].dealt = true
-        this.damage[dIndex].resultString = game.i18n.format(
-          'CoC7.rangeCombatDamageArmor',
-          {
-            name: this.damage[dIndex].targetName,
-            total: this.damage[dIndex].totalTaken,
-            armor: this.damage[dIndex].totalAbsorbed
+    // Set all damage to dealt
+    for (const damage of this.damage) {
+      damage.dealt = true
+      const targetName = damage.targetName
+      const targetKey = damage.targetKey || damage.actorKey
+      if (targetKey) {
+        const target = chatHelper.getActorFromKey(targetKey)
+        if (target) {
+          if (damage.total) {
+            target.dealDamage(damage.total)
+            ChatMessage.create({
+              content: game.i18n.format('CoC7.DamageDealTo', {
+                name: targetName || target.name,
+                damage: damage.total
+              })
+            })
           }
-        )
+        }
       }
     }
     this.damageDealt = true
-    this.updateChatCard()
+    await this.updateChatCard()
+  }
+  
+  // Method to handle canceling damage (redo button)
+  async cancelDamage(options = { update: true }) {
+    const targetKey = options.event?.currentTarget.dataset.targetKey;
+    if (!targetKey) return false;
+    
+    const targetActor = chatHelper.getActorFromKey(targetKey);
+    if (!targetActor) return false;
+    
+    // Find the damage for this target
+    const damage = this.damage.find(d => d.targetKey === targetKey || d.actorKey === targetKey);
+    if (!damage || !damage.dealt) return false;
+    
+    const damageAmount = Number(damage.total);
+    
+    // Restore HP
+    const currentHp = targetActor.hp;
+    const newHp = Math.min(currentHp + damageAmount, targetActor.hpMax);
+    await targetActor.setHp(newHp);
+    
+    // Reset damage state to allow dealing damage again
+    damage.dealt = false;
+    this.damageDealt = false;
+    
+    // Send chat message
+    ChatMessage.create({
+      content: game.i18n.format('CoC7.DamageCanceled', {
+        user: game.user.name,
+        target: targetActor.name,
+        damage: damageAmount
+      })
+    });
+    
+    // Update card if requested
+    options.update = typeof options.update === 'undefined' ? true : options.update;
+    if (options.update) this.updateChatCard();
+    
+    return true;
+  }
+  
+  // Method to handle increasing damage (+ button)
+  async increaseDamage(options = { update: true }) {
+    const targetKey = options.event?.currentTarget.dataset.targetKey;
+    if (!targetKey) return false;
+    
+    const targetActor = chatHelper.getActorFromKey(targetKey);
+    if (!targetActor) return false;
+    
+    // Apply one additional point of damage
+    const currentHp = targetActor.hp;
+    const newHp = Math.max(0, currentHp - 1);
+    await targetActor.setHp(newHp);
+    
+    // Send chat message
+    ChatMessage.create({
+      content: game.i18n.format('CoC7.DamageIncreased', {
+        user: game.user.name,
+        target: targetActor.name
+      })
+    });
+    
+    // Update card if requested
+    options.update = typeof options.update === 'undefined' ? true : options.update;
+    if (options.update) this.updateChatCard();
+    
+    return true;
+  }
+  
+  // Method to handle decreasing damage (- button)
+  async decreaseDamage(options = { update: true }) {
+    const targetKey = options.event?.currentTarget.dataset.targetKey;
+    if (!targetKey) return false;
+    
+    const targetActor = chatHelper.getActorFromKey(targetKey);
+    if (!targetActor) return false;
+    
+    // Reduce damage by one point
+    const currentHp = targetActor.hp;
+    const newHp = Math.min(currentHp + 1, targetActor.hpMax);
+    await targetActor.setHp(newHp);
+    
+    // Send chat message
+    ChatMessage.create({
+      content: game.i18n.format('CoC7.DamageDecreased', {
+        user: game.user.name,
+        target: targetActor.name
+      })
+    });
+    
+    // Update card if requested
+    options.update = typeof options.update === 'undefined' ? true : options.update;
+    if (options.update) this.updateChatCard();
+    
+    return true;
+  }
+
+  async updateTarget() {
+    // Get the currently targeted token
+    const targetedTokens = this.targetedTokens;
+    if (targetedTokens.length === 0) {
+      ui.notifications.warn(game.i18n.localize('CoC7.NoTokenTargeted'));
+      return this;
+    }
+
+    // Update the target with the first targeted token
+    const targetToken = targetedTokens[0];
+    this._targetToken = targetToken;
+    this._targetKey = `${targetToken.scene.id}.${targetToken.id}`;
+    
+    // Update the chat card to reflect the new target
+    await this.updateChatCard();
+    
+    return this;
+  }
+
+  // Add event listener hooks for range combat damage buttons
+  static activateListeners(html) {
+    html.on("click", ".damage-control-btn", this._onDamageControlClick.bind(this));
+  }
+
+  // Handle damage control button clicks
+  static async _onDamageControlClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const button = event.currentTarget;
+    const action = button.dataset.action;
+    const targetKey = button.dataset.targetKey;
+    const card = button.closest(".range.initiator");
+    
+    if (!card) return;
+    
+    const messageId = card.closest(".message").dataset.messageId;
+    const initiator = await CoC7RangeInitiator.getFromMessageId(messageId);
+    
+    if (initiator && initiator[action]) {
+      await initiator[action]({ event, update: true });
+    }
   }
 }
 

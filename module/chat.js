@@ -137,6 +137,7 @@ export class CoC7Chat {
     // RollCard.bindListerners( html);
     OpposedCheckCard.bindListerners(html)
     CombinedCheckCard.bindListerners(html)
+    CoC7RangeInitiator.activateListeners(html)
 
     /* // FoundryVTT v12 */
     // HTML needs changed to support this correctly

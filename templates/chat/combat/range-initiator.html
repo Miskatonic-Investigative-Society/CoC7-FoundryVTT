@@ -325,7 +325,7 @@
   <div class="damage">
     {{#if damageRolled}}
       {{#each damage as |d|}}
-        <div class="coc7 damage-results" data-target-name="{{d.targetName}}" data-target-key="{{targetKey}}" data-total="{{d.total}}" data-critical="{{d.critical}}" data-dealt="{{d.dealt}}" data-result-string="{{resultString}}">
+        <div class="coc7 damage-results" data-target-name="{{d.targetName}}" data-target-key="{{d.targetKey}}" data-total="{{d.total}}" data-critical="{{d.critical}}" data-dealt="{{d.dealt}}" data-result-string="{{resultString}}">
           <div class="dice-roll">
             <div class="dice-result">
               {{#each d.blastRangeDamage as |blast|}}
@@ -335,6 +335,19 @@
               {{else}}
               <div class="dice-formula {{#if d.critical}}critical{{/if}}" style="line-height: 16px;margin-bottom: 2px;">
                 {{resultString}} {{#if d.dealt}}<i class="fas fa-check"></i>{{/if}}
+                {{#if d.dealt}}
+                <div class="damage-controls">
+                  <button class="damage-control-btn" data-action="cancelDamage" data-target-key="{{d.targetKey}}" title="{{ localize 'CoC7.CancelDamage' }}">
+                    <i class="fas fa-undo"></i>
+                  </button>
+                  <button class="damage-control-btn" data-action="increaseDamage" data-target-key="{{d.targetKey}}" title="{{ localize 'CoC7.IncreaseDamage' }}">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                  <button class="damage-control-btn" data-action="decreaseDamage" data-target-key="{{d.targetKey}}" title="{{ localize 'CoC7.DecreaseDamage' }}">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+                {{/if}}
               </div>
               {{/each}}
               <div class="dice-tooltip" style="display: none;">
@@ -367,13 +380,13 @@
         </div>
       {{/each}}
       {{#unless weapon.system.properties.blst}}
-        {{#unless damageDealt}}
-          {{#if didAnyShotHit}}
+        {{#if didAnyShotHit}}
+          {{#unless damageDealt}}
             <div class="card-buttons gm-visible-only">
               <button data-action="deal-range-damage">{{ localize 'CoC7.InflictPain' }}</button>
             </div>
-          {{/if}}
-        {{/unless}}
+          {{/unless}}
+        {{/if}}
       {{/unless}}
     {{/if}}
    </div>
