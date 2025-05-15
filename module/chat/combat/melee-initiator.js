@@ -302,4 +302,29 @@ export class CoC7MeleeInitiator extends ChatCardActor {
     oldCard.querySelector('.dice-tooltip').style.display = 'none'
     CoC7Chat.updateChatCard(oldCard) // TODO : Check if this needs to be async
   }
+
+  async updateTarget () {
+    // Get the currently targeted token
+    const targetedTokens = this.targetedTokens
+    if (targetedTokens.length === 0) {
+      ui.notifications.warn(game.i18n.localize('CoC7.NoTokenTargeted'))
+      return this
+    }
+
+    // Update the target with the first targeted token
+    const targetToken = targetedTokens[0]
+    this._targetToken = targetToken
+    this._targetKey = `${targetToken.scene.id}.${targetToken.id}`
+    
+    // Clear the existing target card if it exists
+    if (this.targetCard) {
+      await game.messages.get(this.targetCard)?.delete()
+      this.targetCard = null
+    }
+
+    // Update the chat card to reflect the new target
+    await this.updateChatCard()
+    
+    return this
+  }
 }

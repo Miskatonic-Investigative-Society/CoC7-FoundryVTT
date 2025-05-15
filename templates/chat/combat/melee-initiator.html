@@ -39,6 +39,10 @@
       {{/if}}
     </div>
 
+    <div class="card-buttons owner-only" style="margin-bottom: 5px;">
+      <button data-action="update-target">{{localize 'CoC7.UpdateTarget'}}</button>
+    </div>
+
     <div class="flexrow-coc7 bonus-selection">
       <span class="flex1 toggle-switch outnumbered {{#unless rolled}}simple-flag{{/unless}} {{#if outnumbered}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleOutNumbered'}}" style="text-align:center" data-flag="outnumbered" data-selected={{outnumbered}}>{{localize 'CoC7.OutNumbered'}}</span>
       <span class="flex1 toggle-switch surprised {{#unless rolled}}simple-flag{{/unless}} {{#if surprised}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleSurprised'}}" style="text-align:center" data-flag="surprised" data-selected={{surprised}}>{{localize 'CoC7.combatCard.surprised'}}</span>
