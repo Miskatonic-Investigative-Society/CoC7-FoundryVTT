@@ -236,7 +236,7 @@ export class CoC7Utilities {
     }
   }
 
-  static skillCheckMacro (skill, event, options = {}) {
+  static async skillCheckMacro (skill, event, options = {}) {
     event.preventDefault()
     const speaker = ChatMessage.getSpeaker()
     let actor
@@ -248,7 +248,9 @@ export class CoC7Utilities {
       return
     }
 
-    actor.skillCheck(skill, event.shiftKey, options)
+    const check = await actor.skillCheck(skill, event.shiftKey, options)
+    
+    return check?.dice?.roll?.options?.coc7Result?.successLevel;
   }
 
   static weaponCheckMacro (weapon, event) {

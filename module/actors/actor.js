@@ -2867,6 +2867,7 @@ export class CoCActor extends Actor {
     else check.pushing = !!options.pushing
     await check.roll()
     check.toMessage(check.pushing)
+    return check
   }
 
   async weaponCheck (weaponData, fastForward = false) {
