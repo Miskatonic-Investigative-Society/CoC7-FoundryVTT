@@ -69,6 +69,12 @@
       {{/each}}
     </div>
 
+    {{#unless rolled}}
+    <div class="card-buttons owner-only" style="margin-bottom: 5px;">
+      <button data-action="update-range-targets">{{localize 'CoC7.UpdateTarget'}}</button>
+    </div>
+    {{/unless}}
+
     {{#each targets as |trgt key|}}
       <div class='target' data-key="{{key}}" data-target-key="{{key}}" data-actor-key="{{trgt.actorKey}}" data-base-range="{{trgt.baseRange}}" data-long-range="{{trgt.longRange}}" data-extreme-range="{{trgt.extremeRange}}" data-out-of-range="{{trgt.outOfRange}}" data-rounded-distance="{{trgt.roundedDistance}}" data-distance-unit="{{trgt.distanceUnit}}" data-cover="{{trgt.cover}}" data-surprised="{{trgt.surprised}}" data-point-blank-range="{{trgt.pointBlankRange}}" data-big="{{trgt.big}}" data-small="{{trgt.small}}" data-fast="{{trgt.fast}}" data-active="{{trgt.active}}" data-in-melee="{{trgt.inMelee}}" data-is-GM="{{../isKeeper}}" data-is-blind="false" {{#unless trgt.active}}style='display: none;' {{/unless}}>
         <div class="target-name">

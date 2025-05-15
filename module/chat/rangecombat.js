@@ -612,8 +612,34 @@ export class CoC7RangeInitiator {
   }
 
   changeVolleySize (x) {
-    this.volleySize = this.volleySize + x
+    this.volleySize = Number(this.volleySize) + x
     this.updateChatCard()
+  }
+
+  async updateTargets () {
+    // Clear previous targets
+    this._targets = []
+    
+    // Get currently targeted tokens
+    for (const t of [...game.user.targets]) {
+      const target = new CoC7RangeTarget(`${t.scene.id}.${t.id}`)
+      target.token = t
+      this._targets.push(target)
+    }
+    
+    // If no targets, add a default one
+    if (this._targets.length === 0) {
+      const target = new CoC7RangeTarget()
+      target.active = true
+      this._targets.push(target)
+    } else {
+      // Make the first target active
+      this._targets[0].active = true
+    }
+    
+    // Update the chat card
+    await this.updateChatCard()
+    return this
   }
 
   static updateCardSwitch (event, publishUpdate = true) {

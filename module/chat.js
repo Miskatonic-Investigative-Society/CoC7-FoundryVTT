@@ -1175,6 +1175,18 @@ export class CoC7Chat {
         break
       }
 
+      case 'update-initiator': {
+        const target = CoC7MeleeTarget.getFromCard(card)
+        await target.updateInitiator()
+        break
+      }
+
+      case 'update-range-targets': {
+        const rangeInitiator = CoC7RangeInitiator.getFromCard(card)
+        await rangeInitiator.updateTargets()
+        break
+      }
+
       default:
         break
     }
