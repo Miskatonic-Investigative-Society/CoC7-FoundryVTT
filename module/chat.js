@@ -980,6 +980,11 @@ export class CoC7Chat {
         await target.publishCheckResult()
         break
       }
+      case 'update-target': {
+        const initiator = CoC7MeleeInitiator.getFromCard(card)
+        await initiator.updateTarget()
+        break
+      }
       case 'roll-melee-damage': {
         const damageChatCard = new DamageCard({
           critical: button.dataset.critical === 'true',

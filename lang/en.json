@@ -249,6 +249,7 @@
   "CoC7.CriticalTitle": "The blow is critical",
   "CoC7.ImpaleTitle": "The weapon can impale",
   "CoC7.Target": "Target",
+  "CoC7.UpdateTarget": "Update Target",
   "CoC7.TargetOutOfRange": "Target out of range",
   "CoC7.NoTargetToDamage": "There is no target to apply the damage to",
   "CoC7.ShotIsImpossible": "Shot is impossible",
@@ -1405,7 +1406,7 @@
   "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events",
 
   "CoC7.SANSameLossAsMythosGain": "Sanity loss equal to Cthulhu Mythos gain",
-  "CoC7.ExperiencePackageBackground": "Add to the investigator’s backstory based on the experience.",
+  "CoC7.ExperiencePackageBackground": "Add to the investigator's backstory based on the experience.",
   "CoC7.ExperiencePackageDialogTitle": "Select Experience Package options",
   "CoC7.ExperiencePackageSpellList": "Known Spells",
   "CoC7.ExperiencePackageApplySanity": "Apply Sanity Loss",
@@ -1421,5 +1422,9 @@
   "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
   "CoC7.SheetExperiencePackageName": "Experience",
 
-  "CoC7.AlternativeNames": "Alternative names"
+  "CoC7.AlternativeNames": "Alternative names",
+
+  "CoC7.NoTokenTargeted": "No token targeted.",
+  "CoC7.NoTargetsAvailable": "No targets available.",
+  "CoC7.Targeted": "Targeted"
 }
