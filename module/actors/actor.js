@@ -27,6 +27,15 @@ import { CoC7Utilities } from '../utilities.js'
 export class CoCActor extends Actor {
   /** Create derived document classes for specific Item types */
   constructor (data, context) {
+    // Ensure type is set before any processing
+    if (!data.type) {
+      if (context?.pack === 'item-piles' || data.flags?.['item-piles']) {
+        data.type = 'container'
+      } else {
+        data.type = 'character' // Default type if none specified
+      }
+    }
+
     /** @see CONFIG.Actor.documentClasses in module/scripts/configure-documents */
     if (data.type in CONFIG.Actor.documentClasses && !context?.extended) {
       /**
@@ -78,7 +87,6 @@ export class CoCActor extends Actor {
   //       }
   //    };
   // }
-
   // setProp(key, x){
   //   this[key] = x;
   // }
@@ -87,6 +95,22 @@ export class CoCActor extends Actor {
   //   return this[key]||0;
   // }
   //
+
+  /** @override */
+  static async createDocuments(data = [], context = {}) {
+    // Ensure type is set for all documents
+    data = data.map(d => {
+      if (!d.type) {
+        if (context?.pack === 'item-piles' || d.flags?.['item-piles']) {
+          d.type = 'container'
+        } else {
+          d.type = 'character'
+        }
+      }
+      return d
+    })
+    return super.createDocuments(data, context)
+  }
 
   /**
    * @override
@@ -225,6 +249,7 @@ export class CoCActor extends Actor {
       if (this.sanMax && this.sanMax < this.san) { this.system.attribs.san.value = this.sanMax }
     }
   }
+  
 
   static defaultImg (type) {
     switch (type) {
@@ -236,9 +261,35 @@ export class CoCActor extends Actor {
         return 'systems/CoC7/assets/icons/cultist.svg'
     }
   }
-
   /** @override */
   static async create (data, options = {}) {
+    // Handle item-piles integration at creation time
+    if (options?.pack === 'item-piles' || data.flags?.['item-piles']) {
+      data.type = 'container'
+      if (!data.system) {
+        data.system = {
+          attribs: {
+            hp: { value: 0, max: 0 },
+            mp: { value: 0, max: 0 },
+            san: { value: 0, max: 0 },
+            mov: { value: 0 },
+            db: { value: 0 },
+            build: { value: 0 }
+          },
+          characteristics: {
+            str: { value: 0 },
+            con: { value: 0 },
+            siz: { value: 0 },
+            dex: { value: 0 },
+            app: { value: 0 },
+            int: { value: 0 },
+            pow: { value: 0 },
+            edu: { value: 0 }
+          }
+        }
+      }
+    }
+
     if (data.type === 'character') {
       data.prototypeToken = foundry.utils.mergeObject(data.prototypeToken || {}, {
         actorLink: true,
@@ -265,7 +316,6 @@ export class CoCActor extends Actor {
     }
     return super.create(data, options)
   }
-
   /**
    * Early version on templates did not include possibility of auto calc
    * Just check if auto is undefined, in which case it will be set to true
@@ -302,7 +352,6 @@ export class CoCActor extends Actor {
 
     return returnData
   }
-
   get characteristics () {
     const characteristics = {
       str: {
