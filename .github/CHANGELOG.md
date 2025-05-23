@@ -9,6 +9,7 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Allow coc7-links to be dropped on the hotbar
 - Expose skill check result to macros, thanks to @zeteticl. #1818
 - Fix Hotbar Drop Hook not returning flag
 - Fix issue with checking if Actor is inside a compendium in FoundryVTT v13.344
