@@ -73,7 +73,20 @@
     {{{_htmlRoll}}}
     {{#if targetKey}}
       {{#if damageInflicted}}
-        <div class='card-result'>{{ localize 'CoC7.DamageInflicted'}} : {{totalDamageString}}</div>
+        <div class='card-result'>
+          {{ localize 'CoC7.DamageInflicted'}} : {{totalDamageString}}
+          <div class="damage-controls">
+            <button data-action="cancelDamage" title="{{ localize 'CoC7.CancelDamage' }}">
+              <i class="fas fa-undo"></i>
+            </button>
+            <button data-action="increaseDamage" title="{{ localize 'CoC7.IncreaseDamage' }}">
+              <i class="fas fa-plus"></i>
+            </button>
+            <button data-action="decreaseDamage" title="{{ localize 'CoC7.DecreaseDamage' }}">
+              <i class="fas fa-minus"></i>
+            </button>
+          </div>
+        </div>
       {{else}}
         <div class="card-buttons gm-visible-only">
           <button data-action="dealDamage">{{ localize 'CoC7.InflictPain' }} ({{totalDamageString}})</button>

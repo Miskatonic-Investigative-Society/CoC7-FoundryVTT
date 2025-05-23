@@ -137,6 +137,7 @@ export class CoC7Chat {
     // RollCard.bindListerners( html);
     OpposedCheckCard.bindListerners(html)
     CombinedCheckCard.bindListerners(html)
+    CoC7RangeInitiator.activateListeners(html)
 
     /* // FoundryVTT v12 */
     // HTML needs changed to support this correctly
@@ -980,6 +981,11 @@ export class CoC7Chat {
         await target.publishCheckResult()
         break
       }
+      case 'update-target': {
+        const initiator = CoC7MeleeInitiator.getFromCard(card)
+        await initiator.updateTarget()
+        break
+      }
       case 'roll-melee-damage': {
         const damageChatCard = new DamageCard({
           critical: button.dataset.critical === 'true',
@@ -1167,6 +1173,18 @@ export class CoC7Chat {
         const conCheck = CoC7ConCheck.getFromCard(card)
         conCheck.isBlind = false
         conCheck.updateChatCard()
+        break
+      }
+
+      case 'update-initiator': {
+        const target = CoC7MeleeTarget.getFromCard(card)
+        await target.updateInitiator()
+        break
+      }
+
+      case 'update-range-targets': {
+        const rangeInitiator = CoC7RangeInitiator.getFromCard(card)
+        await rangeInitiator.updateTargets()
         break
       }
 
