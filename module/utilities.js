@@ -2,6 +2,7 @@
 import { COC7 } from './config.js'
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
+import { CoC7Link } from './apps/coc7-link.js'
 import { RollDialog } from './apps/roll-dialog.js'
 import { chatHelper } from './chat/helper.js'
 
@@ -249,8 +250,8 @@ export class CoC7Utilities {
     }
 
     const check = await actor.skillCheck(skill, event.shiftKey, options)
-    
-    return check?.dice?.roll?.options?.coc7Result?.successLevel;
+
+    return check?.dice?.roll?.options?.coc7Result?.successLevel
   }
 
   static weaponCheckMacro (weapon, event) {
@@ -286,7 +287,18 @@ export class CoC7Utilities {
   }
 
   static createMacro (bar, data, slot) {
-    if (data.type !== 'Item') return
+    if (!['Item', 'CoC7Link'].includes(data.type)) return
+
+    if (data.type === 'CoC7Link') {
+      CoC7Link.makeMacroData(data).then(macroData => {
+        if (macroData) {
+          Macro.create(macroData).then(macro => {
+            game.user.assignHotbarMacro(macro, slot)
+          })
+        }
+      })
+      return false
+    }
 
     const item = fromUuidSync(data.uuid, bar)
 

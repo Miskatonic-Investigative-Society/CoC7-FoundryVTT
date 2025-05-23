@@ -27,7 +27,8 @@ export default function () {
     macros: {
       skillCheck: CoC7Utilities.skillCheckMacro,
       weaponCheck: CoC7Utilities.weaponCheckMacro,
-      check: CoC7Utilities.checkMacro
+      check: CoC7Utilities.checkMacro,
+      linkMacro: CoC7Link.linkMacro
     },
     cards: {
       DamageCard
