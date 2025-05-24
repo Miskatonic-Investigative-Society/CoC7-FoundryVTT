@@ -2,27 +2,34 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cs.json (31 untranslated strings)](#csjson)
+[cs.json (32 untranslated strings)](#csjson)
 
-[es.json (41 untranslated strings)](#esjson)
+[de.json (1 untranslated strings)](#dejson)
 
-[ja.json (33 untranslated strings)](#jajson)
+[es.json (42 untranslated strings)](#esjson)
 
-[pl.json (11 untranslated strings)](#pljson)
+[fr.json (1 untranslated strings)](#frjson)
 
-[uk.json (32 untranslated strings)](#ukjson)
+[ja.json (34 untranslated strings)](#jajson)
 
-[zh-TW.json (1 untranslated strings)](#zh-twjson)
+[pl.json (12 untranslated strings)](#pljson)
+
+[sv.json (1 untranslated strings)](#svjson)
+
+[uk.json (33 untranslated strings)](#ukjson)
+
+[zh-TW.json (2 untranslated strings)](#zh-twjson)
 
 
 ## cs.json
-31 untranslated strings
+32 untranslated strings
 ```
 "CoC7.Entities.ExperiencePackage": "Experience Package",
 "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
 "CoC7.SkillExperiencePackage": "Experience Package",
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
 "CoC7.ExperiencePackageSkill": "Experience Package Skill",
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
 "CoC7.CoCIDFlag.keys.rt..backstory-significant-people": "Significant People",
@@ -50,8 +57,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SheetExperiencePackageName": "Experience",
 "CoC7.AlternativeNames": "Alternative names"
 ```
+## de.json
+1 untranslated strings
+```
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description"
+```
 ## es.json
-41 untranslated strings
+42 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -66,6 +78,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",
 "SETTINGS.DoNotPromptNoTargetSelectedHit": "When rolling weapon attacks without tokens do not requestion confirmation of no targets",
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
 "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
@@ -95,8 +108,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SheetExperiencePackageName": "Experience",
 "CoC7.AlternativeNames": "Alternative names"
 ```
+## fr.json
+1 untranslated strings
+```
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description"
+```
 ## ja.json
-33 untranslated strings
+34 untranslated strings
 ```
 "CoC7.Entities.ExperiencePackage": "Experience Package",
 "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
@@ -104,6 +122,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
 "CoC7.ExperiencePackageSkill": "Experience Package Skill",
 "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
 "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
@@ -133,8 +152,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AlternativeNames": "Alternative names"
 ```
 ## pl.json
-11 untranslated strings
+12 untranslated strings
 ```
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
 "CoC7.CoCIDFlag.keys.rt..backstory-significant-people": "Significant People",
@@ -147,14 +167,20 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDCompendiumPopulateButton": "Populate",
 "CoC7.AlternativeNames": "Alternative names"
 ```
+## sv.json
+1 untranslated strings
+```
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description"
+```
 ## uk.json
-32 untranslated strings
+33 untranslated strings
 ```
 "CoC7.Entities.ExperiencePackage": "Experience Package",
 "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
 "CoC7.SkillExperiencePackage": "Experience Package",
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
 "CoC7.ExperiencePackageSkill": "Experience Package Skill",
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
 "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
@@ -184,7 +210,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AlternativeNames": "Alternative names"
 ```
 ## zh-TW.json
-1 untranslated strings
+2 untranslated strings
 ```
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Treasured Possessions"
 ```
