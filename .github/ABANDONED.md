@@ -2,19 +2,19 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (497 untranslated strings)](#cnjson)
+[cn.json (498 untranslated strings)](#cnjson)
 
-[it.json (69 untranslated strings)](#itjson)
+[it.json (70 untranslated strings)](#itjson)
 
-[ko.json (279 untranslated strings)](#kojson)
+[ko.json (280 untranslated strings)](#kojson)
 
-[pt-BR.json (227 untranslated strings)](#pt-brjson)
+[pt-BR.json (228 untranslated strings)](#pt-brjson)
 
-[ru.json (149 untranslated strings)](#rujson)
+[ru.json (150 untranslated strings)](#rujson)
 
 
 ## cn.json
-497 untranslated strings
+498 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -428,6 +428,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "Archetype points {count} of {total} remaining {remaining}",
 "CoC7.InvestigatorWizard.CreateInstructions": "Click create to create your character. You Keeper needs to be online for the character to be created.",
 "CoC7.InvestigatorWizard.CreatingInvestigator": "Please wait while the keeper creates your investigator.",
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.id": "ID",
 "CoC7.CoCIDFlag.title": "Edit System ID (CoC ID)",
 "CoC7.CoCIDFlag.summary": "Set a group identifier that can be used to find the the most up to date version of this {type}. The System ID should use the English translation of the {type} to support localization across all languages.",
@@ -515,7 +516,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AlternativeNames": "Alternative names"
 ```
 ## it.json
-69 untranslated strings
+70 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -541,6 +542,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.DoNotPromptNoTargetSelected": "Do not prompt that no targets are selected",
 "SETTINGS.DoNotPromptNoTargetSelectedHit": "When rolling weapon attacks without tokens do not requestion confirmation of no targets",
 "CoC7.InvestigatorWizard.ChooseAfterRoll": "Choose where to place rolled characteristics",
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
 "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
@@ -588,7 +590,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AlternativeNames": "Alternative names"
 ```
 ## ko.json
-279 untranslated strings
+280 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -784,6 +786,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "Archetype points {count} of {total} remaining {remaining}",
 "CoC7.InvestigatorWizard.CreateInstructions": "Click create to create your character. You Keeper needs to be online for the character to be created.",
 "CoC7.InvestigatorWizard.CreatingInvestigator": "Please wait while the keeper creates your investigator.",
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.id": "ID",
 "CoC7.CoCIDFlag.title": "Edit System ID (CoC ID)",
 "CoC7.CoCIDFlag.summary": "Set a group identifier that can be used to find the the most up to date version of this {type}. The System ID should use the English translation of the {type} to support localization across all languages.",
@@ -871,7 +874,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AlternativeNames": "Alternative names"
 ```
 ## pt-BR.json
-227 untranslated strings
+228 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -1034,6 +1037,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "Archetype points {count} of {total} remaining {remaining}",
 "CoC7.InvestigatorWizard.CreateInstructions": "Click create to create your character. You Keeper needs to be online for the character to be created.",
 "CoC7.InvestigatorWizard.CreatingInvestigator": "Please wait while the keeper creates your investigator.",
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
 "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
@@ -1102,7 +1106,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AlternativeNames": "Alternative names"
 ```
 ## ru.json
-149 untranslated strings
+150 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -1194,6 +1198,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TokenDropModeAverage": "Average rolls",
 "SETTINGS.TokenDropModeIgnore": "Do nothing",
 "CoC7.InvestigatorWizard.ChooseAfterRoll": "Choose where to place rolled characteristics",
+"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
 "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
