@@ -9,6 +9,15 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Allow coc7-links to be dropped on the hotbar
+- Expose skill check result to macros, thanks to @zeteticl. #1818
+- Fix Hotbar Drop Hook not returning flag
+- Fix issue with checking if Actor is inside a compendium in FoundryVTT v13.344
+- Fix V3 character sheet inactive tab text colour on FoundryVTT v13
+- Update Investigator Wizard Backstory heading translations and support one block backstory setting
+- Update to Swedish localization, thanks to @Rangertheman #1814
+- Update to Taiwanese localization, thanks to @zeteticl. #1815
+
 ## Version 7.14
 
 **_!! This is intended to be the last release to support FoundryVTT v11 !!_**

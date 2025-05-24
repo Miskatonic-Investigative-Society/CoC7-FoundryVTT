@@ -36,7 +36,7 @@
         cursor: pointer;
       }
 
-      .tabs {
+      nav.tabs {
         position: absolute;
         left: 0;
         top: 558px;
@@ -110,6 +110,10 @@
             text-shadow: 2px 2px 4px #000000;
             font-size: 1.2rem;
             box-sizing: content-box;
+
+            &[data-tab] {
+              color: #fff;
+            }
 
             &.active {
               text-shadow: 2px 2px 15px white;

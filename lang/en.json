@@ -1323,6 +1323,7 @@
   "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "Archetype points {count} of {total} remaining {remaining}",
   "CoC7.InvestigatorWizard.CreateInstructions": "Click create to create your character. You Keeper needs to be online for the character to be created.",
   "CoC7.InvestigatorWizard.CreatingInvestigator": "Please wait while the keeper creates your investigator.",
+  "CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 
   "CoC7.CoCIDFlag.id": "ID",
   "CoC7.CoCIDFlag.title": "Edit System ID (CoC ID)",

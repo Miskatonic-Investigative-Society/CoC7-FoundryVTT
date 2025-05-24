@@ -533,7 +533,8 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
     }
 
     // Owner Only, not available from compendium
-    if (this.actor.isOwner && typeof this.actor.compendium === 'undefined') {
+    /* // FoundryVTT V13 */
+    if (this.actor.isOwner && (this.actor.compendium === null || typeof this.actor.compendium === 'undefined')) {
       if (game.settings.get('CoC7', 'useContextMenus')) {
         if (!this.menus) this.menus = []
 
