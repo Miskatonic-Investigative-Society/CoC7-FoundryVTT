@@ -1287,7 +1287,7 @@ export class CoCActor extends Actor {
                 ) &&
                 sectionName
               ) {
-                await this.createBioSection(sectionName)
+                await this.createBioSection(game.i18n.localize(sectionName))
               }
             }
           }
