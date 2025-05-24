@@ -886,16 +886,25 @@ export class CoC7InvestigatorWizard extends FormApplication {
           const allBackstories = await this.object.cacheBackstories
           sheetData.backstories = {}
           for (let index = 0; index < this.object.bioSections.length; index++) {
+            let rolls = ''
+            if (this.object.bioSections[index].name.startsWith('rt..')) {
+              rolls = this.object.bioSections[index].name
+            } else {
+              const match = this.object.bioSections[index].name.match(/^CoC7\.CoCIDFlag\.keys\.(rt\.\..+)$/)
+              if (match) {
+                rolls = match[1]
+              }
+            }
             sheetData.backstories[index] = {
               index,
               name: this.object.bioSections[index].name,
-              rolls: (game.system.api.cocid.findCocIdInList(this.object.bioSections[index].key, allBackstories).length ? this.object.bioSections[index].key : ''),
+              rolls: (rolls !== '' && game.system.api.cocid.findCocIdInList(rolls, allBackstories).length ? rolls : ''),
               value: this.object.bioSections[index].value
             }
           }
         }
         sheetData.canNext = true
-        sheetData.createButton = game.user.role >= CONST.USER_PERMISSIONS.ACTOR_CREATE.defaultRole
+        sheetData.createButton = game.user.hasPermission('ACTOR_CREATE')
         break
 
       case sheetData.pages.PAGE_CREATE:
@@ -1024,8 +1033,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       for (let index = 0; index < setup.system.bioSections.length; index++) {
         this.object.bioSections.push({
           name: setup.system.bioSections[index],
-          value: '',
-          key: 'rt..backstory-' + CoC7Utilities.toKebabCase(setup.system.bioSections[index])
+          value: ''
         })
       }
       this.object.personal = occupation.system.personal
@@ -1694,7 +1702,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         }
       }
     } else if (event.submitter?.dataset.button === 'next') {
-      if (this.object.step === this.pageList.PAGE_CREATE || (this.object.step === this.pageList.PAGE_BACKSTORY && game.user.role >= CONST.USER_PERMISSIONS.ACTOR_CREATE.defaultRole)) {
+      if (this.object.step === this.pageList.PAGE_CREATE || (this.object.step === this.pageList.PAGE_BACKSTORY && game.user.hasPermission('ACTOR_CREATE'))) {
         this.attemptToCreate()
         return
       } else {
@@ -1714,7 +1722,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
 
   async attemptToCreate () {
     const actorData = await this.normalizeCharacterData(this.object)
-    if (game.user.isGM || game.user.role >= CONST.USER_PERMISSIONS.ACTOR_CREATE.defaultRole) {
+    if (game.user.hasPermission('ACTOR_CREATE')) {
       const actor = await CoC7InvestigatorWizard.createCharacter(actorData)
       actor.sheet.render(true)
       this.close()
@@ -1864,11 +1872,18 @@ export class CoC7InvestigatorWizard extends FormApplication {
       }
     }
     const biography = []
-    for (let index = 0, im = data.bioSections.length; index < im; index++) {
-      biography.push({
-        title: data.bioSections[index].name,
-        value: data.bioSections[index].value
-      })
+    const backstory = []
+    if (game.settings.get('CoC7', 'oneBlockBackstory')) {
+      for (let index = 0, im = data.bioSections.length; index < im; index++) {
+        backstory.push('<h3>' + game.i18n.localize(data.bioSections[index].name) + '</h3>' + '<p>' + data.bioSections[index].value.split(/[\r\n]+/).join('</p><p>') + '</p>')
+      }
+    } else {
+      for (let index = 0, im = data.bioSections.length; index < im; index++) {
+        biography.push({
+          title: data.bioSections[index].name,
+          value: data.bioSections[index].value
+        })
+      }
     }
     const actorData = {
       type: 'character',
@@ -1916,6 +1931,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         },
         development,
         biography,
+        backstory: backstory.join('<p></p>'),
         monetary
       },
       prototypeToken: {
