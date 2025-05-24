@@ -9,6 +9,12 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.15
+
+**_!! This is intended to be the last release to support FoundryVTT v11 !!_**
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Allow coc7-links to be dropped on the hotbar
 - Expose skill check result to macros, thanks to @zeteticl. #1818
 - Fix Hotbar Drop Hook not returning flag
