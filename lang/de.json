@@ -1323,6 +1323,7 @@
   "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "Archetypfertigkeitspunkte {count} von {total} verbleibend {remaining}",
   "CoC7.InvestigatorWizard.CreateInstructions": "Klicken, um deinen Charakter zu erzeugen. Deine Spielleitung muss online sein, dass die Erschaffung möglich ist.",
   "CoC7.InvestigatorWizard.CreatingInvestigator": "Bitte warte während die Spielleitung deinen Investigator erstellt.",
+  "CoC7.InvestigatorWizard.PersonalDescription": "Persönliche Beschreibung",
 
   "CoC7.CoCIDFlag.id": "ID",
   "CoC7.CoCIDFlag.title": "Editiere System ID (CoC ID)",
