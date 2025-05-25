@@ -1326,6 +1326,7 @@
   "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "Du har använt {count} av {total} arketyppoäng. Kvar att fördela: {remaining}",
   "CoC7.InvestigatorWizard.CreateInstructions": "Klicka på 'Skapa' för att skapa din utredare. Spelledaren måste vara online för att utredarens ska skapas.",
   "CoC7.InvestigatorWizard.CreatingInvestigator": "Vänta medan Spelledaren skapar din utredare.",
+   "CoC7.InvestigatorWizard.PersonalDescription": "Personlig beskrivning",
 
   "CoC7.CoCIDFlag.id": "ID",
   "CoC7.CoCIDFlag.title": "Edit System ID (CoC ID)",
