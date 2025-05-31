@@ -1,4 +1,4 @@
-/* global foundry, game, TextEditor */
+/* global ChatMessage, CONFIG, foundry, fromUuid, game, TextEditor */
 import { CoC7ActorSheet } from './base.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7Link } from '../../apps/coc7-link.js'
@@ -76,6 +76,30 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 
     sheetData.weaponSkillGroups = this.actor.weaponSkillGroups()
 
+    sheetData.movementTypes = Object.keys(CONFIG.Token.movement.actions).reduce((c, i) => {
+      c.push({
+        id: i,
+        name: CONFIG.Token.movement.actions[i].label,
+        order: CONFIG.Token.movement.actions[i].order
+      })
+      return c
+    }, []).sort((a, b) => {
+      return a.order - b.order
+    })
+
+    sheetData.macros = await this.actor.system.special.macros.reduce(async (c, i) => {
+      const carry = await c
+      const macro = await fromUuid(i.uuid)
+      if (macro) {
+        carry.push({
+          uuid: macro.uuid,
+          img: macro.img,
+          name: macro.name
+        })
+      }
+      return carry
+    }, [])
+
     return sheetData
   }
 
@@ -112,6 +136,52 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
     //     .find('[name="data.attribs.hp.value"]')
     //     .change(event => this.actor.setHealthStatusManually(event))
     // }
+    html.find('.add-movement').click(this._onAddMovement.bind(this))
+    html.find('.remove-movement').click(this._onRemoveMovement.bind(this))
+    html.find('.remove-macro').click(this._onRemoveMacro.bind(this))
+    html.find('.execute-macro').click(this._onExecuteMacro.bind(this))
+  }
+
+  _onAddMovement () {
+    const movement = this.actor.system.special.movement ? foundry.utils.duplicate(this.actor.system.special.movement) : []
+    movement.push({
+      value: '',
+      type: 'walk'
+    })
+    this.actor.update({ 'system.special.movement': movement })
+  }
+
+  _onRemoveMovement (event) {
+    const a = event.currentTarget
+    if (typeof a.dataset.index !== 'undefined') {
+      const movement = foundry.utils.duplicate(this.actor.system.special.movement)
+      movement.splice(Number(a.dataset.index), 1)
+      this.actor.update({ 'system.special.movement': movement })
+    }
+  }
+
+  _onRemoveMacro (event) {
+    const a = event.currentTarget
+    if (typeof a.dataset.index !== 'undefined') {
+      const macros = foundry.utils.duplicate(this.actor.system.special.macros)
+      macros.splice(Number(a.dataset.index), 1)
+      this.actor.update({ 'system.special.macros': macros })
+    }
+  }
+
+  async _onExecuteMacro (event) {
+    const a = event.currentTarget
+    if (typeof a.dataset.uuid !== 'undefined') {
+      const macro = await fromUuid(a.dataset.uuid)
+      if (macro) {
+        macro.execute({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor, token: this.token }),
+          actor: this.actor,
+          token: this.token,
+          event
+        })
+      }
+    }
   }
 
   async _onSanLossContextMenuClick (event) {
@@ -245,6 +315,16 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
           return
         }
       }
+    }
+    const system = foundry.utils.expandObject(formData)?.system
+    if (system.special?.movement) {
+      const movement = foundry.utils.duplicate(this.actor.system.special.movement)
+      for (const offset in system.special.movement) {
+        for (const key in system.special.movement[offset]) {
+          movement[offset][key] = system.special.movement[offset][key]
+        }
+      }
+      formData['system.special.movement'] = movement
     }
     return super._updateObject(event, formData)
   }

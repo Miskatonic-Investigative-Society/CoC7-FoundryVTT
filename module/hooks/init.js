@@ -120,4 +120,57 @@ export default function () {
       return TextEditor.createAnchor(data)
     }
   })
+
+  /* // FoundryVTT V12 */
+  if (typeof CONFIG.Token.movement === 'undefined') {
+    CONFIG.Token.movement = {
+      actions: {
+        walk: {
+          label: 'CoC7.TEMPORARY.V12.WALK',
+          icon: 'fa-solid fa-person-walking',
+          order: 0
+        },
+        fly: {
+          label: 'CoC7.TEMPORARY.V12.FLY',
+          icon: 'fa-solid fa-person-fairy',
+          order: 1
+        },
+        swim: {
+          label: 'CoC7.TEMPORARY.V12.SWIM',
+          icon: 'fa-solid fa-person-swimming',
+          order: 2
+        },
+        burrow: {
+          label: 'CoC7.TEMPORARY.V12.BURROW',
+          icon: 'fa-solid fa-person-digging',
+          order: 3
+        },
+        crawl: {
+          label: 'CoC7.TEMPORARY.V12.CRAWL',
+          icon: 'fa-solid fa-person-praying',
+          order: 4
+        },
+        climb: {
+          label: 'CoC7.TEMPORARY.V12.CLIMB',
+          icon: 'fa-solid fa-person-through-window',
+          order: 5
+        },
+        jump: {
+          label: 'CoC7.TEMPORARY.V12.JUMP',
+          icon: 'fa-solid fa-person-running-fast',
+          order: 6
+        },
+        blink: {
+          label: 'CoC7.TEMPORARY.V12.BLINK',
+          icon: 'fa-solid fa-person-from-portal',
+          order: 7
+        },
+        displace: {
+          label: 'CoC7.TEMPORARY.V12.DISPLACE',
+          icon: 'fa-solid fa-transporter-1',
+          order: 8
+        }
+      }
+    }
+  }
 }
