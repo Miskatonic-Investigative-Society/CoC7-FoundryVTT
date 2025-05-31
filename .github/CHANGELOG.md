@@ -7,7 +7,15 @@ Happy gaming !
 
 ## Upcoming Release
 
+**_!! FoundryVTT v11 is no longer supported !!_**
+
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add movement types and adding macro documents to the creature/NPC sheet
+- Update to German localization, thanks to @MrViso #1831
+- Update to Spanish localization, thanks to @zeedif #1833
+- Update to Spanish manual, thanks to @zeedif #1833
+- Update to Swedish localization, thanks to @Rangertheman #1832
 
 ## Version 7.15
 
