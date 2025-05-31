@@ -126,47 +126,47 @@ export default function () {
     CONFIG.Token.movement = {
       actions: {
         walk: {
-          label: 'CoC7.TEMPORARY.V12.WALK',
+          label: 'TOKEN.MOVEMENT.ACTIONS.walk.label',
           icon: 'fa-solid fa-person-walking',
           order: 0
         },
         fly: {
-          label: 'CoC7.TEMPORARY.V12.FLY',
+          label: 'TOKEN.MOVEMENT.ACTIONS.fly.label',
           icon: 'fa-solid fa-person-fairy',
           order: 1
         },
         swim: {
-          label: 'CoC7.TEMPORARY.V12.SWIM',
+          label: 'TOKEN.MOVEMENT.ACTIONS.swim.label',
           icon: 'fa-solid fa-person-swimming',
           order: 2
         },
         burrow: {
-          label: 'CoC7.TEMPORARY.V12.BURROW',
+          label: 'TOKEN.MOVEMENT.ACTIONS.burrow.label',
           icon: 'fa-solid fa-person-digging',
           order: 3
         },
         crawl: {
-          label: 'CoC7.TEMPORARY.V12.CRAWL',
+          label: 'TOKEN.MOVEMENT.ACTIONS.crawl.label',
           icon: 'fa-solid fa-person-praying',
           order: 4
         },
         climb: {
-          label: 'CoC7.TEMPORARY.V12.CLIMB',
+          label: 'TOKEN.MOVEMENT.ACTIONS.climb.label',
           icon: 'fa-solid fa-person-through-window',
           order: 5
         },
         jump: {
-          label: 'CoC7.TEMPORARY.V12.JUMP',
+          label: 'TOKEN.MOVEMENT.ACTIONS.jump.label',
           icon: 'fa-solid fa-person-running-fast',
           order: 6
         },
         blink: {
-          label: 'CoC7.TEMPORARY.V12.BLINK',
+          label: 'TOKEN.MOVEMENT.ACTIONS.blink.label',
           icon: 'fa-solid fa-person-from-portal',
           order: 7
         },
         displace: {
-          label: 'CoC7.TEMPORARY.V12.DISPLACE',
+          label: 'TOKEN.MOVEMENT.ACTIONS.displace.label',
           icon: 'fa-solid fa-transporter-1',
           order: 8
         }

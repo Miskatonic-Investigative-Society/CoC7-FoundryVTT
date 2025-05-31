@@ -1424,13 +1424,13 @@
 
   "CoC7.AlternativeNames": "Alternative names",
 
-  "CoC7.TEMPORARY.V12.WALK": "Walk",
-  "CoC7.TEMPORARY.V12.FLY": "Fly",
-  "CoC7.TEMPORARY.V12.SWIM": "Swim",
-  "CoC7.TEMPORARY.V12.BURROW": "Burrow",
-  "CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-  "CoC7.TEMPORARY.V12.CLIMB": "Climb",
-  "CoC7.TEMPORARY.V12.JUMP": "Jump",
-  "CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-  "CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 }
