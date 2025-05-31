@@ -2,19 +2,19 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (498 untranslated strings)](#cnjson)
+[cn.json (507 untranslated strings)](#cnjson)
 
-[it.json (70 untranslated strings)](#itjson)
+[it.json (79 untranslated strings)](#itjson)
 
-[ko.json (280 untranslated strings)](#kojson)
+[ko.json (289 untranslated strings)](#kojson)
 
-[pt-BR.json (228 untranslated strings)](#pt-brjson)
+[pt-BR.json (237 untranslated strings)](#pt-brjson)
 
-[ru.json (150 untranslated strings)](#rujson)
+[ru.json (159 untranslated strings)](#rujson)
 
 
 ## cn.json
-498 untranslated strings
+507 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -513,10 +513,19 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
-"CoC7.AlternativeNames": "Alternative names"
+"CoC7.AlternativeNames": "Alternative names",
+"CoC7.TEMPORARY.V12.WALK": "Walk",
+"CoC7.TEMPORARY.V12.FLY": "Fly",
+"CoC7.TEMPORARY.V12.SWIM": "Swim",
+"CoC7.TEMPORARY.V12.BURROW": "Burrow",
+"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
+"CoC7.TEMPORARY.V12.CLIMB": "Climb",
+"CoC7.TEMPORARY.V12.JUMP": "Jump",
+"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
+"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
 ```
 ## it.json
-70 untranslated strings
+79 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -587,10 +596,19 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
-"CoC7.AlternativeNames": "Alternative names"
+"CoC7.AlternativeNames": "Alternative names",
+"CoC7.TEMPORARY.V12.WALK": "Walk",
+"CoC7.TEMPORARY.V12.FLY": "Fly",
+"CoC7.TEMPORARY.V12.SWIM": "Swim",
+"CoC7.TEMPORARY.V12.BURROW": "Burrow",
+"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
+"CoC7.TEMPORARY.V12.CLIMB": "Climb",
+"CoC7.TEMPORARY.V12.JUMP": "Jump",
+"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
+"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
 ```
 ## ko.json
-280 untranslated strings
+289 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -871,10 +889,19 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
-"CoC7.AlternativeNames": "Alternative names"
+"CoC7.AlternativeNames": "Alternative names",
+"CoC7.TEMPORARY.V12.WALK": "Walk",
+"CoC7.TEMPORARY.V12.FLY": "Fly",
+"CoC7.TEMPORARY.V12.SWIM": "Swim",
+"CoC7.TEMPORARY.V12.BURROW": "Burrow",
+"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
+"CoC7.TEMPORARY.V12.CLIMB": "Climb",
+"CoC7.TEMPORARY.V12.JUMP": "Jump",
+"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
+"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
 ```
 ## pt-BR.json
-228 untranslated strings
+237 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -1103,10 +1130,19 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
-"CoC7.AlternativeNames": "Alternative names"
+"CoC7.AlternativeNames": "Alternative names",
+"CoC7.TEMPORARY.V12.WALK": "Walk",
+"CoC7.TEMPORARY.V12.FLY": "Fly",
+"CoC7.TEMPORARY.V12.SWIM": "Swim",
+"CoC7.TEMPORARY.V12.BURROW": "Burrow",
+"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
+"CoC7.TEMPORARY.V12.CLIMB": "Climb",
+"CoC7.TEMPORARY.V12.JUMP": "Jump",
+"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
+"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
 ```
 ## ru.json
-150 untranslated strings
+159 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -1257,5 +1293,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
-"CoC7.AlternativeNames": "Alternative names"
+"CoC7.AlternativeNames": "Alternative names",
+"CoC7.TEMPORARY.V12.WALK": "Walk",
+"CoC7.TEMPORARY.V12.FLY": "Fly",
+"CoC7.TEMPORARY.V12.SWIM": "Swim",
+"CoC7.TEMPORARY.V12.BURROW": "Burrow",
+"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
+"CoC7.TEMPORARY.V12.CLIMB": "Climb",
+"CoC7.TEMPORARY.V12.JUMP": "Jump",
+"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
+"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
 ```
