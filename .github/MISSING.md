@@ -56,55 +56,55 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
 "CoC7.AlternativeNames": "Alternative names",
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## de.json
 9 untranslated strings
 ```
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## es.json
 9 untranslated strings
 ```
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## fr.json
 10 untranslated strings
 ```
 "CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## ja.json
 43 untranslated strings
@@ -143,15 +143,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
 "CoC7.AlternativeNames": "Alternative names",
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## pl.json
 21 untranslated strings
@@ -168,28 +168,28 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDCompendiumPopulateTypes": "Types",
 "CoC7.CoCIDCompendiumPopulateButton": "Populate",
 "CoC7.AlternativeNames": "Alternative names",
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## sv.json
 9 untranslated strings
 ```
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## uk.json
 42 untranslated strings
@@ -227,28 +227,28 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
 "CoC7.AlternativeNames": "Alternative names",
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## zh-TW.json
 11 untranslated strings
 ```
 "CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Treasured Possessions",
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```

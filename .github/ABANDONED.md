@@ -514,15 +514,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
 "CoC7.AlternativeNames": "Alternative names",
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## it.json
 79 untranslated strings
@@ -597,15 +597,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
 "CoC7.AlternativeNames": "Alternative names",
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## ko.json
 289 untranslated strings
@@ -890,15 +890,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
 "CoC7.AlternativeNames": "Alternative names",
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## pt-BR.json
 237 untranslated strings
@@ -1131,15 +1131,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
 "CoC7.AlternativeNames": "Alternative names",
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## ru.json
 159 untranslated strings
@@ -1294,13 +1294,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
 "CoC7.SheetExperiencePackageName": "Experience",
 "CoC7.AlternativeNames": "Alternative names",
-"CoC7.TEMPORARY.V12.WALK": "Walk",
-"CoC7.TEMPORARY.V12.FLY": "Fly",
-"CoC7.TEMPORARY.V12.SWIM": "Swim",
-"CoC7.TEMPORARY.V12.BURROW": "Burrow",
-"CoC7.TEMPORARY.V12.CRAWL": "Crawl",
-"CoC7.TEMPORARY.V12.CLIMB": "Climb",
-"CoC7.TEMPORARY.V12.JUMP": "Jump",
-"CoC7.TEMPORARY.V12.BLINK": "Teleport (Blink)",
-"CoC7.TEMPORARY.V12.DISPLACE": "Teleport (Displace)"
+"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
