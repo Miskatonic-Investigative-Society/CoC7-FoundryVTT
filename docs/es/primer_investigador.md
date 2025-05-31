@@ -7,62 +7,62 @@ Esta página crea un investigador utilizando los compendios proporcionados; si e
 
 # Habilidad
 
-Haz clic en la pestaña de Compendios y luego, bajo el encabezado de Objetos, abre las Habilidades (CoC7). Aquí encontrarás las habilidades que se muestran en las hojas de personaje disponibles en el sitio web de Chaosium.
+Haz clic en la pestaña de Compendios y luego, bajo el encabezado Ejemplos del Sistema, abre el objeto Habilidades (CoC7). Aquí encontrarás las habilidades que se muestran en las hojas de personaje disponibles en el sitio web de Chaosium.
 
-- _Sin ajuste_: No se pueden asignar puntos personales de habilidad.
+- _Sin ajuste_: No se pueden asignar puntos de habilidad personales.
 - _Sin ganancia de EXP_: No marcas esta habilidad para mejorar en caso de éxito.
-- _Especialización_: Esta habilidad forma parte de un grupo como Pilotar o Pelear.
+- _Especialización_: Esta habilidad forma parte de un grupo como Pilotar o Lucha.
 - _Infrecuente_: Esta habilidad es poco común y se puede ocultar automáticamente en la hoja de personaje.
 - _Forzada_: Esta habilidad se puede forzar.
-- _Combate_: Establece automáticamente Especialización, Combate y el nombre de la especialización a Combate.
+- _Combatir_: Establece automáticamente Especialización, De combate y el nombre de la especialización a Combatir.
 - _Armas de fuego_: Establece automáticamente Especialización, Combate y el nombre de la especialización a Armas de fuego.
 
-Puedes crear un nuevo Compendio de objetos y copiar las habilidades que necesitas, lo que te permitirá editarlas. También puedes crear nuevas habilidades creando nuevos objetos de Habilidad (Haz clic en la pestaña del directorio de Objetos y luego en Crear objeto, dale un nombre, por ejemplo, Jardinería, y establece el Tipo como Habilidad).
+Puedes crear un nuevo Compendio de objetos y copiar las habilidades que requieras en él, permitiéndote editarlas. También puedes crear nuevas habilidades creando nuevos objetos de Habilidad (Haz clic en la pestaña de Objetos, luego en Crear objeto, asígnale un nombre, por ejemplo, Jardinería, y establece el Tipo como Habilidad).
 
 ## Configuración
 
-Una vez que hayas configurado tus habilidades, crea una Configuración, tienes un ejemplo en el compendio de Ejemplos de objetos [_Ejemplo de configuración de los años 20_].
+Una vez que hayas configurado tus habilidades, crea una Configuración. Aquí tienes un ejemplo del compendio Ejemplos de objetos: [_Ejemplo de configuración de los años 20_]
 
-Las Configuraciones te permiten estandarizar las habilidades, objetos, secciones de biografía y características con las que comienzan los investigadores.
+Las Configuraciones te permiten estandarizar con qué habilidades, objetos, secciones de biografía y características comienzan los investigadores.
 
-Haz clic en la pestaña del directorio de Objetos y luego en Crear objeto, dale un nombre, por ejemplo, Nueva Configuración del Investigador y establece el Tipo como Configuración.
+Haz clic en la pestaña Objetos, luego en Crear objeto, asígnale un nombre, por ejemplo, Nueva configuración de Investigador, y establece el Tipo como Configuración.
 
-En la pestaña de Descripción, haz clic en el botón para obtener un editor y establecer la descripción.
+En la pestaña de Descripción, para establecer la descripción, haz clic en el botón  para obtener un editor.
 
-En la pestaña de Detalles, haz clic en Secciones de transfondo para agregar cualquier sección que necesites del paso de Crear un transfondo en la creación del investigador. Haz clic en la pestaña de Compendios y luego, abre el objeto de Ejemplos de objetos (CoC7) y arrastra [_Puñetazo_] a la configuración.
+En la pestaña de Detalles, haz clic en el  en Secciones de transfondo para agregar cualquier sección que requieras del paso Crear un trasfondo de la creación del investigador. Haz clic en la pestaña Compendios, luego, bajo el encabezado Objetos, abre el objeto Ejemplos de objetos (CoC7) y arrastra [_Puñetazo_] a la configuración.
 
-En la pestaña de Características, puedes personalizar cómo se lanzan/compran las características del investigador.
+En la pestaña de Características, puedes personalizar cómo se tiran/compran las características del investigador.
 
 En la pestaña de Habilidades, puedes arrastrar las habilidades que tendrá el investigador.
 
-Todas las hojas de actores y objetos tienen una pestaña que los Guardianes pueden usar para almacenar notas; solo los usuarios que estén configurados como Guardianes pueden ver esta pestaña.
+Todas las hojas de actor y objeto tienen una pestaña  que pueden utilizar los Guardianes para almacenar notas; solo los usuarios configurados como GM pueden ver esta pestaña.
 
 ## Ocupación
 
-Las ocupaciones te permiten establecer cuántos puntos de ocupación, el rango de Crédito y las habilidades con las que comienza el investigador. Aquí tienes un ejemplo del compendio de Ejemplos de objetos [_Ejemplo de Ocupación_].
+Las ocupaciones te permiten establecer cuántos puntos de ocupación, el rango de Crédito y las habilidades con las que comienza el investigador. Aquí tienes un ejemplo del compendio Ejemplos de objetos: [_Ejemplo de Ocupación_]
 
-Haz clic en la pestaña del directorio de Objetos y luego en Crear objetos, dale un nombre, por ejemplo, Conductor, y establece el Tipo como Ocupación.
+Haz clic en la pestaña de Objetos, luego en Crear objeto, asígnale un nombre, por ejemplo, Conductor, y establece el Tipo como Ocupación.
 
-En la pestaña de Descripción, haz clic en el botón para obtener un editor y establecer la descripción.
+En la pestaña de Descripción, para establecer la descripción, haz clic en el botón  para obtener un editor.
 
-En la pestaña de Detalles, puedes establecer el cálculo de puntos de ocupación y el Crédito mínimo/máximo.
+En la pestaña de Detalles, puedes establecer el cálculo de Puntos de Ocupación y el Crédito Mínimo/Máximo.
 
-En la pestaña de Habilidades, puedes arrastrar habilidades desde los Compendios o el directorio de Objetos a las habilidades comunes. También puedes configurar múltiples grupos de habilidades opcionales decidiendo cuántas el investigador debe seleccionar.
+En la pestaña de Habilidades, puedes arrastrar habilidades desde los Compendios o la pestaña de Objetos a las habilidades comunes. También puedes configurar múltiples grupos de habilidades Opcionales, decidiendo cuántas debe seleccionar el investigador.
 
-# Creando tu primer investigador
+# Crear tu primer investigador
 
 ## Personaje
 
-Para completar tu personaje, necesitas tener una escena activa que se puede crear en el directorio de Escenas.
+Para completar tu personaje, necesitas tener una escena activa, que se puede crear en el Directorio de Escenas.
 
-Haz clic en la pestaña del directorio de Actores y luego en Crear objeto, dale un nombre, por ejemplo, Nuevo Investigador y establece el Tipo como Personaje.
+Haz clic en la pestaña de Actores, luego en Crear actor, asígnale un nombre, por ejemplo, Nuevo investigador, y establece el Tipo como Personaje.
 
-Puedes arrastrar la configuración creada anteriormente al personaje para la configuración inicial o arrastra este ejemplo [_Ejemplo de Configuración de los años 20_].
+Puedes arrastrar tu configuración creada anteriormente al personaje para la configuración inicial o arrastrar este ejemplo en su lugar: [_Ejemplo de configuración de los años 20_]
 
-A continuación, arrastra la ocupación creada anteriormente al personaje o arrastra este ejemplo [_Ejemplo de Ocupación_].
+A continuación, arrastra tu ocupación creada anteriormente al personaje o arrastra este ejemplo en su lugar: [_Ejemplo de ocupación_]
 
-En la barra lateral izquierda, selecciona Herramientas del Guardián y luego selecciona el modo de Creación de personajes.
+En la barra de menú de la izquierda, selecciona Herramientas del Guardián y luego selecciona el Modo de creación de personajes.
 
-En la hoja de personaje, selecciona la pestaña de Desarrollo. El primer punto indica que esta es una habilidad de ocupación; la primera columna de números es el valor base, el siguiente es donde asignas puntos personales, el tercero es para puntos de ocupación, el cuarto es para la experiencia ganada durante la fase de mejora del investigador y la última columna es el porcentaje total de habilidad.
+En la hoja de personaje, selecciona la pestaña de Desarrollo. El primer punto indica que esta es una habilidad de ocupación; la primera columna de números es el valor base, la siguiente es donde asignas puntos personales, la tercera es para puntos de ocupación, la cuarta es para la experiencia ganada durante la fase de mejora del investigador y la última columna es el porcentaje total de habilidad.
 
-Puedes ver cuántos puntos personales y de ocupación has gastado hasta ahora. Una vez que hayas gastado todos tus puntos, debes desactivar el modo de Creación de personajes para permitir que los personajes vean sus Puntos de vida, Puntos de magia, Cordura y Suerte.
+Puedes ver cuántos puntos personales y de ocupación has gastado hasta ahora. Una vez que hayas gastado todos tus puntos, necesitas desactivar el Modo de creación de personajes para permitir que los personajes vean sus Puntos de vida, Puntos de magia, Cordura y Suerte.

@@ -3,7 +3,7 @@
 
 Los arquetipos se utilizan en juegos Pulp. Proporcionan bonificaciones a habilidades y características.
 
-Una vez creado el objeto _Arquetipo_, se mostrará la _Hoja de Arquetipo_.
+Una vez creado el objeto _Arquetipo_, se muestra la _Hoja de Arquetipo_.
 Allí puedes definir los detalles del _Arquetipo_:
 
 - En la pestaña _Detalles_ puedes:
