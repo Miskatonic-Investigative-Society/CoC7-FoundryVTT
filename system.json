@@ -9,7 +9,7 @@
     }
   ],
   "compatibility": {
-    "minimum": 11,
+    "minimum": 12,
     "verified": 13
   },
   "esmodules": [
