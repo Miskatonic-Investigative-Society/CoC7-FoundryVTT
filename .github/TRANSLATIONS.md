@@ -52,16 +52,16 @@ The following translations have more than 50 untranslated strings [are you able 
 |[CoC7.SheetExperiencePackageName](#coc7sheetexperiencepackagename)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|
 |[CoC7.SkillExperiencePackage](#coc7skillexperiencepackage)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|
 |[CoC7.SkillTotalExperiencePackagePoints](#coc7skilltotalexperiencepackagepoints)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[TOKEN.MOVEMENT.ACTIONS.blink.label](#coc7temporaryv12blink)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.burrow.label](#coc7temporaryv12burrow)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.climb.label](#coc7temporaryv12climb)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.crawl.label](#coc7temporaryv12crawl)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.displace.label](#coc7temporaryv12displace)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.fly.label](#coc7temporaryv12fly)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.jump.label](#coc7temporaryv12jump)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.swim.label](#coc7temporaryv12swim)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.walk.label](#coc7temporaryv12walk)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.rangeCombatBlastDamage](#coc7rangecombatblastdamage)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[TOKEN.MOVEMENT.ACTIONS.blink.label](#tokenmovementactionsblinklabel)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[TOKEN.MOVEMENT.ACTIONS.burrow.label](#tokenmovementactionsburrowlabel)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[TOKEN.MOVEMENT.ACTIONS.climb.label](#tokenmovementactionsclimblabel)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[TOKEN.MOVEMENT.ACTIONS.crawl.label](#tokenmovementactionscrawllabel)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[TOKEN.MOVEMENT.ACTIONS.displace.label](#tokenmovementactionsdisplacelabel)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[TOKEN.MOVEMENT.ACTIONS.fly.label](#tokenmovementactionsflylabel)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[TOKEN.MOVEMENT.ACTIONS.jump.label](#tokenmovementactionsjumplabel)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[TOKEN.MOVEMENT.ACTIONS.swim.label](#tokenmovementactionsswimlabel)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[TOKEN.MOVEMENT.ACTIONS.walk.label](#tokenmovementactionswalklabel)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 ##### CoC7.AlternativeNames
 ```  "CoC7.AlternativeNames": "Alternative names",```
 ##### CoC7.ClearExperiencePackageName
@@ -128,6 +128,8 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "CoC7.SkillExperiencePackage": "Experience Package",```
 ##### CoC7.SkillTotalExperiencePackagePoints
 ```  "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",```
+##### CoC7.rangeCombatBlastDamage
+```  "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",```
 ##### TOKEN.MOVEMENT.ACTIONS.blink.label
 ```  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",```
 ##### TOKEN.MOVEMENT.ACTIONS.burrow.label
@@ -146,5 +148,3 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",```
 ##### TOKEN.MOVEMENT.ACTIONS.walk.label
 ```  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",```
-##### CoC7.rangeCombatBlastDamage
-```  "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",```
