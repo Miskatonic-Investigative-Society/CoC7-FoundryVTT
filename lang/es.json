@@ -432,7 +432,7 @@
   "CoC7.ErrorInvalid": "inválido",
   "CoC7.ErrorInvalidCardType": "Tipo de mensaje",
   "CoC7.ErrorInvalidRollType": "Tipo de tirada",
-  "CoC7.Validate": "Tirar dados",
+  "CoC7.Validate": "Aceptar",
   "CoC7.Apply": "Aplicar",
 
   "CoC7.NewBioSectionName": "Nueva sección",
@@ -926,7 +926,7 @@
   "CoC7.WarnNoTargetsSanCheck": "No tienes objetivos seleccionados. Selecciona objetivos o crea un enlace.",
 
   "CoC7.allActors": "Todos los actores",
-  "CoC7.restTargets": "Objetivos en reposo",
+  "CoC7.restTargets": "Objetivos del reposo",
   "CoC7.startRest": "Iniciar reposo",
   "CoC7.dreaming": "Los investigadores esperan soñando",
   "CoC7.healthRecovered": "Recuperado un Punto de Vida",
