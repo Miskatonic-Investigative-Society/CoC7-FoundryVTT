@@ -108,7 +108,8 @@
             "max": null,
             "short": "MOV",
             "label": "Movement rate",
-            "auto": true
+            "auto": true,
+            "type": "walk"
           },
           "db": {
             "value": null,
@@ -284,7 +285,9 @@
           "checkPassed": null,
           "checkFailled": null
         },
-        "attacksPerRound": 1
+        "attacksPerRound": 1,
+        "movement": [],
+        "macros": []
       },
       "infos": {
         "occupation": "",
@@ -319,7 +322,9 @@
           "checkPassed": null,
           "checkFailled": null
         },
-        "attacksPerRound": 1
+        "attacksPerRound": 1,
+        "movement": [],
+        "macros": []
       },
       "infos": {
         "type": null

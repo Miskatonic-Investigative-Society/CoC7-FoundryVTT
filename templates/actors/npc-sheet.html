@@ -168,20 +168,45 @@
           {{/if}}
         </div>
 
-        <div class="attribute-list flexrow-coc7" style="flex: none;height: 20px;">
-          <div class="flexrow-coc7 flex1 attribute" data-attrib="mov">
-            <label>{{localize 'CoC7.Mov'}} :</label>
+        <div class="attribute-list flexrow-coc7" style="flex: 0 0 auto;">
+          <div style="flex: 2">
+            <div class="flexrow-coc7 flex1 attribute" data-attrib="mov">
+              <label>{{localize 'CoC7.Mov'}} :</label>
+              {{#if data.system.attribs.mov.auto}}
+                <span class="attribute-value single" type="text" style="line-height: 22px;flex: 0 0 1.54rem;"> {{data.system.attribs.mov.value}} </span>
+              {{else}}
+                <input class="attribute-value single {{#if data.system.flags.locked}}read-only{{/if}}" style="flex: 0 0 1.54rem;" type="text" name="system.attribs.mov.value" value="{{data.system.attribs.mov.value}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
+              {{/if}}
 
-            {{#if data.system.attribs.mov.auto}}
-              <span class="attribute-value single" type="text" style="line-height: 22px;"> {{data.system.attribs.mov.value}} </span>
-            {{else}}
-              <input class="attribute-value single {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.mov.value" value="{{data.system.attribs.mov.value}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
-            {{/if}}
-
+              {{#unless data.system.flags.locked}}
+                <select class="attribute-dtype" name="system.attribs.mov.type" style="height: auto;">
+                  {{selectOptions movementTypes selected=data.system.attribs.mov.type localize=true valueAttr="id" labelAttr="name"}}
+                </select>
+                <div class="auto-toggle {{#if data.system.attribs.mov.auto}}auto-on{{else}}auto-off{{/if}}" style="flex: 0 0 1.2rem"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
+              {{else}}
+                <span class="attribute-value single" type="text" style="line-height: 22px;">{{localize (selectValue movementTypes data.system.attribs.mov.type 'id' 'name')}}</span>
+              {{/unless}}
+            </div>
+            {{#each data.system.special.movement as |movement key|}}
+              <div class="flexrow-coc7 flex1 attribute">
+                <label>{{localize 'CoC7.Mov'}} :</label>
+                <input class="attribute-value single {{#if ../data.system.flags.locked}}read-only{{/if}}" style="flex: 0 0 1.54rem;" type="text" name="system.special.movement.{{key}}.value" value="{{movement.value}}" data-dtype="Number" {{#if ../data.system.flags.locked}}readonly{{/if}}>
+                {{#unless ../data.system.flags.locked}}
+                  <select class="attribute-dtype" name="system.special.movement.{{key}}.type" style="height: auto;">
+                    {{selectOptions ../movementTypes selected=movement.type localize=true valueAttr="id" labelAttr="name"}}
+                  </select>
+                  <div class="remove-movement" style="padding-left: 4px;flex: 0 0 1.2rem" data-index="{{key}}"><i class="fas fa-minus-circle" style="padding-top: 0.3rem;"></i></div>
+                {{else}}
+                  <span class="attribute-value single" type="text" style="line-height: 22px;">{{localize (selectValue ../movementTypes movement.type 'id' 'name')}}</span>
+                {{/unless}}
+              </div>
+            {{/each}}
             {{#unless data.system.flags.locked}}
-              <div class="auto-toggle {{#if data.system.attribs.mov.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
+              <div class="flexrow-coc7 flex1 attribute">
+                <label>{{localize 'CoC7.Mov'}} :</label>
+                <div class="add-movement"><i class="fas fa-plus-circle" style="padding-top: 0.3rem;"></i></div>
+              </div>
             {{/unless}}
-
           </div>
           <div class="flexrow-coc7 flex1 attribute" data-attrib="db" data-roll-formula="{{data.system.attribs.db.value}}">
             <label class="attribute-label rollable">{{localize 'CoC7.DB'}} :</label>
@@ -351,6 +376,22 @@
             {{editor enrichedBiographyPersonalDescription target="system.biography.personalDescription.value" engine="prosemirror" button=true owner=owner editable=editable}}
           </div>
         </section>
+
+        {{#if macros.length}}
+          <section class="sheet-section">
+            <div class="section-header flexrow-coc7" data-pannel="macros">
+              <h3 class="flex1">{{localize 'DOCUMENT.Macros'}}</h3>
+            </div>
+            <div class="macros flexcol-coc7 pannel expanded" style="padding: 0 0.2em;">
+              {{#each macros as |macro key|}}
+                <div class="flexrow">
+                  <div class="macro-click execute-macro" data-uuid="{{macro.uuid}}">{{macro.name}}</div>
+                  <div class="macro-click remove-macro" style="flex: 0 0 auto" data-index="{{key}}"><i class="fas fa-trash"></i></div>
+                </div>
+              {{/each}}
+            </div>
+          </section>
+        {{/if}}
 
         <section class="sheet-section">
           <div class="section-header flexrow-coc7" data-pannel="effects">
