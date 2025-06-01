@@ -144,7 +144,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     // Iterate over active effects, classifying them into categories
     for (const e of effects) {
       count += 1
-      e._getSourceName() // Trigger a lookup for the source name
+      // e._getSourceName() // Trigger a lookup for the source name
       if (e.isSuppressed || e.disabled) categories.inactive.effects.push(e)
       else categories.active.effects.push(e)
     }

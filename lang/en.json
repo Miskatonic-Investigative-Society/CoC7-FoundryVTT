@@ -1422,5 +1422,15 @@
   "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
   "CoC7.SheetExperiencePackageName": "Experience",
 
-  "CoC7.AlternativeNames": "Alternative names"
+  "CoC7.AlternativeNames": "Alternative names",
+
+  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 }

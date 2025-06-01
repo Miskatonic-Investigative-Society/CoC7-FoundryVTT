@@ -1278,6 +1278,13 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
       if (data.check === CoC7Link.CHECK_TYPE.EFFECT) {
         CoC7Link._onLinkActorClick(this.actor, data)
       }
+    } else if (['creature', 'npc'].includes(this.actor.type) && data.type === 'Macro') {
+      const macros = this.actor.system.special.macros ? foundry.utils.duplicate(this.actor.system.special.macros) : []
+      macros.push({
+        uuid: data.uuid
+      })
+      this.actor.update({ 'system.special.macros': macros })
+      return false
     }
     await super._onDrop(event)
   }
