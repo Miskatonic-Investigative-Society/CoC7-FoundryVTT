@@ -1425,5 +1425,15 @@
   "CoC7.ClearExperiencePackageName": "Ta bort Erfarenhetspaketet",
   "CoC7.SheetExperiencePackageName": "Erfarenhet",
 
-  "CoC7.AlternativeNames": "Alternativa namn"
+  "CoC7.AlternativeNames": "Alternativa namn",
+
+  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Gå",
+  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Flyga",
+  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Simma",
+  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "Borra in",
+  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Krypa",
+  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Klättra",
+  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Hoppa",
+  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleportera (Glimta)",
+  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleportera (Förskjuta)"
 }
