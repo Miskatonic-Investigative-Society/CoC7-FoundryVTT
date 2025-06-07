@@ -35,8 +35,8 @@ export default class CoC7ActiveEffect extends ActiveEffect {
       case 'create':
         return owner.createEmbeddedDocuments('ActiveEffect', [
           {
-            label: game.i18n.localize('CoC7.EffectNew'),
-            icon: 'icons/svg/aura.svg',
+            name: game.i18n.localize('CoC7.EffectNew'),
+            img: 'icons/svg/aura.svg',
             origin: owner.uuid,
             'duration.rounds':
               li.dataset.effectType === 'temporary' ? 1 : undefined,
