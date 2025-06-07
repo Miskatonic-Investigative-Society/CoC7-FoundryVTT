@@ -1323,7 +1323,8 @@
   "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "{count} points de compétences d'Archétype utilisés sur {total} . Il en reste {remaining}",
   "CoC7.InvestigatorWizard.CreateInstructions": "Cliquez sur créer pour créer votre personnage. Votre Gardien doit être connecté pour pouvoir procéder à la création.",
   "CoC7.InvestigatorWizard.CreatingInvestigator": "Attendez s'il vous plaît pendant que le Gardien crée votre investigateur.",
-
+  "CoC7.InvestigatorWizard.PersonalDescription": "Description personnelle",
+  
   "CoC7.CoCIDFlag.id": "ID",
   "CoC7.CoCIDFlag.title": "Éditer le System ID (CoC ID)",
   "CoC7.CoCIDFlag.summary": "Fixez un identifiant utilisable pour retrouver le '{type}' le plus à jour. Le System ID doit utiliser la traduction anglaise de '{type}' pour supporter le portage sous d'autres langues.",
@@ -1421,5 +1422,15 @@
   "CoC7.ClearExperiencePackageName": "Effacer le nom du Kit Expérience",
   "CoC7.SheetExperiencePackageName": "Expérience",
 
-  "CoC7.AlternativeNames": "Noms alternatifs"
+  "CoC7.AlternativeNames": "Noms alternatifs",
+
+  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Marcher",
+  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Voler",
+  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Nager",
+  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "S'enfouir",
+  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Ramper",
+  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Grimper",
+  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Sauter",
+  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Téléporter (Clignote)",
+  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Téléporter (Déplace)"
 }
