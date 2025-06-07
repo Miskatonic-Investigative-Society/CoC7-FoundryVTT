@@ -8,13 +8,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 [es.json (9 untranslated strings)](#esjson)
 
-[fr.json (10 untranslated strings)](#frjson)
-
 [ja.json (43 untranslated strings)](#jajson)
 
 [pl.json (21 untranslated strings)](#pljson)
-
-[sv.json (9 untranslated strings)](#svjson)
 
 [uk.json (42 untranslated strings)](#ukjson)
 
@@ -92,20 +88,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
 "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
-## fr.json
-10 untranslated strings
-```
-"CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
-"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
-"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
-"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
-"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
-"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
-"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
-"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
-"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
-"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
-```
 ## ja.json
 43 untranslated strings
 ```
@@ -168,19 +150,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDCompendiumPopulateTypes": "Types",
 "CoC7.CoCIDCompendiumPopulateButton": "Populate",
 "CoC7.AlternativeNames": "Alternative names",
-"TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
-"TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
-"TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
-"TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
-"TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
-"TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
-"TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
-"TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
-"TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
-```
-## sv.json
-9 untranslated strings
-```
 "TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
 "TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
 "TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",

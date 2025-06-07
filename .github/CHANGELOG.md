@@ -9,6 +9,16 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.17
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix effect creation from Character Sheet error on FoundryVTT v13
+- Fix hidden keeper notes tab on spell sheet
+- Update to French localization, thanks to @vonv #1841
+- Update to Spanish localization, thanks to @zeedif #1840
+- Update to Swedish localization, thanks to @Rangertheman #1844
+
 ## Version 7.16
 
 **_!! FoundryVTT v11 is no longer supported !!_**
