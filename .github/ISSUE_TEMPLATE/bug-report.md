@@ -16,9 +16,9 @@ assignees: ''
 - [ ] Are you running the latest version of both Foundry VTT and Call of Cthulhu 7th Edition?
 - [ ] Have you tested whether the bug persists without any other modules activated or on Foundry Launch in Safe Configuration?
 
-## Browser and OS
+## Browser, OS, and FoundryVTT version
 
-<!--- Provide the browser and operating system you are using -->
+<!--- Provide the browser, operating system, and FoundryVTT major version number you are using. -->
 
 ## Description.
 
