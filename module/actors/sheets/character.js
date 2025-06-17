@@ -152,7 +152,16 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     sheetData.isSummarized = this.summarized
     sheetData.skillList = []
     let previousSpec = ''
-    for (const skill of sheetData.skills) {
+    const sortedSkills = [...sheetData.skills].sort((a, b) => {
+      const sortKeyA = a.system.specialization || a.name
+      const sortKeyB = b.system.specialization || b.name
+      const primaryCompare = sortKeyA.localeCompare(sortKeyB, game.i18n.lang)
+      if (primaryCompare !== 0) {
+        return primaryCompare
+      }
+      return a.name.localeCompare(b.name, game.i18n.lang)
+    })
+    for (const skill of sortedSkills) {
       if (sheetData.skillShowUncommon || !skill.system.properties.rarity) {
         if (skill.system.properties.special) {
           if (previousSpec !== skill.system.specialization) {
