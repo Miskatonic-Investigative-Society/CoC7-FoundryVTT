@@ -969,50 +969,52 @@ export class CoCActor extends Actor {
           if (CoC7Item.isAnySpec(data)) {
             const isAnyButNotFlagged = (!(data.system.properties?.requiresname) ?? false) && !(data.system.properties?.picknameonly ?? false)
             let skillList = []
-            const group = game.system.api.cocid.guessGroupFromDocument(data)
-            if (group) {
-              skillList = (await game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
-                return (item.system.properties?.special ?? false) && !(item.system.properties?.requiresname ?? false) && !(item.system.properties?.picknameonly ?? false)
-              })
-            }
-            if (data.system?.flags?.occupation || data.system?.flags?.archetype) {
-              const existingSkills = this.skills.filter(el => {
-                if (!el.system.specialization) return false
-                if (
-                  data.system?.flags?.occupation &&
-                  el.system.flags?.occupation
-                ) {
-                  return false
-                }
-                if (
-                  data.system?.flags?.archetype &&
-                  el.system.flags?.archetype
-                ) {
-                  return false
-                }
-                return (
-                  data.system.specialization.toLocaleLowerCase() ===
-                  el.system.specialization.toLocaleLowerCase()
-                )
-              })
-              if (existingSkills.length > 0) {
-                if (skillList.length > 0) {
-                  for (let i = existingSkills.length - 1; i >= 0; i--) {
-                    const found = skillList.findIndex(item => {
-                      return item.name === existingSkills[i].name || item.flags?.CoC7?.cocidFlag?.id === existingSkills[i].flags?.CoC7?.cocidFlag?.id
-                    })
-                    if (found > -1) {
-                      skillList.splice(found, 1)
-                    }
+            if (!data.system.properties?.onlyone) {
+              const group = game.system.api.cocid.guessGroupFromDocument(data)
+              if (group) {
+                skillList = (await game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
+                  return (item.system.properties?.special ?? false) && !(item.system.properties?.requiresname ?? false) && !(item.system.properties?.picknameonly ?? false)
+                })
+              }
+              if (data.system?.flags?.occupation || data.system?.flags?.archetype) {
+                const existingSkills = this.skills.filter(el => {
+                  if (!el.system.specialization) return false
+                  if (
+                    data.system?.flags?.occupation &&
+                    el.system.flags?.occupation
+                  ) {
+                    return false
                   }
-                  skillList = skillList.concat(existingSkills)
-                } else {
-                  skillList = existingSkills
+                  if (
+                    data.system?.flags?.archetype &&
+                    el.system.flags?.archetype
+                  ) {
+                    return false
+                  }
+                  return (
+                    data.system.specialization.toLocaleLowerCase() ===
+                    el.system.specialization.toLocaleLowerCase()
+                  )
+                })
+                if (existingSkills.length > 0) {
+                  if (skillList.length > 0) {
+                    for (let i = existingSkills.length - 1; i >= 0; i--) {
+                      const found = skillList.findIndex(item => {
+                        return item.name === existingSkills[i].name || item.flags?.CoC7?.cocidFlag?.id === existingSkills[i].flags?.CoC7?.cocidFlag?.id
+                      })
+                      if (found > -1) {
+                        skillList.splice(found, 1)
+                      }
+                    }
+                    skillList = skillList.concat(existingSkills)
+                  } else {
+                    skillList = existingSkills
+                  }
                 }
               }
-            }
-            if (skillList.length > 0) {
-              skillList.sort(CoC7Utilities.sortByNameKey)
+              if (skillList.length > 0) {
+                skillList.sort(CoC7Utilities.sortByNameKey)
+              }
             }
             const skillData = await SkillSpecializationSelectDialog.create({
               skills: skillList,
