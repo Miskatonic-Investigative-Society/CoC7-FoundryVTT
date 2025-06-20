@@ -104,7 +104,7 @@
   "CoC7.Weapons": "Armas",
   "CoC7.Effects": "Efectos",
   "CoC7.Cost": "Coste",
-  "CoC7.Source": "Fuente",
+  "CoC7.Source": "Origen",
   "CoC7.SpellDetails": "Detalles del hechizo",
   "CoC7.Details": "Detalles",
   "CoC7.Other": "Otro",
@@ -394,7 +394,7 @@
   "CoC7.SkillXpGainDisabled": "Aumento de EXP desactivado.",
   "CoC7.SkillSpecial": "Especialización",
   "CoC7.SkillRarity": "Infrecuente",
-  "CoC7.SkillRarityShort": "[INF]",
+  "CoC7.SkillRarityShort": "[Infrecuente]",
   "CoC7.SkillPush": "Forzada",
   "CoC7.SkillCombat": "De combate",
   "CoC7.SkillFighting": "Combatir",
@@ -423,7 +423,7 @@
   "CoC7.WeaponStun": "Aturdimiento",
   "CoC7.Weapon.Property.Melee": "Cuerpo a cuerpo",
   "CoC7.Weapon.Property.Thrown": "Arrojadiza",
-  "CoC7.Weapon.Property.Burn": "Quemar",
+  "CoC7.Weapon.Property.Burn": "Quemadura/Fuego",
   "CoC7.Weapon.Property.Shotgun": "Escopeta",
 
   "CoC7.ErrorItem": "No se pudo localizar el objeto",
@@ -841,7 +841,7 @@
   "CoC7.PhysicalTalent": "Físico",
   "CoC7.MentalTalent": "Mental",
   "CoC7.CombatTalent": "De combate",
-  "CoC7.MiscellaneousTalent": "Misceláneo",
+  "CoC7.MiscellaneousTalent": "Vario",
   "CoC7.BasicTalent": "Básico",
   "CoC7.InsaneTalent": "Locura",
   "CoC7.Sane": "Cuerdo",
@@ -898,7 +898,7 @@
   "CoC7.UsePoints": "Usar puntos",
   "CoC7.UseRolls": "Usar tiradas",
   "CoC7.CoreCharacteristics": "Características básicas",
-  "CoC7.BonusPoints": "Puntos adicionales",
+  "CoC7.BonusPoints": "Puntos de bonificación",
   "CoC7.SuggestedOccupations": "Ocupaciones sugeridas",
   "CoC7.SuggestedTraits": "Rasgos Sugeridos",
 
@@ -1422,5 +1422,15 @@
   "CoC7.ClearExperiencePackageName": "Borrar nombre del Paquete de experiencia",
   "CoC7.SheetExperiencePackageName": "Experiencia",
 
-  "CoC7.AlternativeNames": "Nombres alternativos"
+  "CoC7.AlternativeNames": "Nombres alternativos",
+
+  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Caminar",
+  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Volar",
+  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Nadar",
+  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "Excavar",
+  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Arrastrarse",
+  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Trepar",
+  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Saltar",
+  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teletransporte (parpadeo)",
+  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teletransporte (desplazamiento)"
 }
