@@ -229,17 +229,17 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
         // ce bloc devrait etre déplacé dans le bloc _updateFormData
         if (item.type === 'skill') {
           if (item.system.properties.special) {
-            if (item.system.properties.fighting) {
+            if (item.system.properties.fighting && !item.system.specialization) {
               item.system.specialization = game.i18n.localize(
                 'CoC7.FightingSpecializationName'
               )
             }
-            if (item.system.properties.firearm) {
+            if (item.system.properties.firearm && !item.system.specialization) {
               item.system.specialization = game.i18n.localize(
                 'CoC7.FirearmSpecializationName'
               )
             }
-            if (item.system.properties.ranged) {
+            if (item.system.properties.ranged && !item.system.specialization) {
               item.system.specialization = game.i18n.localize(
                 'CoC7.RangedSpecializationName'
               )
