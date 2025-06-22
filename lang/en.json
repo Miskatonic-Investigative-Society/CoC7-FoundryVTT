@@ -1432,5 +1432,7 @@
   "TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
   "TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
   "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
-  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
+  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)",
+
+  "CoC7.SkillAreadyAdded": "You already have a {name} skill"
 }
