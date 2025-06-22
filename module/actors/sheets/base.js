@@ -336,13 +336,17 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
       }
 
       for (const itemType in sheetData.itemsByType) {
-        sheetData.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
-      }
+        if (itemType === 'skill') {
+          sheetData.itemsByType[itemType].sort(CoC7Utilities.sortBySpecializationThenName)
+        } else {
+          sheetData.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
+        }
+       }
 
       // redondant avec matrice itembytype
       sheetData.skills = sheetData.items
         .filter(item => item.type === 'skill')
-        .sort(CoC7Utilities.sortByNameKey)
+        .sort(CoC7Utilities.sortBySpecializationThenName)
 
       sheetData.meleeSkills = sheetData.skills.filter(
         skill =>
