@@ -152,7 +152,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     sheetData.isSummarized = this.summarized
     sheetData.skillList = []
     let previousSpec = ''
-    for (const skill of sortedSkills) {
+    for (const skill of sheetData.skills) {
       if (sheetData.skillShowUncommon || !skill.system.properties.rarity) {
         if (skill.system.properties.special) {
           if (previousSpec !== skill.system.specialization) {
