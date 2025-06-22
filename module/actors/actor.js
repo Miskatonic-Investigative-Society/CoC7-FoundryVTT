@@ -969,52 +969,50 @@ export class CoCActor extends Actor {
           if (CoC7Item.isAnySpec(data)) {
             const isAnyButNotFlagged = (!(data.system.properties?.requiresname) ?? false) && !(data.system.properties?.picknameonly ?? false)
             let skillList = []
-            if (!data.system.properties?.onlyone) {
-              const group = game.system.api.cocid.guessGroupFromDocument(data)
-              if (group) {
-                skillList = (await game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
-                  return (item.system.properties?.special ?? false) && !(item.system.properties?.requiresname ?? false) && !(item.system.properties?.picknameonly ?? false)
-                })
-              }
-              if (data.system?.flags?.occupation || data.system?.flags?.archetype) {
-                const existingSkills = this.skills.filter(el => {
-                  if (!el.system.specialization) return false
-                  if (
-                    data.system?.flags?.occupation &&
-                    el.system.flags?.occupation
-                  ) {
-                    return false
-                  }
-                  if (
-                    data.system?.flags?.archetype &&
-                    el.system.flags?.archetype
-                  ) {
-                    return false
-                  }
-                  return (
-                    data.system.specialization.toLocaleLowerCase() ===
-                    el.system.specialization.toLocaleLowerCase()
-                  )
-                })
-                if (existingSkills.length > 0) {
-                  if (skillList.length > 0) {
-                    for (let i = existingSkills.length - 1; i >= 0; i--) {
-                      const found = skillList.findIndex(item => {
-                        return item.name === existingSkills[i].name || item.flags?.CoC7?.cocidFlag?.id === existingSkills[i].flags?.CoC7?.cocidFlag?.id
-                      })
-                      if (found > -1) {
-                        skillList.splice(found, 1)
-                      }
+            const group = game.system.api.cocid.guessGroupFromDocument(data)
+            if (group) {
+              skillList = (await game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
+                return (item.system.properties?.special ?? false) && !(item.system.properties?.requiresname ?? false) && !(item.system.properties?.picknameonly ?? false)
+              })
+            }
+            if (data.system?.flags?.occupation || data.system?.flags?.archetype) {
+              const existingSkills = this.skills.filter(el => {
+                if (!el.system.specialization) return false
+                if (
+                  data.system?.flags?.occupation &&
+                  el.system.flags?.occupation
+                ) {
+                  return false
+                }
+                if (
+                  data.system?.flags?.archetype &&
+                  el.system.flags?.archetype
+                ) {
+                  return false
+                }
+                return (
+                  data.system.specialization.toLocaleLowerCase() ===
+                  el.system.specialization.toLocaleLowerCase()
+                )
+              })
+              if (existingSkills.length > 0) {
+                if (skillList.length > 0) {
+                  for (let i = existingSkills.length - 1; i >= 0; i--) {
+                    const found = skillList.findIndex(item => {
+                      return item.name === existingSkills[i].name || item.flags?.CoC7?.cocidFlag?.id === existingSkills[i].flags?.CoC7?.cocidFlag?.id
+                    })
+                    if (found > -1) {
+                      skillList.splice(found, 1)
                     }
-                    skillList = skillList.concat(existingSkills)
-                  } else {
-                    skillList = existingSkills
                   }
+                  skillList = skillList.concat(existingSkills)
+                } else {
+                  skillList = existingSkills
                 }
               }
-              if (skillList.length > 0) {
-                skillList.sort(CoC7Utilities.sortByNameKey)
-              }
+            }
+            if (skillList.length > 0) {
+              skillList.sort(CoC7Utilities.sortByNameKey)
             }
             const skillData = await SkillSpecializationSelectDialog.create({
               skills: skillList,
@@ -1053,17 +1051,32 @@ export class CoCActor extends Actor {
                   if (existing) {
                     const flags = data.system?.flags
                     const keepBase = (data.system.properties?.keepbasevalue ?? false)
-                    data = foundry.utils.duplicate(existing)
-                    for (const [key, value] of Object.entries(flags)) {
-                      if (value) {
-                        data.system.flags[key] = true
-                      }
-                    }
                     if (keepBase) {
+                      const parts = CoC7Item.getNamePartsSpec(
+                        existing.system.skillName,
+                        data.system.specialization
+                      )
+      
+                      data.system.skillName = parts.skillName
+                      data.name = parts.name
+                      for (const [key, value] of Object.entries(flags)) {
+                        if (value) {
+                          data.system.flags[key] = true
+                        }
+                      }
+                      baseValue = data.system.base
+                      baseCalculated = await CoC7Item.calculateBase(this, data)
+                    } else {
+                      data = foundry.utils.duplicate(existing)
+                      for (const [key, value] of Object.entries(flags)) {
+                        if (value) {
+                          data.system.flags[key] = true
+                        }
+                      }
                       if (skillData.baseValue !== '') {
                         data.system.base = skillData.baseValue
                       }
-                      baseValue = skillData.baseValue
+                      baseValue = data.system.base
                       baseCalculated = await CoC7Item.calculateBase(this, data)
                     }
                   }
