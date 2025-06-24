@@ -1,4 +1,4 @@
-Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better. We encourage everyone to help improve this project with new features, bug fixes, or performance improvements. Please take a little bit of your time to read this guide and follow the steps bellow to make this process faster and easier.
+Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better. We encourage everyone to help improve this project with new features, bug fixes, or performance improvements. Please take a little bit of your time to read this guide and follow the steps below to make this process faster and easier.
 
 The goal of this document is to provide easy instructions to setup a development environment and provide clear contribution guidelines to encourage participation from more developers.
 
@@ -33,7 +33,7 @@ The more detail on reproducing, the better! Bugs are hard to fix if we can not r
 
 We are always looking for translators, there is a lot to translate, and we can not do it all. If you see any translations missing for you language, Feel free to look in the corresponding `*.json` file in the `lang` folder. Comparing against the `en.json` is a good idea, for a baseline.
 
-For the list of missing translations, see: [TRANSLATIONS](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md).
+For the list of missing translations, see: [TRANSLATIONS](.github/TRANSLATIONS.md).
 
 ## Coding
 
@@ -85,42 +85,50 @@ If `npm install` throws any errors you can try `npm install --legacy-peer-deps` 
 
 Don't mind possible warnings. They are part of any Node project.
 
-To make things easier, edit the `fvtt.config.example.js` file, located at the root of your local repository. The userDataPath key is your User Data Directory from Foundry and can be found on the Configuration tab on the Setup screen.
+To make things easier, edit the `fvtt.config.example.js` file, located at the root of your local repository. The `userDataPath` key is your User Data Directory from Foundry and can be found on the Configuration tab on the Setup screen.
 
 Examples:
 
-- %localappdata%/FoundryVTT
-- ~/Library/Application Support/FoundryVTT
-- /home/\$USER/.local/share/FoundryVTT
+- `%localappdata%/FoundryVTT`
+- `~/Library/Application Support/FoundryVTT`
+- `/home/$USER/.local/share/FoundryVTT`
 
 Then, rename this file to `fvtt.config.js`
 
-And with this you can create a system build that will be sent directly to your Foundry folder by `npm run build` or `npm run watch`
+And with this you can create a system build that will be sent directly to your Foundry folder by `npm run build` or `npm run watch`.
 
-If you do not configure this file, all the builds will be built in the build folder, on the root directory.
+If you do not configure this file, all the builds will be built in the `build/` folder, on the root directory.
 
-Run `npm run build-compendiums` to generate the binary packs as they are not included.
+Run `npm run build-compendiums` and `npm run build-manuals` to generate the binary packs as they are not included in the repository.
 
 Run `npm run build` to perform a one off compile/build.
 
 Now everything is ready for you to make any changes or additions you want.
 
-After rename `fvtt.config.example.js` to `fvtt.config.js` consider run:
+After renaming `fvtt.config.example.js` to `fvtt.config.js` consider running:
 
-`git update-index --assume-unchanged fvtt.config.example.js`
+`git update-index --assume-unchanged fvtt.config.js`
 
 This way Git does not assume the original file has been deleted from the repository.
 
 ## Running automated tests
+
 In order to run tests and see if you didn't introduce breaking changes, download [secondary repository with e2e Quench tests](https://github.com/Miskatonic-Investigative-Society/coc7-system-tests) and follow setup instructions there.
 
 ### Contributing
 
 The project structure is made as follows:
 
-...
+- `src/`: The source code for the system.
+  - `core/`: Core system logic, base classes, and global hooks.
+  - `features/`: Self-contained features like 'chase', 'combat', 'sanity', etc.
+  - `shared/`: Reusable utilities, UI components, and helpers.
+- `manuals/`: Source markdown files for the in-game documentation.
+- `scripts/`: Build scripts for generating compendiums, manuals, and other assets.
+- `templates/`: Handlebars templates for sheets and UI.
+- `lang/`: Localization files.
 
-While testing your changes within Foundry VTT, prefer run: `npm run watch`
+While testing your changes within Foundry VTT, prefer running: `npm run watch`
 
 This way, Webpack and other dependencies will know whenever you make any relevant code changes and will run the build process only when necessary.
 
@@ -136,6 +144,6 @@ Install [Visual Studio Code](https://code.visualstudio.com/download).
 
 Install extension [standard.vscode-standard](https://marketplace.visualstudio.com/items?itemName=standard.vscode-standard).
 
-Configure the extension Tick `Standard: Auto Fix On Save`
+Configure the extension Tick `Standard: Auto Fix On Save`.
 
-Before committing your code run `npm run format`
+Before committing your code run `npm run format`.
