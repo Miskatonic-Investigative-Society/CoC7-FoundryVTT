@@ -1,5 +1,6 @@
 /* global game */
 import { EnableVariantRulesEn } from '../../features/tours/enable-variant-rules-en.js'
+import { EnableVariantRulesEs } from '../../features/tours/enable-variant-rules-es.js'
 import { EnableVariantRulesFr } from '../../features/tours/enable-variant-rules-fr.js'
 
 export async function registerTours () {
@@ -8,6 +9,9 @@ export async function registerTours () {
     const tours = {
       en: {
         'enable-variant-rules': EnableVariantRulesEn
+      },
+      es: {
+        'enable-variant-rules': EnableVariantRulesEs
       },
       fr: {
         'enable-variant-rules': EnableVariantRulesFr
