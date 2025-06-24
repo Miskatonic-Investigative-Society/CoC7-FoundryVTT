@@ -3197,8 +3197,10 @@ export class CoCActor extends Actor {
   }
 
   get hasRollableCharacteristics () {
-    for (const [, value] of Object.entries(this.system.characteristics)) {
-      if (isNaN(Number(value.formula))) return true
+    if (this.system.characteristics) {
+      for (const [, value] of Object.entries(this.system.characteristics)) {
+        if (isNaN(Number(value.formula))) return true
+      }
     }
     return false
   }
