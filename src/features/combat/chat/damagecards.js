@@ -1,10 +1,10 @@
 /* // FoundryVTT V10 */
 // /* global ChatMessage, foundry, game, renderTemplate, Roll, ui */
 
-// // import { chatHelper } from './helper.js';
-// import { CoC7Dice } from '../dice.js'
-// import { ChatCardActor } from './card-actor.js'
-// import { CoC7Utilities } from '../utilities.js'
+// import { CoC7Dice } from '../../../shared/dice/dice.js'
+// // import { chatHelper } from '../../../shared/dice/helper.js'
+// import { ChatCardActor } from '../../../shared/chat/card-actor.js'
+// import { CoC7Utilities } from '../../../shared/utilities.js'
 
 // export class CoC7DamageRoll extends ChatCardActor {
 //   constructor (itemId, actorKey, options) {

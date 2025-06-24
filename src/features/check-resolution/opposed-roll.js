@@ -1,7 +1,7 @@
 /* global ChatMessage, foundry, game */
-import { CoC7Check } from '../../core/check.js'
-import { DamageCard } from '../combat/chat/damage.js'
 import { RollCard } from './cards/roll-card.js'
+import { DamageCard } from '../combat/chat/damage.js'
+import { CoC7Check } from '../../core/check.js'
 
 export class OpposedCheckCard extends RollCard {
   static async bindListerners (html) {

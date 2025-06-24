@@ -1,7 +1,7 @@
 /* global CONFIG, foundry, fromUuid, game, Item, Roll, TextEditor, Token, ui */
 import { COC7 } from '../config.js'
-import { CoC7Utilities } from '../../shared/utilities.js'
 import { CoCIDEditor } from '../../features/coc-id-system/apps/coc-id-editor.js'
+import { CoC7Utilities } from '../../shared/utilities.js'
 
 /**
  * Override and extend the basic :class:`Item` implementation

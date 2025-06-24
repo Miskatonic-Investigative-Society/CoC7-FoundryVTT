@@ -1,8 +1,8 @@
 /* global $, Actor, AudioHelper, ChatMessage, CONFIG, CONST, foundry, fromUuid, game, getComputedStyle, Item, renderTemplate, Token, ui */
+import { CoCActor } from './documents/actor.js'
+import { CoC7Item } from './documents/item.js'
 import { CoC7Dice } from '../shared/dice/dice.js'
-import { CoC7Item } from '../core/documents/item.js'
 import { chatHelper, CoC7Roll } from '../shared/dice/helper.js'
-import { CoCActor } from '../core/documents/actor.js'
 import { CoC7Utilities } from '../shared/utilities.js'
 
 export class CoC7Check {

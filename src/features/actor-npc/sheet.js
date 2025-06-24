@@ -1,11 +1,11 @@
 /* global ChatMessage, CONFIG, foundry, fromUuid, game, TextEditor */
-import { CoC7ActorSheet } from '../../core/sheets/actor-sheet-base.js'
-import { RollDialog } from '../../shared/ui-dialogs/roll-dialog.js'
 import { CoC7Link } from '../link-creation/coc7-link.js'
-import { chatHelper, isCtrlKey } from '../../shared/dice/helper.js'
 import { SanCheckCard } from '../sanity/chat/san-check.js'
-import { CoC7ContextMenu } from '../../shared/ui-components/context-menu.js'
 import { CoC7ChatMessage } from '../../core/coc7-chat-message.js'
+import { CoC7ActorSheet } from '../../core/sheets/actor-sheet-base.js'
+import { chatHelper, isCtrlKey } from '../../shared/dice/helper.js'
+import { CoC7ContextMenu } from '../../shared/ui-components/context-menu.js'
+import { RollDialog } from '../../shared/ui-dialogs/roll-dialog.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications

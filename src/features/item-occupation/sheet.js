@@ -1,9 +1,9 @@
 /* global $, DragDrop, foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../coc-id-system/coc-id-button.js'
+import { DropCoCID } from '../coc-id-system/apps/drop-coc-id.js'
 import { COC7 } from '../../core/config.js'
 import { CoC7Item } from '../../core/documents/item.js'
 import { CoC7Utilities } from '../../shared/utilities.js'
-import { DropCoCID } from '../coc-id-system/apps/drop-coc-id.js'
 
 /**
  * Extend the basic ItemSheet with some very simple modifications

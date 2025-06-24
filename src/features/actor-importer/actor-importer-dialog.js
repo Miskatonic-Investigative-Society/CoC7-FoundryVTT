@@ -1,7 +1,7 @@
 /* global $, CONFIG, FileReader, FormApplication, foundry, game, Hooks, ui */
+import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
 import { CoC7ActorImporter } from './actor-importer.js'
 import { CoC7DholeHouseActorImporter } from './dholehouse_importer.js'
-import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
 import { CoC7Utilities } from '../../shared/utilities.js'
 
 export class CoC7ActorImporterDialog extends FormApplication {

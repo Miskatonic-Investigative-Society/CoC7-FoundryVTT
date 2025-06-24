@@ -1,11 +1,11 @@
 /* global $, canvas, ChatMessage, CONFIG, CONST, foundry, game, ui */
-import { CoCActor } from '../../core/documents/actor.js'
-import { CoC7Check } from '../../core/check.js'
 import { CoC7ContentLinkDialog } from './coc7-content-link-dialog.js'
 import { CoC7GroupMessage } from '../check-resolution/coc7-group-message.js'
-import { CoC7Utilities } from '../../shared/utilities.js'
 import { SanCheckCard } from '../sanity/chat/san-check.js'
+import { CoC7Check } from '../../core/check.js'
+import { CoCActor } from '../../core/documents/actor.js'
 import { chatHelper, isCtrlKey } from '../../shared/dice/helper.js'
+import { CoC7Utilities } from '../../shared/utilities.js'
 
 /**
  * Allow for parsing of CoC7 elements in chat message and sheets.

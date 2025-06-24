@@ -1,10 +1,10 @@
 /* global $, Dialog, DragDrop, FormDataExtended, foundry, game, TextEditor, ui */
+import { _participant } from './participant.js'
 import { addCoCIDSheetHeaderButton } from '../coc-id-system/coc-id-button.js'
 import { CoC7ChaseParticipantImporter } from '../chase/apps/chase-participant-importer.js'
 import { CoC7Chat } from '../../core/chat.js'
-import { chatHelper } from '../../shared/dice/helper.js'
 import { CoC7Check } from '../../core/check.js'
-import { _participant } from './participant.js'
+import { chatHelper } from '../../shared/dice/helper.js'
 
 export class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
   /**

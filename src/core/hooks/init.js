@@ -1,18 +1,18 @@
 /* global Combat, CONFIG, foundry, fromUuid, game, Hooks, TextEditor */
+import DiceSoNiceReadyLast from './dice-so-nice-ready-last.js'
+import CoC7ClickableEvents from '../coc7-clickable-events.js'
+import { COC7 } from '../config.js'
+import { compendiumFilter } from '../system/compendium-filter.js'
 import { configureDocuments } from '../system/configure-documents.js'
+import { handlebarsHelper } from '../system/handlebars-helper.js'
 import { preloadHandlebarsTemplates } from '../system/load-templates.js'
 import { registerSettings } from '../system/register-settings.js'
 import { registerSheets } from '../system/register-sheets.js'
+import { CoCID } from '../../features/coc-id-system/coc-id.js'
+import { DamageCard } from '../../features/combat/chat/damage.js'
 import { rollInitiative } from '../../features/combat/combat.js'
-import { handlebarsHelper } from '../system/handlebars-helper.js'
-import { compendiumFilter } from '../system/compendium-filter.js'
-import { COC7 } from '../config.js'
 import { CoC7Link } from '../../features/link-creation/coc7-link.js'
 import { CoC7Utilities } from '../../shared/utilities.js'
-import { CoCID } from '../../features/coc-id-system/coc-id.js'
-import DiceSoNiceReadyLast from './dice-so-nice-ready-last.js'
-import CoC7ClickableEvents from '../coc7-clickable-events.js'
-import { DamageCard } from '../../features/combat/chat/damage.js'
 
 export default function () {
   if (foundry.utils.isNewerVersion(game.version, '13')) {

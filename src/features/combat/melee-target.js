@@ -1,10 +1,10 @@
 /* global $, ChatMessage, CONST, Dialog, FormData, game, renderTemplate, ui */
-import { CoC7Check } from '../../core/check.js'
-import { chatHelper, CoC7Roll } from '../../shared/dice/helper.js'
-import { CoC7Chat } from '../../core/chat.js'
-import { ChatCardActor } from '../../shared/chat/card-actor.js'
-import { CoC7MeleeResoltion } from '../combat/melee-resolution.js'
 import { CoC7MeleeInitiator } from './chat/melee-initiator.js'
+import { CoC7MeleeResoltion } from '../combat/melee-resolution.js'
+import { CoC7Chat } from '../../core/chat.js'
+import { CoC7Check } from '../../core/check.js'
+import { ChatCardActor } from '../../shared/chat/card-actor.js'
+import { chatHelper, CoC7Roll } from '../../shared/dice/helper.js'
 
 export class CoC7MeleeTarget extends ChatCardActor {
   constructor (actorKey, parentMessageId = null, fastForward = false) {

@@ -1,10 +1,10 @@
 /* global $, canvas, Dialog, foundry, game, PIXI, Token, TokenDocument, ui */
-import { CoCActor } from '../../core/documents/actor.js'
+import { _participant, sortByRoleAndDex } from './participant.js'
 import { ChaseObstacleCard } from './chat/chase-obstacle.js'
+import { CoCActor } from '../../core/documents/actor.js'
 import { CoC7Check } from '../../core/check.js'
 import { CoC7Utilities } from '../../shared/utilities.js'
 import { CoC7Item } from '../../core/documents/item.js'
-import { _participant, sortByRoleAndDex } from '../chase/participant.js'
 
 export class CoC7Chase extends CoC7Item {
   constructor (data, context) {

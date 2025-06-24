@@ -1,10 +1,10 @@
 /* global canvas, ChatMessage, CONFIG, CONST, Dialog, Folder, foundry, fromUuid, fromUuidSync, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
-import { COC7 } from '../core/config.js'
+import { chatHelper } from './dice/helper.js'
+import { RollDialog } from './ui-dialogs/roll-dialog.js'
 import { CoC7Check } from '../core/check.js'
+import { COC7 } from '../core/config.js'
 import { CoC7Item } from '../core/documents/item.js'
 import { CoC7Link } from '../features/link-creation/coc7-link.js'
-import { RollDialog } from './ui-dialogs/roll-dialog.js'
-import { chatHelper } from './dice/helper.js'
 
 export class CoC7Utilities {
   // static test(event){

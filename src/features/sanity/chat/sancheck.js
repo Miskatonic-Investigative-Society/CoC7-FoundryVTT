@@ -1,10 +1,9 @@
 /* // FoundryVTT V10 */
 // /* global $, ChatMessage, game, renderTemplate, Roll, ui */
-// import { CoC7Check } from '../check.js'
-// import { CoC7Dice } from '../dice.js'
-// // import { CoC7Dice } from '../dice.js';
-// // import { CoC7Item } from '../items/item.js';
-// import { chatHelper, CoC7Roll } from './helper.js'
+// import { CoC7Check } from '../../../core/check.js'
+// // import { CoC7Item } from '../../../core/documents/item.js'
+// import { CoC7Dice } from '../../../shared/dice/dice.js'
+// import { chatHelper, CoC7Roll } from '../../../shared/dice/helper.js'
 
 // export class CoC7SanCheck {
 //   constructor (

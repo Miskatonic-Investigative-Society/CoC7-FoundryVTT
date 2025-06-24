@@ -1,10 +1,10 @@
 /* global foundry, game, Roll, ui */
+import { _participant } from '../participant.js'
 import { CoC7Check } from '../../../core/check.js'
 import { EnhancedChatCard } from '../../../shared/chatcardlib/src/chatcardlib.js'
 import { CoC7Dice } from '../../../shared/dice/dice.js'
-import { _participant } from '../participant.js'
-import { CoC7Utilities } from '../../../shared/utilities.js'
 import { createInlineRoll } from '../../../shared/dice/helper.js'
+import { CoC7Utilities } from '../../../shared/utilities.js'
 
 export class ChaseObstacleCard extends EnhancedChatCard {
   /** @override */

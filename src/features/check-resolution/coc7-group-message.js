@@ -1,7 +1,7 @@
 /* global ChatMessage, foundry, fromUuid, game, renderTemplate, TokenDocument, ui */
-import { ActorPickerDialog } from '../../shared/ui-dialogs/actor-picker-dialog.js'
 import { CoC7Check } from '../../core/check.js'
 import { CoC7Dice } from '../../shared/dice/dice.js'
+import { ActorPickerDialog } from '../../shared/ui-dialogs/actor-picker-dialog.js'
 import { CoC7Utilities } from '../../shared/utilities.js'
 
 export class CoC7GroupMessage {

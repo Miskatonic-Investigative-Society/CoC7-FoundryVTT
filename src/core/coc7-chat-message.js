@@ -1,13 +1,13 @@
 /* global game, ui */
 import { CoC7Check } from './check.js'
-import { CoC7ContentLinkDialog } from '../features/link-creation/coc7-content-link-dialog.js'
-import { isCtrlKey } from '../shared/dice/helper.js'
-import { RollDialog } from '../shared/ui-dialogs/roll-dialog.js'
 import { CombinedCheckCard } from '../features/check-resolution/combined-roll.js'
 import { OpposedCheckCard } from '../features/check-resolution/opposed-roll.js'
-import { SanCheckCard } from '../features/sanity/chat/san-check.js'
-import { SanDataDialog } from '../features/sanity/apps/sandata-dialog.js'
+import { CoC7ContentLinkDialog } from '../features/link-creation/coc7-content-link-dialog.js'
 import { CoC7Link } from '../features/link-creation/coc7-link.js'
+import { SanDataDialog } from '../features/sanity/apps/sandata-dialog.js'
+import { SanCheckCard } from '../features/sanity/chat/san-check.js'
+import { isCtrlKey } from '../shared/dice/helper.js'
+import { RollDialog } from '../shared/ui-dialogs/roll-dialog.js'
 import { CoC7Utilities } from '../shared/utilities.js'
 
 export class CoC7ChatMessage {

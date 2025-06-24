@@ -1,6 +1,6 @@
 /* global Dialog, FormData, game, renderTemplate */
-import { CoC7ChatMessage } from '../../core/coc7-chat-message.js'
 import { CoC7Check } from '../../core/check.js'
+import { CoC7ChatMessage } from '../../core/coc7-chat-message.js'
 
 export class RollDialog {
   static async create (options = {}) {

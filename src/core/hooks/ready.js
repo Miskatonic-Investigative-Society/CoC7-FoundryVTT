@@ -1,11 +1,11 @@
 /* global $ CONFIG, foundry, game */
-import { CoC7Check } from '../../core/check.js'
-import { CoC7ContextMenu } from '../../shared/ui-components/context-menu.js'
+import { CoC7Check } from '../check.js'
 import { CoC7SystemSocket } from '../coc7-system-socket.js'
-import { CoC7Tooltips } from '../../shared/ui-components/tooltips.js'
 // import { CoC7WelcomeMessage } from '../apps/welcome-message.js'
 import { registerTours } from '../system/register-tours.js'
 import { Updater } from '../system/updater.js'
+import { CoC7ContextMenu } from '../../shared/ui-components/context-menu.js'
+import { CoC7Tooltips } from '../../shared/ui-components/tooltips.js'
 
 function activateGlobalListener () {
   const body = $('body')

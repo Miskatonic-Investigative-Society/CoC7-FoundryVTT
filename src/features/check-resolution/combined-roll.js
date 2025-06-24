@@ -1,7 +1,7 @@
 /* global AudioHelper, CONFIG, foundry, game */
+import { RollCard } from './cards/roll-card.js'
 import { CoC7Check } from '../../core/check.js'
 import { CoC7Dice } from '../../shared/dice/dice.js'
-import { RollCard } from './cards/roll-card.js'
 
 export class CombinedCheckCard extends RollCard {
   static async bindListerners (html) {

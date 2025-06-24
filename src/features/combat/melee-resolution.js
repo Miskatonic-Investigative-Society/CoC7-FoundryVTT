@@ -1,8 +1,8 @@
 /* global ChatMessage, game, renderTemplate, ui */
-import { CoC7Check } from '../../core/check.js'
-import { chatHelper } from '../../shared/dice/helper.js'
 import { CoC7MeleeInitiator } from './chat/melee-initiator.js'
 import { CoC7MeleeTarget } from './melee-target.js'
+import { CoC7Check } from '../../core/check.js'
+import { chatHelper } from '../../shared/dice/helper.js'
 
 export class CoC7MeleeResoltion {
   constructor (

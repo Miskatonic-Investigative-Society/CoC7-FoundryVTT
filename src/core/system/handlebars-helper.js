@@ -1,6 +1,6 @@
 /* global game, Handlebars */
-import { chatHelper } from '../../shared/dice/helper.js'
 import { CoC7Check } from '../check.js'
+import { chatHelper } from '../../shared/dice/helper.js'
 
 export const handlebarsHelper = function () {
   Handlebars.registerHelper('rollActorImg', function (actorKey) {

@@ -1,7 +1,7 @@
 /* global canvas, ChatMessage, Dialog, foundry, game, Roll, ui */
 import { CoC7Dice } from '../../../shared/dice/dice.js'
-import { InteractiveChatCard } from '../../../shared/ui-components/interactive-chat-card.js'
 import { createInlineRoll } from '../../../shared/dice/helper.js'
+import { InteractiveChatCard } from '../../../shared/ui-components/interactive-chat-card.js'
 import { CoC7Utilities } from '../../../shared/utilities.js'
 
 export class DamageCard extends InteractiveChatCard {

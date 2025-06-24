@@ -1,8 +1,8 @@
 /* global $, FontFace, foundry, game, TextEditor, ui */
+import { CoC7CreateMythosEncounter } from '../sanity/apps/create-mythos-encounters.js'
 import { COC7 } from '../../core/config.js'
 import { CoCActor } from '../../core/documents/actor.js'
 import { CoC7ActorSheet } from '../../core/sheets/actor-sheet-base.js'
-import { CoC7CreateMythosEncounter } from '../sanity/apps/create-mythos-encounters.js'
 import { chatHelper } from '../../shared/dice/helper.js'
 
 export class CoC7CharacterSheet extends CoC7ActorSheet {

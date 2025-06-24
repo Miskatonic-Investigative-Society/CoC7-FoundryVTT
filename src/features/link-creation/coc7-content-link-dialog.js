@@ -1,7 +1,7 @@
 /* global canvas, CONST, FormApplication, foundry, game, ui */
-import { CoCActor } from '../../core/documents/actor.js'
-import { CoC7Check } from '../../core/check.js'
 import { CoC7Link } from './coc7-link.js'
+import { CoC7Check } from '../../core/check.js'
+import { CoCActor } from '../../core/documents/actor.js'
 import { CoC7Utilities } from '../../shared/utilities.js'
 
 export class CoC7ContentLinkDialog extends FormApplication {

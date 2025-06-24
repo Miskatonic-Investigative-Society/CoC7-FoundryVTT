@@ -1,11 +1,11 @@
 /* global canvas, foundry, game, PlaceablesLayer */
 import { CoC7Chat } from './chat.js'
-import { CoC7Utilities } from '../shared/utilities.js'
 import { CoC7ActorImporterDialog } from '../features/actor-importer/actor-importer-dialog.js'
-import { CoC7ContentLinkDialog } from '../features/link-creation/coc7-content-link-dialog.js'
-import { CoC7InvestigatorWizard } from '../features/investigator-wizard/investigator-wizard.js'
 import CoCIDActorUpdateItems from '../features/coc-id-system/apps/coc-id-actor-update-items.js'
 import CoCIDCompendiumPopulate from '../features/coc-id-system/apps/coc-id-compendium-populate.js'
+import { CoC7InvestigatorWizard } from '../features/investigator-wizard/investigator-wizard.js'
+import { CoC7ContentLinkDialog } from '../features/link-creation/coc7-content-link-dialog.js'
+import { CoC7Utilities } from '../shared/utilities.js'
 
 class CoC7MenuLayer extends (foundry.canvas?.layers?.PlaceablesLayer ?? PlaceablesLayer) {
   constructor () {

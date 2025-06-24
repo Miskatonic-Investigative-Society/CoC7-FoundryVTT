@@ -1,7 +1,7 @@
 /* global $, ChatMessage, foundry, game, renderTemplate, Roll, ui */
-import { CoC7Dice } from '../../shared/dice/dice.js'
 import { CoC7Check } from '../../core/check.js'
-import { chatHelper, CoC7Roll, CoC7Damage } from '../../shared/dice/helper.js'
+import { CoC7Dice } from '../../shared/dice/dice.js'
+import { chatHelper, CoC7Damage, CoC7Roll } from '../../shared/dice/helper.js'
 import { CoC7Utilities } from '../../shared/utilities.js'
 
 export class CoC7RangeInitiator {

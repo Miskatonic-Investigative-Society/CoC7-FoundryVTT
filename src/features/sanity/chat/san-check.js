@@ -1,8 +1,8 @@
 /* global $, foundry, game, renderTemplate, Roll, ui */
 import { COC7 } from '../../../core/config.js'
 import { CoC7Check } from '../../../core/check.js'
-import { CoC7Dice } from '../../../shared/dice/dice.js'
 import { ChatCardActor } from '../../../shared/chat/card-actor.js'
+import { CoC7Dice } from '../../../shared/dice/dice.js'
 import { createInlineRoll, chatHelper } from '../../../shared/dice/helper.js'
 
 function replacer (key, value) {

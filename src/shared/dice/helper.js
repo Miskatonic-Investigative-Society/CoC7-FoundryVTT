@@ -1,6 +1,6 @@
 /* global canvas, ChatMessage, CONST, foundry, fromUuid, game, Ray, Token, ui */
-import { CoC7Check } from '../../core/check.js'
 import { CoC7Utilities } from '../utilities.js'
+import { CoC7Check } from '../../core/check.js'
 
 /**
  * Return <a> element of a roll instance. foundry.js ref:TextEditor._createInlineRoll

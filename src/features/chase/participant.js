@@ -1,6 +1,6 @@
 /* global game, ui */
-import { chatHelper } from '../../shared/dice/helper.js'
 import { CoC7Check } from '../../core/check.js'
+import { chatHelper } from '../../shared/dice/helper.js'
 import { CoC7Utilities } from '../../shared/utilities.js'
 
 export class _participant {

@@ -1,10 +1,10 @@
 /* global $, Actor, ChatMessage, CONST, FormApplication, foundry, game, Hooks, renderTemplate, Roll, TextEditor, ui */
-import { AverageRoll } from '../../shared/ui-dialogs/average-roll.js'
+import { CoC7OccupationSheet } from '../item-occupation/sheet.js'
 import { COC7 } from '../../core/config.js'
 import { CoCActor } from '../../core/documents/actor.js'
-import { CoC7OccupationSheet } from '../item-occupation/sheet.js'
-import { CoC7Utilities } from '../../shared/utilities.js'
+import { AverageRoll } from '../../shared/ui-dialogs/average-roll.js'
 import { SkillSpecializationSelectDialog } from '../../shared/ui-dialogs/skill-specialization-select-dialog.js'
+import { CoC7Utilities } from '../../shared/utilities.js'
 
 export class CoC7InvestigatorWizard extends FormApplication {
   static get defaultOptions () {

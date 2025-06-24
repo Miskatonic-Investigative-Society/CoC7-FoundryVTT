@@ -1,9 +1,9 @@
 /* global $, ChatMessage, game, renderTemplate, ui */
-import { CoC7Check } from '../../../core/check.js'
-import { chatHelper, CoC7Roll } from '../../../shared/dice/helper.js'
-import { CoC7Chat } from '../../../core/chat.js'
 import { CoC7MeleeResoltion } from '../melee-resolution.js'
+import { CoC7Chat } from '../../../core/chat.js'
+import { CoC7Check } from '../../../core/check.js'
 import { ChatCardActor } from '../../../shared/chat/card-actor.js'
+import { chatHelper, CoC7Roll } from '../../../shared/dice/helper.js'
 
 // TODO : récupérer le jet en tant qu'objet !!!
 export class CoC7MeleeInitiator extends ChatCardActor {

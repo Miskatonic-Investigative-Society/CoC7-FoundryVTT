@@ -1,18 +1,18 @@
 /* global $, ChatMessage, CONST, foundry, game, Token, tokenData, ui */
 import { CoC7Check } from './check.js'
 import { COC7 } from './config.js'
-import { CoC7MeleeInitiator } from '../features/combat/melee-initiator.js'
-import { CoC7MeleeTarget } from '../features/combat/melee-target.js'
-import { CoC7MeleeResoltion } from '../features/combat/melee-resolution.js'
-import { CoC7RangeInitiator } from '../features/combat/range-combat.js'
-import { CoC7Roll, chatHelper, isCtrlKey } from '../shared/dice/helper.js'
 import { CoC7ConCheck } from '../features/check-resolution/concheck.js'
-import { SanCheckCard } from '../features/sanity/chat/san-check.js'
-import { OpposedCheckCard } from '../features/check-resolution/opposed-roll.js'
 import { CombinedCheckCard } from '../features/check-resolution/combined-roll.js'
-import { InteractiveChatCard } from '../shared/ui-components/interactive-chat-card.js'
+import { OpposedCheckCard } from '../features/check-resolution/opposed-roll.js'
 import { DamageCard } from '../features/combat/chat/damage.js'
+import { CoC7MeleeInitiator } from '../features/combat/melee-initiator.js'
+import { CoC7MeleeResoltion } from '../features/combat/melee-resolution.js'
+import { CoC7MeleeTarget } from '../features/combat/melee-target.js'
+import { CoC7RangeInitiator } from '../features/combat/range-combat.js'
+import { SanCheckCard } from '../features/sanity/chat/san-check.js'
 import { CoC7Dice } from '../shared/dice/dice.js'
+import { CoC7Roll, chatHelper, isCtrlKey } from '../shared/dice/helper.js'
+import { InteractiveChatCard } from '../shared/ui-components/interactive-chat-card.js'
 
 const CHAT_COC7_MESSAGE = {
   FAKEROLL:

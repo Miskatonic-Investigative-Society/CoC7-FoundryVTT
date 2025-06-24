@@ -1,9 +1,9 @@
 /* global fromUuid, game, NotesLayer, ui */
 import { CoC7GroupMessage } from '../features/check-resolution/coc7-group-message.js'
-import { CoC7InvestigatorWizard } from '../features/investigator-wizard/investigator-wizard.js'
-import { CoC7Utilities } from '../shared/utilities.js'
 import { CombinedCheckCard } from '../features/check-resolution/combined-roll.js'
 import { OpposedCheckCard } from '../features/check-resolution/opposed-roll.js'
+import { CoC7InvestigatorWizard } from '../features/investigator-wizard/investigator-wizard.js'
+import { CoC7Utilities } from '../shared/utilities.js'
 
 export class CoC7SystemSocket {
   /**

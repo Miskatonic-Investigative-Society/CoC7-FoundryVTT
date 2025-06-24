@@ -1,7 +1,7 @@
 /* global DragDrop, FormApplication, foundry, game, ui */
-import { CoCActor } from '../../../core/documents/actor.js'
-import { CoC7Check } from '../../../core/check.js'
 import { _participant } from '../participant.js'
+import { CoC7Check } from '../../../core/check.js'
+import { CoCActor } from '../../../core/documents/actor.js'
 import { CoC7Utilities } from '../../../shared/utilities.js'
 
 export class CoC7ChaseParticipantImporter extends FormApplication {

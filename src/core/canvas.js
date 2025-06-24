@@ -1,6 +1,6 @@
 /* global game, ui */
-import { CoC7Utilities } from '../shared/utilities.js'
 import { CoC7Link } from '../features/link-creation/coc7-link.js'
+import { CoC7Utilities } from '../shared/utilities.js'
 
 export class CoC7Canvas {
   static get COC7_TYPES_SUPPORTED () {

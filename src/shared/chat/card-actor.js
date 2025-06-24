@@ -1,5 +1,5 @@
 /* global ChatMessage, game */
-import { chatHelper } from '../../shared/dice/helper.js'
+import { chatHelper } from '../dice/helper.js'
 
 export class ChatCardActor {
   constructor (actorKey = null, fastForward = false) {

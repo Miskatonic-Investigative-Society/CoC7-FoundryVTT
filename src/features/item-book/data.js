@@ -1,8 +1,8 @@
 /* global ChatMessage, foundry, game, renderTemplate, Roll, ui */
+import { CoC7Spell } from '../item-spell/data.js'
 import { SanCheckCard } from '../sanity/chat/san-check.js'
 import { CoC7Check } from '../../core/check.js'
 import { CoC7Item } from '../../core/documents/item.js'
-import { CoC7Spell } from '../item-spell/data.js'
 
 export class CoC7Book extends CoC7Item {
   constructor (data, context) {
