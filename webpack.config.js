@@ -56,7 +56,7 @@ const optimization =
           cacheGroups: {
             default: {
               name: 'main',
-              test: 'module/coc7.js'
+              test: 'src/core/index.js'
             }
           }
         }
@@ -70,7 +70,7 @@ const optimization =
 const bundleScript = {
   bail: buildMode === 'production',
   context: __dirname,
-  entry: './module/coc7.js',
+  entry: './src/core/index.js',
   devtool: 'inline-source-map',
   mode: buildMode,
   module: {
