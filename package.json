@@ -7,7 +7,7 @@
     "build-compendiums": "node scripts/build-compendiums.js",
     "build-manuals": "node scripts/generate-manuals.js",
     "build-roll-requests": "node scripts/generate-roll-requests.js",
-    "format": "standard --fix",
+    "format": "eslint . --fix",
     "game-icons-build": "node scripts/build-game-icons.js",
     "watch": "webpack --mode development"
   },
@@ -24,6 +24,9 @@
   "homepage": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT#readme",
   "type": "module",
   "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "@league-of-foundry-developers/foundry-vtt-types": "^12.331.5",
+    "@stylistic/eslint-plugin": "^5.0.0",
     "@vusion/webfonts-generator": "^0.8.0",
     "classic-level": "^2.0.0",
     "copy-webpack-plugin": "^12.0.0",
@@ -31,22 +34,19 @@
     "css-minimizer-webpack-plugin": "^7.0.0",
     "decompress": "^4.2.1",
     "del": "^7.0.0",
+    "eslint": "^9.29.0",
+    "eslint-plugin-import": "^2.32.0",
+    "globals": "^16.2.0",
     "jsonfile": "^6.1.0",
     "less": "^4.1.3",
     "less-loader": "^12.0.0",
     "mini-css-extract-plugin": "^2.6.1",
     "node-fetch": "^3.3.2",
     "remarkable": "^2.0.1",
-    "standard": "^17.0.0",
     "thread-loader": "^4.0.1",
     "webpack": "^5.74.0",
     "webpack-cli": "^5.1.0",
     "webpackbar": "^6.0.0",
     "write": "^2.0.0"
-  },
-  "standard": {
-    "ignore": [
-      "/lib/socketlib/"
-    ]
   }
 }
