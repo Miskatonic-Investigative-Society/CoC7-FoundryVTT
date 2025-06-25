@@ -216,6 +216,133 @@
   ],
   "background": "systems/CoC7/assets/images/system-background.jpg",
   "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": [
+          "system.monetary.assetsDetails",
+          "system.biography.value",
+          "system.backstory",
+          "system.notes",
+          "system.description.keeper"
+        ]
+      },
+      "container": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.keeper"
+        ]
+      },
+      "creature": {
+        "htmlFields": [
+          "system.biography.personalDescription.value",
+          "system.description.keeper"
+        ]
+      },
+      "npc": {
+        "htmlFields": [
+          "system.biography.personalDescription.value",
+          "system.description.keeper"
+        ]
+      },
+      "vehicle": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.notes"
+        ]
+      }
+    },
+    "Item": {
+      "archetype": {
+        "htmlFields": [
+          "system.description.value", 
+          "system.description.keeper", 
+          "system.suggestedOccupations", 
+          "system.suggestedTraits"
+        ]
+      },
+      "armor": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.keeper"
+        ]
+      },
+      "book": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.keeper",
+          "system.content"
+        ]
+      },
+      "chase": {
+        "htmlFields": [
+          "system.description.keeper"
+        ]
+      },
+      "experiencePackage": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.keeper"
+        ]
+      },
+      "item": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.keeper"
+        ]
+      },
+      "occupation": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.keeper",
+          "system.suggestedContacts"
+        ]
+      },
+      "setup": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.keeper",
+          "system.backstory"
+        ]
+      },
+      "skill": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.keeper"
+        ]
+      },
+      "spell": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.keeper",
+          "system.description.chat",
+          "system.description.alternativeNames"
+        ]
+      },
+      "status": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.keeper",
+          "system.description.chat",
+          "system.description.notes"
+        ]
+      },
+      "talent": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.keeper",
+          "system.description.chat",
+          "system.description.notes"
+        ]
+      },
+      "weapon": {
+        "htmlFields": [
+          "system.description.value",
+          "system.description.chat",
+          "system.description.special",
+          "system.description.keeper"
+        ]
+      }
+    },
     "RegionBehavior": {
       "coc7ClickableEvents": {}
     }

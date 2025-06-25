@@ -118,7 +118,7 @@ const bundleScript = {
         { from: 'packs/', to: 'packs/' },
         { from: 'README.md' },
         { from: 'system.json' },
-        { from: 'template.json' },
+        // { from: 'template.json' },
         { from: 'templates/', to: 'templates/' }
       ]
     }),

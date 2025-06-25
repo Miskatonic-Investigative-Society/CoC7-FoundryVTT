@@ -2,43 +2,59 @@
 import { CoC7Item } from '../../core/documents/item.js'
 
 export class CoC7Skill extends CoC7Item {
-  constructor (data, context) {
-    if (typeof data.system?.skillName === 'undefined') {
-      const skill = CoC7Skill.guessNameParts(data.name)
-      const { name, skillName, specialization, ...newProperties } = skill
-      data.name = name
-      data.system ||= {}
-      const properties = { ...data.system.properties, ...newProperties }
-      data.system = { ...data.system, skillName, specialization, properties }
-    }
-    super(data, context)
+  /** @override */
+  prepareBaseData() {
+    super.prepareBaseData()
+    // Este cálculo se ejecuta antes de que se apliquen los ActiveEffects.
+    this.system.baseValue = this._calculateBaseValue()
   }
 
-  static guessNameParts (skillName) {
-    const output = {
-      combat: false,
-      fighting: false,
-      firearm: false,
-      name: skillName,
-      skillName,
-      special: false,
-      specialization: ''
-    }
+  /** @override */
+  prepareDerivedData() {
+    super.prepareDerivedData()
+    const system = this.system
 
-    const match = skillName.match(/^(.+)\s*\(([^)]+)\)$/)
-    if (match) {
-      output.skillName = match[2].trim()
-      output.special = true
-
-      const specialization = match[1].trim()
-      output.specialization = specialization
-      output.name = specialization + ' (' + output.skillName + ')'
-      output.fighting = specialization === game.i18n.localize('CoC7.FightingSpecializationName')
-      output.firearm = specialization === game.i18n.localize('CoC7.FirearmSpecializationName')
-      output.ranged = specialization === game.i18n.localize('CoC7.RangedSpecializationName')
-      output.combat = output.fighting || output.firearm || output.ranged
+    // The final skill value is the sum of its base and all adjustments.
+    let total = system.baseValue || 0
+    
+    if (this.actor?.type === 'character') {
+      total += system.adjustments?.personal ?? 0
+      total += system.adjustments?.occupation ?? 0
+      total += system.adjustments?.experience ?? 0
+      
+      if (game.settings.get('CoC7', 'pulpRuleArchetype')) {
+        total += system.adjustments?.archetype ?? 0
+      } else {
+        total += system.adjustments?.experiencePackage ?? 0
+      }
+    } else {
+      // For NPCs/Creatures, use the base value directly
+      total = this._calculateBaseValue()
     }
-    return output
+    
+    // This value will be shown on the sheet and used for rolls.
+    // We save it at the document level for easy access, but it's not persisted in the DB.
+    this.calculatedValue = Math.max(total, 0)
+  }
+
+  /**
+   * Helper to calculate the base value, handling numbers and formulas.
+   * @returns {number}
+   * @private
+   */
+  _calculateBaseValue() {
+    const base = this.system.base
+    if (String(base).includes('@')) {
+      if (!this.actor) return 0
+      try {
+        const roll = new Roll(base, this.actor.getRollData())
+        return Math.floor(roll.evaluateSync({ strict: false }).total)
+      } catch (e) {
+        console.warn(`CoC7 | Could not parse skill base formula "${base}" for skill "${this.name}" on actor "${this.actor?.name}"`)
+        return 0
+      }
+    }
+    return parseInt(base, 10) || 0
   }
 
   get hasActiveEffects () {
@@ -81,67 +97,49 @@ export class CoC7Skill extends CoC7Item {
   }
 
   /**
+   * Base value getter that resolves formulas if necessary.
+   */
+  get base() {
+    return this.system.baseValue ?? this._calculateBaseValue()
+  }
+
+  /**
    * This is the value of the skill score unaffected by active effects
    */
   get rawValue () {
-    let value = 0
-    if (this.actor.type === 'character') {
-      // For an actor with experience we need to calculate skill value
-      value = this.base
-      value += this.system.adjustments?.personal
-        ? parseInt(this.system.adjustments?.personal)
-        : 0
-      value += this.system.adjustments?.occupation
-        ? parseInt(this.system.adjustments?.occupation)
-        : 0
-      value += this.system.adjustments?.experience
-        ? parseInt(this.system.adjustments?.experience)
-        : 0
-      if (
-        game.settings.get('CoC7', 'pulpRuleArchetype') &&
-        this.system.adjustments?.archetype
-      ) {
-        value += parseInt(this.system.adjustments?.archetype)
-      } else {
-        value += parseInt(this.system.adjustments?.experiencePackage ?? 0, 10)
-      }
-    } else {
-      // For all others actor we store the value directly
-      value = parseInt(this.system.value)
-    }
-    return !isNaN(value) ? value : null
+    return this.calculatedValue ?? 0
   }
 
   /**
    * This is the skill's value after active effects have been applied
    */
   get value () {
-    const value = this.parent?.system.skills?.[`${this.itemIdentifier}`]?.value
-    return value || this.rawValue
+    const effectValue = this.parent?.system.skills?.[`${this.itemIdentifier}`]?.value
+    return effectValue ?? this.rawValue
+  }
+
+  get canBePushed() {
+    return this.system.properties.push
   }
 
   async updateValue (value) {
     if (this.actor.type === 'character') {
       const delta = parseInt(value) - this.rawValue
-      const exp =
-        (this.system.adjustments?.experience
-          ? parseInt(this.system.adjustments.experience)
-          : 0) + delta
+      const exp = (this.system.adjustments?.experience ?? 0) + delta
       await this.update({
-        'system.adjustments.experience': exp > 0 ? exp : 0
+        'system.adjustments.experience': Math.max(exp, 0)
       })
-    } else await this.update({ 'system.value': value })
+    } else {
+      await this.update({ 'system.base': value.toString() })
+    }
   }
 
   async increaseExperience (x) {
     if (this.type !== 'skill') return null
     if (this.actor.type === 'character') {
-      const exp =
-        (this.system.adjustments?.experience
-          ? parseInt(this.system.adjustments.experience)
-          : 0) + parseInt(x)
+      const exp = (this.system.adjustments?.experience ?? 0) + parseInt(x)
       await this.update({
-        'system.adjustments.experience': exp > 0 ? exp : 0
+        'system.adjustments.experience': Math.max(exp, 0)
       })
     }
   }
