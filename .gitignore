@@ -1,16 +1,21 @@
+# IDEs and local configs
 .husky/_
 .idea/
 .vs/
 .vscode/
+
+# Logs and temp files
 *.log
 *.todo
-build/
-coverage/
-target/
 yarn.lock
-/dist/
-/fvtt.config.js
 /node_modules/
 /package-lock.json
-/packs/
 /temp/
+
+# Build output
+/dist/
+/packs/
+/docs/
+
+# Local Foundry VTT config
+/fvtt.config.js
