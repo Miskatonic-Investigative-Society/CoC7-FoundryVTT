@@ -25,4 +25,13 @@ export const handlebarsHelper = function () {
     }
     return 0
   })
+  Handlebars.registerHelper('selectValue', function (choices, selected, valueAttr, labelAttr) {
+    if (typeof choices !== 'undefined' && typeof choices.find === 'function') {
+      const found = choices.find(o => o[valueAttr] === selected && typeof o[labelAttr] !== 'undefined')
+      if (found) {
+        return found[labelAttr]
+      }
+    }
+    return ''
+  })
 }
