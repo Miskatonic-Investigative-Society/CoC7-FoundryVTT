@@ -55,13 +55,16 @@ export class DamageCard extends InteractiveChatCard {
   async cancelDamage (options = { update: true }) {
     if (!this.targetActor || !this.damageInflicted) return false;
     
-    // Cancel the damage by restoring the actor's HP
-    const currentDamage = Number(this.totalDamageString);
-    const currentHp = this.targetActor.hp;
-    const newHp = Math.min(currentHp + currentDamage, this.targetActor.hpMax);
+    // Restore HP to the original value before any damage was dealt
+    // The original HP should be stored when damage is first dealt
+    if (typeof this.originalHp === 'undefined') {
+      // If we don't have the original HP stored, calculate it
+      this.originalHp = Math.min(this.targetActor.hp + Number(this.totalDamageString), this.targetActor.hpMax);
+    }
     
-    // Use setHp instead of dealDamage with negative value
-    await this.targetActor.setHp(newHp);
+    // Restore to original HP, ensuring it doesn't exceed max HP
+    const restoredHp = Math.min(this.originalHp, this.targetActor.hpMax);
+    await this.targetActor.setHp(restoredHp);
     
     this.damageInflicted = false;
     
@@ -70,7 +73,7 @@ export class DamageCard extends InteractiveChatCard {
       content: game.i18n.format('CoC7.DamageCanceled', {
         user: game.user.name,
         target: this.targetActor.name,
-        damage: currentDamage
+        damage: Number(this.totalDamageString)
       })
     });
     
@@ -103,7 +106,7 @@ export class DamageCard extends InteractiveChatCard {
   async decreaseDamage (options = { update: true }) {
     if (!this.targetActor) return false;
     
-    // Reduce damage by one point
+    // Reduce damage by one point (heal one point)
     const currentHp = this.targetActor.hp;
     const newHp = Math.min(currentHp + 1, this.targetActor.hpMax);
     await this.targetActor.setHp(newHp);
@@ -286,6 +289,9 @@ export class DamageCard extends InteractiveChatCard {
       }
     }
     if (this.targetActor) {
+      // Store the original HP before dealing damage
+      this.originalHp = this.targetActor.hp;
+      
       await this.targetActor.dealDamage(Number(damage), {
         ignoreArmor: true
       })

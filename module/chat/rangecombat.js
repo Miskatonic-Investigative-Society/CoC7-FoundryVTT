@@ -904,6 +904,9 @@ export class CoC7RangeInitiator {
         const target = chatHelper.getActorFromKey(targetKey)
         if (target) {
           if (damage.total) {
+            // Store the original HP before dealing damage
+            damage.originalHp = target.hp;
+            
             target.dealDamage(damage.total)
             ChatMessage.create({
               content: game.i18n.format('CoC7.DamageDealTo', {
@@ -931,23 +934,28 @@ export class CoC7RangeInitiator {
     const damage = this.damage.find(d => d.targetKey === targetKey || d.actorKey === targetKey);
     if (!damage || !damage.dealt) return false;
     
-    const damageAmount = Number(damage.total);
+    // Restore HP to the original value before any damage was dealt
+    if (typeof damage.originalHp === 'undefined') {
+      // If we don't have the original HP stored, calculate it
+      damage.originalHp = Math.min(targetActor.hp + Number(damage.total), targetActor.hpMax);
+    }
     
-    // Restore HP
-    const currentHp = targetActor.hp;
-    const newHp = Math.min(currentHp + damageAmount, targetActor.hpMax);
-    await targetActor.setHp(newHp);
+    // Restore to original HP, ensuring it doesn't exceed max HP
+    const restoredHp = Math.min(damage.originalHp, targetActor.hpMax);
+    await targetActor.setHp(restoredHp);
     
     // Reset damage state to allow dealing damage again
     damage.dealt = false;
-    this.damageDealt = false;
+    
+    // Only reset damageDealt if no other damage is still dealt
+    this.damageDealt = this.damage.some(d => d.dealt);
     
     // Send chat message
     ChatMessage.create({
       content: game.i18n.format('CoC7.DamageCanceled', {
         user: game.user.name,
         target: targetActor.name,
-        damage: damageAmount
+        damage: Number(damage.total)
       })
     });
     
@@ -994,7 +1002,7 @@ export class CoC7RangeInitiator {
     const targetActor = chatHelper.getActorFromKey(targetKey);
     if (!targetActor) return false;
     
-    // Reduce damage by one point
+    // Reduce damage by one point (heal one point)
     const currentHp = targetActor.hp;
     const newHp = Math.min(currentHp + 1, targetActor.hpMax);
     await targetActor.setHp(newHp);

@@ -1188,6 +1188,149 @@ export class CoC7Chat {
         break
       }
 
+      case 'cancelDamage': {
+        if (card.classList.contains('range')) {
+          const rangeInitiator = CoC7RangeInitiator.getFromCard(card)
+          await rangeInitiator.cancelDamage({ event })
+        } else if (card.classList.contains('damage')) {
+          // Handle regular damage card cancel
+          // Try to find target actor key from different possible locations
+          let targetKey = null
+          const targetImg = card.querySelector('img[data-actor-key]:not([data-actor-key="' + card.querySelector('img[data-actor-key]')?.dataset.actorKey + '"])')
+          if (targetImg) {
+            targetKey = targetImg.dataset.actorKey
+          } else {
+            // Fallback to any actor key that's not the first one (dealer)
+            const actorKeys = card.querySelectorAll('[data-actor-key]')
+            if (actorKeys.length > 1) {
+              targetKey = actorKeys[1].dataset.actorKey
+            } else if (actorKeys.length === 1) {
+              targetKey = actorKeys[0].dataset.actorKey
+            }
+          }
+          
+          if (!targetKey) return
+          
+          const targetActor = chatHelper.getActorFromKey(targetKey)
+          if (!targetActor) return
+          
+          // Get damage value from the card
+          const damageText = card.querySelector('.card-result')?.textContent || ''
+          const damageMatch = damageText.match(/(\d+)/)
+          const damageAmount = damageMatch ? Number(damageMatch[1]) : 0
+          
+          // Calculate original HP (damage + current HP, capped at max)
+          const originalHp = Math.min(targetActor.hp + damageAmount, targetActor.hpMax)
+          await targetActor.setHp(originalHp)
+          
+          // Send chat message
+          ChatMessage.create({
+            content: game.i18n.format('CoC7.DamageCanceled', {
+              user: game.user.name,
+              target: targetActor.name,
+              damage: damageAmount
+            })
+          })
+          
+          // Update the card to remove damage controls and show deal damage button
+          const cardResult = card.querySelector('.card-result')
+          if (cardResult) {
+            cardResult.innerHTML = cardResult.innerHTML.replace(/<div class="damage-controls">.*?<\/div>/s, '')
+          }
+          
+          // Show deal damage button
+          const dealDamageBtn = card.querySelector('.card-buttons.gm-visible-only')
+          if (dealDamageBtn) dealDamageBtn.style.display = 'block'
+          
+          await CoC7Chat.updateChatCard(card)
+        }
+        break
+      }
+
+      case 'increaseDamage': {
+        if (card.classList.contains('range')) {
+          const rangeInitiator = CoC7RangeInitiator.getFromCard(card)
+          await rangeInitiator.increaseDamage({ event })
+        } else if (card.classList.contains('damage')) {
+          // Handle regular damage card increase
+          // Try to find target actor key from different possible locations
+          let targetKey = null
+          const targetImg = card.querySelector('img[data-actor-key]:not([data-actor-key="' + card.querySelector('img[data-actor-key]')?.dataset.actorKey + '"])')
+          if (targetImg) {
+            targetKey = targetImg.dataset.actorKey
+          } else {
+            // Fallback to any actor key that's not the first one (dealer)
+            const actorKeys = card.querySelectorAll('[data-actor-key]')
+            if (actorKeys.length > 1) {
+              targetKey = actorKeys[1].dataset.actorKey
+            } else if (actorKeys.length === 1) {
+              targetKey = actorKeys[0].dataset.actorKey
+            }
+          }
+          
+          if (!targetKey) return
+          
+          const targetActor = chatHelper.getActorFromKey(targetKey)
+          if (!targetActor) return
+          
+          // Apply one additional point of damage
+          const currentHp = targetActor.hp
+          const newHp = Math.max(0, currentHp - 1)
+          await targetActor.setHp(newHp)
+          
+          // Send chat message
+          ChatMessage.create({
+            content: game.i18n.format('CoC7.DamageIncreased', {
+              user: game.user.name,
+              target: targetActor.name
+            })
+          })
+        }
+        break
+      }
+
+      case 'decreaseDamage': {
+        if (card.classList.contains('range')) {
+          const rangeInitiator = CoC7RangeInitiator.getFromCard(card)
+          await rangeInitiator.decreaseDamage({ event })
+        } else if (card.classList.contains('damage')) {
+          // Handle regular damage card decrease
+          // Try to find target actor key from different possible locations
+          let targetKey = null
+          const targetImg = card.querySelector('img[data-actor-key]:not([data-actor-key="' + card.querySelector('img[data-actor-key]')?.dataset.actorKey + '"])')
+          if (targetImg) {
+            targetKey = targetImg.dataset.actorKey
+          } else {
+            // Fallback to any actor key that's not the first one (dealer)
+            const actorKeys = card.querySelectorAll('[data-actor-key]')
+            if (actorKeys.length > 1) {
+              targetKey = actorKeys[1].dataset.actorKey
+            } else if (actorKeys.length === 1) {
+              targetKey = actorKeys[0].dataset.actorKey
+            }
+          }
+          
+          if (!targetKey) return
+          
+          const targetActor = chatHelper.getActorFromKey(targetKey)
+          if (!targetActor) return
+          
+          // Reduce damage by one point (heal one point)
+          const currentHp = targetActor.hp
+          const newHp = Math.min(currentHp + 1, targetActor.hpMax)
+          await targetActor.setHp(newHp)
+          
+          // Send chat message
+          ChatMessage.create({
+            content: game.i18n.format('CoC7.DamageDecreased', {
+              user: game.user.name,
+              target: targetActor.name
+            })
+          })
+        }
+        break
+      }
+
       default:
         break
     }
