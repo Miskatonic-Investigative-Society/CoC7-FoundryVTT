@@ -1051,17 +1051,32 @@ export class CoCActor extends Actor {
                   if (existing) {
                     const flags = data.system?.flags
                     const keepBase = (data.system.properties?.keepbasevalue ?? false)
-                    data = foundry.utils.duplicate(existing)
-                    for (const [key, value] of Object.entries(flags)) {
-                      if (value) {
-                        data.system.flags[key] = true
-                      }
-                    }
                     if (keepBase) {
+                      const parts = CoC7Item.getNamePartsSpec(
+                        existing.system.skillName,
+                        data.system.specialization
+                      )
+      
+                      data.system.skillName = parts.skillName
+                      data.name = parts.name
+                      for (const [key, value] of Object.entries(flags)) {
+                        if (value) {
+                          data.system.flags[key] = true
+                        }
+                      }
+                      baseValue = data.system.base
+                      baseCalculated = await CoC7Item.calculateBase(this, data)
+                    } else {
+                      data = foundry.utils.duplicate(existing)
+                      for (const [key, value] of Object.entries(flags)) {
+                        if (value) {
+                          data.system.flags[key] = true
+                        }
+                      }
                       if (skillData.baseValue !== '') {
                         data.system.base = skillData.baseValue
                       }
-                      baseValue = skillData.baseValue
+                      baseValue = data.system.base
                       baseCalculated = await CoC7Item.calculateBase(this, data)
                     }
                   }
