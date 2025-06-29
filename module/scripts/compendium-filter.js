@@ -296,7 +296,7 @@ export function compendiumFilter () {
         for (const directoryItem of directoryItems) {
           const item = app.collection.index.get(directoryItem.dataset[keyName])
           if (item && item.type === 'skill') {
-            directoryItem.querySelector('a').innerHTML = item.name + ' (' + (item.system?.base ?? '?') + '%' + ((item.system?.properties?.rarity ?? false) ? ' ' + uncommon : '') + ')'
+            directoryItem.querySelector('a').innerHTML = item.name + ' (' + (item.system?.base ?? '?') + '%)' + ((item.system?.properties?.rarity ?? false) ? ' ' + uncommon : '')
           }
         }
       }

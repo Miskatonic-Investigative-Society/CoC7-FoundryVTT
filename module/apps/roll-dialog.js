@@ -56,7 +56,7 @@ export class RollDialog {
         content: html,
         buttons: {
           roll: {
-            label: game.i18n.localize('CoC7.RollDice'),
+            label: '<i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i> ' + game.i18n.localize('CoC7.RollDice'),
             callback: html => {
               formData = new FormData(html[0].querySelector('#bonus-roll-form'))
               return resolve(formData)
