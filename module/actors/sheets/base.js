@@ -229,17 +229,17 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
         // ce bloc devrait etre déplacé dans le bloc _updateFormData
         if (item.type === 'skill') {
           if (item.system.properties.special) {
-            if (item.system.properties.fighting) {
+            if (item.system.properties.fighting && !item.system.specialization) {
               item.system.specialization = game.i18n.localize(
                 'CoC7.FightingSpecializationName'
               )
             }
-            if (item.system.properties.firearm) {
+            if (item.system.properties.firearm && !item.system.specialization) {
               item.system.specialization = game.i18n.localize(
                 'CoC7.FirearmSpecializationName'
               )
             }
-            if (item.system.properties.ranged) {
+            if (item.system.properties.ranged && !item.system.specialization) {
               item.system.specialization = game.i18n.localize(
                 'CoC7.RangedSpecializationName'
               )
@@ -336,13 +336,17 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
       }
 
       for (const itemType in sheetData.itemsByType) {
-        sheetData.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
-      }
+        if (itemType === 'skill') {
+          sheetData.itemsByType[itemType].sort(CoC7Utilities.sortBySpecializationThenName)
+        } else {
+          sheetData.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
+        }
+       }
 
       // redondant avec matrice itembytype
       sheetData.skills = sheetData.items
         .filter(item => item.type === 'skill')
-        .sort(CoC7Utilities.sortByNameKey)
+        .sort(CoC7Utilities.sortBySpecializationThenName)
 
       sheetData.meleeSkills = sheetData.skills.filter(
         skill =>
