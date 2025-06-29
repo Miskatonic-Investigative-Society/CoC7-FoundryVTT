@@ -963,6 +963,24 @@ export class CoC7Utilities {
           .toLocaleLowerCase()
       )
   }
+ 
+  static sortBySpecializationThenName (a, b) {
+    const normalize = (str) => (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+
+    // Use specialization as the primary sort key, or the skill name if no specialization exists.
+    const sortKeyA = normalize(a.system.specialization || a.name)
+    const sortKeyB = normalize(b.system.specialization || b.name)
+
+    // Compare the primary sort keys.
+    const primaryCompare = sortKeyA.localeCompare(sortKeyB)
+    if (primaryCompare !== 0) {
+      return primaryCompare
+    }
+
+    const nameA = normalize(a.name)
+    const nameB = normalize(b.name)
+    return nameA.localeCompare(nameB)
+  }
 
   static getAnIdForGm () {
     const keepers = game.users.filter(u => u.active && u.isGM && u.id !== game.user.id)

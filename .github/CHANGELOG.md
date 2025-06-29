@@ -10,6 +10,8 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Fix dice icons missing in the dice roller dialog box (FoundryVTT v13)
+- Fix hasRollableCharacteristics on Container Actors
+- Move uncommon flag out of skill value brackets on compendium list, thanks to @zeedif #1854
 - Update to Polish localization, thanks to @Technus #1858
 - Update to Spanish localization, thanks to @zeedif #1852
 
