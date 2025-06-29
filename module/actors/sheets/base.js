@@ -341,7 +341,7 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
         } else {
           sheetData.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
         }
-       }
+      }
 
       // redondant avec matrice itembytype
       sheetData.skills = sheetData.items
