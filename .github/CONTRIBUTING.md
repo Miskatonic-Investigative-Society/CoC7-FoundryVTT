@@ -87,6 +87,8 @@ Don't mind possible warnings. They are part of any Node project.
 
 To make things easier, edit the `fvtt.config.example.js` file, located at the root of your local repository. The userDataPath key is your User Data Directory from Foundry and can be found on the Configuration tab on the Setup screen.
 
+
+
 Examples:
 
 - %localappdata%/FoundryVTT
@@ -112,6 +114,7 @@ After rename `fvtt.config.example.js` to `fvtt.config.js` consider run:
 This way Git does not assume the original file has been deleted from the repository.
 
 ## Running automated tests
+
 In order to run tests and see if you didn't introduce breaking changes, download [secondary repository with e2e Quench tests](https://github.com/Miskatonic-Investigative-Society/coc7-system-tests) and follow setup instructions there.
 
 ### Contributing

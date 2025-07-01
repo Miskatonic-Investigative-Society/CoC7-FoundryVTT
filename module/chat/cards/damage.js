@@ -52,6 +52,78 @@ export class DamageCard extends InteractiveChatCard {
     this._impale = x
   }
 
+  async cancelDamage (options = { update: true }) {
+    if (!this.targetActor || !this.damageInflicted) return false;
+    
+    // Restore HP to the original value before any damage was dealt
+    // The original HP should be stored when damage is first dealt
+    if (typeof this.originalHp === 'undefined') {
+      // If we don't have the original HP stored, calculate it
+      this.originalHp = Math.min(this.targetActor.hp + Number(this.totalDamageString), this.targetActor.hpMax);
+    }
+    
+    // Restore to original HP, ensuring it doesn't exceed max HP
+    const restoredHp = Math.min(this.originalHp, this.targetActor.hpMax);
+    await this.targetActor.setHp(restoredHp);
+    
+    this.damageInflicted = false;
+    
+    // Send a chat message indicating who canceled the damage
+    ChatMessage.create({
+      content: game.i18n.format('CoC7.DamageCanceled', {
+        user: game.user.name,
+        target: this.targetActor.name,
+        damage: Number(this.totalDamageString)
+      })
+    });
+    
+    options.update = typeof options.update === 'undefined' ? true : options.update;
+    if (options.update) this.updateChatCard();
+    return true;
+  }
+  
+  async increaseDamage (options = { update: true }) {
+    if (!this.targetActor) return false;
+    
+    // Apply one additional point of damage
+    const currentHp = this.targetActor.hp;
+    const newHp = Math.max(0, currentHp - 1);
+    await this.targetActor.setHp(newHp);
+    
+    // Send a chat message indicating who increased the damage
+    ChatMessage.create({
+      content: game.i18n.format('CoC7.DamageIncreased', {
+        user: game.user.name,
+        target: this.targetActor.name
+      })
+    });
+    
+    options.update = typeof options.update === 'undefined' ? true : options.update;
+    if (options.update) this.updateChatCard();
+    return true;
+  }
+  
+  async decreaseDamage (options = { update: true }) {
+    if (!this.targetActor) return false;
+    
+    // Reduce damage by one point (heal one point)
+    const currentHp = this.targetActor.hp;
+    const newHp = Math.min(currentHp + 1, this.targetActor.hpMax);
+    await this.targetActor.setHp(newHp);
+    
+    // Send a chat message indicating who decreased the damage
+    ChatMessage.create({
+      content: game.i18n.format('CoC7.DamageDecreased', {
+        user: game.user.name,
+        target: this.targetActor.name
+      })
+    });
+    
+    options.update = typeof options.update === 'undefined' ? true : options.update;
+    if (options.update) this.updateChatCard();
+    return true;
+  }
+
   get isDamageFormula () {
     if (typeof this.damageFormula !== 'string') return false
     if (!isNaN(Number(this.damageFormula))) return false
@@ -217,6 +289,9 @@ export class DamageCard extends InteractiveChatCard {
       }
     }
     if (this.targetActor) {
+      // Store the original HP before dealing damage
+      this.originalHp = this.targetActor.hp;
+      
       await this.targetActor.dealDamage(Number(damage), {
         ignoreArmor: true
       })
