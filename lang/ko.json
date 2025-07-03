@@ -630,7 +630,7 @@
   "CoC7.ConfirmRestartChase": "추격을 다시 하시겠습니까?",
   "CoC7.ConfirmRestartChaseHint": "추격이 다시 시작됩니다.\n모든 위치가 재설정됩니다.\n속도 점검을 수행하지 않은 캐릭터는 굴려야 합니다..",
   "CoC7.ConfirmResetChase": "추격을 다시 설정하시겠습니까?",
-  "CoC7.ConfirmResetChaseHint": "추격 기능이 재설정됩니다.\b모든 위치와 장애물이 제거됩니다.",
+  "CoC7.ConfirmResetChaseHint": "추격 기능이 재설정됩니다.\n모든 위치와 장애물이 제거됩니다.",
   "CoC7.IncludeEscapees": "가장 빨리 도주하는 캐릭터를 참여시키십시오.",
   "CoC7.TooSlow": "너무 느림",
   "CoC7.TooFast": "너무 빠름",
