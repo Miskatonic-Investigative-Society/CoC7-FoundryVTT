@@ -1417,4 +1417,14 @@
   "CoC7.SheetExperiencePackageName": "経験",
 
   "CoC7.AlternativeNames": "その他の名称"
+
+  "TOKEN.MOVEMENT.ACTIONS.walk.label": "歩行",
+  "TOKEN.MOVEMENT.ACTIONS.fly.label": "飛行",
+  "TOKEN.MOVEMENT.ACTIONS.swim.label": "水泳",
+  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "穴掘り",
+  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "這いずり",
+  "TOKEN.MOVEMENT.ACTIONS.climb.label": "登攀",
+  "TOKEN.MOVEMENT.ACTIONS.jump.label": "跳躍",
+  "TOKEN.MOVEMENT.ACTIONS.blink.label": "瞬間移動 (明滅)",
+  "TOKEN.MOVEMENT.ACTIONS.displace.label": "瞬間移動 (入れ替わり)"
 }
