@@ -789,6 +789,7 @@
   "CoC7.Chase.ChasersMax": "Ścigający Max: {value}",
 
   "CoC7.SpellCastingTime": "Czas rzucania",
+  "CoC7.AlternativeNames": "Nazwy opcjonalne",
   "CoC7.SpellCastingCost": "Koszt",
   "CoC7.CallSpell": "Wezwanie",
   "CoC7.DismissSpell": "Odesłanie",
@@ -1323,6 +1324,7 @@
   "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "Pukty Archetypu {count} z {total} zostało {remaining}",
   "CoC7.InvestigatorWizard.CreateInstructions": "Kliknij, żeby stworzyć postać. Strażnik musi być dostępny, żeby postać została stworzona.",
   "CoC7.InvestigatorWizard.CreatingInvestigator": "Poczekaj, aż Strażnik ukończy tworzenie Twojej postaci.",
+  "CoC7.InvestigatorWizard.PersonalDescription": "Opis postaci",
 
   "CoC7.CoCIDFlag.id": "ID",
   "CoC7.CoCIDFlag.title": "Edytuj ID (CoC ID)",
@@ -1332,7 +1334,12 @@
   "CoC7.CoCIDFlag.keys.i.skill.dodge": "Unik",
   "CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos": "Mity Cthulhu",
   "CoC7.CoCIDFlag.keys.i.skill.credit-rating": "Majętność",
-  "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Urazy i Blizny",
+  "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Urazy/Blizny",
+  "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideologia/Przekonania",
+  "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Znaczące miejsca",
+  "CoC7.CoCIDFlag.keys.rt..backstory-significant-people": "Ważne osoby",
+  "CoC7.CoCIDFlag.keys.rt..backstory-traits": "Przymioty",
+  "CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Rzeczy osobiste",
   "CoC7.CoCIDFlag.new": "- Niestandardowe ID -",
   "CoC7.CoCIDFlag.guess": "Stwórz ID (CoC ID) na podstawie bierzącego dokumentu.",
   "CoC7.CoCIDFlag.priority": "Priorytet ID",
@@ -1409,5 +1416,21 @@
   "CoC7.ErrorExperiencePackageNotInvestigator": "Możesz używać Pakietu Doświadczenia tylko na Badaczach",
   "CoC7.ErrorExperiencePackageNotGM": "Twój Strażnik Tajemnic musi zatwierdzić Pakiet Doświadczenia",
   "CoC7.ClearExperiencePackageName": "Wyczyść nazwę Pakietu Doświadczenia",
-  "CoC7.SheetExperiencePackageName": "Pakiet Doświadczenia"
+  "CoC7.SheetExperiencePackageName": "Pakiet Doświadczenia",
+
+  "CoC7.CoCIDCompendiumPopulate": "Ustaw własne kompendium",
+  "CoC7.CoCIDCompendiumPopulateWarning": "Tej akcji nie można cofnąć, proszę wykonać kopię zapasową. Upewnij się że era, język i moduły są ustawione odpowiednio.",
+  "CoC7.CoCIDCompendiumPopulateDestination": "Moduł docelowy",
+  "CoC7.CoCIDCompendiumPopulateTypes": "Typy",
+  "CoC7.CoCIDCompendiumPopulateButton": "Wypełnij",
+
+  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Chód",
+  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Lot",
+  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Pływanie",
+  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "Rycie",
+  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Czołganie się",
+  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Wspinaczka",
+  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Skok",
+  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (w przestrzeni)",
+  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (przez wymiary)"
 }

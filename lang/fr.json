@@ -6,10 +6,10 @@
   "CoC7.Entities.Creature": "Créature",
   "CoC7.Entities.Npc": "PNJ",
   "CoC7.Entities.Vehicle": "Véhicule",
-  "CoC7.ActorIsTokenHint": "Le personnage est un token",
-  "CoC7.ActorDataLinked": "Les données du personnage sont liées",
-  "CoC7.ActorDataNotLinked": "Les données du personnage NE sont PAS liées",
-  "CoC7.ActorIsSyntheticActor": "Le personnage est une instance de personnage",
+  "CoC7.ActorIsTokenHint": "Cet objet est un token",
+  "CoC7.ActorDataLinked": "Les données de l'acteur et du token sont liées",
+  "CoC7.ActorDataNotLinked": "Les données de l'acteur et du token NE sont PAS liées",
+  "CoC7.ActorIsSyntheticActor": "L'acteur est une instance d'acteur",
 
   "CoC7.Entities.Archetype": "Archétype",
   "CoC7.Entities.Armor": "Armure",
@@ -1323,7 +1323,8 @@
   "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "{count} points de compétences d'Archétype utilisés sur {total} . Il en reste {remaining}",
   "CoC7.InvestigatorWizard.CreateInstructions": "Cliquez sur créer pour créer votre personnage. Votre Gardien doit être connecté pour pouvoir procéder à la création.",
   "CoC7.InvestigatorWizard.CreatingInvestigator": "Attendez s'il vous plaît pendant que le Gardien crée votre investigateur.",
-
+  "CoC7.InvestigatorWizard.PersonalDescription": "Description personnelle",
+  
   "CoC7.CoCIDFlag.id": "ID",
   "CoC7.CoCIDFlag.title": "Éditer le System ID (CoC ID)",
   "CoC7.CoCIDFlag.summary": "Fixez un identifiant utilisable pour retrouver le '{type}' le plus à jour. Le System ID doit utiliser la traduction anglaise de '{type}' pour supporter le portage sous d'autres langues.",
@@ -1332,7 +1333,12 @@
   "CoC7.CoCIDFlag.keys.i.skill.dodge": "Esquive",
   "CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos": "Mythe de Cthulhu",
   "CoC7.CoCIDFlag.keys.i.skill.credit-rating": "Crédit",
+  "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Idéologie et Croyances",
   "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Blessures et Cicatrices",
+  "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Lieux Significatifs",
+  "CoC7.CoCIDFlag.keys.rt..backstory-significant-people": "Personnes Importantes",
+  "CoC7.CoCIDFlag.keys.rt..backstory-traits": "Traits",
+  "CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Biens Précieux",
   "CoC7.CoCIDFlag.new": "- System ID propre -",
   "CoC7.CoCIDFlag.guess": "Créer le System ID (CoC ID) basé sur cet item.",
   "CoC7.CoCIDFlag.priority": "Priorité du System ID",
@@ -1363,6 +1369,11 @@
   "CoC7.ActorCoCIDItemsActorDirectory": "Mettre à jour tous les Acteurs du répertoire",
   "CoC7.ActorCoCIDItemsAny": "Mettre à jour (toutes) les spécialisations",
   "CoC7.ActorCoCIDItemsUpdate": "Mise à jour",
+  "CoC7.CoCIDCompendiumPopulate": "Installez votre compendium",
+  "CoC7.CoCIDCompendiumPopulateWarning": "Cette action ne peut être annulée, sauvegardez votre module avant de le remplir. Vérifier que l'époque, le language, et les modules sont correctement paramétrés.",
+  "CoC7.CoCIDCompendiumPopulateDestination": "Module de Destination",
+  "CoC7.CoCIDCompendiumPopulateTypes": "Types",
+  "CoC7.CoCIDCompendiumPopulateButton": "Remplir",
 
   "CoC7.TokenCreationRoll.Title": "Aléatoire détecté",
   "CoC7.TokenCreationRoll.Prompt": "Ce token a des caractéristiques ou compétences aléatoires.<br>Que souhaitez-vous faire ?",
@@ -1409,5 +1420,17 @@
   "CoC7.ErrorExperiencePackageNotInvestigator": "Vous ne pouvez utiliser les Kits Expérience que sur les Investigateurs",
   "CoC7.ErrorExperiencePackageNotGM": "Votre gardien doit appliquer les Kits Expérience",
   "CoC7.ClearExperiencePackageName": "Effacer le nom du Kit Expérience",
-  "CoC7.SheetExperiencePackageName": "Expérience"
+  "CoC7.SheetExperiencePackageName": "Expérience",
+
+  "CoC7.AlternativeNames": "Noms alternatifs",
+
+  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Marcher",
+  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Voler",
+  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Nager",
+  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "S'enfouir",
+  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Ramper",
+  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Grimper",
+  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Sauter",
+  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Téléporter (Clignote)",
+  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Téléporter (Déplace)"
 }

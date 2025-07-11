@@ -511,6 +511,35 @@ export class CoC7Link {
     }
   }
 
+  static async makeMacroData (data) {
+    const linkObj = await CoC7Link.fromDropData(data)
+    const regEx = new RegExp('@(coc7)\\.' + '(check|effect|item|sanloss)' + '\\[([^\\[\\]]*(?:\\[[^\\[\\]]*(?:\\[[^\\[\\]]*\\])*[^\\[\\]]*\\])*[^\\[\\]]*)\\]' + '(?:{([^}]+)})?', 'gi')
+    const match = regEx.exec(linkObj.link)
+    if (match) {
+      const element = await CoC7Link._createLink(match)
+      return {
+        name: element.querySelector('span').innerHTML.trim(),
+        type: 'script',
+        command: 'game.CoC7.macros.linkMacro(' + JSON.stringify(data) + ')'
+      }
+    }
+    return false
+  }
+
+  static async linkMacro (data) {
+    const linkObj = await CoC7Link.fromDropData(data)
+    const regEx = new RegExp('@(coc7)\\.' + '(check|effect|item|sanloss)' + '\\[([^\\[\\]]*(?:\\[[^\\[\\]]*(?:\\[[^\\[\\]]*\\])*[^\\[\\]]*\\])*[^\\[\\]]*)\\]' + '(?:{([^}]+)})?', 'gi')
+    const match = regEx.exec(linkObj.link)
+    if (match) {
+      CoC7Link._createLink(match).then(element => {
+        CoC7Link._onLinkClick({
+          currentTarget: element
+        })
+      })
+    }
+    return false
+  }
+
   /**
    * Trigger a check when a link is clicked.
    * Depending the origin

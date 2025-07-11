@@ -1,7 +1,7 @@
 <h1 style="flex: 0 0 auto;">{{localize 'CoC7.InvestigatorWizard.TitleBackstory'}}</h1>
 <div class="scrollsection scroll-to-backstory">
   {{#each backstories as |backstory|}}
-    <label>{{backstory.name}}</label>
+    <label>{{localize backstory.name}}</label>
     <div class="form-group">
       <textarea class="backstory-text" data-index="{{backstory.index}}">{{backstory.value}}</textarea>
     </div>

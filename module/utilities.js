@@ -2,6 +2,7 @@
 import { COC7 } from './config.js'
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
+import { CoC7Link } from './apps/coc7-link.js'
 import { RollDialog } from './apps/roll-dialog.js'
 import { chatHelper } from './chat/helper.js'
 
@@ -236,7 +237,7 @@ export class CoC7Utilities {
     }
   }
 
-  static skillCheckMacro (skill, event, options = {}) {
+  static async skillCheckMacro (skill, event, options = {}) {
     event.preventDefault()
     const speaker = ChatMessage.getSpeaker()
     let actor
@@ -248,7 +249,9 @@ export class CoC7Utilities {
       return
     }
 
-    actor.skillCheck(skill, event.shiftKey, options)
+    const check = await actor.skillCheck(skill, event.shiftKey, options)
+
+    return check?.dice?.roll?.options?.coc7Result?.successLevel
   }
 
   static weaponCheckMacro (weapon, event) {
@@ -284,7 +287,18 @@ export class CoC7Utilities {
   }
 
   static createMacro (bar, data, slot) {
-    if (data.type !== 'Item') return
+    if (!['Item', 'CoC7Link'].includes(data.type)) return
+
+    if (data.type === 'CoC7Link') {
+      CoC7Link.makeMacroData(data).then(macroData => {
+        if (macroData) {
+          Macro.create(macroData).then(macro => {
+            game.user.assignHotbarMacro(macro, slot)
+          })
+        }
+      })
+      return false
+    }
 
     const item = fromUuidSync(data.uuid, bar)
 
@@ -948,6 +962,24 @@ export class CoC7Utilities {
           .replace(/[\u0300-\u036f]/g, '')
           .toLocaleLowerCase()
       )
+  }
+
+  static sortBySpecializationThenName (a, b) {
+    const normalize = (str) => (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+
+    // Use specialization as the primary sort key, or the skill name if no specialization exists.
+    const sortKeyA = normalize(a.system.specialization || a.name)
+    const sortKeyB = normalize(b.system.specialization || b.name)
+
+    // Compare the primary sort keys.
+    const primaryCompare = sortKeyA.localeCompare(sortKeyB)
+    if (primaryCompare !== 0) {
+      return primaryCompare
+    }
+
+    const nameA = normalize(a.name)
+    const nameB = normalize(b.name)
+    return nameA.localeCompare(nameB)
   }
 
   static getAnIdForGm () {

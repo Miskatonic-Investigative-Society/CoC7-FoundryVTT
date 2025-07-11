@@ -6,7 +6,7 @@ export default function (application, html, data) {
   // Allow Investigator Wizard
   //  * If the user role is allowed to create actors
   //  * If the user has less owned actors than allowed in settings
-  let allowWizard = game.user.role >= CONST.USER_PERMISSIONS.ACTOR_CREATE.defaultRole
+  let allowWizard = game.user.hasPermission('ACTOR_CREATE')
   if (!allowWizard) {
     const allowed = game.settings.get('CoC7', 'InvestigatorWizardQuantity')
     if (allowed > 0) {
@@ -34,7 +34,7 @@ export default function (application, html, data) {
     }
   }
 
-  if (game.user.role >= CONST.USER_PERMISSIONS.ACTOR_CREATE.defaultRole) {
+  if (game.user.hasPermission('ACTOR_CREATE')) {
     /* // FoundryVTT v12 */
     if (foundry.utils.isNewerVersion(game.version, '13')) {
       const menu = html.querySelector('footer.directory-footer')

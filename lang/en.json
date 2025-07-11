@@ -1323,6 +1323,7 @@
   "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "Archetype points {count} of {total} remaining {remaining}",
   "CoC7.InvestigatorWizard.CreateInstructions": "Click create to create your character. You Keeper needs to be online for the character to be created.",
   "CoC7.InvestigatorWizard.CreatingInvestigator": "Please wait while the keeper creates your investigator.",
+  "CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 
   "CoC7.CoCIDFlag.id": "ID",
   "CoC7.CoCIDFlag.title": "Edit System ID (CoC ID)",
@@ -1421,5 +1422,15 @@
   "CoC7.ClearExperiencePackageName": "Clear Experience Package name",
   "CoC7.SheetExperiencePackageName": "Experience",
 
-  "CoC7.AlternativeNames": "Alternative names"
+  "CoC7.AlternativeNames": "Alternative names",
+
+  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
+  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
+  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
+  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
+  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
+  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
+  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
+  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
+  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 }

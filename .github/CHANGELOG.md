@@ -7,6 +7,58 @@ Happy gaming !
 
 ## Upcoming Release
 
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+## Version 7.18
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix dice icons missing in the dice roller dialog box (FoundryVTT v13)
+- Fix hasRollableCharacteristics on Container Actors
+- Fix sorting non standard fighting/firearms/ranged specialization groups on Actor sheet, thanks to @zeedif #1853
+- Move uncommon flag out of skill value brackets on compendium list, thanks to @zeedif #1854
+- Update to Polish localization, thanks to @Technus #1858
+- Update to Spanish localization, thanks to @zeedif #1852
+
+## Version 7.17
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix effect creation from Character Sheet error on FoundryVTT v13
+- Fix hidden keeper notes tab on spell sheet
+- Update to French localization, thanks to @vonv #1841
+- Update to Spanish localization, thanks to @zeedif #1840
+- Update to Swedish localization, thanks to @Rangertheman #1844
+
+## Version 7.16
+
+**_!! FoundryVTT v11 is no longer supported !!_**
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add movement types and adding macro documents to the creature/NPC sheet
+- Update to German localization, thanks to @MrViso #1831
+- Update to Spanish localization, thanks to @zeedif #1833
+- Update to Spanish manual, thanks to @zeedif #1833
+- Update to Swedish localization, thanks to @Rangertheman #1832
+
+## Version 7.15
+
+**_!! This is intended to be the last release to support FoundryVTT v11 !!_**
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Allow coc7-links to be dropped on the hotbar
+- Expose skill check result to macros, thanks to @zeteticl. #1818
+- Fix Hotbar Drop Hook not returning flag
+- Fix issue with checking if Actor is inside a compendium in FoundryVTT v13.344
+- Fix V3 character sheet inactive tab text colour on FoundryVTT v13
+- Update Investigator Wizard Backstory heading translations and support one block backstory setting
+- Update to Swedish localization, thanks to @Rangertheman #1814
+- Update to Taiwanese localization, thanks to @zeteticl. #1815
+
+## Version 7.14
+
 **_!! This is intended to be the last release to support FoundryVTT v11 !!_**
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
@@ -14,9 +66,11 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Add alternative names text block to spell sheet
 - Add price tab to items, show world era price in header
 - Allow armor be added to containers
+- Fix batch CoC ID Actor update on unlinked tokens
 - Fix dark theme journal link colours
 - Fix language selection issue in Actor Importer, thanks to @ryotai-trpg #1791
 - Temporary disable spell cost automation
+- Update to French localization, thanks to @vonv #1809
 - Update to German localization, thanks to @MrViso #1803
 - Update to German manual, thanks to @Reloader975 #1787
 

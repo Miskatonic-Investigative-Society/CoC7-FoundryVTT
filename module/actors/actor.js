@@ -1287,7 +1287,7 @@ export class CoCActor extends Actor {
                 ) &&
                 sectionName
               ) {
-                await this.createBioSection(sectionName)
+                await this.createBioSection(game.i18n.localize(sectionName))
               }
             }
           }
@@ -2867,6 +2867,7 @@ export class CoCActor extends Actor {
     else check.pushing = !!options.pushing
     await check.roll()
     check.toMessage(check.pushing)
+    return check
   }
 
   async weaponCheck (weaponData, fastForward = false) {
@@ -3180,8 +3181,10 @@ export class CoCActor extends Actor {
   }
 
   get hasRollableCharacteristics () {
-    for (const [, value] of Object.entries(this.system.characteristics)) {
-      if (isNaN(Number(value.formula))) return true
+    if (this.system.characteristics) {
+      for (const [, value] of Object.entries(this.system.characteristics)) {
+        if (isNaN(Number(value.formula))) return true
+      }
     }
     return false
   }

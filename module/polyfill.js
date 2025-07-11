@@ -16,6 +16,7 @@ if (typeof foundry.applications === 'undefined') {
   foundry.applications = {}
 }
 /* // FoundryVTT V12 */
+// Translations TOKEN.MOVEMENT.ACTIONS.* in lang/*.json
 if (typeof foundry.appv1 === 'undefined') {
   foundry.appv1 = {
     sheets: {

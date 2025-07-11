@@ -229,17 +229,17 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
         // ce bloc devrait etre déplacé dans le bloc _updateFormData
         if (item.type === 'skill') {
           if (item.system.properties.special) {
-            if (item.system.properties.fighting) {
+            if (item.system.properties.fighting && !item.system.specialization) {
               item.system.specialization = game.i18n.localize(
                 'CoC7.FightingSpecializationName'
               )
             }
-            if (item.system.properties.firearm) {
+            if (item.system.properties.firearm && !item.system.specialization) {
               item.system.specialization = game.i18n.localize(
                 'CoC7.FirearmSpecializationName'
               )
             }
-            if (item.system.properties.ranged) {
+            if (item.system.properties.ranged && !item.system.specialization) {
               item.system.specialization = game.i18n.localize(
                 'CoC7.RangedSpecializationName'
               )
@@ -336,13 +336,17 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
       }
 
       for (const itemType in sheetData.itemsByType) {
-        sheetData.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
+        if (itemType === 'skill') {
+          sheetData.itemsByType[itemType].sort(CoC7Utilities.sortBySpecializationThenName)
+        } else {
+          sheetData.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
+        }
       }
 
       // redondant avec matrice itembytype
       sheetData.skills = sheetData.items
         .filter(item => item.type === 'skill')
-        .sort(CoC7Utilities.sortByNameKey)
+        .sort(CoC7Utilities.sortBySpecializationThenName)
 
       sheetData.meleeSkills = sheetData.skills.filter(
         skill =>
@@ -533,7 +537,8 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
     }
 
     // Owner Only, not available from compendium
-    if (this.actor.isOwner && typeof this.actor.compendium === 'undefined') {
+    /* // FoundryVTT V13 */
+    if (this.actor.isOwner && (this.actor.compendium === null || typeof this.actor.compendium === 'undefined')) {
       if (game.settings.get('CoC7', 'useContextMenus')) {
         if (!this.menus) this.menus = []
 
@@ -1277,6 +1282,13 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
       if (data.check === CoC7Link.CHECK_TYPE.EFFECT) {
         CoC7Link._onLinkActorClick(this.actor, data)
       }
+    } else if (['creature', 'npc'].includes(this.actor.type) && data.type === 'Macro') {
+      const macros = this.actor.system.special.macros ? foundry.utils.duplicate(this.actor.system.special.macros) : []
+      macros.push({
+        uuid: data.uuid
+      })
+      this.actor.update({ 'system.special.macros': macros })
+      return false
     }
     await super._onDrop(event)
   }
