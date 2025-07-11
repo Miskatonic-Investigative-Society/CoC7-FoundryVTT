@@ -1422,7 +1422,7 @@
   "CoC7.ClearExperiencePackageName": "経験パッケージ名を削除",
   "CoC7.SheetExperiencePackageName": "経験",
 
-  "CoC7.AlternativeNames": "その他の名称"
+  "CoC7.AlternativeNames": "その他の名称",
 
   "TOKEN.MOVEMENT.ACTIONS.walk.label": "歩行",
   "TOKEN.MOVEMENT.ACTIONS.fly.label": "飛行",
