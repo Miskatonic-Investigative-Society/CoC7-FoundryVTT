@@ -1,5 +1,5 @@
 <!--- This file is auto generated from module/manual/en/README.md -->
-# バージョン7.7 システム資料
+# バージョン7.14 システム資料
 
 この資料はCoC7システムの概略（作成中）であり、FVTTの操作説明に関するものではありません。
 
@@ -15,120 +15,117 @@
 
 このドキュメントは次の場所からも開くことができます：ゲーム設定 -> ヘルプ ドキュメント -> CoC7 システムマニュアルを閲覧
 
-# Recent changes
+# 最近の変更点
 
-For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
+変更点の全容についてはGithub上の[changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) をご覧ください。
 
- - New investigator sheet
+ - [Compendiums](compendiums.md) を使用しテキストを更新する
 
-# Chaosium Modules
-- [Call of Cthulhu® - Starter Set](https://foundryvtt.com/packages/cha-coc-fvtt-en-starterset) - Contains three scenarios (Paper Chase, Edge of Darkness, and Dead Man Stomp) and instructions for playing Call of Cthulhu 7th edition.
-- [Call of Cthulhu® - Quick-Start Rules](https://foundryvtt.com/packages/cha-coc-fvtt-en-quickstart) - Contains The Haunting scenario and a beginner guide to FoundryVTT and Call of Cthulhu 7th edition.
-- [Call of Cthulhu® - FoundryVTT - Investigator Wizard](https://foundryvtt.com/packages/call-of-cthulhu-foundryvtt-investigator-wizard) - Released with permission from Chaosium contains archetypes, occupations, setups, and skills for use with the Investigator Creation Wizard.
+# ケイオシアムモジュール
+- [Call of Cthulhu® - Starter Set](https://foundryvtt.com/packages/cha-coc-fvtt-en-starterset) - ３つのシナリオ（『ペーパー・チェイス／Paper Chase』、『屋根裏部屋の怪物／Edge of Darkness』、『死者のストンプ／Dead Man Stomp』）と、新クトゥルフ神話TRPGの遊び方説明を同梱しています。
+- [Call of Cthulhu® - Quick-Start Rules](https://foundryvtt.com/packages/cha-coc-fvtt-en-quickstart) - 『悪霊の家／The Haunting』シナリオと新クトゥルフ神話TRPG及びFoundryVTTのビギナーズガイドを同梱しています。
+- [Call of Cthulhu® - FoundryVTT - Investigator Wizard](https://foundryvtt.com/packages/call-of-cthulhu-foundryvtt-investigator-wizard) - 探索者生成ウィザードで使用できるパルプアーキタイプ、職業、初期設定、技能を同梱しています。このMODはChaosium社の承諾を受けてリリースされています。
 
-# Overview sections below
+# 以下概要セクション
 
-If this is your first time it is recommends you also read the following sections on this page.
+もしこれが初めてなら、このページの下記の閲覧を推奨しています。
 
-Foundry VTT is based in actors and items. This module includes a number of system specific actors and items, and some examples of them can be found in the included system compendiums.
+Foundry VTTはアクターやアイテムによって構成されています。このプログラムにより、ゲームシステム独自のアクターとアイテムを追加しています。いくつかのサンプルがシステムの辞典に格納されています。
 
-- [Actor overview](#actor-overview)
-- [Items overview](#items-overview)
-- [Settings overview](#settings-overview)
-- [Scene menu overview](#call-of-cthulhu-scene-menu)
-- [Keyboard and mouse shortcuts](#keyboard-and-mouse-shortcuts)
-- [Creating your first investigator](first_investigator.md)
-- [Character creation](character_creation.md)
+- [アクター概要](#actor-overview)
+- [アイテム概要](#items-overview)
+- [設定概要](#settings-overview)
+- [シーンメニュー概要](#call-of-cthulhu-scene-menu)
+- [キーボード・マウスショートカット集](#keyboard-and-mouse-shortcuts)
+- [初めての探索者作成](first_investigator.md)
+- [キャラクター作成](character_creation.md)
 
-# How to use the system
-
-- [Active effects](effects.md) - An active effect will modify an actor characteristic(s), attribute(s), skill(s).
-- [Actor importer](actor_importer.md)
-- Actor Type: Character (TODO)
-- Actor Type: Container (TODO)
-- Actor Type: Creature (TODO)
-- Actor Type: NPC (TODO)
+# システムの使い方
+※未訳
+- [アクティブ効果／Active effects](effects.md) -アクティブ効果により、アクターの能力値、副能力値、技能を修正できます。
+- [アクター・インポーター／Actor importer](actor_importer.md)
+- アクター種別：キャラクター (TODO)
+- アクター種別：荷物 (TODO)
+- アクター種別：クリーチャー (TODO)
+- アクター種別：NPC (TODO)
 - Chat link creator (TODO)
 - Character creation mode (TODO)
-- [Combat](combat.md) (TODO)
+- [戦闘／Combat](combat.md) (TODO)
 - Development phase (TODO)
-- [Item Types](items.md) (TODO)
-- [Item Type: Archetype](item_archetype.md) (TODO)
-- [Item Type: Book](item_book.md) (TODO)
-- [Item Type: Chases](chases.md)
-- Item Type: Item (TODO)
-- [Item Type: Occupation](item_occupation.md)
-- [Item Type: Setup](item_setup.md)
-- [Item Type: Skill](item_skill.md) (TODO)
-- Item Type: Spell (TODO)
-- Item Type: Status (TODO)
-- Item Type: Talent (TODO)
-- Item Type: Weapon (TODO)
-- [Link Creation Tool](link_creation_window.md)
-- [Links](links.md) (TODO)
-- Macros (TODO)
-- Rolls (TODO)
-- [Sanity](sanity.md) (TODO)
-- Start Rest (TODO)
+- [アイテム種別](items.md) (TODO)
+- [アイテム種別：アーキタイプ](item_archetype.md) (TODO)
+- [アイテム種別：書物](item_book.md) (TODO)
+- [アイテム種別：チェイス](chases.md)
+- アイテム種別：アイテム (TODO)
+- [アイテム種別：職業](item_occupation.md)
+- [アイテム種別：初期設定](item_setup.md)
+- [アイテム種別：技能](item_skill.md) (TODO)
+- アイテム種別：呪文 (TODO)
+- アイテム種別：状態異常 (TODO)
+- アイテム種別：タレント (TODO)
+- アイテム種別：武器 (TODO)
+- [リンク作成ツール／Link Creation Tool](link_creation_window.md)
+- [リンク／Links](links.md) (TODO)
+- マクロ／Macros (TODO)
+- ロール／Rolls (TODO)
+- [正気度／Sanity](sanity.md) (TODO)
+- 休息をはじめる／Start Rest (TODO)
 - XP Gain (TODO)
 
-# Actor overview
+# アクター概要
 
-- _Character_ - A complete character, usually an investigator. [_Example Character_]
-- _Container_ - An inventory container. [_Example Container_]
-- _Creature_ - A more simple character, suitable for creatures. [_Example Creature_]
-- _NPC_ - A more simple character, suitable for NPCs. [_Example NPC_]
+- _キャラクター／Character_ - 完全なキャラクターです。通常、探索者です。 [_キャラクター例_]
+- _荷物／Container_ - アイテムを格納できる（インベントリ）シートです。 [_荷物の例_]
+- _クリーチャー／Creature_ - 簡易版キャラクターです。クリーチャー（怪物）に適しています。 [_クリーチャー例_]
+- _NPC_ - 簡易版キャラクターです。NPCに適しています。 [_NPC例_]
 
-# Items overview
+# アイテム概要
 
-- _Archetype_ - A set of skills and other stats that implement a Pulp Cthulhu archetype. These do not trigger automation in the system. [_Example Archetype_]
-- _Book_ - An arcane tome that can hold spells and character improvements.
-- _Item_ - A piece of equipment.
-- _Occupation_ - A set of skills and other stats that implement a CoC occupation. [_Example Occupation_]
-- _Setup_ - A set of default configurations for character, creature, or NPC creation. [_Example Setup_]
-- _Skill_ - A skill with a base percentage and some tags. [_Example Skill_]
-- _Spell_ - A magic spell.
-- _Status_ - An phobia or mania condition. [_Example Mania_]
-- _Talent_ -A special power for Pulp Cthulhu. These do not trigger automation in the system. [_Example Talent_]
-- _Weapon_ - An item with weapon statistics (this includes unarmed attacks). [_Example Weapon_]
+- _アーキタイプ／Archetype_ - パルプ・クトゥルフのアーキタイプによって追加される技能群や能力値をまとめたものです。システム側で自動化されていません。 [_Example Archetype_]
+- _書物／Book_ - 呪文や技能成長を格納できる、魔導書です。
+- _アイテム／Item_ - 所持品を表します。
+- _職業／Occupation_ - 新クトゥルフ神話TRPGにおける職業を構成する、技能や能力値群です。[_Example Occupation_]
+- _初期設定／Setup_ - キャラクター、クリーチャー、NPC作成の初期設定に関するアイテムです。 [_Example Setup_]
+- _技能／Skill_ - 初期値やタグが設定できる、技能です。 [_Example Skill_]
+- _呪文／Spell_ - 魔法の呪文です。
+- _状態／Status_ - 恐怖症もしく偏執症の状態アイテムです。 [_Example Mania_]
+- _タレント／Talent_ -パルプ・クトゥルフにおける特別な能力です。システム側で自動化されていません。 [_Example Talent_]
+- _武器／Weapon_ - 武器（これには素手攻撃も含まれます。）の能力を設定したアイテムです。 [_Example Weapon_]
 
-# Settings overview
+# 設定概要
 
-Click on the Game Settings tab then under the Game Settings heading click on Configure Settings.
+ゲーム設定タブをクリックし「ゲーム設定」ヘッダ下の⚙設定をクリックすると変更できます。
 
-Click on System Settings
+- _選択ルール／Variant/Optional Rules_ - 個別のパルプ・クトゥルフルールとオプションルールの切り替えができます
+- _イニシアチブ設定／Initiative Settings_ - イニシアチブのオプションルールに関する追加設定です
+- _ロール設定／Roll Settings_ - ロールのデフォルト設定を変更します
+- _チャット・カード設定／Chat Cards Settings_ -チャットメッセージに関する設定です
+- _シーン設定／Scene Settings_ - シーンに関する設定です
+- _ゲーム・アートワーク設定／Game Artwork Settings_ - この設定により、一時停止アイコンとメッセージを変更できます
+- _シート設定／Sheet Settings_ - キャラクターシートの設定やオプションCSSを変更できます
+- _武器設定／Weapon Settings_ - 武器に関する設定です
+- _開発者＆デバッグ設定／Developer And Debug Settings_ - こちらの設定群は、システムアップデート時にあなたのワールドに障害を引き起こすおそれがあります。テスト用ワールドでのみ使用してください。
+- _ロール表設定／Roll Table Settings_ - 正気度ロールが行われた際、このシステムは狂気の発作を自動的にロールできます。正気度ロール表の例が辞典にあります。
 
-- _Variant/Optional Rules_ - Here you can turn on individual Pulp Cthulhu rules and other optional rules
-- _Initiative Settings_ - Additional settings for optional initiative rule
-- _Roll Settings_ - Default options for rolls
-- _Chat Cards Settings_ - Configure chat messages
-- _Scene Settings_ - Scene Settings
-- _Game Artwork Settings_ - This allows you to set a custom pause icon and message
-- _Sheet Settings_ - This allows you to change character sheet settings and optional CSS
-- _Weapon Settings_ - Weapon Settings
-- _Developer And Debug Settings_ - These settings can break your world when new updates are released so only use them on test worlds
-- _Roll Table Settings_ - When sanity rolls are made the system can automatically roll for a bout of madness. You can see example roll tables in the Sanity Roll Table compendiums
+# クトゥルフ神話TRPG シーンメニュー
 
-# Call of Cthulhu Scene Menu
+このメニューにアクセスするには有効化されたシーンが必要です。シーンはシーンディレクトリで作成できます。これらのオプションはキーパーにのみ有効化されています。
 
-To access this menu you will need to have an active scene which can be created in the Scenes Directory. These options are only available to the Keeper.
+- _キーパーツール／Keeper's tools_
+  - _成長フェイズ／Development phase_: 有効化すると、プレイヤーは成長チェックがついた技能に対し成長ロールが行えます。
+  - _探索者作成モード／Character creation mode_: 有効化すると、技能にポイントを割り振ることができます。
+  - _経験獲得の可否／XP gain_: 有効化すると、技能がロール成功後にチェックされます。
+  - _見せかけロールをプレイヤーに送る／Send a decoy roll to players_: クリックすると、プレイヤー側に見せかけのGM秘匿ロールが表示します。
+  - _休息をとる／Start Rest_: クリックすると、選択されたキャラクターたちが休息を行い経験ロールを行います。
+- _ロール！／Roll !_: 達成値、ボーナス／ペナルティ・ダイスをつけた1d100をロールします。
+- _リンク作成／Create link_: プレイヤーがクリックできる、ロール・リンクを作成できます。
 
-- _Keeper's tools_
-  - _Development phase_: When enabled, players can make improvement rolls for their marked skills.
-  - _Character creation mode_: When enabled, players can distribute points among their skills.
-  - _XP gain_: When enabled, a skill will be marked for improvement after a successful check.
-  - _Send a decoy roll to players_: When clicked, players will see a fake GM private roll.
-  - _Start Rest_: When click, pick characters to perform a rest and roll for XP gains.
-- _Roll !_: Used to roll 1d100 with a threshold, difficulty and bonus or penalty dice.
-- _Create link_: Create a roll link for players to click
+# キーボード・マウスショートカット集
 
-# Keyboard and mouse shortcuts
+シートにはクリックするとダイスロールが行われる要素が多く含まれています。クリック後、通常はユーザに難易度とボーナス／ペナルティダイスを指定できるプロンプトが表示されます。以下の操作でこの挙動は制御できます：
 
-There are many elements in the sheets that trigger a dice roll when clicked. Usually a dialog is shown to prompt the user for a difficulty and a possible bonus or penalty. This behavior is modified with the following controls:
-
-- Right click on any rollable element to include it in an opposed roll. As long as the card is open, all rolls made
-  with a right click will be added to the opposed roll.
-- Alt + Right click on any rollable element to include it in a combined roll.
-- Shift + Left click on a rollable element will make a roll without asking for difficulty or bonus/penalty.
-- Ctrl + Left click on a rollable element will create a roll request. Only available for the GM.
-- Alt + Left click on sanity will prompt the player for minimum and maximum sanity loss.
+- ロール可能な要素を右クリックすると、対抗ロールとして表示できます。カードが開いている限り、右クリックで行われたロールはすべて対抗ロールとして処理されます。
+- ロール可能な要素をAlt + 右クリックすると、複合ロールとして追加できます。
+- ロール可能な要素をShift + 左クリックすると、難易度やボーナス／ペナルティの有無を確認せずにロールします。
+- ロール可能な要素をCtrl + 左クリックすると、ロールリクエストを作成します。この操作はキーパーのみ可能です。
+- 正気度をAlt + 左クリックすると、最小／最大正気度減少をプレイヤーに通知します。
