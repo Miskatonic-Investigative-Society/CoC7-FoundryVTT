@@ -1323,6 +1323,7 @@
   "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "アーキタイプポイント {count} ／ {total}　残り： {remaining}",
   "CoC7.InvestigatorWizard.CreateInstructions": "クリックしてキャラクターを作成する。あなたのキーパーがオンラインでなければキャラクターは作成されない。",
   "CoC7.InvestigatorWizard.CreatingInvestigator": "キーパーが探索者を作成するまで少しお待ちください。",
+  "CoC7.InvestigatorWizard.PersonalDescription": "個人の説明",
 
   "CoC7.CoCIDFlag.id": "ID",
   "CoC7.CoCIDFlag.title": "システムIDを編集 (CoC ID)",
@@ -1368,6 +1369,11 @@
   "CoC7.ActorCoCIDItemsActorDirectory": "ディレクトリ内のアクターをすべて更新",
   "CoC7.ActorCoCIDItemsAny": "専門分野のある技能（任意）を更新",
   "CoC7.ActorCoCIDItemsUpdate": "更新",
+  "CoC7.CoCIDCompendiumPopulate": "あなたの辞典のセットアップ",
+  "CoC7.CoCIDCompendiumPopulateWarning": "このアクションはやり直せません。データ入力前にあなたのモジュールをバックアップしてください。時代、言語とモジュールが正しいか確認してください。",
+  "CoC7.CoCIDCompendiumPopulateDestination": "目的のモジュール",
+  "CoC7.CoCIDCompendiumPopulateTypes": "種別",
+  "CoC7.CoCIDCompendiumPopulateButton": "データ入力",
 
   "CoC7.TokenCreationRoll.Title": "ロール可能を検知",
   "CoC7.TokenCreationRoll.Prompt": "このコマはロール可能な能力値か技能があります。<br>どうしますか？",
