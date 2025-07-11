@@ -1403,7 +1403,7 @@
   "CoC7.ClickableEvents.MouseOver.Hint": "クリック許可とマウスカーソル表示にbooleanを返す",
   "CoC7.ClickableEvents.LeftClick.Title": "左クリックのスクリプト",
   "CoC7.ClickableEvents.RightClick.Title": "右クリックのスクリプト",
-  "TYPES.RegionBehavior.coc7ClickableEvents": "クリック可能なイベント"
+  "TYPES.RegionBehavior.coc7ClickableEvents": "クリック可能なイベント",
 
   "CoC7.SANSameLossAsMythosGain": "〈クトゥルフ神話〉上昇と等しい正気度減少",
   "CoC7.ExperiencePackageBackground": "経験パッケージに基づいた探索者の背景ストーリーを追加する。",
