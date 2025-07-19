@@ -336,6 +336,16 @@ const sources = {
       }
     ]
   },
+  ja: {
+    name: '新クトゥルフ神話TRPG',
+    priority: 0,
+    pages: [
+      {
+        name: 'システム資料',
+        file: 'README.md'
+      }
+    ]
+  },
   uk: {
     name: 'Поклик Ктулху: 7 Видання',
     priority: 0,

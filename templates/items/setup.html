@@ -114,7 +114,7 @@
         </h3>
         {{#each data.system.bioSections as |value index|}}
           <div class="form-group item" data-index="{{index}}">
-            <input type="text" name="system.bioSections.{{index}}" value="{{value}}" placeholder="{{localize 'CoC7.BioSectionName'}}" />
+            <input type="text" name="system.bioSections.{{index}}" value="{{localize value}}" placeholder="{{localize 'CoC7.BioSectionName'}}" />
             <a class="item-control remove-section"><i class="fas fa-minus" style="line-height: 20px;"></i></a>
           </div>
         {{/each}}

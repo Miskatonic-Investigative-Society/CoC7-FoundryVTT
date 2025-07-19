@@ -54,16 +54,25 @@
     <div class="flexrow-coc7 bonus-penalty-selector" style="padding: 4px 0;">
       <div style="flex: 1;"><label>{{localize 'CoC7.BonusDice'}}</label></div>
       <div style="flex: 1;display: flex;flex-direction: column;">
-        <div class="flexrow-coc7 bonus-penalty-labels">
-          <span class="double-penalty" style="flex: 1; text-align: left;">-2</span>
-          <span class="" style="flex: 1; text-align: center;"></span>
-          <span class="penalty" style="flex: 1; text-align: center;">-1</span>
-          <span class="" style="flex: 1; text-align: center;"></span>
-          <span class="normal-roll" style="flex: 1; text-align: center;">0</span>
-          <span class="" style="flex: 1; text-align: center;"></span>
-          <span class="bonus" style="flex: 1; text-align: center;">+1</span>
-          <span class="" style="flex: 1; text-align: center;"></span>
-          <span class="double-bonus" style="flex: 1; text-align: right;">+2</span>
+        <div class="flexcol-coc7 bonus-penalty-labels">
+          <div class="flexrow-coc7">
+            <span class="double-penalty" style="flex: 1.6; text-align: left; white-space: nowrap;"><i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i></span>
+            <span class="penalty" style="flex: 2.5; text-align: center;"><i class="fa-solid fa-dice-d10"></i></span>
+            <span class="normal-roll" style="flex: 2; text-align: center;"><i class="fa-solid fa-dice-d10"></i></span>
+            <span class="bonus" style="flex: 2.5; text-align: center;"><i class="fa-solid fa-dice-d10"></i></span>
+            <span class="double-bonus" style="flex: 1.6; text-align: right; white-space: nowrap;"><i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i></span>
+          </div>
+          <div class="flexrow-coc7">
+            <span class="double-penalty" style="flex: 1; text-align: left;">-2</span>
+            <span class="" style="flex: 1; text-align: center;"></span>
+            <span class="penalty" style="flex: 1; text-align: center;">-1</span>
+            <span class="" style="flex: 1; text-align: center;"></span>
+            <span class="normal-roll" style="flex: 1; text-align: center;">0</span>
+            <span class="" style="flex: 1; text-align: center;"></span>
+            <span class="bonus" style="flex: 1; text-align: center;">+1</span>
+            <span class="" style="flex: 1; text-align: center;"></span>
+            <span class="double-bonus" style="flex: 1; text-align: right;">+2</span>
+          </div>
         </div>
         <input type="range" name="bonusDice" min="-2" max="2" value="{{#if options.modifier}}{{options.modifier}}{{else}}0{{/if}}" class="slider" id="myslider">
       </div>

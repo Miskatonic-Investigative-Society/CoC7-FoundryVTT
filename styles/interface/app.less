@@ -228,7 +228,7 @@
     height: 30px;
   }
 
-  div.flexrow-coc7 {
+  div.flexcol-coc7 {
     margin: 2px 0;
     align-items: center;
     &.bonus-penalty-labels {
@@ -241,36 +241,27 @@
       padding-left: 10px;
       padding-right: 10px;
 
-      span.double-bonus:before,
-      span.double-penalty:before,
-      span.normal-roll:before,
-      span.bonus:before,
-      span.penalty:before {
-        display: inline-block;
-        text-align: center;
-        padding: 3px;
-        font-family: 'FontAwesome';
+      span.double-bonus i,
+      span.double-penalty i,
+      span.normal-roll i,
+      span.bonus i,
+      span.penalty i {
         font-size: 1.3rem;
         text-shadow: -1px -1px 5px white, 1px 1px 5px white;
       }
-      span.penalty:before {
-        content: '\f6cd';
+      span.penalty i {
         color: red;
       }
-      span.double-penalty:before {
-        content: '\f6cd \f6cd';
+      span.double-penalty i {
         color: darkred;
       }
-      span.double-bonus:before {
-        content: '\f6cd \f6cd';
+      span.double-bonus i {
         color: darkgreen;
       }
-      span.bonus:before {
-        content: '\f6cd';
+      span.bonus i {
         color: green ;
       }
-      span.normal-roll:before {
-        content: '\f6cd';
+      span.normal-roll i {
         color: grey;
       }
     }
