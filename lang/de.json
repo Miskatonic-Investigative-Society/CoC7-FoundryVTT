@@ -1422,5 +1422,15 @@
   "CoC7.ClearExperiencePackageName": "Leere den Erfahrungspaket Namen",
   "CoC7.SheetExperiencePackageName": "Erfahrung",
 
-  "CoC7.AlternativeNames": "Alternative Namen"
+  "CoC7.AlternativeNames": "Alternative Namen",
+
+  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Laufen",
+  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Fliegen",
+  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Schwimmen",
+  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "Graben",
+  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Kriechen",
+  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Klettern",
+  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Springen",
+  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleportieren (Blinzeln)",
+  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleportieren (Verdrängen)"
 }

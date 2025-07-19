@@ -9,6 +9,18 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.19
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix dice icons missing in the dice roller dialog box (FoundryVTT v13)
+- Fix investigator wizard not translating background section titles
+- Update to Simplified Chinese localization, thanks to @YFFtYHwsdj #1867
+- Update to German localization, thanks to @MrViso #1874
+- Update to Japanese localization, thanks to @doumoku #1873
+- Update to Japanese manual, thanks to @doumoku #1873
+- Update to Korean localization, thanks to @zeteticl. #1871
+
 ## Version 7.18
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

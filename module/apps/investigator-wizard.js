@@ -1880,7 +1880,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
     } else {
       for (let index = 0, im = data.bioSections.length; index < im; index++) {
         biography.push({
-          title: data.bioSections[index].name,
+          title: game.i18n.localize(data.bioSections[index].name),
           value: data.bioSections[index].value
         })
       }
