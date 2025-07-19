@@ -33,6 +33,7 @@ export default async function () {
     en: 'sxB2OXbfwV6M0nyQ',
     es: '35FM7ZOdzC6L2xlj',
     fr: 'tdakyzTVOQsAMdSm',
+    ja: '75sD0ovkj4TDpvzv',
     uk: '98TuflgZUmQoJdSK'
   }
   if (typeof readMe[lang] === 'undefined') {
