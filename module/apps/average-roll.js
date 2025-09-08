@@ -35,10 +35,21 @@ export class AverageRoll extends Roll {
         // This section is replaced to calculate the average
         let total = term.total
         if (minimize && maximize && term.dice.length) {
-          total = Math.floor((term.dice[0].faces + 1) / 2 * term.total)
+          // Get min and max
+          const min = new AverageRoll(term.term)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true })
+          const max = new AverageRoll(term.term)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true })
+
+          // Get the average of min plus max
+          total = Math.floor((min.total + max.total) / 2)
+
+          // Round to nearest 5
+          total = Math.round(total / 5) * 5
         }
 
-        return new foundry.dice.terms.NumericTerm({ number: total, options: term.options })
+        return new foundry.dice.terms.NumericTerm({
+          number: total,
+          options: term.options
+        })
       }
       return term
     })
