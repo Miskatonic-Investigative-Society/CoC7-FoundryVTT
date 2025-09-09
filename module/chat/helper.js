@@ -276,7 +276,6 @@ export class chatHelper {
       const segment = [{ ray }]
       distance = {
         gridUnit: ray.distance / canvas.scene.grid.size,
-        // value: (ray.distance/canvas.scene.data.grid)*canvas.scene.data.gridDistance,
         value: canvas.grid.measureDistances(segment, {
           gridSpaces: game.settings.get('CoC7', 'gridSpaces')
         })[0],
