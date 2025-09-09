@@ -1,5 +1,5 @@
 /* global Actor, Application, CONFIG, CONST, Dialog, Die, foundry, fromUuid, fromUuidSync, game, Hooks, Roll, TextEditor, Token, ui */
-import { AverageRoll } from '../apps/average-roll.js'
+import CoC7AverageRoll from '../apps/average-roll.js'
 import { COC7 } from '../config.js'
 import CoC7ActiveEffect from '../active-effect.js'
 import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
@@ -3224,7 +3224,7 @@ export class CoCActor extends Actor {
     const characteristics = {}
     for (const [key, value] of Object.entries(this.system.characteristics)) {
       if (value.formula && !value.formula.startsWith('@')) {
-        const average = new AverageRoll('(' + value.formula + ')')[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true, maximize: true }).total
+        const average = new CoC7AverageRoll('(' + value.formula + ')')[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true, maximize: true }).total
         characteristics[`system.characteristics.${key}.value`] = average
       }
     }
