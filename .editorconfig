@@ -8,5 +8,5 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{hbs,html,svg}]
+[*.{hbs,html,json,svg}]
 insert_final_newline = false

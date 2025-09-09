@@ -9,6 +9,9 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Remove FoundryVTT v11 compatibility in system.json, thanks to @ryotai-trpg. #1866
+- Update to Korean localization, thanks to @zeteticl. #1880
+
 ## Version 7.19
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
