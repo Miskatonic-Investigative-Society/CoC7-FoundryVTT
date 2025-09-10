@@ -2,23 +2,41 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cs.json (41 untranslated strings)](#csjson)
+[cn.json (1 untranslated strings)](#cnjson)
 
-[ja.json (1 untranslated strings)](#jajson)
+[cs.json (42 untranslated strings)](#csjson)
 
-[uk.json (42 untranslated strings)](#ukjson)
+[de.json (1 untranslated strings)](#dejson)
 
-[zh-TW.json (11 untranslated strings)](#zh-twjson)
+[es.json (1 untranslated strings)](#esjson)
+
+[fr.json (1 untranslated strings)](#frjson)
+
+[ja.json (2 untranslated strings)](#jajson)
+
+[pl.json (1 untranslated strings)](#pljson)
+
+[sv.json (1 untranslated strings)](#svjson)
+
+[uk.json (43 untranslated strings)](#ukjson)
+
+[zh-TW.json (12 untranslated strings)](#zh-twjson)
 
 
+## cn.json
+1 untranslated strings
+```
+"CoC7.ToolTipSeeNotes": "See notes"
+```
 ## cs.json
-41 untranslated strings
+42 untranslated strings
 ```
 "CoC7.Entities.ExperiencePackage": "Experience Package",
 "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
 "CoC7.SkillExperiencePackage": "Experience Package",
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
 "CoC7.ExperiencePackageSkill": "Experience Package Skill",
+"CoC7.ToolTipSeeNotes": "See notes",
 "CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",
@@ -56,19 +74,46 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
 "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
-## ja.json
+## de.json
 1 untranslated strings
 ```
-"CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties"
+"CoC7.ToolTipSeeNotes": "See notes"
+```
+## es.json
+1 untranslated strings
+```
+"CoC7.ToolTipSeeNotes": "See notes"
+```
+## fr.json
+1 untranslated strings
+```
+"CoC7.ToolTipSeeNotes": "See notes"
+```
+## ja.json
+2 untranslated strings
+```
+"CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
+"CoC7.ToolTipSeeNotes": "See notes"
+```
+## pl.json
+1 untranslated strings
+```
+"CoC7.ToolTipSeeNotes": "See notes"
+```
+## sv.json
+1 untranslated strings
+```
+"CoC7.ToolTipSeeNotes": "See notes"
 ```
 ## uk.json
-42 untranslated strings
+43 untranslated strings
 ```
 "CoC7.Entities.ExperiencePackage": "Experience Package",
 "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
 "CoC7.SkillExperiencePackage": "Experience Package",
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
 "CoC7.ExperiencePackageSkill": "Experience Package Skill",
+"CoC7.ToolTipSeeNotes": "See notes",
 "CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",
 "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",
@@ -108,8 +153,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## zh-TW.json
-11 untranslated strings
+12 untranslated strings
 ```
+"CoC7.ToolTipSeeNotes": "See notes",
 "CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",
 "CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Treasured Possessions",
 "TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",

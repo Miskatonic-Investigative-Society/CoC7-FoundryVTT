@@ -2,17 +2,17 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[it.json (79 untranslated strings)](#itjson)
+[it.json (80 untranslated strings)](#itjson)
 
-[ko.json (289 untranslated strings)](#kojson)
+[ko.json (290 untranslated strings)](#kojson)
 
-[pt-BR.json (237 untranslated strings)](#pt-brjson)
+[pt-BR.json (238 untranslated strings)](#pt-brjson)
 
-[ru.json (159 untranslated strings)](#rujson)
+[ru.json (160 untranslated strings)](#rujson)
 
 
 ## it.json
-79 untranslated strings
+80 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -32,6 +32,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
 "CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
 "CoC7.Settings.ShowWorldEra.Hint": "",
+"CoC7.ToolTipSeeNotes": "See notes",
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
@@ -95,7 +96,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## ko.json
-289 untranslated strings
+290 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -206,6 +207,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.DropCoCID.Prompt": "Prompt each time",
 "CoC7.Settings.DropCoCID.UseCoCID": "Use CoC ID Where Possible",
 "CoC7.Settings.DropCoCID.IgnoreCoCID": "Do Not Use CoC ID",
+"CoC7.ToolTipSeeNotes": "See notes",
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
@@ -388,7 +390,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## pt-BR.json
-237 untranslated strings
+238 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -467,6 +469,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.System.Documentation": "View CoC7 System Manual",
 "CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
 "CoC7.Settings.ShowWorldEra.Hint": "",
+"CoC7.ToolTipSeeNotes": "See notes",
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
@@ -629,7 +632,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
 ```
 ## ru.json
-159 untranslated strings
+160 untranslated strings
 ```
 "CoC7.Entities.Armor": "Armor",
 "CoC7.Entities.ExperiencePackage": "Experience Package",
@@ -709,6 +712,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Japanese": "Japanese",
 "CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
 "CoC7.Settings.ShowWorldEra.Hint": "",
+"CoC7.ToolTipSeeNotes": "See notes",
 "SETTINGS.hidePartValues": "On investigator sheet only show half and extreme values when hovering over",
 "SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
 "SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
