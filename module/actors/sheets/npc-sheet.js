@@ -1,4 +1,4 @@
-/* global ChatMessage, CONFIG, foundry, fromUuid, game, TextEditor */
+/* global ChatMessage, CONFIG, foundry, fromUuid, game, renderTemplate Roll TextEditor */
 import { CoC7ActorSheet } from './base.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7Link } from '../../apps/coc7-link.js'
@@ -100,6 +100,8 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       return carry
     }, [])
 
+    sheetData.attacksRollable = !!(this.actor.system.special?.attacksPerRound?.toString().match(/[d@]/i))
+
     return sheetData
   }
 
@@ -140,6 +142,23 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
     html.find('.remove-movement').click(this._onRemoveMovement.bind(this))
     html.find('.remove-macro').click(this._onRemoveMacro.bind(this))
     html.find('.execute-macro').click(this._onExecuteMacro.bind(this))
+    html.find('.attacks-per-round').click(async (event) => {
+      const roll = await new Roll(this.actor.system.special.attacksPerRound).roll()
+      const tooltip = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(Roll.TOOLTIP_TEMPLATE, { parts: roll.dice.map(d => d.getTooltipData()) })
+      const content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(Roll.CHAT_TEMPLATE, {
+        formula: roll.formula,
+        tooltip,
+        total: roll.total
+      })
+      ChatMessage.create({
+        speaker: {
+          alias: this.actor.name
+        },
+        content,
+        flavor: game.i18n.localize('CoC7.AttacksPerRound'),
+        whisper: [game.user.id]
+      })
+    })
   }
 
   _onAddMovement () {

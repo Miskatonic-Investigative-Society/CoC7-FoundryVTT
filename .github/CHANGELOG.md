@@ -9,6 +9,9 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add roll option for NPC/Creature attacks per round
+- Add toogle show notes to NPC/Creature armor
+- Fix Average Roll class calculating values incorrectly
 - Remove FoundryVTT v11 compatibility in system.json, thanks to @ryotai-trpg. #1866
 - Update to Korean localization, thanks to @zeteticl. #1880
 
