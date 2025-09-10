@@ -534,6 +534,7 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
       html.find('.flag').click(this._onFlagClicked.bind(this))
       html.find('.formula').click(this._onFormulaClicked.bind(this))
       html.find('.auto-toggle').click(this._onAutoToggle.bind(this))
+      html.find('.notes-toggle').click(this._onNotesToggle.bind(this))
     }
 
     // Owner Only, not available from compendium
@@ -1334,6 +1335,12 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
       const attrib = event.currentTarget.closest('.attribute').dataset.attrib
       this.actor.toggleAttribAuto(attrib)
     }
+  }
+
+  async _onNotesToggle (event) {
+    this.actor.update({
+      'system.attribs.armor.notes': !(this.actor.system.attribs?.armor?.notes ?? false)
+    })
   }
 
   async _onToggle (event) {

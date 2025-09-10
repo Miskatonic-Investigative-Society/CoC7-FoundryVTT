@@ -235,6 +235,13 @@
           </div>
           <div class="flexrow-coc7 flex1 attribute" data-attrib="armor">
             <label>{{localize 'CoC7.Armor'}} :</label>
+            {{#if data.system.flags.locked}}
+              {{#if data.system.attribs.armor.notes}}
+                <div title="{{localize 'CoC7.ToolTipSeeNotes'}}"><i class="fa-solid fa-note-sticky" style="padding-top: 4px;"></i></div>
+              {{/if}}
+            {{else}}
+            <div class="notes-toggle {{#if data.system.attribs.armor.notes}}auto-on{{else}}auto-off{{/if}}"><i class="fa-solid fa-note-sticky" style="padding-top: 4px;"></i></div>
+            {{/if}}
             <input class="attribute-value single {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.armor.value" value="{{data.system.attribs.armor.value}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
           </div>
         </div>
@@ -342,16 +349,13 @@
             {{/unless}}
           </div>
           <div class="pannel combat expanded" style="padding-top: 1px;border-bottom: 2px groove;">
-            <div class="flexrow-coc7" style="border-bottom: 1px groove;">
-              <div class="flexrow-coc7" style="flex: 0 0 66%;flex-wrap: wrap;">&nbsp;</div>
-              <div class="flexrow-coc7" style="flex: 0 0 33%;flex-wrap: wrap;border-left: 1px groove;">
-                <h4 style="height:18px;padding: 1px 0 1px 2px;margin: 0;overflow: hidden;">{{localize 'CoC7.AttacksPerRound'}} :</h4>
-                {{#if data.system.flags.locked}}
-                  <div style="flex: 0 0 25px;height: fit-content;padding: 0 2px;text-align: center;">{{data.system.special.attacksPerRound}}</div>
-                {{else}}
-                  <input style="flex: 0 0 25px;height: fit-content;padding: 0 2px;text-align: center;" type="text" name="system.special.attacksPerRound" value="{{data.system.special.attacksPerRound}}" data-dtype="Number">
-                {{/if}}
-              </div>
+            <div class="flexrow-coc7" style="border-bottom: 1px groove;justify-content: flex-end;">
+              <h4 {{#if attacksRollable}}class="attacks-per-round rollable" {{/if}} style="height:18px;padding: 1px 0 1px 2px;margin: 0;overflow: hidden;flex:0 0 auto;">{{localize 'CoC7.AttacksPerRound'}} :</h4>
+              {{#if data.system.flags.locked}}
+                <div style="flex: 0 0 3rem;height: fit-content;padding: 0 2px;text-align: center;">{{data.system.special.attacksPerRound}}</div>
+              {{else}}
+                <input style="flex: 0 0 3rem;height: fit-content;padding: 0 2px;text-align: center;" type="text" name="system.special.attacksPerRound" value="{{data.system.special.attacksPerRound}}">
+              {{/if}}
             </div>
             {{> "systems/CoC7/templates/actors/parts/npc-combat.html"}}
           </div>

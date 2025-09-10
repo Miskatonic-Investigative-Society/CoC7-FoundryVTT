@@ -14,6 +14,12 @@ export default class CoC7AverageRoll extends Roll {
       } else {
         throw new Error(game.i18n.format('DICE.ErrorNotParsable', { formula: '?d?' }))
       }
+    } else if (typeof node.class === 'string' && node.class === 'FunctionTerm') {
+      if (typeof node.terms === 'object') {
+        for (const offset in node.terms) {
+          CoC7AverageRoll.convertDiceTermToNumericTerm(node.terms[offset])
+        }
+      }
     }
     if (typeof node.term === 'object') {
       CoC7AverageRoll.convertDiceTermToNumericTerm(node.term)
