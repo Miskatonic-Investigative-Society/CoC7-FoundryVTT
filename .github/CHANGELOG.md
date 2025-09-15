@@ -11,8 +11,11 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 - Add roll option for NPC/Creature attacks per round
 - Add toogle show notes to NPC/Creature armor
+- Allow characteristic rolls have equations that include other characteristics
 - Fix Average Roll class calculating values incorrectly
+- Fix roll result text in FoundryVTT v13, thanks to 666f78, #1896
 - Remove FoundryVTT v11 compatibility in system.json, thanks to @ryotai-trpg. #1866
+- Update to German localization, thanks to @MrViso #1897
 - Update to Korean localization, thanks to @zeteticl. #1880
 
 ## Version 7.19

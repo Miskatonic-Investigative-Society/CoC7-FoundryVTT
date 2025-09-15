@@ -3201,20 +3201,28 @@ export class CoCActor extends Actor {
    */
   async rollCharacteristicsValue () {
     const characteristics = {}
-    for (const [key, value] of Object.entries(this.system.characteristics)) {
-      if (value.formula && !value.formula.startsWith('@')) {
-        const r = new Roll(value.formula)
-        await r.roll({ async: true })
-        if (r.total) {
-          characteristics[`system.characteristics.${key}.value`] = Math.floor(
-            r.total
-          )
+    const calculated = {}
+    let lastCount = -1
+    while (Object.keys(calculated).length !== lastCount) {
+      lastCount = Object.keys(calculated).length
+      for (const [key, value] of Object.entries(this.system.characteristics)) {
+        if (typeof calculated[key] === 'undefined' && value.formula) {
+          const parsable = value.formula.replace(/@([a-z.0-9_-]+)/gi, (match, term) => {
+            term = term.toLocaleLowerCase()
+            if (typeof calculated[term] !== 'undefined') {
+              return calculated[term]
+            }
+            return '@'
+          })
+          if (parsable.indexOf('@') === -1) {
+            const average = (await new Roll('(' + parsable + ')').evaluate()).total
+            calculated[key] = average
+            characteristics[`system.characteristics.${key}.value`] = average
+          }
         }
       }
     }
-
     await this.update(characteristics)
-    await this.reportCharactedriticsValue()
   }
 
   /**
@@ -3222,15 +3230,28 @@ export class CoCActor extends Actor {
    */
   async averageCharacteristicsValue () {
     const characteristics = {}
-    for (const [key, value] of Object.entries(this.system.characteristics)) {
-      if (value.formula && !value.formula.startsWith('@')) {
-        const average = new CoC7AverageRoll('(' + value.formula + ')')[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true, maximize: true }).total
-        characteristics[`system.characteristics.${key}.value`] = average
+    const calculated = {}
+    let lastCount = -1
+    while (Object.keys(calculated).length !== lastCount) {
+      lastCount = Object.keys(calculated).length
+      for (const [key, value] of Object.entries(this.system.characteristics)) {
+        if (typeof calculated[key] === 'undefined' && value.formula) {
+          const parsable = value.formula.replace(/@([a-z.0-9_-]+)/gi, (match, term) => {
+            term = term.toLocaleLowerCase()
+            if (typeof calculated[term] !== 'undefined') {
+              return calculated[term]
+            }
+            return '@'
+          })
+          if (parsable.indexOf('@') === -1) {
+            const average = (await new CoC7AverageRoll('(' + parsable + ')').evaluate()).total
+            calculated[key] = average
+            characteristics[`system.characteristics.${key}.value`] = average
+          }
+        }
       }
     }
-
     await this.update(characteristics)
-    await this.reportCharactedriticsValue()
   }
 
   /**
