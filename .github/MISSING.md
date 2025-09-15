@@ -6,8 +6,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 [cs.json (42 untranslated strings)](#csjson)
 
-[de.json (1 untranslated strings)](#dejson)
-
 [es.json (1 untranslated strings)](#esjson)
 
 [fr.json (1 untranslated strings)](#frjson)
@@ -73,11 +71,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
 "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
 "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)"
-```
-## de.json
-1 untranslated strings
-```
-"CoC7.ToolTipSeeNotes": "See notes"
 ```
 ## es.json
 1 untranslated strings
