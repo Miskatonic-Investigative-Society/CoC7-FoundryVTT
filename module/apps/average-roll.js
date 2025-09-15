@@ -6,6 +6,14 @@ export default class CoC7AverageRoll extends Roll {
    */
   static convertDiceTermToNumericTerm (node) {
     if (typeof node.class === 'string' && node.class === 'DiceTerm') {
+      if (typeof node.number === 'object') {
+        const roll = new CoC7AverageRoll('(' + node.number.formula + ')').evaluateSync().total
+        node.number = roll
+      }
+      if (typeof node.faces === 'object') {
+        const roll = new CoC7AverageRoll('(' + node.faces.formula + ')').evaluateSync().total
+        node.faces = roll
+      }
       if (typeof node.number !== 'object' && typeof node.faces !== 'object') {
         node.class = 'NumericTerm'
         node.number = Math.floor((node.faces + 1) / 2 * node.number)

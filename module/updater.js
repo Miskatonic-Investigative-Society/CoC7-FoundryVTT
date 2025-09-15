@@ -23,7 +23,7 @@ export class Updater {
               // A migration is required, module has not been updated before, or the version number has changed, check against known good values
               const knownModuleVersions = {
                 'call-of-cthulhu-foundryvtt-investigator-wizard': '1.0.5',
-                'cha-coc-fvtt-en-keeperitems': '1.1.5',
+                'cha-coc-fvtt-en-keeperitems': '1.3.5',
                 'cha-coc-fvtt-en-quickstart': '5.0.5',
                 'cha-coc-fvtt-en-starterset': '5.0.5'
               }
