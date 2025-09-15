@@ -1107,6 +1107,7 @@
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Doppelklick</strong> Markerstatus umschalten</li>",
   "CoC7.ToolTipSkillFlagged": "Für Entwicklung markiert",
   "CoC7.ToolTipSkillUnflagged": "Nicht für Entwicklung markiert",
+  "CoC7.ToolTipSeeNotes": "Siehe Notizen",
 
   "SETTINGS.TitleRules": "Regeln",
   "SETTINGS.TitleInitiative": "Einstellungen: Initiative",

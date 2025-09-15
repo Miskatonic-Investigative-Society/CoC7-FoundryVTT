@@ -1107,6 +1107,7 @@
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Double Click</strong> Toggle flag status</li>",
   "CoC7.ToolTipSkillFlagged": "Flagged for development",
   "CoC7.ToolTipSkillUnflagged": "Not flagged for development",
+  "CoC7.ToolTipSeeNotes": "See notes",
 
   "SETTINGS.TitleRules": "Rules",
   "SETTINGS.TitleInitiative": "Initiative Settings",

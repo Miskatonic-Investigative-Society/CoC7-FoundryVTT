@@ -1,5 +1,5 @@
 /* global $, Actor, ChatMessage, CONST, FormApplication, foundry, game, Hooks, renderTemplate, Roll, TextEditor, ui */
-import { AverageRoll } from '../apps/average-roll.js'
+import CoC7AverageRoll from '../apps/average-roll.js'
 import { COC7 } from '../config.js'
 import { CoCActor } from '../actors/actor.js'
 import { CoC7OccupationSheet } from '../items/sheets/occupation.js'
@@ -820,7 +820,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
                   }
                 }
                 if (!Number.isNumeric(base)) {
-                  base = Math.floor(new AverageRoll('(' + base + ')')[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true, maximize: true }).total)
+                  base = Math.floor(new CoC7AverageRoll('(' + base + ')')[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true, maximize: true }).total)
                 }
                 let totalPoints = parseInt(base, 10)
                 if (Number(row.personalPoints) > 0) {
@@ -1778,7 +1778,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
             }
           }
           if (!Number.isNumeric(base)) {
-            base = Math.floor(new AverageRoll('(' + base + ')')[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true, maximize: true }).total)
+            base = Math.floor(new CoC7AverageRoll('(' + base + ')')[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true, maximize: true }).total)
           }
           item.system.base = base
           item.system.adjustments = item.system.adjustments ?? {}
