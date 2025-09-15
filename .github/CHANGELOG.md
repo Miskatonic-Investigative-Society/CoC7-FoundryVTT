@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.20
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Add roll option for NPC/Creature attacks per round
 - Add toogle show notes to NPC/Creature armor
 - Allow characteristic rolls have equations that include other characteristics
