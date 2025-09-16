@@ -217,43 +217,43 @@ export function compendiumFilter () {
       const groupTypes = [
         {
           key: 'archetype',
-          name: 'CoC7.Entities.Archetype'
+          name: 'TYPES.Item.archetype'
         },
         {
           key: 'book',
-          name: 'CoC7.Entities.Book'
+          name: 'TYPES.Item.book'
         },
         {
           key: 'item',
-          name: 'CoC7.Entities.Item'
+          name: 'TYPES.Item.item'
         },
         {
           key: 'occupation',
-          name: 'CoC7.Entities.Occupation'
+          name: 'TYPES.Item.occupation'
         },
         {
           key: 'setup',
-          name: 'CoC7.Entities.Setup'
+          name: 'TYPES.Item.setup'
         },
         {
           key: 'skill',
-          name: 'CoC7.Entities.Skill'
+          name: 'TYPES.Item.skill'
         },
         {
           key: 'spell',
-          name: 'CoC7.Entities.Spell'
+          name: 'TYPES.Item.spell'
         },
         {
           key: 'status',
-          name: 'CoC7.Entities.Status'
+          name: 'TYPES.Item.status'
         },
         {
           key: 'talent',
-          name: 'CoC7.Entities.Talent'
+          name: 'TYPES.Item.talent'
         },
         {
           key: 'weapon',
-          name: 'CoC7.Entities.Weapon'
+          name: 'TYPES.Item.weapon'
         }
       ]
       for (const groupType of groupTypes) {

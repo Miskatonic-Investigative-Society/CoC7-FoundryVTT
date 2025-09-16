@@ -240,7 +240,7 @@ export class CoC7ChatMessage {
         ) {
           ui.notifications.error(
             game.i18n.format('CoC7.ErrorInvalidFormula', {
-              value: game.i18n.localize('CoC7.Entities.Skill')
+              value: game.i18n.localize('TYPES.Item.skill')
             })
           )
           return false
@@ -286,7 +286,7 @@ export class CoC7ChatMessage {
           if (typeof config.options.itemId === 'undefined') {
             ui.notifications.error(
               game.i18n.format('CoC7.ErrorInvalidFormula', {
-                value: game.i18n.localize('CoC7.Entities.Weapon')
+                value: game.i18n.localize('TYPES.Item.weapon')
               })
             )
             return false

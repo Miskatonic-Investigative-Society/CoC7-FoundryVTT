@@ -56,7 +56,7 @@ export class CoCIDBatch extends FormApplication {
 
   async _updateObject (event, formData) {
     if (event.submitter) {
-      if (this.object.typeName === game.i18n.localize('CoC7.Entities.Skill')) {
+      if (this.object.typeName === game.i18n.localize('TYPES.Item.skill')) {
         this.close()
         await CoCIDBatch.processSkillKeys(this.object.updateList, this.object.missingNames)
       }
@@ -236,7 +236,7 @@ export class CoCIDBatch extends FormApplication {
     let suffixRegExp = null
     switch (type) {
       case 'skill':
-        typeName = game.i18n.localize('CoC7.Entities.Skill')
+        typeName = game.i18n.localize('TYPES.Item.skill')
         idPrefix = 'i.skill.'
         suffixRegExp = /^i\.skill\./
         break

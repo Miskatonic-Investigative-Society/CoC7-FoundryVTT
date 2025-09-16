@@ -48,7 +48,7 @@ export default class CoCIDCompendiumPopulate extends FormApplication {
       if (included.length && destination) {
         const items = await game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^i.(' + included.join('|') + ')'), type: 'i', showLoading: true })
         const folders = await [...new Set(items.map(d => d.type))].reduce(async (sc, t) => {
-          const name = game.i18n.localize('CoC7.Entities.' + t.charAt(0).toUpperCase() + t.slice(1))
+          const name = game.i18n.localize('TYPES.Item.' + t)
           let folder = destination.folders.find(d => d.name === name)
           if (typeof folder === 'undefined') {
             folder = await Folder.create({
@@ -97,7 +97,7 @@ export default class CoCIDCompendiumPopulate extends FormApplication {
     options.types = Object.keys(CONFIG.Item.sheetClasses).filter(t => t !== 'base').map(t => {
       return {
         id: t,
-        label: game.i18n.localize('CoC7.Entities.' + t.charAt(0).toUpperCase() + t.slice(1)),
+        label: game.i18n.localize('TYPES.Item.' + t),
         toggle: (t === 'skill')
       }
     }).sort((a, b) => a.id.localeCompare(b.id))
