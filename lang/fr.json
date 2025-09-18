@@ -1107,6 +1107,7 @@
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Clic Double</strong> Bascule le statut de coche</li>",
   "CoC7.ToolTipSkillFlagged": "Coché pour développement",
   "CoC7.ToolTipSkillUnflagged": "Pas coché pour développement",
+  "CoC7.ToolTipSeeNotes": "Voir les notes",
 
   "SETTINGS.TitleRules": "Règles",
   "SETTINGS.TitleInitiative": "Paramètres d'initiative",
