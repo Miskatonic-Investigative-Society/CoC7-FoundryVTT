@@ -69,6 +69,12 @@
       {{/each}}
     </div>
 
+    {{#unless rolled}}
+    <div class="card-buttons owner-only" style="margin-bottom: 5px;">
+      <button data-action="update-range-targets">{{localize 'CoC7.UpdateTarget'}}</button>
+    </div>
+    {{/unless}}
+
     {{#each targets as |trgt key|}}
       <div class='target' data-key="{{key}}" data-target-key="{{key}}" data-actor-key="{{trgt.actorKey}}" data-base-range="{{trgt.baseRange}}" data-long-range="{{trgt.longRange}}" data-extreme-range="{{trgt.extremeRange}}" data-out-of-range="{{trgt.outOfRange}}" data-rounded-distance="{{trgt.roundedDistance}}" data-distance-unit="{{trgt.distanceUnit}}" data-cover="{{trgt.cover}}" data-surprised="{{trgt.surprised}}" data-point-blank-range="{{trgt.pointBlankRange}}" data-big="{{trgt.big}}" data-small="{{trgt.small}}" data-fast="{{trgt.fast}}" data-active="{{trgt.active}}" data-in-melee="{{trgt.inMelee}}" data-is-GM="{{../isKeeper}}" data-is-blind="false" {{#unless trgt.active}}style='display: none;' {{/unless}}>
         <div class="target-name">
@@ -319,7 +325,7 @@
   <div class="damage">
     {{#if damageRolled}}
       {{#each damage as |d|}}
-        <div class="coc7 damage-results" data-target-name="{{d.targetName}}" data-target-key="{{targetKey}}" data-total="{{d.total}}" data-critical="{{d.critical}}" data-dealt="{{d.dealt}}" data-result-string="{{resultString}}">
+        <div class="coc7 damage-results" data-target-name="{{d.targetName}}" data-target-key="{{d.targetKey}}" data-total="{{d.total}}" data-critical="{{d.critical}}" data-dealt="{{d.dealt}}" data-result-string="{{resultString}}">
           <div class="dice-roll">
             <div class="dice-result">
               {{#each d.blastRangeDamage as |blast|}}
@@ -329,6 +335,19 @@
               {{else}}
               <div class="dice-formula {{#if d.critical}}critical{{/if}}" style="line-height: 16px;margin-bottom: 2px;">
                 {{resultString}} {{#if d.dealt}}<i class="fas fa-check"></i>{{/if}}
+                {{#if d.dealt}}
+                <div class="damage-controls">
+                  <button class="damage-control-btn" data-action="cancelDamage" data-target-key="{{d.targetKey}}" title="{{ localize 'CoC7.CancelDamage' }}">
+                    <i class="fas fa-undo"></i>
+                  </button>
+                  <button class="damage-control-btn" data-action="increaseDamage" data-target-key="{{d.targetKey}}" title="{{ localize 'CoC7.IncreaseDamage' }}">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                  <button class="damage-control-btn" data-action="decreaseDamage" data-target-key="{{d.targetKey}}" title="{{ localize 'CoC7.DecreaseDamage' }}">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+                {{/if}}
               </div>
               {{/each}}
               <div class="dice-tooltip" style="display: none;">
@@ -361,13 +380,13 @@
         </div>
       {{/each}}
       {{#unless weapon.system.properties.blst}}
-        {{#unless damageDealt}}
-          {{#if didAnyShotHit}}
+        {{#if didAnyShotHit}}
+          {{#unless damageDealt}}
             <div class="card-buttons gm-visible-only">
               <button data-action="deal-range-damage">{{ localize 'CoC7.InflictPain' }}</button>
             </div>
-          {{/if}}
-        {{/unless}}
+          {{/unless}}
+        {{/if}}
       {{/unless}}
     {{/if}}
    </div>
