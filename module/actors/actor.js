@@ -934,6 +934,12 @@ export class CoCActor extends Actor {
     for (let data of dataArray) {
       switch (data.type) {
         case 'skill': {
+          if (data.system.properties?.onlyone && data.flags.CoC7?.cocidFlag?.id) {
+            if (this.getFirstItemByCoCID(data.flags.CoC7.cocidFlag.id)) {
+              ui.notifications.warn(game.i18n.format('CoC7.SkillAreadyAdded', { name: data.name }))
+              continue
+            }
+          }
           baseValue = data.system.base
           baseCalculated = await CoC7Item.calculateBase(this, data)
           if (this.type !== 'character') {
@@ -1051,6 +1057,7 @@ export class CoCActor extends Actor {
                   if (existing) {
                     const flags = data.system?.flags
                     const keepBase = (data.system.properties?.keepbasevalue ?? false)
+                    const keepCoCID = (data.system.properties?.onlyone && data.flags.CoC7?.cocidFlag?.id ? data.flags.CoC7?.cocidFlag?.id : false)
                     data = foundry.utils.duplicate(existing)
                     for (const [key, value] of Object.entries(flags)) {
                       if (value) {
@@ -1063,6 +1070,11 @@ export class CoCActor extends Actor {
                       }
                       baseValue = skillData.baseValue
                       baseCalculated = await CoC7Item.calculateBase(this, data)
+                    }
+                    if (keepCoCID) {
+                      data.flags.CoC7 = data.flags.CoC7 ?? {}
+                      data.flags.CoC7.cocidFlag = data.flags.CoC7.cocidFlag ?? {}
+                      data.flags.CoC7.cocidFlag.id = keepCoCID
                     }
                   }
                 }
