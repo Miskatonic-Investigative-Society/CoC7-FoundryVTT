@@ -1110,6 +1110,7 @@
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>dubbelklick</strong> Växla statusflagga</li>",
   "CoC7.ToolTipSkillFlagged": "Flaggad för utveckling",
   "CoC7.ToolTipSkillUnflagged": "Inte flaggad för utveckling",
+  "CoC7.ToolTipSeeNotes": "Se noteringar",
 
   "SETTINGS.TitleRules": "Regler",
   "SETTINGS.TitleInitiative": "Initiativinställningar",
