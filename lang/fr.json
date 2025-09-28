@@ -1370,11 +1370,11 @@
   "CoC7.ActorCoCIDItemsActorDirectory": "Mettre à jour tous les Acteurs du répertoire",
   "CoC7.ActorCoCIDItemsAny": "Mettre à jour (toutes) les spécialisations",
   "CoC7.ActorCoCIDItemsUpdate": "Mise à jour",
-  "CoC7.CoCIDCompendiumPopulate": "Installez votre compendium",
+  "CoC7.CoCIDCompendiumPopulate": "Peuplez votre/vos compendium",
   "CoC7.CoCIDCompendiumPopulateWarning": "Cette action ne peut être annulée, sauvegardez votre module avant de le remplir. Vérifier que l'époque, le language, et les modules sont correctement paramétrés.",
   "CoC7.CoCIDCompendiumPopulateDestination": "Module de Destination",
   "CoC7.CoCIDCompendiumPopulateTypes": "Types",
-  "CoC7.CoCIDCompendiumPopulateButton": "Remplir",
+  "CoC7.CoCIDCompendiumPopulateButton": "Peupler",
 
   "CoC7.TokenCreationRoll.Title": "Aléatoire détecté",
   "CoC7.TokenCreationRoll.Prompt": "Ce token a des caractéristiques ou compétences aléatoires.<br>Que souhaitez-vous faire ?",
