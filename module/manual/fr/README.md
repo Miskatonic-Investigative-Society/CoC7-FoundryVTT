@@ -1,192 +1,508 @@
-## Documentation du Système :squid:
+# Le système
 
-Vous avez installé Foundry VTT (la version stable, les versions en test sont... en test :)
+* [Ce qu'il **fait**](#ce-quil-fait).
+* [Comment il se **paramètre**](#comment-il-se-paramètre).
+* [Tout ce qui est cliquable](#tout-ce-qui-est-cliquable).
+* Comment il s'utilise si:
+  * [je suis **Gardien**](#je-suis-gardien).
+  * [je suis **Investigateur**](#je-suis-investigateur).
+* [fas fa-suitcase] [Les **objets**](#les-objets): [archétype](#archétype) (archetype), [armure](#armure) (armor), [livre](#livre) (book), [poursuite](#poursuite) (chase), [package d'expérience](#package-dexpérience) (experiencePackage), [objet](#objet) (item), [occupation](#occupation), [créateur](#créateur) (setup), [compétence](#compétence) (skill), [sort](#sort) (spell), [status](#status), [talent](#talent), [arme](#arme) (weapon)
+* [fas fa-user] [Les **acteurs**](#les-acteurs): [personnage](#personnage) (character), [contenant](#contenant) (container), [créature](#créature) (creature), [protagoniste](#protagoniste) (npc), [véhicule](#véhicule) (vehicle)
 
-**Quelques modules pour commencer**
+**Rappels Foundry VTT**
 
-- fr-FR - Core Game: pour avoir la traduction française de Foundry
-- Dice so nice!: pour les jets de dés
+* CoC7 est un **système** de jeu.
+* Call of Cthulhu 7th French est un **module**, apportant des modifications au système.
+* Votre partie est un **monde** dans lequel vous activerez ou non les modules que vous avez installés sur Foundry VTT.
+* le token est la représentation de votre personnage sur une scène.
+* le portrait est l'image qui représente votre personnage sur sa fiche.
 
-Vous passez la langue par défaut à Français dans l'onglet `configuration` du menu d'`accueil`.\
-Vous créez votre monde, avec le Call of Cthulhu 7th edition (Unofficial) de Vétérini.\
-Et vous le lancez.\
-Vous activez vos modules et hop !
+## Ce qu'il fait
 
-## Premiers paramétrages
+Il permet de gérer quasiment tous les aspects de votre partie de jdr l'Appel de Cthulhu en v7:
 
-Une fois dans le monde, dans le menu `Paramètres`, vous sélectionnez `Gestion des modules`, puis `Système de jeu`.\
-Tous les paramètres sont dignes d'intérêt mais:
+* la création du scénario: scènes, protagonistes, objets, journaux et aides de jeu, musique.
+* la création du personnage via une fiche détaillée cliquable de partout.
+* les jets, les combats, la magie, l'expérience,...
 
-- les `Modificateur de jet` et `Modificateur de seuil de réussite` le sont particulièrement.
-- et `Changer l'apparence de la fiche`
+[⇪ haut de page](#le-système)
 
-## Ce que l'on peut créer
+## Comment il se paramètre
 
-### Icône Personnages
+* Quels modules [complémentaires installer](#quels-modules-complémentaires-installer) [fas fa-cube].
+* Comment le [paramétrer](#comment-le-paramétrer) [fas fa-cogs].
 
-- character: personnage PJ
-- npc: PNJ
-- creature: monstre
-- vehicle: véhicule
+### Quels modules complémentaires installer
 
-### Icône Objets
+* [fas fa-cube] Translation: French [Core] https://foundryvtt.com/packages/fr-core
+* [fas fa-cube] Call of Cthulhu 7th French (Unofficial) https://foundryvtt.com/packages/coc7-module-fr-toc
 
-Là ça devient ouf:
+### Comment le paramétrer
 
-- item: un objet
-- weapon: une arme
-- skill: une compétence
-- setup: une module de création de perso à glisser/déposer sur votre fiche à la création (embarque les jets de création de caracs, les compétences,...)
-- occupation: une occupation (avec ses compétences, son époque, ses points d'occupation, son crédit)
-- archetype: un archétype (Pulp)
-- book: un livre occulte
-- spell: un sort
-- talent: un talent (Pulp)
-- status: un état... de folie
+Pour **accéder aux paramètres** du système:
 
-### Icône Tables
+* Allez dans le menu vertical à droite.
+* Cliquez sur [fas fa-cogs].
+* Puis sur [fas fa-cogs] _Configurer les paramètres_.
+* Puis sur _Call of Cthulhu 7th Edition_ dans la liste de gauche.
+* Pour sauvegarde et appliquer vos paramètres, cliquez sur [fas fa-floppy-disk] _Sauvegarder_.
 
-:recycle:
+Quels paramètres tripoter (notés [fas fa-cogs] et potentiellement, changer la valeur par défaut) et pourquoi ?
 
-## Outils du gardien (menus spécifiques au système)
+* [fas fa-cogs] Variantes/Règles **optionnelles**: si vous voulez faire du **Pulp** par exemple.
+* Utiliser les menus contextuels
+* Répertoire de transfert des images de The Dhole's House
+* [fas fa-cogs] **Époque du monde**: à fixer à la création du monde.
+* Afficher l'époque de jeu dans la liste des joueurs
+* Utiliser les CoC ID quand on dépose un item
 
-Ils sont dans votre barre d'outils:
+Paramètres d'initiative
 
-![01](https://tentacules.net/toc/toc_/virtuel/foundryvtt-cocv7vetrini-docgithub-001.jpg)
+* Afficher les dés d'initiative
+* Afficher le degré de réussite
 
-- L'icône de dé permet de lancer des dés n'importe quand (en les modifiant si besoin: difficulté, seuil, niveau de compétence).
-- L'icône de poulpe donne accès aux outils du Gardien:
+Paramètres de jets de dés
 
-![02](https://tentacules.net/toc/toc_/virtuel/foundryvtt-cocv7vetrini-docgithub-002.jpg)
+* Attendez le Gardien jette les dés
+* Modificateur de jet
+* Modificateur de seuil de réussite
+* Difficulté par défaut des test
+* Notification de jet caché
 
-De haut en bas:
+Paramètres de cartes de Chat
 
-- Activer la phase de développement (entre séances)
-- Activer la phase de création (à la création des persos)
-- Importer un personnage depuis un simple texte
-- Activer la possibilité des gains d'expérience (en partie)
-- Balancer un jet factice aux joueurs dans le chat: un peu d'pression :)
+* Autoriser les utilisateurs de confiance à modifier les cartes de chat
+* Autoriser les utilisateurs de confiance à modifier les sections pour Gardien uniquement
+* Afficher le portrait sur les cartes de dialogue
+* Afficher le niveau de réussite des tests (étoiles)
+* Afficher le niveau de succès des jets de dés (texte)
+* Utiliser le portrait des tokens
 
-## Les compendiums
+Paramètres de scène
 
-Pour les utiliser au mieux, 2 choses:
+* Active les icônes d'état
+* Mesurer en unité de grille
+* Inclut l'altitude
+* Ne pas afficher les erreurs pour les distances
+* En création de PNJ
 
-- Installer le module Compendium Folders (qui trie automatiquement les compendium)
-- Importer les différents compendium (clic-droit Importer...)
+Paramètre d'Illustration du Jeu
 
-[Combat](combat.md)
+* Remplacer l'illustration du jeu
 
-[Création](character_creation.md)
+Paramètres de fiche
 
-[Créer son premier investigateur](first_investigator.md)
+* Afficher le nom du joueur sur la fiche
+* Délai en millisecondes avant qu'une info-bulle apparaisse, 0 pour jamais
+* Sur la fiche de personnage, n'afficher que la moitié et la valeur max au survol
+* Sur la fiche compacte, n'afficher que les icônes dans la liste des compétences
+* Le joueur peut déverrouiller sa fiche
+* Le joueur peut modifier son état
+* Historique en un bloc
+* Changer l'apparence de la fiche
+* Texture de fond de la fiche
+* Type de fond
+* Fond des autres fiches
+* Image d'arrière-plan
+* Couleur principale
+* Couleur secondaire
+* Couleur éléments interactifs
+* Limiter la taille des compétences
+* Police de caractères
+* Police de caractères (gras)
+* Taille de la police par défaut (px)
 
-[Documentation du système](README.md)
+Paramètres d'arme
 
-[Effets](effects.md)
+* Ne pas tenir compte des utilisations par tour
+* Ne pas tenir compte du nombre de munitions
+* Ne pas afficher qu'aucune cible est sélectionnée
 
-[Imoirtation de PNJs](actor_importer.md)
+Paramètres Dice So Nice (si vous avez installé le module du même nom)
 
-[Liens](links.md)
+* dés synchro
+* dés dix de bonus en couleurs
+* dés dix de pénalité en couleurs
 
-[Objets](items.md)
+Paramètres Développeur et Debug
 
-[Outil de création de Lien](link_creation_window.md)
+* Système en mode Debug
+* Montrer les Fonctionnalités Expérimentales
 
-[Poursuites](chases.md)
+Paramètres de table aléatoire
 
-[Santé Mentale](sanity.md)
+* Table des folies passagères (résumé)
+* Table des folies passagères (temps réel)
 
-[Système de gestion des ID ](coc-id-system.md)
+[⇪ haut de page](#le-système)
 
-[Tableau des commandes](commands_cheat_sheet.md)
+## Tout ce qui est cliquable
 
-[Type d'Objet: Archétype](item_archetype.md)
+... peut être cliqué :) Mais surtout:
 
-[Type d'Objet: Compétence](item_skill.md)
+* Click Droit crée une carte (dans le chat) de jet **opposé**. Tant qu'elle est ouverte, chaque Click Droit ajoutera le nouveau jet.
+* Alt + Click Droit un jet **combiné**.
+* Shift + Click jette le dé **sans** demander la difficulté ni bonus/malus.
+* Ctrl + Click crée une **demande** de jet, seulement pour le Gardien.
+* Alt + Click en SAN affichera au joueur les **pertes** max et min de SAN.
 
-[Type d'Objet: Livre](item_book.md)
+[⇪ haut de page](#le-système)
 
-[Type d'Objet: Occupation](item_occupation.md)
+## Je suis Gardien
 
-[Type d'Objet: Setup](item_setup.md)
+* Barre d'[outils du gardien](#barre-doutils-du-gardien).
+* [Import de protagoniste](#import-de-protagoniste) via copié/collé de texte.
 
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
+### Barre d'outils du Gardien
 
-Des éons qu'_ils_ dorment mais [Vétérini](https://github.com/HavlockV) les a réveillés ! Avec ce système ultime, à vous l'Appel de Cthulhu v7 en version totale: création, progression, SAN, combat, poursuites, ...
-Le MUST have !
+Elle est accessible uniquement si vous êtes sur une scène de votre monde.
 
-| [Guide de l'utilisateur/trice](#guide-de-lutilisateur-trice) (en cours) | ~~[Santé Mentale](#santé-mentale)~~ (à faire) |
-| ----------------------------------------------------------------------- | --------------------------------------------- |
-| **[Tableau des Commandes](#tableau-des-commandes) (en cours)**          | **~~[Combat](#combat)~~ (à faire)**           |
-| **[Liens (pour les jets)](#liens-et-jets) (en cours)**                  | **~~[Poursuites](#poursuites)~~ (à faire)**   |
-| **[Création de personnage](#création-de-personnage) (à faire)**         | **~~[Objets](#objets)~~ (à faire)**           |
-| **~~[Phase de progression](#phase-de-progression)~~ (à faire)**         | **~~[Personnages](#personnages)~~ (à faire)** |
+Ce sont les 3 derniers icônes de la barre à gauche de la fenêtre: 🐙 🎲 et 🔗
 
-_Documentation partagée avec amour et horreur par Toc :squid: [https://tentacules.net](https://tentacules.net/?motscles=JdrVirtuel)_
+#### 🐙 Outils du Gardien
 
-![03](https://tentacules.net/toc/toc_/virtuel/foundryvtt-cocv7vetrini-docgithub-003.jpg)
+* [fas fa-angle-double-up] Phase de **développement**
 
-\
-\
-\
+Activé/désactivé: durant la phase d'expérience, entre 2 parties, permet de faire les jets d'expérience et autres évolutions.
 
-# Objets
+Cela fait apparaître un nouvel onglet à droite de la fiche avec un [fas fa-cogs].
 
-## item: un objet
+* [fas fa-user-edit] Mode **création** de personnage
 
-## weapon: une arme
+Activé/désactivé: durant la phase de création des personnages, permet de répartir les points et faire les modifications voulues (compétences,...).
 
-## skill: une compétence
+* [fas fa-fingerprint] CoC ID: remplacement des Acteur Item
+* [fas fa-book-user] Installez votre compendium
+* [fas fa-user-plus] **Import** de Protagoniste
 
-## setup: une module de création de perso
+Lien vers l'[import de protagoniste](#import-de-protagoniste) via un texte copié/collé.
 
-## occupation: une occupation
+* [fas fa-user-check] **Création** de Personnage guidée
 
-## archetype: un archétype (Pulp)
+Lien vers la [création de Personnage guidée](#).
 
-## book: un livre occulte
+* [fas fa-certificate] Gain d'**expérience**
 
-## spell: un sort
+Activé/désactivé: en jeu, permet de cocher les futurs gains d'expérience, par exemple via des réussites spectaculaires sur des jets de compétences.
 
-## talent: un talent (Pulp)
+* [fas fa-sim-card] Envoyer un jet **leurre** aux joueurs
 
-## status: un état... de folie
+Faire croire aux joueurs que vous jetez les dés :)
 
-\
-\
-\
+* [fas fa-moon] Se **reposer**
 
-# Personnages
+Lancer une phase de repos.
 
-## character: personnage PJ
+[⇪ haut de page](#le-système)
 
-C'est ici: [Création de personnage](./pages/character_creation.md).
+#### 🎲 Lancer!
 
-## npc: PNJ
+Permet de faire un jet (sans compétence spécifique), en spécifiant: le seuil de réussite, la difficulté, les dés bonus/malus,...
 
-## creature: monstre
+#### 🔗 Créer un lien
 
-## vehicle: véhicule
+Permet de créer un lien vers un test ou un objet pour l'envoyer vers
+
+* le presse-papier (et ainsi le copier dans un journal par exemple).
+* vers les tokens sélectionnés.
+* dans le chat.
+
+[TODO]
+
+### Import de protagoniste
+
+Outil permettant, par simple **copié/collé** de la description d'un PNJ (provenant d'un PDF par exemple ou d'un site web :)) d'en faire un protagoniste de votre monde, avec fiche.
+
+**Accessible** via [fas fa-user-check] pour le Gardien dans son menu ou dans le menu Foundry [fas fa-user] Acteur, en bas, via le lien.
+
+[TODO]
+
+[⇪ haut de page](#le-système)
+
+## Je suis Investigateur
+
+* [Première connexion](#première-connexion)
+* La [fiche d'Investigateur](#la-fiche-dinvestigateur) ([compétences](#onglet-compétences), [combat](#onglet-combat), [équipement](#onglet-equipement), [historique](#onglet-historique)).
+* [Créer un Investigateur](#créer-un-investigateur) ([guidée](#création-guidée), [à moitié](#création-semi-guidée-par-compendium), [à la main](#création-manuelle)).
+
+### Première connexion
+
+[TODO]
+
+### La fiche d'Investigateur
+
+Les menus/icônes de la **barre** du haut de la fiche:
+
+* [fas fa-window-minimize] Minimiser la fiche: fiche réduite dans laquelle n'apparaissent que caracs, chances, compétences utils, armes,...
+* [fas fa-gear] Changer le style de fiche (pas utile).
+* [fas fa-circle-user] Modifier le token du personnage.
+* [fas fa-passport] Récupérer l'ID du personnage.
+
+Et en-**dessous**, sur la fiche:
+
+* [fas fa-lock][fas fa-lock-open] Précise si le personnage peut être **modifié** (très utile !) en dehors des phase de création et de développement.
+* [fas fa-link] Précise si le personnage est son **token** sont liés: toute modif de l'un impactera potentiellement l'autre (très utile !).
+* [fas fa-user-circle] Précise si la fiche actuelle est celle du token ou celle du personnage (pas d'icône dans ce cas).
+
+A chaque fois que vous voyez l'icône [fas fa-edit], c'est que vous pouvez **modifier** la valeur en cliquant sur le texte ou la case vide le cas échéant.
+
+A chaque fois que vous voyez l'icône [fas fa-trash], c'est que vous pouvez **supprimer** la chose concernée en cliquant dessus.
+
+En mode **Modification** [fas fa-lock-open], la majorité des noms et valeurs peuvent être modifiés.
+
+Les onglets sont accessibles sur la gauche de la fiche via le petits rubans de couleur.
+
+**Le bloc des stats**
+
+Bloc situé à gauche de la fiche, sous le portrait qui en fait partie, qui reste visible quelque soit l'onglet sélectionné:
+
+Le portrait:
+
+* peut être modifié en cliquant dessus.
+* en mode modification [fas fa-lock-open], en cliquant dessus, vous pouvez sélectionner la façon d'afficher votre portrait, son cadrage.
+* en le **survolant**, des icônes apparaissent pour modifier le **status** du personnage: mourant, inconscient, folie passagère,...
+
+Le reste:
+
+* Nom
+* (nom du) joueur
+* Occupation
+* Sexe
+* Age
+* Résidence
+* Lieu de naissance
+* Les **caractéristiques** (avec les valeurs /2 et /5).
+* Les points de Vie (avec en dessous le max)
+* Les points de Magie (avec en dessous le max)
+* La Chance (avec en dessous le max)
+* La Santé Mentale (avec en dessous le max)
+* Le Mouvement
+* La Carrure
+* L'Impact
+* L'Armure
+* La Perte journalière éventuelle de SAN
+
+[⇪ haut de page](#le-système)
+
+#### Onglet: Compétences
+
+On y trouve les compétences avec:
+
+* leur score
+* leurs scores /2 et /5
+* une case cochable pour l’expérience (qui se coche toute seule)
+* et un petit [fas fa-info-circle] pour avoir des informations complémentaires
+
+Le [fas fa-sort-amount-down] permet de trier les compétences soit par nom soit par valeur.
+
+Le [fas fa-toggle-on] permet de montrer ou non les compétences spéciales. [TODO]
+
+[⇪ haut de page](#le-système)
+
+#### Onglet: Combat
+
+En général, il faut **cliquer sur le nom d'une arme** pour l'utiliser et pas sur la compétence.
+
+On y trouve:
+
+* la liste des armes triées par type avec:
+  * leur nom
+  * les dégâts
+  * les munitions éventuelles
+  * les bonus éventuels
+  * en cliquant sur le **triangle** en début de ligne apparaissent: les compétences, cadence, type,... liés à l'arme.
+* la liste des compétences de combat avec:
+  * leur score
+  * une case cochable pour l’expérience (qui se coche toute seule)
+  * et un petit [fas fa-info-circle] pour avoir des informations complémentaires
+
+[⇪ haut de page](#le-système)
+
+#### Onglet: Equipement
+
+On y trouve:
+
+* l'équipement:
+  * Objets (glissé/déposé sur la fiche)
+  * Ouvrages (glissé/déposé sur la fiche)
+  * Sorts (glissé/déposé sur la fiche)
+  * Armure (glissé/déposé sur la fiche)
+  * Etats (états physiques/mentaux du personnage, à la main du Gardien)
+* la thune, la fraîche, la moulaga, les pessos... En mode modification [fas fa-lock-open], le petit [fas fa-cogs] vert permet de calculer ou non les revenus de façon automatique.
+
+La [fas fa-arrows-spin] indique que l'objet peut être vendu (personnage à sélectionner dans une popup) ou rangé [TODO].
+
+[⇪ haut de page](#le-système)
+
+#### Onglet: Historique
+
+On y trouve:
+
+* Biens précieux
+* Description
+* Idéologie et croyance
+* Lieux significatifs
+* Ouvrages occultes, sorts et artefacts
+* Personnes importantes
+* Phobies et manies
+* Rencontres avec des entités étranges
+* Séquelles et cicatrices
+* Traits
+
+[⇪ haut de page](#le-système)
+
+#### Onglet: Effets (pour le Gardien)
+
+Les effets du personnage, avec une description, une source et une durée.
+
+* Temporaire
+* Passif
+* Inactif
+* Status
+
+[⇪ haut de page](#le-système)
+
+#### Onglet: Notes du Gardien (pour le Gardien)
+
+On (le Gardien) y trouve:
+
+* des notes libres
+* les pertes de SAN liées à des rencontres
+* les immunités aux pertes de SAN
+* des marqueurs liés au Mythe
+* des infos sur l'argent, les possessions et les niveaux de vie
+
+[⇪ haut de page](#le-système)
+
+### Créer un Investigateur
+
+#### Création guidée
+
+**Accessible** via [fas fa-user-check] pour le Gardien dans son menu ou dans le menu Foundry [fas fa-user] Acteur, en bas, via le lien.
+
+[TODO]
+
+[⇪ haut de page](#le-système)
+
+#### Création semi guidée par compendium
+
+[TODO]
+
+[⇪ haut de page](#le-système)
+
+#### Création manuelle
+
+[TODO]
+
+[⇪ haut de page](#le-système)
+
+[fas fa-suitcase]
+
+## Les Objets
+
+### Archétype
+
+[TODO]
+
+### Armure
+
+[TODO]
+
+### Livre
+
+[TODO]
+
+### Poursuite
+
+[TODO]
+
+### Package d'expérience
+
+[TODO]
+
+### Objet
+
+[TODO]
+
+### Occupation
+
+[TODO]
+
+### Créateur
+
+[TODO]
+
+### Compétence
+
+[TODO]
+
+### Sort
+
+[TODO]
+
+### Status
+
+[TODO]
+
+### Talent
+
+[TODO]
+
+### Arme
+
+[⇪ haut de page](#le-système)
+
+[fas fa-user]
+
+## Les Acteurs
+
+### Personnage
+
+Voir [Créer un Investigateur](#créer-un-investigateur).
+
+### Contenant
+
+[TODO]
+
+### Créature
+
+**La fiche de créature**
+
+En bas à gauche du portrait: 4 icônes.
+
+* [fas fa-dice] Génère des caractéristiques aléatoires
+* [fas fa-balance-scale] Prends les caractéristiques moyennes
+* [fas fa-lock] [fas fa-lock-open] Permet ou non la modification de la fiche.
+* [fas fa-square-root-alt] [fas fa-user-edit] Bascule entre le mode formule (3D6+3) ou valeur (15).
+
+Le reste:
+
+* Son portrait
+* Nom
+* Type
+* Caractéristiques
+* Points de Vie, Magie, SAN, Chance
+* Mouvement (il peut y en avoir plusieurs)
+* Impact
+* Carrure
+* Armure
+* Son état
+* La perte de SAN qu'elle provoque
+* Les compétences
+* Les armes: _voir_ [Onglet: Combat](#onglet-combat)
+* L'inventaire: objets, ouvrages, sorts, armures. _Voir_ [Onglet: Equipement](#onglet-equipement)
+* Les effets
+* Les notes du Gardien
+
+En mode modification [fas fa-lock-open], le petit [fas fa-cogs] vert permet de permuter entre le calcul automatique de la valeur ou le fait qu'elle soit fixée.
+
+### Protagoniste
+
+C'est pareil qu'une [créature](#créature) sauf que ça n'a pas de type mais une profession et âge.
+
+### Véhicule
+
+[TODO]
+
+[⇪ haut de page](#le-système)
+
