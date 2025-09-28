@@ -9,12 +9,20 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.21
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Update to French localization, thanks to @vonv #1903, #1904, #1932,
+- Update to French manual, thanks to @vonv #1908 - #1931 / #1933 - #1934
+- Update to Swedish localization, thanks to @Rangertheman #1902
+
 ## Version 7.20
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Add roll option for NPC/Creature attacks per round
-- Add toogle show notes to NPC/Creature armor
+- Add toggle show notes to NPC/Creature armor
 - Allow characteristic rolls have equations that include other characteristics
 - Fix Average Roll class calculating values incorrectly
 - Fix roll result text in FoundryVTT v13, thanks to 666f78, #1896
