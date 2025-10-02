@@ -927,7 +927,7 @@
 
   "CoC7.allActors": "Tous les Personnages",
   "CoC7.restTargets": "Candidats au repos",
-  "CoC7.startRest": "Se reposer",
+  "CoC7.startRest": "Se reposer (PV, PM, SAN)",
   "CoC7.dreaming": "Les Investigateurs attendent en rêvant",
   "CoC7.healthRecovered": "Un Point de Vie récupéré",
   "CoC7.pulpHealthRecovered": "{number} Points de Vie récupérés",
