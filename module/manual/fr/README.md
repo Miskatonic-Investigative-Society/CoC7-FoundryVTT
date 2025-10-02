@@ -7,6 +7,7 @@
   * [je suis Gardien](#je-suis-gardien).
   * [je suis Investigateur](#je-suis-investigateur).
 * Le [combat](#le-combat) [fas fa-swords].
+* Les [effets](#les-effets) [game-icon game-icon-aura].
 * [Les objets](#les-objets) [fas fa-suitcase]:
   * [archétype](#archetype) (archetype)
   * [armure](#armure) (armor)
@@ -197,7 +198,7 @@ Rappel de règles: [2. Les tests - lancer 1D100](#2-les-tests-lancer-1d100), [3.
 
 ## Je suis Gardien
 
-* Barre d'[outils du gardien](#barre-doutils-du-gardien).
+* Barre d'[outils du gardien](#barre-doutils-du-gardien) [game-icon game-icon-tentacle-strike] [game-icon game-icon-d10] [fas fa-link].
 * [Import de protagoniste](#import-de-protagoniste) via copié/collé de texte.
 
 Dans toutes les fiches, si une petite icônes [game-icon game-icon-tentacles-skull] est présente, en la cliquant, vous arrivez sur une section qui vous permet de prendre des notes **visibles** uniquement par vous.
@@ -206,9 +207,11 @@ Dans toutes les fiches, si une petite icônes [game-icon game-icon-tentacles-sku
 
 Elle est accessible uniquement si vous êtes sur une **scène** de votre monde.
 
-Ce sont les 3 derniers icônes de la barre à gauche de la fenêtre: 🐙 🎲 et 🔗
+Ce sont les 3 derniers icônes de la barre à gauche de la fenêtre: [game-icon game-icon-tentacle-strike] [game-icon game-icon-d10] et [fas fa-link]
 
-#### 🐙 Outils du Gardien
+#### Outils du Gardien
+
+[game-icon game-icon-tentacle-strike]
 
 * [fas fa-angle-double-up] Phase de **développement**
 
@@ -240,15 +243,23 @@ Faire croire aux joueurs que vous jetez les dés :)
 
 * [fas fa-moon] Se **reposer**
 
-Lancer une phase de repos.
+Lancer une phase (7 heures) de repos et de guérison.
+
+* Points de Vie: +1 si pas de blessure critique.
+* Points de Magie: +7x(POU/100 arrondi au supérieur).
+* Perte de SAN journalière: remise à zéro.
 
 [⇪ haut de page](#le-systeme)
 
-#### 🎲 Lancer!
+#### Lancer!
+
+[game-icon game-icon-d10]
 
 Permet de faire un jet (sans compétence spécifique), en spécifiant: le seuil de réussite, la difficulté, les dés bonus/malus,...
 
-#### 🔗 Créer un lien
+#### Créer un lien
+
+[fas fa-link]
 
 Permet de créer un **lien** vers un **test** ou un **objet** pour l'envoyer vers
 
@@ -374,6 +385,7 @@ Le reste:
 * Nom
 * (nom du) joueur
 * Occupation
+  * L'occupation peut être supprimée via l'icône [far fa-times-circle] qui apparaît en mode modification [fas fa-lock-open].
 * Sexe
 * Age
 * Résidence
@@ -409,6 +421,8 @@ Le [fas fa-toggle-on] [fas fa-toggle-off] permet de **montrer** ou non les comp�
 #### Onglet Combat
 
 En général, il faut **cliquer sur le nom d'une arme** pour l'utiliser et pas sur la compétence.
+
+Lorsque l'on ajoute (pas cliquer/déposer) une arme, il faut **au préalable avoir ajouté** au personnage la compétence correspondante à partir du compendium Coc7-fr > .création > Compétences > Combat...
 
 On y trouve:
 
@@ -466,6 +480,13 @@ Les effets du personnage, avec une description, une source et une durée.
 * Passif
 * Inactif
 * Status
+  * Vulnérable [game-icon game-icon-falling]
+  * Inconscient(e) [game-icon game-icon-knocked-out-stars]
+  * Blessure grave [game-icon game-icon-arm-sling]
+  * Mourant(e) [game-icon game-icon-heart-beats]
+  * Folie passagère [game-icon game-icon-hanging-spider]
+  * Folie persistante [game-icon game-icon-tentacles-skull]
+  * Mort [game-icon game-icon-tombstone]
 
 [⇪ haut de page](#le-systeme)
 
@@ -676,6 +697,111 @@ Si le coup porte, lancez les dégâts puis:
 
 [⇪ haut de page](#le-systeme)
 
+## Les Effets
+
+[game-icon game-icon-aura]
+
+Ils sont de différents types:
+
+* Temporaire: à durée limitée.
+* Passif: sans durée définie.
+* Inactif: temporaire ou passif, plus actif (durée dépassée,...).
+* Status: implique un status particulier type mort, blessé,...
+
+Détails d'un effet/status:
+
+* Détails
+  * Couleur: couleur de l'icône sur le token sur la scène si l'effet est actif.
+  * Description.
+  * Suspendu: il devient alors inactif.
+  * États:
+    * Folie passagère / Folie / Blessure grave / Mourant(e) / Mort / Inconscient / À terre: transforme l'effet en status.
+    * Les autres états sont: Endormi / Étourdi / Entravé / Paralysé / En vol / Aveugle / Sourd / Réduit au silence / Apeuré / Brûlant / Gelé / Choqué / Corrodé / Saignement / Malade / Empoisonné / Maudit / Régénère / Dégénère / En lévitation / Enterré / Amélioré / Affaibli / Invisible / Ciblé / Marqué / Béni / Protection contre le feu / Protection contre le froid / Protection magique / Protection sacrée
+* Durées:
+  * durée, départ,...
+* Changements:
+  * Les **modes**:
+    * Personnalisation: ne sert pas.
+    * Multiplier: x
+    * Ajouter > modifier: 10 = +10, -10 = -10.
+    * Baisser > minorer: ne remplace la valeur que si celle-ci est inférieure à celle d'origine.
+    * Augmenter > majorer: ne remplace la valeur que si celle-ci est supérieure à celle d'origine.
+    * Surcharger: remplace la valeur.
+  * pour modifier une statistique du personnage. Voici les formules:
+  * il faut garder la dénomination anglaise.
+
+**Caractéristiques**
+
+```
+Force:
+system.characteristics.str.value
+system.characteristics.str.bonusDice
+Constitution:
+system.characteristics.con.value
+system.characteristics.con.bonusDice
+Taille:
+system.characteristics.siz.value
+system.characteristics.siz.bonusDice
+Dextérité:
+system.characteristics.dex.value
+system.characteristics.dex.bonusDice
+Apparence:
+system.characteristics.app.value
+system.characteristics.app.bonusDice
+Intelligence:
+system.characteristics.int.value
+system.characteristics.int.bonusDice
+Pouvoir:
+system.characteristics.pow.value
+system.characteristics.pow.bonusDice
+Education:
+system.characteristics.edu.value
+system.characteristics.edu.bonusDice
+```
+
+**Attributs**
+
+```
+Chance:
+system.attribs.lck.value
+system.attribs.lck.bonusDice
+SAN:
+system.attribs.san.value
+system.attribs.san.bonusDice
+Mouvement:
+system.attribs.mov.value
+Build:
+system.attribs.build.value
+Bonus aux dégâts:
+system.attribs.db.value
+Armure:
+system.attribs.armor.value
+```
+
+**Dérivés** (on ne peut modifier que le max.)
+
+```
+Points de vie:
+system.attribs.hp.max
+SAN:
+system.attribs.san.max
+```
+
+**Compétences**
+
+Elles sont identifiées par leur nom, attention aux majuscules/minuscules et cette fois, c'est en **français**, comme sur la fiche dans le nom qui apparaît en haut de la description de la compétence [fas fa-info-circle] :
+
+```
+Charme
+system.skills.Charme.value
+system.skills.Charme.bonusDice
+Combat rapproché (Corps à corps)
+system.skills.Combat rapproché (Corps à corps).value
+system.skills.Combat rapproché (Corps à corps).bonusDice
+```
+
+[⇪ haut de page](#le-systeme)
+
 ## Les Objets
 
 [fas fa-suitcase]
@@ -750,6 +876,8 @@ Objet à glisser sur une fiche de personnage vierge pour accompagner et conduire
 _A glisser/déposer sur un Acteur ou sur un Ouvrage._
 
 ### Status
+
+Voir: [effets](#les-effets).
 
 [TODO]
 
