@@ -2,152 +2,168 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The **de** translation is currently up to date
-
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[it.json (80 untranslated strings)](./ABANDONED.md#itjson)
+[cs.json (88 untranslated strings)](./ABANDONED.md#csjson)
 
-[ko.json (290 untranslated strings)](./ABANDONED.md#kojson)
+[it.json (126 untranslated strings)](./ABANDONED.md#itjson)
 
-[pt-BR.json (238 untranslated strings)](./ABANDONED.md#pt-brjson)
+[ko.json (336 untranslated strings)](./ABANDONED.md#kojson)
 
-[ru.json (160 untranslated strings)](./ABANDONED.md#rujson)
+[pt-BR.json (284 untranslated strings)](./ABANDONED.md#pt-brjson)
+
+[ru.json (206 untranslated strings)](./ABANDONED.md#rujson)
+
+[uk.json (89 untranslated strings)](./ABANDONED.md#ukjson)
+
+[zh-TW.json (58 untranslated strings)](./ABANDONED.md#zh-twjson)
 
 
 
-|Key|[cn](./MISSING.md#cnjson)|[cs](./MISSING.md#csjson)|[es](./MISSING.md#esjson)|[fr](./MISSING.md#frjson)|[ja](./MISSING.md#jajson)|[pl](./MISSING.md#pljson)|[sv](./MISSING.md#svjson)|[uk](./MISSING.md#ukjson)|[zh-TW](./MISSING.md#zh-twjson)|
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**1**|**42**|**1**|**1**|**2**|**1**|**1**|**43**|**12**|
-|[CoC7.AlternativeNames](#coc7alternativenames)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ClearExperiencePackageName](#coc7clearexperiencepackagename)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CoCIDCompendiumPopulate](#coc7cocidcompendiumpopulate)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CoCIDCompendiumPopulateButton](#coc7cocidcompendiumpopulatebutton)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CoCIDCompendiumPopulateDestination](#coc7cocidcompendiumpopulatedestination)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CoCIDCompendiumPopulateTypes](#coc7cocidcompendiumpopulatetypes)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CoCIDCompendiumPopulateWarning](#coc7cocidcompendiumpopulatewarning)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs](#coc7cocidflagkeysrtbackstory-ideology-and-beliefs)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars](#coc7cocidflagkeysrtbackstory-injuries-and-scars)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations](#coc7cocidflagkeysrtbackstory-meaningful-locations)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.rt..backstory-significant-people](#coc7cocidflagkeysrtbackstory-significant-people)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.rt..backstory-traits](#coc7cocidflagkeysrtbackstory-traits)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions](#coc7cocidflagkeysrtbackstory-treasured-possessions)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.EmptySpellList](#coc7emptyspelllist)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.EmptyStatusList](#coc7emptystatuslist)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Entities.ExperiencePackage](#coc7entitiesexperiencepackage)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorExperiencePackageArchetype](#coc7errorexperiencepackagearchetype)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorExperiencePackageNotGM](#coc7errorexperiencepackagenotgm)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorExperiencePackageNotInvestigator](#coc7errorexperiencepackagenotinvestigator)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ExperiencePackageApplySanity](#coc7experiencepackageapplysanity)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ExperiencePackageBackground](#coc7experiencepackagebackground)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ExperiencePackageDialogTitle](#coc7experiencepackagedialogtitle)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ExperiencePackageSkill](#coc7experiencepackageskill)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ExperiencePackageSpellList](#coc7experiencepackagespelllist)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.InvestigatorWizard.PersonalDescription](#coc7investigatorwizardpersonaldescription)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.PromptAddInjuryScar](#coc7promptaddinjuryscar)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.PromptAddSpells](#coc7promptaddspells)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.PromptAddStatus](#coc7promptaddstatus)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.SANSameLossAsMythosGain](#coc7sansamelossasmythosgain)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.SheetExperiencePackageName](#coc7sheetexperiencepackagename)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.SkillExperiencePackage](#coc7skillexperiencepackage)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.SkillTotalExperiencePackagePoints](#coc7skilltotalexperiencepackagepoints)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ToolTipSeeNotes](#coc7tooltipseenotes)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.rangeCombatBlastDamage](#coc7rangecombatblastdamage)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
-|[TOKEN.MOVEMENT.ACTIONS.blink.label](#tokenmovementactionsblinklabel)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.burrow.label](#tokenmovementactionsburrowlabel)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.climb.label](#tokenmovementactionsclimblabel)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.crawl.label](#tokenmovementactionscrawllabel)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.displace.label](#tokenmovementactionsdisplacelabel)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.fly.label](#tokenmovementactionsflylabel)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.jump.label](#tokenmovementactionsjumplabel)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.swim.label](#tokenmovementactionsswimlabel)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[TOKEN.MOVEMENT.ACTIONS.walk.label](#tokenmovementactionswalklabel)|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-##### CoC7.AlternativeNames
-```  "CoC7.AlternativeNames": "Alternative names",```
-##### CoC7.ClearExperiencePackageName
-```  "CoC7.ClearExperiencePackageName": "Clear Experience Package name",```
-##### CoC7.CoCIDCompendiumPopulate
-```  "CoC7.CoCIDCompendiumPopulate": "Set up your compendium",```
-##### CoC7.CoCIDCompendiumPopulateButton
-```  "CoC7.CoCIDCompendiumPopulateButton": "Populate",```
-##### CoC7.CoCIDCompendiumPopulateDestination
-```  "CoC7.CoCIDCompendiumPopulateDestination": "Destination Module",```
-##### CoC7.CoCIDCompendiumPopulateTypes
-```  "CoC7.CoCIDCompendiumPopulateTypes": "Types",```
-##### CoC7.CoCIDCompendiumPopulateWarning
-```  "CoC7.CoCIDCompendiumPopulateWarning": "This action can not be undone, please backup your module before populating it. Make sure your world era, language, and modules are set correctly.",```
-##### CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs
-```  "CoC7.CoCIDFlag.keys.rt..backstory-ideology-and-beliefs": "Ideology and Beliefs",```
-##### CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars
-```  "CoC7.CoCIDFlag.keys.rt..backstory-injuries-and-scars": "Injuries and Scars",```
-##### CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations
-```  "CoC7.CoCIDFlag.keys.rt..backstory-meaningful-locations": "Meaningful Locations",```
-##### CoC7.CoCIDFlag.keys.rt..backstory-significant-people
-```  "CoC7.CoCIDFlag.keys.rt..backstory-significant-people": "Significant People",```
-##### CoC7.CoCIDFlag.keys.rt..backstory-traits
-```  "CoC7.CoCIDFlag.keys.rt..backstory-traits": "Traits",```
-##### CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions
-```  "CoC7.CoCIDFlag.keys.rt..backstory-treasured-possessions": "Treasured Possessions",```
-##### CoC7.EmptySpellList
-```  "CoC7.EmptySpellList": "Add a spell by dropping it here.",```
-##### CoC7.EmptyStatusList
-```  "CoC7.EmptyStatusList": "Add a phobia/mania by dropping it here.",```
-##### CoC7.Entities.ExperiencePackage
-```  "CoC7.Entities.ExperiencePackage": "Experience Package",```
-##### CoC7.ErrorExperiencePackageArchetype
-```  "CoC7.ErrorExperiencePackageArchetype": "You can not use Experience Packages if Archetypes are enabled",```
-##### CoC7.ErrorExperiencePackageNotGM
-```  "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",```
-##### CoC7.ErrorExperiencePackageNotInvestigator
-```  "CoC7.ErrorExperiencePackageNotInvestigator": "You can only use Experience Package on Investigators",```
-##### CoC7.ExperiencePackageApplySanity
-```  "CoC7.ExperiencePackageApplySanity": "Apply Sanity Loss",```
-##### CoC7.ExperiencePackageBackground
-```  "CoC7.ExperiencePackageBackground": "Add to the investigator’s backstory based on the experience.",```
-##### CoC7.ExperiencePackageDialogTitle
-```  "CoC7.ExperiencePackageDialogTitle": "Select Experience Package options",```
-##### CoC7.ExperiencePackageSkill
-```  "CoC7.ExperiencePackageSkill": "Experience Package Skill",```
-##### CoC7.ExperiencePackageSpellList
-```  "CoC7.ExperiencePackageSpellList": "Known Spells",```
-##### CoC7.InvestigatorWizard.PersonalDescription
-```  "CoC7.InvestigatorWizard.PersonalDescription": "Personal Description",```
+|Key|[cn](./MISSING.md#cnjson)|[de](./MISSING.md#dejson)|[es](./MISSING.md#esjson)|[fr](./MISSING.md#frjson)|[ja](./MISSING.md#jajson)|[pl](./MISSING.md#pljson)|[sv](./MISSING.md#svjson)|
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|**Remaining**:|**47**|**46**|**47**|**46**|**48**|**47**|**46**|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Document.Hint](#coc7chaosiumcanvasinterfacemappintoggledocumenthint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Document.Title](#coc7chaosiumcanvasinterfacemappintoggledocumenttitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Note.Hint](#coc7chaosiumcanvasinterfacemappintogglenotehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Note.Title](#coc7chaosiumcanvasinterfacemappintogglenotetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionHide.Hint](#coc7chaosiumcanvasinterfacemappintogglepermissionhidehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionHide.Title](#coc7chaosiumcanvasinterfacemappintogglepermissionhidetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionShow.Hint](#coc7chaosiumcanvasinterfacemappintogglepermissionshowhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionShow.Title](#coc7chaosiumcanvasinterfacemappintogglepermissionshowtitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Hint](#coc7chaosiumcanvasinterfacemappintoggletogglehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Title](#coc7chaosiumcanvasinterfacemappintoggletoggletitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.OpenDocument.Anchor.Hint](#coc7chaosiumcanvasinterfaceopendocumentanchorhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.OpenDocument.Anchor.Title](#coc7chaosiumcanvasinterfaceopendocumentanchortitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.OpenDocument.Document.Hint](#coc7chaosiumcanvasinterfaceopendocumentdocumenthint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.OpenDocument.Document.Title](#coc7chaosiumcanvasinterfaceopendocumentdocumenttitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.OpenDocument.Permission.Hint](#coc7chaosiumcanvasinterfaceopendocumentpermissionhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.OpenDocument.Permission.Title](#coc7chaosiumcanvasinterfaceopendocumentpermissiontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Permission.Always](#coc7chaosiumcanvasinterfacepermissionalways)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Permission.Document](#coc7chaosiumcanvasinterfacepermissiondocument)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Permission.GM](#coc7chaosiumcanvasinterfacepermissiongm)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Permission.SeeTile](#coc7chaosiumcanvasinterfacepermissionseetile)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntry.Hint](#coc7chaosiumcanvasinterfacetiletogglejournalentryhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntry.Title](#coc7chaosiumcanvasinterfacetiletogglejournalentrytitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntryPage.Hint](#coc7chaosiumcanvasinterfacetiletogglejournalentrypagehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntryPage.Title](#coc7chaosiumcanvasinterfacetiletogglejournalentrypagetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocument.Hint](#coc7chaosiumcanvasinterfacetiletogglepermissiondocumenthint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocument.Title](#coc7chaosiumcanvasinterfacetiletogglepermissiondocumenttitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPage.Hint](#coc7chaosiumcanvasinterfacetiletogglepermissionpagehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPage.Title](#coc7chaosiumcanvasinterfacetiletogglepermissionpagetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.RegionBehavior.Hint](#coc7chaosiumcanvasinterfacetiletoggleregionbehaviorhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.RegionBehavior.Title](#coc7chaosiumcanvasinterfacetiletoggleregionbehaviortitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.RegionUuids.Hint](#coc7chaosiumcanvasinterfacetiletoggleregionuuidshint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.RegionUuids.Title](#coc7chaosiumcanvasinterfacetiletoggleregionuuidstitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Hint](#coc7chaosiumcanvasinterfacetiletoggletilehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Title](#coc7chaosiumcanvasinterfacetiletoggletiletitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Hint](#coc7chaosiumcanvasinterfacetiletoggletogglehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Title](#coc7chaosiumcanvasinterfacetiletoggletoggletitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.ToScene.Permission.Hint](#coc7chaosiumcanvasinterfacetoscenepermissionhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.ToScene.Permission.Title](#coc7chaosiumcanvasinterfacetoscenepermissiontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.ToScene.Scene.Hint](#coc7chaosiumcanvasinterfacetoscenescenehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.ToScene.Scene.Title](#coc7chaosiumcanvasinterfacetoscenescenetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.ToScene.Tile.Hint](#coc7chaosiumcanvasinterfacetoscenetilehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.ToScene.Tile.Title](#coc7chaosiumcanvasinterfacetoscenetiletitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ToolTipSeeNotes](#coc7tooltipseenotes)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|
+|[TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle](#typesregionbehaviorchaosiumcanvasinterfacemappintoggle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument](#typesregionbehaviorchaosiumcanvasinterfaceopendocument)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[TYPES.RegionBehavior.ChaosiumCanvasInterfaceTileToggle](#typesregionbehaviorchaosiumcanvasinterfacetiletoggle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene](#typesregionbehaviorchaosiumcanvasinterfacetoscene)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+##### CoC7.ChaosiumCanvasInterface.MapPinToggle.Document.Hint
+```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.Document.Hint": "Set ownership on these documents",```
+##### CoC7.ChaosiumCanvasInterface.MapPinToggle.Document.Title
+```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.Document.Title": "Select Documents",```
+##### CoC7.ChaosiumCanvasInterface.MapPinToggle.Note.Hint
+```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.Note.Hint": "Set the texture of the map pin on these scene notes",```
+##### CoC7.ChaosiumCanvasInterface.MapPinToggle.Note.Title
+```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.Note.Title": "Scene Notes",```
+##### CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionHide.Hint
+```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionHide.Hint": "When set to hide set document ownership to this level",```
+##### CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionHide.Title
+```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionHide.Title": "Hide Permisison",```
+##### CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionShow.Hint
+```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionShow.Hint": "When set to show set document ownership to this level",```
+##### CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionShow.Title
+```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionShow.Title": "Show Permission",```
+##### CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Hint
+```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Hint": "Should this show or hide the the map pin and documents",```
+##### CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Title
+```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Title": "Show",```
+##### CoC7.ChaosiumCanvasInterface.OpenDocument.Anchor.Hint
+```  "CoC7.ChaosiumCanvasInterface.OpenDocument.Anchor.Hint": "If loading a JournalEntryPage jump to anchor",```
+##### CoC7.ChaosiumCanvasInterface.OpenDocument.Anchor.Title
+```  "CoC7.ChaosiumCanvasInterface.OpenDocument.Anchor.Title": "Optional Anchor",```
+##### CoC7.ChaosiumCanvasInterface.OpenDocument.Document.Hint
+```  "CoC7.ChaosiumCanvasInterface.OpenDocument.Document.Hint": "Which Journal Entry / Journal Entry Page / Actor",```
+##### CoC7.ChaosiumCanvasInterface.OpenDocument.Document.Title
+```  "CoC7.ChaosiumCanvasInterface.OpenDocument.Document.Title": "Select Document",```
+##### CoC7.ChaosiumCanvasInterface.OpenDocument.Permission.Hint
+```  "CoC7.ChaosiumCanvasInterface.OpenDocument.Permission.Hint": "",```
+##### CoC7.ChaosiumCanvasInterface.OpenDocument.Permission.Title
+```  "CoC7.ChaosiumCanvasInterface.OpenDocument.Permission.Title": "Can click if",```
+##### CoC7.ChaosiumCanvasInterface.Permission.Always
+```  "CoC7.ChaosiumCanvasInterface.Permission.Always": "Always",```
+##### CoC7.ChaosiumCanvasInterface.Permission.Document
+```  "CoC7.ChaosiumCanvasInterface.Permission.Document": "Can See Document",```
+##### CoC7.ChaosiumCanvasInterface.Permission.GM
+```  "CoC7.ChaosiumCanvasInterface.Permission.GM": "Keeper",```
+##### CoC7.ChaosiumCanvasInterface.Permission.SeeTile
+```  "CoC7.ChaosiumCanvasInterface.Permission.SeeTile": "Can See Tile",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntry.Hint
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntry.Hint": "",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntry.Title
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntry.Title": "Select Journal Entries",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntryPage.Hint
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntryPage.Hint": "",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntryPage.Title
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntryPage.Title": "Select Journal Entry Pages",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocument.Hint
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocument.Hint": "When set to show set Document ownership to this level",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocument.Title
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocument.Title": "Permission for Documents",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPage.Hint
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPage.Hint": "When set to show set Journal Entry Page ownership to this level",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPage.Title
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPage.Title": "Permission for Journal Entry Pages",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.RegionBehavior.Hint
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.RegionBehavior.Hint": "Enable/Disable these Region Behaviors",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.RegionBehavior.Title
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.RegionBehavior.Title": "Select Region Behaviors",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.RegionUuids.Hint
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.RegionUuids.Hint": "",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.RegionUuids.Title
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.RegionUuids.Title": "Then trigger these CCI Regions on Right Click",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Hint
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Hint": "Set visibility of these tiles",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Title
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Title": "Select Tile",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Hint
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Hint": "Should this show or hide the the map pin and documents",```
+##### CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Title
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Title": "Show",```
+##### CoC7.ChaosiumCanvasInterface.ToScene.Permission.Hint
+```  "CoC7.ChaosiumCanvasInterface.ToScene.Permission.Hint": "",```
+##### CoC7.ChaosiumCanvasInterface.ToScene.Permission.Title
+```  "CoC7.ChaosiumCanvasInterface.ToScene.Permission.Title": "Can click if",```
+##### CoC7.ChaosiumCanvasInterface.ToScene.Scene.Hint
+```  "CoC7.ChaosiumCanvasInterface.ToScene.Scene.Hint": "",```
+##### CoC7.ChaosiumCanvasInterface.ToScene.Scene.Title
+```  "CoC7.ChaosiumCanvasInterface.ToScene.Scene.Title": "Select Scene",```
+##### CoC7.ChaosiumCanvasInterface.ToScene.Tile.Hint
+```  "CoC7.ChaosiumCanvasInterface.ToScene.Tile.Hint": "Select Tile that must be visible",```
+##### CoC7.ChaosiumCanvasInterface.ToScene.Tile.Title
+```  "CoC7.ChaosiumCanvasInterface.ToScene.Tile.Title": "Select Tile",```
 ##### CoC7.PersonalSpecialityPlaceholder
 ```  "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",```
-##### CoC7.PromptAddInjuryScar
-```  "CoC7.PromptAddInjuryScar": "Add an injury/scar",```
-##### CoC7.PromptAddSpells
-```  "CoC7.PromptAddSpells": "Add spells",```
-##### CoC7.PromptAddStatus
-```  "CoC7.PromptAddStatus": "Add a Phobia/Mania",```
-##### CoC7.SANSameLossAsMythosGain
-```  "CoC7.SANSameLossAsMythosGain": "Sanity loss equal to Cthulhu Mythos gain",```
-##### CoC7.SheetExperiencePackageName
-```  "CoC7.SheetExperiencePackageName": "Experience",```
-##### CoC7.SkillExperiencePackage
-```  "CoC7.SkillExperiencePackage": "Experience Package",```
-##### CoC7.SkillTotalExperiencePackagePoints
-```  "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",```
 ##### CoC7.ToolTipSeeNotes
 ```  "CoC7.ToolTipSeeNotes": "See notes",```
-##### CoC7.rangeCombatBlastDamage
-```  "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",```
-##### TOKEN.MOVEMENT.ACTIONS.blink.label
-```  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",```
-##### TOKEN.MOVEMENT.ACTIONS.burrow.label
-```  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",```
-##### TOKEN.MOVEMENT.ACTIONS.climb.label
-```  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",```
-##### TOKEN.MOVEMENT.ACTIONS.crawl.label
-```  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",```
-##### TOKEN.MOVEMENT.ACTIONS.displace.label
-```  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)",```
-##### TOKEN.MOVEMENT.ACTIONS.fly.label
-```  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",```
-##### TOKEN.MOVEMENT.ACTIONS.jump.label
-```  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",```
-##### TOKEN.MOVEMENT.ACTIONS.swim.label
-```  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",```
-##### TOKEN.MOVEMENT.ACTIONS.walk.label
-```  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",```
+##### TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle
+```  "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: Map Pin Toggle",```
+##### TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument
+```  "TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument": "CCI: Open Document",```
+##### TYPES.RegionBehavior.ChaosiumCanvasInterfaceTileToggle
+```  "TYPES.RegionBehavior.ChaosiumCanvasInterfaceTileToggle": "CCI: Tile Toggle",```
+##### TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene
+```  "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene",```
