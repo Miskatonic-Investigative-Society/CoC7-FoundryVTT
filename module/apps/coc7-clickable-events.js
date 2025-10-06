@@ -1,32 +1,45 @@
 /* global canvas, CONFIG, CONST, DocumentSheetConfig, foundry, fromUuid, game, NotesLayer, RegionBehavior, TokenLayer */
-const { RegionBehaviorType } = foundry.data.regionBehaviors ?? {} // FoundryVTT v11
+import ChaosiumCanvasInterfaceMapPinToggle from './chaosium-canvas-interface-map-pin-toggle.js'
+import ChaosiumCanvasInterfaceOpenDocument from './chaosium-canvas-interface-open-document.js'
+import ChaosiumCanvasInterfaceToScene from './chaosium-canvas-interface-to-scene.js'
+import ChaosiumCanvasInterfaceTileToggle from './chaosium-canvas-interface-tile-toggle.js'
+import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
 
-// FoundryVTT v11
-const RegionBehaviorTypeClass = (typeof RegionBehaviorType === 'undefined' ? class {} : RegionBehaviorType)
-
-export default class CoC7ClickableEvents extends RegionBehaviorTypeClass {
+export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.RegionBehaviorType {
   static initSelf () {
-    // FoundryVTT v11
-    if (!foundry.utils.isNewerVersion(game.version, '12')) {
-      return
+    const known = [
+      ChaosiumCanvasInterfaceMapPinToggle,
+      ChaosiumCanvasInterfaceOpenDocument,
+      ChaosiumCanvasInterfaceToScene,
+      ChaosiumCanvasInterfaceTileToggle
+    ]
+
+    const dataModels = {
+      coc7ClickableEvents: CoC7ClickableEvents
+    }
+    const typeIcons = {
+      coc7ClickableEvents: 'fa-solid fa-computer-mouse'
+    }
+    const types = [
+      'coc7ClickableEvents'
+    ]
+    for (const CCI of known) {
+      const name = (new CCI()).constructor.name
+      dataModels[name] = CCI
+      typeIcons[name] = CCI.icon
+      types.push(name)
     }
 
-    Object.assign(CONFIG.RegionBehavior.dataModels, {
-      coc7ClickableEvents: CoC7ClickableEvents
-    })
+    Object.assign(CONFIG.RegionBehavior.dataModels, dataModels)
 
-    Object.assign(CONFIG.RegionBehavior.typeIcons, {
-      coc7ClickableEvents: 'fa-solid fa-computer-mouse'
-    })
+    Object.assign(CONFIG.RegionBehavior.typeIcons, typeIcons)
 
     DocumentSheetConfig.registerSheet(
       RegionBehavior,
       'CoC7',
       foundry.applications.sheets.RegionBehaviorConfig,
       {
-        types: [
-          'coc7ClickableEvents'
-        ],
+        types,
         makeDefault: true
       }
     )
@@ -40,8 +53,10 @@ export default class CoC7ClickableEvents extends RegionBehaviorTypeClass {
       if (canvas.activeLayer instanceof polyfillTokenLayer) {
         const destination = canvas.activeLayer.toLocal(event)
         for (const region of canvas.scene.regions.contents) {
-          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents) && region.object.polygonTree.testPoint(destination)) {
-            region.behaviors.filter(b => !b.disabled).map(async (b) => { if (await b.system._handleMouseOverEvent() === true) { await b.system._handleLeftClickEvent() } })
+          /* // FoundryVTT V12 */
+          const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
+          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination)) {
+            region.behaviors.filter(b => !b.disabled).map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleLeftClickEvent === 'function') { await b.system._handleLeftClickEvent() } })
           }
         }
       }
@@ -53,8 +68,10 @@ export default class CoC7ClickableEvents extends RegionBehaviorTypeClass {
       if (canvas.activeLayer instanceof polyfillTokenLayer) {
         const destination = canvas.activeLayer.toLocal(event)
         for (const region of canvas.scene.regions.contents) {
-          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents) && region.object.polygonTree.testPoint(destination)) {
-            region.behaviors.filter(b => !b.disabled).map(async (b) => { if (await b.system._handleMouseOverEvent() === true) { await b.system._handleRightClickEvent() } })
+          /* // FoundryVTT V12 */
+          const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
+          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination)) {
+            region.behaviors.filter(b => !b.disabled).map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleRightClickEvent === 'function') { await b.system._handleRightClickEvent() } })
           }
         }
       }
@@ -69,7 +86,9 @@ export default class CoC7ClickableEvents extends RegionBehaviorTypeClass {
         const destination = canvas.activeLayer.toLocal(event)
         let setPointer = false
         for (const region of canvas.scene.regions.contents) {
-          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents) && region.object.polygonTree.testPoint(destination)) {
+          /* // FoundryVTT V12 */
+          const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
+          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination)) {
             setPointer = await region.behaviors.filter(b => !b.disabled).reduce(async (c, b) => {
               const r = await b.system._handleMouseOverEvent()
               if (r !== false && r !== true) {
@@ -144,18 +163,18 @@ export default class CoC7ClickableEvents extends RegionBehaviorTypeClass {
   static async ClickRegionLeftUuid (docUuid) {
     const doc = await fromUuid(docUuid)
     if (doc) {
-      doc.behaviors.filter(b => !b.disabled).map(async (b) => { if (await b.system._handleMouseOverEvent() === true) { await b.system._handleLeftClickEvent() } })
+      doc.behaviors.filter(b => !b.disabled).filter(b => b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface).map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleLeftClickEvent === 'function') { await b.system._handleLeftClickEvent() } })
     } else {
-      console.error('journalPageUuids ' + docUuid + ' not loaded')
+      console.error('RegionUuid ' + docUuid + ' not loaded')
     }
   }
 
   static async ClickRegionRightUuid (docUuid) {
     const doc = await fromUuid(docUuid)
     if (doc) {
-      doc.behaviors.filter(b => !b.disabled).map(async (b) => { if (await b.system._handleMouseOverEvent() === true) { await b.system._handleRightClickEvent() } })
+      doc.behaviors.filter(b => !b.disabled).filter(b => b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface).map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleRightClickEvent === 'function') { await b.system._handleRightClickEvent() } })
     } else {
-      console.error('journalPageUuids ' + docUuid + ' not loaded')
+      console.error('RegionUuid ' + docUuid + ' not loaded')
     }
   }
 
