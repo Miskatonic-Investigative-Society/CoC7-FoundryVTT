@@ -7,6 +7,22 @@ import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
 
 export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.RegionBehaviorType {
   static initSelf () {
+    /* // FoundryVTT V12 */
+    if (game.release.generation === 12) {
+      class NoteDocumentPolyfill extends CONFIG.Note.documentClass {
+        get name () {
+          return (this.text.length ? this.text : this.label)
+        }
+      }
+      CONFIG.Note.documentClass = NoteDocumentPolyfill
+      class TileDocumentPolyfill extends CONFIG.Tile.documentClass {
+        get name () {
+          return (this.id)
+        }
+      }
+      CONFIG.Tile.documentClass = TileDocumentPolyfill
+    }
+
     const known = [
       ChaosiumCanvasInterfaceMapPinToggle,
       ChaosiumCanvasInterfaceOpenDocument,
