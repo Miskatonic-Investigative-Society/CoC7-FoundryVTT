@@ -8,20 +8,9 @@
   * [je suis Gardien](#je-suis-gardien).
   * [je suis Investigateur](#je-suis-investigateur).
 * Le [combat](#le-combat) .
+* Les [effets](#les-effets) .
 * [Les objets](#les-objets) :
-  * [archétype](#archetype) (archetype)
-  * [armure](#armure) (armor)
-  * [livre](#livre) (book)
-  * [poursuite](#poursuite) (chase)
-  * [package d'expérience](#package-dexperience) (experiencePackage)
-  * [objet](#objet) (item)
-  * [occupation](#occupation)
-  * [créateur](#createur) (setup)
-  * [compétence](#competence) (skill)
-  * [sort](#sort) (spell)
-  * [status](#status)
-  * [talent](#talent)
-  * [arme](#arme) (weapon)
+  * [arme](#arme) (weapon) / [livre](#livre) (book) / [objet](#objet) (item) / [sort](#sort) (spell)
 * [Les acteurs](#les-acteurs) :
   * [personnage](#personnage) (character)
   * [contenant](#contenant) (container)
@@ -172,10 +161,12 @@ Paramètres de table aléatoire
 ... peut être cliqué :) Mais surtout:
 
 * ```Click Droit``` crée une carte (dans le chat) de jet **opposé**. Tant qu'elle est ouverte, chaque ```Click Droit``` ajoutera le nouveau jet.
-* ```Alt + Click Droit``` un jet **combiné**.
+* ```Alt + Click Droit``` un jet **combiné** (jet sous 2 compétences en simultané).
 * ```Shift + Click``` jette le dé **sans** demander la difficulté ni bonus/malus.
 * ```Ctrl + Click``` crée une **demande** de jet, seulement pour le Gardien.
 * ```Alt + Click``` en SAN affichera au joueur les **pertes** max et min de SAN.
+
+Les options jet combiné ou opposé apparaissent aussi dans la fenêtre de jet.
 
 [⇪ haut de page](#le-systeme)
 
@@ -191,6 +182,7 @@ Suite au jet, dans la carte du chat  qui apparaît, on peut, selon le cas:
 
 * **Redoubler** le jet.
 * Dépenser des points de **Chance** pour réussir ou augmenter la réussite.
+* Clore une carte de jet opposé ou combiné: le(s) jet(s) sont alors lancés.
 
 Rappel de règles: [2. Les tests - lancer 1D100](#2-les-tests-lancer-1d100), [3. Quand lancer un dé ?](#3-quand-lancer-un-de), [4. Niveaux de réussite](#4-niveaux-de-reussite), [5. Redoubler un jet](#5-redoubler-un-jet), [6. Dés bonus et malus](#6-des-bonus-et-malus) et [7. La Chance](#7-la-chance).
 
@@ -198,24 +190,24 @@ Rappel de règles: [2. Les tests - lancer 1D100](#2-les-tests-lancer-1d100), [3.
 
 ## Je suis Gardien
 
-* Barre d'[outils du gardien](#barre-doutils-du-gardien).
+* Barre d'[outils du gardien](#barre-doutils-du-gardien)   .
 * [Import de protagoniste](#import-de-protagoniste) via copié/collé de texte.
 
-Dans toutes les fiches, si une petite icônes  est présente, en la cliquant, vous arrivez sur une section qui vous permet de prendre des notes **visibles** uniquement par vous.
+Dans toutes les fiches, si une petite icône  est présente, en la cliquant, vous arrivez sur une section qui vous permet de prendre des notes **visibles** uniquement par vous.
 
 ### Barre d'outils du Gardien
 
 Elle est accessible uniquement si vous êtes sur une **scène** de votre monde.
 
-Ce sont les 3 derniers icônes de la barre à gauche de la fenêtre: 🐙 🎲 et 🔗
+Ce sont les 3 dernières icônes de la barre à gauche de la fenêtre:   et 
 
-#### 🐙 Outils du Gardien
+#### Outils du Gardien 
 
 *  Phase de **développement**
 
 Activé/désactivé: durant la phase d'expérience, entre 2 parties, permet de faire les jets d'expérience et autres évolutions.
 
-Cela fait apparaître un nouvel onglet à droite de la fiche avec un .
+Cela fait apparaître un nouvel onglet à droite de la fiche avec un  sur ruban bleu.
 
 *  Mode **création** de personnage
 
@@ -241,15 +233,19 @@ Faire croire aux joueurs que vous jetez les dés :)
 
 *  Se **reposer**
 
-Lancer une phase de repos.
+Lancer une phase (7 heures) de repos et de guérison.
+
+* Points de Vie: +1 si pas de blessure critique.
+* Points de Magie: +7x(POU/100 arrondi au supérieur).
+* Perte de SAN journalière: remise à zéro.
 
 [⇪ haut de page](#le-systeme)
 
-#### 🎲 Lancer!
+#### Lancer! 
 
 Permet de faire un jet (sans compétence spécifique), en spécifiant: le seuil de réussite, la difficulté, les dés bonus/malus,...
 
-#### 🔗 Créer un lien
+#### Créer un lien 
 
 Permet de créer un **lien** vers un **test** ou un **objet** pour l'envoyer vers
 
@@ -257,7 +253,7 @@ Permet de créer un **lien** vers un **test** ou un **objet** pour l'envoyer ver
 * vers les tokens sélectionnés.
 * dans le chat.
 
-Voici le fonctionnement: `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
+Voici le format: `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
 
 * TYPE_OF_REQUEST :
   * 'sanloss': test de SAN, si échoué, propose de réduire la SAN.
@@ -289,7 +285,7 @@ Jet simple: [ [/roll 1d10]]{Dégâts}
 
 [⇪ haut de page](#le-systeme)
 
-### Import de protagoniste
+### Import de protagoniste 
 
 Outil permettant, par simple **copié/collé** de la description d'un PNJ (provenant d'un PDF par exemple ou d'un site web :)) d'en faire un protagoniste de votre monde, avec fiche.
 
@@ -325,8 +321,9 @@ _Vous pouvez aller en chercher sur Toc:_ https://www.tentacules.net/toc/toc/tocy
 
 ## Je suis Investigateur
 
-* [Première connexion](#premiere-connexion)
-* La [fiche d'Investigateur](#la-fiche-dinvestigateur) ([compétences](#onglet-competences), [combat](#onglet-combat), [équipement](#onglet-equipement), [historique](#onglet-historique)).
+* [Première connexion](#premiere-connexion) _[TODO]_
+* La [fiche d'Investigateur](#la-fiche-dinvestigateur), onglets:
+  * ([compétences](#onglet-competences), [combat](#onglet-combat), [équipement](#onglet-equipement), [historique](#onglet-historique), [notes du gardien](#onglet-notes-du-gardien-pour-le-gardien), [phase de développement](#onglet-developpement-creation), [effets](#onglet-effets-pour-le-gardien)).
 * [Créer un Investigateur](#creer-un-investigateur) ([guidée](#creation-guidee), [à moitié](#creation-semi-guidee-par-compendium), [à la main](#creation-manuelle)).
 * [Lire un livre du Mythe](#lire-un-livre-du-mythe)
 * [Jeter un sort](#jeter-un-sort)
@@ -341,7 +338,7 @@ Les onglets: [compétences](#onglet-competences), [combat](#onglet-combat), [éq
 
 Les menus/icônes de la **barre** du haut de la fiche:
 
-*   Minimiser la fiche: fiche réduite dans laquelle n'apparaissent que caracs, chances, compétences utils, armes,...
+*   Minimiser la fiche: fiche réduite dans laquelle n'apparaissent que caracs, chances, compétences utiles, armes,...
 *  Changer le style de fiche (pas utile).
 *  Modifier le token du personnage.
 *  Récupérer l'ID du personnage.
@@ -375,6 +372,7 @@ Le reste:
 * Nom
 * (nom du) joueur
 * Occupation
+  * L'occupation peut être supprimée via l'icône  qui apparaît en mode modification .
 * Sexe
 * Age
 * Résidence
@@ -398,7 +396,7 @@ On y trouve les **compétences** avec:
 
 * leur score
 * leurs scores /2 et /5
-* une case cochable pour l’expérience (qui se coche toute seule ou à la main en double cliquant)
+* une case cochable  pour l’expérience (qui se coche toute seule ou à la main en double cliquant)
 * et un petit  pour avoir des informations complémentaires
 
 Le   permet de **trier** les compétences soit par nom soit par valeur.
@@ -411,17 +409,19 @@ Le   permet de **montrer** ou non les compétences **spéciales**: celles marqu�
 
 En général, il faut **cliquer sur le nom d'une arme** pour l'utiliser et pas sur la compétence.
 
+Lorsque l'on ajoute (pas cliquer/déposer) une arme, il faut **au préalable avoir ajouté** au personnage la compétence correspondante à partir du compendium  Coc7-fr > .création > Compétences > Combat...
+
 On y trouve:
 
-* la liste des armes triées par type avec:
+* la liste des **armes** triées par type avec:
   * leur nom
   * les dégâts
-  * les **munitions** éventuelles ( ```Click droit```: -1 munition, ```Click gauche```: +1, avec Shift en plus on vide ou on recharge entièrement)
+  * les **munitions** éventuelles ( ```Click droit```: -1 munition, ```Click gauche```: +1, avec ```Shift``` en plus on vide ou on recharge entièrement)
   * les bonus éventuels
-  * en cliquant sur le **triangle** en début de ligne apparaissent: les compétences, cadence, type,... liés à l'arme.
-* la liste des compétences de combat avec:
+  * en cliquant sur le **triangle**  en début de ligne, apparaissent: les compétences, cadence, type,... liés à l'arme.
+* la liste des **compétences** de combat avec:
   * leur score
-  * une case cochable pour l’expérience (qui se coche toute seule)
+  * une case cochable` pour l’expérience (qui se coche toute seule)
   * et un petit  pour avoir des informations complémentaires
 
 [⇪ haut de page](#le-systeme)
@@ -431,11 +431,11 @@ On y trouve:
 On y trouve:
 
 * l'équipement:
-  * Objets (glissé/déposé sur la fiche)
-  * Ouvrages (glissé/déposé sur la fiche)
-  * Sorts (glissé/déposé sur la fiche)
-  * Armure (glissé/déposé sur la fiche)
-  * Etats (états physiques/mentaux du personnage, à la main du Gardien)
+  * **Objets** (glissé/déposé sur la fiche)
+  * **Ouvrages** (glissé/déposé sur la fiche)
+  * **Sorts** (glissé/déposé sur la fiche)
+  * **Armure** (glissé/déposé sur la fiche)
+  * **Etats** (états physiques/mentaux du personnage, à la main du Gardien)
 * la thune, la fraîche, la moulaga, les pessos... En mode modification , le petit  vert permet de calculer ou non les revenus de façon automatique.
 
 La  indique que l'objet peut être **échangé** ou **rangé**. Si c'est un _conteneur_ (duquel il est propriétaire), il y sera rangé.
@@ -459,18 +459,25 @@ On y trouve:
 
 [⇪ haut de page](#le-systeme)
 
-#### Onglet Effets (pour le Gardien)
+#### Onglet Effets _pour le Gardien_
 
-Les effets du personnage, avec une description, une source et une durée.
+Les effets (souvent des bonus, malus ou états) assignés au personnage, avec une description, une source et une durée.
 
 * Temporaire
 * Passif
 * Inactif
 * Status
+  * Vulnérable 
+  * Inconscient(e) 
+  * Blessure grave 
+  * Mourant(e) 
+  * Folie passagère 
+  * Folie persistante 
+  * Mort 
 
 [⇪ haut de page](#le-systeme)
 
-#### Onglet Notes du Gardien (pour le Gardien)
+#### Onglet Notes du Gardien _pour le Gardien_
 
 On (le Gardien) y trouve:
 
@@ -482,6 +489,17 @@ On (le Gardien) y trouve:
 
 [⇪ haut de page](#le-systeme)
 
+#### Onglet Développement Création 
+
+Lorsque le Gardien active ces phases dans ses outils , cela vous permet d'accéder à un nouvel onglet accessible derrière un petit ruban bleu en haut à gauche de la fiche .
+
+Vous pouvez y:
+
+* répartir vos points à la création
+* faire vos jets d'expérience pendant les phases de développement sur les compétences cochées . Vous pouvez cliquer sur les compétences où vous vous êtes distingué ou alors directement sur le bouton-texte _Phase de Développement_.
+
+[⇪ haut de page](#le-systeme)
+
 ### Créer un Investigateur
 
 Les types de création: [guidée](#creation-guidee), [à moitié](#creation-semi-guidee-par-compendium), [à la main](#creation-manuelle).
@@ -490,7 +508,7 @@ Les types de création: [guidée](#creation-guidee), [à moitié](#creation-semi
 
 **Accessible** via  pour le Gardien dans son menu ou dans le menu Foundry  Acteur, en bas, via le lien.
 
-Il se base sur les **setups** présents dans les compendiums de votre monde (dont ceux du système et des modules installés et activés) en rapport avec l'**époque** de jeu de votre monde.
+Il se base sur les **setups** présents dans les compendiums  de votre monde (dont ceux du système et des modules installés et activés) en rapport avec l'**époque** de jeu de votre monde.
 
 **ATTENTION**, si vous avez installé et activé le module en anglais Investigator Wizard, on va vous proposer des tas d'occupations: en français ET en anglais ! Désactivez-le.
 
@@ -521,7 +539,7 @@ Etape 5: **Choix de l'occupation**
 
 Etape 6: **Compétences de l'occupation**
 
-* Choisissez vos compétences d'occupation jusqu'à ce que le petit icône rouge en bas disparaisse: cela activera le bouton Suivant.
+* Choisissez vos compétences d'occupation jusqu'à ce que la petite icône rouge en bas disparaisse: cela activera le bouton Suivant.
 
 Etape 7: **Dépenser les points de compétence**
 
@@ -529,7 +547,7 @@ Etape 7: **Dépenser les points de compétence**
 * La seconde pour les compétences personnelles.
 * La troisième pour les compétences d'occupation.
 * Attention au Crédit, ne pas dépasser !
-* Répartissez vos points jusqu'à ce que le petit icône rouge en bas disparaisse: cela activera le bouton Suivant.
+* Répartissez vos points jusqu'à ce que la petite icône rouge en bas disparaisse: cela activera le bouton Suivant.
 
 Etape 8: **Détails de l'Investigateur**
 
@@ -558,12 +576,12 @@ Et c'est parti !
 * Dans le menu Acteurs , cliquez sur Créer un acteur.
 * Choisissez _character_.
 * Donnez lui un nom puis _Créer acteur_.
-* Vérifiez bien d'être (c'est au Gardien de la faire) en mode **création**  ET en mode **développement** .
+* Vérifiez bien d'être (c'est au Gardien de la faire) en mode **création**  (outils du Gardien).
 * Allez dans le menu Compendium  de Foundry, dossier _CoC7-fr_, compendium _.création_, dossier _.Création_.
 * Choisissez **votre époque et votre mode de tirage** (par exemple: Investigateur/trice 20's Aléatoire), et faîtes-le glisser sur votre fiche de personnage encore vierge.
 * _La magie opère :)_
 * Lancez les dés pour les caracs puis Valider.
-* Retournez dans le menu Compendium  de Foundry, dossier _CoC7-fr_, compendium _.création_, dossier _Occupations.
+* Retournez dans le menu Compendium  de Foundry, dossier _CoC7-fr_, compendium _.création_, dossier _Occupations_.
 * Choisissez votre **occupation** et faîtes-la glisser sur votre fiche.
 * Choisissez les **compétences**, répondez aux **choix** proposés.
 * Cliquez sur l'onglet  dans le ruban bleu en haut à gauche de la fiche.
@@ -588,51 +606,50 @@ Et c'est parti !
 
 ### Lire un livre du Mythe
 
-Vous devez savoir parler la langue de l'Ouvrage.
+Vous devez savoir parler la **langue** de l'Ouvrage (attention à bien avoir les mêmes orthographes et majuscules des 2 côtés).
 
-* Allez dans votre inventaire / Ouvrages.
+* Allez dans votre inventaire / **Ouvrages**.
 * Pour l'ouvrage qui vous intéresse, cliquez sur .
 * Cliquez sur _Première lecture_.
 * Puis cliquez sur **le +** à droite de la barre pour effectuer toutes les phases d'étude jusqu'au bout.
+* Vous pourrez alors aussi utiliser les sorts de l'onglet Sorts du livre.
 
 ### Jeter un sort
 
-* Allez dans votre inventaire / Sort.
+* Allez dans votre inventaire / **Sort**.
 * Pour le Sort qui vous intéresse, cliquez sur .
 
 ou
 
-* Allez dans votre inventaire / Ouvrage.
+* Allez dans votre inventaire / **Ouvrage**.
 * Choisir un Ouvrage que vous avez étudié entièrement.
 * Cliquez sur .
-* Allez dans l'onglet Sorts de l'Ouvrage.
+* Allez dans l'onglet **Sorts** de l'Ouvrage.
 * Cliquez sur le Sort.
 
 puis
 
-* Cliquez sur JET ou JET CACHE.
-* Le chat vous indique:
+* Cliquez sur **JET** ou **JET CACHE**.
+* Le chat  vous indique:
   * la perte de Points de Magie à appliquer à la main.
   * la perte de Points de SAN à appliquer à la main.
   * La description et les effets du sort.
 
 [⇪ haut de page](#le-systeme)
 
-## Le Combat
+## Le Combat 
 
-
-
-### Menu combat de Foundry 
+### Menu combat de Foundry
 
 Il n'est pas obligatoire de le lancer mais il permet de gérer:
 
 * l'**initiative** des participants.
 * les **tours** (en mettant en valeur le personnage actif).
-* de voir aussi les choses de façon centralisées.
+* de voir aussi les choses de façon centralisée.
 
 Pour l'utiliser:
 
-* sélectionnez les participants au combat sur la scène
+* sélectionnez les tokens des **participants** au combat sur la scène
 * ```Click Droit```: icône en bas à droite (2 épées derrière un bouclier)
 * cliquer dans le menu Foundry à droite: 
 * et vous pouvez commencer le combat.
@@ -641,54 +658,157 @@ Pour l'utiliser:
 
 **Sélectionner sa cible**
 
-* Passez la souris au-dessus du token, puis touche T (Shift + T pour en ajouter plusieurs). Quatre triangles apparaissent aux coins du token.
-* OU ```Click Droit``` sur le token cible et cliquez sur l'icône Cible.
+* Passez la souris au-dessus du token, puis touche **T** (Shift + T pour en ajouter plusieurs). Quatre triangles apparaissent aux coins du token.
+* OU ```Click Droit``` sur le token cible et cliquez sur l'icône Cible .
 
-Cliquez ensuite sur **le nom de l'arme utilisée** (pas la compétence de combat !).
+Cliquez ensuite sur **le nom de l'arme utilisée** (pas la compétence de combat !) pour faire le jet.
 
 **Carte de chat : jet de compétence de combat**
 
 Vous pouvez spécifier dans cette carte:
 
-* la distance de la cible
-* les conditions (viser, tir auto, surprise, ...)
-* d'éventuels dés additionnels
+* la **distance** de la cible
+* les **conditions** (viser, tir auto, surprise, ...)
+* d'éventuels **dés** additionnels
 
 Puis
 
-* cliquer sur le bouton en bas de la carte, qui va se transformer et vous proposer de jeter les dégâts si le tir à réussi.
-* si le tir est **manqué**, en cliquant sur la carte du chat, on vous proposera éventuellement de dépenser des points de Chance pour réussir ou améliorer.
+* cliquer sur le bouton en bas de la carte, qui va se transformer et vous proposer de jeter les **dégâts** si le tir à réussi.
+* si le tir est **manqué**, en cliquant sur la carte du chat, sur votre résultat aux dés, on vous proposera éventuellement de dépenser des points de Chance pour réussir ou améliorer.
 
-Vous pouvez alors infliger les dégâts en cliquant sur le bouton ! Ils seront appliqués automatiquement. **Sans cible désignée**, vous devrez les appliquer vous-même.
+Vous pouvez alors **infliger** les dégâts en cliquant sur le bouton ! Ils seront appliqués automatiquement. **Sans cible désignée**, vous devrez les appliquer vous-même.
 
 **Corps à Corps**
 
-Une fois le jet lancé une fiche de réaction de la cible apparaît. Elle peut:
+Une fois le jet lancé une fiche de **réaction** de la cible apparaît. Elle peut:
 
 * esquiver
 * parer
 * riposter
 * ...
 
-Si le coup porte, lancez les dégâts puis:
+Si le coup **porte**, lancez les **dégâts** puis:
 
-* l'armure sera visible dans la carte de chat  (vous pouvez la modifier)
-* si vous n'aviez pas sélectionné de cible, vous pouvez cliquer sur le token de la scène qui est la cible, et cliquer sur le petit icône avec une silhouette sur la carte de chat à côté du total des dégâts.
+* l'**armure** sera visible dans la carte de chat  (vous pouvez la modifier)
+* si vous n'aviez pas sélectionné de **cible**, vous pouvez cliquer sur le **token** de la scène qui est la cible, et cliquer sur la petite icône avec une silhouette sur la carte de chat à côté du total des dégâts .
 
 [⇪ haut de page](#le-systeme)
 
-## Les Objets
+## Les Effets 
 
+Ils sont de différents types:
 
+* **Temporaire**: à durée limitée.
+* **Passif**: sans durée définie.
+* **Inactif**: temporaire ou passif, plus actif (durée dépassée,...).
+* **Status**: implique un status particulier type mort, blessé,...
 
-Les voici: [archétype](#archetype) (archetype), [armure](#armure) (armor), [livre](#livre) (book), [poursuite](#poursuite) (chase), [package d'expérience](#package-dexperience) (experiencePackage), [objet](#objet) (item), [occupation](#occupation), [créateur](#createur) (setup), [compétence](#competence) (skill), [sort](#sort) (spell), [status](#status), [talent](#talent), [arme](#arme) (weapon).
+Détails d'un effet/status:
+
+* **Détails**
+  * Couleur: couleur de l'icône sur le token sur la scène si l'effet est actif.
+  * Description.
+  * Suspendu: il devient alors inactif.
+  * États:
+    * Folie passagère / Folie / Blessure grave / Mourant(e) / Mort / Inconscient / À terre: transforme l'effet en status.
+    * Les autres états sont: Endormi / Étourdi / Entravé / Paralysé / En vol / Aveugle / Sourd / Réduit au silence / Apeuré / Brûlant / Gelé / Choqué / Corrodé / Saignement / Malade / Empoisonné / Maudit / Régénère / Dégénère / En lévitation / Enterré / Amélioré / Affaibli / Invisible / Ciblé / Marqué / Béni / Protection contre le feu / Protection contre le froid / Protection magique / Protection sacrée
+* **Durées**:
+  * durée, départ,...
+* Changements:
+  * Les **modes**:
+    * Personnalisation: ne sert pas.
+    * __Multiplier__: x
+    * __Ajouter__ > modifier: 10 = +10, -10 = -10.
+    * __Baisser__ > minorer: ne remplace la valeur que si celle-ci est inférieure à celle d'origine.
+    * __Augmenter__ > majorer: ne remplace la valeur que si celle-ci est supérieure à celle d'origine.
+    * __Surcharger__: remplace la valeur.
+  * pour modifier une statistique du personnage. Voici les formules, il faut garder la dénomination anglaise:
+
+**Caractéristiques**
+
+```
+Force:
+system.characteristics.str.value
+system.characteristics.str.bonusDice
+Constitution:
+system.characteristics.con.value
+system.characteristics.con.bonusDice
+Taille:
+system.characteristics.siz.value
+system.characteristics.siz.bonusDice
+Dextérité:
+system.characteristics.dex.value
+system.characteristics.dex.bonusDice
+Apparence:
+system.characteristics.app.value
+system.characteristics.app.bonusDice
+Intelligence:
+system.characteristics.int.value
+system.characteristics.int.bonusDice
+Pouvoir:
+system.characteristics.pow.value
+system.characteristics.pow.bonusDice
+Education:
+system.characteristics.edu.value
+system.characteristics.edu.bonusDice
+```
+
+**Attributs**
+
+```
+Chance:
+system.attribs.lck.value
+system.attribs.lck.bonusDice
+SAN:
+system.attribs.san.value
+system.attribs.san.bonusDice
+Mouvement:
+system.attribs.mov.value
+Build:
+system.attribs.build.value
+Bonus aux dégâts:
+system.attribs.db.value
+Armure:
+system.attribs.armor.value
+```
+
+**Dérivés** (on ne peut modifier que le max.)
+
+```
+Points de vie:
+system.attribs.hp.max
+SAN:
+system.attribs.san.max
+```
+
+**Compétences**
+
+Elles sont identifiées par leur nom, attention aux majuscules/minuscules et cette fois, c'est en **français**, comme sur la fiche dans le nom qui apparaît en haut de la description de la compétence  :
+
+```
+Charme
+system.skills.Charme.value
+system.skills.Charme.bonusDice
+Combat rapproché (Corps à corps)
+system.skills.Combat rapproché (Corps à corps).value
+system.skills.Combat rapproché (Corps à corps).bonusDice
+```
+
+[⇪ haut de page](#le-systeme)
+
+## Les Objets 
+
+Les voici:
+
+* [livre](#livre) (book), [objet](#objet) (item), [sort](#sort) (spell), [arme](#arme) (weapon).
+* [archétype](#archetype) (archetype) _[TODO]_, [armure](#armure) (armor) _[TODO]_, [poursuite](#poursuite) (chase) _[TODO]_, [package d'expérience](#package-dexperience) (experiencePackage) _[TODO]_, [occupation](#occupation) _[TODO]_, [créateur](#createur) (setup) _[TODO]_, [compétence](#competence) (skill) _[TODO]_, [status](#status) _[TODO]_, [talent](#talent) _[TODO]_.
 
 Pour utiliser les objets, livres, sorts,... stockés dans les **compendiums** , il faut d'abord les **importer**:
 
 * soit un ```Click Droit``` sur un compendium: _Importer tout le contenu_.
 * soit un ```Click Droit``` sur l'item choisi: _Importer l'entité_.
 
-Il ne faut pas utiliser directement des données des compendiums.
+Il ne faut __pas utiliser directement__ des données des compendiums.
 
 ### Archétype
 
@@ -705,11 +825,11 @@ _A glisser/déposer sur un Acteur._
 ### Livre
 
 * Auteur, date, langue (attention, elle doit être écrite exactement comme celle parlée par le/les personnages).
-* Onglet Description
-* Onglet Détails: choisir le Type,
+* Onglet **Description**
+* Onglet **Détails**: choisir le Type,
   * cela fait apparaître des données complémentaires à préciser dont le temps d'étude, la perte de SAN,...
   * cela fait apparaître l'onglet Sorts: y glisser/déposer les sorts choisis.
-* Le type Autres permet d'ajouter des gains de compétences.
+* Le type **Autres** permet d'ajouter des gains de compétences.
 
 _A glisser/déposer sur un Acteur._
 
@@ -735,7 +855,7 @@ _A glisser/déposer sur un Acteur._
 
 ### Créateur
 
-Objet à glisser sur une fiche de personnage vierge pour accompagner et conduire la création.
+Objet à glisser sur une fiche de personnage vierge pour accompagner et conduire la création (aussi appelé **setup**).
 
 [TODO]
 
@@ -752,6 +872,8 @@ _A glisser/déposer sur un Acteur ou sur un Ouvrage._
 
 ### Status
 
+Voir: [effets](#les-effets).
+
 [TODO]
 
 ### Talent
@@ -764,26 +886,24 @@ Pour le _Pulp_.
 
 Choisir le **type**: Mêlée / À distance, Manœuvre, Lancé, Fusil à pompe, Canon Double, À empalement, Rafale, Automatique, +Imp/2 / +Imp, Silencieuse, Spécial, Montée, À Souffle, Étourdissante, Rare, Brûle.
 
-Compétence principale (par exemple: _Armes de poing_), Portée(s) en yard, Dommage(s).
+Compétence **principale** (par exemple: _Armes de poing_), Portée(s) en yard, Dommage(s).
 
-Dans l'onglet Détails: choisir la/les époques, Panne, Cadence, Max/round, Capacité, Balles/rafale, Rayon, le Prix.
+Dans l'onglet **Détails**: choisir la/les époques, Panne, Cadence, Max/round, Capacité, Balles/rafale, Rayon, le Prix.
 
 _A glisser/déposer sur un Acteur._
 
 [⇪ haut de page](#le-systeme)
 
-## Les Acteurs
+## Les Acteurs 
 
-
-
-Les voici: [personnage](#personnage) (character), [contenant](#contenant) (container), [créature](#creature) (creature), [protagoniste](#protagoniste) (npc), [véhicule](#vehicule) (vehicle)
+Les voici: [personnage](#personnage) (character), [contenant](#contenant) (container), [créature](#creature) (creature), [protagoniste](#protagoniste) (npc), [véhicule](#vehicule) (vehicle) _[TODO]_
 
 Pour utiliser les créatures stockées dans les **compendiums** , il faut d'abord les **importer**:
 
 * soit un ```Click Droit``` sur un compendium: _Importer tout le contenu_.
 * soit un ```Click Droit``` sur l'item choisi: _Importer l'entité_.
 
-Il ne faut pas utiliser directement des données des compendiums.
+Il ne faut __pas utiliser directement__ des données des compendiums.
 
 ### Personnage
 
@@ -791,13 +911,13 @@ Voir [Créer un Investigateur](#creer-un-investigateur).
 
 ### Contenant
 
-Acteur qui peut contenir (par glissé/déposé) des objets: objets, ouvrages, sorts, armes, armures.
+**Acteur** qui peut **contenir** (par glissé/déposé) des objets: objets, ouvrages, sorts, armes, armures.
 
-Les personnages qui ont les droits _Propriétaire_ dessus pourront alors les y prendre ou les y ranger (comme un coffre, une cave,...) via l'icône .
+Les personnages qui ont les droits _Propriétaire_ dessus pourront alors les y **prendre** ou les y **ranger** (comme un coffre, une cave,...) via l'icône .
 
 ### Créature
 
-Lorsque vous avez importé une créature d'un compendium et vous créez son **token** sur une scène, si elle a des compétences définies **aléatoirement**, le système va vous demander de Jeter les dés, prendre les Moyennes ou Passer cette étape.
+Lorsque vous avez importé une créature d'un compendium et vous créez son **token** sur une scène, si elle a des compétences définies **aléatoirement**, le système va vous demander de *Jeter* les dés, prendre les **Moyennes** ou **Passer** cette étape.
 
 **La fiche de créature**
 
@@ -809,19 +929,19 @@ Les menus/icônes de la **barre** du haut de la fiche:
 
 Et en-**dessous**, sur la fiche:
 
-*  Précise si le personnage est son **token** sont liés: toute modif de l'un impactera potentiellement l'autre (très utile !).
+*  Précise si la créature et son **token** sont liés: toute modif de l'un impactera potentiellement l'autre (très utile ! Surtout pour des créatures unique comme le Grand Cthu...).
 
 En **bas à gauche du portrait**: 4 icônes.
 
-*  Génère des caractéristiques aléatoires
-*  Prends les caractéristiques moyennes
-*   Permet ou non la modification de la fiche.
-*   Bascule entre le mode formule (3D6+3) ou valeur (15).
+*  Génère des caractéristiques **aléatoires**
+*  Prends les caractéristiques **moyennes**
+*   Permet ou non la **modification** de la fiche.
+*   Bascule entre le mode **formule** (3D6+3) ou **valeur** (15).
 
 Et pour le **token** spécifiquement:
 
-*  Signifie que ce token est une instance d'acteur (token et créature ne sont pas liés: les modifications faites sur l'un n'impactent pas l'autre).
-*   Signifie que c'est un token.
+*  Signifie que ce token est une **instance** d'acteur (token et créature ne sont pas liés: les modifications faites sur l'un n'impactent pas l'autre).
+*   Signifie que c'est un **token**.
 
 Le reste:
 
@@ -963,11 +1083,3 @@ La Chance est une caractéristique un peu à part dans le profil d’un investig
 La Chance remonte progressivement lors des phases de développement avec un test d’expérience classique.
 
 [⇪ haut de page](#le-systeme)
-
-Légende:
-dé  module  engrenage  scène  chat  combat 
-objet  acteur  compendium  table  journal  macro 
-outils du gardien 🐙 / lancer! 🎲 / créer un lien 🔗
- Phase de développement  Mode création de personnage  CoC ID: remplacement des Acteur Item
- Installez votre compendium  Import de Protagoniste  Création de Personnage guidée
- Gain d'expérience  Envoyer un jet leurre aux joueurs  Se reposer

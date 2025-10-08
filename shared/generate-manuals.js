@@ -111,6 +111,10 @@ const sources = {
         file: 'actor_importer.md'
       },
       {
+        name: 'Chaosium Canvas Interface',
+        file: 'cci.md'
+      },
+      {
         name: 'Character Creation',
         file: 'character_creation.md'
       },
@@ -393,7 +397,7 @@ try {
       let input = fs.readFileSync(rootFolder + '/module/manual/' + lang + '/' + sources[lang].pages[page].file, 'utf8')
 
       const mdFile = input
-        .replace(/\[(fas fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g, '')
+        .replace(/\[(fa[^ ]+ fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g, '')
         .replace(/@@coc7./g, '@coc7.')
         .replace(/@Compendium\[[^\]]+\.[^\\.]+\]{([^}]+)}/g, '[_$1_]')
 
@@ -414,7 +418,7 @@ try {
 
       const html = md.render(input)
         .replace(
-          /\[(fas fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g,
+          /\[(fa[^ ]+ fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g,
           '<em class="$1">&nbsp;</em>'
         )
         .replace(/src="..\/..\/assets\//g, 'src="systems/CoC7/assets/')
