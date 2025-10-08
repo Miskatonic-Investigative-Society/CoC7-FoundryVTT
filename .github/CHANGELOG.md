@@ -13,9 +13,10 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Implement Chaosium Canvas Interface (CCI)
 - Update to French localization, thanks to @vonv #1903, #1904, #1932,
 - Update to French manual, thanks to @vonv #1908 - #1931 / #1933 - #1934
-- Update to Swedish localization, thanks to @Rangertheman #1902
+- Update to Swedish localization, thanks to @Rangertheman #1902 and #1948
 
 ## Version 7.20
 
