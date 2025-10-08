@@ -14,8 +14,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 [pl.json (47 untranslated strings)](#pljson)
 
-[sv.json (46 untranslated strings)](#svjson)
-
 
 ## cn.json
 47 untranslated strings
@@ -275,56 +273,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 47 untranslated strings
 ```
 "CoC7.ToolTipSeeNotes": "See notes",
-"TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: Map Pin Toggle",
-"TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument": "CCI: Open Document",
-"TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene",
-"TYPES.RegionBehavior.ChaosiumCanvasInterfaceTileToggle": "CCI: Tile Toggle",
-"CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Title": "Show",
-"CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Hint": "Should this show or hide the the map pin and documents",
-"CoC7.ChaosiumCanvasInterface.MapPinToggle.Document.Title": "Select Documents",
-"CoC7.ChaosiumCanvasInterface.MapPinToggle.Document.Hint": "Set ownership on these documents",
-"CoC7.ChaosiumCanvasInterface.MapPinToggle.Note.Title": "Scene Notes",
-"CoC7.ChaosiumCanvasInterface.MapPinToggle.Note.Hint": "Set the texture of the map pin on these scene notes",
-"CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionShow.Title": "Show Permission",
-"CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionShow.Hint": "When set to show set document ownership to this level",
-"CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionHide.Title": "Hide Permisison",
-"CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionHide.Hint": "When set to hide set document ownership to this level",
-"CoC7.ChaosiumCanvasInterface.OpenDocument.Permission.Title": "Can click if",
-"CoC7.ChaosiumCanvasInterface.OpenDocument.Permission.Hint": "",
-"CoC7.ChaosiumCanvasInterface.OpenDocument.Document.Title": "Select Document",
-"CoC7.ChaosiumCanvasInterface.OpenDocument.Document.Hint": "Which Journal Entry / Journal Entry Page / Actor",
-"CoC7.ChaosiumCanvasInterface.OpenDocument.Anchor.Title": "Optional Anchor",
-"CoC7.ChaosiumCanvasInterface.OpenDocument.Anchor.Hint": "If loading a JournalEntryPage jump to anchor",
-"CoC7.ChaosiumCanvasInterface.Permission.Always": "Always",
-"CoC7.ChaosiumCanvasInterface.Permission.Document": "Can See Document",
-"CoC7.ChaosiumCanvasInterface.Permission.GM": "Keeper",
-"CoC7.ChaosiumCanvasInterface.Permission.SeeTile": "Can See Tile",
-"CoC7.ChaosiumCanvasInterface.ToScene.Permission.Title": "Can click if",
-"CoC7.ChaosiumCanvasInterface.ToScene.Permission.Hint": "",
-"CoC7.ChaosiumCanvasInterface.ToScene.Scene.Title": "Select Scene",
-"CoC7.ChaosiumCanvasInterface.ToScene.Scene.Hint": "",
-"CoC7.ChaosiumCanvasInterface.ToScene.Tile.Title": "Select Tile",
-"CoC7.ChaosiumCanvasInterface.ToScene.Tile.Hint": "Select Tile that must be visible",
-"CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Title": "Show",
-"CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Hint": "Should this show or hide the the map pin and documents",
-"CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Title": "Select Tile",
-"CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Hint": "Set visibility of these tiles",
-"CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntry.Title": "Select Journal Entries",
-"CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntry.Hint": "",
-"CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntryPage.Title": "Select Journal Entry Pages",
-"CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntryPage.Hint": "",
-"CoC7.ChaosiumCanvasInterface.TileToggle.RegionBehavior.Title": "Select Region Behaviors",
-"CoC7.ChaosiumCanvasInterface.TileToggle.RegionBehavior.Hint": "Enable/Disable these Region Behaviors",
-"CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocument.Title": "Permission for Documents",
-"CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocument.Hint": "When set to show set Document ownership to this level",
-"CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPage.Title": "Permission for Journal Entry Pages",
-"CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPage.Hint": "When set to show set Journal Entry Page ownership to this level",
-"CoC7.ChaosiumCanvasInterface.TileToggle.RegionUuids.Title": "Then trigger these CCI Regions on Right Click",
-"CoC7.ChaosiumCanvasInterface.TileToggle.RegionUuids.Hint": ""
-```
-## sv.json
-46 untranslated strings
-```
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: Map Pin Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument": "CCI: Open Document",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene",
