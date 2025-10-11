@@ -215,6 +215,7 @@
   "background": "systems/CoC7/assets/images/system-background.jpg",
   "documentTypes": {
     "RegionBehavior": {
+      "ChaosiumCanvasInterfaceDrawingToggle": {},
       "ChaosiumCanvasInterfaceMapPinToggle": {},
       "ChaosiumCanvasInterfaceOpenDocument": {},
       "ChaosiumCanvasInterfaceToScene": {},
