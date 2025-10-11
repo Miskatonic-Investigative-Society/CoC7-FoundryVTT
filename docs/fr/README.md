@@ -192,6 +192,7 @@ Rappel de règles: [2. Les tests - lancer 1D100](#2-les-tests-lancer-1d100), [3.
 
 * Barre d'[outils du gardien](#barre-doutils-du-gardien)   .
 * [Import de protagoniste](#import-de-protagoniste) via copié/collé de texte.
+* NOUVEAU: Le CCI / [Chaosium Canvas Interface](#chaosium-canvas-interface) ou boîte à outils pour la gestion des **régions** (Foundry) avec les aides de jeu et autres.
 
 Dans toutes les fiches, si une petite icône  est présente, en la cliquant, vous arrivez sur une section qui vous permet de prendre des notes **visibles** uniquement par vous.
 
@@ -316,6 +317,78 @@ Sortilèges: Invoquer Vonv, Recherche dans Toc.
 Il apparaîtra dans les Acteurs, dans le dossier _Personnage importé_ et la fiche s'ouvrira à la fin du processus.
 
 _Vous pouvez aller en chercher sur Toc:_ https://www.tentacules.net/toc/toc/tocyclo.php?type_rech=crea _et_ https://www.tentacules.net/toc/toc/tocyclo.php?type_rech=pnj.
+
+[⇪ haut de page](#le-systeme)
+
+### Chaosium Canvas Interface
+
+FoundryVTT v12 a implémenté les  Régions de scène, qui permettent de déclencher des  Comportements en fonction des interactions avec les jetons. La Base de connaissances de FoundryVTT contient des informations sur l'utilisation des Notes de carte, des Régions de scène et des Tuiles. Il est recommandé d'avoir une compréhension de base de chacun de ces éléments avant de continuer.
+
+#### Comportements supplémentaires des Régions de scène
+
+Événements Cliquables étend cette fonctionnalité pour permettre aux interactions de la souris d'exécuter des macros. Chaosium Canvas Interface est une version simplifiée qui facilite l'ajout de ces fonctionnalités à vos propres scènes.
+Vous pouvez obtenir l'UUID des Notes de carte, des Régions de scène et des Tuiles en cliquant sur le bouton  Copier l'UUID du document dans l'en-tête.
+
+#### CCI: Basculer la visibilité des Notes de carte
+
+Cette fonctionnalité permet de créer un interrupteur pour la visibilité des Notes de carte par les joueurs. Elle nécessite deux régions: une pour afficher la note et une autre pour la masquer. Seul le MJ (Gardien) peut déclencher cette action.
+
+* **Afficher**: Détermine si le clic sur cette région affichera ou masquera la Note de carte aux joueurs.
+* **Notes de scène**: Entrez l'UUID de la Note de carte, puis appuyez sur le bouton Ajouter le document.
+* **Documents sélectionnés**: Ces documents verront leurs permissions modifiées. Ils doivent correspondre à la même Entrée de journal ou Page de journal que la Note de carte. Vous pouvez glisser-déposer le document ici ou ajouter l'UUID de la même manière que pour les Notes de scène.
+* **Permission d'affichage**: Lorsque la case Afficher est cochée et que la Région de scène est déclenchée, les permissions par défaut des Documents sélectionnés seront définies sur cette valeur.
+* **Permission de masquage**: Lorsque la case Afficher n'est pas cochée et que la Région de scène est déclenchée, les permissions par défaut des Documents sélectionnés seront définies sur cette valeur.
+
+_Exemple_: Utilisation d'une Note de carte, de deux Tuiles et de deux Régions de scène.
+Les images des tuiles sont disponibles aux chemins suivants:
+
+```
+systems/CoC7/assets/art/eye-red.svg
+systems/CoC7/assets/art/eye-green.svg
+```
+
+#### CCI: Ouvrir un document
+
+Cette fonctionnalité permet d'ouvrir un Document (par exemple, une Entrée de journal, une Page de journal ou un Acteur).
+
+* **Cliquer si**: Qui peut cliquer sur cette région ?
+  * Toujours: Tous les utilisateurs.
+  * Peut voir le document: Seuls les utilisateurs ayant la permission de voir le document.
+  * Gardien: Seuls les MJ (Gardiens).
+* **Sélectionner le document**: Entrez l'UUID du document, puis appuyez sur le bouton Ajouter le document.
+* **Ancre optionnelle**: Si le document est une Page de journal, vous pouvez optionnellement définir une ancre.
+
+#### CCI: Basculer la visibilité d'une Tuile
+
+Cette fonctionnalité est conçue pour être utilisée avec CCI: Ouvrir un document (ci-dessus) afin d'afficher et de masquer une Tuile, qui possède une Région de scène CCI: Ouvrir un document. Elle nécessite deux régions: une pour afficher et une autre pour masquer. Seul le MJ (Gardien) peut déclencher cette action.
+
+* **Afficher**: Détermine si le clic sur cette région affichera ou masquera les Tuiles, Entrées de journal et Pages de journal concernées. Peut également être utilisé pour activer ou désactiver d'autres Comportements de région.
+* **Sélectionner la Tuile**: Entrez l'UUID de la Tuile, puis appuyez sur le bouton Ajouter le document.
+* **Sélectionner les Entrées de journal**: Entrez l'UUID comme pour Sélectionner la Tuile ou glissez-déposez ici.
+* **Permission pour les Documents**: Si Afficher est coché, les Documents auront cette permission par défaut.
+* **Sélectionner les Pages de journal**: Entrez l'UUID comme pour Sélectionner la Tuile ou glissez-déposez ici.
+* **Permission pour les Pages de journal**: Si Afficher est coché, les Pages de journal auront cette permission par défaut.
+* **Sélectionner le Comportement de région**: Entrez l'UUID comme pour Sélectionner la Tuile.
+* **Déclencher ces Régions CCI sur clic droit**: Si cette région est utilisée avec une autre, vous pouvez déclencher l'action de clic gauche sur celle-ci en faisant un clic droit sur cette région.
+
+Exemple: Utilisation de trois Tuiles et de trois Régions de scène.
+Les images des tuiles sont disponibles aux chemins suivants:
+
+```
+systems/CoC7/assets/art/eye-red.svg
+systems/CoC7/assets/art/eye-green.svg
+```
+
+#### CCI: Changer de scène
+
+Cette fonctionnalité permet de passer d'une Scène à une autre.
+
+* **Peut cliquer si**: Qui peut cliquer sur cette région ?
+  * Toujours: Tous les utilisateurs.
+  * Gardien: Seuls les MJ (Gardiens).
+  * Peut voir la Tuile: Seuls les utilisateurs ayant la permission de voir la Tuile.
+* **Sélectionner la Scène**: Entrez l'UUID de la Scène, puis appuyez sur le bouton Ajouter le document.
+* **Sélectionner la Tuile**: Entrez l'UUID de la Tuile, puis appuyez sur le bouton Ajouter le document.
 
 [⇪ haut de page](#le-systeme)
 
