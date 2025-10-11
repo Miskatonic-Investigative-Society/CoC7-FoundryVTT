@@ -9,7 +9,7 @@ const abandoned = {}
 const source = jsonfile.readFileSync('./lang/en.json')
 const keys = Object.keys(source)
 
-const maxMissingKeys = 50
+const maxMissingKeys = 75
 
 glob('./lang/*.json', {}, async function (er, files) {
   await Promise.all(
