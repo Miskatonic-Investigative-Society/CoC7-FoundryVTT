@@ -24,7 +24,7 @@ If you do not have a scene active you must create a scene to use the scene contr
 
 * Click [game-icon game-icon-tentacle-strike]Keeper's tools
 * Click [fas fa-book-user]How to add to your compendium
-* Make sure you have the the correct era, language, and modules enabled in [fas fa-cogs]Game Settings
+* Make sure you have the correct era, language, and modules enabled in [fas fa-cogs]Game Settings
 * Select which Item types you want to include
 * Click [fas fa-check]Populate
 * After a short while the compendium will be popualted ready for you to edit

@@ -126,7 +126,7 @@ The following translations have more than 75 untranslated strings [are you able 
 ##### CoC7.ChaosiumCanvasInterface.DrawingToggle.RegionUuids.Title
 ```  "CoC7.ChaosiumCanvasInterface.DrawingToggle.RegionUuids.Title": "Then trigger these CCI Regions on Right Click",```
 ##### CoC7.ChaosiumCanvasInterface.DrawingToggle.Toggle.Hint
-```  "CoC7.ChaosiumCanvasInterface.DrawingToggle.Toggle.Hint": "Should this show or hide the the map pin and documents",```
+```  "CoC7.ChaosiumCanvasInterface.DrawingToggle.Toggle.Hint": "Should this show or hide the drawing and documents",```
 ##### CoC7.ChaosiumCanvasInterface.DrawingToggle.Toggle.Title
 ```  "CoC7.ChaosiumCanvasInterface.DrawingToggle.Toggle.Title": "Show",```
 ##### CoC7.ChaosiumCanvasInterface.MapPinToggle.Document.Hint
@@ -146,7 +146,7 @@ The following translations have more than 75 untranslated strings [are you able 
 ##### CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionShow.Title
 ```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.PermissionShow.Title": "Show Permission",```
 ##### CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Hint
-```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Hint": "Should this show or hide the the map pin and documents",```
+```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Hint": "Should this show or hide the map pin and documents",```
 ##### CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Title
 ```  "CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Title": "Show",```
 ##### CoC7.ChaosiumCanvasInterface.OpenDocument.Anchor.Hint
@@ -198,7 +198,7 @@ The following translations have more than 75 untranslated strings [are you able 
 ##### CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Title
 ```  "CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Title": "Select Tile",```
 ##### CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Hint
-```  "CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Hint": "Should this show or hide the the map pin and documents",```
+```  "CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Hint": "Should this show or hide the tile and documents",```
 ##### CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Title
 ```  "CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Title": "Show",```
 ##### CoC7.ChaosiumCanvasInterface.ToScene.Permission.Hint
