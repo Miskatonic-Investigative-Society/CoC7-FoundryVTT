@@ -13,7 +13,7 @@ You can get the UUID for Drawing, Map Notes, Scene Regions, and Tiles by clickin
 ## CCI: Drawing Toggle
 This can be used like CCI Tile Toggle (below) to show and hide a Drawing. It requires two regions, one to show and the other to hide. This can only be triggered by the GM (Keeper).
 
-- **Show** - Define if clicking on this region will show or hide the the relevant Drawings, Journal Entries, and Journal Entry Pages. It can also be used to enable or disable other Region Behaviors
+- **Show** - Define if clicking on this region will show or hide the relevant Drawings, Journal Entries, and Journal Entry Pages. It can also be used to enable or disable other Region Behaviors
 - **Select Drawing** - Enter the UUID of the Drawing and then press the Add Document button.
 - **Select Journal Entries** - Enter the UUID as per Select Drawing or Drag it here
 - **Permission for Documents** - If Show is ticked the Documents will have this default permission
@@ -53,7 +53,7 @@ This is designed to open a Document (e.g. Journal Entry, Journal Entry Page, or 
 ## CCI: Tile Toggle
 This is designed to be used with CCI Open Document (above) to show and hide a Tile, which has an CCI: Open Document Scene Region. It requires two regions, one to show and the other to hide. This can only be triggered by the GM (Keeper).
 
-- **Show** - Define if clicking on this region will show or hide the the relevant Tiles, Journal Entries, and Journal Entry Pages. It can also be used to enable or disable other Region Behaviors
+- **Show** - Define if clicking on this region will show or hide the relevant Tiles, Journal Entries, and Journal Entry Pages. It can also be used to enable or disable other Region Behaviors
 - **Select Tile** - Enter the UUID of the Tile and then press the Add Document button.
 - **Select Journal Entries** - Enter the UUID as per Select Tile or Drag it here
 - **Permission for Documents** - If Show is ticked the Documents will have this default permission
