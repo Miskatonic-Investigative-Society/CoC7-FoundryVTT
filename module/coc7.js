@@ -36,14 +36,11 @@ import RenderCoC7CreatureSheet from './hooks/render-coc7-creature-sheet.js'
 import RenderCoC7DirectoryPicker from './hooks/render-coc7-directory-picker.js'
 import RenderCoC7NPCSheet from './hooks/render-coc7-npc-sheet.js'
 import RenderCombatTracker from './hooks/render-combat-tracker.js'
+import RenderDialogV2 from './hooks/render-dialog-v2.js'
 import RenderGamePause from './hooks/render-game-pause.js'
 import RenderItemSheet from './hooks/render-item-sheet.js'
 import RenderJournalEntryPageTextSheet from './hooks/render-journal-entry-page-text-sheet.js'
 import RenderJournalEntrySheet from './hooks/render-journal-entry-sheet.js'
-import RenderJournalSheet from './hooks/render-journal-sheet.js'
-import RenderJournalTextPageSheet from './hooks/render-journal-text-page-sheet.js'
-import RenderPause from './hooks/render-pause.js'
-import RenderPlayerList from './hooks/render-player-list.js'
 import RenderPlayers from './hooks/render-players.js'
 import RenderRealRoll from './hooks/render-real-roll.js'
 import RenderSceneControls from './hooks/render-scene-controls.js'
@@ -72,15 +69,10 @@ Hooks.on('drawNote', DrawNote)
 Hooks.on('dropActorSheetData', DropActorSheetData)
 Hooks.on('dropCanvasData', DropCanvasData)
 Hooks.on('getHeaderControlsJournalEntrySheet', GetHeaderControlsJournalEntrySheet)
-Hooks.on('getJournalSheetHeaderButtons', GetHeaderControlsJournalEntrySheet) /* // FoundryVTT v12 */
 Hooks.on('getHeaderControlsMacroConfig', GetHeaderControlsMacroConfig)
-Hooks.on('getMacroConfigHeaderButtons', GetHeaderControlsMacroConfig) /* // FoundryVTT v12 */
 Hooks.on('getHeaderControlsPlaylistConfig', GetHeaderControlsPlaylistConfig)
-Hooks.on('getPlaylistConfigHeaderButtons', GetHeaderControlsPlaylistConfig) /* // FoundryVTT v12 */
 Hooks.on('getHeaderControlsRollTableSheet', GetHeaderControlsRollTableSheet)
-Hooks.on('getRollTableConfigHeaderButtons', GetHeaderControlsRollTableSheet) /* // FoundryVTT v12 */
 Hooks.on('getHeaderControlsSceneConfig', GetHeaderControlsSceneConfig)
-Hooks.on('getSceneConfigHeaderButtons', GetHeaderControlsSceneConfig) /* // FoundryVTT v12 */
 Hooks.on('getSceneControlButtons', GetSceneControlButtons)
 Hooks.on('hotbarDrop', HotbarDrop)
 Hooks.on('renderActorDirectory', RenderActorDirectory)
@@ -92,14 +84,11 @@ Hooks.on('renderCoC7CreatureSheet', RenderCoC7CreatureSheet)
 Hooks.on('renderCoC7DirectoryPicker', RenderCoC7DirectoryPicker)
 Hooks.on('renderCoC7NPCSheet', RenderCoC7NPCSheet)
 Hooks.on('renderCombatTracker', RenderCombatTracker)
+Hooks.on('renderDialogV2', RenderDialogV2)
 Hooks.on('renderGamePause', RenderGamePause)
 Hooks.on('renderItemSheet', RenderItemSheet)
 Hooks.on('renderJournalEntryPageTextSheet', RenderJournalEntryPageTextSheet)
 Hooks.on('renderJournalEntrySheet', RenderJournalEntrySheet)
-Hooks.on('renderJournalSheet', RenderJournalSheet) /* // FoundryVTT v12 */
-Hooks.on('renderJournalTextPageSheet', RenderJournalTextPageSheet) /* // FoundryVTT v12 */
-Hooks.on('renderPause', RenderPause) /* // FoundryVTT v12 */
-Hooks.on('renderPlayerList', RenderPlayerList) /* // FoundryVTT v12 */
 Hooks.on('renderPlayers', RenderPlayers)
 Hooks.on('renderSceneControls', RenderSceneControls)
 Hooks.on('renderSettings', RenderSettings)
