@@ -9,12 +9,21 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.22
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add CCI: Drawing Toggle which works the same way as Tile Toggle
+- Update to Change i18n strings for Actor/Item types, thanks to @ryotai-trpg #1907
+- Update to French localization, thanks to @vonv #1953
+- Update to French manual, thanks to @vonv #1952
+
 ## Version 7.21
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Implement Chaosium Canvas Interface (CCI)
-- Update to French localization, thanks to @vonv #1903, #1904, #1932,
+- Update to French localization, thanks to @vonv #1903, #1904, and #1932
 - Update to French manual, thanks to @vonv #1908 - #1931 / #1933 - #1934
 - Update to Swedish localization, thanks to @Rangertheman #1902 and #1948
 

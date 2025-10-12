@@ -25,7 +25,7 @@ If you do not have a scene active you must create a scene to use the scene contr
 
 * Click Keeper's tools
 * Click How to add to your compendium
-* Make sure you have the the correct era, language, and modules enabled in Game Settings
+* Make sure you have the correct era, language, and modules enabled in Game Settings
 * Select which Item types you want to include
 * Click Populate
 * After a short while the compendium will be popualted ready for you to edit

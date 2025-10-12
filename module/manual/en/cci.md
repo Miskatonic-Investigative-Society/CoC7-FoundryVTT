@@ -2,14 +2,26 @@
 
 FoundryVTT v12 implemented [fa-regular fa-game-board]Scene Regions which allows you to trigger [fa-solid fa-child-reaching]Behaviors based on token interactions.
 
-The FoundryVTT Knowledge Base has information on using [Map Notes](https://foundryvtt.com/article/map-notes/), [Scene Regions](https://foundryvtt.com/article/scene-regions/), and [Tiles](https://foundryvtt.com/article/tiles/) it is recommend you have a basic understanding of each before continuing.
+The FoundryVTT Knowledge Base has information on using [Drawings](https://foundryvtt.com/article/drawings/), [Map Notes](https://foundryvtt.com/article/map-notes/), [Scene Regions](https://foundryvtt.com/article/scene-regions/), and [Tiles](https://foundryvtt.com/article/tiles/) it is recommend you have a basic understanding of each before continuing.
 
 ## Additional Scene Region Behaviors
 Clickable Events extends this to allow mouse interactions to run macros, Chaosium Canvas Interface is a simplified version that makes it easier to add to your own scenes.
 
-You can get the UUID for Map Notes, Scene Regions, and Tiles by clicking the [fa-solid fa-passport]Copy Document UUID button in the header.
+You can get the UUID for Drawing, Map Notes, Scene Regions, and Tiles by clicking the [fa-solid fa-passport]Copy Document UUID button in the header.
 
-### CCI: Map Note Toggle
+## CCI: Drawing Toggle
+This can be used like CCI Tile Toggle (below) to show and hide a Drawing. It requires two regions, one to show and the other to hide. This can only be triggered by the GM (Keeper).
+
+- **Show** - Define if clicking on this region will show or hide the relevant Drawings, Journal Entries, and Journal Entry Pages. It can also be used to enable or disable other Region Behaviors
+- **Select Drawing** - Enter the UUID of the Drawing and then press the Add Document button.
+- **Select Journal Entries** - Enter the UUID as per Select Drawing or Drag it here
+- **Permission for Documents** - If Show is ticked the Documents will have this default permission
+- **Select Journal Entry Pages** - Enter the UUID as per Select Drawing or Drag it here
+- **Permission for Journal Entry Pages** - If Show is ticked the Journal Entry Pages will have this default permission
+- **Select Region Behavior** - Enter the UUID as per Select Drawing
+- **Then trigger these CCI Regions on Right Click** - If this is being used with another region, you can trigger the Left Click action on it by Right Clicking this one
+
+## CCI: Map Note Toggle
 This is designed to make a toggle for player Map Note visibility and requires two regions, one to show the Map Note and one to hide it. This can only be triggered by the GM (Keeper).
 
 - **Show** - Define if clicking on this region will show or hide the Map Note to the players
@@ -27,7 +39,7 @@ The tile images are available on these paths systems/CoC7/assets/art/eye-red.svg
 ![](../../assets/manual/cci/map_note_toggle_region.webp)
 Viewing the Scene Region layer
 
-### CCI: Open Document
+## CCI: Open Document
 This is designed to open a Document (e.g. Journal Entry, Journal Entry Page, or Actor).
 
 - **Click If** - Who can click on this region
@@ -37,10 +49,10 @@ This is designed to open a Document (e.g. Journal Entry, Journal Entry Page, or 
 - **Select Document** - Enter the UUID of the Document and then press the Add Document button.
 - **Optional Anchor** - If the Document is a Journal Entry Page you can optionally set the anchor
 
-### CCI: Tile Toggle
+## CCI: Tile Toggle
 This is designed to be used with CCI Open Document (above) to show and hide a Tile, which has an CCI: Open Document Scene Region. It requires two regions, one to show and the other to hide. This can only be triggered by the GM (Keeper).
 
-- **Show** - Define if clicking on this region will show or hide the the relevant Tiles, Journal Entries, and Journal Entry Pages. It can also be used to enable or disable other Region Behaviors
+- **Show** - Define if clicking on this region will show or hide the relevant Tiles, Journal Entries, and Journal Entry Pages. It can also be used to enable or disable other Region Behaviors
 - **Select Tile** - Enter the UUID of the Tile and then press the Add Document button.
 - **Select Journal Entries** - Enter the UUID as per Select Tile or Drag it here
 - **Permission for Documents** - If Show is ticked the Documents will have this default permission
@@ -58,7 +70,7 @@ The tile images are available on these paths systems/CoC7/assets/art/eye-red.svg
 ![](../../assets/manual/cci/tile_toggle_region.webp)
 Viewing the Scene Region layer
 
-### CCI: To Scene
+## CCI: To Scene
 This is designed to move between Scenes
 
 - **Can click if** - Who can click on this region

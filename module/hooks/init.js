@@ -5,7 +5,7 @@ import { registerSettings } from '../scripts/register-settings.js'
 import { registerSheets } from '../scripts/register-sheets.js'
 import { rollInitiative } from '../combat.js'
 import { handlebarsHelper } from '../scripts/handlebars-helper.js'
-import { compendiumFilter } from '../scripts/compendium-filter.js'
+import CompendiumFilter from '../scripts/compendium-filter.js'
 import { COC7 } from '../config.js'
 import { CoC7Link } from '../apps/coc7-link.js'
 import { CoC7Utilities } from '../utilities.js'
@@ -13,6 +13,7 @@ import { CoCID } from '../scripts/coc-id.js'
 import DiceSoNiceReadyLast from './dice-so-nice-ready-last.js'
 import CoC7ClickableEvents from '../apps/coc7-clickable-events.js'
 import { DamageCard } from '../chat/cards/damage.js'
+import deprecated from '../deprecated.js'
 
 export default function () {
   if (foundry.utils.isNewerVersion(game.version, '13')) {
@@ -59,11 +60,12 @@ export default function () {
   registerSettings()
   registerSheets()
   handlebarsHelper()
-  compendiumFilter()
+  CompendiumFilter()
   CoCID.init()
   CoC7Link.init()
   Hooks.once('diceSoNiceReady', DiceSoNiceReadyLast)
   CoC7ClickableEvents.initSelf()
+  deprecated.init()
 
   CONFIG.TextEditor.enrichers.push({
     pattern: /@chaosiumUUID\[([^#\]]+)(?:#([^\]]+))?](?:{([^}]+)})?/gi,

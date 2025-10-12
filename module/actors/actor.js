@@ -711,11 +711,11 @@ export class CoCActor extends Actor {
   async createEmptyArmor (event = null) {
     const showSheet = event ? !event.shiftKey : true
     const data = {
-      name: game.i18n.localize('CoC7.Entities.Armor'),
+      name: game.i18n.localize('TYPES.Item.armor'),
       type: 'armor',
       effects: [
         {
-          name: game.i18n.localize('CoC7.Entities.Armor'),
+          name: game.i18n.localize('TYPES.Item.armor'),
           changes: [
             {
               key: 'system.attribs.armor.value',
