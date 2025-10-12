@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 7.22
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Add CCI: Drawing Toggle which works the same way as Tile Toggle
 - Update to Change i18n strings for Actor/Item types, thanks to @ryotai-trpg #1907
 - Update to French localization, thanks to @vonv #1953
