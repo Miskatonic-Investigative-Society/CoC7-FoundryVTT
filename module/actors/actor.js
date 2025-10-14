@@ -2937,16 +2937,23 @@ export class CoCActor extends Actor {
       weapon = weapons[0]
     }
 
+    let weaponID =
+      typeof weaponData.uuid === "string"
+        ? (weaponData.uuid.includes(".")
+            ? weaponData.uuid.split(".").pop()
+            : weaponData.uuid)
+        : weapon.id;
+
     if (!weapon.system.properties.rngd) {
       if (game.user.targets.size > 1) {
         ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'))
       }
 
-      const card = new CoC7MeleeInitiator(this.tokenKey, (weaponData.uuid || weapon.id), fastForward)
+      const card = new CoC7MeleeInitiator(this.tokenKey, weaponID, fastForward)
       card.createChatCard()
     }
     if (weapon.system.properties.rngd) {
-      const card = new CoC7RangeInitiator(this.tokenKey, (weaponData.uuid || weapon.id), fastForward)
+      const card = new CoC7RangeInitiator(this.tokenKey, weaponID, fastForward)
       card.createChatCard()
     }
   }
