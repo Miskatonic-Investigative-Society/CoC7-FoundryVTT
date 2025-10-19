@@ -2,6 +2,7 @@
 import ChaosiumCanvasInterfaceDrawingToggle from './chaosium-canvas-interface-drawing-toggle.js'
 import ChaosiumCanvasInterfaceMapPinToggle from './chaosium-canvas-interface-map-pin-toggle.js'
 import ChaosiumCanvasInterfaceOpenDocument from './chaosium-canvas-interface-open-document.js'
+import ChaosiumCanvasInterfacePlaySound from './chaosium-canvas-interface-play-sound.js'
 import ChaosiumCanvasInterfaceToScene from './chaosium-canvas-interface-to-scene.js'
 import ChaosiumCanvasInterfaceTileToggle from './chaosium-canvas-interface-tile-toggle.js'
 import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
@@ -18,16 +19,23 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
       CONFIG.Note.documentClass = NoteDocumentPolyfill
       class TileDocumentPolyfill extends CONFIG.Tile.documentClass {
         get name () {
-          return (this.id)
+          return this.id
         }
       }
       CONFIG.Tile.documentClass = TileDocumentPolyfill
+      class DrawingDocumentPolyfill extends CONFIG.Drawing.documentClass {
+        get name () {
+          return this.id
+        }
+      }
+      CONFIG.Drawing.documentClass = DrawingDocumentPolyfill
     }
 
     const known = [
       ChaosiumCanvasInterfaceDrawingToggle,
       ChaosiumCanvasInterfaceMapPinToggle,
       ChaosiumCanvasInterfaceOpenDocument,
+      ChaosiumCanvasInterfacePlaySound,
       ChaosiumCanvasInterfaceToScene,
       ChaosiumCanvasInterfaceTileToggle
     ]

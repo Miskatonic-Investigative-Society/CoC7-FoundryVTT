@@ -43,6 +43,7 @@ import RenderJournalEntryPageTextSheet from './hooks/render-journal-entry-page-t
 import RenderJournalEntrySheet from './hooks/render-journal-entry-sheet.js'
 import RenderPlayers from './hooks/render-players.js'
 import RenderRealRoll from './hooks/render-real-roll.js'
+import RenderRegionConfig from './hooks/render-region-config.js'
 import RenderSceneControls from './hooks/render-scene-controls.js'
 import RenderSettings from './hooks/render-settings.js'
 import RenderSettingsConfig from './hooks/render-settings-config.js'
@@ -90,6 +91,7 @@ Hooks.on('renderItemSheet', RenderItemSheet)
 Hooks.on('renderJournalEntryPageTextSheet', RenderJournalEntryPageTextSheet)
 Hooks.on('renderJournalEntrySheet', RenderJournalEntrySheet)
 Hooks.on('renderPlayers', RenderPlayers)
+Hooks.on('renderRegionConfig', RenderRegionConfig)
 Hooks.on('renderSceneControls', RenderSceneControls)
 Hooks.on('renderSettings', RenderSettings)
 Hooks.on('renderSettingsConfig', RenderSettingsConfig)

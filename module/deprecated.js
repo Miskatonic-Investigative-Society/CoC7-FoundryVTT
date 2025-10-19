@@ -9,6 +9,7 @@ import RenderJournalSheet from './hooks/render-journal-sheet.js'
 import RenderJournalTextPageSheet from './hooks/render-journal-text-page-sheet.js'
 import RenderPause from './hooks/render-pause.js'
 import RenderPlayerList from './hooks/render-player-list.js'
+import RenderRegionBehaviorConfig from './hooks/render-region-behavior-config.js'
 
 export default class deprecated {
   /**
@@ -26,6 +27,7 @@ export default class deprecated {
       Hooks.on('renderJournalTextPageSheet', RenderJournalTextPageSheet)
       Hooks.on('renderPause', RenderPause)
       Hooks.on('renderPlayerList', RenderPlayerList)
+      Hooks.on('renderRegionBehaviorConfig', RenderRegionBehaviorConfig)
     }
   }
 }
