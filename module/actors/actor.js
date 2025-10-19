@@ -2871,82 +2871,129 @@ export class CoCActor extends Actor {
   }
 
   async weaponCheck (weaponData, fastForward = false) {
-    let weapon
+    let item
+    const weapons = []
+    let needed = true
+    const candidateIds = []
+    let candidateNames = []
+    // Get weapon from UUID and check it belongs to this Actor
     if (typeof weaponData.uuid !== 'undefined') {
-      weapon = await fromUuid(weaponData.uuid)
-    }
-    if (typeof weaponData.id !== 'undefined') {
-      weapon = this.items.get(weaponData.id)
-    }
-    if (!weapon) {
-      let weapons = this.getItemsFromName(weaponData.name)
-      if (weapons.length === 0) {
-        if (game.user.isGM) {
-          let item = null
-          const pack = weaponData.pack ? game.packs.get(weaponData.pack) : null
-          if (pack) {
-            if (pack.metadata.entity !== 'Item') return
-            item = await pack.getDocument(weaponData.id)
-          } else if (weaponData.id) {
-            item = game.items.get(weaponData.id)
-          }
-
-          if (!item) {
-            return ui.notifications.warn(
-              game.i18n.localize('CoC7.WarnMacroNoItemFound')
-            )
-          }
-
-          let create = false
-          await Dialog.confirm({
-            title: `${game.i18n.localize('CoC7.AddWeapon')}`,
-            content: `<p>${game.i18n.format('CoC7.AddWeapontHint', {
-              weapon: weaponData.name,
-              actor: this.name
-            })}</p>`,
-            yes: () => {
-              create = true
-            }
-          })
-          const actor =
-            typeof this.parent?.actor !== 'undefined' ? this.parent.actor : this
-
-          if (create === true) {
-            await actor.createEmbeddedDocuments('Item', [item.toJSON()])
-          } else return
-          weapons = actor.getItemsFromName(item.name)
-          if (!weapons.length) return
-          await weapons[0].reload()
+      const weapon = await fromUuid(weaponData.uuid)
+      if (weapon && weapon.type === 'weapon') {
+        weapons.push(weapon)
+        if (weapon.parent.id === this.id) {
+          needed = false
         } else {
-          ui.notifications.warn(
-            game.i18n.format('CoC7.ErrorActorHasNoWeaponNamed', {
-              actorName: this.name,
-              weaponName: weaponData.name
-            })
-          )
-          return
+          const parsedUuid = foundry.utils.parseUuid(weaponData.uuid)
+          if (typeof parsedUuid.id !== 'undefined') {
+            candidateIds.push(parsedUuid.id)
+          }
         }
-      } else if (weapons.length > 1) {
+      }
+    }
+    if (needed && typeof weaponData.id !== 'undefined') {
+      candidateIds.push(weaponData.id)
+    }
+    // If weapon Item still needed try by Item.id
+    if (needed) {
+      for (const id of candidateIds) {
+        const weapon = this.items.get(id)
+        if (weapon && weapon.type === 'weapon') {
+          weapons.push(weapon)
+          needed = false
+          break
+        }
+      }
+    }
+    // If weapon Item still needed try by Name
+    if (needed) {
+      if (typeof weaponData.name !== 'undefined') {
+        candidateNames.push(weaponData.name)
+      }
+      for (const item of weapons) {
+        candidateNames.push(item.name)
+      }
+      candidateNames = [...new Set(candidateNames)]
+      for (const name of candidateNames) {
+        const weapon = this.items.getName(name)
+        if (weapon && weapon.type === 'weapon') {
+          weapons.push(weapon)
+          needed = false
+          break
+        }
+      }
+    }
+    // If still needed check world items by name
+    if (needed) {
+      for (const name of candidateNames) {
+        const weapon = game.items.getName(name)
+        if (weapon && weapon.type === 'weapon') {
+          weapons.push(weapon)
+          break
+        }
+      }
+    }
+    // If still needed check world items by id
+    if (needed) {
+      for (const id of candidateIds) {
+        const weapon = game.items.get(id)
+        if (weapon && weapon.type === 'weapon') {
+          weapons.push(weapon)
+          break
+        }
+      }
+    }
+    if (needed && weapons.length === 0) {
+      ui.notifications.warn('CoC7.WarnMacroNoItemFound', { localize: true })
+      return
+    } else if (needed) {
+      const weapon = weapons.pop().toObject()
+      if (!this.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)) {
         ui.notifications.warn(
-          game.i18n.format('CoC7.ErrorActorHasTooManyWeaponsNamed', {
+          game.i18n.format('CoC7.ErrorActorHasNoWeaponNamed', {
             actorName: this.name,
-            weaponName: weaponData.name
+            weaponName: weapon.name
           })
         )
+        return
       }
-      weapon = weapons[0]
+      let create = false
+      await Dialog.confirm({
+        title: `${game.i18n.localize('CoC7.AddWeapon')}`,
+        content: `<p>${game.i18n.format('CoC7.AddWeapontHint', {
+          weapon: weapon.name,
+          actor: this.name
+        })}</p>`,
+        yes: () => {
+          create = true
+        }
+      })
+      if (create === false) {
+        return
+      }
+      await this.createEmbeddedDocuments('Item', [weapon], { keepId: true })
+      item = this.items.find(doc => doc.type === 'weapon' && doc.name === weapon.name)
+      if (!item) {
+        return
+      }
+      await item.reload()
+    } else if (weapons.length) {
+      item = weapons.pop()
+    }
+    if (!item) {
+      return
     }
 
-    if (!weapon.system.properties.rngd) {
+    if (!item.system.properties.rngd) {
       if (game.user.targets.size > 1) {
-        ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'))
+        ui.notifications.warn('CoC7.WarnTooManyTarget', { localize: true })
       }
 
-      const card = new CoC7MeleeInitiator(this.tokenKey, (weaponData.uuid || weapon.id), fastForward)
+      const card = new CoC7MeleeInitiator(this.tokenKey, item.id, fastForward)
       card.createChatCard()
     }
-    if (weapon.system.properties.rngd) {
-      const card = new CoC7RangeInitiator(this.tokenKey, (weaponData.uuid || weapon.id), fastForward)
+    if (item.system.properties.rngd) {
+      const card = new CoC7RangeInitiator(this.tokenKey, item.id, fastForward)
       card.createChatCard()
     }
   }
