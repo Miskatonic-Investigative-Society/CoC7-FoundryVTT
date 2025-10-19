@@ -9,6 +9,11 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add CCI: Play Sound
+- Add ability for CCI to run from left or right click
+- Update find weapon on Actor to check more locations for Item
+- Update to Swedish localization, thanks to @Rangertheman #1963
+
 ## Version 7.22
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

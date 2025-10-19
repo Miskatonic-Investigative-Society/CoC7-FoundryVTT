@@ -19,6 +19,12 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
   static defineSchema () {
     const fields = foundry.data.fields
     return {
+      triggerButton: new fields.NumberField({
+        choices: ChaosiumCanvasInterface.triggerButtons,
+        initial: ChaosiumCanvasInterface.triggerButton.Left,
+        label: 'CoC7.ChaosiumCanvasInterface.MapPinToggle.Button.Title',
+        hint: 'CoC7.ChaosiumCanvasInterface.MapPinToggle.Button.Hint'
+      }),
       toggle: new fields.BooleanField({
         initial: false,
         label: 'CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Title',
@@ -61,7 +67,7 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
     return game.user.isGM
   }
 
-  async _handleLeftClickEvent () {
+  async #handleClickEvent () {
     game.socket.emit('system.coc7', { type: 'toggleMapNotes', toggle: true })
     /* // FoundryVTT V12 */
     game.settings.set('core', (foundry.canvas.layers?.NotesLayer ?? NotesLayer).TOGGLE_SETTING, true)
@@ -82,6 +88,18 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
       } else {
         console.error('Note ' + uuid + ' not loaded')
       }
+    }
+  }
+
+  async _handleLeftClickEvent () {
+    if (this.triggerButton === ChaosiumCanvasInterface.triggerButton.Left) {
+      this.#handleClickEvent()
+    }
+  }
+
+  async _handleRightClickEvent () {
+    if (this.triggerButton === ChaosiumCanvasInterface.triggerButton.Right) {
+      this.#handleClickEvent()
     }
   }
 }
