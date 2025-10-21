@@ -17,6 +17,12 @@ export default class ChaosiumCanvasInterfaceOpenDocument extends ChaosiumCanvasI
   static defineSchema () {
     const fields = foundry.data.fields
     return {
+      triggerButton: new fields.NumberField({
+        choices: ChaosiumCanvasInterface.triggerButtons,
+        initial: ChaosiumCanvasInterface.triggerButton.Left,
+        label: 'CoC7.ChaosiumCanvasInterface.OpenDocument.Button.Title',
+        hint: 'CoC7.ChaosiumCanvasInterface.OpenDocument.Button.Hint'
+      }),
       permission: new fields.StringField({
         blank: false,
         choices: Object.keys(ChaosiumCanvasInterfaceOpenDocument.PERMISSIONS).reduce((c, k) => { c[k] = game.i18n.localize(ChaosiumCanvasInterfaceOpenDocument.PERMISSIONS[k]); return c }, {}),
@@ -53,18 +59,28 @@ export default class ChaosiumCanvasInterfaceOpenDocument extends ChaosiumCanvasI
     return false
   }
 
-  async _handleLeftClickEvent () {
-    if (this.documentUuid) {
-      const doc = await fromUuid(this.documentUuid)
-      if (doc?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)) {
-        if (doc instanceof JournalEntryPage) {
-          doc.parent.sheet.render(true, { pageId: doc.id, anchor: this.anchor })
-        } else {
-          doc.sheet.render(true)
-        }
+  async #handleClickEvent () {
+    const doc = await fromUuid(this.documentUuid)
+    if (doc?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)) {
+      if (doc instanceof JournalEntryPage) {
+        doc.parent.sheet.render(true, { pageId: doc.id, anchor: this.anchor })
       } else {
-        console.error('Document ' + this.documentUuid + ' not loaded')
+        doc.sheet.render(true)
       }
+    } else {
+      console.error('Document ' + this.documentUuid + ' not loaded')
+    }
+  }
+
+  async _handleLeftClickEvent () {
+    if (this.documentUuid && this.triggerButton === ChaosiumCanvasInterface.triggerButton.Left) {
+      this.#handleClickEvent()
+    }
+  }
+
+  async _handleRightClickEvent () {
+    if (this.documentUuid && this.triggerButton === ChaosiumCanvasInterface.triggerButton.Right) {
+      this.#handleClickEvent()
     }
   }
 }

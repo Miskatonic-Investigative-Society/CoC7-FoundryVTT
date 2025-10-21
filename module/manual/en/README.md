@@ -1,4 +1,4 @@
-# System documentation for version 7.21
+# System documentation for version 7.23
 
 This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
 
@@ -18,8 +18,7 @@ This documentation can be reopened under [fas fa-cogs]Game Settings -> Help and 
 
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
 
- - Chaosium Canvas Interface [CCI](cci.md)
- - Using [Compendiums](compendiums.md) to update your text
+ - Chaosium Canvas Interface [CCI](cci.md) - allow CCI to be triggered from left or right click and new CCI: Play Sound
 
 # Chaosium Modules
 - [Call of Cthulhu® - Starter Set](https://foundryvtt.com/packages/cha-coc-fvtt-en-starterset) - Contains three scenarios (Paper Chase, Edge of Darkness, and Dead Man Stomp) and instructions for playing Call of Cthulhu 7th edition.
