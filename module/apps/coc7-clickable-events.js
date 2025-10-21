@@ -13,7 +13,7 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
     if (game.release.generation === 12) {
       class NoteDocumentPolyfill extends CONFIG.Note.documentClass {
         get name () {
-          return (this.text.length ? this.text : this.label)
+          return (this.text?.length ? this.text : this.label)
         }
       }
       CONFIG.Note.documentClass = NoteDocumentPolyfill
