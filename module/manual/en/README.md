@@ -18,7 +18,7 @@ This documentation can be reopened under [fas fa-cogs]Game Settings -> Help and 
 
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
 
- - Chaosium Canvas Interface [CCI](cci.md) - add new fields and CCI: Play Sound
+ - Chaosium Canvas Interface [CCI](cci.md) - allow CCI to be triggered from left or right click and new CCI: Play Sound
 
 # Chaosium Modules
 - [Call of Cthulhu® - Starter Set](https://foundryvtt.com/packages/cha-coc-fvtt-en-starterset) - Contains three scenarios (Paper Chase, Edge of Darkness, and Dead Man Stomp) and instructions for playing Call of Cthulhu 7th edition.

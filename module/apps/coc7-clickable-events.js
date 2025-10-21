@@ -19,13 +19,13 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
       CONFIG.Note.documentClass = NoteDocumentPolyfill
       class TileDocumentPolyfill extends CONFIG.Tile.documentClass {
         get name () {
-          return this.id
+          return this.collectionName + ': ' + this.id
         }
       }
       CONFIG.Tile.documentClass = TileDocumentPolyfill
       class DrawingDocumentPolyfill extends CONFIG.Drawing.documentClass {
         get name () {
-          return this.id
+          return this.collectionName + ': ' + this.id
         }
       }
       CONFIG.Drawing.documentClass = DrawingDocumentPolyfill
