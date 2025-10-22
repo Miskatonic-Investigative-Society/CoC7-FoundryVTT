@@ -37,10 +37,12 @@ export default class ChaosiumCanvasInterfaceTileToggle extends ChaosiumCanvasInt
         label: 'CoC7.ChaosiumCanvasInterface.TileToggle.Button.Title',
         hint: 'CoC7.ChaosiumCanvasInterface.TileToggle.Button.Hint'
       }),
-      toggle: new fields.BooleanField({
-        initial: false,
-        label: 'CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Title',
-        hint: 'CoC7.ChaosiumCanvasInterface.TileToggle.Toggle.Hint'
+      action: new fields.NumberField({
+        choices: ChaosiumCanvasInterface.actionToggles,
+        initial: ChaosiumCanvasInterface.actionToggle.Off,
+        label: 'CoC7.ChaosiumCanvasInterface.DrawingToggle.Action.Title',
+        hint: 'CoC7.ChaosiumCanvasInterface.DrawingToggle.Action.Hint',
+        required: true
       }),
       tileUuids: new fields.SetField(
         new fields.DocumentUUIDField({
@@ -134,6 +136,9 @@ export default class ChaosiumCanvasInterfaceTileToggle extends ChaosiumCanvasInt
     if (typeof source.triggerButton === 'undefined' && source.regionUuids?.length) {
       source.triggerButton = ChaosiumCanvasInterfaceTileToggle.triggerButton.Both
     }
+    if (typeof source.toggle !== 'undefined' && typeof source.action === 'undefined') {
+      source.action = (source.toggle ? ChaosiumCanvasInterface.actionToggle.On : ChaosiumCanvasInterface.actionToggle.Off)
+    }
     return source
   }
 
@@ -142,16 +147,31 @@ export default class ChaosiumCanvasInterfaceTileToggle extends ChaosiumCanvasInt
   }
 
   async #handleClickEvent (button) {
+    let toggle = false
+    switch (this.action) {
+      case ChaosiumCanvasInterface.actionToggle.On:
+        toggle = true
+        break
+      case ChaosiumCanvasInterface.actionToggle.Toggle:
+        {
+          const firstUuid = this.tileUuids.first()
+          if (firstUuid) {
+            const doc = await fromUuid(firstUuid)
+            toggle = doc.hidden
+          }
+        }
+        break
+    }
     for (const uuid of this.tileUuids) {
       const doc = await fromUuid(uuid)
       if (doc) {
-        await doc.update({ hidden: !this.toggle })
+        await doc.update({ hidden: !toggle })
       } else {
         console.error('Tile ' + uuid + ' not loaded')
       }
     }
-    const permissionDocument = (!this.toggle ? this.permissionDocumentHide : this.permissionDocument)
-    const permissionPage = (!this.toggle ? this.permissionPageHide : this.permissionPage)
+    const permissionDocument = (!toggle ? this.permissionDocumentHide : this.permissionDocument)
+    const permissionPage = (!toggle ? this.permissionPageHide : this.permissionPage)
     for (const uuid of this.journalEntryUuids) {
       const doc = await fromUuid(uuid)
       if (doc) {
@@ -171,7 +191,7 @@ export default class ChaosiumCanvasInterfaceTileToggle extends ChaosiumCanvasInt
     for (const uuid of this.regionBehaviorUuids) {
       const doc = await fromUuid(uuid)
       if (doc) {
-        await doc.update({ disabled: !this.toggle })
+        await doc.update({ disabled: !toggle })
       } else {
         console.error('Region Behavior ' + uuid + ' not loaded')
       }

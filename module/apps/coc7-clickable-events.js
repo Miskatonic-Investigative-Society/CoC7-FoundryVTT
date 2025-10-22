@@ -1,4 +1,5 @@
 /* global canvas, CONFIG, CONST, DocumentSheetConfig, foundry, fromUuid, game, NotesLayer, RegionBehavior, TokenLayer */
+import ChaosiumCanvasInterfaceAmbientLightToggle from './chaosium-canvas-interface-ambient-light-toggle.js'
 import ChaosiumCanvasInterfaceDrawingToggle from './chaosium-canvas-interface-drawing-toggle.js'
 import ChaosiumCanvasInterfaceMapPinToggle from './chaosium-canvas-interface-map-pin-toggle.js'
 import ChaosiumCanvasInterfaceOpenDocument from './chaosium-canvas-interface-open-document.js'
@@ -32,6 +33,7 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
     }
 
     const known = [
+      ChaosiumCanvasInterfaceAmbientLightToggle,
       ChaosiumCanvasInterfaceDrawingToggle,
       ChaosiumCanvasInterfaceMapPinToggle,
       ChaosiumCanvasInterfaceOpenDocument,

@@ -8,7 +8,7 @@ The FoundryVTT Knowledge Base has information on using [Drawings](https://foundr
 ## Additional Scene Region Behaviors
 Clickable Events extends this to allow mouse interactions to run macros, Chaosium Canvas Interface is a simplified version that makes it easier to add to your own scenes.
 
-You can get the UUID for Drawing, Map Notes, Scene Regions, and Tiles by clicking the Copy Document UUID button in the header.
+You can get the UUID for Drawing, Lights, Map Notes, Scene Regions, and Tiles by clicking the Copy Document UUID button in the header.
 
 If you are using FoundryVTT v13 you can drag Scene Regions and Region Behaviors onto the Behaviors tab to duplicate them into your new Scene Region
 
@@ -16,7 +16,7 @@ If you are using FoundryVTT v13 you can drag Scene Regions and Region Behaviors 
 This can be used like CCI Tile Toggle (below) to show and hide a Drawing. It requires two regions, one to show and the other to hide. This can only be triggered by the GM (Keeper).
 
 - **Mouse Button** - Should this trigger on Left, Right or Both mouse buttons
-- **Show** - Define if clicking on this region will show or hide the relevant Drawings, Journal Entries, and Journal Entry Pages. It can also be used to enable or disable other Region Behaviors
+- **Action** - Define if clicking on this region will show, hide, or toggle the relevant Drawings, Journal Entries, and Journal Entry Pages. It can also be used to enable or disable other Region Behaviors
 - **Select Drawing** - Enter the UUID of the Drawing and then press the Add Document button
 - **Select Journal Entries** - Enter the UUID as per Select Drawing or Drag it here
 - **Permission for Documents** - If Show is ticked the Documents will have this default permission
@@ -29,11 +29,18 @@ This can be used like CCI Tile Toggle (below) to show and hide a Drawing. It req
 - **Trigger This Region** - Enter the UUID as per Select Drawing
 - **With A Button Click** - Trigger a Left of Right click on the above Region
 
+## CCI: Light Toggle
+This is designed to toggle multiple light sources at once. This can only be triggered by the GM (Keeper).
+
+- **Mouse Button** - Should this trigger on Left or Right mouse buttons
+- **Action** - Define if clicking on this region will turn on, off, or toggle the lights
+- **Select Light Sources** - Enter the UUID of the Light and then press the Add Document button
+
 ## CCI: Map Note Toggle
 This is designed to make a toggle for player Map Note visibility and requires two regions, one to show the Map Note and one to hide it. This can only be triggered by the GM (Keeper).
 
-- **Mouse Button** - Should this trigger on Left, Right or Both mouse buttons
-- **Show** - Define if clicking on this region will show or hide the Map Note to the players
+- **Mouse Button** - Should this trigger on Left or Right mouse buttons
+- **Action** - Define if clicking on this region will show, hide, or toggle the Map Note to the players
 - **Selected Documents** - These documents will have their permissions altered, this should be set the same Journal Entry or Journal Entry Page as the Map Note. You can drag the Document here or add the UUID using the same method as Scene Notes
 - **Scene Notes** - Enter the UUID of the Map Note and then press the Add Document button
 - **Show Permission** - When Show is ticked and the Scene Region is triggered the default permissions for Selected Documents will be set to this
@@ -51,7 +58,7 @@ Viewing the Scene Region layer
 ## CCI: Open Document
 This is designed to open a Document (e.g. Journal Entry, Journal Entry Page, or Actor).
 
-- **Mouse Button** - Should this trigger on Left, Right or Both mouse buttons
+- **Mouse Button** - Should this trigger on Left or Right mouse buttons
 - **Click If** - Who can click on this region
   - Always - All users
   - Can See Document - Only users that have permission to view the document
@@ -62,8 +69,8 @@ This is designed to open a Document (e.g. Journal Entry, Journal Entry Page, or 
 ## CCI: Play Sound
 This is designed to play/stop a sound or playlist
 
-- **Mouse Button** - Should this trigger on Left, Right or Both mouse buttons
-- **Play** - Define if clicking on this region will play or stop the playback
+- **Mouse Button** - Should this trigger on Left or Right mouse buttons
+- **Action** - Define if clicking on this region will play or stop the playback
 - **Select Playlist** - Enter the UUID of the Playlist and then press the Add Document button or Drag it here
 - **Select Playlist Sound** - Enter the UUID as per Select Playlist or Drag it here
 
@@ -71,7 +78,7 @@ This is designed to play/stop a sound or playlist
 This is designed to be used with CCI Open Document (above) to show and hide a Tile, which has an CCI: Open Document Scene Region. It requires two regions, one to show and the other to hide. This can only be triggered by the GM (Keeper).
 
 - **Mouse Button** - Should this trigger on Left, Right or Both mouse buttons
-- **Show** - Define if clicking on this region will show or hide the relevant Tiles, Journal Entries, and Journal Entry Pages. It can also be used to enable or disable other Region Behaviors
+- **Action** - Define if clicking on this region will show, hide, or toggle the relevant Tiles, Journal Entries, and Journal Entry Pages. It can also be used to enable or disable other Region Behaviors
 - **Select Tile** - Enter the UUID of the Tile and then press the Add Document button
 - **Select Journal Entries** - Enter the UUID as per Select Tile or Drag it here
 - **Permission for Documents** - If Show is ticked the Documents will have this default permission
@@ -96,7 +103,7 @@ Viewing the Scene Region layer
 ## CCI: To Scene
 This is designed to move between Scenes
 
-- **Mouse Button** - Should this trigger on Left, Right or Both mouse buttons
+- **Mouse Button** - Should this trigger on Left or Right mouse buttons
 - **Can click if** - Who can click on this region
   - Always - All users
   - Keeper - Only GM users (Keepers)

@@ -215,12 +215,13 @@
   "background": "systems/CoC7/assets/images/system-background.jpg",
   "documentTypes": {
     "RegionBehavior": {
+      "ChaosiumCanvasInterfaceAmbientLightToggle": {},
       "ChaosiumCanvasInterfaceDrawingToggle": {},
       "ChaosiumCanvasInterfaceMapPinToggle": {},
       "ChaosiumCanvasInterfaceOpenDocument": {},
       "ChaosiumCanvasInterfacePlaySound": {},
-      "ChaosiumCanvasInterfaceToScene": {},
       "ChaosiumCanvasInterfaceTileToggle": {},
+      "ChaosiumCanvasInterfaceToScene": {},
       "coc7ClickableEvents": {}
     }
   }
