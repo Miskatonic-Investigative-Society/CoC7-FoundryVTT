@@ -1551,5 +1551,11 @@
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerRegionUuids.Title": "Aktivera det här området",
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerRegionUuids.Hint": "",
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Title": "Med ett knapptryck",
-  "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Hint": ""
+  "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Hint": "",
+  "TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle": "CCI: Light Toggle",
+  "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlaySound": "CCI: Spela upp ljud",
+  "CoC7.ChaosiumCanvasInterface.DrawingToggle.Action.Title": "Händelse",
+  "CoC7.ChaosiumCanvasInterface.DrawingToggle.Action.Hint": "Ska det är visa, dölja eller växla ritningen och dokumenten",
+  "CoC7.ChaosiumCanvasInterface.OpenDocument.Button.Title": "musknappar",
+  "CoC7.ChaosiumCanvasInterface.OpenDocument.Button.Hint": "Vilken musknapp ska aktivera den här funktionen"
 }
