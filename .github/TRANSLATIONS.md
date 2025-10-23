@@ -20,25 +20,25 @@ The following translations have more than 127 untranslated strings [are you able
 
 |Key|[cn](./MISSING.md#cnjson)|[de](./MISSING.md#dejson)|[es](./MISSING.md#esjson)|[fr](./MISSING.md#frjson)|[ja](./MISSING.md#jajson)|[pl](./MISSING.md#pljson)|[sv](./MISSING.md#svjson)|[zh-TW](./MISSING.md#zh-twjson)|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**116**|**115**|**116**|**75**|**117**|**116**|**62**|**127**|
-|[CoC7.ChaosiumCanvasInterface.Actions.Hide](#coc7chaosiumcanvasinterfaceactionshide)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.Actions.Show](#coc7chaosiumcanvasinterfaceactionsshow)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.Actions.Toggle](#coc7chaosiumcanvasinterfaceactionstoggle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Hint](#coc7chaosiumcanvasinterfaceambientlighttoggleactionhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Title](#coc7chaosiumcanvasinterfaceambientlighttoggleactiontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Actions.Off](#coc7chaosiumcanvasinterfaceambientlighttoggleactionsoff)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Actions.On](#coc7chaosiumcanvasinterfaceambientlighttoggleactionson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Button.Hint](#coc7chaosiumcanvasinterfaceambientlighttogglebuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Button.Title](#coc7chaosiumcanvasinterfaceambientlighttogglebuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Light.Hint](#coc7chaosiumcanvasinterfaceambientlighttogglelighthint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Light.Title](#coc7chaosiumcanvasinterfaceambientlighttogglelighttitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.Buttons.Both](#coc7chaosiumcanvasinterfacebuttonsboth)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.Buttons.Left](#coc7chaosiumcanvasinterfacebuttonsleft)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.Buttons.Right](#coc7chaosiumcanvasinterfacebuttonsright)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|**Remaining**:|**116**|**115**|**116**|**75**|**117**|**116**|**6**|**127**|
+|[CoC7.ChaosiumCanvasInterface.Actions.Hide](#coc7chaosiumcanvasinterfaceactionshide)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Actions.Show](#coc7chaosiumcanvasinterfaceactionsshow)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Actions.Toggle](#coc7chaosiumcanvasinterfaceactionstoggle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Hint](#coc7chaosiumcanvasinterfaceambientlighttoggleactionhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Off](#coc7chaosiumcanvasinterfaceambientlighttoggleactionoff)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.On](#coc7chaosiumcanvasinterfaceambientlighttoggleactionon)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Title](#coc7chaosiumcanvasinterfaceambientlighttoggleactiontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Button.Hint](#coc7chaosiumcanvasinterfaceambientlighttogglebuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Button.Title](#coc7chaosiumcanvasinterfaceambientlighttogglebuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Light.Hint](#coc7chaosiumcanvasinterfaceambientlighttogglelighthint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Light.Title](#coc7chaosiumcanvasinterfaceambientlighttogglelighttitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Buttons.Both](#coc7chaosiumcanvasinterfacebuttonsboth)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Buttons.Left](#coc7chaosiumcanvasinterfacebuttonsleft)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Buttons.Right](#coc7chaosiumcanvasinterfacebuttonsright)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.Action.Hint](#coc7chaosiumcanvasinterfacedrawingtoggleactionhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.Action.Title](#coc7chaosiumcanvasinterfacedrawingtoggleactiontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.Button.Hint](#coc7chaosiumcanvasinterfacedrawingtogglebuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.Button.Title](#coc7chaosiumcanvasinterfacedrawingtogglebuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.Button.Hint](#coc7chaosiumcanvasinterfacedrawingtogglebuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.Button.Title](#coc7chaosiumcanvasinterfacedrawingtogglebuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.Drawing.Hint](#coc7chaosiumcanvasinterfacedrawingtoggledrawinghint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.Drawing.Title](#coc7chaosiumcanvasinterfacedrawingtoggledrawingtitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.JournalEntry.Hint](#coc7chaosiumcanvasinterfacedrawingtogglejournalentryhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
@@ -47,24 +47,24 @@ The following translations have more than 127 untranslated strings [are you able
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.JournalEntryPage.Title](#coc7chaosiumcanvasinterfacedrawingtogglejournalentrypagetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionDocument.Hint](#coc7chaosiumcanvasinterfacedrawingtogglepermissiondocumenthint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionDocument.Title](#coc7chaosiumcanvasinterfacedrawingtogglepermissiondocumenttitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionDocumentHide.Hint](#coc7chaosiumcanvasinterfacedrawingtogglepermissiondocumenthidehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionDocumentHide.Title](#coc7chaosiumcanvasinterfacedrawingtogglepermissiondocumenthidetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionDocumentHide.Hint](#coc7chaosiumcanvasinterfacedrawingtogglepermissiondocumenthidehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionDocumentHide.Title](#coc7chaosiumcanvasinterfacedrawingtogglepermissiondocumenthidetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionPage.Hint](#coc7chaosiumcanvasinterfacedrawingtogglepermissionpagehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionPage.Title](#coc7chaosiumcanvasinterfacedrawingtogglepermissionpagetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionPageHide.Hint](#coc7chaosiumcanvasinterfacedrawingtogglepermissionpagehidehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionPageHide.Title](#coc7chaosiumcanvasinterfacedrawingtogglepermissionpagehidetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionPageHide.Hint](#coc7chaosiumcanvasinterfacedrawingtogglepermissionpagehidehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.PermissionPageHide.Title](#coc7chaosiumcanvasinterfacedrawingtogglepermissionpagehidetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.RegionBehavior.Hint](#coc7chaosiumcanvasinterfacedrawingtoggleregionbehaviorhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.DrawingToggle.RegionBehavior.Title](#coc7chaosiumcanvasinterfacedrawingtoggleregionbehaviortitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerAsButton.Hint](#coc7chaosiumcanvasinterfacedrawingtoggletriggerasbuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerAsButton.Title](#coc7chaosiumcanvasinterfacedrawingtoggletriggerasbuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerButton.Hint](#coc7chaosiumcanvasinterfacedrawingtoggletriggerbuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerButton.Title](#coc7chaosiumcanvasinterfacedrawingtoggletriggerbuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerRegionUuids.Hint](#coc7chaosiumcanvasinterfacedrawingtoggletriggerregionuuidshint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerRegionUuids.Title](#coc7chaosiumcanvasinterfacedrawingtoggletriggerregionuuidstitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Action.Hint](#coc7chaosiumcanvasinterfacemappintoggleactionhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Action.Title](#coc7chaosiumcanvasinterfacemappintoggleactiontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Button.Hint](#coc7chaosiumcanvasinterfacemappintogglebuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Button.Title](#coc7chaosiumcanvasinterfacemappintogglebuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerAsButton.Hint](#coc7chaosiumcanvasinterfacedrawingtoggletriggerasbuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerAsButton.Title](#coc7chaosiumcanvasinterfacedrawingtoggletriggerasbuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerButton.Hint](#coc7chaosiumcanvasinterfacedrawingtoggletriggerbuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerButton.Title](#coc7chaosiumcanvasinterfacedrawingtoggletriggerbuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerRegionUuids.Hint](#coc7chaosiumcanvasinterfacedrawingtoggletriggerregionuuidshint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.TriggerRegionUuids.Title](#coc7chaosiumcanvasinterfacedrawingtoggletriggerregionuuidstitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Action.Hint](#coc7chaosiumcanvasinterfacemappintoggleactionhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Action.Title](#coc7chaosiumcanvasinterfacemappintoggleactiontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Button.Hint](#coc7chaosiumcanvasinterfacemappintogglebuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Button.Title](#coc7chaosiumcanvasinterfacemappintogglebuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.MapPinToggle.Document.Hint](#coc7chaosiumcanvasinterfacemappintoggledocumenthint)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.MapPinToggle.Document.Title](#coc7chaosiumcanvasinterfacemappintoggledocumenttitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.MapPinToggle.Note.Hint](#coc7chaosiumcanvasinterfacemappintogglenotehint)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
@@ -85,44 +85,44 @@ The following translations have more than 127 untranslated strings [are you able
 |[CoC7.ChaosiumCanvasInterface.Permission.Document](#coc7chaosiumcanvasinterfacepermissiondocument)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.Permission.GM](#coc7chaosiumcanvasinterfacepermissiongm)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.Permission.SeeTile](#coc7chaosiumcanvasinterfacepermissionseetile)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Hint](#coc7chaosiumcanvasinterfaceplaysoundactionhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Title](#coc7chaosiumcanvasinterfaceplaysoundactiontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Actions.Play](#coc7chaosiumcanvasinterfaceplaysoundactionsplay)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Actions.Stop](#coc7chaosiumcanvasinterfaceplaysoundactionsstop)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Button.Hint](#coc7chaosiumcanvasinterfaceplaysoundbuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Button.Title](#coc7chaosiumcanvasinterfaceplaysoundbuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Hint](#coc7chaosiumcanvasinterfaceplaysoundplaylisthint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Title](#coc7chaosiumcanvasinterfaceplaysoundplaylisttitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Hint](#coc7chaosiumcanvasinterfaceplaysoundsoundhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Title](#coc7chaosiumcanvasinterfaceplaysoundsoundtitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint](#coc7chaosiumcanvasinterfacetiletoggleactionhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title](#coc7chaosiumcanvasinterfacetiletoggleactiontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.Button.Hint](#coc7chaosiumcanvasinterfacetiletogglebuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.Button.Title](#coc7chaosiumcanvasinterfacetiletogglebuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Hint](#coc7chaosiumcanvasinterfaceplaysoundactionhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Play](#coc7chaosiumcanvasinterfaceplaysoundactionplay)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Stop](#coc7chaosiumcanvasinterfaceplaysoundactionstop)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Title](#coc7chaosiumcanvasinterfaceplaysoundactiontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Button.Hint](#coc7chaosiumcanvasinterfaceplaysoundbuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Button.Title](#coc7chaosiumcanvasinterfaceplaysoundbuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Hint](#coc7chaosiumcanvasinterfaceplaysoundplaylisthint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Title](#coc7chaosiumcanvasinterfaceplaysoundplaylisttitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Hint](#coc7chaosiumcanvasinterfaceplaysoundsoundhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Title](#coc7chaosiumcanvasinterfaceplaysoundsoundtitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint](#coc7chaosiumcanvasinterfacetiletoggleactionhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title](#coc7chaosiumcanvasinterfacetiletoggleactiontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.Button.Hint](#coc7chaosiumcanvasinterfacetiletogglebuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.Button.Title](#coc7chaosiumcanvasinterfacetiletogglebuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntry.Hint](#coc7chaosiumcanvasinterfacetiletogglejournalentryhint)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntry.Title](#coc7chaosiumcanvasinterfacetiletogglejournalentrytitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntryPage.Hint](#coc7chaosiumcanvasinterfacetiletogglejournalentrypagehint)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.JournalEntryPage.Title](#coc7chaosiumcanvasinterfacetiletogglejournalentrypagetitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocument.Hint](#coc7chaosiumcanvasinterfacetiletogglepermissiondocumenthint)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocument.Title](#coc7chaosiumcanvasinterfacetiletogglepermissiondocumenttitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocumentHide.Hint](#coc7chaosiumcanvasinterfacetiletogglepermissiondocumenthidehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocumentHide.Title](#coc7chaosiumcanvasinterfacetiletogglepermissiondocumenthidetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocumentHide.Hint](#coc7chaosiumcanvasinterfacetiletogglepermissiondocumenthidehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionDocumentHide.Title](#coc7chaosiumcanvasinterfacetiletogglepermissiondocumenthidetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPage.Hint](#coc7chaosiumcanvasinterfacetiletogglepermissionpagehint)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPage.Title](#coc7chaosiumcanvasinterfacetiletogglepermissionpagetitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPageHide.Hint](#coc7chaosiumcanvasinterfacetiletogglepermissionpagehidehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPageHide.Title](#coc7chaosiumcanvasinterfacetiletogglepermissionpagehidetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPageHide.Hint](#coc7chaosiumcanvasinterfacetiletogglepermissionpagehidehint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.PermissionPageHide.Title](#coc7chaosiumcanvasinterfacetiletogglepermissionpagehidetitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.RegionBehavior.Hint](#coc7chaosiumcanvasinterfacetiletoggleregionbehaviorhint)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.RegionBehavior.Title](#coc7chaosiumcanvasinterfacetiletoggleregionbehaviortitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Hint](#coc7chaosiumcanvasinterfacetiletoggletilehint)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.TileToggle.Tile.Title](#coc7chaosiumcanvasinterfacetiletoggletiletitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Hint](#coc7chaosiumcanvasinterfacetiletoggletriggerasbuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Title](#coc7chaosiumcanvasinterfacetiletoggletriggerasbuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerButton.Hint](#coc7chaosiumcanvasinterfacetiletoggletriggerbuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerButton.Title](#coc7chaosiumcanvasinterfacetiletoggletriggerbuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerRegionUuids.Hint](#coc7chaosiumcanvasinterfacetiletoggletriggerregionuuidshint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerRegionUuids.Title](#coc7chaosiumcanvasinterfacetiletoggletriggerregionuuidstitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.ToScene.Button.Hint](#coc7chaosiumcanvasinterfacetoscenebuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.ToScene.Button.Title](#coc7chaosiumcanvasinterfacetoscenebuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Hint](#coc7chaosiumcanvasinterfacetiletoggletriggerasbuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Title](#coc7chaosiumcanvasinterfacetiletoggletriggerasbuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerButton.Hint](#coc7chaosiumcanvasinterfacetiletoggletriggerbuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerButton.Title](#coc7chaosiumcanvasinterfacetiletoggletriggerbuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerRegionUuids.Hint](#coc7chaosiumcanvasinterfacetiletoggletriggerregionuuidshint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.TriggerRegionUuids.Title](#coc7chaosiumcanvasinterfacetiletoggletriggerregionuuidstitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.ToScene.Button.Hint](#coc7chaosiumcanvasinterfacetoscenebuttonhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.ToScene.Button.Title](#coc7chaosiumcanvasinterfacetoscenebuttontitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.ToScene.Permission.Hint](#coc7chaosiumcanvasinterfacetoscenepermissionhint)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.ToScene.Permission.Title](#coc7chaosiumcanvasinterfacetoscenepermissiontitle)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.ToScene.Scene.Hint](#coc7chaosiumcanvasinterfacetoscenescenehint)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
@@ -157,12 +157,12 @@ The following translations have more than 127 untranslated strings [are you able
 ```  "CoC7.ChaosiumCanvasInterface.Actions.Toggle": "Toggle",```
 ##### CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Hint
 ```  "CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Hint": "Should this turn on/off or toggle the lights",```
+##### CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Off
+```  "CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Off": "Off",```
+##### CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.On
+```  "CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.On": "On",```
 ##### CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Title
 ```  "CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Title": "Action",```
-##### CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Actions.Off
-```  "CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Actions.Off": "Off",```
-##### CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Actions.On
-```  "CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Actions.On": "On",```
 ##### CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Button.Hint
 ```  "CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Button.Hint": "Which button should trigger this behavior",```
 ##### CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Button.Title
@@ -279,12 +279,12 @@ The following translations have more than 127 untranslated strings [are you able
 ```  "CoC7.ChaosiumCanvasInterface.Permission.SeeTile": "Can See Tile",```
 ##### CoC7.ChaosiumCanvasInterface.PlaySound.Action.Hint
 ```  "CoC7.ChaosiumCanvasInterface.PlaySound.Action.Hint": "Should this play, stop, or toggle playback",```
+##### CoC7.ChaosiumCanvasInterface.PlaySound.Action.Play
+```  "CoC7.ChaosiumCanvasInterface.PlaySound.Action.Play": "Play",```
+##### CoC7.ChaosiumCanvasInterface.PlaySound.Action.Stop
+```  "CoC7.ChaosiumCanvasInterface.PlaySound.Action.Stop": "Stop",```
 ##### CoC7.ChaosiumCanvasInterface.PlaySound.Action.Title
 ```  "CoC7.ChaosiumCanvasInterface.PlaySound.Action.Title": "Action",```
-##### CoC7.ChaosiumCanvasInterface.PlaySound.Actions.Play
-```  "CoC7.ChaosiumCanvasInterface.PlaySound.Actions.Play": "Play",```
-##### CoC7.ChaosiumCanvasInterface.PlaySound.Actions.Stop
-```  "CoC7.ChaosiumCanvasInterface.PlaySound.Actions.Stop": "Stop",```
 ##### CoC7.ChaosiumCanvasInterface.PlaySound.Button.Hint
 ```  "CoC7.ChaosiumCanvasInterface.PlaySound.Button.Hint": "Which button should trigger this behavior",```
 ##### CoC7.ChaosiumCanvasInterface.PlaySound.Button.Title
