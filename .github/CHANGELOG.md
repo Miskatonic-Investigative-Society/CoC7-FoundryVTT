@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add CCI: Light Toggle
+- CCI behaviors with show/hide checkbox now have show/hide/toggle
+- Update to Swedish localization, thanks to @Rangertheman #1979
+
 ## Version 7.23
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
