@@ -61,6 +61,7 @@ This is designed to open a Document (e.g. Journal Entry, Journal Entry Page, or 
 - **Click If** - Who can click on this region
   - Always - All users
   - Can See Document - Only users that have permission to view the document
+  - Can See Tile - Only users that have permission to view the document and can see the tile
   - Keeper - Only GM users (Keepers)
 - **Select Document** - Enter the UUID of the Document and then press the Add Document button
 - **Optional Anchor** - If the Document is a Journal Entry Page you can optionally set the anchor
@@ -106,6 +107,6 @@ This is designed to move between Scenes
 - **Can click if** - Who can click on this region
   - Always - All users
   - Keeper - Only GM users (Keepers)
-  - Can See Tile - Only users that have permission to view the Tile
+  - Can See Tile - Only users that can see the tile
 - **Select Scene** - Enter the UUID of the Scene and then press the Add Document button or Drag it here
 - **Select Tile** - Enter the UUID of the Tile and then press the Add Document button
