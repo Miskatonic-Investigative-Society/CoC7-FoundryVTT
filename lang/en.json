@@ -1503,6 +1503,8 @@
   "CoC7.ChaosiumCanvasInterface.OpenDocument.Document.Hint": "Which Journal Entry / Journal Entry Page / Actor",
   "CoC7.ChaosiumCanvasInterface.OpenDocument.Anchor.Title": "Optional Anchor",
   "CoC7.ChaosiumCanvasInterface.OpenDocument.Anchor.Hint": "If loading a JournalEntryPage jump to anchor",
+  "CoC7.ChaosiumCanvasInterface.OpenDocument.Tile.Title": "Select Tile",
+  "CoC7.ChaosiumCanvasInterface.OpenDocument.Tile.Hint": "Select Tile that must be visible",
   "CoC7.ChaosiumCanvasInterface.Permission.Always": "Always",
   "CoC7.ChaosiumCanvasInterface.Permission.Document": "Can See Document",
   "CoC7.ChaosiumCanvasInterface.Permission.GM": "Keeper",
