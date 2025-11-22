@@ -9,6 +9,17 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## 7.24
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add CCI: Light Toggle
+- Add see tile permission level to Open Document
+- CCI behaviors with show/hide checkbox now have show/hide/toggle
+- Update to Korean localization, thanks to @Rutz179. #1985
+- Update to Polish localization, thanks to @everyonecancode and @Technus #1982
+- Update to Swedish localization, thanks to @Rangertheman #1979 and #1980
+
 ## Version 7.23
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

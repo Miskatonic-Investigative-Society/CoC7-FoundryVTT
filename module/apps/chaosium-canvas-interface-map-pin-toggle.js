@@ -25,10 +25,12 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
         label: 'CoC7.ChaosiumCanvasInterface.MapPinToggle.Button.Title',
         hint: 'CoC7.ChaosiumCanvasInterface.MapPinToggle.Button.Hint'
       }),
-      toggle: new fields.BooleanField({
-        initial: false,
-        label: 'CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Title',
-        hint: 'CoC7.ChaosiumCanvasInterface.MapPinToggle.Toggle.Hint'
+      action: new fields.NumberField({
+        choices: ChaosiumCanvasInterface.actionToggles,
+        initial: ChaosiumCanvasInterface.actionToggle.Off,
+        label: 'CoC7.ChaosiumCanvasInterface.MapPinToggle.Action.Title',
+        hint: 'CoC7.ChaosiumCanvasInterface.MapPinToggle.Action.Hint',
+        required: true
       }),
       documentUuids: new fields.SetField(
         new fields.DocumentUUIDField(),
@@ -63,6 +65,13 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
     }
   }
 
+  static migrateData (source) {
+    if (typeof source.toggle !== 'undefined' && typeof source.action === 'undefined') {
+      source.action = (source.toggle ? ChaosiumCanvasInterface.actionToggle.On : ChaosiumCanvasInterface.actionToggle.Off)
+    }
+    return source
+  }
+
   async _handleMouseOverEvent () {
     return game.user.isGM
   }
@@ -71,10 +80,25 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
     game.socket.emit('system.coc7', { type: 'toggleMapNotes', toggle: true })
     /* // FoundryVTT V12 */
     game.settings.set('core', (foundry.canvas.layers?.NotesLayer ?? NotesLayer).TOGGLE_SETTING, true)
+    let toggle = false
+    switch (this.action) {
+      case ChaosiumCanvasInterface.actionToggle.On:
+        toggle = true
+        break
+      case ChaosiumCanvasInterface.actionToggle.Toggle:
+        {
+          const firstUuid = this.documentUuids.first()
+          if (firstUuid) {
+            const doc = await fromUuid(firstUuid)
+            toggle = doc.ownership.default === this.permissionHide
+          }
+        }
+        break
+    }
     for (const uuid of this.documentUuids) {
       const doc = await fromUuid(uuid)
       if (doc) {
-        const permission = (this.toggle ? this.permissionShow : this.permissionHide)
+        const permission = (toggle ? this.permissionShow : this.permissionHide)
         await doc.update({ 'ownership.default': permission })
       } else {
         console.error('Document ' + uuid + ' not loaded')
@@ -83,7 +107,7 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
     for (const uuid of this.noteUuids) {
       const doc = await fromUuid(uuid)
       if (doc) {
-        const texture = (this.toggle ? 'systems/CoC7/assets/art/map-pin.svg' : 'systems/CoC7/assets/art/map-pin-dark.svg')
+        const texture = (toggle ? 'systems/CoC7/assets/art/map-pin.svg' : 'systems/CoC7/assets/art/map-pin-dark.svg')
         await doc.update({ 'texture.src': texture })
       } else {
         console.error('Note ' + uuid + ' not loaded')

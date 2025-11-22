@@ -24,6 +24,7 @@ export class Updater {
               const knownModuleVersions = {
                 'call-of-cthulhu-foundryvtt-investigator-wizard': '1.0.5',
                 'cha-coc-fvtt-en-keeperitems': '1.3.5',
+                'cha-coc-fvtt-en-notimetoscream': '1.0.7',
                 'cha-coc-fvtt-en-quickstart': '5.0.5',
                 'cha-coc-fvtt-en-starterset': '5.0.5'
               }
