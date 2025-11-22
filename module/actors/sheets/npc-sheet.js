@@ -142,6 +142,7 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
     html.find('.remove-movement').click(this._onRemoveMovement.bind(this))
     html.find('.remove-macro').click(this._onRemoveMacro.bind(this))
     html.find('.execute-macro').click(this._onExecuteMacro.bind(this))
+    html.find('.npc-notes-toggle').click(this._onNotesToggle.bind(this))
     html.find('.attacks-per-round').click(async (event) => {
       const roll = await new Roll(this.actor.system.special.attacksPerRound).roll()
       const tooltip = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(Roll.TOOLTIP_TEMPLATE, { parts: roll.dice.map(d => d.getTooltipData()) })
@@ -202,6 +203,14 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       }
     }
   }
+
+  async _onNotesToggle (event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    await this.actor.update({'system.seeNotes' : !this.actor.system.seeNotes})
+
+  }
+
 
   async _onSanLossContextMenuClick (event) {
     const rollOptions = {

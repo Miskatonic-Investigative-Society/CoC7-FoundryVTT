@@ -295,7 +295,8 @@
         "sex": ""
       },
       "flags": {
-        "locked": false
+        "locked": false,
+        "seeNotes": true
       }
     },
     "creature": {

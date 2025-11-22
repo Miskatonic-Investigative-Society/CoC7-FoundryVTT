@@ -300,6 +300,7 @@
                   {{/if}}
                 {{/if}}
               {{/if}}
+              <a class="npc-notes-toggle" style="flex: 0 0 16px;" title="{{localize 'CoC7.toggleNPCNotes'}}"> <i class="fas fa-scroll-old"></i></a>
             </div>
           {{/if}}
         </div>
@@ -372,14 +373,16 @@
           </section>
         {{/if}}
 
-        <section class="sheet-section">
-          <div class="section-header flexrow-coc7" data-pannel="description">
-            <h3 class="flex1">{{localize 'CoC7.Notes'}} </h3>
-          </div>
-          <div class="description pannel expanded resizededitor">
-            {{editor enrichedBiographyPersonalDescription target="system.biography.personalDescription.value" engine="prosemirror" button=true owner=owner editable=editable}}
-          </div>
-        </section>
+        {{#if actor.system.seeNotes}}
+          <section class="sheet-section">
+            <div class="section-header flexrow-coc7" data-pannel="description">
+              <h3 class="flex1">{{localize 'CoC7.Notes'}} </h3>
+            </div>
+            <div class="description pannel expanded resizededitor">
+              {{editor enrichedBiographyPersonalDescription target="system.biography.personalDescription.value" engine="prosemirror" button=true owner=owner editable=editable}}
+            </div>
+          </section>
+        {{/if}}
 
         {{#if macros.length}}
           <section class="sheet-section">
