@@ -1242,6 +1242,24 @@ items:
           id: i.skill.stealth
           lang: en
           priority: 0
+  - _id: 8jAVwbgzWc0zRXGL
+    name: Survival (Desert)
+    type: skill
+    img: modules/call-of-cthulhu-foundryvtt-investigator-wizard/assets/game-icons/lorc/campfire.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 10
+      value: null
+      properties:
+        special: true
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.survival-desert
+          lang: en
+          priority: 0
   - _id: 1zSIeY0eat2AxQok
     name: Swim
     type: skill
@@ -1257,6 +1275,23 @@ items:
       CoC7:
         cocidFlag:
           id: i.skill.swim
+          lang: en
+          priority: 0
+  - _id: AcUIbZFhfoXqQP2m
+    name: Track
+    type: skill
+    img: systems/CoC7/assets/icons/skills/track.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 10
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.track
           lang: en
           priority: 0
   - name: 'Punch'
