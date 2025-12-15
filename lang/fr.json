@@ -593,7 +593,7 @@
   "CoC7.BackgroundSectionMoveDown": "Descendre",
   "CoC7.BackgroundEncounters": "Pertes liées à des entités étranges",
   "CoC7.BackgroundFlags": "Marqueurs",
-  "CoC7.BackgroundFlagsMythosExperienced": "Perte de SAN de 5% liée à la connaissance du Mythe",
+  "CoC7.BackgroundFlagsMythosExperienced": "Gain de 5% en Mythe suite à une première folie due à celui-ci.",
   "CoC7.BackgroundFlagsMythosHardened": "Résistant au Mythe",
 
   "CoC7.SanityLossEncounters": "Pertes de SAN liées à des Rencontres",
