@@ -16,8 +16,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 [pl.json (2 untranslated strings)](#pljson)
 
-[sv.json (2 untranslated strings)](#svjson)
-
 
 ## cn.json
 118 untranslated strings
@@ -619,12 +617,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint": "Should this show, hide, or toggle the tile and documents"
 ```
 ## pl.json
-2 untranslated strings
-```
-"CoC7.ChaosiumCanvasInterface.OpenDocument.Tile.Title": "Select Tile",
-"CoC7.ChaosiumCanvasInterface.OpenDocument.Tile.Hint": "Select Tile that must be visible"
-```
-## sv.json
 2 untranslated strings
 ```
 "CoC7.ChaosiumCanvasInterface.OpenDocument.Tile.Title": "Select Tile",
