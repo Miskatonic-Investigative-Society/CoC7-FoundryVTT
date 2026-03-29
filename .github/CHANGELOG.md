@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add Survival (Desert) and Track skills to 1920 Character Example
+- Update to French localization, thanks to @vonv #1991 and #1992
+- Update to Swedish localization, thanks to @Rangertheman #1995
+
 ## 7.24
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
