@@ -6,12 +6,12 @@ import write from './node_modules/write/index.js'
 const unordered = {}
 let missing = []
 const abandoned = {}
-const source = jsonfile.readFileSync('./lang/en.json')
+const source = jsonfile.readFileSync('./static/lang/en.json')
 const keys = Object.keys(source)
 
 const maxMissingKeys = 127
 
-glob('./lang/*.json', {}, async function (er, files) {
+glob('./static/lang/*.json', {}, async function (er, files) {
   await Promise.all(
     files.map(async filename => {
       const lang = filename.replace(/^(.+\/)([a-zA-Z0-9-]+)(\.json)$/, '$2')
