@@ -433,7 +433,7 @@ export default class CoC7SanCheckCard extends ChatCardActor {
       this.__inlineIntCheck = this.intCheck.inlineCheck.outerHTML
     }
 
-    const html = await renderTemplate(SanCheckCard.template, this)
+    const html = await renderTemplate(CoC7SanCheckCard.template, this)
     const htmlCardElement = $.parseHTML(html)[0]
 
     // Attach the sanCheckCard object to the message.
@@ -458,11 +458,11 @@ export default class CoC7SanCheckCard extends ChatCardActor {
     if (targets.length) {
       for (const t of targets) {
         if (t.actor.isToken) {
-          SanCheckCard.create(t.actor.tokenKey, sanData, {
+          CoC7SanCheckCard.create(t.actor.tokenKey, sanData, {
             fastForward
           })
         } else {
-          SanCheckCard.create(t.actor.id, sanData, { fastForward })
+          CoC7SanCheckCard.create(t.actor.id, sanData, { fastForward })
         }
       }
     } else {
@@ -471,7 +471,7 @@ export default class CoC7SanCheckCard extends ChatCardActor {
   }
 
   static async create (...args) {
-    const chatCard = new SanCheckCard(...args)
+    const chatCard = new CoC7SanCheckCard(...args)
     if (chatCard.actor.hasIndefInsane) {
       chatCard.state.alreadyInsane = true
     }
@@ -486,7 +486,7 @@ export default class CoC7SanCheckCard extends ChatCardActor {
       chatCard.state.finish = true
     }
 
-    const html = await renderTemplate(SanCheckCard.template, chatCard)
+    const html = await renderTemplate(CoC7SanCheckCard.template, chatCard)
     const htmlCardElement = $.parseHTML(html)[0]
 
     htmlCardElement.dataset.object = escape(JSON.stringify(chatCard, replacer))
@@ -499,13 +499,13 @@ export default class CoC7SanCheckCard extends ChatCardActor {
 
     const htmlCard = htmlMessage.querySelector('.chat-card')
 
-    return SanCheckCard.getFromCard(htmlCard)
+    return CoC7SanCheckCard.getFromCard(htmlCard)
   }
 
   static getFromCard (card) {
     const sanCheckCardData = JSON.parse(unescape(card.dataset.object))
 
-    const sanCheckCard = new SanCheckCard()
+    const sanCheckCard = new CoC7SanCheckCard()
     Object.assign(sanCheckCard, sanCheckCardData)
     if (!sanCheckCard.messageId) {
       sanCheckCard.messageId = card.closest('.message').dataset.messageId
