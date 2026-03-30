@@ -1,8 +1,8 @@
 /* global canvas, ChatMessage, Dialog, foundry, game, Roll, ui */
-import { CoC7Dice } from '../../dice.js'
+import CoC7DicePool from '../../apps/dice-pool.js'
 import { InteractiveChatCard } from '../interactive-chat-card.js'
 import { createInlineRoll } from '../helper.js'
-import { CoC7Utilities } from '../../utilities.js'
+import CoC7Utilities from '../../apps/utilities.js'
 
 export class DamageCard extends InteractiveChatCard {
   /**
@@ -131,7 +131,7 @@ export class DamageCard extends InteractiveChatCard {
     this.roll = await new Roll(this.damageFormula || '0').evaluate({
       async: true
     })
-    await CoC7Dice.showRollDice3d(this.roll)
+    await CoC7DicePool.showRollDice3d(this.roll)
     this.hardrolled = true
     options.update =
       typeof options.update === 'undefined' ? true : options.update

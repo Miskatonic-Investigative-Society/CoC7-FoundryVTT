@@ -1,5 +1,5 @@
 /* global ChatMessage, CONFIG, foundry, game, Roll */
-export class CoC7Dice {
+export default class CoC7DicePool {
   static async roll (modif = 0, rollMode = null, hideDice = false) {
     let alternativeDice = ''
     if (game.modules.get('dice-so-nice')?.active) {
@@ -19,12 +19,12 @@ export class CoC7Dice {
       game.CoC7.dev.dice.alwaysCrit &&
       game.settings.get('CoC7', 'hiddendevmenu')
     ) {
-      roll = Roll.fromData(CoC7Dice.crit01)
+      roll = Roll.fromData(CoC7DicePool.crit01)
     } else if (
       game.CoC7.dev.dice.alwaysFumble &&
       game.settings.get('CoC7', 'hiddendevmenu')
     ) {
-      roll = Roll.fromData(CoC7Dice.fumble99)
+      roll = Roll.fromData(CoC7DicePool.fumble99)
     } else {
       roll = await new Roll(
         '1dt' +

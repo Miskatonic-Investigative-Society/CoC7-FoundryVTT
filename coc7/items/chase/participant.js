@@ -1,7 +1,7 @@
 /* global game, ui */
 import { chatHelper } from '../../chat/helper.js'
-import { CoC7Check } from '../../check.js'
-import { CoC7Utilities } from '../../utilities.js'
+import CoC7Check from '../../apps/check.js'
+import CoC7Utilities from '../../apps/utilities.js'
 
 export class _participant {
   constructor (data = {}) {

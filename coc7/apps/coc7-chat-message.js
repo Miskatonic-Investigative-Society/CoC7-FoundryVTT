@@ -1,5 +1,5 @@
 /* global game, ui */
-import { CoC7Check } from '../check.js'
+import CoC7Check from '../apps/check.js'
 import { CoC7ContentLinkDialog } from './coc7-content-link-dialog.js'
 import { isCtrlKey } from '../chat/helper.js'
 import { RollDialog } from './roll-dialog.js'
@@ -8,7 +8,7 @@ import { OpposedCheckCard } from '../chat/cards/opposed-roll.js'
 import { SanCheckCard } from '../chat/cards/san-check.js'
 import { SanDataDialog } from './sandata-dialog.js'
 import { CoC7Link } from './coc7-link.js'
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from './utilities.js'
 
 export class CoC7ChatMessage {
   static get ROLL_TYPE_ATTRIBUTE () {

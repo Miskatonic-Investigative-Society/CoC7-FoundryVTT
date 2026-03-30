@@ -21,7 +21,7 @@ import { CoC7TalentSheet } from '../items/sheets/talent.js'
 import { CoC7VehicleSheet } from '../actors/sheets/vehicle.js'
 import { CoC7WeaponSheet } from '../items/sheets/weapon-sheet.js'
 
-export function registerSheets () {
+export default function () {
   /* // FoundryVTT V12 */
   const ActorsPolyfill = (foundry.documents.collections?.Actors ?? Actors)
   const ItemsPolyfill = (foundry.documents.collections?.Items ?? Items)

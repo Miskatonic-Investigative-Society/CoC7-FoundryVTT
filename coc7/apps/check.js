@@ -1,11 +1,11 @@
 /* global $, Actor, AudioHelper, ChatMessage, CONFIG, CONST, foundry, fromUuid, game, getComputedStyle, Item, renderTemplate, Token, ui */
-import { CoC7Dice } from './dice.js'
-import { CoC7Item } from './items/item.js'
-import { chatHelper, CoC7Roll } from './chat/helper.js'
-import { CoCActor } from './actors/actor.js'
-import { CoC7Utilities } from './utilities.js'
+import CoC7DicePool from './dice-pool.js'
+import { CoC7Item } from '../items/item.js'
+import { chatHelper, CoC7Roll } from '../chat/helper.js'
+import { CoCActor } from '../actors/actor.js'
+import CoC7Utilities from './utilities.js'
 
-export class CoC7Check {
+export default class CoC7Check {
   constructor (
     actor = null,
     skill = null,
@@ -800,13 +800,13 @@ export class CoC7Check {
   async _perform (options = {}) {
     this.dice =
       options.roll ||
-      (await CoC7Dice.roll(this.diceModifier, this.rollMode, this.isBlind))
+      (await CoC7DicePool.roll(this.diceModifier, this.rollMode, this.isBlind))
     if (!options.silent && !game.modules.get('dice-so-nice')?.active) {
       AudioHelper.play({ src: CONFIG.sounds.dice }, true)
     }
 
     if (options.forceDSN) {
-      await CoC7Dice.showRollDice3d(this.dice.roll)
+      await CoC7DicePool.showRollDice3d(this.dice.roll)
     }
 
     this.dices = {
@@ -1782,7 +1782,7 @@ export class CoC7Check {
     }
 
     if (forceRoll && this.dice?.roll && (game.user.isGM || !this.isBlind)) {
-      await CoC7Dice.showRollDice3d(this.dice.roll)
+      await CoC7DicePool.showRollDice3d(this.dice.roll)
     }
 
     const msg = await message.update(chatData)

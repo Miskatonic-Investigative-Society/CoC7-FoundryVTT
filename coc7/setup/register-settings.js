@@ -1,10 +1,10 @@
 /* global $, CONFIG, CONST, foundry, game, ui */
-import { COC7 } from '../config.js'
+import { COC7 } from '../constants.js'
 import { CoC7DecaderDie } from '../apps/decader-die.js'
 import { CoC7DecaderDieOther } from '../apps/decader-die-other.js'
-import { CoC7GameRuleSettings } from './game-rules.js'
+import CoC7GameRuleSettings from '../apps/settings-game-rules.js'
 
-export function registerSettings () {
+export default function () {
   /**
    * Rules
    */

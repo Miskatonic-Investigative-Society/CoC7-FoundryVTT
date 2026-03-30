@@ -1,5 +1,5 @@
 /* global $, CONFIG, FormApplication, foundry, game, Item */
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from './utilities.js'
 
 export class CoCIDBatch extends FormApplication {
   static get defaultOptions () {

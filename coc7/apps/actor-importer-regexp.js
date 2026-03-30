@@ -1,5 +1,5 @@
 /* global game */
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from './utilities.js'
 /**
  * nameCharacters list of characters that can be part of a [] for character, skill, or weapon names used in bracket expression.
  *

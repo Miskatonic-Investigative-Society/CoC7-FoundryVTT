@@ -1,9 +1,9 @@
 /* global $, Dialog, DragDrop, FormDataExtended, foundry, game, TextEditor, ui */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import { CoC7ChaseParticipantImporter } from '../../apps/chase-participant-importer.js'
+import CoC7ChaseParticipantDialog from '../../apps/chase-participant-dialog.js'
 import { CoC7Chat } from '../../chat.js'
 import { chatHelper } from '../../chat/helper.js'
-import { CoC7Check } from '../../check.js'
+import CoC7Check from '../../apps/check.js'
 import { _participant } from './participant.js'
 
 export class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
@@ -596,7 +596,7 @@ export class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
         break
 
       case 'add-participant':
-        CoC7ChaseParticipantImporter.create({
+        CoC7ChaseParticipantDialog.create({
           chaseUuid: this.item.uuid,
           locationUuid: lUuid,
           dropData: {}
@@ -658,7 +658,7 @@ export class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
           participant.data.chaseUuid = this.item.uuid
           participant.data.locationUuid = location.uuid
           participant.data.update = true
-          CoC7ChaseParticipantImporter.create(participant.data)
+          CoC7ChaseParticipantDialog.create(participant.data)
         }
         break
       case 'removeParticipant':
@@ -837,7 +837,7 @@ export class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
       await this.item.setchaseTrackScroll({ render: false })
       await this.item.moveParticipantToLocation(data.uuid, locationUuid)
     } else {
-      CoC7ChaseParticipantImporter.create({
+      CoC7ChaseParticipantDialog.create({
         chaseUuid: this.item.uuid,
         locationUuid,
         dropData: data
@@ -874,7 +874,7 @@ export class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
       const dataString = event.dataTransfer.getData('text/plain')
       data.dropData = JSON.parse(dataString)
     }
-    CoC7ChaseParticipantImporter.create(data)
+    CoC7ChaseParticipantDialog.create(data)
   }
 
   async _onRollParticipant (event) {

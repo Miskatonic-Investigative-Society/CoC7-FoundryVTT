@@ -1,7 +1,7 @@
 /* global fromUuid, game, NotesLayer, ui */
 import { CoC7GroupMessage } from './coc7-group-message.js'
 import { CoC7InvestigatorWizard } from './investigator-wizard.js'
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from './utilities.js'
 import { CombinedCheckCard } from '../chat/cards/combined-roll.js'
 import { OpposedCheckCard } from '../chat/cards/opposed-roll.js'
 

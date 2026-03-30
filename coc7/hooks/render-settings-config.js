@@ -1,5 +1,5 @@
 /* global game */
-import { CoC7DirectoryPicker } from '../scripts/coc7-directory-picker.js'
+import CoC7DirectoryPicker from '../apps/directory-picker.js'
 
 function createTitleNode (text) {
   const title = document.createElement('h2')

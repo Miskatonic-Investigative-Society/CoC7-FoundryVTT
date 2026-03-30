@@ -127,7 +127,7 @@ function _setInitiativeOptions (rule) {
   }
 }
 
-export class CoC7GameRuleSettings extends FormApplication {
+export default class CoC7GameRuleSettings extends FormApplication {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       title: 'SETTINGS.TitleRules',

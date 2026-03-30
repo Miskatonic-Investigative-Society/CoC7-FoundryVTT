@@ -1,8 +1,8 @@
 /* global CONFIG, Dialog, foundry, game, ui */
-import { CoC7Item } from './items/item.js'
-import { CoCIDBatch } from './apps/coc-id-batch.js'
+import { CoC7Item } from '../items/item.js'
+import { CoCIDBatch } from './coc-id-batch.js'
 
-export class Updater {
+export default class CoC7Updater {
   static async checkForUpdate () {
     let systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion')
     if (game.actors.size + game.scenes.size + game.items.size + game.journal.size + game.tables.size === 0) {
@@ -61,7 +61,7 @@ export class Updater {
           buttons: {
             update: {
               label: game.i18n.localize('CoC7.Migrate.ButtonUpdate'),
-              callback: async () => Updater.update()
+              callback: async () => CoC7Updater.update()
             },
             skip: {
               label: game.i18n.localize('CoC7.Migrate.ButtonSkip')
@@ -142,7 +142,7 @@ export class Updater {
     // Migrate World Items
     for (const item of game.items.contents) {
       try {
-        const updateData = Updater.migrateItemData(item.toObject())
+        const updateData = CoC7Updater.migrateItemData(item.toObject())
         if (!foundry.utils.isEmpty(updateData)) {
           console.log(`Migrating Item document ${item.name}`)
           await item.update(updateData, { enforceTypes: false })
@@ -160,7 +160,7 @@ export class Updater {
     // Migrate World Tables
     for (const table of game.tables.contents) {
       try {
-        const updateData = Updater.migrateTableData(table.toObject())
+        const updateData = CoC7Updater.migrateTableData(table.toObject())
         if (!foundry.utils.isEmpty(updateData)) {
           console.log(`Migrating Table document ${table.name}`)
           await table.update(updateData, { enforceTypes: false })
@@ -178,7 +178,7 @@ export class Updater {
     // Migrate Macros
     for (const macro of game.macros.contents) {
       try {
-        const updateData = Updater.migrateMacroData(macro.toObject())
+        const updateData = CoC7Updater.migrateMacroData(macro.toObject())
         if (!foundry.utils.isEmpty(updateData)) {
           console.log(`Migrating Macro document ${macro.name}`)
           await macro.update(updateData, { enforceTypes: false })
@@ -196,7 +196,7 @@ export class Updater {
     // Migrate Scenes [Token] Actors
     for (const scene of game.scenes) {
       try {
-        const updateData = Updater.migrateSceneData(scene)
+        const updateData = CoC7Updater.migrateSceneData(scene)
         if (!foundry.utils.isEmpty(updateData)) {
           console.log(`Migrating Scene document ${scene.name}`)
           // if (
@@ -257,7 +257,7 @@ export class Updater {
           pack.metadata.type
         )
       ) {
-        await Updater.migrateCompendiumData(pack)
+        await CoC7Updater.migrateCompendiumData(pack)
       }
     }
   }
@@ -266,20 +266,20 @@ export class Updater {
     const updateData = {}
 
     // Update World Actor
-    Updater._migrateActorCharacterSanity(actor, updateData)
-    Updater._migrateActorArtwork(actor, updateData)
-    Updater._migrateActorKeeperNotes(actor, updateData)
-    Updater._migrateActorNpcCreature(actor, updateData)
-    Updater._migrateActorStatusEffectActive(actor, updateData)
-    Updater._migrateActorSanLossReasons(actor, updateData)
-    Updater._migrateActorMonetary(actor, updateData)
+    CoC7Updater._migrateActorCharacterSanity(actor, updateData)
+    CoC7Updater._migrateActorArtwork(actor, updateData)
+    CoC7Updater._migrateActorKeeperNotes(actor, updateData)
+    CoC7Updater._migrateActorNpcCreature(actor, updateData)
+    CoC7Updater._migrateActorStatusEffectActive(actor, updateData)
+    CoC7Updater._migrateActorSanLossReasons(actor, updateData)
+    CoC7Updater._migrateActorMonetary(actor, updateData)
 
     // Migrate World Actor Items
     if (actor.items) {
       const items = actor.items.reduce((arr, i) => {
         const itemData =
           i instanceof CONFIG.Item.documentClass ? i.toObject() : i
-        const itemUpdate = Updater.migrateItemData(itemData)
+        const itemUpdate = CoC7Updater.migrateItemData(itemData)
         if (!foundry.utils.isEmpty(itemUpdate)) {
           itemUpdate._id = itemData._id
           arr.push(foundry.utils.expandObject(itemUpdate))
@@ -319,19 +319,19 @@ export class Updater {
       try {
         switch (documentType) {
           case 'Actor':
-            updateData = Updater.migrateActorData(doc.toObject())
+            updateData = CoC7Updater.migrateActorData(doc.toObject())
             break
           case 'Item':
-            updateData = Updater.migrateItemData(doc.toObject())
+            updateData = CoC7Updater.migrateItemData(doc.toObject())
             break
           case 'Macro':
-            updateData = Updater.migrateMacroData(doc.toObject())
+            updateData = CoC7Updater.migrateMacroData(doc.toObject())
             break
           case 'RollTable':
-            updateData = Updater.migrateTableData(doc.toObject())
+            updateData = CoC7Updater.migrateTableData(doc.toObject())
             break
           case 'Scene':
-            updateData = Updater.migrateSceneData(doc)
+            updateData = CoC7Updater.migrateSceneData(doc)
             break
         }
         // Save the entry, if data was changed
@@ -360,16 +360,16 @@ export class Updater {
     const updateData = {}
 
     // Update World Item
-    Updater._migrateItemEmbeddedv10(item, updateData)
-    Updater._migrateItemExperience(item, updateData)
-    Updater._migrateItemArtwork(item, updateData)
-    Updater._migrateItemBookAutomated(item, updateData)
-    Updater._migrateItemKeeperNotes(item, updateData)
-    Updater._migrateItemSpellAutomated(item, updateData)
-    Updater._migrateItemKeeperNotesMerge(item, updateData)
-    Updater._migrateItemEras(item, updateData)
-    Updater._migrateItemv10(item, updateData)
-    Updater._migrateItemBookUnits(item, updateData)
+    CoC7Updater._migrateItemEmbeddedv10(item, updateData)
+    CoC7Updater._migrateItemExperience(item, updateData)
+    CoC7Updater._migrateItemArtwork(item, updateData)
+    CoC7Updater._migrateItemBookAutomated(item, updateData)
+    CoC7Updater._migrateItemKeeperNotes(item, updateData)
+    CoC7Updater._migrateItemSpellAutomated(item, updateData)
+    CoC7Updater._migrateItemKeeperNotesMerge(item, updateData)
+    CoC7Updater._migrateItemEras(item, updateData)
+    CoC7Updater._migrateItemv10(item, updateData)
+    CoC7Updater._migrateItemBookUnits(item, updateData)
 
     return updateData
   }
@@ -378,7 +378,7 @@ export class Updater {
     const updateData = {}
 
     // Update World Actor
-    Updater._migrateMacroArtwork(table, updateData)
+    CoC7Updater._migrateMacroArtwork(table, updateData)
 
     return updateData
   }
@@ -387,7 +387,7 @@ export class Updater {
     const updateData = {}
 
     // Update World Actor
-    Updater._migrateTableArtwork(table, updateData)
+    CoC7Updater._migrateTableArtwork(table, updateData)
 
     return updateData
   }
@@ -400,7 +400,7 @@ export class Updater {
       returns.tokens = scene.tokens.map(token => {
         const t = token.toObject()
         const updateData = {}
-        Updater._migrateTokenArtwork(t, updateData)
+        CoC7Updater._migrateTokenArtwork(t, updateData)
         if (Object.keys(updateData).length) {
           foundry.utils.mergeObject(t, updateData)
         }
@@ -412,7 +412,7 @@ export class Updater {
         } else if (!t.actorLink) {
           const actorData = foundry.utils.duplicate(t.actorData)
           actorData.type = token.actor?.type
-          const update = Updater.migrateActorData(actorData)
+          const update = CoC7Updater.migrateActorData(actorData)
           ;['items', 'effects'].forEach(embeddedName => {
             if (!update[embeddedName]?.length) {
               return

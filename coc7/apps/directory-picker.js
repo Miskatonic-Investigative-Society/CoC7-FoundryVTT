@@ -1,6 +1,6 @@
 /* global FilePicker, foundry, game, ui */
 /* // FoundryVTT V12 */
-export class CoC7DirectoryPicker extends (foundry.applications.apps?.FilePicker ?? FilePicker) {
+export default class CoC7DirectoryPicker extends (foundry.applications.apps?.FilePicker ?? FilePicker) {
   constructor (options = {}) {
     options.type = 'folder'
     super(options)

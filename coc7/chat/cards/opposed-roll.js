@@ -1,5 +1,5 @@
 /* global ChatMessage, foundry, game */
-import { CoC7Check } from '../../check.js'
+import CoC7Check from '../../apps/check.js'
 import { DamageCard } from './damage.js'
 import { RollCard } from './roll-card.js'
 

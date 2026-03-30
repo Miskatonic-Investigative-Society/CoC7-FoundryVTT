@@ -1,5 +1,5 @@
 /* global $, FontFace, foundry, game, TextEditor, ui */
-import { COC7 } from '../../config.js'
+import { COC7 } from '../../constants.js'
 import { CoCActor } from '../actor.js'
 import { CoC7ActorSheet } from './base.js'
 import { CoC7CreateMythosEncounter } from '../../apps/create-mythos-encounters.js'

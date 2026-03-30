@@ -5,7 +5,7 @@
  * Pre-loaded templates are compiled and cached for fast access when rendering
  * @return {Promise}
  */
-export const preloadHandlebarsTemplates = async function () {
+export default async function () {
   /** Define template paths to load */
   const templatePaths = [
     'systems/CoC7/templates/actors/npc-v2/tab/skills.hbs',
@@ -23,7 +23,7 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/CoC7/templates/actors/investigator-v2/parts/vitals.hbs',
     'systems/CoC7/templates/actors/investigator-v2/tabs/combat.hbs',
     'systems/CoC7/templates/actors/investigator-v2/header.hbs',
-    'systems/CoC7/templates/actors/character/investigator-summarized-v2/body.hbs',
+    'systems/CoC7/templates/actors/investigator-summarized-v2/body.hbs',
 
     'systems/CoC7/templates/items/book-tab-details.hbs',
     'systems/CoC7/templates/items/spell-tab-details.hbs',

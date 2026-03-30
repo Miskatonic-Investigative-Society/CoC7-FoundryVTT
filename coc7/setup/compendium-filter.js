@@ -1,6 +1,6 @@
 /* global Compendium CONFIG foundry game Hooks SearchFilter */
-import { COC7 } from '../config.js'
-import { CoC7Utilities } from '../utilities.js'
+import { COC7 } from '../constants.js'
+import CoC7Utilities from '../apps/utilities.js'
 
 /* // FoundryVTT v12 */
 let oldSearchFilter

@@ -1,6 +1,6 @@
 /* global ChatMessage, foundry, game, renderTemplate, Roll, ui */
 import { SanCheckCard } from '../../chat/cards/san-check.js'
-import { CoC7Check } from '../../check.js'
+import CoC7Check from '../../apps/check.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Spell } from '../spell/data.js'
 

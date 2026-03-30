@@ -1,5 +1,5 @@
 /* global Actor, ActorSheet, canvas, CONFIG, FormApplication, foundry, fromUuid, game, ui */
-import { COC7 } from '../config.js'
+import { COC7 } from '../constants.js'
 
 export default class CoCIDActorUpdateItems extends FormApplication {
   static get defaultOptions () {

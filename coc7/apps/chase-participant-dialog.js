@@ -1,10 +1,10 @@
 /* global DragDrop, FormApplication, foundry, game, ui */
 import { CoCActor } from '../actors/actor.js'
-import { CoC7Check } from '../check.js'
+import CoC7Check from '../apps/check.js'
 import { _participant } from '../items/chase/participant.js'
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from './utilities.js'
 
-export class CoC7ChaseParticipantImporter extends FormApplication {
+export default class CoC7ChaseParticipantDialog extends FormApplication {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       title: game.i18n.localize('CoC7.AddActorToChase'),
@@ -343,6 +343,6 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
       if (docUuid) data.docUuid = docUuid
       delete data.dropData
     }
-    return new CoC7ChaseParticipantImporter(data).render(true)
+    return new CoC7ChaseParticipantDialog(data).render(true)
   }
 }

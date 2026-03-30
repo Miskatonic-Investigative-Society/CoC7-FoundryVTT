@@ -1,6 +1,6 @@
 /* global $, CONFIG, FormApplication, foundry, game, TextEditor */
-import { COC7 } from '../config.js'
-import { CoC7Utilities } from '../utilities.js'
+import { COC7 } from '../constants.js'
+import CoC7Utilities from './utilities.js'
 
 export class CoCIDEditor extends FormApplication {
   static get defaultOptions () {

@@ -1,8 +1,8 @@
 /* global $, ChatMessage, foundry, game, renderTemplate, Roll, ui */
-import { CoC7Dice } from '../dice.js'
-import { CoC7Check } from '../check.js'
+import CoC7DicePool from '../apps/dice-pool.js'
+import CoC7Check from '../apps/check.js'
 import { chatHelper, CoC7Roll, CoC7Damage } from './helper.js'
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from '../apps/utilities.js'
 
 export class CoC7RangeInitiator {
   constructor (actorKey = null, itemId = null, fastForward = false) {
@@ -517,7 +517,7 @@ export class CoC7RangeInitiator {
       while (!weaponMalfunction && this.shots.length > index) {
         const roll = await this.shootAtTarget(this.shots[index])
         if (roll.dice?.roll) {
-          await CoC7Dice.showRollDice3d(roll.dice.roll)
+          await CoC7DicePool.showRollDice3d(roll.dice.roll)
         }
         await this.weapon.shootBullets(
           parseInt(this.shots[index].bulletsShot) +
@@ -533,7 +533,7 @@ export class CoC7RangeInitiator {
     } else {
       const roll = await this.shootAtTarget()
       if (roll.dice?.roll) {
-        await CoC7Dice.showRollDice3d(roll.dice.roll)
+        await CoC7DicePool.showRollDice3d(roll.dice.roll)
       }
       let bulletFired = this.burst
         ? parseInt(this.weapon.system.usesPerRound.burst)
@@ -778,7 +778,7 @@ export class CoC7RangeInitiator {
           const roll = new Roll(damageFormula)
           /** MODIF 0.8.x **/
           await roll.evaluate({ async: true })
-          await CoC7Dice.showRollDice3d(roll)
+          await CoC7DicePool.showRollDice3d(roll)
           /*****************/
           const dice = []
           for (const die of roll.dice) {
@@ -801,7 +801,7 @@ export class CoC7RangeInitiator {
         for (let index = 0; index < impalingShots; index++) {
           const roll = new Roll(criticalDamageFormula)
           await roll.evaluate()
-          await CoC7Dice.showRollDice3d(roll)
+          await CoC7DicePool.showRollDice3d(roll)
           const dice = []
           for (const die of roll.dice) {
             for (const result of die.results) {

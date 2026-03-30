@@ -1,5 +1,5 @@
 /* global ActiveEffect, game */
-import { COC7 } from './config.js'
+import { COC7 } from '../constants.js'
 
 export default class CoC7ActiveEffect extends ActiveEffect {
   apply (actor, change) {

@@ -1,8 +1,8 @@
 /* global foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import CoC7ActiveEffect from '../../active-effect.js'
-import { COC7 } from '../../config.js'
-import { CoC7Utilities } from '../../utilities.js'
+import CoC7ActiveEffect from '../../apps/active-effect.js'
+import { COC7 } from '../../constants.js'
+import CoC7Utilities from '../../apps/utilities.js'
 import { isCtrlKey } from '../../chat/helper.js'
 
 /**

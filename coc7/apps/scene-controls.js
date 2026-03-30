@@ -1,11 +1,11 @@
 /* global canvas, foundry, game, PlaceablesLayer */
-import { CoC7Chat } from './chat.js'
-import { CoC7Utilities } from './utilities.js'
-import { CoC7ActorImporterDialog } from './apps/actor-importer-dialog.js'
-import { CoC7ContentLinkDialog } from './apps/coc7-content-link-dialog.js'
-import { CoC7InvestigatorWizard } from './apps/investigator-wizard.js'
-import CoCIDActorUpdateItems from './apps/coc-id-actor-update-items.js'
-import CoCIDCompendiumPopulate from './apps/coc-id-compendium-populate.js'
+import { CoC7Chat } from '../chat.js'
+import CoC7Utilities from './utilities.js'
+import { CoC7ActorImporterDialog } from './actor-importer-dialog.js'
+import { CoC7ContentLinkDialog } from './coc7-content-link-dialog.js'
+import { CoC7InvestigatorWizard } from './investigator-wizard.js'
+import CoCIDActorUpdateItems from './coc-id-actor-update-items.js'
+import CoCIDCompendiumPopulate from './coc-id-compendium-populate.js'
 
 class CoC7MenuLayer extends (foundry.canvas?.layers?.PlaceablesLayer ?? PlaceablesLayer) {
   constructor () {
@@ -29,7 +29,7 @@ class CoC7MenuLayer extends (foundry.canvas?.layers?.PlaceablesLayer ?? Placeabl
   }
 }
 
-export class CoC7Menu {
+export default class CoC7SceneControls {
   static getButtons (controls) {
     canvas.coc7gmtools = new CoC7MenuLayer()
     const isKeeper = game.user.isGM

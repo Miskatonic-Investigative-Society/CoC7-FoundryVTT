@@ -1,8 +1,8 @@
 /* global $, CONFIG, FileReader, FormApplication, foundry, game, Hooks, ui */
 import { CoC7ActorImporter } from './actor-importer.js'
-import { CoC7DholeHouseActorImporter } from './dholehouse_importer.js'
+import CoC7DholeHouseActorImporter from './dholehouse-importer.js'
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from './utilities.js'
 
 export class CoC7ActorImporterDialog extends FormApplication {
   /** @override */
@@ -277,7 +277,7 @@ export class CoC7ActorImporterDialog extends FormApplication {
       })
     )
     await createdActor.sheet.render(true)
-    // const updated = await Updater.updateActor(npc)
+    // const updated = await CoC7Updater.updateActor(npc)
     // console.debug('updated:', updated)
   }
 

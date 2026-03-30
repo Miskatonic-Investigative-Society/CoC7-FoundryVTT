@@ -1,11 +1,11 @@
 /* global $ CONFIG, foundry, game */
-import { CoC7Check } from '../check.js'
+import CoC7Check from '../apps/check.js'
 import { CoC7ContextMenu } from '../context-menu.js'
 import { CoC7SystemSocket } from '../apps/coc7-system-socket.js'
 import { CoC7Tooltips } from '../apps/tooltips.js'
 // import { CoC7WelcomeMessage } from '../apps/welcome-message.js'
-import { registerTours } from '../scripts/register-tours.js'
-import { Updater } from '../updater.js'
+import registerTours from '../setup/register-tours.js'
+import CoC7Updater from '../apps/updater.js'
 
 function activateGlobalListener () {
   const body = $('body')
@@ -48,7 +48,7 @@ export default async function () {
   registerTours()
 
   // CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
-  await Updater.checkForUpdate()
+  await CoC7Updater.checkForUpdate()
 
   // game.CoC7.menus = new CoC7Menu();
 

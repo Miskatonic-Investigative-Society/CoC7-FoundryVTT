@@ -1,5 +1,5 @@
 /* global $, game */
-import { COC7 } from '../config.js'
+import { COC7 } from '../constants.js'
 
 export default function (playerList, html, data) {
   if (game.settings.get('CoC7', 'showWorldEra')) {

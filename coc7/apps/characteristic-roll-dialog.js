@@ -1,5 +1,5 @@
 /* global Dialog, game, renderTemplate, Roll */
-export class CharacRollDialog extends Dialog {
+export default class CoC7CharacteristicRollDialog extends Dialog {
   constructor (data, options) {
     super(data, options)
 
@@ -212,7 +212,7 @@ export class CharacRollDialog extends Dialog {
       data
     )
     return new Promise(resolve => {
-      const dlg = new CharacRollDialog(
+      const dlg = new CoC7CharacteristicRollDialog(
         {
           title: data.title,
           content: html,

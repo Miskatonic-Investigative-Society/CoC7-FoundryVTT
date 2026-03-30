@@ -1,5 +1,5 @@
 /* global Dialog, renderTemplate */
-export class CharacSelectDialog extends Dialog {
+export default class CoC7CharacteristicSelectionDialog extends Dialog {
   activateListeners (html) {
     super.activateListeners(html)
 
@@ -20,7 +20,7 @@ export class CharacSelectDialog extends Dialog {
       data
     )
     return new Promise(resolve => {
-      const dlg = new CharacSelectDialog(
+      const dlg = new CoC7CharacteristicSelectionDialog(
         {
           title: data.title,
           content: html,

@@ -1,6 +1,6 @@
 /* global $, CONST, Dialog, FormData, foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import { CoC7Utilities } from '../../utilities.js'
+import CoC7Utilities from '../../apps/utilities.js'
 
 export class CoC7ContainerSheet extends foundry.appv1.sheets.ActorSheet {
   /**

@@ -1,8 +1,8 @@
 /* global Actor, Card, CONFIG, foundry, fromUuid, game, Item, JournalEntry, Macro, Playlist, RollTable, Scene, SceneNavigation, ui */
-import { COC7 } from '../config.js'
-import { CoC7Utilities } from '../utilities.js'
+import { COC7 } from '../constants.js'
+import CoC7Utilities from './utilities.js'
 
-export class CoCID {
+export default class CoCID {
   static init () {
     CONFIG.Actor.compendiumIndexFields.push('flags.CoC7.cocidFlag')
     // CONFIG.Cards.compendiumIndexFields.push('flags.CoC7.cocidFlag')

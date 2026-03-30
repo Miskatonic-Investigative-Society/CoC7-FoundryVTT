@@ -2,7 +2,7 @@
 import { EnableVariantRulesEn } from '../tours/enable-variant-rules-en.js'
 import { EnableVariantRulesFr } from '../tours/enable-variant-rules-fr.js'
 
-export async function registerTours () {
+export default async function () {
   try {
     let lang = game.i18n.lang
     const tours = {

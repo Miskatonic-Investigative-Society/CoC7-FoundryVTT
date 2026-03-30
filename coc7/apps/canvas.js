@@ -1,5 +1,5 @@
 /* global game, ui */
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from './utilities.js'
 import { CoC7Link } from './coc7-link.js'
 
 export class CoC7Canvas {

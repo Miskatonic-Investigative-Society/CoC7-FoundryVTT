@@ -1,6 +1,6 @@
 /* global foundry game TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import CoC7ActiveEffect from '../../active-effect.js'
+import CoC7ActiveEffect from '../../apps/active-effect.js'
 
 export class CoC7ArmorSheet extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {

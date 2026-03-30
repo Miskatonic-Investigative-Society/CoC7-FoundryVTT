@@ -1,12 +1,12 @@
 /* global Actor, CONFIG, fetch, foundry, game, ui */
 import { CoCActor } from '../actors/actor.js'
-import { CoC7DirectoryPicker } from '../scripts/coc7-directory-picker.js'
-import { CoC7Utilities } from '../utilities.js'
+import CoC7DirectoryPicker from '../apps/directory-picker.js'
+import CoC7Utilities from './utilities.js'
 
 /**
  * CoC7ActorImporter helper class to import an Actor from the raw text description.
  */
-export class CoC7DholeHouseActorImporter {
+export default class CoC7DholeHouseActorImporter {
   /**
    * Compose the Backstory from the different blocks.
    * @param {} backstoryJSON DholeHouse backstory JSON

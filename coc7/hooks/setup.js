@@ -1,5 +1,5 @@
 /* global CONFIG game  */
-import { COC7 } from '../config.js'
+import { COC7 } from '../constants.js'
 
 export default function () {
   // Localize CONFIG objects once up-front

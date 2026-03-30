@@ -1,6 +1,6 @@
 /* global AudioHelper, CONFIG, foundry, game */
-import { CoC7Check } from '../../check.js'
-import { CoC7Dice } from '../../dice.js'
+import CoC7Check from '../../apps/check.js'
+import CoC7DicePool from '../../apps/dice-pool.js'
 import { RollCard } from './roll-card.js'
 
 export class CombinedCheckCard extends RollCard {
@@ -150,7 +150,7 @@ export class CombinedCheckCard extends RollCard {
           }
         }
 
-        const roll = await CoC7Dice.combinedRoll({ pool })
+        const roll = await CoC7DicePool.combinedRoll({ pool })
         roll.initiator = game.user.id
 
         const data = {

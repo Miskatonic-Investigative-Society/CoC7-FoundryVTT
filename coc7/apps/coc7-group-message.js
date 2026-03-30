@@ -1,8 +1,8 @@
 /* global ChatMessage, foundry, fromUuid, game, renderTemplate, TokenDocument, ui */
 import { ActorPickerDialog } from './actor-picker-dialog.js'
-import { CoC7Check } from '../check.js'
-import { CoC7Dice } from '../dice.js'
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Check from '../apps/check.js'
+import CoC7DicePool from './dice-pool.js'
+import CoC7Utilities from './utilities.js'
 
 export class CoC7GroupMessage {
   // Step 6c: GM / - = Remove a roll
@@ -384,7 +384,7 @@ export class CoC7GroupMessage {
       pool[parseInt(rollData[which].bonus ?? 0, 10)] = false
     }
 
-    const roll = await CoC7Dice.combinedRoll({ pool })
+    const roll = await CoC7DicePool.combinedRoll({ pool })
 
     let first = true
     for (const which in rollData) {

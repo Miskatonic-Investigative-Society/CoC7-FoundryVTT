@@ -1,5 +1,5 @@
 /* global canvas, CONST, FormApplication, foundry, fromUuid, game, TokenDocument, ui */
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from './utilities.js'
 
 export class ActorPickerDialog extends FormApplication {
   static get defaultOptions () {

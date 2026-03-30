@@ -1,6 +1,6 @@
 /* global $, ChatMessage, CONST, foundry, game, Token, tokenData, ui */
-import { CoC7Check } from './check.js'
-import { COC7 } from './config.js'
+import CoC7Check from './apps/check.js'
+import { COC7 } from './constants.js'
 import { CoC7MeleeInitiator } from './chat/combat/melee-initiator.js'
 import { CoC7MeleeTarget } from './chat/combat/melee-target.js'
 import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js'
@@ -12,7 +12,7 @@ import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
 import { CombinedCheckCard } from './chat/cards/combined-roll.js'
 import { InteractiveChatCard } from './chat/interactive-chat-card.js'
 import { DamageCard } from './chat/cards/damage.js'
-import { CoC7Dice } from './dice.js'
+import CoC7DicePool from './apps/dice-pool.js'
 
 const CHAT_COC7_MESSAGE = {
   FAKEROLL:
@@ -959,7 +959,7 @@ export class CoC7Chat {
           event.currentTarget.dataset.skill
         )
         $(button).prop('disabled', true)
-        await CoC7Dice.showRollDice3d(check.dice.roll)
+        await CoC7DicePool.showRollDice3d(check.dice.roll)
         await initiator.publishCheckResult()
         break
       }
@@ -976,7 +976,7 @@ export class CoC7Chat {
           event.currentTarget.dataset.skill
         )
         $(button).prop('disabled', true)
-        await CoC7Dice.showRollDice3d(check.dice.roll)
+        await CoC7DicePool.showRollDice3d(check.dice.roll)
         await target.publishCheckResult()
         break
       }

@@ -1,15 +1,15 @@
 /* global Actor, Application, CONFIG, CONST, Dialog, Die, foundry, fromUuid, fromUuidSync, game, Hooks, Roll, TextEditor, Token, ui */
 import CoC7AverageRoll from '../apps/average-roll.js'
-import { COC7 } from '../config.js'
-import CoC7ActiveEffect from '../active-effect.js'
+import { COC7 } from '../constants.js'
+import CoC7ActiveEffect from '../apps/active-effect.js'
 import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
-import { CoC7Check } from '../check.js'
+import CoC7Check from '../apps/check.js'
 import { CoC7ConCheck } from '../chat/concheck.js'
 import { RollDialog } from '../apps/roll-dialog.js'
 import { SkillSelectDialog } from '../apps/skill-selection-dialog.js'
 import { PointSelectDialog } from '../apps/point-selection-dialog.js'
-import { CharacSelectDialog } from '../apps/char-selection-dialog.js'
-import { CharacRollDialog } from '../apps/char-roll-dialog.js'
+import CoC7CharacteristicSelectionDialog from '../apps/characteristic-selection-dialog.js'
+import CoC7CharacteristicRollDialog from '../apps/characteristic-roll-dialog.js'
 import { ExperiencePackageDialog } from '../apps/experience-package-dialog.js'
 import { SkillSpecSelectDialog } from '../apps/skill-spec-select-dialog.js'
 import { SkillSpecializationSelectDialog } from '../apps/skill-specialization-select-dialog.js'
@@ -17,9 +17,9 @@ import { SkillValueDialog } from '../apps/skill-value-dialog.js'
 import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js'
 import { CoC7RangeInitiator } from '../chat/rangecombat.js'
 import { chatHelper } from '../chat/helper.js'
-import { CoC7Dice } from '../dice.js'
+import CoC7DicePool from '../apps/dice-pool.js'
 import { CoC7Item } from '../items/item.js'
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from '../apps/utilities.js'
 
 /**
  * Extend the base Actor class to implement additional logic specialized for CoC 7th.
@@ -1228,7 +1228,7 @@ export class CoCActor extends Actor {
               data.system.characteristics.values.pow !== null &&
               data.system.characteristics.values.edu !== null
             )
-            const rolled = await CharacRollDialog.create(data.system)
+            const rolled = await CoC7CharacteristicRollDialog.create(data.system)
             if (rolled) {
               const updateData = {}
               for (const key of [
@@ -1342,7 +1342,7 @@ export class CoCActor extends Actor {
               const charDialogData = {}
               charDialogData.characteristics = coreCharac
               charDialogData.title = game.i18n.localize('CoC7.SelectCoreCharac')
-              charac = await CharacSelectDialog.create(charDialogData)
+              charac = await CoC7CharacteristicSelectionDialog.create(charDialogData)
             } else if (coreCharac.length === 1) {
               charac = coreCharac[0].key
             }
@@ -3503,11 +3503,11 @@ export class CoCActor extends Actor {
     let message = ''
     const upgradeRoll = new Roll('1D100')
     await upgradeRoll.roll({ async: true })
-    if (!fastForward) await CoC7Dice.showRollDice3d(upgradeRoll)
+    if (!fastForward) await CoC7DicePool.showRollDice3d(upgradeRoll)
     if (upgradeRoll.total > skill.value || upgradeRoll.total >= 95) {
       const augmentRoll = new Roll('1D10')
       await augmentRoll.roll({ async: true })
-      if (!fastForward) await CoC7Dice.showRollDice3d(augmentRoll)
+      if (!fastForward) await CoC7DicePool.showRollDice3d(augmentRoll)
       message = game.i18n.format('CoC7.DevSuccessDetails', {
         item: skill.name,
         augment: augmentRoll.total

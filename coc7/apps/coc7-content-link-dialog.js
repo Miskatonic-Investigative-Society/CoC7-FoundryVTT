@@ -1,8 +1,8 @@
 /* global canvas, CONST, FormApplication, foundry, game, ui */
 import { CoCActor } from '../actors/actor.js'
-import { CoC7Check } from '../check.js'
+import CoC7Check from '../apps/check.js'
 import { CoC7Link } from './coc7-link.js'
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from './utilities.js'
 
 export class CoC7ContentLinkDialog extends FormApplication {
   static get defaultOptions () {

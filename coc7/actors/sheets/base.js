@@ -2,9 +2,9 @@
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
-import { CoC7Check } from '../../check.js'
+import CoC7Check from '../../apps/check.js'
 import { CoC7ContentLinkDialog } from '../../apps/coc7-content-link-dialog.js'
-import { COC7 } from '../../config.js'
+import { COC7 } from '../../constants.js'
 import { CoCActor } from '../../actors/actor.js'
 import { CoC7Item } from '../../items/item.js'
 import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js'
@@ -13,9 +13,9 @@ import { CoC7ConCheck } from '../../chat/concheck.js'
 import { chatHelper, isCtrlKey } from '../../chat/helper.js'
 import { CoC7Link } from '../../apps/coc7-link.js'
 import { DamageCard } from '../../chat/cards/damage.js'
-import CoC7ActiveEffect from '../../active-effect.js'
+import CoC7ActiveEffect from '../../apps/active-effect.js'
 import { CoC7ContextMenu } from '../../context-menu.js'
-import { CoC7Utilities } from '../../utilities.js'
+import CoC7Utilities from '../../apps/utilities.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications

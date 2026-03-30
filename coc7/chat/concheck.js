@@ -1,6 +1,6 @@
 /* global $, ChatMessage, game, renderTemplate, ui */
-import { COC7 } from '../config.js'
-import { CoC7Check } from '../check.js'
+import { COC7 } from '../constants.js'
+import CoC7Check from '../apps/check.js'
 import { chatHelper, CoC7Roll } from './helper.js'
 
 export class CoC7ConCheck {

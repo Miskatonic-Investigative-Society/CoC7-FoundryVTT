@@ -1,5 +1,5 @@
 /* global $, ChatMessage, CONST, Dialog, FormData, game, renderTemplate, ui */
-import { CoC7Check } from '../../check.js'
+import CoC7Check from '../../apps/check.js'
 import { chatHelper, CoC7Roll } from '../helper.js'
 import { CoC7Chat } from '../../chat.js'
 import { ChatCardActor } from '../card-actor.js'

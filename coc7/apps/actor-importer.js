@@ -2,7 +2,7 @@
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
 import { CoCActor } from '../actors/actor.js'
 import { CoC7Item } from '../items/item.js'
-import { CoC7Utilities } from '../utilities.js'
+import CoC7Utilities from './utilities.js'
 
 /**
  * CoC7ActorImporter helper class to import an Actor from the raw text description.

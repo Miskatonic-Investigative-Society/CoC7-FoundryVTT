@@ -1,12 +1,12 @@
 /* global canvas, ChatMessage, CONFIG, CONST, Dialog, Folder, foundry, fromUuid, fromUuidSync, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
-import { COC7 } from './config.js'
-import { CoC7Check } from './check.js'
-import { CoC7Item } from './items/item.js'
-import { CoC7Link } from './apps/coc7-link.js'
-import { RollDialog } from './apps/roll-dialog.js'
-import { chatHelper } from './chat/helper.js'
+import { COC7 } from '../constants.js'
+import CoC7Check from '../apps/check.js'
+import { CoC7Item } from '../items/item.js'
+import { CoC7Link } from './coc7-link.js'
+import { RollDialog } from './roll-dialog.js'
+import { chatHelper } from '../chat/helper.js'
 
-export class CoC7Utilities {
+export default class CoC7Utilities {
   // static test(event){
   //   if( event.shiftKey) ui.notifications.info('Hello from SHIFT utilities');
   //   else ui.notifications.info('Hello from utilities');

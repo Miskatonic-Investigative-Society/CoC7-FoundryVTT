@@ -1,8 +1,8 @@
 /* global game, Handlebars */
 import { chatHelper } from '../chat/helper.js'
-import { CoC7Check } from '../check.js'
+import CoC7Check from '../apps/check.js'
 
-export const handlebarsHelper = function () {
+export default function () {
   Handlebars.registerHelper('rollActorImg', function (actorKey) {
     const img = chatHelper.getActorImgFromKey(actorKey)
     if (img) return img

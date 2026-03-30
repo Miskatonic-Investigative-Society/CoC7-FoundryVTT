@@ -1,8 +1,8 @@
 /* global $, canvas, Dialog, foundry, game, PIXI, Token, TokenDocument, ui */
 import { CoCActor } from '../../actors/actor.js'
 import { ChaseObstacleCard } from '../../chat/cards/chase-obstacle.js'
-import { CoC7Check } from '../../check.js'
-import { CoC7Utilities } from '../../utilities.js'
+import CoC7Check from '../../apps/check.js'
+import CoC7Utilities from '../../apps/utilities.js'
 import { CoC7Item } from '../item.js'
 import { _participant, sortByRoleAndDex } from './participant.js'
 

@@ -1,5 +1,5 @@
 /* global ChatMessage, game, renderTemplate, ui */
-import { CoC7Check } from '../../check.js'
+import CoC7Check from '../../apps/check.js'
 import { chatHelper } from '../helper.js'
 import { CoC7MeleeInitiator } from './melee-initiator.js'
 import { CoC7MeleeTarget } from './melee-target.js'

@@ -1,7 +1,7 @@
 /* global $, foundry, game, renderTemplate, Roll, ui */
-import { COC7 } from '../../config.js'
-import { CoC7Check } from '../../check.js'
-import { CoC7Dice } from '../../dice.js'
+import { COC7 } from '../../constants.js'
+import CoC7Check from '../../apps/check.js'
+import CoC7DicePool from '../../apps/dice-pool.js'
 import { ChatCardActor } from '../card-actor.js'
 import { createInlineRoll, chatHelper } from '../helper.js'
 
@@ -317,7 +317,7 @@ export class SanCheckCard extends ChatCardActor {
 
     await this.sanLossRoll.roll({ async: true })
 
-    await CoC7Dice.showRollDice3d(this.sanLossRoll)
+    await CoC7DicePool.showRollDice3d(this.sanLossRoll)
 
     const max = this.actor.maxLossToSanReason(
       this.sanData.sanReason,

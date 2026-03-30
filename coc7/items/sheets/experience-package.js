@@ -1,7 +1,7 @@
 /* global $ DragDrop foundry game TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7Item } from '../item.js'
-import { CoC7Utilities } from '../../utilities.js'
+import CoC7Utilities from '../../apps/utilities.js'
 import { DropCoCID } from '../../apps/drop-coc-id.js'
 
 export class CoC7ExperiencePackageSheet extends foundry.appv1.sheets.ItemSheet {

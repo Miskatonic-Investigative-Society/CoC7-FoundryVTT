@@ -1,5 +1,5 @@
-import { CoC7Menu } from '../menu.js'
+import CoC7SceneControls from '../apps/scene-controls.js'
 
 export default function (controls) {
-  CoC7Menu.getButtons(controls)
+  CoC7SceneControls.getButtons(controls)
 }

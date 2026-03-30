@@ -1,9 +1,9 @@
 /* global foundry, game, Roll, ui */
-import { CoC7Check } from '../../check.js'
+import CoC7Check from '../../apps/check.js'
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
-import { CoC7Dice } from '../../dice.js'
+import CoC7DicePool from '../../apps/dice-pool.js'
 import { _participant } from '../../items/chase/participant.js'
-import { CoC7Utilities } from '../../utilities.js'
+import CoC7Utilities from '../../apps/utilities.js'
 import { createInlineRoll } from '../helper.js'
 
 export class ChaseObstacleCard extends EnhancedChatCard {
@@ -893,7 +893,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (!this.data.objects) this.data.objects = {}
     this.data.objects.obstacleDamageRoll = new Roll(this.usedWeapon?.damage)
     await this.data.objects.obstacleDamageRoll.evaluate({ async: true })
-    await CoC7Dice.showRollDice3d(this.data.objects.obstacleDamageRoll)
+    await CoC7DicePool.showRollDice3d(this.data.objects.obstacleDamageRoll)
     this.data.states.obstacleDamageRolled = true
     this.data.totalActionCost += 1
     this.data.states.cardResolved = true

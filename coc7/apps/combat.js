@@ -1,5 +1,5 @@
 /* global game */
-import { CoC7Check } from './check.js'
+import CoC7Check from './check.js'
 
 export class CoC7Combat {
   static renderCombatTracker (app, html, data) {
