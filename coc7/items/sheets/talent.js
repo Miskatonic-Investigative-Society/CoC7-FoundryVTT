@@ -12,7 +12,7 @@ export class CoC7TalentSheet extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'talent'],
-      template: 'systems/CoC7/templates/items/talent.html',
+      template: 'systems/CoC7/templates/items/talent-header.hbs',
       width: 525,
       height: 480,
       scrollY: ['.tab.description'],

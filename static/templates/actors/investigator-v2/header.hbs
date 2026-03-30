@@ -218,37 +218,37 @@
         <div class="two-panes-content">
           <div class="left-panel">
             {{#if showDevPannel}}
-              {{> "systems/CoC7/templates/actors/parts/development-controls.html"}}
+              {{> "systems/CoC7/templates/actors/investigator-v2/parts/development.hbs"}}
             {{else}}
-              {{> "systems/CoC7/templates/actors/parts/vitals.html"}}
+              {{> "systems/CoC7/templates/actors/investigator-v2/parts/vitals.hbs"}}
             {{/if}}
           </div>
 
           <div class="right-panel">
             {{#if showDevPannel}}
               <div class="tab development" data-group="primary" data-tab="development">
-                {{> "systems/CoC7/templates/actors/parts/character-development-v2.html"}}
+                {{> "systems/CoC7/templates/actors/investigator-v2/tabs/development.hbs"}}
               </div>
             {{/if}}
 
             <div class="tab" data-group="primary" data-tab="skills">
-              {{> "systems/CoC7/templates/actors/parts/actor-skills-v2.html"}}
+              {{> "systems/CoC7/templates/actors/investigator-v2/tabs/skills.hbs"}}
             </div>
 
             <div class="tab combat" data-group="primary" data-tab="combat">
-              {{> "systems/CoC7/templates/actors/parts/combat.html"}}
+              {{> "systems/CoC7/templates/actors/investigator-v2/tabs/combat.hbs"}}
             </div>
 
             <div class="tab coc7 sheet actor temp-retro-compat" data-group="primary" data-tab="possession">
-              {{~> "systems/CoC7/templates/actors/parts/actor-inventory.html"}}
+              {{~> "systems/CoC7/templates/actors/investigator-v2/tabs/possession.hbs"}}
             </div>
 
             <div class="tab coc7 sheet actor temp-retro-compat restore-list-styles character-background" data-group="primary" data-tab="background">
               {{#if oneBlockBackStory}}
                 {{editor enrichedBackstory target="system.backstory" engine="prosemirror" button=true owner=owner editable=editable}}
-                {{> "systems/CoC7/templates/actors/parts/actor-mythos-enounters.hbs"}}
+                {{> "systems/CoC7/templates/actors/investigator-v2/parts/actor-mythos-encounters.hbs"}}
               {{else}}
-                {{~> "systems/CoC7/templates/actors/parts/actor-background.html"}}
+                {{~> "systems/CoC7/templates/actors/investigator-v2/tabs/background.hbs"}}
               {{/if}}
             </div>
 
@@ -263,7 +263,7 @@
                   <div><a class="clear_conditions button">{{localize 'CoC7.ClearAllConditions'}}</a></div>
                 {{/if}}
                 <div class="flexrow-coc7">
-                  {{> "systems/CoC7/templates/actors/parts/actor-keeper-mythos-enounters.hbs"}}
+                  {{> "systems/CoC7/templates/actors/investigator-v2/parts/actor-keeper-mythos-encounters.hbs"}}
                   <div class="flexcol-coc7 bio-section" style="flex: 0 0 50%;">
                     <div class="flexrow-coc7" style="flex: initial;">
                       <label style="height: 1rem;margin: 0;border: 0;font-family: customSheetFont, 'Palatino Linotype', serif;font-size: .75rem;flex: 1;">{{localize 'CoC7.BackgroundFlags'}}</label>

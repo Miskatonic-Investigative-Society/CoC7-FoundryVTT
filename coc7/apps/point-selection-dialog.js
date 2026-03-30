@@ -51,7 +51,7 @@ export class PointSelectDialog extends Dialog {
 
   static async create (data) {
     const html = await renderTemplate(
-      'systems/CoC7/templates/apps/point-select.html',
+      'systems/CoC7/templates/apps/point-select.hbs',
       data
     )
     return new Promise(resolve => {

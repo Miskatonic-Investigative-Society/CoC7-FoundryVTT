@@ -11,7 +11,7 @@ export class CoC7ContentLinkDialog extends FormApplication {
       classes: ['coc7', 'active-effect-sheet'],
       title: game.i18n.localize('CoC7.CreateLink'),
       dragDrop: [{ dragSelector: null, dropSelector: '.container' }],
-      template: 'systems/CoC7/templates/apps/link-creation.html',
+      template: 'systems/CoC7/templates/apps/link-creation.hbs',
       closeOnSubmit: false,
       width: 560,
       height: 'auto',

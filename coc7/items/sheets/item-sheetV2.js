@@ -15,7 +15,7 @@ export class CoC7ItemSheetV2 extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'item'],
-      template: 'systems/CoC7/templates/items/item-sheetV2.html',
+      template: 'systems/CoC7/templates/items/item-v2-header.hbs',
       width: 500,
       height: 450,
       scrollY: ['.tab.description'],

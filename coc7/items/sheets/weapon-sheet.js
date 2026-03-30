@@ -31,7 +31,7 @@ export class CoC7WeaponSheet extends foundry.appv1.sheets.ItemSheet {
    */
   get template () {
     const path = 'systems/CoC7/templates/items'
-    return `${path}/weapon-sheet.html`
+    return `${path}/weapon-header.hbs`
   }
 
   _getHeaderButtons () {

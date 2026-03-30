@@ -99,7 +99,7 @@ export class CoC7ArchetypeSheet extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'occupation'],
-      template: 'systems/CoC7/templates/items/archetype.html',
+      template: 'systems/CoC7/templates/items/archetype-header.hbs',
       width: 520,
       height: 480,
       dragDrop: [{ dragSelector: '.item' }],

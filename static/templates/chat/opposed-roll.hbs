@@ -41,7 +41,7 @@
   {{/if}}
   <ol>
     {{#each rollOrder as |which|}}
-    {{~> 'systems/CoC7/templates/chat/messages/roll-container.hbs' which=which rollStatus=(lookup ../rollStatuses which) roll=(lookup ../rollData which) parent=../this}}
+    {{~> 'systems/CoC7/templates/chat/parts/roll-container.hbs' which=which rollStatus=(lookup ../rollStatuses which) roll=(lookup ../rollData which) parent=../this}}
     {{/each}}
   </ol>
   {{#if (and isCombat allRollsCompleted resultText)}}

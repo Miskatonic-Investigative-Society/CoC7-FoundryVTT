@@ -36,7 +36,7 @@ export class CoC7SkillSheet extends foundry.appv1.sheets.ItemSheet {
 
   /** @override */
   get template () {
-    return `systems/CoC7/templates/items/${this.item.type}-sheet.html`
+    return 'systems/CoC7/templates/items/skill-header.hbs'
   }
 
   _getHeaderButtons () {

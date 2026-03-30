@@ -14,7 +14,7 @@ export class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     const options = foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV2', 'item', 'chase'],
-      template: 'systems/CoC7/templates/items/chase.html',
+      template: 'systems/CoC7/templates/items/chase-header.hbs',
       width: 550,
       height: 500,
       resizable: true,

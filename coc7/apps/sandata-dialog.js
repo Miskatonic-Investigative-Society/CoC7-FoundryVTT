@@ -11,7 +11,7 @@ export class SanDataDialog extends Dialog {
 
   static async create (options = {}) {
     const html = await renderTemplate(
-      'systems/CoC7/templates/apps/sandata.html',
+      'systems/CoC7/templates/apps/san-data-dialog.hbs',
       options
     )
 

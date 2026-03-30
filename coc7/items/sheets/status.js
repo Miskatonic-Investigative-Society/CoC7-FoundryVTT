@@ -13,7 +13,7 @@ export class CoC7StatusSheet extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'status'],
-      template: 'systems/CoC7/templates/items/status.html',
+      template: 'systems/CoC7/templates/items/status-header.hbs',
       width: 525,
       height: 480,
       scrollY: ['.tab.description'],

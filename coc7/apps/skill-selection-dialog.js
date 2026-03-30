@@ -26,7 +26,7 @@ export class SkillSelectDialog extends Dialog {
 
   static async create (data) {
     const html = await renderTemplate(
-      'systems/CoC7/templates/apps/skill-select.html',
+      'systems/CoC7/templates/apps/skill-select.hbs',
       data
     ) // Render template bug avec certaines data
     return new Promise(resolve => {

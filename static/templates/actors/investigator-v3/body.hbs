@@ -61,7 +61,7 @@
       <div class="ornament-top"></div>
       <div class="sheet-inner">
         <section class="sheet-header">
-          {{~> 'systems/CoC7/templates/actors/parts/actor-picture-frame-v3.hbs'}}
+          {{~> 'systems/CoC7/templates/actors/investigator-v3/parts/portrait-frame.hbs'}}
           <div class="character-info">
             <div class="character-details">
               <div class="detail-wrapper">
@@ -128,7 +128,7 @@
                 <input name="system.infos.birthplace" type="text" class="detail-value" value="{{data.system.infos.birthplace}}" />
               </div>
             </div>
-            {{~> 'systems/CoC7/templates/actors/parts/actor-characteristics-v3.hbs'}}
+            {{~> 'systems/CoC7/templates/actors/investigator-v3/parts/attributes-primary.hbs'}}
             <div class="secondary-attributes flexrow-coc7">
               <div class="secondary-attribute attribute attr-hp{{#unless (and data.system.flags.locked data.system.attribs.hp.auto)}} manual-override{{/unless}}" data-attrib="hp">
                 <div class="attribute-label{{#unless data.system.flags.locked}} auto-toggle{{/unless}}">{{localize 'CoC7.HP'}}</div>
@@ -213,32 +213,32 @@
           <section class="sheet-body">
             <!-- Development -->
             <div class="tab development" data-tab="development">
-              {{~> 'systems/CoC7/templates/actors/parts/actor-development-v3.hbs'}}
+              {{~> 'systems/CoC7/templates/actors/investigator-v3/tabs/development.hbs'}}
             </div>
             <!-- Skills -->
             <div class="tab skills" data-tab="skills">
-              {{~> 'systems/CoC7/templates/actors/parts/actor-skills-v3.hbs'}}
+              {{~> 'systems/CoC7/templates/actors/investigator-v3/tabs/skills.hbs'}}
             </div>
             <!-- Combat -->
             <div class="tab combat" data-tab="combat">
-              {{~> 'systems/CoC7/templates/actors/parts/actor-combat-v3.hbs'}}
+              {{~> 'systems/CoC7/templates/actors/investigator-v3/tabs/combat.hbs'}}
             </div>
             <!-- Possessions -->
             <div class="tab possessions" data-tab="possession">
-              {{~> 'systems/CoC7/templates/actors/parts/actor-possessions-v3.hbs'}}
+              {{~> 'systems/CoC7/templates/actors/investigator-v3/tabs/possession.hbs'}}
             </div>
             <!-- Background -->
             <div class="tab background" data-tab="background">
-              {{~> 'systems/CoC7/templates/actors/parts/actor-background-v3.hbs'}}
+              {{~> 'systems/CoC7/templates/actors/investigator-v3/tabs/background.hbs'}}
             </div>
             <!-- Active Effects -->
             <div class="tab active-effects" data-tab="active-effects">
-              {{~> 'systems/CoC7/templates/actors/parts/actor-active-effects-v3.hbs'}}
+              {{~> 'systems/CoC7/templates/actors/investigator-v3/tabs/active-effects.hbs'}}
             </div>
             {{#if isKeeper}}
               <!-- Guardian Notes -->
               <div class="tab keeper-notes" data-tab="keeper-notes">
-                {{~> 'systems/CoC7/templates/actors/parts/actor-keeper-notes-v3.hbs'}}
+                {{~> 'systems/CoC7/templates/actors/investigator-v3/tabs/keeper.hbs'}}
               </div>
             {{/if}}
             {{#unless data.system.flags.locked}}

@@ -6,7 +6,7 @@ export class CoC7ArmorSheet extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'armor'],
-      template: 'systems/CoC7/templates/items/armor.hbs',
+      template: 'systems/CoC7/templates/items/armor-header.hbs',
       width: 520,
       height: 480,
       dragDrop: [{ dragSelector: '.item' }],

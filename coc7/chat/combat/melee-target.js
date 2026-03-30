@@ -99,7 +99,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
   }
 
   get template () {
-    return 'systems/CoC7/templates/chat/combat/melee-target.html'
+    return 'systems/CoC7/templates/chat/melee-target.hbs'
   }
 
   static getFromMessageId (messageId) {

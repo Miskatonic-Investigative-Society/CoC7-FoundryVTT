@@ -8,25 +8,25 @@
 export const preloadHandlebarsTemplates = async function () {
   /** Define template paths to load */
   const templatePaths = [
-    'systems/CoC7/templates/actors/parts/npc-skills.html',
-    'systems/CoC7/templates/actors/parts/npc-combat.html',
+    'systems/CoC7/templates/actors/npc-v2/tab/skills.hbs',
+    'systems/CoC7/templates/actors/npc-v2/tab/combat.hbs',
 
-    'systems/CoC7/templates/actors/parts/actor-inventory.html',
-    'systems/CoC7/templates/actors/parts/actor-inventory-items.html',
-    'systems/CoC7/templates/actors/parts/actor-background.html',
+    'systems/CoC7/templates/actors/investigator-v2/tabs/possession.hbs',
+    'systems/CoC7/templates/actors/npc-v2/tab/inventory-items.hbs',
+    'systems/CoC7/templates/actors/investigator-v2/tabs/background.hbs',
     'systems/CoC7/templates/common/active-effects.hbs',
-    'systems/CoC7/templates/actors/parts/actor-mythos-enounters.hbs',
-    'systems/CoC7/templates/actors/parts/actor-keeper-mythos-enounters.hbs',
-    'systems/CoC7/templates/actors/parts/actor-skills-v2.html',
-    'systems/CoC7/templates/actors/parts/character-development-v2.html',
-    'systems/CoC7/templates/actors/parts/development-controls.html',
-    'systems/CoC7/templates/actors/parts/vitals.html',
-    'systems/CoC7/templates/actors/parts/combat.html',
-    'systems/CoC7/templates/actors/character-sheet-v2.html',
-    'systems/CoC7/templates/actors/character/summary.html',
+    'systems/CoC7/templates/actors/investigator-v2/parts/actor-mythos-encounters.hbs',
+    'systems/CoC7/templates/actors/investigator-v2/parts/actor-keeper-mythos-encounters.hbs',
+    'systems/CoC7/templates/actors/investigator-v2/tabs/skills.hbs',
+    'systems/CoC7/templates/actors/investigator-v2/tabs/development.hbs',
+    'systems/CoC7/templates/actors/investigator-v2/parts/development.hbs',
+    'systems/CoC7/templates/actors/investigator-v2/parts/vitals.hbs',
+    'systems/CoC7/templates/actors/investigator-v2/tabs/combat.hbs',
+    'systems/CoC7/templates/actors/investigator-v2/header.hbs',
+    'systems/CoC7/templates/actors/character/investigator-summarized-v2/body.hbs',
 
-    'systems/CoC7/templates/items/book/details.html',
-    'systems/CoC7/templates/items/spell/details.html',
+    'systems/CoC7/templates/items/book-tab-details.hbs',
+    'systems/CoC7/templates/items/spell-tab-details.hbs',
 
     'systems/CoC7/templates/apps/investigator-wizard/introduction.hbs',
     'systems/CoC7/templates/apps/investigator-wizard/configuration.hbs',
@@ -44,18 +44,18 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/CoC7/templates/apps/investigator-wizard/backstory.hbs',
     'systems/CoC7/templates/apps/investigator-wizard/create.hbs',
 
-    'systems/CoC7/templates/chat/messages/roll-container.hbs',
-    'systems/CoC7/templates/chat/messages/roll-dice.hbs',
+    'systems/CoC7/templates/chat/parts/roll-container.hbs',
+    'systems/CoC7/templates/chat/parts/roll-dice.hbs',
 
-    'systems/CoC7/templates/actors/parts/actor-picture-frame-v3.hbs',
-    'systems/CoC7/templates/actors/parts/actor-characteristics-v3.hbs',
-    'systems/CoC7/templates/actors/parts/actor-development-v3.hbs',
-    'systems/CoC7/templates/actors/parts/actor-skills-v3.hbs',
-    'systems/CoC7/templates/actors/parts/actor-combat-v3.hbs',
-    'systems/CoC7/templates/actors/parts/actor-possessions-v3.hbs',
-    'systems/CoC7/templates/actors/parts/actor-background-v3.hbs',
-    'systems/CoC7/templates/actors/parts/actor-keeper-notes-v3.hbs',
-    'systems/CoC7/templates/actors/parts/actor-active-effects-v3.hbs'
+    'systems/CoC7/templates/actors/investigator-v3/parts/portrait-frame.hbs',
+    'systems/CoC7/templates/actors/investigator-v3/parts/attributes-primary.hbs',
+    'systems/CoC7/templates/actors/investigator-v3/tabs/development.hbs',
+    'systems/CoC7/templates/actors/investigator-v3/tabs/skills.hbs',
+    'systems/CoC7/templates/actors/investigator-v3/tabs/combat.hbs',
+    'systems/CoC7/templates/actors/investigator-v3/tabs/possession.hbs',
+    'systems/CoC7/templates/actors/investigator-v3/tabs/background.hbs',
+    'systems/CoC7/templates/actors/investigator-v3/tabs/keeper.hbs',
+    'systems/CoC7/templates/actors/investigator-v3/tabs/active-effects.hbs'
   ]
 
   /** Load the template parts */

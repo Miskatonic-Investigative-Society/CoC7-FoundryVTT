@@ -208,7 +208,7 @@ export class CharacRollDialog extends Dialog {
     }
 
     const html = await renderTemplate(
-      'systems/CoC7/templates/apps/char-roll.html',
+      'systems/CoC7/templates/apps/char-roll.hbs',
       data
     )
     return new Promise(resolve => {

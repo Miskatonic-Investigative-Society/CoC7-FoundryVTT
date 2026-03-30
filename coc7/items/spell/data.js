@@ -84,7 +84,7 @@ export class CoC7Spell extends CoC7Item {
       }
       losses.push({ characteristicName, loss })
     }
-    const template = 'systems/CoC7/templates/items/spell/chat.html'
+    const template = 'systems/CoC7/templates/chat/spell.hbs'
     const description = this.system.description.value
     const html = await renderTemplate(template, { description, losses })
     let chatData = {

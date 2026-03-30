@@ -151,7 +151,7 @@ export class CoC7SetupSheet extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'setup'],
-      template: 'systems/CoC7/templates/items/setup.html',
+      template: 'systems/CoC7/templates/items/setup-header.hbs',
       width: 565,
       height: 530,
       dragDrop: [{ dragSelector: '.item' }],

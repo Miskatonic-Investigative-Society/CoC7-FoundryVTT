@@ -310,7 +310,7 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'actor', 'npc'],
       dragDrop: [{ dragSelector: '.item', dropSelector: null }],
-      template: 'systems/CoC7/templates/actors/npc-sheet.html',
+      template: 'systems/CoC7/templates/actors/npc-v2/body.hbs',
       width: 580,
       resizable: false,
       minimizable: true

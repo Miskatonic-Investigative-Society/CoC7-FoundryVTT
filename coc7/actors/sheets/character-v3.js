@@ -5,7 +5,7 @@ export class CoC7CharacterSheetV3 extends CoC7CharacterSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV3', 'actor', 'character'],
-      template: 'systems/CoC7/templates/actors/character-sheet-v3.hbs',
+      template: 'systems/CoC7/templates/actors/investigator-v3/body.hbs',
       width: 980,
       height: 810,
       scrollY: ['.sheet-body']

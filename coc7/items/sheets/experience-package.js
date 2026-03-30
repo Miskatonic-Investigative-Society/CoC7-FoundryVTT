@@ -8,7 +8,7 @@ export class CoC7ExperiencePackageSheet extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'armor'],
-      template: 'systems/CoC7/templates/items/experience-package.hbs',
+      template: 'systems/CoC7/templates/items/experience-package-header.hbs',
       width: 520,
       height: 480,
       dragDrop: [{ dragSelector: '.item' }],

@@ -437,7 +437,7 @@ export class CoC7RangeInitiator {
   }
 
   get template () {
-    return 'systems/CoC7/templates/chat/combat/range-initiator.html'
+    return 'systems/CoC7/templates/chat/range-initiator.hbs'
   }
 
   async createChatCard () {

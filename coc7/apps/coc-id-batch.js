@@ -5,7 +5,7 @@ export class CoCIDBatch extends FormApplication {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'dialog', 'coc-id-editor'],
-      template: 'systems/CoC7/templates/apps/coc-id-batch.hbs',
+      template: 'systems/CoC7/templates/apps/coc-id-batch-body.hbs',
       width: 700,
       height: 'auto',
       title: 'CoC7.CoCIDFlag.title',

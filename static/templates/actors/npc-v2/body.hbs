@@ -335,7 +335,7 @@
             {{/unless}}
           </div>
           <div class="pannel skills expanded" style="padding-top: 1px;border-bottom: 2px groove;">
-            {{> "systems/CoC7/templates/actors/parts/npc-skills.html"}}
+            {{> "systems/CoC7/templates/actors/npc-v2/tab/skills.hbs"}}
           </div>
         </section>
 
@@ -357,7 +357,7 @@
                 <input style="flex: 0 0 3rem;height: fit-content;padding: 0 2px;text-align: center;" type="text" name="system.special.attacksPerRound" value="{{data.system.special.attacksPerRound}}">
               {{/if}}
             </div>
-            {{> "systems/CoC7/templates/actors/parts/npc-combat.html"}}
+            {{> "systems/CoC7/templates/actors/npc-v2/tab/combat.hbs"}}
           </div>
         </section>
 
@@ -367,7 +367,7 @@
               <h3 class="flex1">{{localize 'CoC7.Inventory'}}</h3>
             </div>
             <div class="inventory flexrow-coc7 pannel expanded">
-              {{> "systems/CoC7/templates/actors/parts/actor-inventory-items.html"}}
+              {{> "systems/CoC7/templates/actors/npc-v2/tab/inventory-items.hbs"}}
             </div>
           </section>
         {{/if}}

@@ -12,7 +12,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       id: 'investigator-wizard-application',
       classes: ['coc7', 'dialog', 'investigator-wizard'],
       title: game.i18n.localize('CoC7.InvestigatorWizard.Title'),
-      template: 'systems/CoC7/templates/apps/investigator-wizard.hbs',
+      template: 'systems/CoC7/templates/apps/investigator-wizard/body.hbs',
       width: 520,
       height: 600,
       closeOnSubmit: false,

@@ -10,7 +10,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   /** @override */
   static get defaultOptions () {
     const options = foundry.utils.mergeObject(super.defaultOptions, {
-      template: 'systems/CoC7/templates/chat/cards/chase-obstacle.html',
+      template: 'systems/CoC7/templates/chat/chase-obstacle.hbs',
       GMUpdate: true
     })
     options.classes.push('obstacle-card')

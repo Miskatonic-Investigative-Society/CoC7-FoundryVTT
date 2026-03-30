@@ -450,7 +450,7 @@ export class SanCheckCard extends ChatCardActor {
   }
 
   static get template () {
-    return 'systems/CoC7/templates/chat/cards/san-check.html'
+    return 'systems/CoC7/templates/chat/san-check.hbs'
   }
 
   static checkTargets (sanData, fastForward = false) {

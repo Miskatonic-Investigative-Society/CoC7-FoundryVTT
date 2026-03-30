@@ -8,7 +8,7 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
       width: 555,
       height: 420,
       resizable: true,
-      template: 'systems/CoC7/templates/actors/vehicle.html',
+      template: 'systems/CoC7/templates/actors/vehicle-v2/header.hbs',
       dragDrop: [{ dragSelector: '.actor', dropSelector: '.dropZone' }],
       tabs: [
         {

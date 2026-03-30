@@ -8,7 +8,7 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       title: game.i18n.localize('CoC7.AddActorToChase'),
-      template: 'systems/CoC7/templates/apps/chase-participant-importer.html',
+      template: 'systems/CoC7/templates/apps/chase-participant.hbs',
       classes: ['coc7', 'dialog', 'chase-participant-importer'],
       editable: true,
       resizable: false,

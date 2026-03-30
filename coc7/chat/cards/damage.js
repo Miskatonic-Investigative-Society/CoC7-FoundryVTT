@@ -17,7 +17,7 @@ export class DamageCard extends InteractiveChatCard {
         '_htmlRoll',
         '_htmlInlineRoll'
       ].concat(super.defaultOptions.exclude),
-      template: 'systems/CoC7/templates/chat/cards/damage.html'
+      template: 'systems/CoC7/templates/chat/damage.hbs'
     })
   }
 

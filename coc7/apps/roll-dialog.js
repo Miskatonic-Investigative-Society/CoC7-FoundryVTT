@@ -42,7 +42,7 @@ export class RollDialog {
       data.cardTypes = CoC7ChatMessage.cardTypes(options)
     }
     const html = await renderTemplate(
-      'systems/CoC7/templates/apps/bonus.html',
+      'systems/CoC7/templates/apps/bonus.hbs',
       data
     )
     return new Promise(resolve => {

@@ -16,7 +16,7 @@ export class CharacSelectDialog extends Dialog {
 
   static async create (data) {
     const html = await renderTemplate(
-      'systems/CoC7/templates/apps/char-select.html',
+      'systems/CoC7/templates/apps/char-select.hbs',
       data
     )
     return new Promise(resolve => {

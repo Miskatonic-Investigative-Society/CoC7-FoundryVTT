@@ -73,7 +73,7 @@ export class CoC7ConCheck {
   }
 
   async getCheckElement () {
-    const template = 'systems/CoC7/templates/chat/roll-result.html'
+    const template = 'systems/CoC7/templates/chat/roll-result.hbs'
     const html = await renderTemplate(template, this.check)
     const htmlElement = $.parseHTML(html)[0]
     if (htmlElement) {
@@ -84,7 +84,7 @@ export class CoC7ConCheck {
   }
 
   async toMessage (fastForward = false) {
-    const template = 'systems/CoC7/templates/chat/con-check.html'
+    const template = 'systems/CoC7/templates/chat/con-check.hbs'
 
     if (fastForward) {
       await this.rollCon()
@@ -143,7 +143,7 @@ export class CoC7ConCheck {
   }
 
   async updateChatCard () {
-    const template = 'systems/CoC7/templates/chat/con-check.html'
+    const template = 'systems/CoC7/templates/chat/con-check.hbs'
 
     const html = await renderTemplate(template, this)
     const htmlElement = $.parseHTML(html)[0]

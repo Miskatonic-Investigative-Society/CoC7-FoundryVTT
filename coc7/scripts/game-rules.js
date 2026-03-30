@@ -132,7 +132,7 @@ export class CoC7GameRuleSettings extends FormApplication {
     return foundry.utils.mergeObject(super.defaultOptions, {
       title: 'SETTINGS.TitleRules',
       id: 'rules-settings',
-      template: 'systems/CoC7/templates/system/rule-settings.html',
+      template: 'systems/CoC7/templates/apps/rule-settings.hbs',
       width: 550,
       height: 'auto',
       closeOnSubmit: true

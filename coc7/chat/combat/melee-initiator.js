@@ -21,7 +21,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
   }
 
   get template () {
-    return 'systems/CoC7/templates/chat/combat/melee-initiator.html'
+    return 'systems/CoC7/templates/chat/melee-initiator.hbs'
   }
 
   async revealCheck () {

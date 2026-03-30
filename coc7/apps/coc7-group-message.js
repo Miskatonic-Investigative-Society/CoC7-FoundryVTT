@@ -865,11 +865,11 @@ export class CoC7GroupMessage {
   static getTemplatePath (type) {
     switch (type) {
       case 'opposed':
-        return 'systems/CoC7/templates/chat/messages/opposed.hbs'
+        return 'systems/CoC7/templates/chat/opposed-roll.hbs'
       case 'combinedall':
       case 'combinedany':
       case 'combined':
-        return 'systems/CoC7/templates/chat/messages/combined.hbs'
+        return 'systems/CoC7/templates/chat/combined-roll.hbs'
     }
     return null
   }

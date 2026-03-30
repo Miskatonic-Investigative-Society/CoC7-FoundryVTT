@@ -1645,7 +1645,7 @@ export class CoC7Check {
   async toMessage (pushing = false) {
     // If card is provided atttached the roll to the card. If URID provided attach at this position.?
     this.pushing = pushing
-    const template = 'systems/CoC7/templates/chat/roll-result.html'
+    const template = 'systems/CoC7/templates/chat/roll-result.hbs'
 
     const html = await renderTemplate(template, this)
 
@@ -1755,7 +1755,7 @@ export class CoC7Check {
       this.isBlind = true
     }
 
-    const template = 'systems/CoC7/templates/chat/roll-result.html'
+    const template = 'systems/CoC7/templates/chat/roll-result.hbs'
     const html = await renderTemplate(template, this)
     let newContent = html
 
