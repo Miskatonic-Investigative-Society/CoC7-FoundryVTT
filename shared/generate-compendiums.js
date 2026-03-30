@@ -11,9 +11,9 @@ export default class GenerateCompendiums {
 
     let type = ''
 
-    if (fs.existsSync(rootFolder + '/module.json')) {
+    if (fs.existsSync(rootFolder + '/static/module.json')) {
       type = 'module'
-    } else if (fs.existsSync(rootFolder + '/system.json')) {
+    } else if (fs.existsSync(rootFolder + '/static/system.json')) {
       type = 'system'
     } else {
       throw new Error('No module.json or system.json')
@@ -26,17 +26,17 @@ export default class GenerateCompendiums {
       }
     }
 
-    const foundryConfig = JSON.parse(fs.readFileSync(rootFolder + '/' + type + '.json', 'utf8'))
+    const foundryConfig = JSON.parse(fs.readFileSync(rootFolder + '/static/' + type + '.json', 'utf8'))
     if (typeof foundryConfig?.id === 'undefined') {
-      throw new Error('No id found in ./' + type + '.json file')
+      throw new Error('No id found in ./static/' + type + '.json file')
     }
 
     if (typeof foundryConfig.packs === 'undefined') {
-      throw new Error('No packs found in ./' + type + '.json file')
+      throw new Error('No packs found in ./static/' + type + '.json file')
     }
 
     if (typeof foundryConfig.languages === 'undefined') {
-      throw new Error('No languages found in ./' + type + '.json file')
+      throw new Error('No languages found in ./static/' + type + '.json file')
     }
 
     const langs = []
