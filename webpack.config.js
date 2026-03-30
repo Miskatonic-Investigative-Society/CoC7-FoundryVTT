@@ -113,7 +113,7 @@ const bundleScript = {
       patterns: [
         { from: 'static/assets/', to: 'assets/' },
         { from: 'static/lang/', to: 'lang/' },
-        { from: 'lib/', to: 'lib/' },
+        { from: 'static/lib/', to: 'lib/' },
         { from: 'LICENSE' },
         { from: 'packs/', to: 'packs/' },
         { from: 'README.md' },

@@ -424,15 +424,15 @@ try {
 
   console.log('Move files')
 
-  if (!fs.existsSync(rootFolder + '/lib')) {
-    fs.mkdirSync(rootFolder + '/lib')
+  if (!fs.existsSync(rootFolder + '/static/lib')) {
+    fs.mkdirSync(rootFolder + '/static/lib')
   }
-  if (!fs.existsSync(rootFolder + '/lib/game-icons')) {
-    fs.mkdirSync(rootFolder + '/lib/game-icons')
+  if (!fs.existsSync(rootFolder + '/static/lib/game-icons')) {
+    fs.mkdirSync(rootFolder + '/static/lib/game-icons')
   }
 
-  fs.writeFileSync(rootFolder + '/lib/game-icons/' + webfontsConfig.fontName + '.css', cssFile, { flag: 'w+' })
-  fs.renameSync(webfontsConfig.dest + '/' + webfontsConfig.fontName + '.woff', rootFolder + '/lib/game-icons/' + webfontsConfig.fontName + '.woff')
+  fs.writeFileSync(rootFolder + '/static/lib/game-icons/' + webfontsConfig.fontName + '.css', cssFile, { flag: 'w+' })
+  fs.renameSync(webfontsConfig.dest + '/' + webfontsConfig.fontName + '.woff', rootFolder + '/static/lib/game-icons/' + webfontsConfig.fontName + '.woff')
 
   console.log('Completed')
 } catch (e) {

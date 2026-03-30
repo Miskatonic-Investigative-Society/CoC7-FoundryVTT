@@ -46,7 +46,7 @@
   },
   "standard": {
     "ignore": [
-      "/lib/socketlib/"
+      "/static/lib/socketlib/"
     ]
   }
 }
