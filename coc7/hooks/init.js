@@ -7,12 +7,12 @@ import { rollInitiative } from '../apps/combat.js'
 import handlebarsHelper from '../setup/handlebars-helper.js'
 import CompendiumFilter from '../setup/compendium-filter.js'
 import { COC7 } from '../constants.js'
-import { CoC7Link } from '../apps/coc7-link.js'
+import CoC7Link from '../apps/link.js'
 import CoC7Utilities from '../apps/utilities.js'
 import CoCID from '../apps/coc-id.js'
 import DiceSoNiceReadyLast from './dice-so-nice-ready-last.js'
-import CoC7ClickableEvents from '../apps/coc7-clickable-events.js'
-import { DamageCard } from '../chat/cards/damage.js'
+import CoC7ClickableEvents from '../apps/clickable-events.js'
+import CoC7ChatDamage from '../apps/chat-damage.js'
 import deprecated from '../deprecated.js'
 
 export default function () {
@@ -32,7 +32,7 @@ export default function () {
       linkMacro: CoC7Link.linkMacro
     },
     cards: {
-      DamageCard
+      DamageCard: CoC7ChatDamage
     },
     dev: {
       dice: {

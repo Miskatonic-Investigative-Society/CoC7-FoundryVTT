@@ -1,6 +1,6 @@
 /* global ChatMessage, foundry, game, renderTemplate, ui */
 import { CoC7Item } from '../item.js'
-import { SanCheckCard } from '../../chat/cards/san-check.js'
+import CoC7SanCheckCard from '../../apps/san-check-card.js'
 
 export class CoC7Spell extends CoC7Item {
   constructor (data, context) {
@@ -134,7 +134,7 @@ export class CoC7Spell extends CoC7Item {
 
   /** Bypass the Sanity check and just roll the damage */
   async grantSanityLoss (value, priv) {
-    const template = SanCheckCard.template
+    const template = CoC7SanCheckCard.template
     let html = await renderTemplate(template, {})
     let chatData = {
       user: game.user.id,
@@ -162,7 +162,7 @@ export class CoC7Spell extends CoC7Item {
           }
         })
       )
-      const sanityCheck = SanCheckCard.getFromCard(html)
+      const sanityCheck = CoC7SanCheckCard.getFromCard(html)
       await sanityCheck.bypassRollSan()
       await sanityCheck.rollSanLoss()
       await sanityCheck.updateChatCard()

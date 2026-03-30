@@ -1,12 +1,12 @@
 /* global foundry, game, Roll, ui */
-import CoC7Check from '../../apps/check.js'
-import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
-import CoC7DicePool from '../../apps/dice-pool.js'
-import { _participant } from '../../items/chase/participant.js'
-import CoC7Utilities from '../../apps/utilities.js'
-import { createInlineRoll } from '../helper.js'
+import CoC7Check from './check.js'
+import { EnhancedChatCard } from '../common/chatcardlib/src/chatcardlib.js'
+import CoC7DicePool from './dice-pool.js'
+import { _participant } from '../items/chase/participant.js'
+import CoC7Utilities from './utilities.js'
+import { createInlineRoll } from '../chat/helper.js'
 
-export class ChaseObstacleCard extends EnhancedChatCard {
+export default class CoC7ChatChaseObstacle extends EnhancedChatCard {
   /** @override */
   static get defaultOptions () {
     const options = foundry.utils.mergeObject(super.defaultOptions, {

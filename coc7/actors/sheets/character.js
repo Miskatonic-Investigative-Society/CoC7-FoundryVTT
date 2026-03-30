@@ -2,7 +2,7 @@
 import { COC7 } from '../../constants.js'
 import { CoCActor } from '../actor.js'
 import { CoC7ActorSheet } from './base.js'
-import { CoC7CreateMythosEncounter } from '../../apps/create-mythos-encounters.js'
+import CoC7CreateMythosEncounter from '../../apps/create-mythos-encounter.js'
 import { chatHelper } from '../../chat/helper.js'
 
 export class CoC7CharacterSheet extends CoC7ActorSheet {

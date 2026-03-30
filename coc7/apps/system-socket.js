@@ -2,10 +2,10 @@
 import { CoC7GroupMessage } from './coc7-group-message.js'
 import { CoC7InvestigatorWizard } from './investigator-wizard.js'
 import CoC7Utilities from './utilities.js'
-import { CombinedCheckCard } from '../chat/cards/combined-roll.js'
-import { OpposedCheckCard } from '../chat/cards/opposed-roll.js'
+import CoC7ChatCombinedMessage from './chat-combined-message.js'
+import CoC7ChatOpposedMessage from './chat-opposed-message.js'
 
-export class CoC7SystemSocket {
+export default class CoC7SystemSocket {
   /**
    * @param {object} data                       Data to send to socket.
    * @param {string} [data.type]                Action to run
@@ -36,11 +36,11 @@ export class CoC7SystemSocket {
     } else {
       if (game.user.isGM) {
         switch (data.type) {
-          case OpposedCheckCard.defaultConfig.type:
-            OpposedCheckCard.dispatch(data)
+          case CoC7ChatOpposedMessage.defaultConfig.type:
+            CoC7ChatOpposedMessage.dispatch(data)
             break
-          case CombinedCheckCard.defaultConfig.type:
-            CombinedCheckCard.dispatch(data)
+          case CoC7ChatCombinedMessage.defaultConfig.type:
+            CoC7ChatCombinedMessage.dispatch(data)
             break
           case 'invoke':
             {

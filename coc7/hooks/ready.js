@@ -1,8 +1,8 @@
 /* global $ CONFIG, foundry, game */
 import CoC7Check from '../apps/check.js'
 import { CoC7ContextMenu } from '../context-menu.js'
-import { CoC7SystemSocket } from '../apps/coc7-system-socket.js'
-import { CoC7Tooltips } from '../apps/tooltips.js'
+import CoC7SystemSocket from '../apps/system-socket.js'
+import CoC7DelayedTooltip from '../apps/delayed-tooltip.js'
 // import { CoC7WelcomeMessage } from '../apps/welcome-message.js'
 import registerTours from '../setup/register-tours.js'
 import CoC7Updater from '../apps/updater.js'
@@ -24,7 +24,7 @@ export default async function () {
     /** This will prompt the welcome message when it is  finished */
     // await CoC7WelcomeMessage.create()
   }
-  game.CoC7Tooltips = new CoC7Tooltips()
+  game.CoC7Tooltips = new CoC7DelayedTooltip()
 
   const instructionsVersion = game.settings.get('CoC7', 'showInstructions')
   let lang = game.i18n.lang

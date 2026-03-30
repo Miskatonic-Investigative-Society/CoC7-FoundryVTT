@@ -1,9 +1,9 @@
 /* global $, foundry, game, renderTemplate, Roll, ui */
-import { COC7 } from '../../constants.js'
-import CoC7Check from '../../apps/check.js'
-import CoC7DicePool from '../../apps/dice-pool.js'
-import { ChatCardActor } from '../card-actor.js'
-import { createInlineRoll, chatHelper } from '../helper.js'
+import { COC7 } from '../constants.js'
+import CoC7Check from './check.js'
+import CoC7DicePool from './dice-pool.js'
+import { ChatCardActor } from '../chat/card-actor.js'
+import { createInlineRoll, chatHelper } from '../chat/helper.js'
 
 function replacer (key, value) {
   if (key.startsWith('__')) {
@@ -23,7 +23,7 @@ function replacer (key, value) {
   return value // return as is
 }
 
-export class SanCheckCard extends ChatCardActor {
+export default class CoC7SanCheckCard extends ChatCardActor {
   constructor (actorKey = null, sanData = {}, options = {}) {
     super(
       actorKey,

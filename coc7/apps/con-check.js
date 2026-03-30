@@ -1,9 +1,9 @@
 /* global $, ChatMessage, game, renderTemplate, ui */
 import { COC7 } from '../constants.js'
-import CoC7Check from '../apps/check.js'
-import { chatHelper, CoC7Roll } from './helper.js'
+import CoC7Check from './check.js'
+import { chatHelper, CoC7Roll } from '../chat/helper.js'
 
-export class CoC7ConCheck {
+export default class CoC7ConCheck {
   constructor (actorId = null, difficulty = CoC7Check.difficultyLevel.regular) {
     this.check = new CoC7Check(actorId)
     this.check.characteristic = 'con'

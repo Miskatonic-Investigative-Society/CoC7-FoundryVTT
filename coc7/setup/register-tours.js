@@ -1,6 +1,6 @@
 /* global game */
-import { EnableVariantRulesEn } from '../tours/enable-variant-rules-en.js'
-import { EnableVariantRulesFr } from '../tours/enable-variant-rules-fr.js'
+import EnableVariantRulesEn from '../tours/enable-variant-rules-en.js'
+import EnableVariantRulesFr from '../tours/enable-variant-rules-fr.js'
 
 export default async function () {
   try {

@@ -1,5 +1,5 @@
 /* global Dialog, FormData, game, renderTemplate */
-import { CoC7ChatMessage } from './coc7-chat-message.js'
+import CoC7RollNormalize from './roll-normalize.js'
 import CoC7Check from '../apps/check.js'
 
 export class RollDialog {
@@ -39,7 +39,7 @@ export class RollDialog {
       typeof options.cardType !== 'undefined' &&
       (!options.forcedCardType ?? true)
     ) {
-      data.cardTypes = CoC7ChatMessage.cardTypes(options)
+      data.cardTypes = CoC7RollNormalize.cardTypes(options)
     }
     const html = await renderTemplate(
       'systems/CoC7/templates/apps/bonus.hbs',

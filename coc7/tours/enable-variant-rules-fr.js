@@ -1,6 +1,6 @@
-import { EnableVariantRulesEn } from './enable-variant-rules-en.js'
+import EnableVariantRulesEn from './enable-variant-rules-en.js'
 
-export class EnableVariantRulesFr extends EnableVariantRulesEn {
+export default class EnableVariantRulesFr extends EnableVariantRulesEn {
   constructor (config) {
     super({
       title: 'Activez les règles optionnelles.',

@@ -1,5 +1,5 @@
 /* global $, game */
-export class CoC7Tooltips {
+export default class CoC7DelayedTooltip {
   constructor () {
     this.ToolTipHover = null
     this.toolTipTimer = null

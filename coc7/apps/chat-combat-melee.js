@@ -1,12 +1,12 @@
 /* global $, ChatMessage, game, renderTemplate, ui */
-import CoC7Check from '../../apps/check.js'
-import { chatHelper, CoC7Roll } from '../helper.js'
-import { CoC7Chat } from '../../chat.js'
-import { CoC7MeleeResoltion } from './melee-resolution.js'
-import { ChatCardActor } from '../card-actor.js'
+import CoC7Check from './check.js'
+import { chatHelper, CoC7Roll } from '../chat/helper.js'
+import { CoC7Chat } from '../chat.js'
+import { CoC7MeleeResoltion } from '../chat/combat/melee-resolution.js'
+import { ChatCardActor } from '../chat/card-actor.js'
 
 // TODO : récupérer le jet en tant qu'objet !!!
-export class CoC7MeleeInitiator extends ChatCardActor {
+export default class CoC7ChatCombatMelee extends ChatCardActor {
   constructor (actorKey = null, itemId = null, fastForward = false) {
     super(actorKey, fastForward)
     this.itemId = itemId
@@ -181,7 +181,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
   }
 
   static getFromCard (card, messageId = null) {
-    const initiator = new CoC7MeleeInitiator()
+    const initiator = new CoC7ChatCombatMelee()
     chatHelper.getObjectFromElement(initiator, card)
     initiator.roll = CoC7Roll.getFromCard(card)
 
@@ -196,7 +196,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
     if (!message) return null
     const card = $(message.content)[0]
 
-    const initiator = CoC7MeleeInitiator.getFromCard(card, messageId)
+    const initiator = CoC7ChatCombatMelee.getFromCard(card, messageId)
     initiator.messageId = messageId
 
     return initiator
@@ -214,7 +214,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
       event.currentTarget.dataset.selected = card.dataset[camelFlag]
     } else {
       // update card for all player
-      const initiator = CoC7MeleeInitiator.getFromCard(card)
+      const initiator = CoC7ChatCombatMelee.getFromCard(card)
       initiator.toggleFlag(flag)
       initiator.updateChatCard()
     }

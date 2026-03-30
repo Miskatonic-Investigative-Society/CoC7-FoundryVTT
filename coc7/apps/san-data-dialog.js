@@ -1,5 +1,5 @@
 /* global Dialog, FormData, game, renderTemplate */
-export class SanDataDialog extends Dialog {
+export default class SanDataDialog extends Dialog {
   activateListeners (html) {
     super.activateListeners(html)
     html.find(':checkbox').click(() => this._toggleInput(html))

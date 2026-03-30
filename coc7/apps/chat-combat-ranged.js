@@ -1,10 +1,10 @@
 /* global $, ChatMessage, foundry, game, renderTemplate, Roll, ui */
-import CoC7DicePool from '../apps/dice-pool.js'
-import CoC7Check from '../apps/check.js'
-import { chatHelper, CoC7Roll, CoC7Damage } from './helper.js'
-import CoC7Utilities from '../apps/utilities.js'
+import CoC7DicePool from './dice-pool.js'
+import CoC7Check from './check.js'
+import { chatHelper, CoC7Roll, CoC7Damage } from '../chat/helper.js'
+import CoC7Utilities from './utilities.js'
 
-export class CoC7RangeInitiator {
+export default class CoC7ChatCombatRanged {
   constructor (actorKey = null, itemId = null, fastForward = false) {
     this.actorKey = actorKey
     this.itemId = itemId
@@ -605,7 +605,7 @@ export class CoC7RangeInitiator {
     if (!message) return null
     const card = $(message.content)[0]
 
-    const initiator = CoC7RangeInitiator.getFromCard(card, messageId)
+    const initiator = CoC7ChatCombatRanged.getFromCard(card, messageId)
     initiator.messageId = messageId
 
     return initiator
@@ -628,7 +628,7 @@ export class CoC7RangeInitiator {
       event.currentTarget.dataset.selected = card.dataset[camelFlag]
     } else {
       // update card for all player
-      const initiator = CoC7RangeInitiator.getFromCard(card)
+      const initiator = CoC7ChatCombatRanged.getFromCard(card)
       if (event.currentTarget.classList.contains('target-flag')) {
         const target = event.currentTarget.closest('.target')
         const key = parseInt(target.dataset.targetKey)
@@ -672,7 +672,7 @@ export class CoC7RangeInitiator {
   }
 
   static getFromCard (card, messageId = null) {
-    const rangeInitiator = new CoC7RangeInitiator()
+    const rangeInitiator = new CoC7ChatCombatRanged()
     rangeInitiator._targets = []
     if (messageId) rangeInitiator.messageId = messageId
     else if (card.closest('.message')) {

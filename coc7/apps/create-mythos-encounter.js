@@ -1,5 +1,5 @@
 /* global $, FormApplication, foundry, game */
-export class CoC7CreateMythosEncounter extends FormApplication {
+export default class CoC7CreateMythosEncounter extends FormApplication {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7'],

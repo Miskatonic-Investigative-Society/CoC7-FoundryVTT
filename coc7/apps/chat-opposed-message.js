@@ -1,9 +1,9 @@
 /* global ChatMessage, foundry, game */
-import CoC7Check from '../../apps/check.js'
-import { DamageCard } from './damage.js'
-import { RollCard } from './roll-card.js'
+import CoC7Check from './check.js'
+import CoC7ChatDamage from './chat-damage.js'
+import { RollCard } from '../chat/cards/roll-card.js'
 
-export class OpposedCheckCard extends RollCard {
+export default class CoC7ChatOpposedMessage extends RollCard {
   static async bindListerners (html) {
     html.on(
       'click',
@@ -14,12 +14,12 @@ export class OpposedCheckCard extends RollCard {
     html.on(
       'click',
       '.roll-card.opposed a',
-      OpposedCheckCard._onClick.bind(this)
+      CoC7ChatOpposedMessage._onClick.bind(this)
     )
     html.on(
       'click',
       '.roll-card.opposed button',
-      OpposedCheckCard._onClick.bind(this)
+      CoC7ChatOpposedMessage._onClick.bind(this)
     )
   }
 
@@ -31,7 +31,7 @@ export class OpposedCheckCard extends RollCard {
   }
 
   get config () {
-    return OpposedCheckCard.defaultConfig
+    return CoC7ChatOpposedMessage.defaultConfig
   }
 
   get attackerRoll () {
@@ -223,7 +223,7 @@ export class OpposedCheckCard extends RollCard {
     const li = a.closest('li.actor-roll')
     const message = a.closest('.chat-message')
     const cardElement = a.closest('div.roll-card')
-    const card = await OpposedCheckCard.fromHTMLCardElement(cardElement)
+    const card = await CoC7ChatOpposedMessage.fromHTMLCardElement(cardElement)
     card.messageId = message.dataset.messageId
     const rank = Number(li?.dataset?.rank)
 
@@ -261,7 +261,7 @@ export class OpposedCheckCard extends RollCard {
       case 'roll-damage': {
         card.closeCard()
         await card.updateChatCard()
-        const damageChatCard = new DamageCard({
+        const damageChatCard = new CoC7ChatDamage({
           critical: card.winner.isExtremeSuccess,
           fastForward: event.shiftKey
         })

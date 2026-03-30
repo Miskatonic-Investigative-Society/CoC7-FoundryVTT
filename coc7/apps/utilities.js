@@ -2,7 +2,7 @@
 import { COC7 } from '../constants.js'
 import CoC7Check from '../apps/check.js'
 import { CoC7Item } from '../items/item.js'
-import { CoC7Link } from './coc7-link.js'
+import CoC7Link from './link.js'
 import { RollDialog } from './roll-dialog.js'
 import { chatHelper } from '../chat/helper.js'
 

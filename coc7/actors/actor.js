@@ -2,9 +2,9 @@
 import CoC7AverageRoll from '../apps/average-roll.js'
 import { COC7 } from '../constants.js'
 import CoC7ActiveEffect from '../apps/active-effect.js'
-import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
+import CoC7RollNormalize from '../apps/roll-normalize.js'
 import CoC7Check from '../apps/check.js'
-import { CoC7ConCheck } from '../chat/concheck.js'
+import CoC7ConCheck from '../apps/con-check.js'
 import { RollDialog } from '../apps/roll-dialog.js'
 import { SkillSelectDialog } from '../apps/skill-selection-dialog.js'
 import { PointSelectDialog } from '../apps/point-selection-dialog.js'
@@ -14,8 +14,8 @@ import { ExperiencePackageDialog } from '../apps/experience-package-dialog.js'
 import { SkillSpecSelectDialog } from '../apps/skill-spec-select-dialog.js'
 import { SkillSpecializationSelectDialog } from '../apps/skill-specialization-select-dialog.js'
 import { SkillValueDialog } from '../apps/skill-value-dialog.js'
-import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js'
-import { CoC7RangeInitiator } from '../chat/rangecombat.js'
+import CoC7ChatCombatMelee from '../apps/chat-combat-melee.js'
+import CoC7ChatCombatRanged from '../apps/chat-combat-ranged.js'
 import { chatHelper } from '../chat/helper.js'
 import CoC7DicePool from '../apps/dice-pool.js'
 import { CoC7Item } from '../items/item.js'
@@ -1906,13 +1906,13 @@ export class CoCActor extends Actor {
 
   async runRoll (options = {}) {
     if (typeof options.cardType === 'undefined') {
-      options.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+      options.cardType = CoC7RollNormalize.CARD_TYPE_NORMAL
     }
     if (typeof options.preventStandby === 'undefined') {
       options.preventStandby = true
     }
     options.actor = this
-    const results = await CoC7ChatMessage.trigger(options)
+    const results = await CoC7RollNormalize.trigger(options)
     return results
   }
 
@@ -2989,11 +2989,11 @@ export class CoCActor extends Actor {
         ui.notifications.warn('CoC7.WarnTooManyTarget', { localize: true })
       }
 
-      const card = new CoC7MeleeInitiator(this.tokenKey, item.id, fastForward)
+      const card = new CoC7ChatCombatMelee(this.tokenKey, item.id, fastForward)
       card.createChatCard()
     }
     if (item.system.properties.rngd) {
-      const card = new CoC7RangeInitiator(this.tokenKey, item.id, fastForward)
+      const card = new CoC7ChatCombatRanged(this.tokenKey, item.id, fastForward)
       card.createChatCard()
     }
   }

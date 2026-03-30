@@ -1,18 +1,18 @@
 /* global $, ChatMessage, CONST, Dialog, FormData, foundry, game, Hooks, Roll, TextEditor, ui */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
-import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
+import CoC7RollNormalize from '../../apps/roll-normalize.js'
 import CoC7Check from '../../apps/check.js'
-import { CoC7ContentLinkDialog } from '../../apps/coc7-content-link-dialog.js'
+import CoC7ContentLinkDialog from '../../apps/content-link-dialog.js'
 import { COC7 } from '../../constants.js'
 import { CoCActor } from '../../actors/actor.js'
 import { CoC7Item } from '../../items/item.js'
-import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js'
-import { CoC7RangeInitiator } from '../../chat/rangecombat.js'
-import { CoC7ConCheck } from '../../chat/concheck.js'
+import CoC7ChatCombatMelee from '../../apps/chat-combat-melee.js'
+import CoC7ChatCombatRanged from '../../apps/chat-combat-ranged.js'
+import CoC7ConCheck from '../../apps/con-check.js'
 import { chatHelper, isCtrlKey } from '../../chat/helper.js'
-import { CoC7Link } from '../../apps/coc7-link.js'
-import { DamageCard } from '../../chat/cards/damage.js'
+import CoC7Link from '../../apps/link.js'
+import CoC7ChatDamage from '../../apps/chat-damage.js'
 import CoC7ActiveEffect from '../../apps/active-effect.js'
 import { CoC7ContextMenu } from '../../context-menu.js'
 import CoC7Utilities from '../../apps/utilities.js'
@@ -1076,53 +1076,53 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
     }
     switch (targetType) {
       case ('skill'):
-        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
+        rollOptions.rollType = CoC7RollNormalize.ROLL_TYPE_SKILL
         rollOptions.skillId = target.closest('.item')?.dataset.skillId
 
         break
       case ('characteristic'):
-        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
+        rollOptions.rollType = CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC
         rollOptions.characteristic = target.closest('.char-box').dataset.characteristic
         break
 
       case ('attribute'):
-        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+        rollOptions.rollType = CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE
         rollOptions.attribute = target.closest('.attribute').dataset.attrib
         break
     }
     switch (event.currentTarget.dataset.action) {
       case ('roll'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NORMAL
         break
       case ('opposed-roll'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_OPPOSED
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_OPPOSED
         break
       case ('combined-roll'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_COMBINED
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_COMBINED
         break
       case ('request-roll'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NORMAL
         rollOptions.preventStandby = false
         break
       case ('link-tool'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NONE
         rollOptions.openLinkTool = true
         break
       case ('send-chat'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NONE
         rollOptions.sendToChat = true
         break
       case ('copy-to-clipboard'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NONE
         rollOptions.sendToClipboard = true
         break
       case ('link-encounter'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NONE
         rollOptions.createEncounter = true
         break
       case ('encounter'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_SAN_CHECK
-        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_SAN_CHECK
+        rollOptions.rollType = CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE
         rollOptions.fastForward = true
         break
 
@@ -1130,7 +1130,7 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
         break
     }
 
-    CoC7ChatMessage.trigger(rollOptions)
+    CoC7RollNormalize.trigger(rollOptions)
   }
 
   _onRenderItemSheet (event) {
@@ -1624,11 +1624,11 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
             ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'))
           }
 
-          const card = new CoC7MeleeInitiator(actorKey, itemId, fastForward)
+          const card = new CoC7ChatCombatMelee(actorKey, itemId, fastForward)
           card.createChatCard()
         }
         if (weapon.system.properties.rngd) {
-          const card = new CoC7RangeInitiator(actorKey, itemId, fastForward)
+          const card = new CoC7ChatCombatRanged(actorKey, itemId, fastForward)
           card.createChatCard()
         }
       }
@@ -1694,7 +1694,7 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
     event.preventDefault()
     const itemId = event.currentTarget.closest('.weapon').dataset.itemId
     const range = event.currentTarget.closest('.weapon-damage').dataset.range
-    const damageChatCard = new DamageCard({
+    const damageChatCard = new CoC7ChatDamage({
       fastForward: event.shiftKey,
       range
     })
@@ -1710,22 +1710,22 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
     if (event.currentTarget.parentElement.dataset.attrib === 'db') return
 
     const data = {
-      rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
-      cardType: CoC7ChatMessage.CARD_TYPE_OPPOSED,
+      rollType: CoC7RollNormalize.ROLL_TYPE_SKILL,
+      cardType: CoC7RollNormalize.CARD_TYPE_OPPOSED,
       event,
       actor: this.actor
     }
     if (event.currentTarget.classList.contains('characteristic-label')) {
-      data.rollType = CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
+      data.rollType = CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC
     } else if (event.currentTarget.classList.contains('attribute-label')) {
-      data.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+      data.rollType = CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE
     }
 
     if (event.altKey) {
-      data.cardType = CoC7ChatMessage.CARD_TYPE_COMBINED
+      data.cardType = CoC7RollNormalize.CARD_TYPE_COMBINED
     }
 
-    CoC7ChatMessage.trigger(data)
+    CoC7RollNormalize.trigger(data)
   }
 
   /**
@@ -1737,18 +1737,18 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
     event.preventDefault()
     if (event.currentTarget.classList.contains('flagged4dev')) return
     if (game.settings.get('CoC7', 'useContextMenus')) {
-      CoC7ChatMessage.trigger({
-        rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
-        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+      CoC7RollNormalize.trigger({
+        rollType: CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC,
+        cardType: CoC7RollNormalize.CARD_TYPE_NORMAL,
         preventStandby: true,
         fastForward: true,
         characteristic: event.currentTarget.closest('.char-box').dataset.characteristic,
         actor: this.actor
       })
     } else {
-      CoC7ChatMessage.trigger({
-        rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
-        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+      CoC7RollNormalize.trigger({
+        rollType: CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC,
+        cardType: CoC7RollNormalize.CARD_TYPE_NORMAL,
         event,
         actor: this.actor
       })
@@ -1780,21 +1780,21 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
     }
 
     if (game.settings.get('CoC7', 'useContextMenus')) {
-      CoC7ChatMessage.trigger({
-        rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
-        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+      CoC7RollNormalize.trigger({
+        rollType: CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC,
+        cardType: CoC7RollNormalize.CARD_TYPE_NORMAL,
         preventStandby: true,
         fastForward: true,
         attribute: event.currentTarget.closest('.attribute').dataset.attrib,
         actor: this.actor
       })
     } else {
-      CoC7ChatMessage.trigger({
-        rollType: CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE,
+      CoC7RollNormalize.trigger({
+        rollType: CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE,
         cardType:
         event.altKey && attrib === 'san'
-          ? CoC7ChatMessage.CARD_TYPE_SAN_CHECK
-          : CoC7ChatMessage.CARD_TYPE_NORMAL,
+          ? CoC7RollNormalize.CARD_TYPE_SAN_CHECK
+          : CoC7RollNormalize.CARD_TYPE_NORMAL,
         event,
         actor: this.actor
       })
@@ -1810,18 +1810,18 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
     event.preventDefault()
     if (event.currentTarget.classList.contains('flagged4dev')) return
     if (game.settings.get('CoC7', 'useContextMenus')) {
-      CoC7ChatMessage.trigger({
-        rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
-        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+      CoC7RollNormalize.trigger({
+        rollType: CoC7RollNormalize.ROLL_TYPE_SKILL,
+        cardType: CoC7RollNormalize.CARD_TYPE_NORMAL,
         preventStandby: true,
         fastForward: true,
         skillId: event?.currentTarget.closest('.item')?.dataset.skillId,
         actor: this.actor
       })
     } else {
-      CoC7ChatMessage.trigger({
-        rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
-        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+      CoC7RollNormalize.trigger({
+        rollType: CoC7RollNormalize.ROLL_TYPE_SKILL,
+        cardType: CoC7RollNormalize.CARD_TYPE_NORMAL,
         event,
         actor: this.actor
       })

@@ -1,10 +1,10 @@
 /* global canvas, ChatMessage, Dialog, foundry, game, Roll, ui */
-import CoC7DicePool from '../../apps/dice-pool.js'
-import { InteractiveChatCard } from '../interactive-chat-card.js'
-import { createInlineRoll } from '../helper.js'
-import CoC7Utilities from '../../apps/utilities.js'
+import CoC7DicePool from './dice-pool.js'
+import { InteractiveChatCard } from '../chat/interactive-chat-card.js'
+import { createInlineRoll } from '../chat/helper.js'
+import CoC7Utilities from './utilities.js'
 
-export class DamageCard extends InteractiveChatCard {
+export default class CoC7ChatDamage extends InteractiveChatCard {
   /**
    * Extend and override the default options used by the 5e Actor Sheet
    * @returns {Object}

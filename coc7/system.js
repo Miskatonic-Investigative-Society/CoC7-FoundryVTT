@@ -4,7 +4,7 @@ import './polyfill.js'
 /* // FoundryVTT V10 */
 // import * as DiceBot from './dicebot.js'
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
-import { ChaseObstacleCard } from './chat/cards/chase-obstacle.js'
+import CoC7ChatChaseObstacle from './apps/chat-chase-obstacle.js'
 
 import ChangeSidebarTab from './hooks/change-sidebar-tab.js'
 import ChatMessage from './hooks/chat-message.js'
@@ -25,10 +25,10 @@ import GetHeaderControlsSceneConfig from './hooks/get-header-controls-scene-conf
 import GetSceneControlButtons from './hooks/get-scene-control-buttons.js'
 import HotbarDrop from './hooks/hotbar-drop.js'
 import Init from './hooks/init.js'
-import PopOutLoaded from './hooks/popout-loaded.js'
+import PopOutLoaded from './hooks/pop-out-loaded.js'
 import Ready from './hooks/ready.js'
 import RenderActorDirectory from './hooks/render-actor-directory.js'
-import RenderActorSheet from './hooks/render-actor-sheet.js'
+import RenderActorSheet from './hooks/render-actor-sheet-v2.js'
 import RenderChatLog from './hooks/render-chat-log.js'
 import RenderChatMessage from './hooks/render-chat-message.js'
 import RenderCoC7ChaseSheet from './hooks/render-coc7-chase-sheet.js'
@@ -38,7 +38,7 @@ import RenderCoC7NPCSheet from './hooks/render-coc7-npc-sheet.js'
 import RenderCombatTracker from './hooks/render-combat-tracker.js'
 import RenderDialogV2 from './hooks/render-dialog-v2.js'
 import RenderGamePause from './hooks/render-game-pause.js'
-import RenderItemSheet from './hooks/render-item-sheet.js'
+import RenderItemSheet from './hooks/render-item-sheet-v2.js'
 import RenderJournalEntryPageTextSheet from './hooks/render-journal-entry-page-text-sheet.js'
 import RenderJournalEntrySheet from './hooks/render-journal-entry-sheet.js'
 import RenderPlayers from './hooks/render-players.js'
@@ -55,7 +55,7 @@ Hooks.once('init', Init)
 Hooks.once('ready', Ready)
 Hooks.once('setup', Setup)
 
-initECC(ChaseObstacleCard)
+initECC(CoC7ChatChaseObstacle)
 /* // FoundryVTT V10 */
 // DiceBot.listen()
 

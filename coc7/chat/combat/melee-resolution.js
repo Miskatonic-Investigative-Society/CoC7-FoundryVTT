@@ -1,7 +1,7 @@
 /* global ChatMessage, game, renderTemplate, ui */
 import CoC7Check from '../../apps/check.js'
 import { chatHelper } from '../helper.js'
-import { CoC7MeleeInitiator } from './melee-initiator.js'
+import CoC7ChatCombatMelee from '../../apps/chat-combat-melee.js'
 import { CoC7MeleeTarget } from './melee-target.js'
 
 export class CoC7MeleeResoltion {
@@ -63,7 +63,7 @@ export class CoC7MeleeResoltion {
 
   get initiator () {
     if (this.initiatorMessage) {
-      return CoC7MeleeInitiator.getFromMessageId(this.initiatorMessage)
+      return CoC7ChatCombatMelee.getFromMessageId(this.initiatorMessage)
     }
     return null
   }

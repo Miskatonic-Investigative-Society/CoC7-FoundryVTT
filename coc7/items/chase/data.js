@@ -1,6 +1,6 @@
 /* global $, canvas, Dialog, foundry, game, PIXI, Token, TokenDocument, ui */
 import { CoCActor } from '../../actors/actor.js'
-import { ChaseObstacleCard } from '../../chat/cards/chase-obstacle.js'
+import CoC7ChatChaseObstacle from '../../apps/chat-chase-obstacle.js'
 import CoC7Check from '../../apps/check.js'
 import CoC7Utilities from '../../apps/utilities.js'
 import { CoC7Item } from '../item.js'
@@ -488,7 +488,7 @@ export class CoC7Chase extends CoC7Item {
     locationUuid,
     { moveParticipant = true } = {}
   ) {
-    const card = new ChaseObstacleCard({
+    const card = new CoC7ChatChaseObstacle({
       chaseUuid: this.uuid,
       locationUuid,
       moveParticipant,

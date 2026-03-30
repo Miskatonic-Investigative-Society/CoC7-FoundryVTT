@@ -1,10 +1,10 @@
 /* global $, canvas, ChatMessage, CONFIG, CONST, foundry, game, ui */
 import { CoCActor } from '../actors/actor.js'
-import CoC7Check from '../apps/check.js'
-import { CoC7ContentLinkDialog } from './coc7-content-link-dialog.js'
+import CoC7Check from './check.js'
+import CoC7ContentLinkDialog from './content-link-dialog.js'
 import { CoC7GroupMessage } from './coc7-group-message.js'
 import CoC7Utilities from './utilities.js'
-import { SanCheckCard } from '../chat/cards/san-check.js'
+import CoC7SanCheckCard from './san-check-card.js'
 import { chatHelper, isCtrlKey } from '../chat/helper.js'
 
 /**
@@ -39,7 +39,7 @@ import { chatHelper, isCtrlKey } from '../chat/helper.js'
  *   _createDocumentLink => Create @link from document data
  *   _onLinkActorClick => Process link
  */
-export class CoC7Link {
+export default class CoC7Link {
   static get CHECK_TYPE () {
     return {
       CHECK: 'check',
@@ -453,7 +453,7 @@ export class CoC7Link {
         break
 
       case CoC7Link.CHECK_TYPE.SANLOSS:
-        SanCheckCard.create(actor.actorKey, options, {
+        CoC7SanCheckCard.create(actor.actorKey, options, {
           fastForward: shiftKey
         })
         return

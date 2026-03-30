@@ -1,16 +1,16 @@
 /* global game, ui */
-import CoC7Check from '../apps/check.js'
-import { CoC7ContentLinkDialog } from './coc7-content-link-dialog.js'
+import CoC7Check from './check.js'
+import CoC7ContentLinkDialog from './content-link-dialog.js'
 import { isCtrlKey } from '../chat/helper.js'
 import { RollDialog } from './roll-dialog.js'
-import { CombinedCheckCard } from '../chat/cards/combined-roll.js'
-import { OpposedCheckCard } from '../chat/cards/opposed-roll.js'
-import { SanCheckCard } from '../chat/cards/san-check.js'
-import { SanDataDialog } from './sandata-dialog.js'
-import { CoC7Link } from './coc7-link.js'
+import CoC7ChatCombinedMessage from './chat-combined-message.js'
+import CoC7ChatOpposedMessage from './chat-opposed-message.js'
+import CoC7SanCheckCard from './san-check-card.js'
+import SanDataDialog from './san-data-dialog.js'
+import CoC7Link from './link.js'
 import CoC7Utilities from './utilities.js'
 
-export class CoC7ChatMessage {
+export default class CoC7RollNormalize {
   static get ROLL_TYPE_ATTRIBUTE () {
     return 'R/AT'
   }
@@ -64,20 +64,20 @@ export class CoC7ChatMessage {
   // }
 
   static cardTypes (config) {
-    if (config.rollType === CoC7ChatMessage.ROLL_TYPE_COMBAT) {
+    if (config.rollType === CoC7RollNormalize.ROLL_TYPE_COMBAT) {
       return null
     }
     const select = {
-      [CoC7ChatMessage.CARD_TYPE_NORMAL]: 'CoC7.RegularRollCard',
-      [CoC7ChatMessage.CARD_TYPE_COMBINED]: 'CoC7.CombinedRollCard',
-      [CoC7ChatMessage.CARD_TYPE_OPPOSED]: 'CoC7.OpposedRollCard'
-      // [CoC7ChatMessage.CARD_TYPE_GROUP]: 'CoC7.GroupRollCard' - NYI
+      [CoC7RollNormalize.CARD_TYPE_NORMAL]: 'CoC7.RegularRollCard',
+      [CoC7RollNormalize.CARD_TYPE_COMBINED]: 'CoC7.CombinedRollCard',
+      [CoC7RollNormalize.CARD_TYPE_OPPOSED]: 'CoC7.OpposedRollCard'
+      // [CoC7RollNormalize.CARD_TYPE_GROUP]: 'CoC7.GroupRollCard' - NYI
     }
     if (
-      config.rollType === CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE &&
+      config.rollType === CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE &&
       config.attribute === 'san'
     ) {
-      select[CoC7ChatMessage.CARD_TYPE_SAN_CHECK] = 'CoC7.SanityLossEncounter'
+      select[CoC7RollNormalize.CARD_TYPE_SAN_CHECK] = 'CoC7.SanityLossEncounter'
     }
     return select
   }
@@ -91,30 +91,30 @@ export class CoC7ChatMessage {
         typeof options.skillName !== 'undefined' ||
         typeof options.attribute !== 'undefined' ||
         typeof options.characteristic !== 'undefined' ||
-        options.rollType === CoC7ChatMessage.ROLL_TYPE_ENCOUNTER)
+        options.rollType === CoC7RollNormalize.ROLL_TYPE_ENCOUNTER)
     ) {
       if (typeof options.skillId !== 'undefined') {
         if (options.actor.items.get(options.skillId)) {
-          options.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
+          options.rollType = CoC7RollNormalize.ROLL_TYPE_SKILL
         }
       } else if (typeof options.skillName !== 'undefined') {
         const skillIds = options.actor.getSkillsByName(options.skillName)
         if (skillIds.length > 0) {
           options.skillId = skillIds[0].id
-          options.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
+          options.rollType = CoC7RollNormalize.ROLL_TYPE_SKILL
         }
       } else if (
         typeof options.attribute !== 'undefined' &&
         ['lck', 'san'].includes(options.attribute)
       ) {
-        options.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+        options.rollType = CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE
       } else if (
         typeof options.characteristic !== 'undefined' &&
         typeof options.actor.system.characteristics[
           options.characteristic
         ] !== 'undefined'
       ) {
-        options.rollType = CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
+        options.rollType = CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC
       }
     } else if (
       typeof options.event === 'undefined' ||
@@ -130,11 +130,11 @@ export class CoC7ChatMessage {
     }
     if (
       ![
-        CoC7ChatMessage.CARD_TYPE_COMBINED,
-        CoC7ChatMessage.CARD_TYPE_GROUP,
-        CoC7ChatMessage.CARD_TYPE_NORMAL,
-        CoC7ChatMessage.CARD_TYPE_OPPOSED,
-        CoC7ChatMessage.CARD_TYPE_SAN_CHECK
+        CoC7RollNormalize.CARD_TYPE_COMBINED,
+        CoC7RollNormalize.CARD_TYPE_GROUP,
+        CoC7RollNormalize.CARD_TYPE_NORMAL,
+        CoC7RollNormalize.CARD_TYPE_OPPOSED,
+        CoC7RollNormalize.CARD_TYPE_SAN_CHECK
       ].includes(options.cardType)
     ) {
       ui.notifications.error(
@@ -146,10 +146,10 @@ export class CoC7ChatMessage {
     }
     if (
       ![
-        CoC7ChatMessage.ROLL_TYPE_SKILL,
-        CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
-        CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE,
-        CoC7ChatMessage.ROLL_TYPE_ENCOUNTER
+        CoC7RollNormalize.ROLL_TYPE_SKILL,
+        CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC,
+        CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE,
+        CoC7RollNormalize.ROLL_TYPE_ENCOUNTER
       ].includes(options.rollType)
     ) {
       ui.notifications.error(
@@ -184,10 +184,10 @@ export class CoC7ChatMessage {
       }
     }
     switch (config.dialogOptions.rollType) {
-      case CoC7ChatMessage.ROLL_TYPE_SKILL:
-      case CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC:
-      case CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE:
-      case CoC7ChatMessage.ROLL_TYPE_ENCOUNTER:
+      case CoC7RollNormalize.ROLL_TYPE_SKILL:
+      case CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC:
+      case CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE:
+      case CoC7RollNormalize.ROLL_TYPE_ENCOUNTER:
         config.options.skillId =
           options.skillId ??
           options.event?.currentTarget.closest('.item')?.dataset.skillId
@@ -210,7 +210,7 @@ export class CoC7ChatMessage {
           options.event?.currentTarget.classList.contains('alternativ-skill')
         config.options.actor = options.actor
         if (
-          config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL &&
+          config.dialogOptions.rollType === CoC7RollNormalize.ROLL_TYPE_SKILL &&
           config.options.isCombat
         ) {
           const item = config.options.actor.items.get(config.options.itemId)
@@ -219,7 +219,7 @@ export class CoC7ChatMessage {
           }
           if (item.type === 'weapon') {
             config.options.weaponName = item.name
-            config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_COMBAT
+            config.dialogOptions.rollType = CoC7RollNormalize.ROLL_TYPE_COMBAT
           }
         }
         if (
@@ -235,7 +235,7 @@ export class CoC7ChatMessage {
           return false
         }
         if (
-          config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL &&
+          config.dialogOptions.rollType === CoC7RollNormalize.ROLL_TYPE_SKILL &&
           typeof config.options.skillId === 'undefined'
         ) {
           ui.notifications.error(
@@ -246,7 +246,7 @@ export class CoC7ChatMessage {
           return false
         } else if (
           config.dialogOptions.rollType ===
-          CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
+          CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC
         ) {
           if (typeof config.options.characteristic === 'undefined') {
             ui.notifications.error(
@@ -264,7 +264,7 @@ export class CoC7ChatMessage {
             return false
           }
         } else if (
-          config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+          config.dialogOptions.rollType === CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE
         ) {
           if (typeof config.options.attribute === 'undefined') {
             ui.notifications.error(
@@ -281,7 +281,7 @@ export class CoC7ChatMessage {
             return false
           }
         } else if (
-          config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_COMBAT
+          config.dialogOptions.rollType === CoC7RollNormalize.ROLL_TYPE_COMBAT
         ) {
           if (typeof config.options.itemId === 'undefined') {
             ui.notifications.error(
@@ -298,7 +298,7 @@ export class CoC7ChatMessage {
           config.options.actor.hasPlayerOwner ?? false
         if (
           config.dialogOptions.rollType ===
-          CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
+          CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC
         ) {
           config.dialogOptions.disableFlatThresholdModifier =
             config.options.isCtrlKey
@@ -322,7 +322,7 @@ export class CoC7ChatMessage {
   }
 
   static async trigger (options = {}) {
-    const config = CoC7ChatMessage.normalizeRequest(options)
+    const config = CoC7RollNormalize.normalizeRequest(options)
     if (config === false) {
       return
     }
@@ -330,17 +330,17 @@ export class CoC7ChatMessage {
       (config.options.isCtrlKey) &&
       game.user.isGM &&
       [
-        CoC7ChatMessage.CARD_TYPE_NORMAL,
-        CoC7ChatMessage.CARD_TYPE_SAN_CHECK
+        CoC7RollNormalize.CARD_TYPE_NORMAL,
+        CoC7RollNormalize.CARD_TYPE_SAN_CHECK
       ].includes(config.dialogOptions.cardType)
     ) {
-      CoC7ChatMessage.createLink(config)
+      CoC7RollNormalize.createLink(config)
     } else if (
       (config.options.sendToChat || config.options.sendToClipboard || config.options.openLinkTool || config.options.createEncounter) &&
       game.user.isGM &&
-      CoC7ChatMessage.CARD_TYPE_NONE === config.dialogOptions.cardType
+      CoC7RollNormalize.CARD_TYPE_NONE === config.dialogOptions.cardType
     ) {
-      CoC7ChatMessage.createLink(config)
+      CoC7RollNormalize.createLink(config)
     } else {
       if (typeof config.options.actor !== 'undefined') {
         if (typeof config.options.attribute !== 'undefined') {
@@ -362,33 +362,33 @@ export class CoC7ChatMessage {
         config.dialogOptions.modifier = Math.min(Math.max(config.dialogOptions.modifier, -2), 2)
       }
       if (!config.options.shiftKey) {
-        await CoC7ChatMessage.createRoll(config)
+        await CoC7RollNormalize.createRoll(config)
       }
-      return CoC7ChatMessage.runRoll(config)
+      return CoC7RollNormalize.runRoll(config)
     }
   }
 
   static createLink (config) {
     switch (config.dialogOptions.rollType) {
-      case CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE:
-      case CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC:
-      case CoC7ChatMessage.ROLL_TYPE_COMBAT:
-      case CoC7ChatMessage.ROLL_TYPE_SKILL:
-      case CoC7ChatMessage.ROLL_TYPE_ENCOUNTER:
+      case CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE:
+      case CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC:
+      case CoC7RollNormalize.ROLL_TYPE_COMBAT:
+      case CoC7RollNormalize.ROLL_TYPE_SKILL:
+      case CoC7RollNormalize.ROLL_TYPE_ENCOUNTER:
         {
           const linkData = {
             type: 'CoC7Link'
           }
-          if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL) {
+          if (config.dialogOptions.rollType === CoC7RollNormalize.ROLL_TYPE_SKILL) {
             linkData.check = CoC7Link.CHECK_TYPE.CHECK
             linkData.linkType = CoC7Link.LINK_TYPE.SKILL
             linkData.name = config.options.actor.items.get(config.options.skillId)?.shortName
             if (!linkData.name) return
-          } else if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC) {
+          } else if (config.dialogOptions.rollType === CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC) {
             linkData.check = CoC7Link.CHECK_TYPE.CHECK
             linkData.linkType = CoC7Link.LINK_TYPE.CHARACTERISTIC
             linkData.name = config.options.characteristic
-          } else if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE) {
+          } else if (config.dialogOptions.rollType === CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE) {
             if ((config.options.altKey || config.options.createEncounter) && config.options.attribute === 'san') {
               linkData.check = CoC7Link.CHECK_TYPE.SANLOSS
             } else {
@@ -396,10 +396,10 @@ export class CoC7ChatMessage {
               linkData.linkType = CoC7Link.LINK_TYPE.ATTRIBUTE
               linkData.name = config.options.attribute
             }
-          } else if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_COMBAT) {
+          } else if (config.dialogOptions.rollType === CoC7RollNormalize.ROLL_TYPE_COMBAT) {
             linkData.check = CoC7Link.CHECK_TYPE.ITEM
             linkData.name = config.options.weaponName
-          } else if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_ENCOUNTER) {
+          } else if (config.dialogOptions.rollType === CoC7RollNormalize.ROLL_TYPE_ENCOUNTER) {
             linkData.check = CoC7Link.CHECK_TYPE.SANLOSS
             linkData.sanMin = config.options.actor?.system?.special?.sanLoss?.checkPassed
             linkData.sanMax = config.options.actor?.system?.special?.sanLoss?.checkFailled
@@ -446,7 +446,7 @@ export class CoC7ChatMessage {
 
   static async runRoll (config) {
     switch (config.dialogOptions.cardType) {
-      case CoC7ChatMessage.CARD_TYPE_SAN_CHECK:
+      case CoC7RollNormalize.CARD_TYPE_SAN_CHECK:
         {
           const sanData = await SanDataDialog.create({
             promptLabel: true
@@ -459,7 +459,7 @@ export class CoC7ChatMessage {
             if (!isNaN(Number(sanMin))) sanMin = Number(sanMin)
             if (!isNaN(Number(sanMax))) sanMax = Number(sanMax)
 
-            SanCheckCard.create(
+            CoC7SanCheckCard.create(
               config.options.actor.actorKey,
               { sanMin, sanMax, sanReason },
               {
@@ -471,7 +471,7 @@ export class CoC7ChatMessage {
           }
         }
         break
-      case CoC7ChatMessage.CARD_TYPE_NORMAL: {
+      case CoC7RollNormalize.CARD_TYPE_NORMAL: {
         const check = new CoC7Check()
         check.diceModifier = config.dialogOptions.modifier
         check.difficulty = config.dialogOptions.difficulty
@@ -485,12 +485,12 @@ export class CoC7ChatMessage {
           game.settings.get('CoC7', 'stanbyGMRolls') &&
           game.user.isGM &&
           config.options.hasPlayerOwner
-        if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL) {
+        if (config.dialogOptions.rollType === CoC7RollNormalize.ROLL_TYPE_SKILL) {
           check.skill = config.options.skillId
           check.canBePushed = (check._getItemFromId(check.skill)?.system?.properties?.push ?? false)
           await check.roll()
         } else if (
-          config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+          config.dialogOptions.rollType === CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE
         ) {
           await check.rollAttribute(config.options.attribute)
         } else {
@@ -512,8 +512,8 @@ export class CoC7ChatMessage {
           passed: check.passed
         }
       }
-      case CoC7ChatMessage.CARD_TYPE_OPPOSED:
-      case CoC7ChatMessage.CARD_TYPE_COMBINED:
+      case CoC7RollNormalize.CARD_TYPE_OPPOSED:
+      case CoC7RollNormalize.CARD_TYPE_COMBINED:
         {
           const check = new CoC7Check()
           check.actor = !config.options.tokenKey
@@ -526,10 +526,10 @@ export class CoC7ChatMessage {
           check.initiator = game.user.id
           let data = {}
           if (
-            config.dialogOptions.cardType === CoC7ChatMessage.CARD_TYPE_OPPOSED
+            config.dialogOptions.cardType === CoC7RollNormalize.CARD_TYPE_OPPOSED
           ) {
             data = {
-              type: OpposedCheckCard.defaultConfig.type,
+              type: CoC7ChatOpposedMessage.defaultConfig.type,
               combat: config.options.isCombat,
               action: 'new'
             }
@@ -539,7 +539,7 @@ export class CoC7ChatMessage {
             await check._perform()
           } else {
             data = {
-              type: CombinedCheckCard.defaultConfig.type,
+              type: CoC7ChatCombinedMessage.defaultConfig.type,
               action: 'new'
             }
             check.difficulty = config.dialogOptions.difficulty
@@ -547,11 +547,11 @@ export class CoC7ChatMessage {
           data.roll = check.JSONRollData
           data._rollMode = game.settings.get('core', 'rollMode')
           if (
-            config.dialogOptions.cardType === CoC7ChatMessage.CARD_TYPE_OPPOSED
+            config.dialogOptions.cardType === CoC7RollNormalize.CARD_TYPE_OPPOSED
           ) {
-            OpposedCheckCard.dispatch(data)
+            CoC7ChatOpposedMessage.dispatch(data)
           } else {
-            CombinedCheckCard.dispatch(data)
+            CoC7ChatCombinedMessage.dispatch(data)
           }
         }
         break

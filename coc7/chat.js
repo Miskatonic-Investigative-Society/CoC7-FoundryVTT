@@ -1,17 +1,17 @@
 /* global $, ChatMessage, CONST, foundry, game, Token, tokenData, ui */
 import CoC7Check from './apps/check.js'
 import { COC7 } from './constants.js'
-import { CoC7MeleeInitiator } from './chat/combat/melee-initiator.js'
+import CoC7ChatCombatMelee from './apps/chat-combat-melee.js'
 import { CoC7MeleeTarget } from './chat/combat/melee-target.js'
 import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js'
-import { CoC7RangeInitiator } from './chat/rangecombat.js'
+import CoC7ChatCombatRanged from './apps/chat-combat-ranged.js'
 import { CoC7Roll, chatHelper, isCtrlKey } from './chat/helper.js'
-import { CoC7ConCheck } from './chat/concheck.js'
-import { SanCheckCard } from './chat/cards/san-check.js'
-import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
-import { CombinedCheckCard } from './chat/cards/combined-roll.js'
+import CoC7ConCheck from './apps/con-check.js'
+import CoC7SanCheckCard from './apps/san-check-card.js'
+import CoC7ChatOpposedMessage from './apps/chat-opposed-message.js'
+import CoC7ChatCombinedMessage from './apps/chat-combined-message.js'
 import { InteractiveChatCard } from './chat/interactive-chat-card.js'
-import { DamageCard } from './chat/cards/damage.js'
+import CoC7ChatDamage from './apps/chat-damage.js'
 import CoC7DicePool from './apps/dice-pool.js'
 
 const CHAT_COC7_MESSAGE = {
@@ -135,8 +135,8 @@ export class CoC7Chat {
     html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this))
 
     // RollCard.bindListerners( html);
-    OpposedCheckCard.bindListerners(html)
-    CombinedCheckCard.bindListerners(html)
+    CoC7ChatOpposedMessage.bindListerners(html)
+    CoC7ChatCombinedMessage.bindListerners(html)
 
     /* // FoundryVTT v12 */
     // HTML needs changed to support this correctly
@@ -182,7 +182,7 @@ export class CoC7Chat {
         if (card.dataset.resolved === 'true') {
           if (card.classList.contains('initiator')) {
             if (card.dataset.targetCard) {
-              const initiator = CoC7MeleeInitiator.getFromMessageId(
+              const initiator = CoC7ChatCombatMelee.getFromMessageId(
                 chatMessage.id
               )
               const target = CoC7MeleeTarget.getFromMessageId(
@@ -198,7 +198,7 @@ export class CoC7Chat {
                 if (!initiator.checkRevealed) await initiator.revealCheck()
               }
             } else {
-              const initiator = CoC7MeleeInitiator.getFromMessageId(
+              const initiator = CoC7ChatCombatMelee.getFromMessageId(
                 chatMessage.id
               )
               if (initiator.resolutionCard) {
@@ -421,7 +421,7 @@ export class CoC7Chat {
     targetToDisplay.style.display = 'block'
     targetToDisplay.dataset.active = 'true'
     // const chatCard = event.currentTarget.closest('.chat-card.range');
-    // const rangeInitiator = CoC7RangeInitiator.getFromCard( chatCard);
+    // const rangeInitiator = CoC7ChatCombatRanged.getFromCard( chatCard);
   }
 
   static _onDropDownElementSelected (event) {
@@ -569,7 +569,7 @@ export class CoC7Chat {
 
     if (card.classList.contains('range')) {
       if (card.classList.contains('initiator')) {
-        const rangeCard = CoC7RangeInitiator.getFromCard(card)
+        const rangeCard = CoC7ChatCombatRanged.getFromCard(card)
         if (event.currentTarget.classList.contains('increase')) {
           rangeCard.changeVolleySize(1)
         } else if (event.currentTarget.classList.contains('decrease')) {
@@ -585,7 +585,7 @@ export class CoC7Chat {
     const card = event.currentTarget.closest('.chat-card')
     if (card.classList.contains('melee')) {
       if (card.classList.contains('initiator')) {
-        CoC7MeleeInitiator.updateCardSwitch(event)
+        CoC7ChatCombatMelee.updateCardSwitch(event)
       }
 
       if (card.classList.contains('target')) {
@@ -595,7 +595,7 @@ export class CoC7Chat {
 
     if (card.classList.contains('range')) {
       if (card.classList.contains('initiator')) {
-        CoC7RangeInitiator.updateCardSwitch(event)
+        CoC7ChatCombatRanged.updateCardSwitch(event)
       }
     }
 
@@ -733,11 +733,11 @@ export class CoC7Chat {
 
     let messageCard
     if (card.classList.contains('range')) {
-      messageCard = CoC7RangeInitiator.getFromCard(card)
+      messageCard = CoC7ChatCombatRanged.getFromCard(card)
     } else if (card.classList.contains('target')) {
       messageCard = CoC7MeleeTarget.getFromCard(card)
     } else if (card.classList.contains('initiator')) {
-      messageCard = CoC7MeleeInitiator.getFromCard(card)
+      messageCard = CoC7ChatCombatMelee.getFromCard(card)
     }
     messageCard.diceModifier = event.currentTarget.value
     await messageCard.updateChatCard()
@@ -770,11 +770,11 @@ export class CoC7Chat {
             meleeCard = CoC7MeleeTarget.getFromCard(card)
           }
           if (card.classList.contains('initiator')) {
-            meleeCard = CoC7MeleeInitiator.getFromCard(card)
+            meleeCard = CoC7ChatCombatMelee.getFromCard(card)
           }
           meleeCard.upgradeRoll(luckAmount, newSuccessLevel, card) // TODO : Check if this needs to be async
         } else if (card.classList.contains('range')) {
-          const rangeCard = CoC7RangeInitiator.getFromCard(card)
+          const rangeCard = CoC7ChatCombatRanged.getFromCard(card)
           const rollResult = button.closest('.roll-result')
           const rollIndex = rollResult
             ? parseInt(rollResult.dataset.index)
@@ -954,7 +954,7 @@ export class CoC7Chat {
       }
 
       case 'melee-initiator-roll': {
-        const initiator = CoC7MeleeInitiator.getFromCard(card)
+        const initiator = CoC7ChatCombatMelee.getFromCard(card)
         const check = await initiator.performSkillCheck(
           event.currentTarget.dataset.skill
         )
@@ -981,7 +981,7 @@ export class CoC7Chat {
         break
       }
       case 'roll-melee-damage': {
-        const damageChatCard = new DamageCard({
+        const damageChatCard = new CoC7ChatDamage({
           critical: button.dataset.critical === 'true',
           fastForward: event.shiftKey
         })
@@ -1010,18 +1010,18 @@ export class CoC7Chat {
         break
       }
       case 'range-initiator-shoot': {
-        const rangeInitiator = CoC7RangeInitiator.getFromCard(card)
+        const rangeInitiator = CoC7ChatCombatRanged.getFromCard(card)
         rangeInitiator.addShotAtCurrentTarget()
         await rangeInitiator.updateChatCard()
         break
       }
       case 'range-initiator-roll': {
-        const rangeInitiator = CoC7RangeInitiator.getFromCard(card)
+        const rangeInitiator = CoC7ChatCombatRanged.getFromCard(card)
         await rangeInitiator.resolveCard()
         break
       }
       case 'roll-range-damage': {
-        const rangeInitiator = CoC7RangeInitiator.getFromCard(card)
+        const rangeInitiator = CoC7ChatCombatRanged.getFromCard(card)
         await rangeInitiator.rollDamage()
         break
       }
@@ -1040,7 +1040,7 @@ export class CoC7Chat {
       }
 
       case 'deal-range-damage': {
-        const rangeInitiator = CoC7RangeInitiator.getFromCard(card)
+        const rangeInitiator = CoC7ChatCombatRanged.getFromCard(card)
         await rangeInitiator.dealDamage()
         break
       }
@@ -1106,21 +1106,21 @@ export class CoC7Chat {
       }
 
       case 'reset-creature-san-data': {
-        const sanCheck = SanCheckCard.getFromCard(card)
+        const sanCheck = CoC7SanCheckCard.getFromCard(card)
         await sanCheck.clearSanLossReason()
         await sanCheck.updateChatCard()
         break
       }
 
       case 'roll-san-check': {
-        const sanCheck = SanCheckCard.getFromCard(card)
+        const sanCheck = CoC7SanCheckCard.getFromCard(card)
         await sanCheck.rollSan()
         await sanCheck.updateChatCard()
         break
       }
 
       case 'advance-state': {
-        const sanCheck = SanCheckCard.getFromCard(card)
+        const sanCheck = CoC7SanCheckCard.getFromCard(card)
         await sanCheck.advanceState(
           button.dataset.state /*, button.dataset.param */
         )
@@ -1129,14 +1129,14 @@ export class CoC7Chat {
       }
 
       case 'roll-san-loss': {
-        const sanCheck = SanCheckCard.getFromCard(card)
+        const sanCheck = CoC7SanCheckCard.getFromCard(card)
         await sanCheck.rollSanLoss()
         sanCheck.updateChatCard()
         break
       }
 
       case 'roll-int-check': {
-        const sanCheck = SanCheckCard.getFromCard(card)
+        const sanCheck = CoC7SanCheckCard.getFromCard(card)
         await sanCheck.rollInt()
         sanCheck.updateChatCard()
         break

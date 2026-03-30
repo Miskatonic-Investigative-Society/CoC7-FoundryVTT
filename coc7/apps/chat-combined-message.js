@@ -1,25 +1,25 @@
 /* global AudioHelper, CONFIG, foundry, game */
-import CoC7Check from '../../apps/check.js'
-import CoC7DicePool from '../../apps/dice-pool.js'
-import { RollCard } from './roll-card.js'
+import CoC7Check from './check.js'
+import CoC7DicePool from './dice-pool.js'
+import { RollCard } from '../chat/cards/roll-card.js'
 
-export class CombinedCheckCard extends RollCard {
+export default class CoC7ChatCombinedMessage extends RollCard {
   static async bindListerners (html) {
     html.on(
       'click',
       '.roll-card.combined .toggle-switch',
       this._onToggle.bind(this)
     )
-    // html.find('.roll-card a').click(async (event) => CombinedCheckCard._onClick( event));
+    // html.find('.roll-card a').click(async (event) => CoC7ChatCombinedMessage._onClick( event));
     html.on(
       'click',
       '.roll-card.combined a',
-      CombinedCheckCard._onClick.bind(this)
+      CoC7ChatCombinedMessage._onClick.bind(this)
     )
     html.on(
       'click',
       '.roll-card.combined button',
-      CombinedCheckCard._onClick.bind(this)
+      CoC7ChatCombinedMessage._onClick.bind(this)
     )
   }
 
@@ -32,7 +32,7 @@ export class CombinedCheckCard extends RollCard {
   }
 
   get config () {
-    return CombinedCheckCard.defaultConfig
+    return CoC7ChatCombinedMessage.defaultConfig
   }
 
   get successCount () {
@@ -124,7 +124,7 @@ export class CombinedCheckCard extends RollCard {
     const li = a.closest('li.actor-roll')
     const message = a.closest('.chat-message')
     const cardElement = a.closest('div.roll-card')
-    const card = await CombinedCheckCard.fromHTMLCardElement(cardElement)
+    const card = await CoC7ChatCombinedMessage.fromHTMLCardElement(cardElement)
     card.messageId = message.dataset.messageId
     const rank = Number(li?.dataset?.rank)
 

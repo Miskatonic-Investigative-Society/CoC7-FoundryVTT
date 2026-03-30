@@ -1,11 +1,11 @@
 /* global ChatMessage, CONFIG, foundry, fromUuid, game, renderTemplate Roll TextEditor */
 import { CoC7ActorSheet } from './base.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
-import { CoC7Link } from '../../apps/coc7-link.js'
+import CoC7Link from '../../apps/link.js'
 import { chatHelper, isCtrlKey } from '../../chat/helper.js'
-import { SanCheckCard } from '../../chat/cards/san-check.js'
+import CoC7SanCheckCard from '../../apps/san-check-card.js'
 import { CoC7ContextMenu } from '../../context-menu.js'
-import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
+import CoC7RollNormalize from '../../apps/roll-normalize.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -205,34 +205,34 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 
   async _onSanLossContextMenuClick (event) {
     const rollOptions = {
-      rollType: CoC7ChatMessage.ROLL_TYPE_ENCOUNTER,
+      rollType: CoC7RollNormalize.ROLL_TYPE_ENCOUNTER,
       preventStandby: true,
       fastForward: false,
       event,
-      cardType: CoC7ChatMessage.CARD_TYPE_SAN_CHECK,
+      cardType: CoC7RollNormalize.CARD_TYPE_SAN_CHECK,
       actor: this.actor
     }
 
     switch (event.currentTarget.dataset.action) {
       case ('link-tool'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NONE
         rollOptions.createEncounter = true
         rollOptions.openLinkTool = true
         break
       case ('send-chat'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NONE
         rollOptions.createEncounter = true
         rollOptions.sendToChat = true
         break
       case ('copy-to-clipboard'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NONE
         rollOptions.createEncounter = true
         rollOptions.sendToClipboard = true
         break
       default:
         break
     }
-    CoC7ChatMessage.trigger(rollOptions)
+    CoC7RollNormalize.trigger(rollOptions)
   }
 
   async _onSanCheck (event) {
@@ -290,7 +290,7 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
           : this.actor.name,
         tokenKey: this.actor.actorKey
       }
-      SanCheckCard.checkTargets(sanData, event.shiftKey)
+      CoC7SanCheckCard.checkTargets(sanData, event.shiftKey)
     }
   }
 

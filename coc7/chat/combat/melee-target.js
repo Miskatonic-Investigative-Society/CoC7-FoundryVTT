@@ -4,7 +4,7 @@ import { chatHelper, CoC7Roll } from '../helper.js'
 import { CoC7Chat } from '../../chat.js'
 import { ChatCardActor } from '../card-actor.js'
 import { CoC7MeleeResoltion } from './melee-resolution.js'
-import { CoC7MeleeInitiator } from './melee-initiator.js'
+import CoC7ChatCombatMelee from '../../apps/chat-combat-melee.js'
 
 export class CoC7MeleeTarget extends ChatCardActor {
   constructor (actorKey, parentMessageId = null, fastForward = false) {
@@ -62,7 +62,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
   get initiatorKey () {
     if (!this._initiatorKey) {
       if (!this._initiator && this.parentMessageId) {
-        this._initiator = CoC7MeleeInitiator.getFromMessageId(
+        this._initiator = CoC7ChatCombatMelee.getFromMessageId(
           this.parentMessageId
         )
       }
@@ -80,7 +80,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
   get initiator () {
     if (!this.initiatorKey) {
       if (this.parentMessageId) {
-        this._initiator = CoC7MeleeInitiator.getFromMessageId(
+        this._initiator = CoC7ChatCombatMelee.getFromMessageId(
           this.parentMessageId
         )
         this.initiatorKey = this._initiator.actorKey
@@ -91,7 +91,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
 
   get meleeInitiator () {
     if (!this._initiator) {
-      this._initiator = CoC7MeleeInitiator.getFromMessageId(
+      this._initiator = CoC7ChatCombatMelee.getFromMessageId(
         this.parentMessageId
       )
     }
