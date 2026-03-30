@@ -2,8 +2,8 @@
 
 Una _habilidad_ se tirará durante las pruebas.
 
-1. Ve a la pestaña de [fas fa-suitcase]Objetos
-2. Haz clic en [fas fa-suitcase]Crear objeto
+1. Ve a la pestaña de [fa-solid fa-suitcase]Objetos
+2. Haz clic en [fa-solid fa-suitcase]Crear objeto
 
     1. Dale un nombre a la habilidad, por ejemplo, _Arte/Artesanía (Danza)_
     2. Establece el _Tipo_ como _Habilidad_

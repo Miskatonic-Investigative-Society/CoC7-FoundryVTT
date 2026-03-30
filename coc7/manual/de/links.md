@@ -37,19 +37,19 @@ Links für Chatnachrichten und Bogeneditoren (NSC, Journaleinträge, ...) haben 
 	- all:
 		- [`difficutly`]: `?` (blind), `0` (regulär), `+` (schwierig), `++` (extrem), `+++` (kritisch).
 		- [`modifier`]: `-x` (x, entspricht der Anzahl der Strafwürfel), `+x` (x, entspricht der Anzahl der Bonuswürfel), `0` (kein Modifikator).
-		- [`icon`]: Icon, welches verwendet werden soll ([font awesome](https://fontawesome.com/icons), `fas fa-dice`).
+		- [`icon`]: Icon, welches verwendet werden soll ([font awesome](https://fontawesome.com/icons), `fa-solid fa-dice`).
 - `TEXT_TO_DISPLAY`: anzuzeigender Name, dies ist optional.
 
 ### Beispiele
 
-| Link                                                                                                    | Ergebnis                                                                          |
-|---------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
-| `@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]`                                          | {schwierige Probe geistige Stabilität (-1) 1/1D6}                                 |
-| `@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]`                                            | {Schwierige Stärkeprobe (-1)}                                                     |
-| `@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]`                                            | {Schwierige Glücksprobe (-1)}                                                     |
-| `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]` | {Schwierige Anthropologieprobe (-1)} (mit Icon)                                   |
-| `@coc7.sanloss[sanMax:1D6,sanMin:1]`                                                                    | {Probe geistige Stabilität 1/1D6} (ohne Name, Schwierigkeit und ohne Modifikator) |
-| `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`              | {Anthropologieprobe (+1)} (mit Icon, ohne Name, Schwierigkeit, mit Bonuswürfel)   |
+| Link                                                                                                         | Ergebnis                                                                          |
+|--------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| `@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]`                                               | {schwierige Probe geistige Stabilität (-1) 1/1D6}                                 |
+| `@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]`                                                 | {Schwierige Stärkeprobe (-1)}                                                     |
+| `@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]`                                                 | {Schwierige Glücksprobe (-1)}                                                     |
+| `@coc7.check[type:skill,icon:fa-solid fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]` | {Schwierige Anthropologieprobe (-1)} (mit Icon)                                   |
+| `@coc7.sanloss[sanMax:1D6,sanMin:1]`                                                                         | {Probe geistige Stabilität 1/1D6} (ohne Name, Schwierigkeit und ohne Modifikator) |
+| `@coc7.check[type:skill,icon:fa-solid fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`              | {Anthropologieprobe (+1)} (mit Icon, ohne Name, Schwierigkeit, mit Bonuswürfel)   |
 
 ### Links benutzen
 

@@ -1,10 +1,10 @@
 # CoC ID System
 
-Several FoundryVTT documents have an ID button accessable to "Game Master" and "Assistant GM" User Roles.
+Several FoundryVTT documents have an ID button accessible to "Game Master" and "Assistant GM" User Roles.
 
 **System ID (CoC ID)**: Setting a skill's ID to i.skill.dodge will let the system know to treat that skill as Dodge on the combat card.
 
-**Language**: Which languge is this version of the Item in.
+**Language**: Which language is this version of the Item in.
 
 **Cthulhu Flavors**: You can also control the era a skill is for, Animal Handling has different base values based on the era
 

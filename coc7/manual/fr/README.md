@@ -6,11 +6,11 @@
 * Comment il s'utilise si:
   * [je suis Gardien](#je-suis-gardien).
   * [je suis Investigateur](#je-suis-investigateur).
-* Le [combat](#le-combat) [fas fa-swords].
+* Le [combat](#le-combat) [fa-solid fa-swords].
 * Les [effets](#les-effets) [game-icon game-icon-aura].
-* [Les objets](#les-objets) [fas fa-suitcase]:
+* [Les objets](#les-objets) [fa-solid fa-suitcase]:
   * [arme](#arme) (weapon) / [livre](#livre) (book) / [objet](#objet) (item) / [sort](#sort) (spell)
-* [Les acteurs](#les-acteurs) [fas fa-user]:
+* [Les acteurs](#les-acteurs) [fa-solid fa-user]:
   * [personnage](#personnage) (character)
   * [contenant](#contenant) (container)
   * [créature](#creature) (creature)
@@ -48,30 +48,30 @@ Il permet de gérer quasiment tous les aspects de votre partie de jdr l'Appel de
 
 ## Comment il se paramètre
 
-* Quels modules [complémentaires installer](#quels-modules-complementaires-installer) [fas fa-cube].
-* Comment le [paramétrer](#comment-le-parametrer) [fas fa-cogs].
+* Quels modules [complémentaires installer](#quels-modules-complementaires-installer) [fa-solid fa-cube].
+* Comment le [paramétrer](#comment-le-parametrer) [fa-solid fa-cogs].
 
 ### Quels modules complémentaires installer
 
-* [fas fa-cube] Translation: French [Core] https://foundryvtt.com/packages/fr-core
-* [fas fa-cube] Call of Cthulhu 7th French (Unofficial) https://foundryvtt.com/packages/coc7-module-fr-toc
+* [fa-solid fa-cube] Translation: French [Core] https://foundryvtt.com/packages/fr-core
+* [fa-solid fa-cube] Call of Cthulhu 7th French (Unofficial) https://foundryvtt.com/packages/coc7-module-fr-toc
 
 ### Comment le paramétrer
 
 Pour **accéder aux paramètres** du système:
 
 * Allez dans le menu vertical à droite.
-* Cliquez sur [fas fa-cogs].
-* Puis sur [fas fa-cogs] _Configurer les paramètres_.
+* Cliquez sur [fa-solid fa-cogs].
+* Puis sur [fa-solid fa-cogs] _Configurer les paramètres_.
 * Puis sur _Call of Cthulhu 7th Edition_ dans la liste de gauche.
-* Pour sauvegarde et appliquer vos paramètres, cliquez sur [fas fa-floppy-disk] _Sauvegarder_.
+* Pour sauvegarde et appliquer vos paramètres, cliquez sur [fa-solid fa-floppy-disk] _Sauvegarder_.
 
-Quels paramètres tripoter (notés [fas fa-cogs] et potentiellement, changer la valeur par défaut) et pourquoi ?
+Quels paramètres tripoter (notés [fa-solid fa-cogs] et potentiellement, changer la valeur par défaut) et pourquoi ?
 
-* [fas fa-cogs] Variantes/Règles **optionnelles**: si vous voulez faire du **Pulp** par exemple.
+* [fa-solid fa-cogs] Variantes/Règles **optionnelles**: si vous voulez faire du **Pulp** par exemple.
 * Utiliser les menus contextuels
 * Répertoire de transfert des images de The Dhole's House
-* [fas fa-cogs] **Époque du monde**: à fixer à la création du monde.
+* [fa-solid fa-cogs] **Époque du monde**: à fixer à la création du monde.
 * Afficher l'époque de jeu dans la liste des joueurs
 * Utiliser les CoC ID quand on dépose un item
 
@@ -177,7 +177,7 @@ Elle se compose de trois blocs:
 * La **difficulté**: inconnue, ordinaire, majeure (demande une réussite majeure %/2), extrême (demande une réussite extrême %/5).
 * Les **dés** Bonus ou Malus à appliquer.
 
-Suite au jet, dans la carte du chat [fas fa-comments] qui apparaît, on peut, selon le cas:
+Suite au jet, dans la carte du chat [fa-solid fa-comments] qui apparaît, on peut, selon le cas:
 
 * **Redoubler** le jet.
 * Dépenser des points de **Chance** pour réussir ou augmenter la réussite.
@@ -189,7 +189,7 @@ Rappel de règles: [2. Les tests - lancer 1D100](#2-les-tests-lancer-1d100), [3.
 
 ## Je suis Gardien
 
-* Barre d'[outils du gardien](#barre-doutils-du-gardien) [game-icon game-icon-tentacle-strike] [game-icon game-icon-d10] [fas fa-link].
+* Barre d'[outils du gardien](#barre-doutils-du-gardien) [game-icon game-icon-tentacle-strike] [game-icon game-icon-d10] [fa-solid fa-link].
 * [Import de protagoniste](#import-de-protagoniste) via copié/collé de texte.
 * NOUVEAU: Le CCI / [Chaosium Canvas Interface](#chaosium-canvas-interface) ou boîte à outils pour la gestion des **régions** (Foundry) avec les aides de jeu et autres.
 
@@ -199,39 +199,39 @@ Dans toutes les fiches, si une petite icône [game-icon game-icon-tentacles-skul
 
 Elle est accessible uniquement si vous êtes sur une **scène** de votre monde.
 
-Ce sont les 3 dernières icônes de la barre à gauche de la fenêtre: [game-icon game-icon-tentacle-strike] [game-icon game-icon-d10] et [fas fa-link]
+Ce sont les 3 dernières icônes de la barre à gauche de la fenêtre: [game-icon game-icon-tentacle-strike] [game-icon game-icon-d10] et [fa-solid fa-link]
 
 #### Outils du Gardien [game-icon game-icon-tentacle-strike]
 
-* [fas fa-angle-double-up] Phase de **développement**
+* [fa-solid fa-angle-double-up] Phase de **développement**
 
 Activé/désactivé: durant la phase d'expérience, entre 2 parties, permet de faire les jets d'expérience et autres évolutions.
 
-Cela fait apparaître un nouvel onglet à droite de la fiche avec un [fas fa-cogs] sur ruban bleu.
+Cela fait apparaître un nouvel onglet à droite de la fiche avec un [fa-solid fa-cogs] sur ruban bleu.
 
-* [fas fa-user-edit] Mode **création** de personnage
+* [fa-solid fa-user-edit] Mode **création** de personnage
 
 Activé/désactivé: durant la phase de création des personnages, permet de répartir les points et faire les modifications voulues (compétences,...).
 
-* [fas fa-fingerprint] CoC ID: remplacement des Acteur Item
-* [fas fa-book-user] Installez votre compendium
-* [fas fa-user-plus] **Import** de Protagoniste
+* [fa-solid fa-fingerprint] CoC ID: remplacement des Acteur Item
+* [fa-solid fa-book-user] Installez votre compendium
+* [fa-solid fa-user-plus] **Import** de Protagoniste
 
 Lien vers l'[import de protagoniste](#import-de-protagoniste) via un texte copié/collé.
 
-* [fas fa-user-check] **Création** de Personnage guidée
+* [fa-solid fa-user-check] **Création** de Personnage guidée
 
 Lien vers la [création de Personnage guidée](#creation-guidee).
 
-* [fas fa-certificate] Gain d'**expérience**
+* [fa-solid fa-certificate] Gain d'**expérience**
 
 Activé/désactivé: en jeu, permet de cocher les futurs gains d'expérience, par exemple via des réussites spectaculaires sur des jets de compétences.
 
-* [fas fa-sim-card] Envoyer un jet **leurre** aux joueurs
+* [fa-solid fa-sim-card] Envoyer un jet **leurre** aux joueurs
 
 Faire croire aux joueurs que vous jetez les dés :)
 
-* [fas fa-moon] Se **reposer**
+* [fa-solid fa-moon] Se **reposer**
 
 Lancer une phase (7 heures) de repos et de guérison.
 
@@ -245,7 +245,7 @@ Lancer une phase (7 heures) de repos et de guérison.
 
 Permet de faire un jet (sans compétence spécifique), en spécifiant: le seuil de réussite, la difficulté, les dés bonus/malus,...
 
-#### Créer un lien [fas fa-link]
+#### Créer un lien [fa-solid fa-link]
 
 Permet de créer un **lien** vers un **test** ou un **objet** pour l'envoyer vers
 
@@ -270,7 +270,7 @@ Voici le format: `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
   * Tous:
     * [difficulty]: ? (aveugle), 0 (normal), + (difficile), ++ (extrême), +++ (critique).
     * [modifier]: -x (x dé malus), +x (x dé bonus), 0 (pas de modificateur).
-    * [icon]: icône à utiliser (font awesome, fas fa-dice).
+    * [icon]: icône à utiliser (font awesome, fa-solid fa-dice).
 * TEXT_TO_DISPLAY: Texte à afficher, optionnel.
 
 Par exemple:
@@ -278,18 +278,18 @@ Par exemple:
 ```@ coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}
 @ coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}
 @ coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]{Hard luck check(-1)}
-@ coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]{Hard Anthropology check(-1)}
-@ coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]
+@ coc7.check[type:skill,icon:fa-solid fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]{Hard Anthropology check(-1)}
+@ coc7.check[type:skill,icon:fa-solid fa-arrow-alt-circle-right,name:anthropology,modifier:+1]
 Jet simple: [ [/roll 1d10]]{Dégâts}
 ```
 
 [⇪ haut de page](#le-systeme)
 
-### Import de protagoniste [fas fa-user-plus]
+### Import de protagoniste [fa-solid fa-user-plus]
 
 Outil permettant, par simple **copié/collé** de la description d'un PNJ (provenant d'un PDF par exemple ou d'un site web :)) d'en faire un protagoniste de votre monde, avec fiche.
 
-**Accessible** via [fas fa-user-check] pour le Gardien dans son menu ou dans le menu Foundry [fas fa-user] Acteur, en bas, via le lien.
+**Accessible** via [fa-solid fa-user-check] pour le Gardien dans son menu ou dans le menu Foundry [fa-solid fa-user] Acteur, en bas, via le lien.
 
 Le formatage est **SUUUUUPER** strict (espaces, passages à la ligne, intitulés,...), et surtout être **patient** (10-15s):
 
@@ -410,22 +410,22 @@ Les onglets: [compétences](#onglet-competences), [combat](#onglet-combat), [éq
 
 Les menus/icônes de la **barre** du haut de la fiche:
 
-* [fas fa-window-minimize] [fas fa-window-maximize] Minimiser la fiche: fiche réduite dans laquelle n'apparaissent que caracs, chances, compétences utiles, armes,...
-* [fas fa-gear] Changer le style de fiche (pas utile).
-* [fas fa-circle-user] Modifier le token du personnage.
-* [fas fa-passport] Récupérer l'ID du personnage.
+* [fa-solid fa-window-minimize] [fa-solid fa-window-maximize] Minimiser la fiche: fiche réduite dans laquelle n'apparaissent que caracs, chances, compétences utiles, armes,...
+* [fa-solid fa-gear] Changer le style de fiche (pas utile).
+* [fa-solid fa-circle-user] Modifier le token du personnage.
+* [fa-solid fa-passport] Récupérer l'ID du personnage.
 
 Et en-**dessous**, sur la fiche:
 
-* [fas fa-lock][fas fa-lock-open] Précise si le personnage peut être **modifié** (très utile !) en dehors des phase de création et de développement.
-* [fas fa-link] Précise si le personnage est son **token** sont liés: toute modif de l'un impactera potentiellement l'autre (très utile !).
-* [fas fa-user-circle] Précise si la fiche actuelle est celle du token ou celle du personnage (pas d'icône dans ce cas).
+* [fa-solid fa-lock][fa-solid fa-lock-open] Précise si le personnage peut être **modifié** (très utile !) en dehors des phase de création et de développement.
+* [fa-solid fa-link] Précise si le personnage est son **token** sont liés: toute modif de l'un impactera potentiellement l'autre (très utile !).
+* [fa-solid fa-user-circle] Précise si la fiche actuelle est celle du token ou celle du personnage (pas d'icône dans ce cas).
 
-A chaque fois que vous voyez l'icône [fas fa-edit], c'est que vous pouvez **modifier** la valeur en cliquant sur le texte ou la case vide le cas échéant.
+A chaque fois que vous voyez l'icône [fa-solid fa-edit], c'est que vous pouvez **modifier** la valeur en cliquant sur le texte ou la case vide le cas échéant.
 
-En mode **Modification** [fas fa-lock-open], la majorité des noms et valeurs peuvent être modifiés. Par contre, plus grand chose n'est cliquable.
+En mode **Modification** [fa-solid fa-lock-open], la majorité des noms et valeurs peuvent être modifiés. Par contre, plus grand chose n'est cliquable.
 
-A chaque fois que vous voyez l'icône [fas fa-trash], c'est que vous pouvez **supprimer** la chose concernée en cliquant dessus.
+A chaque fois que vous voyez l'icône [fa-solid fa-trash], c'est que vous pouvez **supprimer** la chose concernée en cliquant dessus.
 
 Les onglets sont accessibles sur la gauche de la fiche via le petits rubans de couleur.
 
@@ -436,7 +436,7 @@ Bloc situé à gauche de la fiche, sous le portrait qui en fait partie, qui rest
 Le **portrait**:
 
 * peut être modifié en cliquant dessus.
-* en mode modification [fas fa-lock-open], en cliquant dessus, vous pouvez sélectionner la façon d'afficher votre portrait, son cadrage.
+* en mode modification [fa-solid fa-lock-open], en cliquant dessus, vous pouvez sélectionner la façon d'afficher votre portrait, son cadrage.
 * en le **survolant**, des icônes apparaissent pour modifier le **status** du personnage: mourant, inconscient, folie passagère,...
 
 Le reste:
@@ -444,7 +444,7 @@ Le reste:
 * Nom
 * (nom du) joueur
 * Occupation
-  * L'occupation peut être supprimée via l'icône [far fa-times-circle] qui apparaît en mode modification [fas fa-lock-open].
+  * L'occupation peut être supprimée via l'icône [fa-regular fa-times-circle] qui apparaît en mode modification [fa-solid fa-lock-open].
 * Sexe
 * Age
 * Résidence
@@ -469,11 +469,11 @@ On y trouve les **compétences** avec:
 * leur score
 * leurs scores /2 et /5
 * une case cochable [fa-light fa-circle] pour l’expérience (qui se coche toute seule ou à la main en double cliquant)
-* et un petit [fas fa-info-circle] pour avoir des informations complémentaires
+* et un petit [fa-solid fa-info-circle] pour avoir des informations complémentaires
 
-Le [fas fa-sort-amount-down] [fas fa-sort-alpha-down] permet de **trier** les compétences soit par nom soit par valeur.
+Le [fa-solid fa-sort-amount-down] [fa-solid fa-sort-alpha-down] permet de **trier** les compétences soit par nom soit par valeur.
 
-Le [fas fa-toggle-on] [fas fa-toggle-off] permet de **montrer** ou non les compétences **spéciales**: celles marquées comme _rare_ dans leur description.
+Le [fa-solid fa-toggle-on] [fa-solid fa-toggle-off] permet de **montrer** ou non les compétences **spéciales**: celles marquées comme _rare_ dans leur description.
 
 [⇪ haut de page](#le-systeme)
 
@@ -481,7 +481,7 @@ Le [fas fa-toggle-on] [fas fa-toggle-off] permet de **montrer** ou non les comp�
 
 En général, il faut **cliquer sur le nom d'une arme** pour l'utiliser et pas sur la compétence.
 
-Lorsque l'on ajoute (pas cliquer/déposer) une arme, il faut **au préalable avoir ajouté** au personnage la compétence correspondante à partir du compendium [fas fa-book-atlas] Coc7-fr > .création > Compétences > Combat...
+Lorsque l'on ajoute (pas cliquer/déposer) une arme, il faut **au préalable avoir ajouté** au personnage la compétence correspondante à partir du compendium [fa-solid fa-book-atlas] Coc7-fr > .création > Compétences > Combat...
 
 On y trouve:
 
@@ -494,7 +494,7 @@ On y trouve:
 * la liste des **compétences** de combat avec:
   * leur score
   * une case cochable`[fa-light fa-circle] pour l’expérience (qui se coche toute seule)
-  * et un petit [fas fa-info-circle] pour avoir des informations complémentaires
+  * et un petit [fa-solid fa-info-circle] pour avoir des informations complémentaires
 
 [⇪ haut de page](#le-systeme)
 
@@ -508,9 +508,9 @@ On y trouve:
   * **Sorts** (glissé/déposé sur la fiche)
   * **Armure** (glissé/déposé sur la fiche)
   * **Etats** (états physiques/mentaux du personnage, à la main du Gardien)
-* la thune, la fraîche, la moulaga, les pessos... En mode modification [fas fa-lock-open], le petit [fas fa-cogs] vert permet de calculer ou non les revenus de façon automatique.
+* la thune, la fraîche, la moulaga, les pessos... En mode modification [fa-solid fa-lock-open], le petit [fa-solid fa-cogs] vert permet de calculer ou non les revenus de façon automatique.
 
-La [fas fa-arrows-spin] indique que l'objet peut être **échangé** ou **rangé**. Si c'est un _conteneur_ (duquel il est propriétaire), il y sera rangé.
+La [fa-solid fa-arrows-spin] indique que l'objet peut être **échangé** ou **rangé**. Si c'est un _conteneur_ (duquel il est propriétaire), il y sera rangé.
 
 [⇪ haut de page](#le-systeme)
 
@@ -561,14 +561,14 @@ On (le Gardien) y trouve:
 
 [⇪ haut de page](#le-systeme)
 
-#### Onglet Développement Création [fas fa-angle-double-up]
+#### Onglet Développement Création [fa-solid fa-angle-double-up]
 
-Lorsque le Gardien active ces phases dans ses outils [fas fa-angle-double-up], cela vous permet d'accéder à un nouvel onglet accessible derrière un petit ruban bleu en haut à gauche de la fiche [fas fa-cogs].
+Lorsque le Gardien active ces phases dans ses outils [fa-solid fa-angle-double-up], cela vous permet d'accéder à un nouvel onglet accessible derrière un petit ruban bleu en haut à gauche de la fiche [fa-solid fa-cogs].
 
 Vous pouvez y:
 
 * répartir vos points à la création
-* faire vos jets d'expérience pendant les phases de développement sur les compétences cochées [fas fa-circle-check]. Vous pouvez cliquer sur les compétences où vous vous êtes distingué ou alors directement sur le bouton-texte _Phase de Développement_.
+* faire vos jets d'expérience pendant les phases de développement sur les compétences cochées [fa-solid fa-circle-check]. Vous pouvez cliquer sur les compétences où vous vous êtes distingué ou alors directement sur le bouton-texte _Phase de Développement_.
 
 [⇪ haut de page](#le-systeme)
 
@@ -578,9 +578,9 @@ Les types de création: [guidée](#creation-guidee), [à moitié](#creation-semi
 
 #### Création guidée
 
-**Accessible** via [fas fa-user-check] pour le Gardien dans son menu ou dans le menu Foundry [fas fa-user] Acteur, en bas, via le lien.
+**Accessible** via [fa-solid fa-user-check] pour le Gardien dans son menu ou dans le menu Foundry [fa-solid fa-user] Acteur, en bas, via le lien.
 
-Il se base sur les **setups** présents dans les compendiums [fas fa-book-atlas] de votre monde (dont ceux du système et des modules installés et activés) en rapport avec l'**époque** de jeu de votre monde.
+Il se base sur les **setups** présents dans les compendiums [fa-solid fa-book-atlas] de votre monde (dont ceux du système et des modules installés et activés) en rapport avec l'**époque** de jeu de votre monde.
 
 **ATTENTION**, si vous avez installé et activé le module en anglais Investigator Wizard, on va vous proposer des tas d'occupations: en français ET en anglais ! Désactivez-le.
 
@@ -645,18 +645,18 @@ Et c'est parti !
 
 #### Création semi guidée par compendium
 
-* Dans le menu Acteurs [fas fa-user], cliquez sur Créer un acteur.
+* Dans le menu Acteurs [fa-solid fa-user], cliquez sur Créer un acteur.
 * Choisissez _character_.
 * Donnez lui un nom puis _Créer acteur_.
-* Vérifiez bien d'être (c'est au Gardien de la faire) en mode **création** [fas fa-user-edit] (outils du Gardien).
-* Allez dans le menu Compendium [fas fa-book-atlas] de Foundry, dossier _CoC7-fr_, compendium _.création_, dossier _.Création_.
+* Vérifiez bien d'être (c'est au Gardien de la faire) en mode **création** [fa-solid fa-user-edit] (outils du Gardien).
+* Allez dans le menu Compendium [fa-solid fa-book-atlas] de Foundry, dossier _CoC7-fr_, compendium _.création_, dossier _.Création_.
 * Choisissez **votre époque et votre mode de tirage** (par exemple: Investigateur/trice 20's Aléatoire), et faîtes-le glisser sur votre fiche de personnage encore vierge.
 * _La magie opère :)_
 * Lancez les dés pour les caracs puis Valider.
-* Retournez dans le menu Compendium [fas fa-book-atlas] de Foundry, dossier _CoC7-fr_, compendium _.création_, dossier _Occupations_.
+* Retournez dans le menu Compendium [fa-solid fa-book-atlas] de Foundry, dossier _CoC7-fr_, compendium _.création_, dossier _Occupations_.
 * Choisissez votre **occupation** et faîtes-la glisser sur votre fiche.
 * Choisissez les **compétences**, répondez aux **choix** proposés.
-* Cliquez sur l'onglet [fas fa-cogs] dans le ruban bleu en haut à gauche de la fiche.
+* Cliquez sur l'onglet [fa-solid fa-cogs] dans le ruban bleu en haut à gauche de la fiche.
 * **Répartissez** vos points d'occupation et vos points personnels.
 * Réalisez les touches finales: âge, points de magie,...
 * Et voilà !
@@ -665,12 +665,12 @@ Et c'est parti !
 
 #### Création manuelle
 
-* Dans le menu Acteurs [fas fa-user], cliquez sur Créer un acteur.
+* Dans le menu Acteurs [fa-solid fa-user], cliquez sur Créer un acteur.
 * Choisissez _character_.
 * Donnez lui un nom puis _Créer acteur_.
-* Vérifiez bien d'être (c'est au Gardien de la faire) en mode **création** [fas fa-user-edit] ET en mode **développement** [fas fa-angle-double-up].
+* Vérifiez bien d'être (c'est au Gardien de la faire) en mode **création** [fa-solid fa-user-edit] ET en mode **développement** [fa-solid fa-angle-double-up].
 * Ben....... remplissez toutes les valeurs à la main.
-* Pour les compétences, allez dans le menu Compendium [fas fa-book-atlas] de Foundry, dossier _CoC7-fr_, compendium _.création_, dossier _Compétences_ et faîtes-les glisser une par une sur votre fiche.
+* Pour les compétences, allez dans le menu Compendium [fa-solid fa-book-atlas] de Foundry, dossier _CoC7-fr_, compendium _.création_, dossier _Compétences_ et faîtes-les glisser une par une sur votre fiche.
 * Mettez les valeurs.
 * Et voilà.
 
@@ -681,7 +681,7 @@ Et c'est parti !
 Vous devez savoir parler la **langue** de l'Ouvrage (attention à bien avoir les mêmes orthographes et majuscules des 2 côtés).
 
 * Allez dans votre inventaire / **Ouvrages**.
-* Pour l'ouvrage qui vous intéresse, cliquez sur [fas fa-edit].
+* Pour l'ouvrage qui vous intéresse, cliquez sur [fa-solid fa-edit].
 * Cliquez sur _Première lecture_.
 * Puis cliquez sur **le +** à droite de la barre pour effectuer toutes les phases d'étude jusqu'au bout.
 * Vous pourrez alors aussi utiliser les sorts de l'onglet Sorts du livre.
@@ -689,27 +689,27 @@ Vous devez savoir parler la **langue** de l'Ouvrage (attention à bien avoir les
 ### Jeter un sort
 
 * Allez dans votre inventaire / **Sort**.
-* Pour le Sort qui vous intéresse, cliquez sur [fas fa-edit].
+* Pour le Sort qui vous intéresse, cliquez sur [fa-solid fa-edit].
 
 ou
 
 * Allez dans votre inventaire / **Ouvrage**.
 * Choisir un Ouvrage que vous avez étudié entièrement.
-* Cliquez sur [fas fa-edit].
+* Cliquez sur [fa-solid fa-edit].
 * Allez dans l'onglet **Sorts** de l'Ouvrage.
 * Cliquez sur le Sort.
 
 puis
 
 * Cliquez sur **JET** ou **JET CACHE**.
-* Le chat [fas fa-comments] vous indique:
+* Le chat [fa-solid fa-comments] vous indique:
   * la perte de Points de Magie à appliquer à la main.
   * la perte de Points de SAN à appliquer à la main.
   * La description et les effets du sort.
 
 [⇪ haut de page](#le-systeme)
 
-## Le Combat [fas fa-swords]
+## Le Combat [fa-solid fa-swords]
 
 ### Menu combat de Foundry
 
@@ -723,7 +723,7 @@ Pour l'utiliser:
 
 * sélectionnez les tokens des **participants** au combat sur la scène
 * ```Click Droit```: icône en bas à droite (2 épées derrière un bouclier)
-* cliquer dans le menu Foundry à droite: [fas fa-swords]
+* cliquer dans le menu Foundry à droite: [fa-solid fa-swords]
 * et vous pouvez commencer le combat.
 
 ### Détails & Explications
@@ -731,11 +731,11 @@ Pour l'utiliser:
 **Sélectionner sa cible**
 
 * Passez la souris au-dessus du token, puis touche **T** (Shift + T pour en ajouter plusieurs). Quatre triangles apparaissent aux coins du token.
-* OU ```Click Droit``` sur le token cible et cliquez sur l'icône Cible [fas fa-comments].
+* OU ```Click Droit``` sur le token cible et cliquez sur l'icône Cible [fa-solid fa-comments].
 
 Cliquez ensuite sur **le nom de l'arme utilisée** (pas la compétence de combat !) pour faire le jet.
 
-**Carte de chat [fas fa-comments]: jet de compétence de combat**
+**Carte de chat [fa-solid fa-comments]: jet de compétence de combat**
 
 Vous pouvez spécifier dans cette carte:
 
@@ -762,7 +762,7 @@ Une fois le jet lancé une fiche de **réaction** de la cible apparaît. Elle pe
 Si le coup **porte**, lancez les **dégâts** puis:
 
 * l'**armure** sera visible dans la carte de chat [game-icon game-icon-armor-upgrade] (vous pouvez la modifier)
-* si vous n'aviez pas sélectionné de **cible**, vous pouvez cliquer sur le **token** de la scène qui est la cible, et cliquer sur la petite icône avec une silhouette sur la carte de chat à côté du total des dégâts [fas fa-user-minus].
+* si vous n'aviez pas sélectionné de **cible**, vous pouvez cliquer sur le **token** de la scène qui est la cible, et cliquer sur la petite icône avec une silhouette sur la carte de chat à côté du total des dégâts [fa-solid fa-user-minus].
 
 [⇪ haut de page](#le-systeme)
 
@@ -855,7 +855,7 @@ system.attribs.san.max
 
 **Compétences**
 
-Elles sont identifiées par leur nom, attention aux majuscules/minuscules et cette fois, c'est en **français**, comme sur la fiche dans le nom qui apparaît en haut de la description de la compétence [fas fa-info-circle] :
+Elles sont identifiées par leur nom, attention aux majuscules/minuscules et cette fois, c'est en **français**, comme sur la fiche dans le nom qui apparaît en haut de la description de la compétence [fa-solid fa-info-circle] :
 
 ```
 Charme
@@ -868,14 +868,14 @@ system.skills.Combat rapproché (Corps à corps).bonusDice
 
 [⇪ haut de page](#le-systeme)
 
-## Les Objets [fas fa-suitcase]
+## Les Objets [fa-solid fa-suitcase]
 
 Les voici:
 
 * [livre](#livre) (book), [objet](#objet) (item), [sort](#sort) (spell), [arme](#arme) (weapon).
 * [archétype](#archetype) (archetype) _[TODO]_, [armure](#armure) (armor) _[TODO]_, [poursuite](#poursuite) (chase) _[TODO]_, [package d'expérience](#package-dexperience) (experiencePackage) _[TODO]_, [occupation](#occupation) _[TODO]_, [créateur](#createur) (setup) _[TODO]_, [compétence](#competence) (skill) _[TODO]_, [status](#status) _[TODO]_, [talent](#talent) _[TODO]_.
 
-Pour utiliser les objets, livres, sorts,... stockés dans les **compendiums** [fas fa-book-atlas], il faut d'abord les **importer**:
+Pour utiliser les objets, livres, sorts,... stockés dans les **compendiums** [fa-solid fa-book-atlas], il faut d'abord les **importer**:
 
 * soit un ```Click Droit``` sur un compendium: _Importer tout le contenu_.
 * soit un ```Click Droit``` sur l'item choisi: _Importer l'entité_.
@@ -917,7 +917,7 @@ _A glisser/déposer sur un Acteur._
 
 ### Objet
 
-Quantité, poids, prix, description et époque [fas fa-tag].
+Quantité, poids, prix, description et époque [fa-solid fa-tag].
 
 _A glisser/déposer sur un Acteur._
 
@@ -966,11 +966,11 @@ _A glisser/déposer sur un Acteur._
 
 [⇪ haut de page](#le-systeme)
 
-## Les Acteurs [fas fa-user]
+## Les Acteurs [fa-solid fa-user]
 
 Les voici: [personnage](#personnage) (character), [contenant](#contenant) (container), [créature](#creature) (creature), [protagoniste](#protagoniste) (npc), [véhicule](#vehicule) (vehicle) _[TODO]_
 
-Pour utiliser les créatures stockées dans les **compendiums** [fas fa-book-atlas], il faut d'abord les **importer**:
+Pour utiliser les créatures stockées dans les **compendiums** [fa-solid fa-book-atlas], il faut d'abord les **importer**:
 
 * soit un ```Click Droit``` sur un compendium: _Importer tout le contenu_.
 * soit un ```Click Droit``` sur l'item choisi: _Importer l'entité_.
@@ -995,25 +995,25 @@ Lorsque vous avez importé une créature d'un compendium et vous créez son **to
 
 Les menus/icônes de la **barre** du haut de la fiche:
 
-* [fas fa-gear] Changer le style de fiche (pas utile).
-* [fas fa-circle-user] Modifier le token du personnage.
-* [fas fa-passport] Récupérer l'ID du personnage.
+* [fa-solid fa-gear] Changer le style de fiche (pas utile).
+* [fa-solid fa-circle-user] Modifier le token du personnage.
+* [fa-solid fa-passport] Récupérer l'ID du personnage.
 
 Et en-**dessous**, sur la fiche:
 
-* [fas fa-link] Précise si la créature et son **token** sont liés: toute modif de l'un impactera potentiellement l'autre (très utile ! Surtout pour des créatures unique comme le Grand Cthu...).
+* [fa-solid fa-link] Précise si la créature et son **token** sont liés: toute modif de l'un impactera potentiellement l'autre (très utile ! Surtout pour des créatures unique comme le Grand Cthu...).
 
 En **bas à gauche du portrait**: 4 icônes.
 
-* [fas fa-dice] Génère des caractéristiques **aléatoires**
-* [fas fa-balance-scale] Prends les caractéristiques **moyennes**
-* [fas fa-lock] [fas fa-lock-open] Permet ou non la **modification** de la fiche.
-* [fas fa-square-root-alt] [fas fa-user-edit] Bascule entre le mode **formule** (3D6+3) ou **valeur** (15).
+* [fa-solid fa-dice] Génère des caractéristiques **aléatoires**
+* [fa-solid fa-balance-scale] Prends les caractéristiques **moyennes**
+* [fa-solid fa-lock] [fa-solid fa-lock-open] Permet ou non la **modification** de la fiche.
+* [fa-solid fa-square-root-alt] [fa-solid fa-user-edit] Bascule entre le mode **formule** (3D6+3) ou **valeur** (15).
 
 Et pour le **token** spécifiquement:
 
 * [game-icon game-icon-backup] Signifie que ce token est une **instance** d'acteur (token et créature ne sont pas liés: les modifications faites sur l'un n'impactent pas l'autre).
-* [fas fa-user-circle]  Signifie que c'est un **token**.
+* [fa-solid fa-user-circle]  Signifie que c'est un **token**.
 
 Le reste:
 
@@ -1035,7 +1035,7 @@ Le reste:
 * Les notes du Gardien
 * Les Notes, à droite de la fiche, donnent la description de la créature.
 
-En mode **modification** [fas fa-lock-open], le petit [fas fa-cogs] vert permet de permuter entre le calcul automatique de la valeur ou le fait qu'elle soit fixée. Par contre, plus grand chose n'est cliquable en modification.
+En mode **modification** [fa-solid fa-lock-open], le petit [fa-solid fa-cogs] vert permet de permuter entre le calcul automatique de la valeur ou le fait qu'elle soit fixée. Par contre, plus grand chose n'est cliquable en modification.
 
 ### Protagoniste
 

@@ -8,7 +8,7 @@
 
 Ефекти будуть знаходитися у вкладці ефектів персонажа.
 
-![](../../assets/manual/effects/effects-tab.webp)
+![](../../../static/assets/manual/effects/effects-tab.webp)
 
 У Ігрових персонажів ефекти розбиті у 4 категорії:
 
@@ -28,15 +28,15 @@
 
 ### Деталі (Details)
 
-![Details tab](../../assets/manual/effects/details-tab.webp)
+![Details tab](../../../static/assets/manual/effects/details-tab.webp)
 
 ### Тривалість (Duration)
 
-![Duration tab](../../assets/manual/effects/duration-tab.webp)
+![Duration tab](../../../static/assets/manual/effects/duration-tab.webp)
 
 ### Зміни (Effects)
 
-![Changes tab](../../assets/manual/effects/changes-tab.webp)
+![Changes tab](../../../static/assets/manual/effects/changes-tab.webp)
 
 Остання вкладка й містить усі зміни які будуть застосовані до персонажа.
 

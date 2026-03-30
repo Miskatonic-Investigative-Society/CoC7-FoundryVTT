@@ -8,7 +8,7 @@ Effects can be created as a [link](links.md) using the [Link creation tool](link
 
 Effects will be display in the effect tabs on the character sheet.
 
-![effects tab](../../assets/manual/effects/effects-tab.webp)
+![effects tab](../../../static/assets/manual/effects/effects-tab.webp)
 
 Effect are broken down in 4 categories for PC :
 
@@ -28,15 +28,15 @@ This windows has 3 tabs
 
 ### Details tab
 
-![Details tab](../../assets/manual/effects/details-tab.webp)
+![Details tab](../../../static/assets/manual/effects/details-tab.webp)
 
 ### Duration tab
 
-![Duration tab](../../assets/manual/effects/duration-tab.webp)
+![Duration tab](../../../static/assets/manual/effects/duration-tab.webp)
 
 ### Changes tab
 
-![Changes tab](../../assets/manual/effects/changes-tab.webp)
+![Changes tab](../../../static/assets/manual/effects/changes-tab.webp)
 
 This last tab will includes all changes made to the character sheet.
 
@@ -85,7 +85,7 @@ The available changes are :
     - system.attribs.db.value
   - Armor:
     - system.attribs.armor.value
-- Derived attributes. Only the maximum value of those attributes should be modified. Those changes are applied after all other changes have been made. If that attibute is in auto mode, it will be recalculated with the previous characteristics changes before having it's value affected.
+- Derived attributes. Only the maximum value of those attributes should be modified. Those changes are applied after all other changes have been made. If that attribute is in auto mode, it will be recalculated with the previous characteristics changes before having it's value affected.
   - Hit Points:
     - system.attribs.hp.max
   - Sanity:

@@ -8,7 +8,7 @@ Los efectos pueden crearse como un [enlace](enlaces.md) utilizando la [herramien
 
 Los efectos se mostrarán en la pestaña Efectos de la hoja de personaje.
 
-![pestaña de efectos](../../assets/manual/effects/effects-tab.webp)
+![pestaña de efectos](../../../static/assets/manual/effects/effects-tab.webp)
 
 Los efectos se dividen en 4 categorías para PC:
 
@@ -28,15 +28,15 @@ Esta ventana tiene 3 pestañas.
 
 ### Pestaña de Detalles
 
-![Pestaña de Detalles](../../assets/manual/effects/details-tab.webp)
+![Pestaña de Detalles](../../../static/assets/manual/effects/details-tab.webp)
 
 ### Pestaña de Duración
 
-![Pestaña de Duración](../../assets/manual/effects/duration-tab.webp)
+![Pestaña de Duración](../../../static/assets/manual/effects/duration-tab.webp)
 
 ### Pestaña de Cambios
 
-![Pestaña de Cambios](../../assets/manual/effects/changes-tab.webp)
+![Pestaña de Cambios](../../../static/assets/manual/effects/changes-tab.webp)
 
 Esta última pestaña incluirá todos los cambios realizados en la hoja de personaje.
 

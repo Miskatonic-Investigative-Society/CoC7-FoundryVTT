@@ -1,13 +1,13 @@
 # Character Creation
 
-The system comes with some compendiums ready for you to customise. These are reset every time you update or install the system so it is recommended you copy them into your own compendium and edit them as required.
+The system comes with some compendiums ready for you to customize. These are reset every time you update or install the system so it is recommended you copy them into your own compendium and edit them as required.
 
 # Skills
 
 In this section you will create or edit [skills](item_skill.md)
 
-1. Go to [fas fa-atlas]compendium packs
-2. Click on [fas fa-atlas]Create Compendium
+1. Go to [fa-solid fa-atlas]compendium packs
+2. Click on [fa-solid fa-atlas]Create Compendium
 
     - Give your compendium a name (e.g. `My Skills`)
     - Select _Item_ as _Document Type_
@@ -15,12 +15,12 @@ In this section you will create or edit [skills](item_skill.md)
 ## Use existing skills
 
 1. Open up the compendium Skills
-2. Drag any skills you want to customise into your new compendium
+2. Drag any skills you want to customize into your new compendium
 
 ## Create new skills
 
-1. Go to [fas fa-suitcase]Items Directory
-2. Cick on [fas fa-suitcase]Create Item
+1. Go to [fa-solid fa-suitcase]Items Directory
+2. Click on [fa-solid fa-suitcase]Create Item
 
     - Give the skill a name
     - Set _Type_ to _Skill_
@@ -29,8 +29,8 @@ In this section you will create or edit [skills](item_skill.md)
 
 [Setups](item_setup.md) are predefined sets of skills and a way to generate the characteristics (this can be by rolling dices or assigning certain amount of points for example). Once a setup has been created it can be used in the creation of multiple characters.
 
-1. Go to [fas fa-suitcase]Items Directory
-2. Click on [fas fa-suitcase]Create Item
+1. Go to [fa-solid fa-suitcase]Items Directory
+2. Click on [fa-solid fa-suitcase]Create Item
 
     - Give the skill a name
     - Set _Type_ to _Setup_
@@ -54,8 +54,8 @@ Keep in mind that the set of _occupational skills_ doesn't need to be fixed, the
 
 The _occupation_ creation process is the following one:
 
-1. Go to [fas fa-suitcase]Items Directory
-2. Cick on [fas fa-suitcase]Create Item
+1. Go to [fa-solid fa-suitcase]Items Directory
+2. Click on [fa-solid fa-suitcase]Create Item
 
     - Give the skill a name
     - Set _Type_ to _Occupation_
@@ -79,8 +79,8 @@ The _occupation_ creation process is the following one:
 
 You can create a _Player Character_ by creating the _actor_ and filling the corresponding blank _Character Sheet_, but it's much easier if you have previously created a _setup_ and an _occupation_ (see above), if you have created both the process to create the _Player Character_ is as follows:
 
-1. Go to [fas fa-users]Actors Directory
-2. Cick on [fas fa-user]Create Actor
+1. Go to [fa-solid fa-users]Actors Directory
+2. Click on [fa-solid fa-user]Create Actor
 
     - Give the actor a name
     - Set _Type_ to _Character_
@@ -89,9 +89,9 @@ You can create a _Player Character_ by creating the _actor_ and filling the corr
 
 4. Drag and drop an _occupation_ Type item on the sheet, this will probably involve selecting some skills from a given reduced set or from the remaining ones. This will calculate the available _Personal points_ and _Occupation points_ and assign the part of the Occupation points to reach the minimum value for _Credit Rating_ of the selected occupation.
 
-5. On the keeper's menu on the left click [game-icon game-icon-tentacle-strike]Keeper's tools, if this menu is not available need to have an active scene which can be created in the [fas fa-map]Scenes Directory
+5. On the keeper's menu on the left click [game-icon game-icon-tentacle-strike]Keeper's tools, if this menu is not available need to have an active scene which can be created in the [fa-solid fa-map]Scenes Directory
 
-6. On the new submenu click [fas fa-user-edit]Character creation mode. A new tab called _Development_ should appear on the character sheets.
+6. On the new submenu click [fa-solid fa-user-edit]Character creation mode. A new tab called _Development_ should appear on the character sheets.
 
 7. Click on the characters Development tab
 

@@ -13,7 +13,7 @@
 
 # Неігровий персонаж (НІП) / Монстр
 
-![](../../assets/manual/importer/importer.webp)
+![](../../../static/assets/manual/importer/importer.webp)
 
 1. Оберіть тип актора: НІП чи Монстр
 
@@ -37,7 +37,7 @@
 
 # Імпорт акторів за допомогою JSON'а з The Dhole's House
 
-![](../../assets/manual/importer/actor.webp)
+![](../../../static/assets/manual/importer/actor.webp)
 
 1. Оберіть JSON Персонажа з The Dhole's House
 2. Коли додаються вміння, предмети, заклинання та зброя, система може спробувати знайти ці елементи у вашому світі з таким самим ім'ям, й ви можете вказати в теках у якому порядку воно буде їх шукати

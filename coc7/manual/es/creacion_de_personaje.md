@@ -6,8 +6,8 @@ El sistema incluye algunos compendios listos para que los personalices. Estos se
 
 En esta sección, crearás o editarás [habilidades](objeto_habilidad.md).
 
-1. Ve a la pestaña de [fas fa-atlas]Compendios.
-2. Haz clic en [fas fa-atlas]Crear compendio.
+1. Ve a la pestaña de [fa-solid fa-atlas]Compendios.
+2. Haz clic en [fa-solid fa-atlas]Crear compendio.
 
    - Dale un nombre a tu compendio (por ejemplo, `Mis Habilidades`).
    - Establece _Tipo de documento_ como _Objeto_.
@@ -19,8 +19,8 @@ En esta sección, crearás o editarás [habilidades](objeto_habilidad.md).
 
 ## Crear nuevas habilidades
 
-1. Ve a la pestaña de [fas fa-suitcase]Objetos.
-2. Haz clic en [fas fa-suitcase]Crear objeto.
+1. Ve a la pestaña de [fa-solid fa-suitcase]Objetos.
+2. Haz clic en [fa-solid fa-suitcase]Crear objeto.
 
    - Dale un nombre a la habilidad.
    - Establece _Tipo_ como _Habilidad_.
@@ -29,8 +29,8 @@ En esta sección, crearás o editarás [habilidades](objeto_habilidad.md).
 
 Las [Configuraciones](objeto_configuracion.md) son conjuntos predefinidos de habilidades y una forma de generar las características (esto puede ser tirando dados o asignando una cierta cantidad de puntos, por ejemplo). Una vez creada una configuración, se puede utilizar en la creación de varios personajes.
 
-1. Ve a la pestaña de [fas fa-suitcase]Objetos.
-2. Haz clic en [fas fa-suitcase]Crear objeto.
+1. Ve a la pestaña de [fa-solid fa-suitcase]Objetos.
+2. Haz clic en [fa-solid fa-suitcase]Crear objeto.
 
    - Dale un nombre a la configuración.
    - Establece _Tipo_ como _Configuración_.
@@ -54,8 +54,8 @@ Ten en cuenta que el conjunto de _habilidades de ocupación_ no necesita ser fij
 
 El proceso de creación de la _ocupación_ es el siguiente:
 
-1. Ve a la pestaña de [fas fa-suitcase]Objetos.
-2. Haz clic en [fas fa-suitcase]Crear objeto.
+1. Ve a la pestaña de [fa-solid fa-suitcase]Objetos.
+2. Haz clic en [fa-solid fa-suitcase]Crear objeto.
 
    - Dale un nombre a la ocupación.
    - Establece _Tipo_ como _Ocupación_.
@@ -79,8 +79,8 @@ El proceso de creación de la _ocupación_ es el siguiente:
 
 Puedes crear un _Personaje Jugador_ creando el _actor_ y rellenando la correspondiente _Hoja de Personaje_ en blanco, pero es mucho más fácil si has creado previamente una _configuración_ y una _ocupación_ (ver arriba). Si has creado ambas, el proceso para crear el _Personaje Jugador_ es el siguiente:
 
-1. Ve a la pestaña de [fas fa-users]Actores.
-2. Haz clic en [fas fa-user]Crear actor.
+1. Ve a la pestaña de [fa-solid fa-users]Actores.
+2. Haz clic en [fa-solid fa-user]Crear actor.
 
    - Dale un nombre al actor.
    - Establece _Tipo_ como _Personaje_.
@@ -89,9 +89,9 @@ Puedes crear un _Personaje Jugador_ creando el _actor_ y rellenando la correspon
 
 4. Arrastra y suelta un objeto de Tipo _Ocupación_ en la hoja, esto probablemente implicará seleccionar algunas habilidades de un conjunto reducido o de las restantes. Esto calculará los _Puntos de habilidades de interés personal_ y _Puntos de ocupación_ disponibles y asignará la parte de los Puntos de ocupación para alcanzar el valor mínimo de _Crédito_ de la ocupación seleccionada.
 
-5. En el menú del Guardián a la izquierda, haz clic en [game-icon game-icon-tentacle-strike]Herramientas del Guardián; si este menú no está disponible, necesitas tener una escena activa, la cual puede ser creada en la pestaña de [fas fa-map]Escenas.
+5. En el menú del Guardián a la izquierda, haz clic en [game-icon game-icon-tentacle-strike]Herramientas del Guardián; si este menú no está disponible, necesitas tener una escena activa, la cual puede ser creada en la pestaña de [fa-solid fa-map]Escenas.
 
-6. En el nuevo submenú, haz clic en [fas fa-user-edit]Modo de creación de personajes. Debería aparecer una nueva pestaña llamada _Desarrollo_ en las hojas de personaje.
+6. En el nuevo submenú, haz clic en [fa-solid fa-user-edit]Modo de creación de personajes. Debería aparecer una nueva pestaña llamada _Desarrollo_ en las hojas de personaje.
 
 7. Haz clic en la pestaña de _Desarrollo_ de los personajes.
 

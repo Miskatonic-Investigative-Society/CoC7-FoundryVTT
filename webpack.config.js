@@ -111,7 +111,7 @@ const bundleScript = {
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'assets/', to: 'assets/' },
+        { from: 'static/assets/', to: 'assets/' },
         { from: 'lang/', to: 'lang/' },
         { from: 'lib/', to: 'lib/' },
         { from: 'LICENSE' },

@@ -2,8 +2,8 @@
 
 Las configuraciones son conjuntos predefinidos de habilidades y una forma de generar las características (esto puede ser tirando dados o asignando una cierta cantidad de puntos, por ejemplo).
 
-1. Ve a la pestaña de [fas fa-suitcase]Objetos
-2. Haz clic en [fas fa-suitcase]Crear objeto
+1. Ve a la pestaña de [fa-solid fa-suitcase]Objetos
+2. Haz clic en [fa-solid fa-suitcase]Crear objeto
 
    1. Dale un nombre a la configuración, por ejemplo, _Configuración de los años 20_
    2. Establece el _Tipo_ como _Configuración_

@@ -38,19 +38,19 @@ El formato del enlace es `@@coc7.TIPO_DE_SOLICITUD[OPCIONES]{TEXTO_A_MOSTRAR}`
   - todas:
     - [`difficulty`]: `?` (oculta), `0` (regular), `+` (difícil), `++` (extrema), `+++` (crítica).
     - [`modifier`]: `-x` (x dados de penalización), `+x` (x dados de bonificación), `0` (sin modificador).
-    - [`icon`]: ícono a usar ([font awesome](https://fontawesome.com/icons), `fas fa-dice`).
+    - [`icon`]: ícono a usar ([font awesome](https://fontawesome.com/icons), `fa-solid fa-dice`).
 - `TEXTO_A_MOSTRAR`: Nombre a mostrar; esto es opcional.
 
 ### Ejemplos
 
-| Enlace                                                                                                    | Resultado                                                          |
-| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `@@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]`                                          | {Pérdida de COR Extrema (-1) 1/1D6}                                 |
-| `@@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]`                                            | {Tirada de FUE Difícil (-1)}                                        |
-| `@@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]`                                            | {Tirada de Suerte Difícil (-1)}                                     |
-| `@@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]` | {Tirada de Antropología Difícil (-1)} (con ícono)                   |
-| `@@coc7.sanloss[sanMax:1D6,sanMin:1]`                                                                    | {Pérdida de COR 1/1D6} (sin nombre, dificultad ni modificador)      |
-| `@@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`              | {Tirada de Antropología (+1)} (con ícono, sin nombre ni dificultad) |
+| Enlace                                                                                                        | Resultado                                                           |
+| ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `@@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]`                                               | {Pérdida de COR Extrema (-1) 1/1D6}                                 |
+| `@@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]`                                                 | {Tirada de FUE Difícil (-1)}                                        |
+| `@@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]`                                                 | {Tirada de Suerte Difícil (-1)}                                     |
+| `@@coc7.check[type:skill,icon:fa-solid fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]` | {Tirada de Antropología Difícil (-1)} (con ícono)                   |
+| `@@coc7.sanloss[sanMax:1D6,sanMin:1]`                                                                         | {Pérdida de COR 1/1D6} (sin nombre, dificultad ni modificador)      |
+| `@@coc7.check[type:skill,icon:fa-solid fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`              | {Tirada de Antropología (+1)} (con ícono, sin nombre ni dificultad) |
 
 ### Uso de enlaces
 

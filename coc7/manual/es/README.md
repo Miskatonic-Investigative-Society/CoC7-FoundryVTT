@@ -12,7 +12,7 @@ El sistema automatiza la mayoría de las tareas y reglas habituales involucradas
 
 Varias partes de las hojas de actor tienen descripciones emergentes que se activan después de dos segundos; este retraso se puede cambiar en la configuración.
 
-Esta documentación se puede volver a abrir en [fas fa-cogs]Ajustes del Juego -> Ayuda y Documentación -> Ver manual del sistema CoC7.
+Esta documentación se puede volver a abrir en [fa-solid fa-cogs]Ajustes del Juego -> Ayuda y Documentación -> Ver manual del sistema CoC7.
 
 # Cambios recientes
 
@@ -94,9 +94,9 @@ Foundry VTT se basa en actores y objetos. Este módulo incluye una serie de acto
 
 # Resumen de ajustes
 
-Haz clic en la pestaña de [fas fa-cogs]Ajustes y luego, bajo el encabezado Ajustes del juego, haz clic en [fas fa-cogs]Configurar ajustes.
+Haz clic en la pestaña de [fa-solid fa-cogs]Ajustes y luego, bajo el encabezado Ajustes del juego, haz clic en [fa-solid fa-cogs]Configurar ajustes.
 
-Haz clic en [fas fa-cogs]Ajustes del sistema
+Haz clic en [fa-solid fa-cogs]Ajustes del sistema
 
 - _Reglas Variantes/Opcionales_ - Aquí puedes activar reglas individuales de Pulp Cthulhu y otras reglas opcionales.
 - _Ajustes de Iniciativa_ - Ajustes adicionales para la regla opcional de iniciativa.
@@ -111,7 +111,7 @@ Haz clic en [fas fa-cogs]Ajustes del sistema
 
 # Menú de escena de La Llamada de Cthulhu
 
-Para acceder a este menú necesitarás tener una escena activa, que puede crearse en la pestañada de [fas fa-map]Escenas. Estas opciones solo están disponibles para el Guardián.
+Para acceder a este menú necesitarás tener una escena activa, que puede crearse en la pestañada de [fa-solid fa-map]Escenas. Estas opciones solo están disponibles para el Guardián.
 
 - _Herramientas del Guardián_
   - _Fase de desarrollo_: Cuando está activada, los jugadores pueden hacer tiradas de mejora para sus habilidades marcadas.

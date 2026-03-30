@@ -13,7 +13,7 @@ Falls du diese Funktion das erste Mal verwendest, lese bitte auch die folgenden 
 
 # Nichtspielercharakter (NSC) / Kreatur
 
-![](../../assets/manual/importer/importer.webp)
+![](../../../static/assets/manual/importer/importer.webp)
 
 1. Wähle NSC oder Kreatur
 2. Soll das System den Charakterblock einer früheren Edition in die 7. Edition konvertieren?
@@ -34,7 +34,7 @@ Das Klicken auf "Import" wird eine Spielfigur im Ordner "importierte Charaktere"
 
 # The Dhole's House Actor Importer JSON
 
-![](../../assets/manual/importer/actor.webp)
+![](../../../static/assets/manual/importer/actor.webp)
 
 1. The Dhole's House Actor Importer JSON
 2. Beim Hinzufügen von Fertigkeiten, Gegenständen, Zaubersprüchen und Waffen, kann das System versuchen Items in Ihrer Welt mit demselben Namen zu finden. Sie können die Reihenfolge der Nachschlageorte, in welchen gesucht werden soll festlegen:

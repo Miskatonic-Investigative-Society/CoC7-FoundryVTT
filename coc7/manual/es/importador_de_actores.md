@@ -2,7 +2,7 @@
 
 Puedes utilizar el importador de actores para importar varios bloques de PNJ/Criaturas desde aventuras y utilizando el exportador JSON de [The Dholes House](https://www.dholeshouse.org/)
 
-Para abrir el importador de actores, abre la pestaña de [fas fa-users]Actores y haz clic en Importador de actores en la parte inferior de la barra lateral, o en una [game-icon game-icon-tentacle-strike]escena activa haz clic en [fas fa-user-plus]Importador de actores.
+Para abrir el importador de actores, abre la pestaña de [fa-solid fa-users]Actores y haz clic en Importador de actores en la parte inferior de la barra lateral, o en una [game-icon game-icon-tentacle-strike]escena activa haz clic en [fa-solid fa-user-plus]Importador de actores.
 
 # Resumen
 
@@ -13,7 +13,7 @@ Si es la primera vez, se recomienda que también leas las siguientes secciones.
 
 # Personaje No Jugador (PNJ) / Criatura
 
-![](../../assets/manual/importer/importer.webp)
+![](../../../static/assets/manual/importer/importer.webp)
 
 1. Selecciona PNJ o Criatura
 2. Si el sistema debería convertir el bloque de personaje de una edición anterior a la 7ª
@@ -34,9 +34,9 @@ Al hacer clic en Importar, se creará un actor en la pestaña de Actores en la c
 
 # JSON del importador de actores de The Dhole's House
 
-![](../../assets/manual/importer/actor.webp)
+![](../../../static/assets/manual/importer/actor.webp)
 
-1. JSON del importador de actores de The Dhole's House  
+1. JSON del importador de actores de The Dhole's House
 2. Al agregar habilidades, objetos, hechizos y armas, el sistema puede intentar encontrar elementos en tu mundo con el mismo nombre. Puedes elegir el orden en qué se buscan.
 
    _Objetos_: Desde tu directorio de objetos
@@ -47,6 +47,6 @@ Al hacer clic en Importar, se creará un actor en la pestaña de Actores en la c
 
    _Sistema_: Desde los compendios del sistema proporcionados con este sistema
 
-Busca tu archivo JSON. Una vez seleccionado, se mostrará el nombre y la imagen. Haz clic en Importar para crear el actor en la pestaña de [fas fa-users]Actores en la carpeta Personajes importados.
+Busca tu archivo JSON. Una vez seleccionado, se mostrará el nombre y la imagen. Haz clic en Importar para crear el actor en la pestaña de [fa-solid fa-users]Actores en la carpeta Personajes importados.
 
-Por defecto, la imagen se almacenará en una carpeta llamada "dhole-image" en tu mundo. Esto se puede cambiar haciendo clic en la pestaña [fas fa-cogs]Ajustes y luego bajo el encabezado Ajustes del juego, haciendo clic en [fas fa-cogs]Configurar ajustes y haciendo clic en [fas fa-cogs]Ajustes del Sistema.
+Por defecto, la imagen se almacenará en una carpeta llamada "dhole-image" en tu mundo. Esto se puede cambiar haciendo clic en la pestaña [fa-solid fa-cogs]Ajustes y luego bajo el encabezado Ajustes del juego, haciendo clic en [fa-solid fa-cogs]Configurar ajustes y haciendo clic en [fa-solid fa-cogs]Ajustes del Sistema.

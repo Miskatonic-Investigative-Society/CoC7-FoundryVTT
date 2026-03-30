@@ -46,12 +46,12 @@ This is designed to make a toggle for player Map Note visibility and requires tw
 - **Hide Permission** - When Show is unticked and the Scene Region is triggered the default permissions for Selected Documents will be set to this
 
 *Example*
-![](../../assets/manual/cci/map_note_toggle_token.webp)
+![](../../../static/assets/manual/cci/map_note_toggle_token.webp)
 Using a Map Note, two Tiles, and two Scene Regions
 
 The tile images are available on these paths systems/CoC7/assets/art/eye-red.svg and systems/CoC7/assets/art/eye-green.svg
 
-![](../../assets/manual/cci/map_note_toggle_region.webp)
+![](../../../static/assets/manual/cci/map_note_toggle_region.webp)
 Viewing the Scene Region layer
 
 ## CCI: Open Document
@@ -92,12 +92,12 @@ This is designed to be used with CCI Open Document (above) to show and hide a Ti
 - **With A Button Click** - Trigger a Left of Right click on the above Region
 
 *Example*
-![](../../assets/manual/cci/tile_toggle_token.webp)
+![](../../../static/assets/manual/cci/tile_toggle_token.webp)
 Using a three Tiles and three Scene Regions
 
 The tile images are available on these paths systems/CoC7/assets/art/eye-red.svg and systems/CoC7/assets/art/eye-green.svg
 
-![](../../assets/manual/cci/tile_toggle_region.webp)
+![](../../../static/assets/manual/cci/tile_toggle_region.webp)
 Viewing the Scene Region layer
 
 ## CCI: To Scene

@@ -4,8 +4,8 @@ Una _ocupación_ ayuda a definir el trasfondo del personaje, piensa en ella como
 
 Ten en cuenta que el conjunto de _habilidades de ocupación_ no necesita ser fijo, el sistema permite configurar la _ocupación_ para que, cuando se arrastre a una hoja de personaje, dé la opción de seleccionar una o más habilidades de una lista cerrada, o incluso agregar un número predefinido de habilidades para seleccionar entre todas las disponibles.
 
-1. Ve a la pestaña de [fas fa-suitcase]Objetos
-2. Haz clic en [fas fa-suitcase]Crear objeto
+1. Ve a la pestaña de [fa-solid fa-suitcase]Objetos
+2. Haz clic en [fa-solid fa-suitcase]Crear objeto
 
    1. Dale un nombre a la ocupación, por ejemplo, _Bibliotecario_
    2. Establece el _Tipo_ como _Ocupación_

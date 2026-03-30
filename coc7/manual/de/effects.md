@@ -8,7 +8,7 @@ Effekte können als [Link](links.md) erstellt werden durch das Nutzen des [Link 
 
 Effekte werden im Reiter Effekte auf dem Charakterbogen angezeigt.
 
-![Reiter Effekte](../../assets/manual/effects/effects-tab.webp)
+![Reiter Effekte](../../../static/assets/manual/effects/effects-tab.webp)
 
 Effekte sind in 4 Kategorien einzugruppieren für den Spielercharakter:
 
@@ -28,15 +28,15 @@ Das Fenster hat 3 Reiter
 
 ### Reiter Details
 
-![Reiter Details](../../assets/manual/effects/details-tab.webp)
+![Reiter Details](../../../static/assets/manual/effects/details-tab.webp)
 
 ### Reiter Dauer
 
-![Reiter Dauer](../../assets/manual/effects/duration-tab.webp)
+![Reiter Dauer](../../../static/assets/manual/effects/duration-tab.webp)
 
 ### Reiter Änderungen
 
-![Reiter Änderungen](../../assets/manual/effects/changes-tab.webp)
+![Reiter Änderungen](../../../static/assets/manual/effects/changes-tab.webp)
 
 Dieser letzte Reiter wird alle Änderungen am Charakterbogen beinhalten.
 

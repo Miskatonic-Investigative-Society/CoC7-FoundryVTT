@@ -400,6 +400,7 @@ try {
         .replace(/\[(fa[^ ]+ fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g, '')
         .replace(/@@coc7./g, '@coc7.')
         .replace(/@Compendium\[[^\]]+\.[^\\.]+\]{([^}]+)}/g, '[_$1_]')
+        .replace(/\(..\/..\/..\/static\/assets\//g, '(../../static/assets/')
 
       if (!fs.existsSync(rootFolder + '/docs/' + lang + '/')) {
         fs.mkdirSync(rootFolder + '/docs/' + lang + '/')
@@ -421,7 +422,7 @@ try {
           /\[(fa[^ ]+ fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g,
           '<em class="$1">&nbsp;</em>'
         )
-        .replace(/src="..\/..\/assets\//g, 'src="systems/CoC7/assets/')
+        .replace(/src="..\/..\/..\/static\/assets\//g, 'src="systems/CoC7/assets/')
         .replace(/\n\s*/g, '\n')
         .replace(/@@coc7./g, '<span>@</span>coc7.')
 

@@ -2,8 +2,8 @@
 
 A _skill_ will be rolled during tests.
 
-1. Go to the [fas fa-suitcase]Items Directory tab
-2. Click on [fas fa-suitcase]Create Item
+1. Go to the [fa-solid fa-suitcase]Items Directory tab
+2. Click on [fa-solid fa-suitcase]Create Item
 
     1. Give the skill a name e.g. _Art/Craft (Dancing)_
     2. Set _Type_ to _Skill_

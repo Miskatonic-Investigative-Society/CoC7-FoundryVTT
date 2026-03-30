@@ -38,19 +38,19 @@ Format of link is `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
   - all:
     - [`difficulty`]: `?` (blind), `0` (regular), `+` (hard), `++` (extreme), `+++` (critical).
     - [`modifier`]: `-x` (x penalty dice), `+x` (x bonus dice), `0` (no modifier).
-    - [`icon`]: icon tu use ([font awesome](https://fontawesome.com/icons), `fas fa-dice`).
+    - [`icon`]: icon tu use ([font awesome](https://fontawesome.com/icons), `fa-solid fa-dice`).
 - `TEXT_TO_DISPLAY`: Name to display, this is optional.
 
 ### Examples
 
-| Link                                                                                                    | Result                                                                                                   |
-| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]`                                          | {Hard San Loss (-1) 1/1D6}                                                            |
-| `@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]`                                            | {Hard STR check(-1)}                                                                  |
-| `@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]`                                            | {Hard luck check(-1)}                                                                 |
-| `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]` | {Hard Anthropology check(-1)} (with icon)                          |
-| `@coc7.sanloss[sanMax:1D6,sanMin:1]`                                                                    | {San Loss (-1) 1/1D6} (without name, difficulty nor modifier)      |
-| `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`              | {Anthropology check (+1)} (with icon, without name nor difficulty) |
+| Link                                                                                                         | Result                                                             |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]`                                               | {Hard San Loss (-1) 1/1D6}                                         |
+| `@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]`                                                 | {Hard STR check(-1)}                                               |
+| `@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]`                                                 | {Hard luck check(-1)}                                              |
+| `@coc7.check[type:skill,icon:fa-solid fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]` | {Hard Anthropology check(-1)} (with icon)                          |
+| `@coc7.sanloss[sanMax:1D6,sanMin:1]`                                                                         | {San Loss (-1) 1/1D6} (without name, difficulty nor modifier)      |
+| `@coc7.check[type:skill,icon:fa-solid fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`              | {Anthropology check (+1)} (with icon, without name nor difficulty) |
 
 ### Using links
 

@@ -12,7 +12,7 @@ The system automates most of the regular tasks and rules involved with running a
 
 Several parts of the actor sheets have pop up tooltips that trigger after two seconds, this delay can be changed in the settings
 
-This documentation can be reopened under [fas fa-cogs]Game Settings -> Help and Documentation -> View CoC7 System Manual
+This documentation can be reopened under [fa-solid fa-cogs]Game Settings -> Help and Documentation -> View CoC7 System Manual
 
 # Recent changes
 
@@ -96,9 +96,9 @@ Foundry VTT is based in actors and items. This module includes a number of syste
 
 # Settings overview
 
-Click on the [fas fa-cogs]Game Settings tab then under the Game Settings heading click on [fas fa-cogs]Configure Settings.
+Click on the [fa-solid fa-cogs]Game Settings tab then under the Game Settings heading click on [fa-solid fa-cogs]Configure Settings.
 
-Click on [fas fa-cogs]System Settings
+Click on [fa-solid fa-cogs]System Settings
 
 - _Variant/Optional Rules_ - Here you can turn on individual Pulp Cthulhu rules and other optional rules
 - _Initiative Settings_ - Additional settings for optional initiative rule
@@ -113,7 +113,7 @@ Click on [fas fa-cogs]System Settings
 
 # Call of Cthulhu Scene Menu
 
-To access this menu you will need to have an active scene which can be created in the [fas fa-map]Scenes Directory. These options are only available to the Keeper.
+To access this menu you will need to have an active scene which can be created in the [fa-solid fa-map]Scenes Directory. These options are only available to the Keeper.
 
 - _Keeper's tools_
   - _Development phase_: When enabled, players can make improvement rolls for their marked skills.

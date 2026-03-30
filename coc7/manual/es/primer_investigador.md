@@ -6,7 +6,7 @@ Esta página crea un investigador utilizando los compendios proporcionados; si e
 
 # Habilidad
 
-Haz clic en la pestaña de [fas fa-atlas]Compendios y luego, bajo el encabezado Ejemplos del Sistema, abre el objeto Habilidades (CoC7). Aquí encontrarás las habilidades que se muestran en las hojas de personaje disponibles en el sitio web de Chaosium.
+Haz clic en la pestaña de [fa-solid fa-atlas]Compendios y luego, bajo el encabezado Ejemplos del Sistema, abre el objeto Habilidades (CoC7). Aquí encontrarás las habilidades que se muestran en las hojas de personaje disponibles en el sitio web de Chaosium.
 
 - _Sin ajuste_: No se pueden asignar puntos de habilidad personales.
 - _Sin ganancia de EXP_: No marcas esta habilidad para mejorar en caso de éxito.
@@ -16,7 +16,7 @@ Haz clic en la pestaña de [fas fa-atlas]Compendios y luego, bajo el encabezado 
 - _Combatir_: Establece automáticamente Especialización, De combate y el nombre de la especialización a Combatir.
 - _Armas de fuego_: Establece automáticamente Especialización, Combate y el nombre de la especialización a Armas de fuego.
 
-Puedes crear un nuevo Compendio de objetos y copiar las habilidades que requieras en él, permitiéndote editarlas. También puedes crear nuevas habilidades creando nuevos objetos de Habilidad (Haz clic en la pestaña de [fas fa-suitcase]Objetos, luego en Crear objeto, asígnale un nombre, por ejemplo, Jardinería, y establece el Tipo como Habilidad).
+Puedes crear un nuevo Compendio de objetos y copiar las habilidades que requieras en él, permitiéndote editarlas. También puedes crear nuevas habilidades creando nuevos objetos de Habilidad (Haz clic en la pestaña de [fa-solid fa-suitcase]Objetos, luego en Crear objeto, asígnale un nombre, por ejemplo, Jardinería, y establece el Tipo como Habilidad).
 
 ## Configuración
 
@@ -24,11 +24,11 @@ Una vez que hayas configurado tus habilidades, crea una Configuración. Aquí ti
 
 Las Configuraciones te permiten estandarizar con qué habilidades, objetos, secciones de biografía y características comienzan los investigadores.
 
-Haz clic en la pestaña [fas fa-suitcase]Objetos, luego en Crear objeto, asígnale un nombre, por ejemplo, Nueva configuración de Investigador, y establece el Tipo como Configuración.
+Haz clic en la pestaña [fa-solid fa-suitcase]Objetos, luego en Crear objeto, asígnale un nombre, por ejemplo, Nueva configuración de Investigador, y establece el Tipo como Configuración.
 
-En la pestaña de Descripción, para establecer la descripción, haz clic en el botón [fas fa-edit] para obtener un editor.
+En la pestaña de Descripción, para establecer la descripción, haz clic en el botón [fa-solid fa-edit] para obtener un editor.
 
-En la pestaña de Detalles, haz clic en el [fas fa-plus] en Secciones de transfondo para agregar cualquier sección que requieras del paso Crear un trasfondo de la creación del investigador. Haz clic en la pestaña [fas fa-atlas]Compendios, luego, bajo el encabezado Objetos, abre el objeto Ejemplos de objetos (CoC7) y arrastra @Compendium[CoC7.items.3elxAwnv7WCUNwng]{Puñetazo} a la configuración.
+En la pestaña de Detalles, haz clic en el [fa-solid fa-plus] en Secciones de transfondo para agregar cualquier sección que requieras del paso Crear un trasfondo de la creación del investigador. Haz clic en la pestaña [fa-solid fa-atlas]Compendios, luego, bajo el encabezado Objetos, abre el objeto Ejemplos de objetos (CoC7) y arrastra @Compendium[CoC7.items.3elxAwnv7WCUNwng]{Puñetazo} a la configuración.
 
 En la pestaña de Características, puedes personalizar cómo se tiran/compran las características del investigador.
 
@@ -40,9 +40,9 @@ Todas las hojas de actor y objeto tienen una pestaña [game-icon game-icon-tenta
 
 Las ocupaciones te permiten establecer cuántos puntos de ocupación, el rango de Crédito y las habilidades con las que comienza el investigador. Aquí tienes un ejemplo del compendio Ejemplos de objetos: @Compendium[CoC7.items.NOsh6EdNSjpjahDF]{Ejemplo de Ocupación}
 
-Haz clic en la pestaña de [fas fa-suitcase]Objetos, luego en Crear objeto, asígnale un nombre, por ejemplo, Conductor, y establece el Tipo como Ocupación.
+Haz clic en la pestaña de [fa-solid fa-suitcase]Objetos, luego en Crear objeto, asígnale un nombre, por ejemplo, Conductor, y establece el Tipo como Ocupación.
 
-En la pestaña de Descripción, para establecer la descripción, haz clic en el botón [fas fa-edit] para obtener un editor.
+En la pestaña de Descripción, para establecer la descripción, haz clic en el botón [fa-solid fa-edit] para obtener un editor.
 
 En la pestaña de Detalles, puedes establecer el cálculo de Puntos de Ocupación y el Crédito Mínimo/Máximo.
 
@@ -52,16 +52,16 @@ En la pestaña de Habilidades, puedes arrastrar habilidades desde los Compendios
 
 ## Personaje
 
-Para completar tu personaje, necesitas tener una escena activa, que se puede crear en el [fas fa-map]Directorio de Escenas.
+Para completar tu personaje, necesitas tener una escena activa, que se puede crear en el [fa-solid fa-map]Directorio de Escenas.
 
-Haz clic en la pestaña de [fas fa-users]Actores, luego en Crear actor, asígnale un nombre, por ejemplo, Nuevo investigador, y establece el Tipo como Personaje.
+Haz clic en la pestaña de [fa-solid fa-users]Actores, luego en Crear actor, asígnale un nombre, por ejemplo, Nuevo investigador, y establece el Tipo como Personaje.
 
 Puedes arrastrar tu configuración creada anteriormente al personaje para la configuración inicial o arrastrar este ejemplo en su lugar: @Compendium[CoC7.items.CcH7CdXGtGTjMSCg]{Ejemplo de configuración de los años 20}
 
 A continuación, arrastra tu ocupación creada anteriormente al personaje o arrastra este ejemplo en su lugar: @Compendium[CoC7.items.NOsh6EdNSjpjahDF]{Ejemplo de ocupación}
 
-En la barra de menú de la izquierda, selecciona [game-icon game-icon-tentacle-strike]Herramientas del Guardián y luego selecciona el [fas fa-user-edit]Modo de creación de personajes.
+En la barra de menú de la izquierda, selecciona [game-icon game-icon-tentacle-strike]Herramientas del Guardián y luego selecciona el [fa-solid fa-user-edit]Modo de creación de personajes.
 
 En la hoja de personaje, selecciona la pestaña de Desarrollo. El primer punto indica que esta es una habilidad de ocupación; la primera columna de números es el valor base, la siguiente es donde asignas puntos personales, la tercera es para puntos de ocupación, la cuarta es para la experiencia ganada durante la fase de mejora del investigador y la última columna es el porcentaje total de habilidad.
 
-Puedes ver cuántos puntos personales y de ocupación has gastado hasta ahora. Una vez que hayas gastado todos tus puntos, necesitas desactivar el [fas fa-user-edit]Modo de creación de personajes para permitir que los personajes vean sus Puntos de vida, Puntos de magia, Cordura y Suerte.
+Puedes ver cuántos puntos personales y de ocupación has gastado hasta ahora. Una vez que hayas gastado todos tus puntos, necesitas desactivar el [fa-solid fa-user-edit]Modo de creación de personajes para permitir que los personajes vean sus Puntos de vida, Puntos de magia, Cordura y Suerte.
