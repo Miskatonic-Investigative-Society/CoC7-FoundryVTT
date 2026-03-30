@@ -3,11 +3,11 @@ import * as path from 'path'
 import decompress from 'decompress'
 import fetch from 'node-fetch'
 import webfontsGenerator from '@vusion/webfonts-generator'
-import { formatErrorText, getRootFolder, processArguments, requireNodeVersion } from './index.js'
+import TemplateHelpers from './src/template-helpers.js'
 
 // npm run game-icons-build -- --help
 
-requireNodeVersion()
+TemplateHelpers.requireNodeVersion()
 
 /* When new icons are added with the same name set the order here so the font file doesn't swap class names */
 const knownDuplicates = {
@@ -204,11 +204,11 @@ const knownDuplicates = {
 try {
   const sourceLink = 'https://game-icons.net/archives/svg/zip/000000/transparent/game-icons.net.svg.zip'
 
-  const rootFolder = getRootFolder()
+  const rootFolder = TemplateHelpers.systemRoot
 
-  const args = processArguments('Create CSS and font file for Game Icons.', {
-    fresh: 'Download the zip file again even if it already exists.',
-    'keep-old': 'Do not extract the zip file if it already exists. Fresh download will preprevent this.'
+  const args = TemplateHelpers.parseNodeArguments('Create CSS and font file for Game Icons.', {
+    fresh: { message: 'Download the zip file again even if it already exists.', group: false },
+    'keep-old': { message: 'Do not extract the zip file if it already exists. Fresh download will prevent this.', group: false }
   })
 
   const tempFolder = rootFolder + '/temp/'
@@ -436,6 +436,5 @@ try {
 
   console.log('Completed')
 } catch (e) {
-  console.log('\n' + formatErrorText('ERROR: ' + e.message) + '\n\n')
-  process.exit(1)
+  TemplateHelpers.showErrorAndExit(e)
 }

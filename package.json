@@ -9,6 +9,7 @@
     "build-roll-requests": "node scripts/generate-roll-requests.js",
     "format": "standard --fix",
     "game-icons-build": "node scripts/build-game-icons.js",
+    "translations-check": "node scripts/translations-check.js",
     "watch": "webpack --mode development"
   },
   "repository": {

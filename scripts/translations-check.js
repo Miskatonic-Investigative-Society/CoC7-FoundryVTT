@@ -1,7 +1,7 @@
 import { deleteAsync } from 'del'
-import glob from './node_modules/glob/glob.js'
-import jsonfile from './node_modules/jsonfile/index.js'
-import write from './node_modules/write/index.js'
+import glob from 'glob'
+import jsonfile from 'jsonfile'
+import write from 'write'
 
 const unordered = {}
 let missing = []
