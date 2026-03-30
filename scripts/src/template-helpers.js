@@ -1,3 +1,7 @@
+import * as crypto from 'crypto'
+import * as fs from 'fs'
+import { ClassicLevel } from 'classic-level'
+
 export default class TemplateHelpers {
   /**
    * Path to root
@@ -47,6 +51,95 @@ export default class TemplateHelpers {
       console.log(formatted)
     }
     return formatted
+  }
+
+  /**
+   * Create binary pack from json
+   * @param {string} folder
+   * @param {object} json
+   */
+  static async createBinaryPack (folder, json) {
+    if (!fs.existsSync(TemplateHelpers.systemRoot + '/binary-packs/')) {
+      fs.mkdirSync(TemplateHelpers.systemRoot + '/binary-packs/')
+    }
+    if (fs.existsSync(TemplateHelpers.systemRoot + '/binary-packs/' + folder)) {
+      await ClassicLevel.destroy(TemplateHelpers.systemRoot + '/binary-packs/' + folder)
+    }
+    const groups = {
+      // Adventure
+      items: /^!(actors)!([a-zA-Z0-9]{16})$/,
+      pages: /^!(journal)!([a-zA-Z0-9]{16})$/,
+      results: /^!(tables)!([a-zA-Z0-9]{16})$/
+    }
+    const batch = Object.keys(json).reduce((c, i) => {
+      const all = {
+        [i]: JSON.parse(JSON.stringify(json[i]))
+      }
+      for (const key in groups) {
+        const array = i.match(groups[key])
+        if (array) {
+          for (const offset in json[i][key]) {
+            const arrayKey = '!' + array[1] + '.' + key + '!' + array[2] + '.' + json[i][key][offset]._id
+            all[arrayKey] = json[i][key][offset]
+            all[i][key][offset] = json[i][key][offset]._id
+          }
+        }
+      }
+      for (const key in all) {
+        c.push({ type: 'put', key, value: all[key], valueEncoding: 'json' })
+      }
+      return c
+    }, [])
+
+    const db = new ClassicLevel(TemplateHelpers.systemRoot + '/binary-packs/' + folder, { keyEncoding: 'utf8', valueEncoding: 'json' })
+    await db.batch(batch, { valueEncoding: 'utf8' })
+    await db.close()
+  }
+
+  /**
+   * generateBuildConsistentID uses idSource to generate an id that will be consistent across builds.
+   *
+   * Note: This is called outside of foundry to build manual .db files and substitutes foundry.utils.randomID in a build consistent way.
+   * It creates a hash from the key so it is consistent between builds and the converts to base 64 so it uses the same range of characters as FoundryVTTs generator.
+   * @param {object} collisions
+   * @param {string} idSource
+   * @returns {string}
+   */
+  static generateBuildConsistentID (collisions, idSource) {
+    const id = crypto.createHash('md5').update(idSource).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
+    if (typeof collisions[id] !== 'undefined') {
+      throw new Error('Collision on ' + idSource)
+    }
+    collisions[id] = true
+    return id
+  }
+
+  /**
+   * Is this a module or a system. Load the config
+   * @returns {object}
+   */
+  static loadFoundryConfig () {
+    const rootFolder = TemplateHelpers.systemRoot
+
+    let type = ''
+
+    if (fs.existsSync(rootFolder + '/static/module.json')) {
+      type = 'module'
+    } else if (fs.existsSync(rootFolder + '/static/system.json')) {
+      type = 'system'
+    } else {
+      throw new Error('No module.json or system.json')
+    }
+
+    const foundryConfig = JSON.parse(fs.readFileSync(rootFolder + '/static/' + type + '.json', 'utf8'))
+    if (typeof foundryConfig?.id === 'undefined') {
+      throw new Error('No id found in ./' + type + '.json file')
+    }
+
+    return {
+      type,
+      json: foundryConfig
+    }
   }
 
   /**
@@ -102,6 +195,94 @@ export default class TemplateHelpers {
       process.exit(0)
     }
     return args
+  }
+
+  /**
+   * Convert JSON into a document
+   * @param {object} collisions
+   * @param {object} doc
+   * @param {object} options
+   * @param {string} options.type
+   * @param {string} options.lang
+   * @param {string} options.id
+   * @returns {object}
+   */
+  static processDocument (collisions, doc, { type = '', lang = 'en', id = '' }) {
+    if (doc.type === 'folder') {
+      if (!doc._id) {
+        // Make sure we don't generate new ids every time we rebuild
+        doc._id = TemplateHelpers.generateBuildConsistentID(collisions, doc.name + lang + 'folder')
+      }
+      doc.type = type
+      return {
+        id: '!folders!' + doc._id,
+        value: doc
+      }
+    }
+    if (!doc._id) {
+      // Make sure we don't generate new ids every time we rebuild
+      doc._id = TemplateHelpers.generateBuildConsistentID(collisions, doc.name + lang + JSON.stringify(doc.flags[id].cocidFlag.eras))
+    }
+    let idKey = type.toLowerCase() + 's'
+    switch (type) {
+      case 'Actor':
+        break
+      case 'Item':
+        switch (doc.type) {
+          case 'skill': {
+            const match = doc.name.match(/^(.+)\s*\((.+)\)$/)
+            doc.system = doc.system || {}
+            if (match) {
+              doc.system.skillName = match[2].trim()
+              doc.system.specialization = match[1].trim()
+            } else {
+              doc.system.skillName = doc.name
+              doc.system.specialization = ''
+            }
+            break
+          }
+        }
+        break
+      case 'RollTable':
+        idKey = 'tables'
+        if (typeof doc.results !== 'undefined') {
+          let range = 0
+          for (const offset in doc.results) {
+            if (!doc.results[offset]._id) {
+              doc.results[offset]._id = TemplateHelpers.generateBuildConsistentID(collisions, doc.name + lang + JSON.stringify(doc.flags[id].cocidFlag.eras) + offset)
+            }
+            if (!doc.results[offset].range) {
+              range++
+              doc.results[offset].range = [range, range]
+            } else {
+              range = doc.results[offset].range[1]
+            }
+            if (doc.results[offset].type === 'text') {
+              /* // FoundryVTT V12 */
+              doc.results[offset].text = '<strong>' + doc.results[offset].name + '</strong> ' + doc.results[offset].description
+            }
+            /* // FoundryVTT V12 */
+            // type: document / pack
+          }
+          if (!doc.formula) {
+            doc.formula = '1d' + range
+          }
+        }
+        break
+      case 'JournalEntry':
+        if (typeof doc.pages !== 'undefined') {
+          for (const offset in doc.pages) {
+            if (!doc.pages[offset]._id) {
+              doc.pages[offset]._id = TemplateHelpers.generateBuildConsistentID(collisions, doc.name + lang + JSON.stringify(doc.flags[id].cocidFlag.eras) + offset)
+            }
+          }
+        }
+        break
+    }
+    return {
+      id: '!' + idKey + '!' + doc._id,
+      value: doc
+    }
   }
 
   /**
@@ -183,5 +364,17 @@ export default class TemplateHelpers {
     const stack = (match ? match[1] + ':' + match[2] + ' col ' + match[3] : '')
     TemplateHelpers.ansiFormat('ERROR: ' + e.message + '\n' + stack, { color: 'red', output: true })
     process.exit(1)
+  }
+
+  /**
+   * Sort object by key
+   * @param {object} unsorted
+   * @returns {object}
+   */
+  static sortByKey (unsorted) {
+    return Object.keys(unsorted).sort().reduce((c, k) => {
+      c[k] = unsorted[k]
+      return c
+    }, {})
   }
 }

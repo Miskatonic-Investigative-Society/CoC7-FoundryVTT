@@ -2,8 +2,8 @@ import * as fs from 'fs'
 import * as path from 'path'
 import decompress from 'decompress'
 import fetch from 'node-fetch'
-import webfontsGenerator from '@vusion/webfonts-generator'
 import TemplateHelpers from './src/template-helpers.js'
+import webfontsGenerator from '@vusion/webfonts-generator'
 
 // npm run game-icons-build -- --help
 
@@ -277,16 +277,17 @@ try {
     const mapFilename = fs.readdirSync(extractToFolder, {
       recursive: true
     }).reduce((c, file) => {
+      file = file.replace(/\\/g, '/')
       const parts = file.match(/^([^/]+)\/([^/]+)\.svg$/)
       if (parts) {
-        if (Object.prototype.hasOwnProperty.call(knownDuplicates, parts[2])) {
-          if (!Object.prototype.hasOwnProperty.call(c, parts[2])) {
+        if (typeof knownDuplicates[parts[2]] !== 'undefined') {
+          if (typeof c[parts[2]] === 'undefined') {
             c[parts[2]] = knownDuplicates[parts[2]]
           }
           if (c[parts[2]].filter(v => v === parts[1]).length === 0) {
             throw new Error('The file "' + file + '" could not be added to existing')
           }
-        } else if (!Object.prototype.hasOwnProperty.call(c, parts[2])) {
+        } else if (typeof c[parts[2]] === 'undefined') {
           c[parts[2]] = [parts[1]]
         } else {
           throw new Error('The file "' + file + '" could not be added')
@@ -378,8 +379,9 @@ try {
       baseSelector: '.game-icon'
     },
     types: ['woff'],
-    startCodepoint: 0xF000,
-    normalize: true
+    startCodepoint: 0xE000,
+    normalize: true,
+    descent: 80
   }
 
   console.log('Generate Fonts')
@@ -399,8 +401,8 @@ try {
 
   const cssFilename = webfontsConfig.dest + '/' + webfontsConfig.fontName + '.css'
 
-  // Add Licence header to CSS file
-  let cssFile = '/* Game Icons (https://game-icons.net/) - Licence */\n/* https://github.com/game-icons/icons/blob/master/license.txt */\n\n' + fs.readFileSync(cssFilename).toString()
+  // Add License header to CSS file
+  let cssFile = '/* Game Icons (https://game-icons.net/) - License */\n/* https://github.com/game-icons/icons/blob/master/license.txt */\n\n' + fs.readFileSync(cssFilename).toString()
 
   // Backwards compatible CSS
   const first = webfontsConfig.templateOptions.baseSelector + ':before {'
@@ -412,7 +414,7 @@ try {
     const by = files[file].by
     if (by !== last) {
       const first = webfontsConfig.templateOptions.baseSelector + '-' + files[file].name + ':before'
-      cssFile = cssFile.replace(first, (Object.prototype.hasOwnProperty.call(iconsBy, files[file].by) ? iconsBy[files[file].by] : '/* Icons made by ' + files[file].by + ' */') + '\n' + first)
+      cssFile = cssFile.replace(first, (typeof iconsBy[files[file].by] !== 'undefined' ? iconsBy[files[file].by] : '/* Icons made by ' + files[file].by + ' */') + '\n' + first)
       last = by
     }
   }
@@ -424,6 +426,9 @@ try {
 
   console.log('Move files')
 
+  if (!fs.existsSync(rootFolder + '/static/')) {
+    fs.mkdirSync(rootFolder + '/static')
+  }
   if (!fs.existsSync(rootFolder + '/static/lib')) {
     fs.mkdirSync(rootFolder + '/static/lib')
   }

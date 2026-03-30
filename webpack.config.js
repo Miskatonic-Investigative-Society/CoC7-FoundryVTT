@@ -115,7 +115,7 @@ const bundleScript = {
         { from: 'static/lang/', to: 'lang/' },
         { from: 'static/lib/', to: 'lib/' },
         { from: 'LICENSE' },
-        { from: 'packs/', to: 'packs/' },
+        { from: 'binary-packs/', to: 'packs/' },
         { from: 'README.md' },
         { from: 'static/system.json', to: 'system.json' },
         { from: 'template.json' },

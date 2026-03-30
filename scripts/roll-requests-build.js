@@ -1,106 +1,97 @@
-import * as fs from 'fs'
-import * as path from 'path'
-import * as url from 'url'
-import { ClassicLevel } from 'classic-level'
-
-const FOLDER_ID = 'CoC7'
-
-const rootFolder = fs.realpathSync(path.dirname(url.fileURLToPath(import.meta.url)) + '/..')
-
-const collisions = {}
+import TemplateHelpers from './src/template-helpers.js'
 
 const rolls = [
   {
-    type: 'attrib',
+    subtype: 'attrib',
     name: 'Attrib',
     names: [
       {
         name: 'Luck',
-        icon: 'fas fa-dice-d20'
+        icon: 'fa-solid fa-dice-d20'
       },
       {
         name: 'Sanity',
-        icon: 'fas fa-pastafarianism'
+        icon: 'fa-solid fa-pastafarianism'
       }
     ]
   },
   {
-    type: 'characteristic',
+    subtype: 'characteristic',
     name: 'Characteristic',
     names: [
       {
         name: 'APP',
-        icon: 'fas fa-hat-cowboy'
+        icon: 'fa-solid fa-hat-cowboy'
       },
       {
         name: 'CON',
-        icon: 'fas fa-heart-broken'
+        icon: 'fa-solid fa-heart-broken'
       },
       {
         name: 'DEX',
-        icon: 'fas fa-skating'
+        icon: 'fa-solid fa-skating'
       },
       {
         name: 'EDU',
-        icon: 'fas fa-graduation-cap'
+        icon: 'fa-solid fa-graduation-cap'
       },
       {
         name: 'INT',
-        icon: 'fas fa-brain'
+        icon: 'fa-solid fa-brain'
       },
       {
         name: 'POW',
-        icon: 'fas fa-hamsa'
+        icon: 'fa-solid fa-hamsa'
       },
       {
         name: 'SIZ',
-        icon: 'fas fa-child'
+        icon: 'fa-solid fa-child'
       },
       {
         name: 'STR',
-        icon: 'fas fa-dumbbell'
+        icon: 'fa-solid fa-dumbbell'
       }
     ]
   },
   {
-    type: 'skill',
+    subtype: 'skill',
     name: 'Skill',
     names: [
       {
         name: 'Accounting',
-        icon: 'fas fa-balance-scale'
+        icon: 'fa-solid fa-balance-scale'
       },
       {
         name: 'Anthropology',
-        icon: 'fas fa-bone'
+        icon: 'fa-solid fa-bone'
       },
       {
         name: 'Appraise',
-        icon: 'fas fa-dollar-sign'
+        icon: 'fa-solid fa-dollar-sign'
       },
       {
         name: 'Archaeology',
-        icon: 'fas fa-archway'
+        icon: 'fa-solid fa-archway'
       },
       {
         name: 'Art/Craft (Fine Art)',
-        icon: 'fas fa-broom'
+        icon: 'fa-solid fa-broom'
       },
       {
         name: 'Charm',
-        icon: 'fas fa-kiss-wink-heart'
+        icon: 'fa-solid fa-kiss-wink-heart'
       },
       {
         name: 'Climb',
-        icon: 'fas fa-hiking'
+        icon: 'fa-solid fa-hiking'
       },
       {
         name: 'Computer Use',
-        icon: 'fas fa-mouse'
+        icon: 'fa-solid fa-mouse'
       },
       {
         name: 'Credit Rating',
-        icon: 'fas fa-award'
+        icon: 'fa-solid fa-award'
       },
       {
         name: 'Cthulhu Mythos',
@@ -108,87 +99,87 @@ const rolls = [
       },
       {
         name: 'Demolitions',
-        icon: 'fas fa-bomb'
+        icon: 'fa-solid fa-bomb'
       },
       {
         name: 'Disguise',
-        icon: 'fas fa-user-secret'
+        icon: 'fa-solid fa-user-secret'
       },
       {
         name: 'Diving',
-        icon: 'fas fa-user-astronaut'
+        icon: 'fa-solid fa-user-astronaut'
       },
       {
         name: 'Dodge',
-        icon: 'fas fa-running'
+        icon: 'fa-solid fa-running'
       },
       {
         name: 'Drive Auto',
-        icon: 'fas fa-car-side'
+        icon: 'fa-solid fa-car-side'
       },
       {
         name: 'Electrical Repair',
-        icon: 'fas fa-bolt'
+        icon: 'fa-solid fa-bolt'
       },
       {
         name: 'Electronics',
-        icon: 'fas fa-microchip'
+        icon: 'fa-solid fa-microchip'
       },
       {
         name: 'Fast Talk',
-        icon: 'fas fa-dizzy'
+        icon: 'fa-solid fa-dizzy'
       },
       {
         name: 'Fighting (Brawl)',
-        icon: 'fas fa-fist-raised'
+        icon: 'fa-solid fa-fist-raised'
       },
       {
         name: 'Firearms (Handgun)',
-        icon: 'fas fa-bullseye'
+        icon: 'fa-solid fa-bullseye'
       },
       {
         name: 'Firearms (Rifle/Shotgun)',
-        icon: 'fas fa-crosshairs'
+        icon: 'fa-solid fa-crosshairs'
       },
       {
         name: 'Firearms (Submachine Gun)',
-        icon: 'far fa-dot-circle'
+        icon: 'fa-regular fa-dot-circle'
       },
       {
         name: 'First Aid',
-        icon: 'fas fa-medkit'
+        icon: 'fa-solid fa-medkit'
       },
       {
         name: 'History',
-        icon: 'fas fa-heading'
+        icon: 'fa-solid fa-heading'
       },
       {
         name: 'Intimidate',
-        icon: 'fas fa-tired'
+        icon: 'fa-solid fa-tired'
       },
       {
         name: 'Jump',
-        icon: 'fas fa-walking'
+        icon: 'fa-solid fa-walking'
       },
       {
         name: 'Language (Any)',
-        icon: 'fas fa-om'
+        icon: 'fa-solid fa-om'
       },
       {
         name: 'Language (Own)',
-        icon: 'fas fa-globe'
+        icon: 'fa-solid fa-globe'
       },
       {
         name: 'Law',
-        icon: 'fas fa-gavel'
+        icon: 'fa-solid fa-gavel'
       },
       {
         name: 'Library Use',
-        icon: 'fas fa-book-open'
+        icon: 'fa-solid fa-book-open'
       },
       {
         name: 'Listen',
-        icon: 'fas fa-deaf'
+        icon: 'fa-solid fa-deaf'
       },
       {
         name: 'Locksmith',
@@ -196,47 +187,47 @@ const rolls = [
       },
       {
         name: 'Mechanical Repair',
-        icon: 'fas fa-tools'
+        icon: 'fa-solid fa-tools'
       },
       {
         name: 'Medicine',
-        icon: 'fas fa-ambulance'
+        icon: 'fa-solid fa-ambulance'
       },
       {
         name: 'Natural World',
-        icon: 'fas fa-hippo'
+        icon: 'fa-solid fa-hippo'
       },
       {
         name: 'Navigate',
-        icon: 'fas fa-route'
+        icon: 'fa-solid fa-route'
       },
       {
         name: 'Occult',
-        icon: 'fas fa-hat-wizard'
+        icon: 'fa-solid fa-hat-wizard'
       },
       {
         name: 'Operate Heavy Machinery',
-        icon: 'fas fa-snowplow'
+        icon: 'fa-solid fa-snowplow'
       },
       {
         name: 'Persuade',
-        icon: 'fas fa-comments'
+        icon: 'fa-solid fa-comments'
       },
       {
         name: 'Pilot (Boat)',
-        icon: 'fas fa-ship'
+        icon: 'fa-solid fa-ship'
       },
       {
         name: 'Psychoanalysis',
-        icon: 'fas fa-head-side-cough'
+        icon: 'fa-solid fa-head-side-cough'
       },
       {
         name: 'Psychology',
-        icon: 'fas fa-head-side-virus'
+        icon: 'fa-solid fa-head-side-virus'
       },
       {
         name: 'Read Lips',
-        icon: 'fas fa-blind'
+        icon: 'fa-solid fa-blind'
       },
       {
         name: 'Ride',
@@ -244,35 +235,35 @@ const rolls = [
       },
       {
         name: 'Science (Chemistry)',
-        icon: 'fas fa-atom'
+        icon: 'fa-solid fa-atom'
       },
       {
         name: 'Sleight of Hand',
-        icon: 'fas fa-hand-sparkles'
+        icon: 'fa-solid fa-hand-sparkles'
       },
       {
         name: 'Spot Hidden',
-        icon: 'fas fa-binoculars'
+        icon: 'fa-solid fa-binoculars'
       },
       {
         name: 'Stealth',
-        icon: 'fas fa-user-ninja'
+        icon: 'fa-solid fa-user-ninja'
       },
       {
         name: 'Survival (Desert)',
-        icon: 'fas fa-wind'
+        icon: 'fa-solid fa-wind'
       },
       {
         name: 'Swim',
-        icon: 'fas fa-swimmer'
+        icon: 'fa-solid fa-swimmer'
       },
       {
         name: 'Fighting (Throw)',
-        icon: 'fas fa-football-ball'
+        icon: 'fa-solid fa-football-ball'
       },
       {
         name: 'Track',
-        icon: 'fas fa-shoe-prints'
+        icon: 'fa-solid fa-shoe-prints'
       }
     ]
   }
@@ -283,57 +274,61 @@ const parameters = [
     name: 'Regular',
     code: '',
     difficulty: 0,
-    modifier: 0
+    poolModifier: 0
   },
   {
     name: 'Hard',
     code: 'Hard',
     difficulty: '+',
-    modifier: 0
+    poolModifier: 0
   },
   {
     name: 'Extreme',
     code: 'Extreme',
     difficulty: '++',
-    modifier: 0
+    poolModifier: 0
   },
   {
     name: 'Critical',
     code: 'Critical',
     difficulty: '+++',
-    modifier: 0
+    poolModifier: 0
   },
   {
     name: 'Blind',
     code: 'Blind',
     difficulty: '?',
-    modifier: 0
+    poolModifier: 0
   },
   {
     name: '1 Bonus',
     code: '1B',
     difficulty: 0,
-    modifier: '+1'
+    poolModifier: '+1'
   },
   {
     name: '2 Bonus',
     code: '2B',
     difficulty: 0,
-    modifier: '+2'
+    poolModifier: '+2'
   },
   {
     name: '1 Penalty',
     code: '1P',
     difficulty: 0,
-    modifier: '-1'
+    poolModifier: '-1'
   },
   {
     name: '2 Penalty',
     code: '2P',
     difficulty: 0,
-    modifier: '-2'
+    poolModifier: '-2'
   }
 ]
+
+const foundryConfig = TemplateHelpers.loadFoundryConfig()
+
+const folderId = foundryConfig.json.id
 
 try {
   const html = [
@@ -353,60 +348,44 @@ try {
         html.push('<td><p style="text-align:center">' + roll2.name + '</p></td>')
 
         html.push('<td><p style="text-align:center">' + parameter.name + '</p></td>')
-        html.push('<td><p style="text-align:center">@coc7.check[type:' + roll1.type + ',name:' + roll2.name + ',difficulty:' + parameter.difficulty + ',modifier:' + parameter.modifier + ',icon:' + roll2.icon + ']{ ' + roll2.name + (parameter.code !== '' ? ' (' + parameter.code + ')' : '') + '}</p></td>')
+        html.push('<td><p style="text-align:center">@coc7.check[subtype:' + roll1.subtype + ',name:' + roll2.name + ',difficulty:' + parameter.difficulty + ',poolModifier:' + parameter.poolModifier + ',icon:' + roll2.icon + ']{ ' + roll2.name + (parameter.code !== '' ? ' (' + parameter.code + ')' : '') + '}</p></td>')
         html.push('</tr>')
       }
     }
   }
 
-  const dbFile = {}
-
   const id = 'qaWAuaZa42JtdBhF'
-  collisions[id] = true
   const pageId = 'izVAGIeSXPWURg7U'
-  collisions[pageId] = true
-  const journalKey = '!journal!' + id
-  const journalPageKey = '!journal.pages!' + id + '.' + pageId
-  dbFile[journalKey] = {
-    name: 'Roll Requests',
-    pages: [
-      pageId
-    ],
-    _id: id,
-    flags: {
-      [FOLDER_ID]: {
-        cocidFlag: {
-          id: 'je..roll-requests',
-          lang: 'en',
-          priority: 0
+  const dbFile = {
+    ['!journal!' + id]: {
+      name: 'Roll Requests',
+      pages: [
+        {
+          _id: pageId,
+          name: 'Roll Requests',
+          type: 'text',
+          title: {
+            show: false
+          },
+          text: {
+            content: html.join('')
+          }
+        }
+      ],
+      _id: id,
+      flags: {
+        [folderId]: {
+          cocidFlag: {
+            id: 'je..roll-requests',
+            lang: 'en',
+            priority: 0
+          }
         }
       }
     }
   }
-  dbFile[journalPageKey] = {
-    _id: pageId,
-    name: 'Roll Requests',
-    type: 'text',
-    title: {
-      show: false
-    },
-    text: {
-      content: html.join('')
-    }
-  }
-
-  const batch = Object.keys(dbFile).reduce((c, i) => {
-    c.push({ type: 'put', key: i, value: dbFile[i], valueEncoding: 'json' })
-    return c
-  }, [])
-
-  if (fs.existsSync(rootFolder + '/packs/roll-requests')) {
-    await ClassicLevel.destroy(rootFolder + '/packs/roll-requests')
-  }
-  const db = new ClassicLevel(rootFolder + '/packs/roll-requests', { keyEncoding: 'utf8', valueEncoding: 'json' })
-  await db.batch(batch, { valueEncoding: 'utf8' })
-  await db.close()
-  console.log('Generated: ./packs/roll-requests')
+  TemplateHelpers.createBinaryPack('roll-requests', dbFile)
+  console.log('Generated: ./binary-packs/roll-requests')
 } catch (e) {
-  console.log('EXCEPTION:', e)
+  TemplateHelpers.showErrorAndExit(e)
 }
