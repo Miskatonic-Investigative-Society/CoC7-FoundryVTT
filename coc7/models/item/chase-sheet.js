@@ -4,9 +4,9 @@ import CoC7ChaseParticipantDialog from '../../apps/chase-participant-dialog.js'
 import { CoC7Chat } from '../../chat.js'
 import { chatHelper } from '../../chat/helper.js'
 import CoC7Check from '../../apps/check.js'
-import { _participant } from './participant.js'
+import { _participant } from '../chase/participant.js'
 
-export class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
+export default class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
   /**
    * Extend and override the default options used by the Simple Item Sheet
    * @returns {Object}

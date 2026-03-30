@@ -3,10 +3,10 @@ import { CoCActor } from '../../actors/actor.js'
 import CoC7ChatChaseObstacle from '../../apps/chat-chase-obstacle.js'
 import CoC7Check from '../../apps/check.js'
 import CoC7Utilities from '../../apps/utilities.js'
-import { CoC7Item } from '../item.js'
-import { _participant, sortByRoleAndDex } from './participant.js'
+import CoC7Item from './document-class.js'
+import { _participant, sortByRoleAndDex } from '../../models/chase/participant.js'
 
-export class CoC7Chase extends CoC7Item {
+export default class CoC7Chase extends CoC7Item {
   constructor (data, context) {
     if (typeof data.img === 'undefined') {
       data.img = 'systems/CoC7/assets/icons/running-solid.svg'

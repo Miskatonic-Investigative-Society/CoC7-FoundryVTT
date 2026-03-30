@@ -18,7 +18,7 @@ import CoC7ChatCombatMelee from '../apps/chat-combat-melee.js'
 import CoC7ChatCombatRanged from '../apps/chat-combat-ranged.js'
 import { chatHelper } from '../chat/helper.js'
 import CoC7DicePool from '../apps/dice-pool.js'
-import { CoC7Item } from '../items/item.js'
+import CoC7Item from '../models/item/document-class.js'
 import CoC7Utilities from '../apps/utilities.js'
 
 /**

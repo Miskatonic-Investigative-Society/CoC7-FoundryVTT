@@ -6,7 +6,7 @@ export class ActorPickerDialog extends FormApplication {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'dialog', 'actor-picker'],
       title: game.i18n.localize('CoC7.PickWhichActorTitle'),
-      template: 'systems/CoC7/templates/chat/messages/actor-picker.hbs',
+      template: 'systems/CoC7/templates/apps/actor-picker-header.hbs',
       closeOnSubmit: false,
       width: 415,
       height: 375

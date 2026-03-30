@@ -1,7 +1,7 @@
 /* global $, foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { COC7 } from '../../constants.js'
-import { CoC7Item } from '../item.js'
+import CoC7Item from './document-class.js'
 import CoC7Utilities from '../../apps/utilities.js'
 import { DropCoCID } from '../../apps/drop-coc-id.js'
 import { isCtrlKey } from '../../chat/helper.js'
@@ -9,7 +9,7 @@ import { isCtrlKey } from '../../chat/helper.js'
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
-export class CoC7SetupSheet extends foundry.appv1.sheets.ItemSheet {
+export default class CoC7SetupSheet extends foundry.appv1.sheets.ItemSheet {
   /**
    * Activate event listeners using the prepared sheet HTML
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM

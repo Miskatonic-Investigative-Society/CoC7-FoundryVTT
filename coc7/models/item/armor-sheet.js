@@ -2,7 +2,7 @@
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import CoC7ActiveEffect from '../../apps/active-effect.js'
 
-export class CoC7ArmorSheet extends foundry.appv1.sheets.ItemSheet {
+export default class CoC7ArmorSheet extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'armor'],

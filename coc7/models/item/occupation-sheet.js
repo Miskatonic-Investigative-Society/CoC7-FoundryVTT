@@ -1,88 +1,35 @@
-/* global $ DragDrop foundry game TextEditor */
+/* global $, DragDrop, foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import { CoC7Item } from '../item.js'
+import { COC7 } from '../../constants.js'
+import CoC7Item from './document-class.js'
 import CoC7Utilities from '../../apps/utilities.js'
 import { DropCoCID } from '../../apps/drop-coc-id.js'
 
-export class CoC7ExperiencePackageSheet extends foundry.appv1.sheets.ItemSheet {
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheet', 'armor'],
-      template: 'systems/CoC7/templates/items/experience-package-header.hbs',
-      width: 520,
-      height: 480,
-      dragDrop: [{ dragSelector: '.item' }],
-      scrollY: ['.tab.description'],
-      tabs: [
-        {
-          navSelector: '.sheet-navigation',
-          contentSelector: '.sheet-body',
-          initial: 'description'
-        }
-      ]
-    })
-  }
-
-  _getHeaderButtons () {
-    const headerButtons = super._getHeaderButtons()
-    addCoCIDSheetHeaderButton(headerButtons, this)
-    return headerButtons
-  }
-
-  async getData () {
-    const sheetData = super.getData()
-
-    sheetData.data.system.skills = await game.system.api.cocid.expandItemArray({ itemList: sheetData.data.system.skills })
-
-    sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
-
-    sheetData.data.system.skills.sort(CoC7Utilities.sortByNameKey)
-
-    for (let index = 0, len = sheetData.data.system.groups.length; index < len; index++) {
-      sheetData.data.system.groups[index].skills = await game.system.api.cocid.expandItemArray({ itemList: sheetData.data.system.groups[index].skills })
-
-      sheetData.data.system.groups[index].isEmpty = sheetData.data.system.groups[index].skills.length === 0
-
-      sheetData.data.system.groups[index].skills.sort(CoC7Utilities.sortByNameKey)
-    }
-
-    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
-      sheetData.data.system.description.value,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
-      sheetData.data.system.description.keeper,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.isKeeper = game.user.isGM
-    return sheetData
-  }
-
+/**
+ * Extend the basic ItemSheet with some very simple modifications
+ */
+export default class CoC7OccupationSheet extends foundry.appv1.sheets.ItemSheet {
   /**
    * Activate event listeners using the prepared sheet HTML
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
   activateListeners (html) {
     super.activateListeners(html)
-
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return
-    html.find('.toggle-property').click(this._onPropertyClick.bind(this))
-    html.find('.sanity-loss-type-add').click(this._onAddSanityLossReason.bind(this))
-    html.find('.sanity-loss-type-delete').click(this._onDeleteSanityLossReason.bind(this))
-    html.find('.item-delete').click(event => this._onItemDelete(event, 'skills'))
+
+    html
+      .find('.item .item-name h4')
+      .click(event => this._onItemSummary(event, 'skills'))
+    html
+      .find('.item-delete')
+      .click(event => this._onItemDelete(event, 'skills'))
+
     html.find('.group-item-delete').click(this._onGroupItemDelete.bind(this))
     html.find('.group-control').click(this._onGroupControl.bind(this))
 
-    const dragDrop = new DragDrop({
+    /* // FoundryVTT V12 */
+    const dragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
       dropSelector: '.droppable',
       callbacks: { drop: this._onDrop.bind(this) }
     })
@@ -173,6 +120,47 @@ export class CoC7ExperiencePackageSheet extends foundry.appv1.sheets.ItemSheet {
     }
   }
 
+  async _onItemSummary (event, collectionName = 'items') {
+    event.preventDefault()
+    const obj = $(event.currentTarget)
+    const li = obj.parents('.item')
+    const group = obj.closest('.group')
+    let item
+    if (group.length) {
+      item = this.item.system.groups[group.data('group')][collectionName].find(s => {
+        return s._id === li.data('item-id')
+      })
+    } else {
+      item = this.item.system[collectionName].find(s => {
+        return s._id === li.data('item-id')
+      })
+    }
+    if (!item) {
+      return
+    }
+    const chatData = await TextEditor.enrichHTML(
+      item.system.description.value,
+      {
+        async: true,
+        secrets: this.item.editable
+      }
+    )
+
+    // Toggle summary
+    if (li.hasClass('expanded')) {
+      const summary = li.children('.item-summary')
+      summary.slideUp(200, () => summary.remove())
+    } else {
+      const div = $(`<div class="item-summary">${chatData}</div>`)
+      const props = $('<div class="item-properties"></div>')
+      // for (const p of chatData.properties) { props.append(`<span class="tag">${p}</span>`) }
+      div.append(props)
+      li.append(div.hide())
+      div.slideDown(200)
+    }
+    li.toggleClass('expanded')
+  }
+
   async _onItemDelete (event, collectionName = 'items') {
     const item = $(event.currentTarget).closest('.item')
     const itemId = item.data('item-id')
@@ -200,51 +188,107 @@ export class CoC7ExperiencePackageSheet extends foundry.appv1.sheets.ItemSheet {
     }
   }
 
-  async _onPropertyClick (event) {
-    event.preventDefault()
-    const key = event.currentTarget.dataset.property
-    const propertyId = event.currentTarget.closest('.toggle-attributes').dataset.set
-    const value = !(this.item.system[propertyId][key] ?? false)
-    const changes = { ['system.' + propertyId + '.' + key]: value }
-    if (propertyId === 'properties' && key === 'sanitySame') {
+  static get defaultOptions () {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      classes: ['coc7', 'sheet', 'occupation'],
+      template: 'systems/CoC7/templates/items/occupation-header.hbs',
+      width: 525,
+      height: 480,
+      dragDrop: [{ dragSelector: '.item' }],
+      scrollY: ['.tab.description'],
+      tabs: [
+        {
+          navSelector: '.sheet-navigation',
+          contentSelector: '.sheet-body',
+          initial: 'description'
+        }
+      ]
+    })
+  }
+
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
+  }
+
+  async getData () {
+    const sheetData = super.getData()
+
+    sheetData.hasOwner = this.item.isEmbedded === true
+
+    sheetData.data.system.skills = await game.system.api.cocid.expandItemArray({ itemList: sheetData.data.system.skills })
+
+    sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
+
+    sheetData.data.system.skills.sort(CoC7Utilities.sortByNameKey)
+
+    for (let index = 0, len = sheetData.data.system.groups.length; index < len; index++) {
+      sheetData.data.system.groups[index].skills = await game.system.api.cocid.expandItemArray({ itemList: sheetData.data.system.groups[index].skills })
+
+      sheetData.data.system.groups[index].isEmpty = sheetData.data.system.groups[index].skills.length === 0
+
+      sheetData.data.system.groups[index].skills.sort(CoC7Utilities.sortByNameKey)
+    }
+
+    sheetData.occupationPointsString = CoC7OccupationSheet.occupationPointsString(sheetData.data.system.occupationSkillPoints)
+
+    sheetData.itemProperties = []
+
+    for (const [key, value] of Object.entries(sheetData.data.system.type)) {
       if (value) {
-        changes['system.' + propertyId + '.cthulhuGain'] = true
-        changes['system.' + propertyId + '.sanityLoss'] = false
-      }
-    } else if (propertyId === 'properties' && key === 'sanityLoss') {
-      if (value) {
-        changes['system.' + propertyId + '.sanitySame'] = false
-      }
-    } else if (propertyId === 'properties' && key === 'cthulhuGain') {
-      if (!value) {
-        changes['system.' + propertyId + '.sanitySame'] = false
+        sheetData.itemProperties.push(COC7.occupationProperties[key] ? COC7.occupationProperties[key] : null)
       }
     }
-    await this.item.update(changes)
+
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      {
+        async: true,
+        secrets: sheetData.editable
+      }
+    )
+
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      {
+        async: true,
+        secrets: sheetData.editable
+      }
+    )
+
+    sheetData.isKeeper = game.user.isGM
+    return sheetData
   }
 
-  async _onAddSanityLossReason (event) {
-    event.preventDefault()
-    const immunity = this.item.system.immunity ?? []
-    immunity.push('')
-    await this.item.update({ 'system.immunity': immunity })
-  }
-
-  async _onDeleteSanityLossReason (event) {
-    event.preventDefault()
-    const index = $(event.currentTarget).closest('.form-group').data('index')
-    const immunity = this.item.system.immunity ?? []
-    immunity.splice(index, 1)
-    await this.item.update({ 'system.immunity': immunity })
+  static occupationPointsString (occupationSkillPoints) {
+    const optionnal = []
+    const mandatory = []
+    for (const [key, carac] of Object.entries(occupationSkillPoints)) {
+      if (carac.multiplier) {
+        const caracName = game.i18n.localize(`CHARAC.${key.toUpperCase()}`)
+        if (carac.selected && carac.optional) {
+          optionnal.push(`${caracName}x${carac.multiplier}`)
+        }
+        if (carac.selected && !carac.optional) {
+          mandatory.push(`${caracName}x${carac.multiplier}`)
+        }
+      }
+    }
+    let occupationPointsString = ''
+    const orString = ` ${game.i18n.localize('CoC7.Or')} `
+    if (mandatory.length) occupationPointsString += mandatory.join(' + ')
+    if (optionnal.length && mandatory.length) {
+      occupationPointsString += ` + (${optionnal.join(orString)})`
+    }
+    if (optionnal.length && !mandatory.length) {
+      occupationPointsString += optionnal.join(orString)
+    }
+    return occupationPointsString
   }
 
   _updateObject (event, formData) {
     const system = foundry.utils.expandObject(formData)?.system
-    if (system.immunity) {
-      formData['system.immunity'] = Object.values(
-        system.immunity || []
-      )
-    }
     if (system.groups) {
       formData['system.groups'] = Object.values(
         system.groups || []
@@ -255,6 +299,7 @@ export class CoC7ExperiencePackageSheet extends foundry.appv1.sheets.ItemSheet {
         )
       }
     }
+
     super._updateObject(event, formData)
   }
 }

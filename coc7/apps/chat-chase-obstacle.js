@@ -2,7 +2,7 @@
 import CoC7Check from './check.js'
 import { EnhancedChatCard } from '../common/chatcardlib/src/chatcardlib.js'
 import CoC7DicePool from './dice-pool.js'
-import { _participant } from '../items/chase/participant.js'
+import { _participant } from '../models/chase/participant.js'
 import CoC7Utilities from './utilities.js'
 import { createInlineRoll } from '../chat/helper.js'
 

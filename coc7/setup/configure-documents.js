@@ -1,11 +1,11 @@
 /* global CONFIG */
 import { CoCActor } from '../actors/actor.js'
-import { CoC7Book } from '../items/book/data.js'
-import { CoC7Item } from '../items/item.js'
-import { CoC7Spell } from '../items/spell/data.js'
-import { CoC7Chase } from '../items/chase/data.js'
+import CoC7Book from '../models/item/book-system.js'
+import CoC7Item from '../models/item/document-class.js'
+import CoC7Spell from '../models/item/spell-system.js'
+import CoC7Chase from '../models/item/chase-system.js'
 import CoC7ActiveEffect from '../apps/active-effect.js'
-import { CoC7Skill } from '../items/skill/data.js'
+import CoC7Skill from '../models/item/skill-system.js'
 import { CoC7Vehicle } from '../actors/vehicle/data.js'
 
 export default function () {

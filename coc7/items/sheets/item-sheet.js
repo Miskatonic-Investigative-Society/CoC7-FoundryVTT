@@ -1,5 +1,5 @@
 /* global foundry */
-import { CoC7ItemSheetV2 } from './item-sheetV2.js'
+import CoC7ItemSheetV2 from '../../models/item/item-sheet-v2.js'
 
 /**
  * Extend the basic ItemSheet with some very simple modifications

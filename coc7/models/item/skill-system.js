@@ -1,7 +1,7 @@
 /* global foundry, game */
-import { CoC7Item } from '../item.js'
+import CoC7Item from './document-class.js'
 
-export class CoC7Skill extends CoC7Item {
+export default class CoC7Skill extends CoC7Item {
   constructor (data, context) {
     if (typeof data.system?.skillName === 'undefined') {
       const skill = CoC7Skill.guessNameParts(data.name)

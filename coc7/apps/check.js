@@ -1,6 +1,6 @@
 /* global $, Actor, AudioHelper, ChatMessage, CONFIG, CONST, foundry, fromUuid, game, getComputedStyle, Item, renderTemplate, Token, ui */
 import CoC7DicePool from './dice-pool.js'
-import { CoC7Item } from '../items/item.js'
+import CoC7Item from '../models/item/document-class.js'
 import { chatHelper, CoC7Roll } from '../chat/helper.js'
 import { CoCActor } from '../actors/actor.js'
 import CoC7Utilities from './utilities.js'

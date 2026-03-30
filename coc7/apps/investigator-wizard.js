@@ -2,7 +2,7 @@
 import CoC7AverageRoll from '../apps/average-roll.js'
 import { COC7 } from '../constants.js'
 import { CoCActor } from '../actors/actor.js'
-import { CoC7OccupationSheet } from '../items/sheets/occupation.js'
+import CoC7OccupationSheet from '../models/item/occupation-sheet.js'
 import CoC7Utilities from './utilities.js'
 import { SkillSpecializationSelectDialog } from '../apps/skill-specialization-select-dialog.js'
 

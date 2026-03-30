@@ -2,7 +2,7 @@
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import CoC7Utilities from '../../apps/utilities.js'
 
-export class CoC7BookSheet extends foundry.appv1.sheets.ItemSheet {
+export default class CoC7BookSheet extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       template: 'systems/CoC7/templates/items/book-header.hbs',

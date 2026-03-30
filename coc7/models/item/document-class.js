@@ -1,12 +1,12 @@
 /* global CONFIG, foundry, fromUuid, game, Item, Roll, TextEditor, Token, ui */
-import { COC7 } from '../constants.js'
-import CoC7Utilities from '../apps/utilities.js'
-import { CoCIDEditor } from '../apps/coc-id-editor.js'
+import { COC7 } from '../../constants.js'
+import CoC7Utilities from '../../apps/utilities.js'
+import { CoCIDEditor } from '../../apps/coc-id-editor.js'
 
 /**
  * Override and extend the basic :class:`Item` implementation
  */
-export class CoC7Item extends Item {
+export default class CoC7Item extends Item {
   /** Create derived document classes for specific Item types */
   constructor (data, context) {
     /** @see CONFIG.Item.documentClasses in module/scripts/configure-documents */

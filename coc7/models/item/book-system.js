@@ -1,10 +1,10 @@
 /* global ChatMessage, foundry, game, renderTemplate, Roll, ui */
 import CoC7SanCheckCard from '../../apps/san-check-card.js'
 import CoC7Check from '../../apps/check.js'
-import { CoC7Item } from '../item.js'
-import { CoC7Spell } from '../spell/data.js'
+import CoC7Item from './document-class.js'
+import CoC7Spell from './spell-system.js'
 
-export class CoC7Book extends CoC7Item {
+export default class CoC7Book extends CoC7Item {
   constructor (data, context) {
     if (typeof data.img === 'undefined') {
       data.img = 'systems/CoC7/assets/icons/secret-book.svg'

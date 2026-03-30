@@ -1,13 +1,19 @@
 /* global foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
+import CoC7ActiveEffect from '../../apps/active-effect.js'
 import { COC7 } from '../../constants.js'
 import CoC7Utilities from '../../apps/utilities.js'
-import CoC7ActiveEffect from '../../apps/active-effect.js'
+import { isCtrlKey } from '../../chat/helper.js'
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
-export class CoC7ItemSheetV2 extends foundry.appv1.sheets.ItemSheet {
+export default class CoC7SkillSheet extends foundry.appv1.sheets.ItemSheet {
+  constructor (...args) {
+    super(...args)
+    this._sheetTab = 'items'
+  }
+
   /**
    * Extend and override the default options used by the Simple Item Sheet
    * @returns {Object}
@@ -15,9 +21,8 @@ export class CoC7ItemSheetV2 extends foundry.appv1.sheets.ItemSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'item'],
-      template: 'systems/CoC7/templates/items/item-v2-header.hbs',
-      width: 500,
-      height: 450,
+      width: 520,
+      height: 480,
       scrollY: ['.tab.description'],
       tabs: [
         {
@@ -27,6 +32,11 @@ export class CoC7ItemSheetV2 extends foundry.appv1.sheets.ItemSheet {
         }
       ]
     })
+  }
+
+  /** @override */
+  get template () {
+    return 'systems/CoC7/templates/items/skill-header.hbs'
   }
 
   _getHeaderButtons () {
@@ -39,10 +49,40 @@ export class CoC7ItemSheetV2 extends foundry.appv1.sheets.ItemSheet {
    * Prepare data for rendering the Item sheet
    * The prepared data object contains both the actor data as well as additional sheet options
    */
-  async getData (options = {}) {
-    const sheetData = super.getData(options)
+  async getData () {
+    // this.item.checkSkillProperties();
+    const sheetData = super.getData()
 
-    sheetData.effects = CoC7ActiveEffect.prepareActiveEffectCategories(this.item.effects, { status: false })
+    sheetData.hasOwner = this.item.isEmbedded === true
+    sheetData.hadNonCharacterOwner = sheetData.hasOwner && this.actor?.type !== 'character'
+
+    sheetData.effects = CoC7ActiveEffect.prepareActiveEffectCategories(
+      this.item.effects
+    )
+
+    sheetData._properties = []
+    for (const [key, value] of Object.entries(COC7.skillProperties)) {
+      sheetData._properties.push({
+        id: key,
+        name: value,
+        isEnabled: this.item.system.properties[key] === true
+      })
+    }
+
+    sheetData._eras = []
+    for (const [key, value] of Object.entries(COC7.eras)) {
+      sheetData._eras.push({
+        id: key,
+        name: game.i18n.localize(value),
+        isEnabled: (this.item.flags?.CoC7?.cocidFlag?.eras ?? {})[key] === true
+      })
+    }
+    sheetData._eras.sort(CoC7Utilities.sortByNameKey)
+
+    sheetData.isSpecialized = this.item.system.properties.special
+    sheetData.canModifySpec =
+      !this.item.system.properties.firearm &&
+      !this.item.system.properties.fighting
 
     sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
@@ -60,23 +100,11 @@ export class CoC7ItemSheetV2 extends foundry.appv1.sheets.ItemSheet {
       }
     )
 
-    sheetData._eras = []
-    for (const [key, value] of Object.entries(COC7.eras)) {
-      sheetData._eras.push({
-        price: this.item.system.price[key] ?? 0,
-        id: key,
-        name: game.i18n.localize(value),
-        isEnabled: (this.item.flags?.CoC7?.cocidFlag?.eras ?? {})[key] === true
-      })
-    }
-    sheetData._eras.sort(CoC7Utilities.sortByNameKey)
-
     sheetData.isKeeper = game.user.isGM
-
-    sheetData.worldEra = game.settings.get('CoC7', 'worldEra')
-
     return sheetData
   }
+
+  /* -------------------------------------------- */
 
   /**
    * Activate event listeners using the prepared sheet HTML
@@ -88,18 +116,27 @@ export class CoC7ItemSheetV2 extends foundry.appv1.sheets.ItemSheet {
     if (!this.options.editable) return
 
     html.find('.toggle-switch').click(this._onClickToggle.bind(this))
-
-    html
-      .find('.effect-control')
-      .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.item))
   }
+
+  /* -------------------------------------------- */
 
   async _onClickToggle (event) {
     event.preventDefault()
     const propertyId = event.currentTarget.closest('.toggle-switch').dataset.property
     await this.item.toggleProperty(
       propertyId,
-      false
+      isCtrlKey(event)
     )
+  }
+
+  async _updateObject (event, formData) {
+    const skillName = formData['system.skillName'] || this.item.system.skillName
+    if (this.item.system.properties?.special) {
+      const specialization = formData['system.specialization'] || this.item.system.specialization
+      formData.name = specialization + ' (' + skillName + ')'
+    } else {
+      formData.name = skillName
+    }
+    return super._updateObject(event, formData)
   }
 }

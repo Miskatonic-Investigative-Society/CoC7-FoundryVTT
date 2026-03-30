@@ -1,18 +1,19 @@
 /* global foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
+import CoC7ActiveEffect from '../../apps/active-effect.js'
 import { COC7 } from '../../constants.js'
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
-export class CoC7TalentSheet extends foundry.appv1.sheets.ItemSheet {
+export default class CoC7StatusSheet extends foundry.appv1.sheets.ItemSheet {
   /**
    *
    */
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheet', 'talent'],
-      template: 'systems/CoC7/templates/items/talent-header.hbs',
+      classes: ['coc7', 'sheet', 'status'],
+      template: 'systems/CoC7/templates/items/status-header.hbs',
       width: 525,
       height: 480,
       scrollY: ['.tab.description'],
@@ -26,6 +27,14 @@ export class CoC7TalentSheet extends foundry.appv1.sheets.ItemSheet {
     })
   }
 
+  activateListeners (html) {
+    super.activateListeners(html)
+
+    html
+      .find('.effect-control')
+      .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.item))
+  }
+
   _getHeaderButtons () {
     const headerButtons = super._getHeaderButtons()
     addCoCIDSheetHeaderButton(headerButtons, this)
@@ -37,13 +46,14 @@ export class CoC7TalentSheet extends foundry.appv1.sheets.ItemSheet {
    */
   async getData () {
     const sheetData = super.getData()
+    sheetData.effects = CoC7ActiveEffect.prepareActiveEffectCategories(this.item.effects, { status: false })
 
     sheetData.itemProperties = []
 
     for (const [key, value] of Object.entries(this.item.system.type)) {
       if (value) {
         sheetData.itemProperties.push(
-          COC7.talentType[key] ? COC7.talentType[key] : null
+          COC7.statusType[key] ? COC7.statusType[key] : null
         )
       }
     }

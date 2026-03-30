@@ -1,8 +1,8 @@
 /* global ChatMessage, foundry, game, renderTemplate, ui */
-import { CoC7Item } from '../item.js'
+import CoC7Item from './document-class.js'
 import CoC7SanCheckCard from '../../apps/san-check-card.js'
 
-export class CoC7Spell extends CoC7Item {
+export default class CoC7Spell extends CoC7Item {
   constructor (data, context) {
     if (typeof data.img === 'undefined') {
       data.img = 'systems/CoC7/assets/icons/pentagram-rose.svg'

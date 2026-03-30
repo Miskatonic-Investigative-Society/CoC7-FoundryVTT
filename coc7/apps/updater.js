@@ -1,5 +1,5 @@
 /* global CONFIG, Dialog, foundry, game, ui */
-import { CoC7Item } from '../items/item.js'
+import CoC7Item from '../models/item/document-class.js'
 import { CoCIDBatch } from './coc-id-batch.js'
 
 export default class CoC7Updater {

@@ -1,7 +1,7 @@
 /* global canvas, ChatMessage, CONFIG, CONST, Dialog, Folder, foundry, fromUuid, fromUuidSync, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
 import { COC7 } from '../constants.js'
 import CoC7Check from '../apps/check.js'
-import { CoC7Item } from '../items/item.js'
+import CoC7Item from '../models/item/document-class.js'
 import CoC7Link from './link.js'
 import { RollDialog } from './roll-dialog.js'
 import { chatHelper } from '../chat/helper.js'
