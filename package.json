@@ -4,11 +4,11 @@
   "description": "An implementation of Call of Cthulhu 7th Edition system for Foundry VTT.",
   "scripts": {
     "build": "webpack --mode production",
-    "build-compendiums": "node shared/build-compendiums.js",
-    "build-manuals": "node shared/generate-manuals.js",
-    "build-roll-requests": "node shared/generate-roll-requests.js",
+    "build-compendiums": "node scripts/build-compendiums.js",
+    "build-manuals": "node scripts/generate-manuals.js",
+    "build-roll-requests": "node scripts/generate-roll-requests.js",
     "format": "standard --fix",
-    "game-icons-build": "node shared/build-game-icons.js",
+    "game-icons-build": "node scripts/build-game-icons.js",
     "watch": "webpack --mode development"
   },
   "repository": {
