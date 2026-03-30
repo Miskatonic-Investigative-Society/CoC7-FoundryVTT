@@ -119,7 +119,7 @@ const bundleScript = {
         { from: 'README.md' },
         { from: 'system.json' },
         { from: 'template.json' },
-        { from: 'templates/', to: 'templates/' }
+        { from: 'static/templates/', to: 'templates/' }
       ]
     }),
     new MiniCssExtractPlugin({
