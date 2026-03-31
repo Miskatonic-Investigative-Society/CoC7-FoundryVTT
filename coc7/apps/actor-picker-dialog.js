@@ -1,7 +1,7 @@
 /* global canvas, CONST, FormApplication, foundry, fromUuid, game, TokenDocument, ui */
 import CoC7Utilities from './utilities.js'
 
-export class ActorPickerDialog extends FormApplication {
+export default class CoC7ActorPickerDialog extends FormApplication {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'dialog', 'actor-picker'],
@@ -95,7 +95,7 @@ export class ActorPickerDialog extends FormApplication {
       }
 
       return new Promise(resolve => {
-        new ActorPickerDialog({ options, selected, resolve }).render(true)
+        new CoC7ActorPickerDialog({ options, selected, resolve }).render(true)
       })
     }
     ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'))

@@ -2,6 +2,10 @@
 import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
 
 export default class ChaosiumCanvasInterfacePlaySound extends ChaosiumCanvasInterface {
+  /**
+   * Action list
+   * @returns {object}
+   */
   static get actionToggles () {
     const buttons = super.actionToggles
     buttons[ChaosiumCanvasInterface.actionToggle.On] = 'CoC7.ChaosiumCanvasInterface.PlaySound.Action.Play'
@@ -9,10 +13,18 @@ export default class ChaosiumCanvasInterfacePlaySound extends ChaosiumCanvasInte
     return buttons
   }
 
+  /**
+   * Icon to show for behavior
+   * @returns {string}
+   */
   static get icon () {
     return 'fa-solid fa-music'
   }
 
+  /**
+   * Create Schema
+   * @returns {DataSchema}
+   */
   static defineSchema () {
     const fields = foundry.data.fields
     return {
@@ -42,6 +54,11 @@ export default class ChaosiumCanvasInterfacePlaySound extends ChaosiumCanvasInte
     }
   }
 
+  /**
+   * Migrate old style data to new
+   * @param {object} source
+   * @returns {object}
+   */
   static migrateData (source) {
     if (typeof source.toggle !== 'undefined' && typeof source.action === 'undefined') {
       source.action = (source.toggle ? ChaosiumCanvasInterface.actionToggle.On : ChaosiumCanvasInterface.actionToggle.Off)
@@ -49,10 +66,17 @@ export default class ChaosiumCanvasInterfacePlaySound extends ChaosiumCanvasInte
     return source
   }
 
+  /**
+   * Check permissions
+   * @returns {boolean}
+   */
   async _handleMouseOverEvent () {
     return game.user.isGM
   }
 
+  /**
+   * Handle click event
+   */
   async #handleClickEvent () {
     let toggle = false
     switch (this.action) {
@@ -95,12 +119,18 @@ export default class ChaosiumCanvasInterfacePlaySound extends ChaosiumCanvasInte
     }
   }
 
+  /**
+   * Left click event
+   */
   async _handleLeftClickEvent () {
     if ((this.playlistUuid || this.soundUuid) && this.triggerButton === ChaosiumCanvasInterface.triggerButton.Left) {
       this.#handleClickEvent()
     }
   }
 
+  /**
+   * Right click event
+   */
   async _handleRightClickEvent () {
     if ((this.playlistUuid || this.soundUuid) && this.triggerButton === ChaosiumCanvasInterface.triggerButton.Right) {
       this.#handleClickEvent()

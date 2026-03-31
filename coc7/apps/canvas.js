@@ -2,7 +2,7 @@
 import CoC7Utilities from './utilities.js'
 import CoC7Link from './link.js'
 
-export class CoC7Canvas {
+export default class CoC7Canvas {
   static get COC7_TYPES_SUPPORTED () {
     return ['CoC7Link', 'locator', 'getToken']
   }
@@ -24,7 +24,9 @@ export class CoC7Canvas {
           Number.between(c.y, y, y + height)
         )
       }) // Find drop target.
-      if (!dropTargetTokens.length) dropTargetTokens = canvas.tokens.controlled // If no target whisper to selected token
+      if (!dropTargetTokens.length) {
+        dropTargetTokens = canvas.tokens.controlled // If no target whisper to selected token
+      }
       switch (data.type) {
         case 'CoC7Link':
           if (data.check === CoC7Link.CHECK_TYPE.EFFECT) {

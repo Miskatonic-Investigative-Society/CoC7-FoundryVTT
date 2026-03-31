@@ -1,5 +1,5 @@
 /* global CONST, foundry, game */
-import { CoC7ActorImporterDialog } from '../apps/actor-importer-dialog.js'
+import CoC7ActorImporterDialog from '../apps/actor-importer-dialog.js'
 import { CoC7InvestigatorWizard } from '../apps/investigator-wizard.js'
 
 export default function (application, html, data) {

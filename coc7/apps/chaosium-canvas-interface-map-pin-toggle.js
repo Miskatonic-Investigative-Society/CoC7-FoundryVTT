@@ -2,6 +2,10 @@
 import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
 
 export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasInterface {
+  /**
+   * Permission names
+   * @returns {object}
+   */
   static get PERMISSIONS () {
     return {
       [CONST.DOCUMENT_OWNERSHIP_LEVELS.INHERIT]: 'OWNERSHIP.INHERIT',
@@ -12,10 +16,18 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
     }
   }
 
+  /**
+   * Icon to show for behavior
+   * @returns {string}
+   */
   static get icon () {
     return 'fa-solid fa-map-pin'
   }
 
+  /**
+   * Create Schema
+   * @returns {DataSchema}
+   */
   static defineSchema () {
     const fields = foundry.data.fields
     return {
@@ -65,6 +77,11 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
     }
   }
 
+  /**
+   * Migrate old style data to new
+   * @param {object} source
+   * @returns {object}
+   */
   static migrateData (source) {
     if (typeof source.toggle !== 'undefined' && typeof source.action === 'undefined') {
       source.action = (source.toggle ? ChaosiumCanvasInterface.actionToggle.On : ChaosiumCanvasInterface.actionToggle.Off)
@@ -72,10 +89,17 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
     return source
   }
 
+  /**
+   * Check permissions
+   * @returns {boolean}
+   */
   async _handleMouseOverEvent () {
     return game.user.isGM
   }
 
+  /**
+   * Handle click event
+   */
   async #handleClickEvent () {
     game.socket.emit('system.coc7', { type: 'toggleMapNotes', toggle: true })
     /* // FoundryVTT V12 */
@@ -115,12 +139,18 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
     }
   }
 
+  /**
+   * Left click event
+   */
   async _handleLeftClickEvent () {
     if (this.triggerButton === ChaosiumCanvasInterface.triggerButton.Left) {
       this.#handleClickEvent()
     }
   }
 
+  /**
+   * Right click event
+   */
   async _handleRightClickEvent () {
     if (this.triggerButton === ChaosiumCanvasInterface.triggerButton.Right) {
       this.#handleClickEvent()

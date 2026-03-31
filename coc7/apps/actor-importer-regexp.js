@@ -1,5 +1,6 @@
 /* global game */
 import CoC7Utilities from './utilities.js'
+
 /**
  * nameCharacters list of characters that can be part of a [] for character, skill, or weapon names used in bracket expression.
  *
@@ -13,7 +14,7 @@ import CoC7Utilities from './utilities.js'
  * "keys.<language>.sectionCombats" Regular expression to indicate the start of the combat / weapon section of text.
  * "keys.<language>.newCombatHeader" If there is no combat / weapon section, add this section were it probably is, this needs to matched by "keys.<language>.sectionCombats".
  * "keys.<language>.sectionSkills" Regular expression to indicate the start of the skills section of text.
- * "keys.<language>.sectionLangauges" Regular expression to indicate the start of the languages section of text.
+ * "keys.<language>.sectionLanguages" Regular expression to indicate the start of the languages section of text.
  * "keys.<language>.sectionSpells" Regular expression to indicate the start of the spells section of text.
  * "keys.<language>.handgun" Regular expression to match NPC combat section weapon name is a handgun type.
  * "keys.<language>.rifle" Regular expression to match NPC combat section weapon name is a rifle type.
@@ -53,11 +54,7 @@ import CoC7Utilities from './utilities.js'
  *
  * If there is new functionality check for this string in the translations / keys for your language "NEW KEY BELOW - TRANSLATION REQUIRED"
  */
-const nameCharacters =
-  '\\u3000\\u3400-\\u4DBF\\u3040-\\u30FF\\u4E00-\\u9FFF\\w\\(\\)\\-\\/&"\'･（）／' +
-  CoC7Utilities.quoteRegExp(
-    'áéíóàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃĀÑÕäëïöüÿÄËÏÖÜŸàèçÇßØøÅåÆæœ“”«»ąćęłńóśźżĄĆĘŁŃÓŚŹŻ'
-  )
+const nameCharacters = '\\u3000\\u3400-\\u4DBF\\u3040-\\u30FF\\u4E00-\\u9FFF\\w\\(\\)\\-\\/&"\'･（）／' + CoC7Utilities.quoteRegExp('áéíóàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃĀÑÕäëïöüÿÄËÏÖÜŸàèçÇßØøÅåÆæœ“”«»ąćęłńóśźżĄĆĘŁŃÓŚŹŻ')
 
 const keys = {
   en: {
@@ -71,7 +68,7 @@ const keys = {
     sectionCombats: '\n(?:' + 'combat|fighting attacks' + ')[:\n]',
     newCombatHeader: '\n' + 'Combat' + '\n',
     sectionSkills: '\n(?:' + 'skills' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
-    sectionLangauges: '\n(?:' + 'languages' + ')[:\n]',
+    sectionLanguages: '\n(?:' + 'languages' + ')[:\n]',
     sectionSpells: '\n(?:' + 'spells' + ')[:\n]',
     handgun:
       '(?<type>' +
@@ -97,7 +94,7 @@ const keys = {
     sectionCombats: '\n(?:' + 'Kampf|Angriff:|ANGRIFFE' + ')[:\n]',
     newCombatHeader: '\n' + 'Kampf' + '\n',
     sectionSkills: '\n(?:' + 'Fertigkeiten' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
-    sectionLangauges: '\n(?:' + 'Sprachen' + ')[:\n]',
+    sectionLanguages: '\n(?:' + 'Sprachen' + ')[:\n]',
     sectionSpells: '\n(?:' + 'Zauber' + ')[:\n]',
     handgun:
       '(?<type>' +
@@ -125,7 +122,7 @@ const keys = {
     sectionCombats: '\n(?:' + 'Walka|Ataki' + ')[:\n]',
     newCombatHeader: '\n' + 'Walka' + '\n',
     sectionSkills: '\n(?:' + 'Umiejętności' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
-    sectionLangauges: '\n(?:' + 'Języki' + ')[:\n]',
+    sectionLanguages: '\n(?:' + 'Języki' + ')[:\n]',
     sectionSpells: '\n(?:' + 'Zaklęcia' + ')[:\n]',
     handgun:
       '(?<type>' +
@@ -152,7 +149,7 @@ const keys = {
     sectionCombats: '\n(?:' + 'Combat|Armes|Attaques' + ')[:\n]',
     newCombatHeader: '\n' + 'Combat' + '\n',
     sectionSkills: '\n(?:' + 'Compétences' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
-    sectionLangauges: '\n(?:' + 'Langues?' + ')\\s*[:\n]',
+    sectionLanguages: '\n(?:' + 'Langues?' + ')\\s*[:\n]',
     sectionSpells: '\n(?:' + 'Sortilèges\\s*|Sorts' + ')[:\n]',
     handgun:
       '(?<type>' +
@@ -179,7 +176,7 @@ const keys = {
     sectionCombats: '\n(?:' + 'Combate|Armas' + ')[:\n]',
     newCombatHeader: '\n' + 'Combate' + '\n',
     sectionSkills: '\n(?:' + 'Habilidades' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
-    sectionLangauges: '\n(?:' + 'Idiomas|Lenguajes|Lenguas' + ')[:\n]',
+    sectionLanguages: '\n(?:' + 'Idiomas|Lenguajes|Lenguas' + ')[:\n]',
     sectionSpells: '\n(?:' + 'Conjuros|Hechizos' + ')[:\n]',
     handgun:
       '(?<type>' +
@@ -209,7 +206,7 @@ const keys = {
     newCombatHeader: '\n' + 'Combat' + '\n',
     sectionSkills:
       '\n(?:' + '(?:Skills|技能列表)' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
-    sectionLangauges: '\n(?:' + 'Languages|語言' + ')[:\n]',
+    sectionLanguages: '\n(?:' + 'Languages|語言' + ')[:\n]',
     sectionSpells: '\n(?:' + 'spells|咒文列表|咒文' + ')[:\n]',
     handgun:
       '(?<type>' +
@@ -239,7 +236,7 @@ const keys = {
     newCombatHeader: '\n' + '戦闘' + '\n',
     sectionSkills:
       '\n(?:' + '(?:Skills|技能)' + '\\s*(?:\\s*\\([^\\)]+\\))?)[:：\n]',
-    sectionLangauges: '\n(?:' + 'Languages|言語' + ')\\s*[:：\n]',
+    sectionLanguages: '\n(?:' + 'Languages|言語' + ')\\s*[:：\n]',
     sectionSpells: '\n(?:' + 'spells|呪文' + ')\\s*[:：\n]',
     handgun:
       '(?<type>' +
@@ -334,7 +331,7 @@ const translations = {
       '|' +
       keys.en.sectionSkills +
       '|' +
-      keys.en.sectionLangauges +
+      keys.en.sectionLanguages +
       '|' +
       keys.en.sectionSpells +
       ')'
@@ -427,7 +424,7 @@ const translations = {
       '|' +
       keys.de.sectionSkills +
       '|' +
-      keys.de.sectionLangauges +
+      keys.de.sectionLanguages +
       '|' +
       keys.de.sectionSpells +
       ')'
@@ -512,7 +509,7 @@ const translations = {
       '|' +
       keys.pl.sectionSkills +
       '|' +
-      keys.pl.sectionLangauges +
+      keys.pl.sectionLanguages +
       '|' +
       keys.pl.sectionSpells +
       ')'
@@ -601,7 +598,7 @@ const translations = {
       '|' +
       keys.fr.sectionSkills +
       '|' +
-      keys.fr.sectionLangauges +
+      keys.fr.sectionLanguages +
       '|' +
       keys.fr.sectionSpells +
       ')'
@@ -685,7 +682,7 @@ const translations = {
       '|' +
       keys.es.sectionSkills +
       '|' +
-      keys.es.sectionLangauges +
+      keys.es.sectionLanguages +
       '|' +
       keys.es.sectionSpells +
       ')'
@@ -771,7 +768,7 @@ const translations = {
       '|' +
       keys['zh-TW'].sectionSkills +
       '|' +
-      keys['zh-TW'].sectionLangauges +
+      keys['zh-TW'].sectionLanguages +
       '|' +
       keys['zh-TW'].sectionSpells +
       ')'
@@ -857,14 +854,19 @@ const translations = {
       '|' +
       keys.ja.sectionSkills +
       '|' +
-      keys.ja.sectionLangauges +
+      keys.ja.sectionLanguages +
       '|' +
       keys.ja.sectionSpells +
       ')'
   }
 }
 
-export class CoC7ActorImporterRegExp {
+export default class CoC7ActorImporterRegExp {
+  /**
+   * Check language exists, default to en if it doesn't
+   * @param {string} lang
+   * @returns {string}
+   */
   static checkLanguage (lang = null) {
     if (!lang) {
       lang = game.i18n.lang
@@ -875,6 +877,11 @@ export class CoC7ActorImporterRegExp {
     return lang
   }
 
+  /**
+   * Get example text per language
+   * @param {string} lang
+   * @returns {string}
+   */
   static getExampleText (lang) {
     let example = keys.en.example
     if (typeof keys[lang] !== 'undefined') {
@@ -883,6 +890,10 @@ export class CoC7ActorImporterRegExp {
     return example
   }
 
+  /**
+   * Get translation key / description pair
+   * @returns {object}
+   */
   static getTranslations () {
     const output = {}
     for (const key in keys) {
@@ -891,10 +902,20 @@ export class CoC7ActorImporterRegExp {
     return output
   }
 
+  /**
+   * Get keys in language
+   * @param {string} lang
+   * @returns {object}
+   */
   static getKeys (lang) {
     return keys[lang] || keys.en
   }
 
+  /**
+   * Get regular expressions in language
+   * @param {string} lang
+   * @returns {object}
+   */
   static getRegularExpressions (lang) {
     return translations[lang] || translations.en
   }

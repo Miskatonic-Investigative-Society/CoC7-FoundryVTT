@@ -20,26 +20,23 @@ export default class CoC7ActiveEffect extends ActiveEffect {
 
   /**
    * Manage Active Effect instances through the Actor Sheet via effect control buttons.
-   * @param {MouseEvent} event      The left-click event on the effect control
-   * @param {Actor|Item} owner      The owning document which manages this effect
-   * @returns {Promise|null}        Promise that resolves when the changes are complete.
+   * @param {ClickEvent} event
+   * @param {Document} owner
+   * @returns {Document}
    */
   static onManageActiveEffect (event, owner) {
     event.preventDefault()
-    const a = event.currentTarget
-    const li = a.closest('li')
-    const effect = li.dataset.effectId
-      ? owner.effects.get(li.dataset.effectId)
-      : null
-    switch (a.dataset.action) {
+    const button = event.currentTarget
+    const li = button.closest('li')
+    const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null
+    switch (button.dataset.action) {
       case 'create':
         return owner.createEmbeddedDocuments('ActiveEffect', [
           {
             name: game.i18n.localize('CoC7.EffectNew'),
             img: 'icons/svg/aura.svg',
             origin: owner.uuid,
-            'duration.rounds':
-              li.dataset.effectType === 'temporary' ? 1 : undefined,
+            'duration.rounds': li.dataset.effectType === 'temporary' ? 1 : undefined,
             disabled: li.dataset.effectType === 'inactive'
           }
         ])
@@ -68,6 +65,11 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     return effect.statuses.has(conditionName)
   }
 
+  /**
+   * Find first status key that is for the system
+   * @param {Document} effect
+   * @returns {boolean}
+   */
   static getStatusKey (effect) {
     let options = []
     if (effect.statuses.size > 0) {
@@ -80,6 +82,13 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     return typeof CoC7ActiveEffect.getStatusKey(this) === 'string'
   }
 
+  /**
+   * Sort Actor effects into categories
+   * @param {object} effects
+   * @param {options} options
+   * @param {boolean} options.status
+   * @returns {object}
+   */
   static prepareActiveEffectCategories (effects, { status = true } = {}) {
     // Define effect header categories
     const categories = {
@@ -115,17 +124,28 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     }
     // Iterate over active effects, classifying them into categories
     for (const e of effects) {
-      if (e.isSuppressed) categories.suppressed.effects.push(e)
-      else if (e.isStatus) categories.status.effects.push(e)
-      else if (e.disabled) categories.inactive.effects.push(e)
-      else if (e.isTemporary) categories.temporary.effects.push(e)
-      else categories.passive.effects.push(e)
+      if (e.isSuppressed) {
+        categories.suppressed.effects.push(e)
+      } else if (e.isStatus) {
+        categories.status.effects.push(e)
+      } else if (e.disabled) {
+        categories.inactive.effects.push(e)
+      } else if (e.isTemporary) {
+        categories.temporary.effects.push(e)
+      } else {
+        categories.passive.effects.push(e)
+      }
     }
 
     categories.suppressed.hidden = !categories.suppressed.effects.length
     return categories
   }
 
+  /**
+   * Sort Actor effects into categories
+   * @param {object} effects
+   * @returns {object}
+   */
   static prepareNPCActiveEffectCategories (effects) {
     let count = 0
     // Define effect header categories
@@ -145,8 +165,11 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     for (const e of effects) {
       count += 1
       // e._getSourceName() // Trigger a lookup for the source name
-      if (e.isSuppressed || e.disabled) categories.inactive.effects.push(e)
-      else categories.active.effects.push(e)
+      if (e.isSuppressed || e.disabled) {
+        categories.inactive.effects.push(e)
+      } else {
+        categories.active.effects.push(e)
+      }
     }
 
     if (count > 0) categories.expended = true

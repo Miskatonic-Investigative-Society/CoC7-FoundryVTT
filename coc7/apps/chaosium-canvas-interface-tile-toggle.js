@@ -2,6 +2,10 @@
 import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
 
 export default class ChaosiumCanvasInterfaceTileToggle extends ChaosiumCanvasInterface {
+  /**
+   * Permission names
+   * @returns {object}
+   */
   static get PERMISSIONS () {
     return {
       [CONST.DOCUMENT_OWNERSHIP_LEVELS.INHERIT]: 'OWNERSHIP.INHERIT',
@@ -12,22 +16,38 @@ export default class ChaosiumCanvasInterfaceTileToggle extends ChaosiumCanvasInt
     }
   }
 
+  /**
+   * Icon to show for behavior
+   * @returns {string}
+   */
   static get icon () {
     return 'fa-solid fa-cubes'
   }
 
+  /**
+   * Trigger Button Key Name Pairs
+   * @returns {object}
+   */
   static get triggerButtons () {
     const buttons = super.triggerButtons
     buttons[ChaosiumCanvasInterfaceTileToggle.triggerButton.Both] = 'CoC7.ChaosiumCanvasInterface.Buttons.Both'
     return buttons
   }
 
+  /**
+   * Trigger Button Name Key Pairs
+   * @returns {object}
+   */
   static get triggerButton () {
     const button = super.triggerButton
     button.Both = 20
     return button
   }
 
+  /**
+   * Create Schema
+   * @returns {DataSchema}
+   */
   static defineSchema () {
     const fields = foundry.data.fields
     return {
@@ -132,6 +152,11 @@ export default class ChaosiumCanvasInterfaceTileToggle extends ChaosiumCanvasInt
     }
   }
 
+  /**
+   * Migrate old style data to new
+   * @param {object} source
+   * @returns {object}
+   */
   static migrateData (source) {
     if (typeof source.triggerButton === 'undefined' && source.regionUuids?.length) {
       source.triggerButton = ChaosiumCanvasInterfaceTileToggle.triggerButton.Both
@@ -142,10 +167,18 @@ export default class ChaosiumCanvasInterfaceTileToggle extends ChaosiumCanvasInt
     return source
   }
 
+  /**
+   * Check permissions
+   * @returns {boolean}
+   */
   async _handleMouseOverEvent () {
     return game.user.isGM
   }
 
+  /**
+   * Handle click event
+   * @param {int} button
+   */
   async #handleClickEvent (button) {
     let toggle = false
     switch (this.action) {
@@ -211,12 +244,18 @@ export default class ChaosiumCanvasInterfaceTileToggle extends ChaosiumCanvasInt
     }
   }
 
+  /**
+   * Left click event
+   */
   async _handleLeftClickEvent () {
     if ([ChaosiumCanvasInterfaceTileToggle.triggerButton.Both, ChaosiumCanvasInterface.triggerButton.Left].includes(this.triggerButton)) {
       this.#handleClickEvent(ChaosiumCanvasInterface.triggerButton.Left)
     }
   }
 
+  /**
+   * Right click event
+   */
   async _handleRightClickEvent () {
     if ([ChaosiumCanvasInterfaceTileToggle.triggerButton.Both, ChaosiumCanvasInterface.triggerButton.Right].includes(this.triggerButton)) {
       this.#handleClickEvent(ChaosiumCanvasInterface.triggerButton.Right)

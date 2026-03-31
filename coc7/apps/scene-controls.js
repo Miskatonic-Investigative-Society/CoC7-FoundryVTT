@@ -1,7 +1,7 @@
 /* global canvas, foundry, game, PlaceablesLayer */
 import { CoC7Chat } from '../chat.js'
 import CoC7Utilities from './utilities.js'
-import { CoC7ActorImporterDialog } from './actor-importer-dialog.js'
+import CoC7ActorImporterDialog from './actor-importer-dialog.js'
 import CoC7ContentLinkDialog from './content-link-dialog.js'
 import { CoC7InvestigatorWizard } from './investigator-wizard.js'
 import CoCIDActorUpdateItems from './coc-id-actor-update-items.js'

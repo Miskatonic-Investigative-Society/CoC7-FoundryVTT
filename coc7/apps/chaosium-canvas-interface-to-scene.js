@@ -2,6 +2,10 @@
 import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
 
 export default class ChaosiumCanvasInterfaceToScene extends ChaosiumCanvasInterface {
+  /**
+   * Permission names
+   * @returns {object}
+   */
   static get PERMISSIONS () {
     return {
       ALWAYS: 'CoC7.ChaosiumCanvasInterface.Permission.Always',
@@ -10,10 +14,18 @@ export default class ChaosiumCanvasInterfaceToScene extends ChaosiumCanvasInterf
     }
   }
 
+  /**
+   * Icon to show for behavior
+   * @returns {string}
+   */
   static get icon () {
     return 'fa-solid fa-map'
   }
 
+  /**
+   * Create Schema
+   * @returns {DataSchema}
+   */
   static defineSchema () {
     const fields = foundry.data.fields
     return {
@@ -44,6 +56,10 @@ export default class ChaosiumCanvasInterfaceToScene extends ChaosiumCanvasInterf
     }
   }
 
+  /**
+   * Check permissions
+   * @returns {boolean}
+   */
   async _handleMouseOverEvent () {
     switch (this.permission) {
       case 'ALWAYS':
@@ -61,6 +77,9 @@ export default class ChaosiumCanvasInterfaceToScene extends ChaosiumCanvasInterf
     return false
   }
 
+  /**
+   * Handle click event
+   */
   async #handleClickEvent () {
     const doc = await fromUuid(this.sceneUuid)
     if (doc) {
@@ -72,12 +91,18 @@ export default class ChaosiumCanvasInterfaceToScene extends ChaosiumCanvasInterf
     }
   }
 
+  /**
+   * Left click event
+   */
   async _handleLeftClickEvent () {
     if (this.sceneUuid && this.triggerButton === ChaosiumCanvasInterface.triggerButton.Left) {
       this.#handleClickEvent()
     }
   }
 
+  /**
+   * Right click event
+   */
   async _handleRightClickEvent () {
     if (this.sceneUuid && this.triggerButton === ChaosiumCanvasInterface.triggerButton.Right) {
       this.#handleClickEvent()

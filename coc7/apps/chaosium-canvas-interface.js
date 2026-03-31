@@ -1,5 +1,9 @@
 /* global foundry */
 export default class ChaosiumCanvasInterface extends foundry.data.regionBehaviors.RegionBehaviorType {
+  /**
+   * Action Options Key Name Pairs
+   * @returns {object}
+   */
   static get actionToggles () {
     return {
       [ChaosiumCanvasInterface.actionToggle.On]: 'CoC7.ChaosiumCanvasInterface.Actions.Show',
@@ -8,6 +12,10 @@ export default class ChaosiumCanvasInterface extends foundry.data.regionBehavior
     }
   }
 
+  /**
+   * Action Options Name Key Pairs
+   * @returns {object}
+   */
   static get actionToggle () {
     return {
       Off: 0,
@@ -16,6 +24,10 @@ export default class ChaosiumCanvasInterface extends foundry.data.regionBehavior
     }
   }
 
+  /**
+   * Trigger Button Key Name Pairs
+   * @returns {object}
+   */
   static get triggerButtons () {
     return {
       [ChaosiumCanvasInterface.triggerButton.Left]: 'CoC7.ChaosiumCanvasInterface.Buttons.Left',
@@ -23,6 +35,10 @@ export default class ChaosiumCanvasInterface extends foundry.data.regionBehavior
     }
   }
 
+  /**
+   * Trigger Button Name Key Pairs
+   * @returns {object}
+   */
   static get triggerButton () {
     return {
       Left: 0,

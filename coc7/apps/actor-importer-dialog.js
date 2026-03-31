@@ -1,10 +1,10 @@
 /* global $, CONFIG, FileReader, FormApplication, foundry, game, Hooks, ui */
-import { CoC7ActorImporter } from './actor-importer.js'
+import CoC7ActorImporter from './actor-importer.js'
 import CoC7DholeHouseActorImporter from './dholehouse-importer.js'
-import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
+import CoC7ActorImporterRegExp from './actor-importer-regexp.js'
 import CoC7Utilities from './utilities.js'
 
-export class CoC7ActorImporterDialog extends FormApplication {
+export default class CoC7ActorImporterDialog extends FormApplication {
   /** @override */
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -258,7 +258,12 @@ export class CoC7ActorImporterDialog extends FormApplication {
 
   /**
    * importActor imports an Actor using the dialog data
-   * @param {html} html
+   * @param {object} inputs
+   * @param {object} inputs.convertFrom6E
+   * @param {object} inputs.entity
+   * @param {object} inputs.lang
+   * @param {object} inputs.source
+   * @param {object} inputs.text
    */
   static async importActor (inputs) {
     if (inputs.text[inputs.text.length] !== '.') {
@@ -281,9 +286,15 @@ export class CoC7ActorImporterDialog extends FormApplication {
     // console.debug('updated:', updated)
   }
 
-  // /**
-  //  * create it's the default web to crate the CoC7ActorImporterDialog
-  //  */
+  /**
+   * Create dialog
+   * @param {object} options
+   * @param {string} options.characterData
+   * @param {string} options.convert6E
+   * @param {string} options.importType
+   * @param {string|null} options.language
+   * @param {string} options.source
+   */
   static async create (options = {}) {
     options.importType = options.importType ?? 'npc'
     options.language =

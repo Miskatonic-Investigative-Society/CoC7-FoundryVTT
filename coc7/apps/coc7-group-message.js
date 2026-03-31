@@ -1,5 +1,5 @@
 /* global ChatMessage, foundry, fromUuid, game, renderTemplate, TokenDocument, ui */
-import { ActorPickerDialog } from './actor-picker-dialog.js'
+import CoC7ActorPickerDialog from './actor-picker-dialog.js'
 import CoC7Check from '../apps/check.js'
 import CoC7DicePool from './dice-pool.js'
 import CoC7Utilities from './utilities.js'
@@ -777,7 +777,7 @@ export class CoC7GroupMessage {
           }
         }
       } else {
-        const actor = await ActorPickerDialog.create()
+        const actor = await CoC7ActorPickerDialog.create()
         if (!actor) {
           ui.notifications.warn('CoC7.WarnNoControlledActor', { localize: true })
           return null
