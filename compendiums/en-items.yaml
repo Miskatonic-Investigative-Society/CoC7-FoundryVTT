@@ -22,7 +22,7 @@ system:
    - i.skill.electrical-repair
    - i.skill.fast-talk
    - i.skill.fighting-brawl
-   - i.skill.fighting-throw
+   - i.skill.throw
    - i.skill.firearms-handgun
    - i.skill.firearms-rifle-shotgun
    - i.skill.first-aid
@@ -107,7 +107,7 @@ img: icons/svg/sword.svg
 system:
   range:
     normal:
-      value: 50ft
+      value: 17
       damage: 5d6
   usesPerRound:
     max: ''
@@ -117,6 +117,12 @@ system:
   properties:
     rngd: true
     slnt: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.example-death-ray-prototype
+      lang: en
+      priority: 0
 ---
 _id: uWQYNsMURpspTetM
 name: Experimental weapon
@@ -131,7 +137,7 @@ system:
       name: To be selected once the weapon is owned
   range:
     normal:
-      value: 15ft
+      value: 5
       damage: 3d6
   usesPerRound:
     max: ''
@@ -142,6 +148,12 @@ system:
     rngd: true
     brst: true
     spcl: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.example-experimental-weapon
+      lang: en
+      priority: 0
 ---
 _id: NOsh6EdNSjpjahDF
 name: Street Vendor
@@ -203,7 +215,7 @@ system:
   bullets: ''
   malfunction: ''
   properties:
-    melee: true
+    rngd: false
     addb: true
 flags:
   CoC7:
@@ -213,19 +225,16 @@ flags:
       priority: 0
 ---
 _id: yqvwz769ZeJplOW7
-name: Talent 1
+name: Example Talent
 type: talent
 img: icons/svg/item-bag.svg
 system:
   source: ''
   type:
     physical: true
----
-_id: NVz7eCFnoH8J12qH
-name: Talent 2
-type: talent
-img: icons/svg/item-bag.svg
-system:
-  source: ''
-  type:
-    mental: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.talent.example-talent
+      lang: en
+      priority: 0

@@ -1,267 +1,390 @@
-/* global $, foundry, game, TextEditor */
-import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import { COC7 } from '../../constants.js'
-import CoC7Item from './document-class.js'
+/* global DragDrop foundry game TextEditor */
+import { FOLDER_ID, ERAS, MONETARY_FORMATS, MONETARY_TYPES } from '../../constants.js'
+import CoC7ModelsItemGlobalSheet from './global-sheet.js'
 import CoC7Utilities from '../../apps/utilities.js'
-import { DropCoCID } from '../../apps/drop-coc-id.js'
-import { isCtrlKey } from '../../chat/helper.js'
 
-/**
- * Extend the basic ItemSheet with some very simple modifications
- */
-export default class CoC7SetupSheet extends foundry.appv1.sheets.ItemSheet {
-  /**
-   * Activate event listeners using the prepared sheet HTML
-   * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
-   */
-  activateListeners (html) {
-    super.activateListeners(html)
-
-    if (!this.options.editable) return
-
-    html.find('.item .item-name h4').click(event => this._onItemSummary(event, 'items'))
-    html.find('.item-delete').click(event => this._onItemDelete(event, 'items'))
-    html.find('.add-bio').click(async () => await this._onAddBio())
-    html.find('.remove-section').click(this._onRemoveSection.bind(this))
-    html.find('.toggle-switch').click(this._onClickToggle.bind(this))
-    html.find('.add-monetary').click(this._onAddMonetary.bind(this))
-    html.find('.remove-monetary').click(this._onRemoveMonetary.bind(this))
-  }
-
-  async _onClickToggle (event) {
-    event.preventDefault()
-    const propertyId = event.currentTarget.dataset.property
-    await this.item.toggleProperty(
-      propertyId,
-      isCtrlKey(event)
-    )
-  }
-
-  async _onDrop (event, collectionName = 'items') {
-    event.preventDefault()
-    event.stopPropagation()
-
-    const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
-
-    let useCoCID = 0
-    const collection = this.item.system[collectionName] ? foundry.utils.duplicate(this.item.system[collectionName]) : []
-    for (const item of dataList) {
-      if (!item || !item.system) continue
-      if (!['item', 'weapon', 'skill', 'book', 'spell'].includes(item.type)) {
-        continue
-      }
-
-      if (!CoC7Item.isAnySpec(item)) {
-        if (collection.find(el => el.name === item.name)) {
-          continue
-        }
-      }
-
-      if (useCoCID === 0) {
-        useCoCID = await DropCoCID.create()
-      }
-      collection.push(DropCoCID.processItem(useCoCID, item))
-    }
-
-    await this.item.update({ [`system.${collectionName}`]: collection })
-  }
-
-  async _onRemoveSection (event) {
-    const a = event.currentTarget
-    const div = a.closest('.item')
-    const bio = foundry.utils.duplicate(this.item.system.bioSections)
-    bio.splice(Number(div.dataset.index), 1)
-    await this.item.update({ 'system.bioSections': bio })
-  }
-
-  async _onAddBio () {
-    const bio = this.item.system.bioSections ? foundry.utils.duplicate(this.item.system.bioSections) : []
-    bio.push(null)
-    await this.item.update({ 'system.bioSections': bio })
-  }
-
-  _onAddMonetary () {
-    const values = this.item.system.monetary.values ? foundry.utils.duplicate(this.item.system.monetary.values) : []
-    values.push({
-      name: '',
-      min: null,
-      max: null,
-      cashType: 0,
-      cashValue: '',
-      assetsType: 0,
-      assetsValue: '',
-      spendingType: 0,
-      spendingValue: ''
-    })
-    this.item.update({ 'system.monetary.values': values })
-  }
-
-  _onRemoveMonetary (event) {
-    const a = event.currentTarget
-    const div = a.closest('.item')
-    const values = foundry.utils.duplicate(this.item.system.monetary.values)
-    values.splice(Number(div.dataset.index), 1)
-    this.item.update({ 'system.monetary.values': values })
-  }
-
-  async _onItemSummary (event, collectionName = 'items') {
-    event.preventDefault()
-    const li = $(event.currentTarget).parents('.item')
-    const item = this.item.system[collectionName].find(s => {
-      return s._id === li.data('item-id')
-    })
-    if (!item) {
-      return
-    }
-    const chatData = await TextEditor.enrichHTML(
-      item.system.description.value,
-      {
-        async: true,
-        secrets: this.item.editable
-      }
-    )
-
-    // Toggle summary
-    if (li.hasClass('expanded')) {
-      const summary = li.children('.item-summary')
-      summary.slideUp(200, () => summary.remove())
-    } else {
-      const div = $(`<div class="item-summary">${chatData}</div>`)
-      const props = $('<div class="item-properties"></div>')
-      // for (const p of chatData.properties) { props.append(`<span class="tag">${p}</span>`) }
-      div.append(props)
-      li.append(div.hide())
-      div.slideDown(200)
-    }
-    li.toggleClass('expanded')
-  }
-
-  async _onItemDelete (event, collectionName = 'items') {
-    const item = $(event.currentTarget).closest('.item')
-    const itemId = item.data('item-id')
-    const CoCId = item.data('cocid')
-    const itemIndex = this.item.system[collectionName].findIndex(i => (itemId && i._id === itemId) || (CoCId && i === CoCId))
-    if (itemIndex > -1) {
-      const collection = this.item.system[collectionName] ? foundry.utils.duplicate(this.item.system[collectionName]) : []
-      collection.splice(itemIndex, 1)
-      await this.item.update({ [`system.${collectionName}`]: collection })
-    }
-  }
-
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheet', 'setup'],
-      template: 'systems/CoC7/templates/items/setup-header.hbs',
+export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet {
+  static DEFAULT_OPTIONS = {
+    position: {
       width: 565,
-      height: 530,
-      dragDrop: [{ dragSelector: '.item' }],
-      scrollY: ['.tab.description'],
-      tabs: [
-        {
-          navSelector: '.sheet-navigation',
-          contentSelector: '.sheet-body',
-          initial: 'description'
-        }
-      ]
+      height: 530
+    }
+  }
+
+  static PARTS = {
+    header: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/setup-header.hbs'
+    },
+    tabs: {
+      template: 'templates/generic/tab-navigation.hbs'
+    },
+    description: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-properties-description.hbs',
+      scrollable: ['']
+    },
+    details: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/setup-tab-details.hbs',
+      scrollable: ['']
+    },
+    characteristics: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/setup-tab-characteristics.hbs',
+      scrollable: ['']
+    },
+    skills: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/setup-tab-skills.hbs',
+      scrollable: ['']
+    },
+    keeper: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-keeper.hbs',
+      scrollable: ['']
+    }
+  }
+
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
+
+    this.element.querySelectorAll('.item div.summary').forEach((element) => element.addEventListener('click', this._onItemSummary.bind(this)))
+
+    // Everything below here is only needed if the sheet is editable
+    if (!this.isEditable) return
+
+    this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', (event) => {
+      switch (event.currentTarget.dataset.action) {
+        case 'biography-add':
+          this._onBioSectionAdd(event)
+          break
+        case 'biography-move-down':
+          this._onBioSectionMoveDown(event)
+          break
+        case 'biography-move-up':
+          this._onBioSectionMoveUp(event)
+          break
+        case 'biography-remove':
+          this._onBioSectionRemove(event)
+          break
+        case 'item-delete':
+          this._onItemDelete(event)
+          break
+        case 'monetary-add':
+          this._onMonetaryAdd(event)
+          break
+        case 'monetary-remove':
+          this._onMonetaryRemove(event)
+          break
+      }
+    }))
+
+    /* // FoundryVTT V12 */
+    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+      dropSelector: '.drop-item',
+      permissions: {
+        drop: true
+      },
+      callbacks: {
+        drop: this._onItemDrop.bind(this)
+      }
+    }).bind(this.element)
+  }
+
+  /**
+   * Drop
+   * @param {ClickEvent} event
+   */
+  async _onItemDrop (event) {
+    this._onItemDropEvent(event, 'system', ['item', 'weapon', 'skill', 'book', 'spell'])
+  }
+
+  /**
+   * Remove Biography Section Row
+   * @param {ClickEvent} event
+   */
+  async _onBioSectionRemove (event) {
+    event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    const item = event.currentTarget.closest('.bio-section')
+    if (item && typeof item.dataset.index !== 'undefined') {
+      const index = Number(item.dataset.index)
+      const bioSections = foundry.utils.duplicate(this.document.system.bioSections)
+      bioSections.splice(index, 1)
+      await this.document.update({ 'system.bioSections': bioSections })
+    }
+  }
+
+  /**
+   * Add Biography Section Row
+   * @param {ClickEvent} event
+   */
+  async _onBioSectionAdd (event) {
+    event.preventDefault()
+    this.scrollToNewLast('div.bio-section')
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    await this.document.update({
+      'system.bioSections': this.document.system.bioSections.concat([''])
     })
   }
 
-  _getHeaderButtons () {
-    const headerButtons = super._getHeaderButtons()
-    addCoCIDSheetHeaderButton(headerButtons, this)
-    return headerButtons
+  /**
+   * Move Down Biography Section Row
+   * @param {ClickEvent} event
+   */
+  async _onBioSectionMoveDown (event) {
+    event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    const item = event.currentTarget.closest('.bio-section')
+    if (item && typeof item.dataset.index !== 'undefined') {
+      const index = Number(item.dataset.index)
+      const bioSections = foundry.utils.duplicate(this.document.system.bioSections)
+      if (index === 0 || typeof bioSections[index] === 'undefined') return
+      const elem = bioSections.splice(index, 1)[0]
+      bioSections.splice(index - 1, 0, elem)
+      await this.document.update({ 'system.bioSections': bioSections })
+    }
   }
 
-  async getData () {
-    const sheetData = super.getData()
+  /**
+   * Move Up Biography Section Row
+   * @param {ClickEvent} event
+   */
+  async _onBioSectionMoveUp (event) {
+    event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    const item = event.currentTarget.closest('.bio-section')
+    if (item && typeof item.dataset.index !== 'undefined') {
+      const index = Number(item.dataset.index)
+      const bioSections = foundry.utils.duplicate(this.document.system.bioSections)
+      if (typeof bioSections[index] === 'undefined') return
+      const elem = bioSections.splice(index, 1)[0]
+      bioSections.splice(index + 1, 0, elem)
+      await this.document.update({ 'system.bioSections': bioSections })
+    }
+  }
 
-    sheetData.hasOwner = this.item.isEmbedded === true
+  /**
+   * Add Monetary Row
+   * @param {ClickEvent} event
+   */
+  async _onMonetaryAdd (event) {
+    event.preventDefault()
+    this.scrollToNewLast('div.tiny-monetary')
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    await this.document.update({
+      'system.monetary.values': this.document.system.monetary.values.concat([{}])
+    })
+  }
 
-    const era = Object.entries(this.item.flags?.CoC7?.cocidFlag?.eras ?? {}).filter(e => e[1]).map(e => e[0])
+  /**
+   * Remove Monetary Row
+   * @param {ClickEvent} event
+   */
+  async _onMonetaryRemove (event) {
+    event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    const item = event.currentTarget.closest('.form-group')
+    if (item && typeof item.dataset.index !== 'undefined') {
+      const index = Number(item.dataset.index)
+      const values = foundry.utils.duplicate(this.document.system.monetary.values)
+      values.splice(index, 1)
+      this._onMonetaryReorder(values)
+      await this.document.update({ 'system.monetary.values': values })
+    }
+  }
 
-    const items = await game.system.api.cocid.expandItemArray({ itemList: this.item.system.items, era: (typeof era[0] !== 'undefined' ? era[0] : true) })
-
-    sheetData.skills = items.filter(it => it.type === 'skill')
-    sheetData.otherItems = items.filter(it => it.type !== 'skill')
-
-    sheetData.skillListEmpty = sheetData.skills.length === 0
-    sheetData.itemsListEmpty = sheetData.otherItems.length === 0
-
-    sheetData.skills.sort(CoC7Utilities.sortByNameKey)
-
-    sheetData._eras = []
-    for (const [key, value] of Object.entries(COC7.eras)) {
-      sheetData._eras.push({
-        id: key,
-        name: game.i18n.localize(value),
-        isEnabled: (this.item.flags?.CoC7?.cocidFlag?.eras ?? {})[key] === true
+  /**
+   * Reorder Monetary values by Min and Max
+   * @param {Array} values
+   */
+  _onMonetaryReorder (values) {
+    const maxOffset = values.length - 1
+    if (maxOffset > 0) {
+      values.sort((l, r) => {
+        const lMinimum = parseInt(l.min ?? 0, 10)
+        const rMinimum = parseInt(r.min ?? 0, 10)
+        return lMinimum - rMinimum
       })
+      for (let offset = 1; offset <= maxOffset; offset++) {
+        values[offset - 1].max = values[offset].min - 1
+      }
+      values[0].min = null
+      values[maxOffset].max = null
     }
-    sheetData._eras.sort(CoC7Utilities.sortByNameKey)
-
-    sheetData._monetaryFormats = []
-    for (const key in COC7.monetaryFormats) {
-      sheetData._monetaryFormats.push({ key, val: game.i18n.localize(COC7.monetaryFormats[key]) })
-    }
-
-    sheetData.showCurrencySymbol = ['decimalLeft', 'decimalRight', 'integerLeft', 'integerRight'].includes(sheetData.data.system.monetary.format)
-
-    sheetData._monetaryTypes = []
-    for (const key in COC7.monetaryTypes) {
-      if (COC7.monetaryTypes[key].filter.length === 0 || COC7.monetaryTypes[key].filter.includes(sheetData.data.system.monetary.format)) {
-        sheetData._monetaryTypes.push({ key, val: game.i18n.localize(COC7.monetaryTypes[key].name) })
-      }
-    }
-
-    sheetData.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
-
-    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
-      sheetData.data.system.description.value,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
-      sheetData.data.system.description.keeper,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.enrichedBackstory = await TextEditor.enrichHTML(
-      sheetData.data.system.backstory,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.isKeeper = game.user.isGM
-    return sheetData
   }
 
-  _updateObject (event, formData) {
-    const system = foundry.utils.expandObject(formData)?.system
-    if (system.bioSections) {
-      formData['system.bioSections'] = Object.values(
-        system.bioSections || []
-      )
+  /**
+   * Toggle embedded item description
+   * @param {ClickEvent} event
+   */
+  async _onItemSummary (event) {
+    this._onItemSummaryEvent(event, 'system')
+  }
+
+  /**
+   * Delete embedded item
+   * @param {ClickEvent} event
+   */
+  async _onItemDelete (event) {
+    this._onItemDeleteEvent(event, 'system')
+  }
+
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
+
+    const tabs = {
+      description: {
+        icon: '',
+        label: 'CoC7.Description'
+      },
+      details: {
+        icon: '',
+        label: 'CoC7.Details'
+      }
     }
-    if (system.monetary.values) {
-      formData['system.monetary.values'] = Object.values(system.monetary.values || [])
+    if (context.document.system.enableCharacterisitics) {
+      tabs.characteristics = {
+        icon: '',
+        label: 'CoC7.Characteristics'
+      }
+    }
+    tabs.skills = {
+      icon: '',
+      label: 'CoC7.Skills'
+    }
+    if (game.user.isGM) {
+      tabs.keeper = {
+        cssClass: 'icon-only-tab',
+        icon: 'game-icon game-icon-tentacles-skull',
+        tooltip: 'CoC7.GmNotes'
+      }
     }
 
-    if (event.currentTarget?.name === 'system.characteristics.points.enabled') {
-      formData['system.characteristics.rolls.enabled'] = !event.currentTarget.checked
+    context.tabs = this.getTabs('primary', 'description', tabs)
+
+    context.items = await context.document.system.items()
+
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+
+    switch (partId) {
+      case 'description':
+        context._properties = []
+        for (const [key, era] of Object.entries(ERAS)) {
+          if (context.document.flags[FOLDER_ID]?.cocidFlag?.eras?.[key] === true) {
+            context._properties.push(era.name)
+          }
+        }
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.value,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+      case 'details':
+        context.oneBlockBackStory = game.settings.get(FOLDER_ID, 'oneBlockBackstory')
+        context._eras = []
+        for (const [key, era] of Object.entries(ERAS)) {
+          context._eras.push({
+            id: key,
+            name: game.i18n.localize(era.name),
+            icon: era.icon,
+            isEnabled: (context.document.flags[FOLDER_ID]?.cocidFlag?.eras ?? {})[key] === true
+          })
+        }
+        context._eras.sort(CoC7Utilities.sortByNameKey)
+        context.useEraIcons = game.settings.get(FOLDER_ID, 'sheetEraIcons')
+        context._monetaryFormats = []
+        for (const key in MONETARY_FORMATS) {
+          context._monetaryFormats.push({ key, val: game.i18n.localize(MONETARY_FORMATS[key]) })
+        }
+        context._monetaryTypes = []
+        for (const key in MONETARY_TYPES) {
+          if (MONETARY_TYPES[key].filter.length === 0 || MONETARY_TYPES[key].filter.includes(context.document.system.monetary.format)) {
+            context._monetaryTypes.push({ key, val: game.i18n.localize(MONETARY_TYPES[key].name) })
+          }
+        }
+        if (context.oneBlockBackStory) {
+          /* // FoundryVTT V12 */
+          context.enrichedBackstory = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+            context.document.system.backstory,
+            {
+              async: true,
+              secrets: context.editable
+            }
+          )
+        } else {
+          context.bioSections = []
+          for (const index in context.document.system.bioSections) {
+            context.bioSections[index] = {
+              title: context.document.system.bioSections[index]
+            }
+          }
+          if (context.bioSections.length) {
+            context.bioSections[0].isFirst = true
+            context.bioSections[context.bioSections.length - 1].isLast = true
+          }
+        }
+        context.monetary = foundry.utils.duplicate(context.document.system.monetary.values)
+        context.showCurrencySymbol = ['decimalLeft', 'decimalRight', 'integerLeft', 'integerRight'].includes(context.document.system.monetary.format)
+        context.otherItems = context.items.filter(doc => doc.type !== 'skill')
+        context.itemsListEmpty = context.otherItems.length === 0
+        break
+      case 'skills':
+        context.skills = context.items.filter(doc => doc.type === 'skill')
+        context.skillListEmpty = context.skills.length === 0
+        break
+      case 'keeper':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.keeper,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+    }
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {SubmitEvent|null} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
+   * @returns {object}
+   */
+  _processFormData (event, form, formData) {
+    const object = super._processFormData(event, form, formData)
+
+    if (typeof object.system.monetary.values !== 'undefined') {
+      object.system.monetary.values = Object.values(object.system.monetary.values)
+      if (event.target.classList.contains('cash-assets-range')) {
+        this._onMonetaryReorder(object.system.monetary.values)
+      }
     }
 
-    if (event.currentTarget?.name === 'system.characteristics.rolls.enabled') {
-      formData['system.characteristics.points.enabled'] = !event.currentTarget.checked
-    }
-
-    super._updateObject(event, formData)
+    return object
   }
 }

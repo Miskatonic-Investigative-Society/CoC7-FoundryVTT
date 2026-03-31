@@ -1,142 +1,64 @@
-<form class="{{cssClass}} weapon flexcol-coc7" style="border: groove 2px;" autocomplete="off">
-  <div class="item-header flexrow-coc7" style="flex: 0 0 110px;">
-    <div class="item-property" style="display: flex; flex-direction: column; flex: 1;">
-      <div class="item-name" style="display: flex; flex-direction: row; height: 24px;">
-        <input class="item-class" style="flex: 1;" type="text" name="name" value="{{item.name}}" placeholder="name" />
-
-        <div class="flexrow-coc7" style="flex: 2;flex-wrap: nowrap;">
-          {{#if hasOwner}}
-            <select class="attribute-dtype" name="system.skill.main.id">
-              {{selectOptions weaponSkillGroups selected=data.system.skill.main.id localize=true valueAttr="id" nameAttr="id" labelAttr="name"}}
+<div class="flexrow item-header">
+  <div class="flexcol item-property">
+    <div class="flexrow">
+      <input type="text" name="name" value="{{document.name}}" placeholder="{{localize 'CoC7.Name'}}" />
+      <div class="flexrow" style="flex: 2">
+        {{#if document.isEmbedded}}
+          <select name="system.skill.main.id" style="flex: 1">
+            {{#unless document.system.isSkillSet}}
+              <option></option>
+            {{/unless}}
+            {{selectOptions weaponSkillGroups selected=document.system.skill.main.id localize=false valueAttr='id' labelAttr='name'}}
+          </select>
+          {{#if usesAlternateSkill}}
+            <select name="system.skill.alternativ.id" style="flex: 1">
+              {{#unless document.system.isAlternativeSkillSet}}
+                <option></option>
+              {{/unless}}
+              {{selectOptions weaponSkillGroups selected=document.system.skill.alternativ.id localize=false valueAttr='id' labelAttr='name'}}
             </select>
-
-            {{#if usesAlternateSkill}}
-              <select class="attribute-dtype" name="system.skill.alternativ.id">
-                {{selectOptions weaponSkillGroups selected=data.system.skill.alternativ.id localize=true valueAttr="id" nameAttr="id" labelAttr="name"}}
-              </select>
-            {{/if}}
-          {{else}}
-            <input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="system.skill.main.name" value="{{data.system.skill.main.name}}" placeholder="{{localize 'CoC7.WeaponSkillMain'}}" />
-            {{#if usesAlternateSkill}}
-              <input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="system.skill.alternativ.name" value="{{data.system.skill.alternativ.name}}" placeholder="{{localize 'CoC7.WeaponSkillAlt'}}" />
-            {{/if}}
           {{/if}}
-        </div>
-
-      </div>
-
-      <div style="display: flex; flex-direction: row; height: 24px;">
-        {{#if data.system.properties.rngd}}
-          <div style="display: flex; flex: 0 0 50%;">
-            <label>{{localize 'CoC7.WeaponRange'}} (yd) :</label>
-            <input class="item-skill" style="flex: 1;" type="text" name="system.range.normal.value" value="{{data.system.range.normal.value}}" placeholder="Base" />
-            {{#if data.system.properties.shotgun}}
-              <input class="item-skill" style="flex: 1;" type="text" name="system.range.long.value" value="{{data.system.range.long.value}}" placeholder="Long" />
-              <input class="item-skill" style="flex: 1;" type="text" name="system.range.extreme.value" value="{{data.system.range.extreme.value}}" placeholder="Xtrm" />
-            {{/if}}
-          </div>
-          <div style="display: flex; flex: 0 0 50%;">
-            <label>{{localize 'CoC7.WeaponDamage'}} :</label>
-            <input class="item-skill" style="flex: 1;" type="text" name="system.range.normal.damage" value="{{data.system.range.normal.damage}}" placeholder="0" />
-            {{#if data.system.properties.shotgun}}
-              <input class="item-skill" style="flex: 1;" type="text" name="system.range.long.damage" value="{{data.system.range.long.damage}}" placeholder="0" />
-              <input class="item-skill" style="flex: 1;" type="text" name="system.range.extreme.damage" value="{{data.system.range.extreme.damage}}" placeholder="0" />
-            {{/if}}
-          </div>
         {{else}}
-          <span style="flex: 0 0 50%; height: 22px; padding: 2px 3px;">{{localize 'CoC7.WeaponTouch'}}</span>
-          <label>{{localize 'CoC7.WeaponDamage'}} :</label>
-          <input class="item-skill" style="flex: 1;" type="text" name="system.range.normal.damage" value="{{data.system.range.normal.damage}}" placeholder="0" />
+          <input style="flex: 1" type="text" name="system.skill.main.name" value="{{document.system.skill.main.name}}" placeholder="{{localize 'CoC7.WeaponSkillMain'}}" />
+          {{#if usesAlternateSkill}}
+            <input style="flex: 1" type="text" name="system.skill.alternativ.name" value="{{document.system.skill.alternativ.name}}" placeholder="{{localize 'CoC7.WeaponSkillAlt'}}" />
+          {{/if}}
         {{/if}}
-      </div>
-
-      <div class="skill-attributes" style="display: block;" data-set="properties">
-        {{#each _properties as |property key|}}
-          <span class="weapon-property {{#if property.isEnabled}}switched-on{{/if}}" data-property="{{property.id}}">{{localize property.name}}</span>
-        {{/each}}
       </div>
     </div>
-
-    <img class="profile-img" style="flex: 0 0 100px;" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="100" width="100" />
-  </div>
-
-  {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs" style="flex: 0;" data-group="primary">
-    <a class="item" data-tab="details">{{localize 'CoC7.ItemDetails'}}</a>
-    <a class="item" data-tab="description">{{localize 'CoC7.Description'}}</a>
-    {{#if isKeeper}}
-      <a class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
-    {{/if}}
-  </nav>
-
-  {{!-- Sheet Body --}}
-  <section class="sheet-body">
-    <div class="tab skills flexcol-coc7 active" data-group="primary" data-tab="details">
-      <h3 class="form-header" style="flex:0;">{{ localize "CoC7.EraAvailability" }}</h3>
-      <div class="skill-attributes" style="margin-bottom: 6px;flex:0;" data-set="eras">
-        {{#each _eras as |era key|}}
-          <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{era.name}}</span>
-        {{/each}}
-      </div>
-
-      <div class="flexrow-coc7" style="flex: 0 0 auto; border-top: 2px groove #eeede0;">
-        <div class="flexrow-coc7" style="flex: 0 0 32%">
-          <label>{{localize 'CoC7.WeaponMalfunction'}} :</label>
-          <input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="system.malfunction" value="{{data.system.malfunction}}" placeholder="-" />
-        </div>
-        <div class="flexrow-coc7" title="{{localize 'CoC7.WeaponUsesPerRoundHint'}}" style="flex: 0 0 32%">
-          <label>{{localize 'CoC7.WeaponUsesPerRound'}} :</label>
-          <input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="system.usesPerRound.normal" value="{{data.system.usesPerRound.normal}}" placeholder="-" />
-        </div>
-        <div class="flexrow-coc7" style="flex: 0 0 32%">
-          <label>{{localize 'CoC7.WeaponMax'}} :</label>
-          <input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="system.usesPerRound.max" value="{{data.system.usesPerRound.max}}" placeholder="-" />
-        </div>
-        <div class="flexrow-coc7" style="flex: 0 0 32%">
-          <label>{{localize 'CoC7.WeaponBulletsInMag'}} :</label>
-          <input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="system.bullets" value="{{data.system.bullets}}" placeholder="-" />
-        </div>
-        {{#if data.system.properties.brst}}
-          <div class="flexrow-coc7" title="{{localize 'CoC7.BurstSizeHint'}}" style="flex: 0 0 32%">
-            <label>{{localize 'CoC7.BurstSize'}} :</label>
-            <input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="system.usesPerRound.burst" value="{{data.system.usesPerRound.burst}}" placeholder="-" />
-          </div>
-        {{/if}}
-        {{#if data.system.properties.blst}}
-          <div style="display: flex; flex: 0 0 32%;">
-            <label>{{localize 'CoC7.Weapon.BlastRadius'}} :</label>
-            <input class="weapon-detail" style="flex: 1;" type="text" name="system.blastRadius" value="{{data.system.blastRadius}}" placeholder="-" />
-          </div>
-        {{/if}}
-      </div>
-
-      <label>{{localize 'CoC7.ItemPrice'}} :</label>
-      <div class="flexrow-coc7" style="flex: none">
-        {{#each _eras as |era key|}}
-          {{#if era.isEnabled}}
-            <div style="display: flex; flex: 0 0 32%;">
-              <span class="item-era-price flex1" style="line-height: 20px;">{{localize era.name}} :</span><input class="item-price" style="flex: 0 0 40px;" type="text" name="system.price.{{era.id}}" value="{{era.price}}" placeholder="0" />
-            </div>
+    <div class="columns-two flexrow">
+      {{#if document.system.properties.rngd}}
+        <div class="column-row flexrow">
+          <label>{{localize 'CoC7.WeaponRange'}} (yd):</label>
+          <input class="item-skill" style="flex: 1;" type="text" name="system.range.normal.value" value="{{document.system.range.normal.value}}" placeholder="{{localize 'CoC7.rangeCombatCard.BaseRangeShort'}}" />
+          {{#if document.system.properties.shotgun}}
+            <input class="item-skill" style="flex: 1;" type="text" name="system.range.long.value" value="{{document.system.range.long.value}}" placeholder="{{localize 'CoC7.rangeCombatCard.LongRangeShort'}}" />
+            <input class="item-skill" style="flex: 1;" type="text" name="system.range.extreme.value" value="{{document.system.range.extreme.value}}" placeholder="{{localize 'CoC7.rangeCombatCard.ExtremeRangeShort'}}" />
           {{/if}}
-        {{/each}}
-      </div>
-
-      {{#if data.system.properties.spcl}}
-        <label>{{localize 'CoC7.WeaponSpecial'}} :</label>
-        <div class="special" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;">
-          {{editor enrichedDescriptionSpecial target="system.description.special" engine="prosemirror" button=true owner=owner editable=editable}}
+        </div>
+        <div class="column-row flexrow">
+          <label class="flex: 0 0 auto;">{{localize 'CoC7.WeaponDamage'}}:</label>
+          <input class="item-skill" style="flex: 1;" type="text" name="system.range.normal.damage" value="{{document.system.range.normal.damage}}" placeholder="0" />
+          {{#if document.system.properties.shotgun}}
+            <input class="item-skill" style="flex: 1;" type="text" name="system.range.long.damage" value="{{document.system.range.long.damage}}" placeholder="0" />
+            <input class="item-skill" style="flex: 1;" type="text" name="system.range.extreme.damage" value="{{document.system.range.extreme.damage}}" placeholder="0" />
+          {{/if}}
+        </div>
+      {{else}}
+        <label class="column-row flexrow">{{localize 'CoC7.WeaponTouch'}}</label>
+        <div class="column-row flexrow">
+          <label class="flex: 0 0 auto;">{{localize 'CoC7.WeaponDamage'}}:</label>
+          <input class="item-skill" style="flex: 1;" type="text" name="system.range.normal.damage" value="{{document.system.range.normal.damage}}" placeholder="0" />
         </div>
       {{/if}}
-
     </div>
-
-    <div class="tab description flexcol-coc7" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="description">
-      {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
-    </div>
-    {{#if isKeeper}}
-      <div class="tab keeper flexcol-coc7" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
-        {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
+    <div class="toggle-row flexrow">
+      <div class="toggle-attributes flexrow" data-set="properties">
+        {{#each _properties as |row|}}
+          <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+        {{/each}}
       </div>
-    {{/if}}
-  </section>
-</form>
+    </div>
+  </div>
+  <img class="profile-img" src="{{document.img}}" data-action="editImage" data-edit="img" />
+</div>

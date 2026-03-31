@@ -1,2150 +1,1311 @@
-/* global $, ChatMessage, CONST, Dialog, FormData, foundry, game, Hooks, Roll, TextEditor, ui */
-import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import { RollDialog } from '../../apps/roll-dialog.js'
-import CoC7RollNormalize from '../../apps/roll-normalize.js'
-import CoC7Check from '../../apps/check.js'
-import CoC7ContentLinkDialog from '../../apps/content-link-dialog.js'
-import { COC7 } from '../../constants.js'
-import CoCActor from './document-class.js'
-import CoC7Item from '../item/document-class.js'
-import CoC7ChatCombatMelee from '../../apps/chat-combat-melee.js'
-import CoC7ChatCombatRanged from '../../apps/chat-combat-ranged.js'
-import CoC7ConCheck from '../../apps/con-check.js'
-import { chatHelper, isCtrlKey } from '../../chat/helper.js'
-import CoC7Link from '../../apps/link.js'
-import CoC7ChatDamage from '../../apps/chat-damage.js'
+/* global ChatMessage CONFIG foundry fromUuid game Roll TokenDocument ui */
+import { FOLDER_ID } from '../../constants.js'
 import CoC7ActiveEffect from '../../apps/active-effect.js'
-import { CoC7ContextMenu } from '../../context-menu.js'
+import CoC7ChatDamage from '../../apps/chat-damage.js'
+import CoC7ConCheck from '../../apps/con-check.js'
+import CoC7ContentLinkDialog from '../../apps/content-link-dialog.js'
+import CoC7DelayedTooltip from '../../apps/delayed-tooltip.js'
+import CoC7Link from '../../apps/link.js'
+import CoC7ModelsItemWeaponSystem from '../item/weapon-system.js'
+import CoC7RollNormalize from '../../apps/roll-normalize.js'
+import CoC7SkillPopup from '../../apps/skill-popup.js'
 import CoC7Utilities from '../../apps/utilities.js'
+import deprecated from '../../deprecated.js'
 
-/**
- * Extend the basic ActorSheet with some very simple modifications
- */
-export default class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
-  _getHeaderButtons () {
-    const headerButtons = super._getHeaderButtons()
-    addCoCIDSheetHeaderButton(headerButtons, this)
-    return headerButtons
+export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
+  static DEFAULT_OPTIONS = {
+    classes: ['coc7', 'sheet'],
+    form: {
+      handler: CoC7ModelsActorGlobalSheet.#onSubmit,
+      submitOnChange: true
+    }
   }
-
-  async getData () {
-    const sheetData = await super.getData()
-
-    sheetData.showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
-
-    sheetData.canDragToken = !!this.token && game.user.isGM
-    sheetData.linkedActor = this.actor.prototypeToken?.actorLink === true
-    sheetData.isToken = this.actor.isToken
-    sheetData.itemsByType = {}
-    sheetData.skills = {}
-    sheetData.combatSkills = {}
-    sheetData.weapons = {}
-    sheetData.rangeWpn = []
-    sheetData.meleeWpn = []
-    sheetData.actorFlags = {}
-
-    sheetData.effects =
-      this.actor.type === 'character'
-        ? CoC7ActiveEffect.prepareActiveEffectCategories(this.actor.effects)
-        : CoC7ActiveEffect.prepareNPCActiveEffectCategories(this.actor.effects)
-
-    sheetData.permissionLimited = !game.user.isGM && (this.actor.ownership[game.user.id] ?? this.actor.ownership.default) === CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED
-
-    sheetData.isKeeper = game.user.isGM
-    sheetData.allowUnlock =
-      game.settings.get('CoC7', 'playerUnlockSheetMode') === 'always' ||
-      game.user.isGM ||
-      (game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' &&
-        game.settings.get('CoC7', 'charCreationEnabled'))
-    if (
-      game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' &&
-      game.settings.get('CoC7', 'charCreationEnabled')
-    ) {
-      sheetData.data.system.flags.locked = false
-    }
-
-    if (this.actor.type !== 'vehicle') {
-      if (!sheetData.data.system.characteristics) {
-        sheetData.data.system.characteristics = {
-          str: {
-            value: null,
-            short: 'CHARAC.STR',
-            label: 'CHARAC.Strength',
-            formula: null
-          },
-          con: {
-            value: null,
-            short: 'CHARAC.CON',
-            label: 'CHARAC.Constitution',
-            formula: null
-          },
-          siz: {
-            value: null,
-            short: 'CHARAC.SIZ',
-            label: 'CHARAC.Size',
-            formula: null
-          },
-          dex: {
-            value: null,
-            short: 'CHARAC.DEX',
-            label: 'CHARAC.Dexterity',
-            formula: null
-          },
-          app: {
-            value: null,
-            short: 'CHARAC.APP',
-            label: 'CHARAC.Appearance',
-            formula: null
-          },
-          int: {
-            value: null,
-            short: 'CHARAC.INT',
-            label: 'CHARAC.Intelligence',
-            formula: null
-          },
-          pow: {
-            value: null,
-            short: 'CHARAC.POW',
-            label: 'CHARAC.Power',
-            formula: null
-          },
-          edu: {
-            value: null,
-            short: 'CHARAC.EDU',
-            label: 'CHARAC.Education',
-            formula: null
-          }
-        }
-      }
-
-      if (!sheetData.data.system.attribs) {
-        sheetData.data.system.attribs = {
-          hp: {
-            value: null,
-            max: null,
-            short: 'HP',
-            label: 'Hit points',
-            auto: true
-          },
-          mp: {
-            value: null,
-            max: null,
-            short: 'HP',
-            label: 'Magic points',
-            auto: true
-          },
-          lck: { value: null, short: 'LCK', label: 'Luck' },
-          san: {
-            value: null,
-            max: 99,
-            short: 'SAN',
-            label: 'Sanity',
-            auto: true
-          },
-          mov: {
-            value: null,
-            short: 'MOV',
-            label: 'Movement rate',
-            auto: true
-          },
-          db: {
-            value: null,
-            short: 'DB',
-            label: 'Damage bonus',
-            auto: true
-          },
-          build: {
-            value: null,
-            short: 'BLD',
-            label: 'Build',
-            auto: true
-          },
-          armor: { value: null, auto: false }
-        }
-      }
-
-      if (!sheetData.data.system.biography) {
-        sheetData.data.system.biography = {
-          personalDescription: { type: 'string', value: '' }
-        }
-      }
-
-      if (!sheetData.data.system.infos) {
-        sheetData.data.system.infos = {
-          occupation: '',
-          age: '',
-          sex: '',
-          residence: '',
-          birthplace: '',
-          archetype: '',
-          organization: '',
-          playername: ''
-        }
-      }
-
-      if (!sheetData.data.system.flags) {
-        sheetData.data.system.flags = { locked: true, manualCredit: false }
-      }
-
-      if (!sheetData.data.system.credit) {
-        sheetData.data.system.credit = {
-          monetarySymbol: null,
-          multiplier: null,
-          spent: null,
-          assetsDetails: null
-        }
-      }
-
-      if (!sheetData.data.system.development) {
-        sheetData.data.system.development = {
-          personal: null,
-          occupation: null,
-          archetype: null,
-          experiencePackage: null
-        }
-      }
-
-      if (!sheetData.data.system.biography) sheetData.data.system.biography = []
-
-      sheetData.pulpRuleArchetype = game.settings.get('CoC7', 'pulpRuleArchetype')
-      sheetData.pulpRuleOrganization = game.settings.get(
-        'CoC7',
-        'pulpRuleOrganization'
-      )
-      if (!sheetData.pulpRuleArchetype) {
-        if (this.actor.experiencePackage) {
-          const doc = this.actor.experiencePackage
-          sheetData.hasExperiencePackage = true
-          sheetData.nameExperiencePackage = doc.name
-        }
-      }
-    }
-
-    sheetData.isDead = this.actor.dead
-    sheetData.isDying = this.actor.dying
-
-    if (sheetData.items) {
-      for (const item of sheetData.items) {
-        // si c'est une formule et qu'on peut l'evaluer
-        // ce bloc devrait etre déplacé dans le bloc _updateFormData
-        if (item.type === 'skill') {
-          if (item.system.properties.special) {
-            if (item.system.properties.fighting && !item.system.specialization) {
-              item.system.specialization = game.i18n.localize(
-                'CoC7.FightingSpecializationName'
-              )
-            }
-            if (item.system.properties.firearm && !item.system.specialization) {
-              item.system.specialization = game.i18n.localize(
-                'CoC7.FirearmSpecializationName'
-              )
-            }
-            if (item.system.properties.ranged && !item.system.specialization) {
-              item.system.specialization = game.i18n.localize(
-                'CoC7.RangedSpecializationName'
-              )
-            }
-          }
-
-          if (this.actor.type !== 'character') {
-            if (isNaN(Number(item.system.value))) {
-              let value = null
-              const parsed = {}
-              for (const [key, value] of Object.entries(
-                COC7.formula.actorsheet
-              )) {
-                if (key.startsWith('@') && value.startsWith('this.')) {
-                  parsed[key.substring(1)] = foundry.utils.getProperty(
-                    this,
-                    value.substring(5)
-                  )
-                }
-              }
-              try {
-                value = (
-                  await new Roll(item.system.value, parsed).evaluate({
-                    async: true
-                  })
-                ).total
-              } catch (err) {
-                console.warn(
-                  game.i18n.format('CoC7.ErrorUnableToParseSkillFormula', {
-                    value: item.system.value,
-                    name: item.name
-                  })
-                )
-                value = null
-              }
-
-              if (value) {
-                item.system.value = value
-                const itemToUpdate = this.actor.items.get(item._id)
-                console.info(
-                  `[COC7] (Actor:${this.name}) Evaluating skill ${item.name}:${item.system.value} to ${value}`
-                )
-                await itemToUpdate.update({
-                  'system.value': value
-                })
-              }
-            }
-
-            const skill = this.actor.items.get(item._id)
-            const { base, rawValue, value } = skill.system
-
-            // Assume fallback values, useful for initial setup of skills
-            item.system.rawValue = rawValue || value || base
-            item.system.value = value || base
-          } else {
-            const skill = this.actor.items.get(item._id)
-            item.system.base = await skill.asyncBase()
-
-            if (item.system.value) {
-              // This should be part of migration or done at init !
-              // Was done when skill value was changed to base + adjustement
-              const exp = item.system.adjustments?.experience
-                ? parseInt(item.system.adjustments.experience)
-                : 0
-              let updatedExp = exp + parseInt(item.system.value) - skill.value
-              if (updatedExp <= 0) updatedExp = null
-              console.info(
-                `[COC7] Updating skill ${skill.name} experience. Experience missing: ${updatedExp}`
-              )
-              await this.actor.updateEmbeddedDocuments('Item', [
-                {
-                  _id: item._id,
-                  'system.adjustments.experience': updatedExp,
-                  'system.value': null
-                }
-              ])
-              if (!item.system.adjustments) item.system.adjustments = {}
-              item.system.adjustments.experience = updatedExp
-              item.system.rawValue = skill.rawValue
-              item.system.value = skill.value // ACTIVE_EFFECT necessary to apply effects
-            } else {
-              item.system.value = skill.value // ACTIVE_EFFECT necessary to apply effects
-              item.system.rawValue = skill.rawValue
-            }
-          }
-        }
-
-        let list = sheetData.itemsByType[item.type]
-        if (!list) {
-          list = []
-          sheetData.itemsByType[item.type] = list
-        }
-        list.push(item)
-      }
-
-      for (const itemType in sheetData.itemsByType) {
-        if (itemType === 'skill') {
-          sheetData.itemsByType[itemType].sort(CoC7Utilities.sortBySpecializationThenName)
-        } else {
-          sheetData.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
-        }
-      }
-
-      // redondant avec matrice itembytype
-      sheetData.skills = sheetData.items
-        .filter(item => item.type === 'skill')
-        .sort(CoC7Utilities.sortBySpecializationThenName)
-
-      sheetData.meleeSkills = sheetData.skills.filter(
-        skill =>
-          skill.system.properties.combat === true &&
-          skill.system.properties.fighting === true
-      )
-      sheetData.rangeSkills = sheetData.skills.filter(
-        skill =>
-          skill.system.properties.combat === true &&
-          (skill.system.properties.firearm === true || skill.system.properties.ranged === true)
-      )
-
-      const cbtSkills = sheetData.skills.filter(
-        skill => skill.system.properties.combat === true
-      )
-      if (cbtSkills) {
-        for (const skill of cbtSkills) {
-          sheetData.combatSkills[skill._id] = skill
-        }
-      }
-
-      const weapons = sheetData.itemsByType.weapon
-
-      if (weapons) {
-        for (const weapon of weapons) {
-          weapon.usesAlternateSkill =
-            weapon.system.properties.auto === true ||
-            weapon.system.properties.brst === true
-          if (!weapon.system.ammo) weapon.system.ammo = 0
-
-          weapon.skillSet = true
-          // weapon.system.skill.main.name = '';
-          // weapon.system.skill.main.value = 0;
-          // weapon.system.skill.alternativ.name = '';
-          // weapon.system.skill.alternativ.value = 0;
-          if (weapon.system.skill.main.id === '') {
-            // TODO : si l'ID n'ests pas définie mais qu'un nom a été donné, utiliser ce nom et tanter de retrouver le skill
-            weapon.skillSet = false
-          } else {
-            // TODO : avant d'assiger le skill vérifier qu'il existe toujours.
-            // si il n'existe plus il faut le retrouver ou passer skillset a false.
-            const skill = this.actor.items.get(weapon.system.skill.main.id)
-            if (skill) {
-              weapon.system.skill.main.name = skill.system.skillName
-              weapon.system.skill.main.value = skill.value
-            } else {
-              weapon.skillSet = false
-            }
-
-            if (weapon.system.skill.alternativ.id !== '') {
-              const skill = this.actor.items.get(weapon.system.skill.alternativ.id)
-              if (skill) {
-                weapon.system.skill.alternativ.name = skill.system.skillName
-                weapon.system.skill.alternativ.value = skill.value
-              }
-            }
-          }
-
-          weapon.system._properties = []
-          for (const [key, value] of Object.entries(COC7.weaponProperties)) {
-            const property = {}
-            property.id = key
-            property.name = value
-            property.value = weapon.system.properties[key] === true
-            weapon.system._properties.push(property)
-          }
-
-          sheetData.weapons[weapon._id] = weapon
-          if (weapon.system.properties.rngd) sheetData.rangeWpn.push(weapon)
-          else sheetData.meleeWpn.push(weapon)
-        }
-      }
-
-      const token = this.token
-      sheetData.tokenId = token
-        ? `${token.parent?.id ? token.parent.id : 'TOKEN'}.${token.id}`
-        : null // REFACTORING (2)
-
-      sheetData.hasEmptyValueWithFormula = false
-      if (sheetData.data.system.characteristics) {
-        for (const characteristic of Object.values(sheetData.data.system.characteristics)) {
-          if (!characteristic.value) characteristic.editable = true
-          characteristic.hard = Math.floor(characteristic.value / 2)
-          characteristic.extreme = Math.floor(characteristic.value / 5)
-
-          // If no value && no formula don't display charac.
-          if (!characteristic.value && !characteristic.formula) {
-            characteristic.display = false
-          } else {
-            characteristic.display = true
-          }
-
-          // if any characteristic has no value but has a formula.
-          if (!characteristic.value && characteristic.formula) {
-            characteristic.hasEmptyValueWithFormula = true
-          }
-
-          sheetData.hasEmptyValueWithFormula =
-            sheetData.hasEmptyValueWithFormula ||
-            characteristic.hasEmptyValueWithFormula
-        }
-      }
-    }
-
-    // For compat with previous characters test if auto is definied, if not we define it
-    if (!['vehicle', 'container'].includes(this.actor.type)) {
-      const auto = this.actor.checkUndefinedAuto()
-      sheetData.data.system = foundry.utils.mergeObject(sheetData.data.system, auto)
-    } else {
-      sheetData.data.system.attribs.hp.auto = false
-      sheetData.data.system.attribs.mp.auto = false
-      sheetData.data.system.attribs.san.auto = false
-      sheetData.data.system.attribs.mov.auto = false
-      sheetData.data.system.attribs.db.auto = false
-      sheetData.data.system.attribs.build.auto = false
-    }
-
-    if (sheetData.data.system.attribs.mp.value < 0) sheetData.data.system.attribs.mp.value = null
-    if (sheetData.data.system.attribs.san.value < 0) sheetData.data.system.attribs.san.value = null
-
-    if (!['vehicle'].includes(this.actor.type)) {
-      if (sheetData.data.system.biography instanceof Array && sheetData.data.system.biography.length) {
-        sheetData.data.system.biography[0].isFirst = true
-        sheetData.data.system.biography[sheetData.data.system.biography.length - 1].isLast = true
-      }
-    }
-    sheetData.showInventoryItems = false
-    sheetData.showInventoryBooks = false
-    sheetData.showInventorySpells = false
-    sheetData.showInventoryTalents = false
-    sheetData.showInventoryStatuses = false
-    sheetData.showInventoryWeapons = false
-    sheetData.showInventoryArmor = false
-
-    sheetData.hasConditions =
-      this.actor.effects.size > 0 ||
-      (typeof this.actor.system.conditions !== 'undefined' &&
-        Object.keys(this.actor.system.conditions).filter(
-          condition => this.actor.system.conditions[condition].value
-        ).length > 0)
-
-    return sheetData
-  }
-
-  /* -------------------------------------------- */
-  // static parseFormula (formula) {
-  //   let parsedFormula = formula
-  //   for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
-  //     parsedFormula = parsedFormula.replace(key, value)
-  //   }
-  //   return parsedFormula
-  // }
-
-  get tokenKey () {
-    ui.notifications.error('DEPRECATED SHOULD NOT HAPPEN!')
-    throw new Error('global-sheet.js get tokenKey(): DEPRECATED SHOULD NOT HAPPEN!')
-    // if( this.token) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`;  //REFACTORING (2)
-    // return this.actor.id;
-  }
-
-  onCloseSheet () {
-    // this.actor.locked = true;
-  }
-
-  /* -------------------------------------------- */
 
   /**
-   * Activate event listeners using the prepared sheet HTML
-   * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
    */
-  activateListeners (html) {
-    super.activateListeners(html)
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
 
-    html.find('.section-header').click(this._onSectionHeader.bind(this))
-    html.find('.items-header').click(this._onItemHeader.bind(this))
-    html.find('.inventory-header').click(this._onInventoryHeader.bind(this))
-    html.find('.read-only').dblclick(this._toggleReadOnly.bind(this))
-    html.find('.add-ammo').click(this._onAddAmo.bind(this))
-    html.find('.reload-weapon').click(event => this._onReloadWeapon(event))
-    html.find('.reload-weapon').on('contextmenu', event => this._onReloadWeapon(event))
-
-    // Owner Only Listeners
-    if (this.actor.isOwner && !(this.actor.compendium?.locked ?? false)) {
-      html.find('.lock').click(this._onLockClicked.bind(this))
-      html.find('.flag').click(this._onFlagClicked.bind(this))
-      html.find('.formula').click(this._onFormulaClicked.bind(this))
-      html.find('.auto-toggle').click(this._onAutoToggle.bind(this))
-      html.find('.notes-toggle').click(this._onNotesToggle.bind(this))
+    /* // FoundryV12 polyfill */
+    if (!context.document) {
+      context.document = this.document
     }
 
-    // Owner Only, not available from compendium
-    /* // FoundryVTT V13 */
-    if (this.actor.isOwner && (this.actor.compendium === null || typeof this.actor.compendium === 'undefined')) {
-      if (game.settings.get('CoC7', 'useContextMenus')) {
-        if (!this.menus) this.menus = []
-
-        const rollMenu = {
-          id: 'skill-roll',
-          classes: 'roll-menu',
-          section: [
-            {
-              classes: 'main',
-              items: [
-                { action: 'roll', label: 'Roll' },
-                { action: 'opposed-roll', label: 'Opposed roll' },
-                { action: 'combined-roll', label: 'Combined roll' }
-              ]
-            },
-            {
-              classes: 'keeper',
-              visibility: 'gm',
-              items: [
-                {
-                  label: { icon: 'fas fa-link', text: 'Link' },
-                  subMenu: {
-                    items: [
-                      { action: 'link-tool', label: 'Open in link tool' },
-                      { action: 'send-chat', label: 'Send to chat' },
-                      { action: 'copy-to-clipboard', label: 'Copy to clip-board' }
-                    ]
-                  }
-                },
-                { action: 'request-roll', label: 'Request roll' }
-              ]
-            }
-          ]
-        }
-
-        const sanMenu = {
-          id: 'san-roll',
-          classes: 'roll-menu',
-          section: [
-            {
-              classes: 'main',
-              items: [
-                { action: 'encounter', label: 'Encounter' },
-                { action: 'roll', label: 'Roll' },
-                { action: 'opposed-roll', label: 'Opposed roll' },
-                { action: 'combined-roll', label: 'Combined roll' }
-              ]
-            },
-            {
-              classes: 'keeper',
-              visibility: 'trusted',
-              items: [
-                { action: 'request-roll', label: 'Request roll' },
-                {
-                  label: { icon: 'fas fa-link', text: 'Link' },
-                  subMenu: {
-                    items: [
-                      { action: 'link-tool', label: 'Open in link tool' },
-                      { action: 'send-chat', label: 'Send to chat' },
-                      { action: 'copy-to-clipboard', label: 'Copy to clip-board' },
-                      { action: 'link-encounter', label: 'Encounter' }
-                    ]
-                  }
-                }
-              ]
-            }
-          ]
-        }
-
-        const rollContextMenu = new CoC7ContextMenu()
-        rollContextMenu.bind(rollMenu, html, this._onContextMenuClick.bind(this))
-        this.menus.push(rollContextMenu)
-
-        const sanContextMenu = new CoC7ContextMenu()
-        sanContextMenu.bind(sanMenu, html, this._onContextMenuClick.bind(this))
-        this.menus.push(sanContextMenu)
+    context.canDragToken = (context.document.token instanceof TokenDocument) && game.user.isGM
+    context.linkedActor = (context.document.token ?? context.document.prototypeToken)?.actorLink === true
+    context.isToken = context.document.isToken
+    context.tokenUuid = context.document.token?.uuid
+    context.itemsByType = {}
+    for (const document of context.document.items) {
+      if (typeof context.itemsByType[document.type] === 'undefined') {
+        context.itemsByType[document.type] = []
+      }
+      context.itemsByType[document.type].push(document)
+    }
+    for (const itemType in context.itemsByType) {
+      if (itemType === 'skill') {
+        context.itemsByType[itemType].sort(CoC7Utilities.sortSkillByNameWithOwn)
       } else {
-        html
-          .find('.characteristic-label')
-          .contextmenu(this._onOpposedRoll.bind(this))
-        html
-          .find('.skill-name.rollable')
-          .contextmenu(this._onOpposedRoll.bind(this))
-        html
-          .find('.attribute-label.rollable')
-          .contextmenu(this._onOpposedRoll.bind(this))
+        context.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
       }
+    }
+    context.meleeSkills = (context.itemsByType.skill ?? []).filter(doc => doc.system.properties.fighting === true)
+    context.rangeSkills = (context.itemsByType.skill ?? []).filter(doc => doc.system.properties.firearm === true || doc.system.properties.ranged === true)
 
-      // context menu bind
-      html
-        .find('.characteristic-label')
-        .click(this._onRollCharacteriticTest.bind(this))
-      html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
-      html.find('.skill-image').click(this._onRollSkillTest.bind(this))
-      html
-        .find('.attribute-label.rollable')
-        .click(this._onRollAttribTest.bind(this))
+    if (context.document.system.schema.getField('flags')?.getField('locked')) {
+      context.showInventoryItems = !context.document.system.flags.locked || typeof context.itemsByType.item !== 'undefined'
+      context.showInventoryBooks = !context.document.system.flags.locked || typeof context.itemsByType.book !== 'undefined'
+      context.showInventorySpells = !context.document.system.flags.locked || typeof context.itemsByType.spell !== 'undefined'
+      context.showInventoryTalents = (!context.document.system.flags.locked && game.settings.get(FOLDER_ID, 'pulpRuleTalents')) || typeof context.itemsByType.talent !== 'undefined'
+      context.showInventoryStatuses = !context.document.system.flags.locked || typeof context.itemsByType.status !== 'undefined'
+      context.showInventoryWeapons = !context.document.system.flags.locked || typeof context.itemsByType.weapon !== 'undefined'
+      context.showInventoryArmor = !context.document.system.flags.locked || typeof context.itemsByType.armor !== 'undefined'
 
-      html
-        .find('.token-drag-handle')
-        .on('dragstart', this._onDragTokenStart.bind(this))
+      context.hasInventory = this.hasInventory(context)
+    }
 
-      html
-        .find('.characteristic-label')
-        .on('dragstart', event => this._onDragCharacteristic(event))
-      html
-        .find('.attribute-label')
-        .on('dragstart', event => this._onDragAttribute(event))
-      html
-        .find('.san-check')
-        .on('dragstart', event => this._onDragSanCheck(event))
+    context.effects = context.document.type === 'character' ? CoC7ActiveEffect.prepareActiveEffectCategories(context.document.effects) : CoC7ActiveEffect.prepareNPCActiveEffectCategories(context.document.effects)
 
-      html
-        .find('.weapon-name.rollable')
-        .contextmenu(this._onOpposedRoll.bind(this))
+    context.allowUnlock = this.allowUnlock
 
-      html
-        .find('.roll-characteritics')
-        .click(this._onRollCharacteriticsValue.bind(this))
-      html
-        .find('.average-characteritics')
-        .click(this._onAverageCharacteriticsValue.bind(this))
-      html.find('.toggle-switch').click(this._onToggle.bind(this))
+    const overrides = foundry.utils.flattenObject(context.document.overrides)
 
-      // Status monitor
-      if (game.user.isGM || game.settings.get('CoC7', 'statusPlayerEditable')) {
-        html.find('.reset-counter').click(this._onResetCounter.bind(this))
-        html
-          .find('.condition-monitor')
-          .click(this._onConditionToggle.bind(this))
-        html.find('.is-dying').click(this.heal.bind(this))
-        html.find('.is-dead').click(this.revive.bind(this))
+    if (context.document.system.schema.getField('characteristics')) {
+      context.characteristics = {}
+      for (const [key, value] of context.document.system.schema.getField('characteristics').entries()) {
+        context.characteristics[key] = {
+          key,
+          short: value.label,
+          label: value.hint,
+          value: context.document.system.characteristics[key].value,
+          formula: context.document.system.characteristics[key].formula,
+          activeEffectValue: typeof overrides['system.characteristics.' + key + '.value'] !== 'undefined',
+          sourceValue: context.document._source.system.characteristics[key].value
+        }
       }
+    }
+    if (context.document.system.schema.getField('attribs')) {
+      context.attribs = {}
+      for (const key of context.document.system.schema.getField('attribs').keys()) {
+        context.attribs[key] = context.document.system.attribs[key]
+        if (typeof context.attribs[key].value !== 'undefined') {
+          context.attribs[key].activeEffectValue = typeof overrides['system.attribs.' + key + '.value'] !== 'undefined'
+          context.attribs[key].sourceValue = context.document._source.system.attribs[key].value
+        }
+        if (typeof context.attribs[key].max !== 'undefined') {
+          context.attribs[key].activeEffectMax = typeof overrides['system.attribs.' + key + '.max'] !== 'undefined'
+          context.attribs[key].sourceMax = context.document._source.system.attribs[key].max
+        }
+        if (typeof context.attribs[key].dailyLoss !== 'undefined') {
+          context.attribs[key].activeEffectDailyLoss = typeof overrides['system.attribs.' + key + '.dailyLoss'] !== 'undefined'
+          context.attribs[key].sourceDailyLoss = context.document._source.system.attribs[key].dailyLoss
+        }
+        if (typeof context.attribs[key].dailyLimit !== 'undefined') {
+          context.attribs[key].activeEffectDailyLimit = typeof overrides['system.attribs.' + key + '.dailyLimit'] !== 'undefined'
+          context.attribs[key].sourceDailyLimit = context.document._source.system.attribs[key].dailyLimit
+        }
+      }
+    }
 
-      html.find('.dying-check').click(this.checkForDeath.bind(this))
+    if (context.document.system.schema.getField('special')) {
+      context.special = {}
+      for (const key of context.document.system.schema.getField('special').keys()) {
+        context.special[key] = context.document.system.special[key]
+        switch (key) {
+          case 'attacksPerRound':
+            context.special[key] = {
+              activeEffectValue: typeof overrides['system.special.' + key] !== 'undefined',
+              value: context.special[key],
+              sourceValue: context.document._source.system.special[key]
+            }
+            break
+          case 'movement':
+            for (const offset in context.special[key]) {
+              context.special[key][offset].activeEffectValue = typeof overrides['system.special.' + key + '.' + offset + '.value'] !== 'undefined'
+              context.special[key][offset].sourceValue = context.document._source.system.special[key][offset].value
+            }
+            break
+          case 'sanLoss':
+            context.special[key].activeEffectCheckFailled = typeof overrides['system.special.' + key + '.checkFailled'] !== 'undefined'
+            context.special[key].sourceCheckFailled = context.document._source.system.special[key].checkFailled
+            context.special[key].activeEffectCheckPassed = typeof overrides['system.special.' + key + '.checkPassed'] !== 'undefined'
+            context.special[key].sourceCheckPassed = context.document._source.system.special[key].checkPassed
+            break
+        }
+      }
+    }
 
-      html.find('.item .item-image').click(event => this._onItemRoll(event))
-      html
-        .find('.weapon-name.rollable')
-        .click(event => this._onWeaponRoll(event))
-      html
-        .find('.item-name.effect-name')
-        .click(event => this._onEffect(event))
-      // html
-      //   .find('.item-name.effect-name')
-      //   .keydown((event) => {
-      //     if (isCtrlKey(event)) {
-      //       event.currentTarget.classList.add('pointer')
-      //     }
-      //   })
-      // html
-      //   .find('.item-name.effect-name')
-      //   .keydown((event) => {
-      //     if (isCtrlKey(event)) {
-      //       event.currentTarget.classList.remove('pointer')
-      //     }
-      //   })
-      html
-        .find('.weapon-skill.rollable')
-        .click(async event => this._onWeaponSkillRoll(event))
-      html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this))
+    context.pulpRuleArchetype = game.settings.get(FOLDER_ID, 'pulpRuleArchetype') || context.document.archetype
+    context.pulpRuleOrganization = game.settings.get(FOLDER_ID, 'pulpRuleOrganization')
+    if (!context.pulpRuleArchetype) {
+      if (context.document.experiencePackage) {
+        const doc = context.document.experiencePackage
+        context.hasExperiencePackage = true
+        context.nameExperiencePackage = doc.name
+      }
+    }
 
-      const wheelInputs = html.find('.attribute-value')
-      for (const wheelInput of wheelInputs) {
-        wheelInput.addEventListener('wheel', event => this._onWheel(event), {
-          passive: true
+    context.rangeWpn = context.itemsByType.weapon?.filter(d => d.system.properties.rngd) ?? []
+    context.meleeWpn = context.itemsByType.weapon?.filter(d => !d.system.properties.rngd) ?? []
+
+    context.isKeeper = game.user.isGM
+
+    context._properties = [{
+      id: 'melee',
+      name: 'CoC7.Weapon.Property.Melee',
+      tooltip: ''
+    }]
+    for (const [key, value] of CoC7ModelsItemWeaponSystem.schema.getField('properties').entries()) {
+      context._properties.push({
+        id: key,
+        name: value.label,
+        tooltip: value.hint
+      })
+    }
+
+    if (context.document.system.schema.getField('conditions')) {
+      context.hasConditions = context.document.effects.size > 0 || Object.keys(context.document.system.conditions).filter(condition => context.document.system.conditions[condition].value).length > 0
+    }
+
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+
+    if (typeof context.tabs?.[partId] !== 'undefined') {
+      context.tab = context.tabs[partId]
+    } else {
+      context.tab = undefined
+    }
+
+    /* // FoundryV12 polyfill */
+    if (game.release.generation === 12) {
+      context.editable = this.isEditable
+    }
+
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
+
+    this.element.querySelectorAll('.tab-group-header').forEach((element) => element.addEventListener('click', (event) => {
+      const outer = element.closest('.tab-group')
+      const key = 'panel' + outer.dataset.panel
+      const saveable = this.isEditable && typeof this.document.system.flags[key] !== 'undefined'
+      if (outer.dataset.slideUnder === 'on') {
+        const button = outer.closest('section.window-content').querySelector('.slide-out-notes.clickable')
+        const fn = () => {
+          if (button.classList.contains('slid-out-notes')) {
+            outer.classList.remove('sliding-out-notes')
+          }
+          element.removeEventListener('transitionend', fn)
+        }
+        outer.addEventListener('transitionend', fn)
+        outer.classList.add('sliding-out-notes')
+        if (button.classList.contains('slid-out-notes')) {
+          button.classList.remove('slid-out-notes')
+          outer.classList.add('slide-out-notes')
+          if (saveable) {
+            this.document.update({ ['system.flags.' + key]: false }, { render: false })
+          }
+        } else {
+          button.classList.add('slid-out-notes')
+          outer.classList.remove('slide-out-notes')
+          if (saveable) {
+            this.document.update({ ['system.flags.' + key]: true }, { render: false })
+          }
+        }
+        return
+      }
+      if (CoC7Utilities.htmlElementToggled(outer)) {
+        CoC7Utilities.htmlElementToggleHide(outer)
+        if (saveable) {
+          this.document.update({ ['system.flags.' + key]: false }, { render: false })
+        }
+      } else {
+        const div = outer.querySelector('.tab-group-tab')
+        div.classList.remove('html-element-hidden')
+        CoC7Utilities.htmlElementToggleShow(outer, div)
+        if (saveable) {
+          this.document.update({ ['system.flags.' + key]: true }, { render: false })
+        }
+      }
+    }))
+    this.element.querySelector('.token-drag-handle')?.addEventListener('dragstart', this._onDragTokenStart.bind(this))
+    this.element.querySelector('.san-check')?.addEventListener('dragstart', this._onDragSanCheck.bind(this))
+
+    this.element.querySelectorAll('.item-name.effect-name').forEach((element) => element.addEventListener('click', this._onEffect.bind(this)))
+
+    this.element.querySelectorAll('.attribute-value').forEach((element) => element.addEventListener('wheel', this._onWheel.bind(this), {
+      passive: true
+    }))
+
+    this.element.querySelectorAll('.item-popup').forEach((element) => element.addEventListener('click', this._onItemPopup.bind(this)))
+
+    this.element.querySelector('.slide-out-notes.clickable')?.addEventListener('click', (event) => {
+      const tab = event.currentTarget.closest('section.window-content').querySelector('.tab-group-notes .tab-group-header')
+      tab.dispatchEvent(new Event('click'))
+    })
+
+    this.element.querySelectorAll('.weapon-row').forEach((element) => {
+      element.querySelector('.expand-arrow')?.addEventListener('click', async (event) => {
+        event.preventDefault()
+        const li = event.currentTarget.closest('.item')
+        if (!li.dataset.itemUuid) {
+          return
+        }
+        const item = await fromUuid(li.dataset.itemUuid)
+        if (item) {
+          if (CoC7Utilities.htmlElementToggled(li)) {
+            CoC7Utilities.htmlElementToggleHide(li, { remove: true })
+            element.classList.remove('expanded')
+          } else {
+            let div = li.querySelector('.html-element-toggled')
+            if (!div) {
+              div = document.createElement('div')
+              div.style.gridArea = 'details'
+              div.style.display = 'grid'
+              await CoC7Utilities.setItemSummaryHtml(div, item, this.document)
+              li.append(div)
+            }
+            CoC7Utilities.htmlElementToggleShow(li, div)
+            element.classList.add('expanded')
+          }
+        }
+      })
+    })
+
+    this.element.querySelectorAll('.item div.show-detail').forEach((element) => element.addEventListener('click', this._onItemSummary.bind(this)))
+
+    // Everything below here is only needed if the sheet is editable
+    if (!this.isEditable) return
+
+    /* // FoundryVTT V12 */
+    if (game.release.generation === 12) {
+      deprecated.ActorAppV2DragDrop(this)
+      this.element.querySelectorAll('img[data-action="editImage"]').forEach((element) => element.addEventListener('click', async (event) => {
+        deprecated.AppV2EditImage(event, this.document, this.element, { submitOnChange: this.options.form.submitOnChange, position: this.position })
+      }))
+    }
+
+    this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', (event) => { this._onClickToggle(event) }))
+
+    this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', (event) => {
+      event.preventDefault()
+      switch (event.currentTarget.dataset.action) {
+        case 'auto-toggle':
+          this._onAttributeAutoToggleClicked(event)
+          break
+        case 'biography-add':
+          this.document.createBioSection().then(() => {
+            this.render({ force: true })
+          })
+          break
+        case 'biography-move-down':
+          {
+            const index = parseInt(event.target.closest('.bio-section').dataset.index, 10)
+            this.document.moveBioSectionDown(index)
+          }
+          break
+        case 'biography-move-up':
+          {
+            const index = parseInt(event.target.closest('.bio-section').dataset.index, 10)
+            this.document.moveBioSectionUp(index)
+          }
+          break
+        case 'biography-remove':
+          {
+            const index = parseInt(event.target.closest('.bio-section').dataset.index, 10)
+            this.document.deleteBioSection(index)
+          }
+          break
+        case 'characteristics-average':
+          this.document.averageCharacteristicsValue()
+          break
+        case 'characteristics-roll':
+          this.document.rollCharacteristicsValue()
+          break
+        case 'condition':
+          this._onConditionToggle(event)
+          break
+        case 'dying-check':
+          this.checkForDeath(event)
+          break
+        case 'item-add':
+          this._onItemAdd(event)
+          break
+        case 'item-delete':
+          this._onItemDelete(event)
+          break
+        case 'item-edit':
+          this._onItemEdit(event)
+          break
+        case 'item-trade':
+          CoC7Utilities.tradeItem(event.currentTarget.closest('.item')?.dataset.itemUuid)
+          break
+        case 'reset-counter':
+          this.document.resetDailySanity()
+          break
+        case 'toggle-flag':
+          this._onFlagClicked(event)
+          break
+        case 'toggleSkillFlag':
+          this._onFlagSkillClicked(event)
+          break
+        case 'weapon-damage':
+          this._onWeaponDamage(event)
+          break
+        case 'notes-toggle':
+          this.document.update({ 'system.attribs.armor.notes': !this.document.system.attribs.armor.notes })
+          break
+      }
+    }))
+    this.element.querySelectorAll('.reload-weapon').forEach((element) => {
+      element.addEventListener('click', this._onReloadWeapon.bind(this))
+      element.addEventListener('contextmenu', this._onReloadWeapon.bind(this))
+    })
+    this.element.querySelectorAll('.item div.show-detail').forEach((element) => element.addEventListener('dblclick', this._onItemEdit.bind(this)))
+    this.element.querySelectorAll('.item-edit').forEach((element) => element.addEventListener('click', this._onItemEdit.bind(this)))
+    this.element.querySelectorAll('.development-flag').forEach((element) => element.addEventListener('dblclick', async (event) => {
+      event.preventDefault()
+      const itemUuid = event.target.closest('.item').dataset.itemUuid
+      const document = await fromUuid(itemUuid)
+      if (document) {
+        document.update({
+          'system.flags.developement': !document.system.flags.developement
+        })
+      }
+    }))
+    this.element.querySelectorAll('.skill-name').forEach((element) => element.addEventListener('change', this._onSkillSetName.bind(this)))
+    this.element.querySelectorAll('.npc-skill-score').forEach((element) => element.addEventListener('change', this._onSkillSetValue.bind(this)))
+    this.element.querySelectorAll('.skill-adjustment').forEach((element) => element.addEventListener('change', this._onSkillSetAdjustment.bind(this)))
+
+    CoC7ActiveEffect._onRender(this.element, context.document)
+
+    this.element.querySelector('.luck-development')?.addEventListener('click', (event) => {
+      if (!event.detail || event.detail === 1) {
+        this.document.developLuck(event.shiftKey)
+      }
+    })
+
+    this.element.querySelector('.skill-development')?.addEventListener('click', (event) => {
+      if (!event.detail || event.detail === 1) {
+        this.document.developmentPhase(event.shiftKey)
+      }
+    })
+
+    this.element.querySelector('.clear_conditions')?.addEventListener('click', (event) => {
+      const disable = {}
+      for (const condition in this.document.system.conditions) {
+        if (this.document.system.conditions[condition].value === true) {
+          disable[`system.conditions.${condition}.value`] = false
+        }
+      }
+      if (Object.keys(disable).length > 0) {
+        this.actor.update(disable)
+      }
+      const effects = this.document.effects.map(effect => effect.id)
+      if (effects.length > 0) {
+        this.document.deleteEmbeddedDocuments('ActiveEffect', effects)
+      }
+    })
+
+    this.element.querySelectorAll('.read-only').forEach((element) => element.addEventListener('dblclick', this._toggleReadOnly.bind(this)))
+
+    // Everything below here is not available if in compendium
+    /* // FoundryVTT V12 */
+    if (context.document.inCompendium ?? !!context.document.pack) return
+
+    this.element.querySelectorAll('.attribute-name.rollable').forEach((element) => {
+      element.addEventListener('click', this._onRollAttribTest.bind(this))
+      element.addEventListener('contextmenu', this._onOpposedRoll.bind(this))
+      element.addEventListener('dragstart', this._onDragAttribute.bind(this))
+      if (typeof element.dataset.tooltip === 'undefined') {
+        CoC7DelayedTooltip.init(element, this.toolTipAttributeEnter.bind(this))
+      }
+    })
+    this.element.querySelectorAll('.characteristic-name.rollable').forEach((element) => {
+      element.addEventListener('click', this._onRollCharacteristicTest.bind(this))
+      element.addEventListener('contextmenu', this._onOpposedRoll.bind(this))
+      element.addEventListener('dragstart', this._onDragCharacteristic.bind(this))
+      if (typeof element.dataset.tooltip === 'undefined') {
+        CoC7DelayedTooltip.init(element, this.toolTipCharacteristicEnter.bind(this))
+      }
+    })
+    this.element.querySelectorAll('.skill-name.rollable').forEach((element) => {
+      element.addEventListener('click', this._onRollSkillTest.bind(this))
+      element.addEventListener('contextmenu', this._onOpposedRoll.bind(this))
+      if (typeof element.dataset.tooltip === 'undefined') {
+        CoC7DelayedTooltip.init(element, this.toolTipSkillEnter.bind(this))
+      }
+    })
+    this.element.querySelectorAll('.weapon-name.rollable').forEach((element) => {
+      element.addEventListener('click', this._onWeaponRoll.bind(this))
+      element.addEventListener('contextmenu', this._onOpposedRoll.bind(this))
+    })
+  }
+
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<HTMLElement>}
+   */
+  async _renderFrame (options) {
+    const frame = await super._renderFrame(options)
+
+    /* // FoundryV12 polyfill */
+    if (!foundry.utils.isNewerVersion(game.version, 13)) {
+      frame.setAttribute('open', true)
+    }
+
+    return frame
+  }
+
+  /**
+   * Add tooltip and basic tooltip to skill element
+   * @param {HtmlElement} element
+   */
+  toolTipSkillEnter (element) {
+    const isCombat = element.classList?.contains('combat')
+    const data = {
+      skill: element.dataset.nameTooltip,
+      regular: element.dataset.valueTooltip,
+      hard: Math.floor(element.dataset.valueTooltip / 2),
+      extreme: Math.floor(element.dataset.valueTooltip / 5)
+    }
+    const basicToolTip = game.i18n.format('CoC7.ToolTipShort', data)
+    let toolTip = game.i18n.format(isCombat ? 'CoC7.ToolTipCombat' : 'CoC7.ToolTipSkill', data)
+    if (game.user.isGM) {
+      toolTip = toolTip + game.i18n.format('CoC7.ToolTipKeeperSkill', {
+        other: game.settings.get(FOLDER_ID, 'stanbyGMRolls') && this.document.hasPlayerOwner
+          ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+            name: this.document.name
+          })
+          : ''
+      })
+    }
+    element.dataset.generatedBasicTooltip = basicToolTip
+    element.dataset.generatedTooltip = toolTip
+  }
+
+  /**
+   * Add tooltip and basic tooltip to characteristic element
+   * @param {HtmlElement} element
+   */
+  toolTipCharacteristicEnter (element) {
+    let toolTip = ''
+    let basicToolTip = ''
+    if (typeof this.document.system.characteristics[element.dataset.tooltipKey] !== 'undefined') {
+      const data = {
+        skill: game.i18n.localize(CONFIG.Actor.dataModels.character.schema.getField('characteristics').getField(element.dataset.tooltipKey).hint),
+        regular: this.document.system.characteristics[element.dataset.tooltipKey].value,
+        hard: Math.floor(this.document.system.characteristics[element.dataset.tooltipKey].value / 2),
+        extreme: Math.floor(this.document.system.characteristics[element.dataset.tooltipKey].value / 5)
+      }
+      toolTip = toolTip + game.i18n.format('CoC7.ToolTipSkill', data)
+      basicToolTip = game.i18n.format('CoC7.ToolTipShort', data)
+      if (game.user.isGM) {
+        toolTip = toolTip + game.i18n.format('CoC7.ToolTipKeeperSkill', {
+          other: game.settings.get(FOLDER_ID, 'stanbyGMRolls') && this.document.hasPlayerOwner
+            ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+              name: this.document.name
+            })
+            : ''
         })
       }
     }
-
-    // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return
-
-    html.find('.show-detail').click(event => this._onItemSummary(event))
-    html.find('.item-popup').click(this._onItemPopup.bind(this))
-
-    // Update Inventory Item
-    html.find('.show-detail').dblclick(event => this._onRenderItemSheet(event))
-    html.find('.item-edit').click(event => this._onRenderItemSheet(event))
-
-    // Delete Inventory Item
-    html.find('.item-delete').click(async ev => {
-      const li = $(ev.currentTarget).parents('.item')
-      const itemToDelete = this.actor.items.get(li.data('itemId'), {
-        strict: true
-      })
-      await itemToDelete.delete()
-      li.slideUp(200, () => this.render(false))
-    })
-
-    html.find('.add-item').click(ev => {
-      ev.stopPropagation()
-      switch (ev.currentTarget.dataset.type) {
-        case 'armor':
-          this.actor.createEmptyArmor(ev)
-          break
-        case 'book':
-          this.actor.createEmptyBook(ev)
-          break
-        case 'item':
-          this.actor.createEmptyItem(ev)
-          break
-        case 'skill':
-          this.actor.createEmptySkill(ev)
-          break
-        case 'spell':
-          this.actor.createEmptySpell(ev)
-          break
-        case 'weapon':
-          {
-            const properties = {}
-            if (ev.currentTarget.dataset.melee) {
-              properties.melee = true
-            } else if (ev.currentTarget.dataset.rngd) {
-              properties.rngd = true
-            }
-            this.actor.createEmptyWeapon(ev, properties)
-          }
-          break
-      }
-    })
-
-    // html.find('.clean-skill-list').click(() => {
-    //   this.actor.cleanSkills()
-    // })
-
-    html.find('.item-trade').click(this._onTradeItem.bind(this))
-
-    html.find('.add-new-section').click(() => {
-      this.actor.createBioSection()
-      this.render()
-    })
-
-    html.find('.delete-section').click(ev => {
-      const index = parseInt(
-        ev.currentTarget.closest('.bio-section').dataset.index
-      )
-      this.actor.deleteBioSection(index)
-    })
-
-    html.find('.move-section-up').click(ev => {
-      const index = parseInt(
-        ev.currentTarget.closest('.bio-section').dataset.index
-      )
-      this.actor.moveBioSectionUp(index)
-    })
-
-    html.find('.move-section-down').click(ev => {
-      const index = parseInt(
-        ev.currentTarget.closest('.bio-section').dataset.index
-      )
-      this.actor.moveBioSectionDown(index)
-    })
-
-    html.find('.development-flag').dblclick(ev => {
-      const item = this.actor.items.get(
-        ev.currentTarget.closest('.item').dataset.itemId
-      )
-      item.toggleItemFlag('developement')
-    })
-
-    html.find('.occupation-skill-flag.clickable').click(ev => {
-      const item = this.actor.items.get(
-        ev.currentTarget.closest('.item').dataset.itemId
-      )
-      item.toggleItemFlag('occupation')
-    })
-
-    html.find('.archetype-skill-flag.clickable').click(ev => {
-      const item = this.actor.items.get(
-        ev.currentTarget.closest('.item').dataset.itemId
-      )
-      item.toggleItemFlag('archetype')
-    })
-
-    html.find('.skill-developement').click(event => {
-      this.actor.developementPhase(event.shiftKey)
-    })
-
-    html.find('.luck-development').click(event => {
-      if (!event.detail || event.detail === 1) {
-        this.actor.developLuck(event.shiftKey)
-      }
-    })
-
-    html.find('.clear_conditions').click(event => {
-      if (typeof this.actor.system.conditions !== 'undefined') {
-        const disable = {}
-        for (const condition in this.actor.system.conditions) {
-          if (
-            typeof this.actor.system.conditions[condition].value !==
-              'undefined' &&
-            this.actor.system.conditions[condition].value === true
-          ) {
-            disable[`system.conditions.${condition}.value`] = false
-          }
-        }
-        if (Object.keys(disable).length > 0) {
-          this.actor.update(disable)
-        }
-      }
-      const effects = this.actor.effects.map(effect => effect.id)
-      if (effects.length > 0) {
-        this.actor.deleteEmbeddedDocuments('ActiveEffect', effects)
-      }
-    })
-
-    /**
-     * This is used for dev purposes only !
-     */
-    html.find('.test-trigger').click(async event => {
-      if (!game.settings.get('CoC7', 'hiddendevmenu')) return null
-      // await Item.create({
-      //   name: '__CoC7InternalItem__',
-      //   type: 'item'
-      // })
-      // const effects = await item.createEmbeddedDocuments('ActiveEffect', [
-      //   {
-      //     label: game.i18n.localize('CoC7.EffectNew'),
-      //     icon: 'icons/svg/aura.svg',
-      //     origin: null,
-      //     'duration.rounds': undefined,
-      //     disabled: true
-      //   }
-      // ])
-      // const effect = effects[0]
-      // await effect.sheet.render(true)
-      // ui.notifications.info( 'effect created !')
-      // ui.notifications.info('effect created !')
-    })
-
-    html
-      .find('.skill-name.rollable:not(.withouttooltip)')
-      .mouseenter(this.toolTipSkillEnter.bind(this))
-      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
-    html
-      .find('.characteristic-label')
-      .mouseenter(this.toolTipCharacteristicEnter.bind(this))
-      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
-    html
-      .find('.attribute-label.rollable')
-      .mouseenter(this.toolTipAttributeEnter.bind(this))
-      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
-    html
-      .find('.auto-toggle')
-      .mouseenter(this.toolTipAutoEnter.bind(this))
-      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
-    html
-      .find('.item-control.development-flag')
-      .mouseenter(this.toolTipFlagForDevelopment.bind(this))
-      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
-
-    // Active Effects
-    html
-      .find('.effect-control')
-      .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.actor))
+    element.dataset.generatedBasicTooltip = basicToolTip
+    element.dataset.generatedTooltip = toolTip
   }
 
-  toolTipSkillEnter (event) {
-    const delay = parseInt(game.settings.get('CoC7', 'toolTipDelay'))
-    if (delay > 0) {
-      game.CoC7Tooltips.ToolTipHover = event.currentTarget
-      game.CoC7Tooltips.toolTipTimer = setTimeout(() => {
-        const toolTip = game.actors.documentClass.toolTipSkillText()
-        if (toolTip !== false) {
-          game.CoC7Tooltips.displayToolTip(toolTip)
-        }
-      }, delay)
-    }
-  }
-
-  toolTipCharacteristicEnter (event) {
-    const delay = parseInt(game.settings.get('CoC7', 'toolTipDelay'))
-    if (delay > 0) {
-      const sheet = this
-      game.CoC7Tooltips.ToolTipHover = event.currentTarget
-      game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (
-          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
-          game.CoC7Tooltips.ToolTipHover !== null
-        ) {
-          const char = game.CoC7Tooltips.ToolTipHover.closest('.char-box')
-          if (typeof char !== 'undefined' && !!char) {
-            const charId = char.dataset.characteristic
-            const characteristic = sheet.actor.characteristics[charId]
-            let toolTip = game.i18n.format('CoC7.ToolTipSkill', {
-              skill: characteristic.label,
-              regular: characteristic.value ?? 0,
-              hard: characteristic.hard ?? 0,
-              extreme: characteristic.extreme ?? 0
+  /**
+   * Add tooltip and basic tooltip to attribute element
+   * @param {HtmlElement} element
+   */
+  toolTipAttributeEnter (element) {
+    let toolTip = ''
+    let basicToolTip = ''
+    switch (element.dataset.tooltipKey) {
+      case 'lck':
+        {
+          const data = {
+            skill: game.i18n.localize(CONFIG.Actor.dataModels.character.schema.getField('attribs').getField(element.dataset.tooltipKey).hint),
+            regular: (this.document.system.attribs[element.dataset.tooltipKey]?.value ?? 0),
+            hard: Math.floor((this.document.system.attribs[element.dataset.tooltipKey]?.value ?? 0) / 2),
+            extreme: Math.floor((this.document.system.attribs[element.dataset.tooltipKey]?.value ?? 0) / 5)
+          }
+          toolTip = toolTip + game.i18n.format('CoC7.ToolTipSkill', data)
+          basicToolTip = game.i18n.format('CoC7.ToolTipShort', data)
+          if (game.user.isGM) {
+            toolTip = toolTip + game.i18n.format('CoC7.ToolTipKeeperSkill', {
+              other: game.settings.get(FOLDER_ID, 'stanbyGMRolls') && this.document.hasPlayerOwner
+                ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+                  name: this.document.name
+                })
+                : ''
             })
-            if (game.user.isGM) {
-              toolTip =
-                toolTip +
-                game.i18n.format('CoC7.ToolTipKeeperSkill', {
-                  other:
-                    game.settings.get('CoC7', 'stanbyGMRolls') &&
-                    sheet.actor.hasPlayerOwner
-                      ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
-                      : ''
-                })
-            }
-            game.CoC7Tooltips.displayToolTip(toolTip)
           }
         }
-      }, delay)
-    }
-  }
-
-  toolTipAttributeEnter (event) {
-    const delay = parseInt(game.settings.get('CoC7', 'toolTipDelay'))
-    if (delay > 0) {
-      const sheet = this
-      game.CoC7Tooltips.ToolTipHover = event.currentTarget
-      game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (
-          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
-          game.CoC7Tooltips.ToolTipHover !== null
-        ) {
-          const attrib = game.CoC7Tooltips.ToolTipHover.closest('.attribute')
-          if (typeof attrib !== 'undefined') {
-            const attributeId = attrib.dataset.attrib
-            let toolTip = ''
-            const attributes = sheet.actor.system.attribs[attributeId]
-            switch (attributeId) {
-              case 'lck':
-                toolTip = game.i18n.format('CoC7.ToolTipSkill', {
-                  skill: attributes.label,
-                  regular: attributes.value ?? 0,
-                  hard: Math.floor((attributes.value ?? 0) / 2),
-                  extreme: Math.floor((attributes.value ?? 0) / 5)
-                })
-                if (game.user.isGM) {
-                  toolTip =
-                    toolTip +
-                    game.i18n.format('CoC7.ToolTipKeeperSkill', {
-                      other:
-                        game.settings.get('CoC7', 'stanbyGMRolls') &&
-                        sheet.actor.hasPlayerOwner
-                          ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
-                          : ''
-                    })
-                }
-                game.CoC7Tooltips.displayToolTip(toolTip)
-                break
-              case 'db':
-                toolTip = game.i18n.localize('CoC7.ToolTipDB')
-                game.CoC7Tooltips.displayToolTip(toolTip)
-                break
-              case 'san':
-                toolTip = game.i18n.format('CoC7.ToolTipSanity', {
-                  skill: 'Sanity',
-                  regular: attributes.value ?? 0,
-                  hard: Math.floor((attributes.value ?? 0) / 2),
-                  extreme: Math.floor((attributes.value ?? 0) / 5)
-                })
-                if (game.user.isGM) {
-                  toolTip =
-                    toolTip +
-                    game.i18n.format('CoC7.ToolTipKeeperSkill', {
-                      other:
-                        game.i18n.localize('CoC7.ToolTipKeeperSanity') +
-                        (game.settings.get('CoC7', 'stanbyGMRolls') &&
-                        sheet.actor.hasPlayerOwner
-                          ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
-                          : '')
-                    })
-                }
-                game.CoC7Tooltips.displayToolTip(toolTip)
-                break
-            }
+        break
+      case 'san':
+        {
+          const data = {
+            skill: game.i18n.localize(CONFIG.Actor.dataModels.character.schema.getField('attribs').getField(element.dataset.tooltipKey).hint),
+            regular: (this.document.system.attribs[element.dataset.tooltipKey]?.value ?? 0),
+            hard: Math.floor((this.document.system.attribs[element.dataset.tooltipKey]?.value ?? 0) / 2),
+            extreme: Math.floor((this.document.system.attribs[element.dataset.tooltipKey]?.value ?? 0) / 5)
           }
-        }
-      }, delay)
-    }
-  }
-
-  toolTipAutoEnter (event) {
-    const delay = parseInt(game.settings.get('CoC7', 'toolTipDelay'))
-    if (delay > 0) {
-      game.CoC7Tooltips.ToolTipHover = event.currentTarget
-      game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (
-          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
-          game.CoC7Tooltips.ToolTipHover !== null
-        ) {
-          const toolTip = game.i18n.localize('CoC7.ToolTipAutoToggle')
-          game.CoC7Tooltips.displayToolTip(toolTip)
-        }
-      }, delay)
-    }
-  }
-
-  toolTipFlagForDevelopment (event) {
-    const delay = parseInt(game.settings.get('CoC7', 'toolTipDelay'))
-    if (delay > 0) {
-      const sheet = this
-      game.CoC7Tooltips.ToolTipHover = event.currentTarget
-      game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (
-          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
-          game.CoC7Tooltips.ToolTipHover !== null
-        ) {
-          const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
-          if (typeof item !== 'undefined') {
-            const skillId = item.dataset.skillId
-            const skill = sheet.actor.items.get(skillId)
-            const toolTip = game.i18n.format('CoC7.ToolTipSkillFlagToggle', {
-              status: game.i18n.localize(
-                skill.system.flags.developement
-                  ? 'CoC7.ToolTipSkillFlagged'
-                  : 'CoC7.ToolTipSkillUnflagged'
-              )
+          toolTip = toolTip + game.i18n.format('CoC7.ToolTipSanity', data)
+          basicToolTip = game.i18n.format('CoC7.ToolTipShort', data)
+          if (game.user.isGM) {
+            toolTip = toolTip + game.i18n.format('CoC7.ToolTipKeeperSkill', {
+              other: game.i18n.localize('CoC7.ToolTipKeeperSanity') + (game.settings.get(FOLDER_ID, 'stanbyGMRolls') && this.document.hasPlayerOwner
+                ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+                  name: this.document.name
+                })
+                : '')
             })
-            game.CoC7Tooltips.displayToolTip(toolTip)
           }
         }
-      }, delay)
+        break
     }
+    element.dataset.generatedBasicTooltip = basicToolTip
+    element.dataset.generatedTooltip = toolTip
   }
 
-  _onContextMenuClick (event, target) {
-    const targetType = target.dataset?.targetType
-    const rollOptions = {
-      preventStandby: true,
-      fastForward: false,
-      actor: this.actor
-    }
-    switch (targetType) {
-      case ('skill'):
-        rollOptions.rollType = CoC7RollNormalize.ROLL_TYPE_SKILL
-        rollOptions.skillId = target.closest('.item')?.dataset.skillId
-
-        break
-      case ('characteristic'):
-        rollOptions.rollType = CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC
-        rollOptions.characteristic = target.closest('.char-box').dataset.characteristic
-        break
-
-      case ('attribute'):
-        rollOptions.rollType = CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE
-        rollOptions.attribute = target.closest('.attribute').dataset.attrib
-        break
-    }
-    switch (event.currentTarget.dataset.action) {
-      case ('roll'):
-        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NORMAL
-        break
-      case ('opposed-roll'):
-        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_OPPOSED
-        break
-      case ('combined-roll'):
-        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_COMBINED
-        break
-      case ('request-roll'):
-        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NORMAL
-        rollOptions.preventStandby = false
-        break
-      case ('link-tool'):
-        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NONE
-        rollOptions.openLinkTool = true
-        break
-      case ('send-chat'):
-        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NONE
-        rollOptions.sendToChat = true
-        break
-      case ('copy-to-clipboard'):
-        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NONE
-        rollOptions.sendToClipboard = true
-        break
-      case ('link-encounter'):
-        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_NONE
-        rollOptions.createEncounter = true
-        break
-      case ('encounter'):
-        rollOptions.cardType = CoC7RollNormalize.CARD_TYPE_SAN_CHECK
-        rollOptions.rollType = CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE
-        rollOptions.fastForward = true
-        break
-
-      default:
-        break
-    }
-
-    CoC7RollNormalize.trigger(rollOptions)
+  /**
+   * Item sheet render
+   * @param {SubmitEvent|null} event
+   */
+  async _onItemEdit (event) {
+    const itemUuid = event.target.closest('.item').dataset.itemUuid
+    ;(await fromUuid(itemUuid))?.sheet.render({ force: true })
   }
 
-  _onRenderItemSheet (event) {
-    const li = $(event.currentTarget).parents('.item')
-    const item = this.actor.items.get(li.data('itemId'))
-    item.sheet.render(true)
-  }
-
-  async _onTradeItem (event) {
-    const li = $(event.currentTarget).parents('.item')
-    const item = this.actor.items.get(li.data('itemId'))
-    let content = '<p>' + game.i18n.localize('CoC7.MessageSelectUserToGiveTo')
-    const message = {
-      actorFrom: this.actor.id,
-      scene: null,
-      actorTo: this.actor.id,
-      item: item.id
-    }
-    if (this.token?.actor) {
-      message.actorFrom = this.token.id
-      message.scene = this.token.parent.id
-    }
-    const actors = game.actors.filter(e => {
-      if (!['character', 'npc', 'creature', 'container'].includes(e.type)) {
-        return false
-      }
-      if (this.actor.id === e.id) {
-        return false
-      }
-      let visible = false
-      for (const [k, v] of Object.entries(e.ownership)) {
-        if (k === 'default' || k === game.user.id) {
-          visible = visible || v !== CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE
-        }
-      }
-      return visible
-    })
-    content = content + '<form id="selectform"><select name="user">'
-    for (const actor of actors) {
-      content =
-        content + '<option value="' + actor.id + '">' + actor.name + '</option>'
-    }
-    content = content + '</select></form></p>'
-    message.actorTo = await new Promise(resolve => {
-      const dlg = new Dialog({
-        title: game.i18n.localize('CoC7.MessageTitleSelectUserToGiveTo'),
-        content,
-        buttons: {
-          confirm: {
-            label: game.i18n.localize('CoC7.Validate'),
-            callback: html => {
-              const formData = new FormData(
-                html[0].querySelector('#selectform')
-              )
-              for (const [name, value] of formData) {
-                if (name === 'user') {
-                  return resolve(value)
-                }
-              }
-            }
-          }
-        },
-        default: 'confirm',
-        close: () => {}
-      })
-      dlg.render(true)
-    })
-    await game.CoC7socket.executeAsGM('gmtradeitemto', message)
-  }
-
-  _onDragStart (event) {
-    super._onDragStart(event)
-    if (this.token) {
-      const dragData = JSON.parse(event.dataTransfer.getData('text/plain'))
-      dragData.tokenUuid = this.token.uuid
-      dragData.tokenId = this.token.id
-      dragData.sceneId = this.token.parent.id
-      event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
-    }
-  }
-
+  /**
+   * Set drag data
+   * @param {DragEvent} event
+   */
   _onDragCharacteristic (event) {
-    const box = event.currentTarget.parentElement
     const data = {
-      CoC7Type: 'link',
-      linkType: 'characteristic',
-      check: 'check',
+      check: CoC7Link.CHECK_TYPE.CHECK,
       type: 'CoC7Link',
-      hasPlayerOwner: this.actor.hasPlayerOwner,
-      actorKey: this.actor.actorKey,
-      name: box.dataset.characteristic,
-      icon: null,
-      document: {
-        type: this.document.type,
-        uuid: this.document.uuid
-      }
+      subtype: 'characteristic',
+      name: event.currentTarget.closest('.attribute').dataset.characteristic
     }
-
-    event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
+    event.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
+  /**
+   * Set drag data
+   * @param {DragEvent} event
+   */
   _onDragAttribute (event) {
-    const box = event.currentTarget.parentElement
     const data = {
-      CoC7Type: 'link',
-      linkType: 'attribute',
-      check: 'check',
+      check: CoC7Link.CHECK_TYPE.CHECK,
       type: 'CoC7Link',
-      hasPlayerOwner: this.actor.hasPlayerOwner,
-      actorKey: this.actor.actorKey,
-      name: box.dataset.attrib,
-      icon: null,
-      document: {
-        type: this.document.type,
-        uuid: this.document.uuid
-      }
+      subtype: 'attribute',
+      name: event.currentTarget.closest('.attribute').dataset.attrib
     }
-
-    event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
+    event.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
+  /**
+   * Set drag data
+   * @param {DragEvent} event
+   */
   _onDragSanCheck (event) {
-    const sanMin = event.currentTarget.querySelector('.san-value.pass')
-    const sanMax = event.currentTarget.querySelector('.san-value.failed')
     const data = {
-      CoC7Type: 'link',
-      linkType: 'coc7-link',
-      check: 'sanloss',
-      hasPlayerOwner: this.actor.hasPlayerOwner,
-      actorKey: this.actor.actorKey,
-      sanMin: sanMin.innerText,
-      sanMax: sanMax.innerText,
-      icon: null,
-      document: {
-        type: this.document.type,
-        uuid: this.document.uuid
-      }
+      check: CoC7Link.CHECK_TYPE.SANLOSS,
+      type: 'CoC7Link',
+      sanMin: this.actor.system.special.sanLoss.checkPassed,
+      sanMax: this.actor.system.special.sanLoss.checkFailled,
+      sanReason: this.actor.system.infos.type
     }
-
-    event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
+    event.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
-  async _onDrop (event) {
-    const dataString = event.dataTransfer.getData('text/plain')
-    if (dataString === '') {
-      return false
-    }
-    const data = JSON.parse(dataString)
-    if (data.type === 'CoC7Link') {
-      if (data.check === CoC7Link.CHECK_TYPE.EFFECT) {
-        CoC7Link._onLinkActorClick(this.actor, data)
-      }
-    } else if (['creature', 'npc'].includes(this.actor.type) && data.type === 'Macro') {
-      const macros = this.actor.system.special.macros ? foundry.utils.duplicate(this.actor.system.special.macros) : []
+  /**
+   * Handle a dropped document on the ActorSheet
+   * @param {DragEvent} event
+   * @param {Document} document
+   * @returns {Promise<Document|null>}
+   */
+  async _onDropDocument (event, document) {
+    if (document.documentName === 'Macro' && ['creature', 'npc'].includes(this.actor.type)) {
+      const macros = foundry.utils.duplicate(this.actor.system.special.macros)
       macros.push({
-        uuid: data.uuid
+        uuid: document.uuid
       })
-      this.actor.update({ 'system.special.macros': macros })
-      return false
+      return this.actor.update({ 'system.special.macros': macros })
     }
-    await super._onDrop(event)
+    return super._onDropDocument(event, document)
   }
 
-  async _onConditionToggle (event) {
+  /**
+   * Handle a dropped Item on the Actor Sheet.
+   * @param {DragEvent} event
+   * @param {Item} item
+   * @returns {Promise<Item|null|undefined>}
+   */
+  async _onDropItem (event, item) {
+    if (!this.actor.isOwner) {
+      return null
+    }
+    if (this.actor.uuid === item.parent?.uuid) {
+      const result = await this._onSortItem(event, item)
+      return result?.length ? item : null
+    }
+
+    if (!this._onDropItemAllowed(item)) {
+      return null
+    }
+    const keepId = !this.actor.items.has(item.id)
+    return this.actor.createEmbeddedDocuments('Item', [item.toObject()], { parent: this.actor, keepId })
+  }
+
+  /**
+   * Is this type of item allowed to be dropped on the actor?
+   * @param {object} item
+   * @returns {boolean}
+   */
+  _onDropItemAllowed (item) {
+    return true
+  }
+
+  /**
+   * Toggle condition if allowed
+   * @param {ClickEvent} event
+   */
+  _onConditionToggle (event) {
     event.preventDefault()
-    if (event.currentTarget.dataset.condition) {
-      await this.actor.toggleCondition(event.currentTarget.dataset.condition)
+    if (game.user.isGM || game.settings.get(FOLDER_ID, 'statusPlayerEditable')) {
+      if (event.currentTarget.dataset.condition) {
+        this.document.toggleCondition(event.currentTarget.dataset.condition)
+      }
     }
   }
 
-  async revive () {
-    if (game.user.isGM) this.actor.unsetCondition(COC7.status.dead)
-  }
-
-  async heal () {
-    if (game.user.isGM) this.actor.unsetCondition(COC7.status.dying)
-  }
-
+  /**
+   * Roll CON check for death condition
+   * @param {ClickEvent} event
+   */
   async checkForDeath (event) {
-    const conCheck = new CoC7ConCheck(
-      this.actor.isToken ? this.actor.tokenKey : this.actor.id
-    )
-    conCheck.stayAlive = true
-    conCheck.toMessage(event.shiftKey)
+    await CoC7ConCheck.create(this.document, { stayAlive: true })
   }
 
+  /**
+   * Set drag data
+   * @param {DragEvent} event
+   */
   async _onDragTokenStart (event) {
-    const data = {
-      type: 'Token',
-      uuid: this.token.uuid
+    if (event.currentTarget.dataset.tokenUuid) {
+      const data = {
+        type: 'Token',
+        uuid: event.currentTarget.dataset.tokenUuid
+      }
+      event.dataTransfer.setData('text/plain', JSON.stringify(data))
     }
-    event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
-  async _onResetCounter (event) {
+  /**
+   * Toggle Automatic Calculation flag
+   * @param {SubmitEvent|null} event
+   */
+  async _onAttributeAutoToggleClicked (event) {
     event.preventDefault()
-    await this.actor.resetDailySanity()
+    const flagName = event.currentTarget.closest('[data-attrib]').dataset.attrib
+    this.document.update({ ['system.attribs.' + flagName + '.auto']: !this.document.system.attribs[flagName].auto })
   }
 
-  async _onAutoToggle (event) {
-    if (event.currentTarget.closest('.attribute')) {
-      const attrib = event.currentTarget.closest('.attribute').dataset.attrib
-      this.actor.toggleAttribAuto(attrib)
-    }
-  }
-
-  async _onNotesToggle (event) {
-    this.actor.update({
-      'system.attribs.armor.notes': !(this.actor.system.attribs?.armor?.notes ?? false)
-    })
-  }
-
-  async _onToggle (event) {
-    const weapon = this.actor.items.get(
-      event.currentTarget.closest('.item').dataset.itemId
-    )
-    if (weapon) {
-      weapon.toggleProperty(
-        event.currentTarget.dataset.property,
-        isCtrlKey(event)
-      )
-    }
-  }
-
-  // roll the actor characteristic from formula when possible.
-  async _onRollCharacteriticsValue () {
-    await this.actor.rollCharacteristicsValue()
-  }
-
-  async _onAverageCharacteriticsValue () {
-    this.actor.averageCharacteristicsValue()
-  }
-
-  async _onLockClicked (event) {
+  /**
+   * Toggle item property
+   * @param {ClickEvent} event
+   */
+  async _onClickToggle (event) {
     event.preventDefault()
-    const isLocked = this.actor.locked
-    this.actor.locked = !isLocked
-    Hooks.call('actorLockClickedCoC7', [!isLocked])
+    const property = event.currentTarget.closest('.toggle-attributes').dataset.set
+    const key = event.currentTarget.dataset.property
+    const itemUuid = event.currentTarget.closest('.item').dataset.itemUuid
+    if (itemUuid) {
+      const document = await fromUuid(itemUuid)
+      if (document) {
+        document.system.toggleProperty(property, key, { isCtrlKey: CoC7Utilities.isCtrlKey(event) })
+      }
+    }
   }
 
+  /**
+   * Toggle flag
+   * @param {SubmitEvent|null} event
+   */
   async _onFlagClicked (event) {
     event.preventDefault()
-    const flagName = event.currentTarget.dataset.flag
-    this.actor.toggleActorFlag(flagName)
+    const flagName = event.currentTarget.dataset.toggleFlag
+    this.document.update({ ['system.flags.' + flagName]: !this.document.system.flags[flagName] })
   }
 
-  async _onFormulaClicked (event) {
-    event.preventDefault()
-    this.actor.toggleActorFlag('displayFormula')
-  }
-
+  /**
+   * Scroll wheel change values
+   * @param {WheelEvent} event
+   */
   async _onWheel (event) {
-    let value = parseInt(event.currentTarget.value) || null
+    let value = parseInt(event.currentTarget.value, 10) || 0
     if (event.deltaY > 0) {
       value = value === 0 ? 0 : value - 1
-    }
-
-    if (event.deltaY < 0) {
-      value = value + 1
+    } else if (event.deltaY < 0) {
+      value++
     }
 
     switch (event.currentTarget.name) {
       case 'system.attribs.hp.value':
-        this.actor.setHp(value)
+        this.document.setHp(value)
         break
       case 'system.attribs.mp.value':
-        this.actor.setMp(value)
+        this.document.update({ 'system.attribs.mp.value': value })
         break
       case 'system.attribs.san.value':
-        this.actor.setSan(value)
+        this.document.setSan(value)
         break
       case 'system.attribs.lck.value':
-        this.actor.setLuck(value)
-        break
-      case 'system.attribs.build.current':
-        this.actor.setHp(value)
+        this.document.update({ 'system.attribs.lck.value': value })
         break
     }
   }
 
+  /**
+   * Toggle description
+   * @param {ClickEvent} event
+   */
   _toggleReadOnly (event) {
     event.currentTarget.readOnly = !event.currentTarget.readOnly
     event.currentTarget.classList.toggle('read-only')
   }
 
+  /**
+   * Toggle description
+   * @param {ClickEvent} event
+   */
   async _onItemSummary (event) {
     event.preventDefault()
-    const li = $(event.currentTarget).parents('.item')
-    const item = this.actor.items.get(li.data('item-id'))
-    const chatData = await item.getChatData({ secrets: this.actor.isOwner })
-
-    // Toggle summary
-    if (li.hasClass('expanded')) {
-      const summary = li.children('.item-summary')
-      summary.slideUp(200, () => {
-        summary.remove()
-        li.toggleClass('expanded')
-      })
-    } else {
-      const div = $('<div class="item-summary"></div>')
-
-      const labels = $('<div class="item-labels"></div>')
-      for (const p of chatData.labels) {
-        labels.append(
-          `<div class="item-label"><span class="label-name">${p.name} :</span><span class="label-value">${p.value}</span></div>`
-        )
+    const li = event.currentTarget.closest('.item')
+    if (li.dataset.itemUuid) {
+      const item = await fromUuid(li.dataset.itemUuid)
+      if (item) {
+        if (CoC7Utilities.htmlElementToggled(li)) {
+          CoC7Utilities.htmlElementToggleHide(li, { remove: true })
+        } else {
+          let div = li.querySelector('.html-element-toggled')
+          if (!div) {
+            div = document.createElement('div')
+            div.style.flexBasis = '100%'
+            await CoC7Utilities.setItemSummaryHtml(div, item)
+            li.append(div)
+          }
+          CoC7Utilities.htmlElementToggleShow(li, div)
+        }
       }
-      div.append(labels)
-
-      div.append(
-        $(`<div class="item-description">${chatData.description.value}</div>`)
-      )
-
-      if (item.system.properties?.spcl) {
-        const specialDiv = $(
-          `<div class="item-special">${chatData.description.special}</div>`
-        )
-        div.append(specialDiv)
-      }
-
-      const props = $('<div class="item-properties"></div>')
-      for (const p of chatData.properties) {
-        props.append(
-          `<div class="tag item-property">${game.i18n.localize(p)}</div>`
-        )
-      }
-      div.append(props)
-
-      li.append(div.hide())
-      div.slideDown(200, () => li.toggleClass('expanded'))
     }
-    // $(event.currentTarget).toggleClass('expanded');
-  }
-
-  async _onSectionHeader (event) {
-    event.preventDefault()
-    // let section = $(event.currentTarget).parents('section'),
-    //  pannelClass = $(event.currentTarget).data('pannel'),
-    //  pannel = section.find( `.${pannelClass}`);
-    // pannel.toggle();
-    const section = event.currentTarget.closest('section')
-    const pannelClass = event.currentTarget.dataset.pannel
-    if (typeof pannelClass === 'undefined') return
-    const pannel = $(section).find(`.pannel.${pannelClass}`)
-
-    // pannel.toggle();
-    if (pannel.hasClass('expanded')) {
-      // Could remove expanded class and use (pannel.is(':visible'))
-      pannel.slideUp(200, () => pannel.toggleClass('expanded'))
-    } else {
-      pannel.slideDown(200, () => pannel.toggleClass('expanded'))
-    }
-
-    const camelFlag = chatHelper.hyphenToCamelCase(`data.pannel.${pannelClass}.expanded`)
-
-    this.actor.update(
-      { [camelFlag]: !pannel.hasClass('expanded') },
-      { render: false })
-  }
-
-  _onInventoryHeader (event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).siblings('li')
-    if (li.is(':visible')) li.slideUp(200)
-    else li.slideDown(200)
-  }
-
-  _onItemHeader (event) {
-    event.preventDefault()
-    const ol = $(event.currentTarget).next('ol')
-    if (ol.is(':visible')) ol.slideUp(200)
-    else ol.slideDown(200)
-  }
-
-  async _onItemPopup (event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).parents('.item')
-    const item = this.actor.items.get(li.data('item-id'))
-
-    CoC7ActorSheet.popupSkill(item)
-  }
-
-  static async popupSkill (skill) {
-    skill.system.description.enrichedValue = await TextEditor.enrichHTML(
-      skill.system.description.value,
-      { async: true }
-    )
-    const dlg = new Dialog(
-      {
-        title: game.i18n.localize('CoC7.SkillDetailsWindow'),
-        content: skill,
-        buttons: {},
-        close: () => {}
-      },
-      {
-        classes: ['coc7', 'sheet', 'skill'],
-        width: 520,
-        height: 480,
-        scrollY: ['.item-description'],
-        template: 'systems/CoC7/templates/apps/skill-details.html'
-      }
-    )
-    dlg.render(true)
   }
 
   /**
-   * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
-   * @private
+   * Show uneditable skill sheet
+   * @param {SubmitEvent|null} event
    */
-  async _onItemRoll (event) {
+  async _onItemPopup (event) {
     event.preventDefault()
-    // const itemId = event.currentTarget.closest('.item').dataset.itemId;
-    // const actorId = event.currentTarget.closest('form').dataset.actorId;
-    // const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
-    // let check = new CoC7Check();
-
-    // check.actor = !tokenKey ? actorId : tokenKey;
-    // check.item = itemId;
-    // check.roll();
-    // check.toMessage();
+    const itemUuid = event.target.closest('.item').dataset.itemUuid
+    const document = await fromUuid(itemUuid)
+    if (document) {
+      new CoC7SkillPopup({ document }, {}).render({ force: true, focus: true })
+    }
   }
 
+  /**
+   * Ctrl click effect to make a link
+   * @param {SubmitEvent|null} event
+   */
   async _onEffect (event) {
     event.preventDefault()
     const effectId = event.currentTarget.closest('li').dataset.effectId
-    const effect = this.actor.effects.get(effectId)
-    if (isCtrlKey(event) && game.user.isGM) {
+    const effect = this.document.effects.get(effectId)
+    if (CoC7Utilities.isCtrlKey(event) && game.user.isGM) {
       CoC7ContentLinkDialog.create({ type: 'CoC7Link', check: CoC7Link.CHECK_TYPE.EFFECT, object: effect })
     }
   }
 
+  /**
+   * Trigger a Weapon Roll
+   * @param {event} event
+   */
   async _onWeaponRoll (event) {
     event.preventDefault()
-    const itemId = event.currentTarget.closest('li').dataset.itemId
-    const fastForward = event.shiftKey
-    const weapon = this.actor.items.get(itemId)
-    // const actorKey = !this.token? this.actor.actorKey : `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`; //REFACTORING (2)
-    /** * MODIF 0.8.x ***/
-    let actorKey
-    if (!this.token) actorKey = this.actor.id
-    // Sheet was opened from actor directory
-    else {
-      // Opened from token
-      if (this.actor.isToken && game.actors.tokens[this.token.id]) {
-        actorKey = `TOKEN.${this.token.id}`
-      } else {
-        actorKey = `${this.token.parent.id}.${this.token.id}`
-      }
-    }
-
-    if (isCtrlKey(event) && game.user.isGM) {
-      const linkData = {
+    const itemUuid = event.currentTarget.closest('.item').dataset.itemUuid
+    const weapon = await fromUuid(itemUuid)
+    if (CoC7Utilities.isCtrlKey(event) && game.user.isGM) {
+      const cocid = weapon.flags[FOLDER_ID]?.cocidFlag?.id
+      CoC7ContentLinkDialog.create({
         check: CoC7Link.CHECK_TYPE.ITEM,
-        name: weapon.name
-      }
-      CoC7ContentLinkDialog.create(linkData, { actors: [this.actor] })
+        name: cocid ?? weapon.name,
+        label: (cocid ? weapon.name : undefined)
+      })
     } else {
-      let proceedWithoutTarget = game.settings.get('CoC7', 'disregardNoTargets')
-      if (!proceedWithoutTarget && game.user.targets.size <= 0) {
-        proceedWithoutTarget = await new Promise(resolve => {
-          const data = {
-            title: ' ',
-            content: game.i18n.format('CoC7.NoTargetSelected', {
-              weapon: weapon.name
-            }),
-            buttons: {
-              cancel: {
-                icon: '<i class="fas fa-times"></i>',
-                label: game.i18n.localize('CoC7.Cancel'),
-                callback: () => {
-                  return resolve(false)
-                }
-              },
-              proceed: {
-                icon: '<i class="fas fa-check"></i>',
-                label: game.i18n.localize('CoC7.Proceed'),
-                callback: () => {
-                  return resolve(true)
-                }
-              }
-            },
-            default: 'cancel',
-            classes: ['coc7', 'dialog']
-          }
-          new Dialog(data).render(true)
-        })
-      }
-      if (game.user.targets.size > 0 || proceedWithoutTarget) {
-        if (!weapon.system.properties.rngd) {
-          if (game.user.targets.size > 1) {
-            ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'))
-          }
-
-          const card = new CoC7ChatCombatMelee(actorKey, itemId, fastForward)
-          card.createChatCard()
-        }
-        if (weapon.system.properties.rngd) {
-          const card = new CoC7ChatCombatRanged(actorKey, itemId, fastForward)
-          card.createChatCard()
-        }
-      }
+      this.document.weaponRoll(weapon, CoC7Utilities.getActorUuid(this.document))
     }
   }
 
+  /**
+   * Add / Remove ammunition
+   * @param {ClickEvent} event
+   */
   async _onReloadWeapon (event) {
-    const itemId = event.currentTarget.closest('.item')
-      ? event.currentTarget.closest('.item').dataset.itemId
-      : null
-    if (!itemId) return
-    const weapon = this.actor.items.get(itemId)
-    if (event.button === 0) {
-      if (event.shiftKey) await weapon.reload()
-      else await weapon.addBullet()
-    } else if (event.button === 2) {
-      if (event.shiftKey) await weapon.setBullets(0)
-      else await weapon.shootBullets(1)
-    }
-  }
-
-  async _onAddAmo (event) {
-    const itemId = event.currentTarget.closest('.item')
-      ? event.currentTarget.closest('.item').dataset.itemId
-      : null
-    if (!itemId) return
-    const weapon = this.actor.items.get(itemId)
-    await weapon.addBullet()
-  }
-
-  async _onWeaponSkillRoll (event) {
-    event.preventDefault()
-    const skillId = event.currentTarget.dataset.skillId
-    const actorId = event.currentTarget.closest('form').dataset.actorId
-    const tokenKey = event.currentTarget.closest('form').dataset.tokenId
-    const itemId = event.currentTarget.closest('li')
-      ? event.currentTarget.closest('li').dataset.itemId
-      : null
-
-    const check = new CoC7Check()
-
-    if (!event.shiftKey) {
-      const usage = await RollDialog.create()
-      if (usage) {
-        check.diceModifier = usage.get('bonusDice')
-        check.difficulty = usage.get('difficulty')
-        check.flatDiceModifier = Number(usage.get('flatDiceModifier'))
-        check.flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
+    const itemUuid = event.currentTarget.closest('.item').dataset.itemUuid
+    if (itemUuid) {
+      const document = await fromUuid(itemUuid)
+      if (document) {
+        switch (event.button) {
+          case 0:
+            if (event.shiftKey) {
+              await document.system.reload()
+            } else {
+              document.system.addAmmunition()
+            }
+            break
+          case 2:
+            if (event.shiftKey) {
+              await document.system.setBullets(0)
+            } else {
+              await document.system.shootAmmunition(1)
+            }
+            break
+        }
       }
     }
-
-    check.actor = !tokenKey ? actorId : tokenKey
-    check.skill = skillId
-    check.item = itemId
-    await check.roll()
-    check.toMessage()
-
-    // HACK: just to pop the advanced roll window
-    // check.item.roll();
   }
 
+  /**
+   * Perform weapon damage
+   * @param {ClickEvent} event
+   */
   async _onWeaponDamage (event) {
     event.preventDefault()
-    const itemId = event.currentTarget.closest('.weapon').dataset.itemId
-    const range = event.currentTarget.closest('.weapon-damage').dataset.range
-    const damageChatCard = new CoC7ChatDamage({
-      fastForward: event.shiftKey,
-      range
-    })
-    damageChatCard.actorKey = this.actor.tokenKey
-    damageChatCard.itemId = itemId
-    damageChatCard.updateChatCard()
-    // console.log( 'Weapon damage Clicked');
+    const itemElement = event.currentTarget.closest('.item')
+    const itemUuid = itemElement.dataset.itemUuid
+    const damageRange = event.currentTarget.dataset.range
+    CoC7ChatDamage.createFromWeapon({ attackerUuid: this.document.uuid, weaponUuid: itemUuid, damageRange })
   }
 
+  /**
+   * Item Add
+   * @param {SubmitEvent|null} event
+   */
+  async _onItemAdd (event) {
+    event.stopPropagation()
+    let document
+    switch (event.currentTarget.dataset.type) {
+      case 'armor':
+        document = await this.document.createEmptyArmor(event)
+        break
+      case 'book':
+        document = await this.document.createEmptyBook(event)
+        break
+      case 'item':
+        document = await this.document.createEmptyItem(event)
+        break
+      case 'skill':
+        document = await this.document.createEmptySkill(event)
+        break
+      case 'spell':
+        document = await this.document.createEmptySpell(event)
+        break
+      case 'weapon':
+        document = await this.document.createEmptyWeapon(event)
+        break
+    }
+    if (typeof document?.[0] !== 'undefined') {
+      document[0].sheet.render({ force: true })
+    }
+  }
+
+  /**
+   * Item Delete
+   * @param {SubmitEvent|null} event
+   */
+  async _onItemDelete (event) {
+    const itemUuid = event.target.closest('.item').dataset.itemUuid
+    fromUuid(itemUuid).then(item => {
+      item.delete()
+    })
+  }
+
+  /**
+   * Trigger Opposed Check
+   * @param {SubmitEvent|null} event
+   */
   async _onOpposedRoll (event) {
     event.preventDefault()
-
-    if (event.currentTarget.parentElement.dataset.attrib === 'db') return
-
+    if (event.currentTarget.closest('.attribute')?.dataset.attrib === 'db') {
+      return
+    }
     const data = {
-      rollType: CoC7RollNormalize.ROLL_TYPE_SKILL,
-      cardType: CoC7RollNormalize.CARD_TYPE_OPPOSED,
+      rollType: CoC7RollNormalize.ROLL_TYPE.SKILL,
+      cardType: CoC7RollNormalize.CARD_TYPE.OPPOSED,
       event,
-      actor: this.actor
+      actor: this.document
     }
-    if (event.currentTarget.classList.contains('characteristic-label')) {
-      data.rollType = CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC
-    } else if (event.currentTarget.classList.contains('attribute-label')) {
-      data.rollType = CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE
+    if (event.currentTarget.classList.contains('characteristic-name')) {
+      data.rollType = CoC7RollNormalize.ROLL_TYPE.CHARACTERISTIC
+    } else if (event.currentTarget.classList.contains('attribute-name')) {
+      data.rollType = CoC7RollNormalize.ROLL_TYPE.ATTRIBUTE
     }
-
     if (event.altKey) {
-      data.cardType = CoC7RollNormalize.CARD_TYPE_COMBINED
+      data.cardType = CoC7RollNormalize.CARD_TYPE.COMBINED
     }
-
     CoC7RollNormalize.trigger(data)
   }
 
   /**
-   * Handle rolling a Skill check
-   * @  param {Event} event   The originating click event
-   * @private
+   * @inheritdoc
+   * @deprecated Temporary forward
    */
   async _onRollCharacteriticTest (event) {
-    event.preventDefault()
-    if (event.currentTarget.classList.contains('flagged4dev')) return
-    if (game.settings.get('CoC7', 'useContextMenus')) {
-      CoC7RollNormalize.trigger({
-        rollType: CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC,
-        cardType: CoC7RollNormalize.CARD_TYPE_NORMAL,
-        preventStandby: true,
-        fastForward: true,
-        characteristic: event.currentTarget.closest('.char-box').dataset.characteristic,
-        actor: this.actor
-      })
-    } else {
-      CoC7RollNormalize.trigger({
-        rollType: CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC,
-        cardType: CoC7RollNormalize.CARD_TYPE_NORMAL,
-        event,
-        actor: this.actor
-      })
-    }
+    deprecated.warningLogger({
+      was: 'Actor._onRollCharacteriticTest',
+      now: 'Actor.system._onRollCharacteristicTest',
+      until: 15
+    })
+    return this._onRollCharacteristicTest(event)
   }
 
-  async _onRollAttribTest (event) {
-    // FLATMODIFIER
+  /**
+   * Trigger Characteristic Check
+   * @param {SubmitEvent|null} event
+   */
+  async _onRollCharacteristicTest (event) {
     event.preventDefault()
-    const attrib = event.currentTarget.parentElement.dataset.attrib
+    CoC7RollNormalize.trigger({
+      rollType: CoC7RollNormalize.ROLL_TYPE.CHARACTERISTIC,
+      cardType: CoC7RollNormalize.CARD_TYPE.NORMAL,
+      event,
+      actor: this.document
+    })
+  }
+
+  /**
+   * Trigger Attribute Check
+   * @param {SubmitEvent|null} event
+   */
+  async _onRollAttribTest (event) {
+    event.preventDefault()
+    const attrib = event.currentTarget.closest('.attribute').dataset.attrib
     if (attrib === 'db') {
-      if (
-        !/^-{0,1}\d+$/.test(
-          event.currentTarget.parentElement.dataset.rollFormula
-        )
-      ) {
-        const r = new Roll(
-          event.currentTarget.parentElement.dataset.rollFormula
-        )
-        await r.roll({ async: true })
-        if (!isNaN(r.total) && !(r.total === undefined)) {
-          r.toMessage({
-            speaker: ChatMessage.getSpeaker(),
-            flavor: game.i18n.localize('CoC7.BonusDamageRoll')
-          })
-        }
+      const roll = new Roll(this.document.system.attribs.db.value.toString(), this.document.parsedValues())
+      if (!roll.isDeterministic) {
+        roll.toMessage({
+          flavor: game.i18n.localize('CoC7.BonusDamageRoll'),
+          speaker: ChatMessage.getSpeaker()
+        })
       }
       return
     }
-
-    if (game.settings.get('CoC7', 'useContextMenus')) {
-      CoC7RollNormalize.trigger({
-        rollType: CoC7RollNormalize.ROLL_TYPE_CHARACTERISTIC,
-        cardType: CoC7RollNormalize.CARD_TYPE_NORMAL,
-        preventStandby: true,
-        fastForward: true,
-        attribute: event.currentTarget.closest('.attribute').dataset.attrib,
-        actor: this.actor
-      })
-    } else {
-      CoC7RollNormalize.trigger({
-        rollType: CoC7RollNormalize.ROLL_TYPE_ATTRIBUTE,
-        cardType:
-        event.altKey && attrib === 'san'
-          ? CoC7RollNormalize.CARD_TYPE_SAN_CHECK
-          : CoC7RollNormalize.CARD_TYPE_NORMAL,
-        event,
-        actor: this.actor
-      })
-    }
+    const cardType = (attrib === 'san' && event.altKey ? CoC7RollNormalize.CARD_TYPE.SAN_CHECK : CoC7RollNormalize.CARD_TYPE.NORMAL)
+    CoC7RollNormalize.trigger({
+      rollType: CoC7RollNormalize.ROLL_TYPE.ATTRIBUTE,
+      cardType,
+      event,
+      actor: this.document
+    })
   }
 
   /**
-   * Handle rolling a Skill check
-   * @param {Event} event   The originating click event
-   * @private
+   * Trigger Skill Check
+   * @param {SubmitEvent|null} event
    */
-  _onRollSkillTest (event) {
+  async _onRollSkillTest (event) {
     event.preventDefault()
-    if (event.currentTarget.classList.contains('flagged4dev')) return
-    if (game.settings.get('CoC7', 'useContextMenus')) {
-      CoC7RollNormalize.trigger({
-        rollType: CoC7RollNormalize.ROLL_TYPE_SKILL,
-        cardType: CoC7RollNormalize.CARD_TYPE_NORMAL,
-        preventStandby: true,
-        fastForward: true,
-        skillId: event?.currentTarget.closest('.item')?.dataset.skillId,
-        actor: this.actor
-      })
+    if (event.currentTarget.classList.contains('flagged4dev')) {
+      const skillId = event.currentTarget.closest('.item').dataset.itemUuid
+      this.document.developSkill(skillId, event.shiftKey)
     } else {
       CoC7RollNormalize.trigger({
-        rollType: CoC7RollNormalize.ROLL_TYPE_SKILL,
-        cardType: CoC7RollNormalize.CARD_TYPE_NORMAL,
+        rollType: CoC7RollNormalize.ROLL_TYPE.SKILL,
+        cardType: CoC7RollNormalize.CARD_TYPE.NORMAL,
         event,
-        actor: this.actor
+        actor: this.document
       })
     }
   }
 
-  /** @override */
-  // _getSubmitData(updateData={}) {
-
-  //  // Create the expanded update data object
-  //  const fd = new FormDataExtended(this.form, {editors: this.editors});
-  //  let data = fd.toObject();
-  //  if ( updateData ) data = foundry.utils.mergeObject(data, updateData);
-  //  else data = foundry.utils.expandObject(data);
-
-  //  // Handle Damage array
-  //  const damage = data.data?.damage;
-  //  if ( damage ) damage.parts = Object.values(damage?.parts || {}).map(d => [d[0] || '', d[1] || '']);
-
-  //  // Return the flattened submission data
-  //  return foundry.utils.flattenObject(data);
-  // }
-
-  /* -------------------------------------------- */
-
   /**
-   * Implement the _updateObject method as required by the parent class spec
-   * This defines how to update the subject of the form when the form is submitted
-   * @private
+   * Handle form submission
+   * @param {SubmitEvent|null} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
    */
-
-  async _updateObject (event, formData) {
-    // ui.notifications.info('_updateObject');
-    // TODO: Replace with   _getSubmitData(updateData={}) Cf. sheet.js(243)
-    const overrides = foundry.utils.flattenObject(this.actor.overrides)
-    const name = event?.currentTarget?.name
-    if (name && overrides && overrides[name]) {
-      ui.notifications.warn(
-        game.i18n.format('CoC7.EffectAppliedCantOverride', { name })
-      )
+  static async #onSubmit (event, form, formData) {
+    if (!this.isEditable) return
+    const submitData = this._prepareSubmitData(event, form, formData)
+    const overrides = foundry.utils.flattenObject(this.document.overrides)
+    const name = event.target?.name
+    const value = event.target?.value
+    if (name && typeof overrides[name] !== 'undefined') {
+      /* // FoundryVTT V12 */
+      ui.notifications.warn(game.i18n.format('CoC7.EffectAppliedCantOverride', { name }))
+      return
     }
 
-    if (this.object.img !== formData.img && (this.object.token ?? this.object.prototypeToken).texture.src === CoCActor.defaultImg(this.object.type)) {
-      // Image was changed and it was the default, so also update the token image
-      if (this.object.token) {
-        this.object.token.update({
-          'texture.src': formData.img
+    if (this.document.img !== submitData.img) {
+      if ((this.document.token ?? this.document.prototypeToken).texture.src === (this.document.token?.actor ?? this.document).system.constructor.defaultImg) {
+        // Image was changed and it was the default, so also update the token image
+        if (this.document.token) {
+          await this.document.token.update({
+            'texture.src': submitData.img
+          })
+        } else {
+          foundry.utils.setProperty(submitData, 'prototypeToken.texture.src', submitData.img)
+        }
+      }
+    }
+
+    switch (name) {
+      case 'system.attribs.san.value':
+        await this.document.setSan(parseInt(value, 10))
+        return
+      case 'system.attribs.hp.value':
+        await this.document.setHp(parseInt(value, 10))
+        return
+      case 'system.characteristics.str.formula':
+      case 'system.characteristics.con.formula':
+      case 'system.characteristics.siz.formula':
+      case 'system.characteristics.dex.formula':
+      case 'system.characteristics.app.formula':
+      case 'system.characteristics.int.formula':
+      case 'system.characteristics.pow.formula':
+      case 'system.characteristics.edu.formula':
+      case 'system.attribs.db.value':
+        try {
+          new Roll(value).evaluateSync({ maximize: true })
+        } catch (e) {
+          /* // FoundryVTT V12 */
+          ui.notifications.error(game.i18n.format('CoC7.ErrorInvalidFormula', { value }))
+        }
+        break
+    }
+
+    await this._processSubmitData(event, form, submitData)
+  }
+
+  /**
+   * Can sheet be unlocked?
+   * @returns {boolean}
+   */
+  get allowUnlock () {
+    return game.user.isGM || game.settings.get(FOLDER_ID, 'playerUnlockSheetMode') === 'always' || (game.settings.get(FOLDER_ID, 'playerUnlockSheetMode') === 'creation' && game.settings.get(FOLDER_ID, 'charCreationEnabled'))
+  }
+
+  /**
+   * Prepare tabs object
+   * @param {string} group
+   * @param {string} active
+   * @param {object} tabs
+   * @returns {object}
+   */
+  getTabs (group, active, tabs) {
+    if (typeof this.tabGroups[group] === 'undefined' || typeof tabs[this.tabGroups[group]] === 'undefined') {
+      this.tabGroups[group] = active
+    }
+    for (const tab in tabs) {
+      tabs[tab].id = tab
+      tabs[tab].group = group
+      tabs[tab].cssClass = (tabs[tab].cssClass ?? '') + (this.tabGroups[group] === tabs[tab].id ? ' active' : '')
+    }
+    return tabs
+  }
+
+  /**
+   * Check context to see if any inventory groups are true
+   * @param {object} context
+   * @returns {boolean}
+   */
+  hasInventory (context) {
+    return context.showInventoryItems || context.showInventoryBooks || context.showInventorySpells || context.showInventoryTalents || context.showInventoryStatuses || context.showInventoryWeapons || context.showInventoryArmor
+  }
+
+  /**
+   * Toggle skill adjustment flag
+   * @param {SubmitEvent} event
+   */
+  async _onFlagSkillClicked (event) {
+    event.preventDefault()
+    const itemUuid = event.currentTarget.closest('.item').dataset.itemUuid
+    const flag = event.currentTarget.dataset.flag
+    if (itemUuid && flag) {
+      const skill = await fromUuid(itemUuid)
+      if (skill) {
+        skill.update({
+          ['system.flags.' + flag]: !skill.system.flags[flag],
+          ['system.adjustments.' + flag]: 0
+        })
+      }
+    }
+  }
+
+  /**
+   * Set skill item name
+   * @param {SubmitEvent|null} event
+   */
+  async _onSkillSetName (event) {
+    event.preventDefault()
+    const itemUuid = event.target.closest('.item').dataset.itemUuid
+    const value = event.target.value
+    const document = await fromUuid(itemUuid)
+    if (value && document) {
+      const parts = document.system.constructor.guessNameParts(value)
+      if (!parts.system.properties.special && document.system.properties.special) {
+        const parts = document.system.constructor.getNamePartsSpec(value, document.system.specialization)
+        await document.update({
+          name: parts.name,
+          system: {
+            skillName: parts.skillName,
+            specialization: parts.specialization
+          }
         })
       } else {
-        this.object.prototypeToken.update({
-          'texture.src': formData.img
+        await document.update({
+          name: parts.name,
+          system: {
+            properties: {
+              special: parts.system.properties.special
+            },
+            skillName: parts.system.skillName,
+            specialization: parts.system.specialization
+          }
         })
       }
     }
+  }
 
-    const biographyKeyRegex = /^system.biography\.(\d+)\.(.+)$/
-    const biographyKeys = Object.keys(formData).map(k => k.match(biographyKeyRegex)).filter(m => m)
-    if (biographyKeys.length) {
-      const biography = foundry.utils.duplicate(this.actor.system.biography)
-      for (const biographyKey of biographyKeys) {
-        biography[biographyKey[1]][biographyKey[2]] = formData['system.biography.' + biographyKey[1] + '.' + biographyKey[2]]
-        delete formData[biographyKey[0]]
-      }
-      formData['system.biography'] = biography
+  /**
+   * Set skill item value
+   * @param {SubmitEvent|null} event
+   */
+  async _onSkillSetValue (event) {
+    event.preventDefault()
+    const itemUuid = event.target.closest('.item').dataset.itemUuid
+    const value = event.target.value
+    if (isNaN(value)) {
+      return
     }
+    const document = await fromUuid(itemUuid)
+    if (document) {
+      const difference = parseInt(value, 10) - document.system.value
+      if (difference !== 0) {
+        document.update({ 'system.adjustments.experience': document.system.adjustments.experience + difference })
+      }
+    }
+  }
 
-    if (event.currentTarget) {
-      if (event.currentTarget.classList) {
-        if (event.currentTarget.classList.contains('skill-adjustment')) {
-          const item = this.actor.items.get(
-            event.currentTarget.closest('.item').dataset.itemId
-          )
-          if (item) {
-            const value = event.currentTarget.value
-              ? parseInt(event.currentTarget.value)
-              : null
-
-            if (!event.currentTarget.value) {
-              await item.update({
-                [event.currentTarget.name]: null
-              })
-            } else {
-              if (!isNaN(value)) {
-                await item.update({
-                  [event.currentTarget.name]: value
-                })
-              }
-            }
-            if (game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.credit-rating') === item.name && typeof this.actor.occupation?.system?.creditRating?.max !== 'undefined') {
-              const creditValue =
-                (item.value || 0) -
-                (item.system.adjustments?.experience || 0)
-              if (
-                creditValue >
-                  Number(this.actor.occupation.system.creditRating.max) ||
-                creditValue <
-                  Number(this.actor.occupation.system.creditRating.min)
-              ) {
-                ui.notifications.warn(
-                  game.i18n.format('CoC7.CreditOutOfRange', {
-                    min: Number(
-                      this.actor.occupation.system.creditRating.min
-                    ),
-                    max: Number(
-                      this.actor.occupation.system.creditRating.max
-                    )
-                  })
-                )
-              }
-            }
-          }
-        }
-
-        if (event.currentTarget.classList.contains('attribute-value')) {
-          // TODO : check why SAN only ?
-          if (event.currentTarget.name === 'system.attribs.san.value') {
-            await this.actor.setSan(
-              parseInt(event.currentTarget.value)
-            )
-            this.render(true)
-            return
-          }
-          if (event.currentTarget.name === 'system.attribs.hp.value') {
-            await this.actor.setHp(
-              parseInt(event.currentTarget.value)
-            )
-            this.render(true)
-            return
-          }
-        }
-
-        if (event.currentTarget.classList.contains('text-area')) {
-          this.actor.updateTextArea(event.currentTarget)
-          return
-        }
-
-        if (event.currentTarget.classList.contains('bio-section-value')) {
-          const index = parseInt(
-            event.currentTarget.closest('.bio-section').dataset.index
-          )
-          await this.actor.updateBioValue(index, event.currentTarget.value)
-        }
-
-        if (event.currentTarget.classList.contains('bio-section-title')) {
-          const index = parseInt(
-            event.currentTarget.closest('.bio-section').dataset.index
-          )
-          this.actor.updateBioTitle(index, event.currentTarget.value)
-        }
-
-        if (event.currentTarget.classList.contains('npc-skill-score')) {
-          const skill = this.actor.items.get(
-            event.currentTarget.closest('.item').dataset.skillId
-          )
-          if (skill) {
-            await skill.updateValue(event.currentTarget.value)
-          }
-        }
-
-        if (
-          event.currentTarget.classList.contains('skill-name') ||
-          event.currentTarget.classList.contains('item-name')
-        ) {
-          const item = this.actor.items.get(
-            event.currentTarget.closest('.item').dataset.skillId
-          )
-          if (item) {
-            const data = {}
-            if (item.system.properties.special) {
-              const parts = CoC7Item.getNamePartsSpec(
-                event.currentTarget.value,
-                item.system.specialization
-              )
-              data.name = parts.name
-              data['system.skillName'] = parts.skillName
-              data['system.specialization'] = parts.specialization
-            } else {
-              data['system.skillName'] = event.currentTarget.value
-              data.name = event.currentTarget.value
-            }
-            await item.update(data)
-          }
-        }
-
-        if (event.currentTarget.classList.contains('characteristic-formula')) {
-          // tester si c'est vide
-          if (event.currentTarget.value.length !== 0) {
-            // On teste si c'est une formule valide !
-            const r = new Roll(event.currentTarget.value)
-            await r.roll({ async: true })
-            if (isNaN(r.total) || typeof r.total === 'undefined') {
-              ui.notifications.error(
-                game.i18n.format('CoC7.ErrorInvalidFormula', {
-                  value: event.currentTarget.value
-                })
-              )
-              formData[event.currentTarget.name] = game.i18n.format(
-                'CoC7.ErrorInvalid'
-              )
-            }
-          }
-        }
-
-        if (event.currentTarget.classList.contains('attribute-value')) {
-          // tester si le db retourné est valide.
-          if (
-            event.currentTarget.value.length !== 0 &&
-            event.currentTarget.closest('.attribute').dataset.attrib === 'db'
-          ) {
-            // On teste si c'est une formule valide !
-            const r = new Roll(event.currentTarget.value)
-            await r.roll({ async: true })
-            if (isNaN(r.total) || r.total === undefined) {
-              ui.notifications.error(
-                game.i18n.format('CoC7.ErrorInvalidFormula', {
-                  value: event.currentTarget.value
-                })
-              )
-              formData[event.currentTarget.name] = game.i18n.format(
-                'CoC7.ErrorInvalid'
-              )
-            }
-          }
-        }
-
-        // le skill associé a l'arme a changé
-        // TODO : Factorisation du switch
-        // TODO : remplacer les strings par de constantes (item.skill.main ...)
-        if (event.currentTarget.classList.contains('weapon-skill')) {
-          const weapon = this.actor.items.get(
-            event.currentTarget.closest('.item').dataset.itemId
-          )
-          const skill = this.actor.items.get(
-            event.currentTarget.options[event.currentTarget.selectedIndex].value
-          )
-          if (weapon && skill) {
-            switch (event.currentTarget.dataset.skill) {
-              case 'main':
-                await weapon.update({
-                  'system.skill.main.id': skill.id,
-                  'system.skill.main.name': skill.name
-                })
-                break
-              case 'alternativ':
-                await weapon.update({
-                  'system.skill.alternativ.id': skill.id,
-                  'system.skill.alternativ.name': skill.name
-                })
-                break
-            }
-          }
-        }
-
-        // Le nom de l'arme a changé
-        if (event.currentTarget.classList.contains('weapon-name')) {
-          const weapon = this.actor.items.get(
-            event.currentTarget.closest('.item').dataset.itemId
-          )
-          if (weapon) {
-            await weapon.update({ name: event.currentTarget.value })
-          }
-        }
-
-        // les degats de l'arme on changés.
-        // TODO : Factorisation du switch
-        // TODO : remplacer les strings par de constantes (item.range.normal ...)
-        if (event.currentTarget.classList.contains('damage-formula')) {
-          const weapon = this.actor.items.get(
-            event.currentTarget.closest('.item').dataset.itemId
-          )
-          if (weapon) {
-            // teste la validité de la formule.
-            if (event.currentTarget.value.length !== 0) {
-              const r = new Roll(event.currentTarget.value)
-              await r.roll({ async: true })
-              if (isNaN(r.total) || typeof r.total === 'undefined') {
-                ui.notifications.error(
-                  game.i18n.format('CoC7.ErrorUnableToParseFormula', {
-                    value: event.currentTarget.value
-                  })
-                )
-              } else {
-                switch (event.currentTarget.dataset.range) {
-                  case 'normal':
-                    await weapon.update({
-                      'system.range.normal.damage': event.currentTarget.value
-                    })
-                    break
-                  case 'long':
-                    await weapon.update({
-                      'system.range.long.damage': event.currentTarget.value
-                    })
-                    break
-                  case 'extreme':
-                    await weapon.update({
-                      'system.range.extreme.damage': event.currentTarget.value
-                    })
-                    break
-                }
-              }
-            } else {
-              switch (event.currentTarget.dataset.range) {
-                case 'normal':
-                  await weapon.update({
-                    'system.range.normal.damage': null
-                  })
-                  break
-                case 'long':
-                  await weapon.update({
-                    'system.range.long.damage': null
-                  })
-                  break
-                case 'extreme':
-                  await weapon.update({
-                    'system.range.extreme.damage': null
-                  })
-                  break
-              }
-            }
+  /**
+   * Set skill adjustments value
+   * @param {SubmitEvent|null} event
+   */
+  async _onSkillSetAdjustment (event) {
+    event.preventDefault()
+    const itemUuid = event.target.closest('.item').dataset.itemUuid
+    const flag = event.target.dataset.flag
+    const value = event.target.value
+    if (!flag || isNaN(value)) {
+      return
+    }
+    const document = await fromUuid(itemUuid)
+    if (document) {
+      if (document.system.isCreditRating) {
+        const occupation = this.document.occupation
+        if (flag === 'occupation' && occupation) {
+          const newValue = parseInt(value, 10)
+          if (newValue > occupation.system.creditRating.max || newValue < occupation.system.creditRating.min) {
+            /* // FoundryVTT V12 */
+            ui.notifications.warn(game.i18n.format('CoC7.CreditOutOfRange', { min: occupation.system.creditRating.min, max: occupation.system.creditRating.max }))
           }
         }
       }
+      await document.update({
+        ['system.adjustments.' + flag]: value
+      })
     }
-    return this.object.update(formData)
+  }
+
+  /**
+   * @inheritdoc
+   * @param {SubmitEvent|null} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
+   * @returns {object}
+   */
+  _processFormData (event, form, formData) {
+    const object = super._processFormData(event, form, formData)
+    if (typeof object.system.biography !== 'undefined') {
+      const biography = foundry.utils.duplicate(this.document.system.biography)
+      for (const key in object.system.biography) {
+        biography[key] = { ...biography[key], ...object.system.biography[key] }
+      }
+      object.system.biography = biography
+    }
+    if (typeof object.system.sanityLossEvents !== 'undefined') {
+      const sanityLossEvents = foundry.utils.duplicate(this.document.system.sanityLossEvents)
+      for (const key in object.system.sanityLossEvents) {
+        sanityLossEvents[key] = { ...sanityLossEvents[key], ...object.system.sanityLossEvents[key] }
+      }
+      object.system.sanityLossEvents = sanityLossEvents
+    }
+    return object
+  }
+
+  /**
+   * Add empty element the same height as the last and move scroll to it
+   * @param {string} selector
+   */
+  scrollToNewLast (selector) {
+    const existing = this.element.querySelectorAll(selector)
+    if (existing.length) {
+      const empty = document.createElement('div')
+      empty.style.height = existing[existing.length - 1].getBoundingClientRect().height + 'px'
+      existing[existing.length - 1].after(empty)
+      empty.scrollIntoView({ block: 'end' })
+    }
+  }
+
+  /**
+   * Change the active tab within a tab group in this Application instance.
+   * @param {string} tab
+   * @param {string} group
+   * @param {object} options
+   */
+  changeTab (tab, group, options) {
+    if (tab === 'locked' && group === 'primary') {
+      if (this.allowUnlock) {
+        this.document.update({ 'system.flags.locked': !this.document.system.flags.locked })
+      }
+      return
+    }
+    super.changeTab(tab, group, options)
   }
 }

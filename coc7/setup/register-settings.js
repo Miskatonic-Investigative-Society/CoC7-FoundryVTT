@@ -1,57 +1,59 @@
-/* global $, CONFIG, CONST, foundry, game, ui */
-import { COC7 } from '../constants.js'
-import { CoC7DecaderDie } from '../apps/decader-die.js'
-import { CoC7DecaderDieOther } from '../apps/decader-die-other.js'
-import CoC7GameRuleSettings from '../apps/settings-game-rules.js'
+/* global CONFIG CONST foundry game ui */
+import { FOLDER_ID, ERAS } from '../constants.js'
+import CoC7SettingsGameRules from '../apps/settings-game-rules.js'
+import CoC7Utilities from '../apps/utilities.js'
+import deprecated from '../deprecated.js'
 
 export default function () {
-  /**
-   * Rules
-   */
-  game.settings.registerMenu('CoC7', 'gameRules', {
+  game.settings.registerMenu(FOLDER_ID, 'gameRules', {
     name: 'CoC7.Settings.Rules.Name',
     label: 'CoC7.Settings.Rules.Label',
     hint: 'CoC7.Settings.Rules.Hint',
-    icon: 'fas fa-book',
-    type: CoC7GameRuleSettings,
+    icon: 'fa-solid fa-book',
+    type: CoC7SettingsGameRules,
     restricted: true
   })
-  CoC7GameRuleSettings.registerSettings()
+  CoC7SettingsGameRules.registerSettings()
 
-  game.settings.register('CoC7', 'useContextMenus', {
-    name: 'SETTINGS.UseContextMenus',
-    hint: 'SETTINGS.UseContextMenusHint',
-    scope: 'world',
-    config: true,
-    type: Boolean,
-    default: false
-  })
-
-  game.settings.register('CoC7', 'dholeUploadDirectory', {
+  game.settings.register(FOLDER_ID, 'dholeUploadDirectory', {
     name: 'CoC7.Settings.DholeUpload.Directory.Name',
     hint: 'CoC7.Settings.DholeUpload.Directory.Hint',
     scope: 'world',
     config: true,
     type: String,
-    // filePicker: 'folder',
-    /* // FoundryVTT V11 */
-    default: (foundry.utils.isNewerVersion(game.version, '12') ? '' : '[data] ') + 'worlds/' + game.world.id + '/dhole-images'
+    default: 'worlds/' + game.world.id + '/dhole-images'
   })
 
-  game.settings.register('CoC7', 'worldEra', {
+  game.settings.register(FOLDER_ID, 'worldEra', {
     name: 'CoC7.Settings.WorldEra.Name',
     hint: 'CoC7.Settings.WorldEra.Hint',
     scope: 'world',
     config: true,
     default: 'standard',
     type: String,
-    choices: COC7.eras,
+    /* // FoundryVTT V12 */
+    choices: foundry.utils.isNewerVersion(game.version, 13)
+      ? () => Object.entries(ERAS).reduce((c, e) => {
+          c.push({
+            value: e[0],
+            label: game.i18n.localize(e[1].name)
+          })
+          return c
+        }, []).sort(CoC7Utilities.sortByLabelKey).reduce((c, e) => {
+          c[e.value] = e.label
+          return c
+        }, {})
+      : Object.entries(ERAS).reduce((c, e) => {
+        c[e[0]] = e[1].name
+        return c
+      }, {}),
     onChange: () => {
-      ui.players.render(true)
+      ui.players.render(deprecated.renderForce)
+      game.CoC7.skillNames.refreshList()
     }
   })
 
-  game.settings.register('CoC7', 'showWorldEra', {
+  game.settings.register(FOLDER_ID, 'showWorldEra', {
     name: 'CoC7.Settings.ShowWorldEra.Name',
     hint: 'CoC7.Settings.ShowWorldEra.Hint',
     scope: 'world',
@@ -59,11 +61,12 @@ export default function () {
     default: true,
     type: Boolean,
     onChange: () => {
+      /* // FoundryVTT V12 */
       ui.players.render(true)
     }
   })
 
-  game.settings.register('CoC7', 'dropCoCID', {
+  game.settings.register(FOLDER_ID, 'dropCoCID', {
     name: 'CoC7.Settings.DropCoCID.Name',
     hint: 'CoC7.Settings.DropCoCID.Hint',
     scope: 'world',
@@ -81,7 +84,7 @@ export default function () {
    * Initiative
    */
   /** Set displaying dices for init roll */
-  game.settings.register('CoC7', 'displayInitDices', {
+  game.settings.register(FOLDER_ID, 'displayInitDices', {
     name: 'SETTINGS.displayInitDices',
     hint: 'SETTINGS.displayInitDicesHint',
     scope: 'world',
@@ -90,7 +93,7 @@ export default function () {
     type: Boolean
   })
   /** Set displaying dices for init roll */
-  game.settings.register('CoC7', 'displayInitAsText', {
+  game.settings.register(FOLDER_ID, 'displayInitAsText', {
     name: 'SETTINGS.displayInitAsText',
     hint: 'SETTINGS.displayInitAsTextHint',
     scope: 'world',
@@ -100,10 +103,10 @@ export default function () {
   })
 
   /**
-   * Roll customisaions
+   * Roll customizations
    */
   /** Standby rolls made by GM from player sheet */
-  game.settings.register('CoC7', 'stanbyGMRolls', {
+  game.settings.register(FOLDER_ID, 'stanbyGMRolls', {
     name: 'SETTINGS.StanbyGMRolls',
     hint: 'SETTINGS.StanbyGMRollsHint',
     scope: 'world',
@@ -112,7 +115,7 @@ export default function () {
     type: Boolean
   })
   /** Allow usage of a flat dice modifier */
-  game.settings.register('CoC7', 'allowFlatDiceModifier', {
+  game.settings.register(FOLDER_ID, 'allowFlatDiceModifier', {
     name: 'SETTINGS.AllowFlatDiceModifier',
     hint: 'SETTINGS.AllowFlatDiceModifierHint',
     scope: 'world',
@@ -121,7 +124,7 @@ export default function () {
     type: Boolean
   })
   /** Allow usage of a flat threshold modifier */
-  game.settings.register('CoC7', 'allowFlatThresholdModifier', {
+  game.settings.register(FOLDER_ID, 'allowFlatThresholdModifier', {
     name: 'SETTINGS.AllowFlatThresholdModifier',
     hint: 'SETTINGS.AllowFlatThresholdModifierHint',
     scope: 'world',
@@ -129,7 +132,7 @@ export default function () {
     default: false,
     type: Boolean
   })
-  game.settings.register('CoC7', 'defaultCheckDifficulty', {
+  game.settings.register(FOLDER_ID, 'defaultCheckDifficulty', {
     name: 'SETTINGS.DefaultDifficulty',
     hint: 'SETTINGS.DefaultDifficultyHint',
     scope: 'world',
@@ -141,7 +144,7 @@ export default function () {
       unknown: 'SETTINGS.CheckDifficultyUnknown'
     }
   })
-  game.settings.register('CoC7', 'selfRollWhisperTarget', {
+  game.settings.register(FOLDER_ID, 'selfRollWhisperTarget', {
     name: 'SETTINGS.SelfRollWhisperTarget',
     hint: 'SETTINGS.SelfRollWhisperTargetHint',
     scope: 'world',
@@ -159,7 +162,7 @@ export default function () {
    * Chat Cards
    */
   /** Trusted players will be allowed to modify chat cards */
-  game.settings.register('CoC7', 'trustedCanModfyChatCard', {
+  game.settings.register(FOLDER_ID, 'trustedCanModfyChatCard', {
     name: 'SETTINGS.TrustedCanModfyChatCard',
     hint: 'SETTINGS.TrustedCanModfyChatCardHint',
     scope: 'world',
@@ -168,7 +171,7 @@ export default function () {
     type: Boolean
   })
   /** Trusted players will be allowed to see chat cards private sections */
-  game.settings.register('CoC7', 'trustedCanSeeChatCard', {
+  game.settings.register(FOLDER_ID, 'trustedCanSeeChatCard', {
     name: 'SETTINGS.TrustedCanSeeChatCard',
     hint: 'SETTINGS.TrustedCanSeeChatCardHint',
     scope: 'world',
@@ -177,7 +180,7 @@ export default function () {
     type: Boolean
   })
   /** Set the need to display actor image on chat cards */
-  game.settings.register('CoC7', 'displayActorOnCard', {
+  game.settings.register(FOLDER_ID, 'displayActorOnCard', {
     name: 'SETTINGS.DisplayActorOnCard',
     hint: 'SETTINGS.DisplayActorOnCardHint',
     scope: 'world',
@@ -185,14 +188,14 @@ export default function () {
     default: false,
     type: Boolean
   })
-  game.settings.register('CoC7', 'displayCheckSuccessLevel', {
+  game.settings.register(FOLDER_ID, 'displayCheckSuccessLevel', {
     name: 'SETTINGS.DisplayCheckSuccessLevel',
     scope: 'client',
     config: true,
     default: true,
     type: Boolean
   })
-  game.settings.register('CoC7', 'displayResultType', {
+  game.settings.register(FOLDER_ID, 'displayResultType', {
     name: 'SETTINGS.DisplayResultType',
     scope: 'client',
     config: true,
@@ -200,7 +203,7 @@ export default function () {
     type: Boolean
   })
   /** Set the use of token instead of portraits */
-  game.settings.register('CoC7', 'useToken', {
+  game.settings.register(FOLDER_ID, 'useToken', {
     name: 'SETTINGS.UseToken',
     hint: 'SETTINGS.UseTokenHint',
     scope: 'world',
@@ -212,7 +215,7 @@ export default function () {
   /**
    * Scene Settings
    */
-  game.settings.register('CoC7', 'enableStatusIcons', {
+  game.settings.register(FOLDER_ID, 'enableStatusIcons', {
     name: 'SETTINGS.EnableStatusIcons',
     hint: 'SETTINGS.EnableStatusIconsHint',
     scope: 'world',
@@ -220,7 +223,7 @@ export default function () {
     type: Boolean,
     default: true
   })
-  game.settings.register('CoC7', 'gridSpaces', {
+  game.settings.register(FOLDER_ID, 'gridSpaces', {
     name: 'SETTINGS.RestrictGridSpaces',
     hint: 'SETTINGS.RestrictGridSpacesHint',
     scope: 'world',
@@ -228,7 +231,7 @@ export default function () {
     default: false,
     type: Boolean
   })
-  game.settings.register('CoC7', 'distanceElevation', {
+  game.settings.register(FOLDER_ID, 'distanceElevation', {
     name: 'SETTINGS.CheckElevation',
     hint: 'SETTINGS.CheckElevationHint',
     scope: 'world',
@@ -236,7 +239,7 @@ export default function () {
     default: true,
     type: Boolean
   })
-  game.settings.register('CoC7', 'distanceTheatreOfTheMind', {
+  game.settings.register(FOLDER_ID, 'distanceTheatreOfTheMind', {
     name: 'SETTINGS.SceneDistanceNotCalcualtedNoError',
     hint: 'SETTINGS.SceneDistanceNotCalcualtedNoErrorHint',
     scope: 'world',
@@ -245,7 +248,7 @@ export default function () {
     type: Boolean
   })
   /** Default behavior when NPC is created on a scene */
-  game.settings.register('CoC7', 'tokenDropMode', {
+  game.settings.register(FOLDER_ID, 'tokenDropMode', {
     name: 'SETTINGS.TokenDropMode',
     hint: 'SETTINGS.TokenDropModeHint',
     scope: 'world',
@@ -262,7 +265,7 @@ export default function () {
   /**
    * Game Artwork Settings
    */
-  game.settings.register('CoC7', 'overrideGameArtwork', {
+  game.settings.register(FOLDER_ID, 'overrideGameArtwork', {
     name: 'SETTINGS.OverrideGameArtwork',
     hint: 'SETTINGS.OverrideGameArtworkHint',
     scope: 'world',
@@ -270,16 +273,16 @@ export default function () {
     default: false,
     type: Boolean
   })
-  if (game.settings.get('CoC7', 'overrideGameArtwork')) {
-    game.settings.register('CoC7', 'artPauseImage', {
+  if (game.settings.get(FOLDER_ID, 'overrideGameArtwork')) {
+    game.settings.register(FOLDER_ID, 'artPauseImage', {
       name: 'SETTINGS.ArtPauseImage',
       hint: 'SETTINGS.ArtPauseImageHint',
       scope: 'world',
       config: true,
-      default: 'systems/CoC7/assets/icons/time-trap.svg',
+      default: 'systems/' + FOLDER_ID + '/assets/icons/time-trap.svg',
       type: String
     })
-    game.settings.register('CoC7', 'artPauseText', {
+    game.settings.register(FOLDER_ID, 'artPauseText', {
       name: 'SETTINGS.ArtPauseText',
       hint: 'SETTINGS.ArtPauseTextHint',
       scope: 'world',
@@ -292,28 +295,28 @@ export default function () {
   /**
    * Sheet settings
    */
-  game.settings.register('CoC7', 'displayPlayerNameOnSheet', {
+  game.settings.register(FOLDER_ID, 'displayPlayerNameOnSheet', {
     name: 'SETTINGS.displayPlayerNameOnSheet',
     scope: 'world',
     config: true,
     default: false,
     type: Boolean
   })
-  game.settings.register('CoC7', 'toolTipDelay', {
+  game.settings.register(FOLDER_ID, 'toolTipDelay', {
     name: 'CoC7.toolTipDelay',
     scope: 'world',
     config: true,
     default: 1500,
     type: Number
   })
-  game.settings.register('CoC7', 'hidePartValues', {
+  game.settings.register(FOLDER_ID, 'hidePartValues', {
     name: 'SETTINGS.hidePartValues',
     scope: 'world',
     config: true,
     default: false,
     type: Boolean
   })
-  game.settings.register('CoC7', 'showIconsOnly', {
+  game.settings.register(FOLDER_ID, 'showIconsOnly', {
     name: 'SETTINGS.showIconsOnly',
     scope: 'world',
     config: true,
@@ -321,7 +324,7 @@ export default function () {
     type: Boolean
   })
   /** Allow player to unlock the sheet outside of creation mode */
-  game.settings.register('CoC7', 'playerUnlockSheetMode', {
+  game.settings.register(FOLDER_ID, 'playerUnlockSheetMode', {
     name: 'SETTINGS.PlayerUnlockSheetMode',
     scope: 'world',
     config: true,
@@ -334,7 +337,7 @@ export default function () {
     }
   })
   /** Allow player to modify status */
-  game.settings.register('CoC7', 'statusPlayerEditable', {
+  game.settings.register(FOLDER_ID, 'statusPlayerEditable', {
     name: 'SETTINGS.StatusPlayerEditable',
     hint: 'SETTINGS.StatusPlayerEditableHint',
     scope: 'world',
@@ -342,7 +345,7 @@ export default function () {
     default: true,
     type: Boolean
   })
-  game.settings.register('CoC7', 'oneBlockBackstory', {
+  game.settings.register(FOLDER_ID, 'oneBlockBackstory', {
     name: 'SETTINGS.OneBlockBackStory',
     hint: 'SETTINGS.OneBlockBackStoryHint',
     scope: 'world',
@@ -350,120 +353,96 @@ export default function () {
     default: false,
     type: Boolean
   })
-  game.settings.register('CoC7', 'overrideSheetArtwork', {
-    name: 'SETTINGS.OverrideSheetArtwork',
-    hint: 'SETTINGS.OverrideSheetArtworkHint',
+  game.settings.register(FOLDER_ID, 'sheetEraIcons', {
+    name: 'SETTINGS.UseIconForEras',
+    hint: 'SETTINGS.UseIconForErasHint',
     scope: 'world',
     config: true,
     default: false,
     type: Boolean
   })
-  if (game.settings.get('CoC7', 'overrideSheetArtwork')) {
-    game.settings.register('CoC7', 'artWorkSheetBackground', {
-      name: 'SETTINGS.ArtWorkSheetBackground',
-      hint: 'SETTINGS.ArtWorkSheetBackgroundHint',
-      scope: 'world',
-      config: true,
-      default: "url('./assets/images/background.webp') 4 repeat",
-      type: String
-    })
-    game.settings.register('CoC7', 'artWorkSheetBackgroundType', {
-      name: 'SETTINGS.ArtWorkSheetBackgroundType',
-      scope: 'world',
-      config: true,
-      default: 'slice',
-      type: String,
-      choices: {
-        slice: 'SETTINGS.BackgroundSlice',
-        auto: 'SETTINGS.BackgroundAuto',
-        contain: 'SETTINGS.BackgroundContain',
-        cover: 'SETTINGS.BackgroundCover'
-      }
-    })
-    game.settings.register('CoC7', 'artWorkOtherSheetBackground', {
-      name: 'SETTINGS.ArtWorkOtherSheetBackground',
-      hint: 'SETTINGS.ArtWorkOtherSheetBackgroundHint',
-      scope: 'world',
-      config: true,
-      default: "url( './assets/images/background.webp')",
-      type: String
-    })
-    game.settings.register('CoC7', 'artworkSheetImage', {
-      name: 'SETTINGS.ArtworkSheetImage',
-      hint: 'SETTINGS.ArtworkSheetImageHint',
-      scope: 'world',
-      config: true,
-      default: "url('./assets/images/tentacles.webp')",
-      type: String
-    })
-    game.settings.register('CoC7', 'artworkFrontColor', {
-      name: 'SETTINGS.ArtworkFrontColor',
-      hint: 'SETTINGS.ArtworkFrontColorHint',
-      scope: 'world',
-      config: true,
-      default: 'rgba(43,55,83,1)',
-      type: String
-    })
-    game.settings.register('CoC7', 'artworkBackgroundColor', {
-      name: 'SETTINGS.ArtworkBackgroundColor',
-      hint: 'SETTINGS.ArtworkBackgroundColorHint',
-      scope: 'world',
-      config: true,
-      default: 'rgba(103,11,11,1)',
-      type: String
-    })
-    game.settings.register('CoC7', 'artworkInteractiveColor', {
-      name: 'SETTINGS.ArtworkInteractiveColor',
-      hint: 'SETTINGS.ArtworkInteractiveColorHint',
-      scope: 'world',
-      config: true,
-      default: 'rgba(103,11,11,1)',
-      type: String
-    })
-    game.settings.register('CoC7', 'artworkFixedSkillLength', {
-      name: 'SETTINGS.ArtworkFixedSkillLength',
-      hint: 'SETTINGS.ArtworkFixedSkillLengthHint',
-      scope: 'world',
-      config: true,
-      default: true,
-      type: Boolean
-    })
-    game.settings.register('CoC7', 'artworkMainFont', {
-      name: 'SETTINGS.ArtworkMainFont',
-      scope: 'world',
-      config: true,
-      default: '',
-      type: String
-    })
-    game.settings.register('CoC7', 'artworkMainFontBold', {
-      name: 'SETTINGS.ArtworkMainFontBold',
-      scope: 'world',
-      config: true,
-      default: '',
-      type: String
-    })
-    game.settings.register('CoC7', 'artworkMainFontSize', {
-      name: 'SETTINGS.ArtworkMainFontSize',
-      scope: 'world',
-      config: true,
-      default: 16,
-      type: Number,
-      onChange: size => _setRootFontSize(size)
-    })
-
-    function _setRootFontSize (size) {
-      $(':root').css('font-size', size)
-      ui.sidebar.render(true)
-      for (const [, w] of Object.entries(ui.windows)) {
-        w.render(true)
-      }
+  /*
+  The following settings are obsolete a CSS module will give move specific controls and allow disabling when debugging errors
+  */
+  game.settings.register(FOLDER_ID, 'overrideSheetArtwork', {
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
+  })
+  game.settings.register(FOLDER_ID, 'artWorkSheetBackground', {
+    scope: 'world',
+    config: false,
+    default: "url('./assets/images/background.webp') 4 repeat",
+    type: String
+  })
+  game.settings.register(FOLDER_ID, 'artWorkSheetBackgroundType', {
+    scope: 'world',
+    config: false,
+    default: 'slice',
+    type: String,
+    choices: {
+      slice: 'SETTINGS.BackgroundSlice',
+      auto: 'SETTINGS.BackgroundAuto',
+      contain: 'SETTINGS.BackgroundContain',
+      cover: 'SETTINGS.BackgroundCover'
     }
-  }
-
+  })
+  game.settings.register(FOLDER_ID, 'artWorkOtherSheetBackground', {
+    scope: 'world',
+    config: false,
+    default: "url( './assets/images/background.webp')",
+    type: String
+  })
+  game.settings.register(FOLDER_ID, 'artworkSheetImage', {
+    scope: 'world',
+    config: false,
+    default: "url('./assets/images/tentacles.webp')",
+    type: String
+  })
+  game.settings.register(FOLDER_ID, 'artworkFrontColor', {
+    scope: 'world',
+    config: false,
+    default: 'rgba(43,55,83,1)',
+    type: String
+  })
+  game.settings.register(FOLDER_ID, 'artworkBackgroundColor', {
+    scope: 'world',
+    config: false,
+    default: 'rgba(103,11,11,1)',
+    type: String
+  })
+  game.settings.register(FOLDER_ID, 'artworkInteractiveColor', {
+    scope: 'world',
+    config: false,
+    default: 'rgba(103,11,11,1)',
+    type: String
+  })
+  game.settings.register(FOLDER_ID, 'artworkFixedSkillLength', {
+    scope: 'world',
+    config: false,
+    default: true,
+    type: Boolean
+  })
+  game.settings.register(FOLDER_ID, 'artworkMainFont', {
+    scope: 'world',
+    config: false,
+    default: '',
+    type: String
+  })
+  game.settings.register(FOLDER_ID, 'artworkMainFontBold', {
+    scope: 'world',
+    config: false,
+    default: '',
+    type: String
+  })
+  /*
+  The previous settings are obsolete a CSS module will give move specific controls and allow disabling when debugging errors
+  */
   /**
    * Weapons
    */
-  game.settings.register('CoC7', 'disregardUsePerRound', {
+  game.settings.register(FOLDER_ID, 'disregardUsePerRound', {
     name: 'SETTINGS.DisregardUsePerRound',
     hint: 'SETTINGS.DisregardUsePerRoundHint',
     scope: 'world',
@@ -471,7 +450,7 @@ export default function () {
     default: false,
     type: Boolean
   })
-  game.settings.register('CoC7', 'disregardAmmo', {
+  game.settings.register(FOLDER_ID, 'disregardAmmo', {
     name: 'SETTINGS.DisregardAmmo',
     hint: 'SETTINGS.DisregardAmmoHint',
     scope: 'world',
@@ -479,7 +458,7 @@ export default function () {
     default: false,
     type: Boolean
   })
-  game.settings.register('CoC7', 'disregardNoTargets', {
+  game.settings.register(FOLDER_ID, 'disregardNoTargets', {
     name: 'SETTINGS.DoNotPromptNoTargetSelected',
     hint: 'SETTINGS.DoNotPromptNoTargetSelectedHit',
     scope: 'world',
@@ -489,55 +468,31 @@ export default function () {
   })
 
   /**
-   * Chases
-   */
-  // MOVED TO CHASSE INDIVIDUAL SETTING
-  // game.settings.register('CoC7', 'chaseShowTokenMovement', {
-  //   name: 'SETTINGS.ChaseShowTokenMovement',
-  //   hint: 'SETTINGS.ChaseShowTokenMovementHint',
-  //   scope: 'world',
-  //   config: true,
-  //   default: true,
-  //   type: Boolean
-  // })
-
-  /**
    * Dice So Nice
    */
   if (game.modules.get('dice-so-nice')?.active) {
-    game.settings.register('CoC7', 'syncDice3d', {
-      name: 'SETTINGS.SyncDice3D',
-      hint: 'SETTINGS.SyncDice3DHint',
-      scope: 'world',
+    game.settings.register(FOLDER_ID, 'tenDieBonus', {
+      name: 'SETTINGS.TenDieBonus',
+      hint: 'SETTINGS.TenDieBonusHint',
+      scope: 'client',
       config: true,
-      default: true,
-      type: Boolean
+      default: 'bronze',
+      type: String
     })
-    const [version] = game.modules.get('dice-so-nice')?.version.split('.')
-    if (!isNaN(Number(version)) && Number(version) >= 3) {
-      game.settings.register('CoC7', 'tenDieBonus', {
-        name: 'SETTINGS.TenDieBonus',
-        hint: 'SETTINGS.TenDieBonusHint',
-        scope: 'client',
-        config: true,
-        default: 'bronze',
-        type: String
-      })
-      game.settings.register('CoC7', 'tenDiePenalty', {
-        name: 'SETTINGS.TenDiePenalty',
-        hint: 'SETTINGS.TenDiePenaltyHint',
-        scope: 'client',
-        config: true,
-        default: 'bloodmoon',
-        type: String
-      })
-    }
+    game.settings.register(FOLDER_ID, 'tenDiePenalty', {
+      name: 'SETTINGS.TenDiePenalty',
+      hint: 'SETTINGS.TenDiePenaltyHint',
+      scope: 'client',
+      config: true,
+      default: 'bloodmoon',
+      type: String
+    })
   }
 
   /**
    * Developer and debug settings
    */
-  game.settings.register('CoC7', 'debugmode', {
+  game.settings.register(FOLDER_ID, 'debugmode', {
     name: 'SETTINGS.DebugMode',
     hint: 'SETTINGS.DebugModeHint',
     scope: 'client',
@@ -545,7 +500,7 @@ export default function () {
     type: Boolean,
     default: false
   })
-  game.settings.register('CoC7', 'experimentalFeatures', {
+  game.settings.register(FOLDER_ID, 'experimentalFeatures', {
     name: 'SETTINGS.ShowExperimentalFeatures',
     hint: 'SETTINGS.ShowExperimentalFeaturesHint',
     scope: 'world',
@@ -556,7 +511,7 @@ export default function () {
   /**
    * Other settings
    */
-  game.settings.register('CoC7', 'hiddendevmenu', {
+  game.settings.register(FOLDER_ID, 'hiddendevmenu', {
     name: 'Hidden dev menu',
     hint: 'Use at your own risk',
     scope: 'world',
@@ -564,110 +519,128 @@ export default function () {
     type: Boolean,
     default: false
   })
-  game.settings.register('CoC7', 'developmentEnabled', {
+  game.settings.register(FOLDER_ID, 'developmentEnabled', {
     name: 'Dev phased allowed',
     scope: 'world',
     config: false,
     type: Boolean,
     default: false
   })
-  /** Feat: welcome message */
-  game.settings.register('CoC7', 'showWelcomeMessage', {
-    name: 'SETTINGS.showWelcomeMessage',
-    hint: 'SETTINGS.showWelcomeMessage',
-    scope: 'world',
-    config: false,
-    default: true,
-    type: Boolean
-  })
-  game.settings.register('CoC7', 'charCreationEnabled', {
+  game.settings.register(FOLDER_ID, 'charCreationEnabled', {
     name: 'Char creation allowed',
     scope: 'world',
     config: false,
     type: Boolean,
     default: false
   })
-  game.settings.register('CoC7', 'systemUpdateVersion', {
+  game.settings.register(FOLDER_ID, 'systemUpdateVersion', {
     name: 'System update version',
     scope: 'world',
     config: false,
     type: String,
     default: '0'
   })
-  game.settings.register('CoC7', 'systemUpdatedModuleVersion', {
+  game.settings.register(FOLDER_ID, 'systemUpdatedModuleVersion', {
     scope: 'world',
     config: false,
     default: {}
   })
-  game.settings.register('CoC7', 'xpEnabled', {
-    name: 'Enable XP gain',
+  game.settings.register(FOLDER_ID, 'xpEnabled', {
+    name: 'Allow player users to toggle XP gain',
     scope: 'world',
     config: false,
     type: Boolean,
     default: true
   })
-  game.settings.register('CoC7', 'showInstructions', {
+  game.settings.register(FOLDER_ID, 'showInstructions', {
     name: 'Show changelog/instructions',
     scope: 'world',
     config: false,
     type: String,
     default: '0'
   })
-  game.settings.register('CoC7', 'InvestigatorWizardSetup', {
+  game.settings.register(FOLDER_ID, 'InvestigatorWizardSetup', {
     name: 'Force specific setup CoC ID for Investigator Wizard',
     scope: 'world',
     config: false,
     type: String,
     default: ''
   })
-  game.settings.register('CoC7', 'InvestigatorWizardQuantity', {
+  game.settings.register(FOLDER_ID, 'InvestigatorWizardQuantity', {
     name: 'Number of investigators a single user without create actor rights can own',
     scope: 'world',
     config: false,
     type: Number,
     default: 0
   })
-  game.settings.register('CoC7', 'InvestigatorWizardOwnership', {
+  game.settings.register(FOLDER_ID, 'InvestigatorWizardOwnership', {
     name: 'Default permissions for non owner players',
     scope: 'world',
     config: false,
     type: Number,
     default: CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE
   })
-  game.settings.register('CoC7', 'InvestigatorWizardRerolls', {
+  game.settings.register(FOLDER_ID, 'InvestigatorWizardRerolls', {
     name: 'Allow players to reroll characteristics',
     scope: 'world',
     config: false,
     type: Boolean,
     default: false
   })
-  game.settings.register('CoC7', 'InvestigatorWizardPointBuy', {
+  game.settings.register(FOLDER_ID, 'InvestigatorWizardPointBuy', {
     name: 'Force point buy instead of setup choice',
     scope: 'world',
     config: false,
     type: Boolean,
     default: false
   })
-  game.settings.register('CoC7', 'InvestigatorWizardQuickFire', {
+  game.settings.register(FOLDER_ID, 'InvestigatorWizardQuickFire', {
     name: 'Quick fire setup values',
     scope: 'world',
     config: false,
     type: Array,
     default: []
   })
-  game.settings.register('CoC7', 'InvestigatorWizardChooseValues', {
+  game.settings.register(FOLDER_ID, 'InvestigatorWizardChooseValues', {
     name: 'Choose where to place rolled characteristics',
     scope: 'world',
     config: false,
     type: Boolean,
     default: false
   })
-  /** Set an initiative formula for the system */
-  CONFIG.Combat.initiative = {
-    formula: '@characteristics.dex.value',
-    decimals: 4
+
+  game.settings.register(FOLDER_ID, 'boutOfMadnessSummaryTable', {
+    name: 'SETTINGS.BoutOfMadnessSummaryTable',
+    scope: 'world',
+    config: true,
+    default: 'none',
+    type: String,
+    choices: {
+      none: 'SETTINGS.LetKeeperDecide'
+    }
+  })
+
+  game.settings.register(FOLDER_ID, 'boutOfMadnessRealTimeTable', {
+    name: 'SETTINGS.BoutOfMadnessRealTimeTable',
+    scope: 'world',
+    config: true,
+    default: 'none',
+    type: String,
+    choices: {
+      none: 'SETTINGS.LetKeeperDecide'
+    }
+  })
+
+  // Attempt to fix bad setting
+  if (game.settings.get(FOLDER_ID, 'InvestigatorWizardChooseValues') !== true && game.settings.get(FOLDER_ID, 'InvestigatorWizardChooseValues') !== false) {
+    game.settings.set(FOLDER_ID, 'InvestigatorWizardChooseValues', game.settings.get(FOLDER_ID, 'InvestigatorWizardChooseValues')[0] ?? false)
   }
-  CONFIG.debug.hooks = !!game.settings.get('CoC7', 'debugmode')
-  CONFIG.Dice.terms.t = CoC7DecaderDie
-  CONFIG.Dice.terms.o = CoC7DecaderDieOther
+  // Migrate Bout Of Madness Tables from ID to UUID
+  if (game.settings.get(FOLDER_ID, 'boutOfMadnessSummaryTable') !== 'none' && game.settings.get(FOLDER_ID, 'boutOfMadnessSummaryTable').indexOf('.') === -1) {
+    game.settings.set(FOLDER_ID, 'boutOfMadnessSummaryTable', 'RollTable.' + game.settings.get(FOLDER_ID, 'boutOfMadnessSummaryTable'))
+  }
+  if (game.settings.get(FOLDER_ID, 'boutOfMadnessRealTimeTable') !== 'none' && game.settings.get(FOLDER_ID, 'boutOfMadnessRealTimeTable').indexOf('.') === -1) {
+    game.settings.set(FOLDER_ID, 'boutOfMadnessRealTimeTable', 'RollTable.' + game.settings.get(FOLDER_ID, 'boutOfMadnessRealTimeTable'))
+  }
+  CONFIG.debug.hooks = !!game.settings.get(FOLDER_ID, 'debugmode')
 }

@@ -1,86 +1,130 @@
-/* global CONFIG foundry game TextEditor */
-import CoC7CharacterSheet from './character-sheet-v2.js'
+/* global game */
+import { FOLDER_ID } from '../../constants.js'
+import CoC7ModelsActorCharacterSheetV2 from './character-sheet-v2.js'
 
-export default class CoC7CharacterSheetV3 extends CoC7CharacterSheet {
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheetV3', 'actor', 'character'],
-      template: 'systems/CoC7/templates/actors/investigator-v3/body.hbs',
+export default class CoC7ModelsActorCharacterSheetV3 extends CoC7ModelsActorCharacterSheetV2 {
+  static DEFAULT_OPTIONS = {
+    classes: ['investigator'],
+    position: {
       width: 980,
-      height: 810,
-      scrollY: ['.sheet-body']
-    })
-  }
-
-  _getHeaderButtons () {
-    let buttons = super._getHeaderButtons()
-    buttons = [
-      {
-        label: game.i18n.localize('CoC7.Summarize'),
-        class: 'test-extra-icon',
-        icon: 'fas fa-window-minimize',
-        onclick: event => this.toggleSheetMode(event)
-      }
-    ].concat(buttons)
-    return buttons
-  }
-
-  async toggleSheetMode (event) {
-    const ClassName = CONFIG.Actor.sheetClasses.character['CoC7.CoC7CharacterSheetMinimized']?.cls
-    if (typeof ClassName !== 'undefined') {
-      const token = this.options.token
-      await this.close()
-      await (new ClassName(this.object, { editable: this.object.isOwner })).render(true, { token })
+      height: 811
+    },
+    window: {
+      resizable: true
     }
   }
 
-  async getData () {
-    const sheetData = await super.getData()
-    const hp = this.actor.system.attribs.hp
-    sheetData.imgSaturation = hp.value / hp.max
-
-    sheetData.biographySections = []
-    if (sheetData.data.system.biography instanceof Array && sheetData.data.system.biography.length) {
-      for (const biography of sheetData.data.system.biography) {
-        sheetData.biographySections.push({
-          title: biography.title,
-          value: biography.value,
-          enriched: await TextEditor.enrichHTML(
-            biography.value,
-            {
-              async: true,
-              secrets: sheetData.editable
-            }
-          )
-        })
-      }
-      sheetData.biographySections[0].isFirst = true
-      sheetData.biographySections[sheetData.biographySections.length - 1].isLast = true
+  static PARTS = {
+    tabs: {
+      template: 'templates/generic/tab-navigation.hbs'
+    },
+    sheetExtras: {
+      template: 'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/parts/sheet-extras.hbs'
+    },
+    body: {
+      template: 'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/body.hbs',
+      scrollable: [
+        'aside.personal-details div.scroll-container',
+        'section.tab.activeEffects',
+        'section.tab.background',
+        'section.tab.combat',
+        'section.tab.development',
+        'section.tab.keeper',
+        'section.tab.portraitConfig',
+        'section.tab.possessions',
+        'section.tab.skills'
+      ]
     }
-
-    sheetData.showPartValues = !game.settings.get('CoC7', 'hidePartValues')
-
-    return sheetData
   }
 
-  activateListeners (html) {
-    super.activateListeners(html)
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
 
-    if (!this.object.sheet.isEditable) return
+    const hp = context.document.system.attribs.hp
+    context.imgSaturation = (hp.max ? hp.value / hp.max : 0)
 
-    html.find('.add-new-section-scroll').click(() => {
-      this.actor.createBioSection()
-      html.find('.sheet-body').each((i, el) => { el.scrollTop = el.scrollHeight - el.clientHeight })
-      this.render()
+    const tabs = {
+      background: {
+        cssClass: 'tab background',
+        icon: '',
+        label: 'CoC7.Background'
+      },
+      possessions: {
+        cssClass: 'tab possessions',
+        icon: '',
+        label: 'CoC7.Possessions'
+      },
+      combat: {
+        cssClass: 'tab combat',
+        icon: '',
+        label: 'CoC7.Combat'
+      },
+      skills: {
+        cssClass: 'tab skills',
+        icon: '',
+        label: 'CoC7.Skills'
+      },
+      activeEffects: {
+        cssClass: 'tab effects small-ribbon',
+        icon: 'game-icon game-icon-aura',
+        label: '',
+        tooltip: 'CoC7.Effects'
+      }
+    }
+    if (context.showDevPanel) {
+      tabs.development = {
+        cssClass: 'tab development small-ribbon',
+        icon: 'fa-solid fa-cogs',
+        label: '',
+        tooltip: 'CoC7.CharacterDevelopment'
+      }
+    }
+    if (game.user.isGM) {
+      tabs.keeper = {
+        cssClass: 'tab keeper small-ribbon',
+        icon: 'game-icon game-icon-tentacles-skull',
+        label: '',
+        tooltip: 'CoC7.GmNotes'
+      }
+    }
+    if (!context.document.system.flags.locked) {
+      tabs.portraitConfig = {
+        cssClass: 'tab tab-hidden',
+        icon: '',
+        label: ''
+      }
+    }
+
+    context.tabs = this.getTabs('primary', 'skills', tabs)
+
+    context.portraitFrame = context.document.flags[FOLDER_ID]?.portraitFrame
+
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
+
+    // Everything below here is only needed if the sheet is editable
+    if (!this.isEditable) return
+
+    this.element.querySelector('.portrait-frame')?.addEventListener('click', () => {
+      this.changeTab('portraitConfig', 'primary')
     })
-    html.find('.portrait-frame').click(() => {
-      this._tabs.find(t => t._navSelector === '.sheet-nav')?.activate('portrait-frame')
-    })
-    html.find('.optionbox .photo-frame').click((event) => {
+    this.element.querySelectorAll('.option-box .photo-frame').forEach((element) => element.addEventListener('click', (event) => {
       const objectFit = event.currentTarget.dataset.objectFit
-      this.actor.update({
-        'flags.CoC7.portraitFrame': objectFit
-      })
-    })
+      this.document.setFlag(FOLDER_ID, 'portraitFrame', objectFit)
+    }))
   }
 }

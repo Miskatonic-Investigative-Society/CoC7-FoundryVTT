@@ -43,10 +43,5 @@
     "thread-loader": "^4.0.0",
     "webpack-cli": "^6.0.0",
     "webpackbar": "^7.0.0"
-  },
-  "standard": {
-    "ignore": [
-      "/static/lib/socketlib/"
-    ]
   }
 }

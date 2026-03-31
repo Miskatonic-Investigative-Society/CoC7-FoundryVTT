@@ -1,93 +1,96 @@
-<h1 style="flex: 0 0 auto;">{{localize 'CoC7.InvestigatorWizard.TitleAdjustCharacteristics'}}</h1>
-<div class="scrollsection">
-  {{#unless pulpRuleIgnoreAgePenalties}}
-    {{#if object.requiresAgeAdjustments.edu}}
-      {{#if (eq 1 object.requiresAgeAdjustments.edu.total)}}
-        <h2>{{localize 'CoC7.InvestigatorWizard.MakeEDUImprovementCheck' total=object.requiresAgeAdjustments.edu.total}}</h2>
-      {{else}}
-        <h2>{{localize 'CoC7.InvestigatorWizard.MakeEDUImprovementChecks' total=object.requiresAgeAdjustments.edu.total}}</h2>
-      {{/if}}
-      <div class="flexcol-coc7">
-        <ol class="item-list">
-          <li class="item flexrow-coc7">
-            <label class="flex2">{{localize 'CHARAC.Education'}} ({{object.setupPoints.edu}}%):</label>
-            <div>{{points.edu.value}}%</div>
-          </li>
-          <li class="item flexrow-coc7" style="min-height: 2.1rem;">
-            <label class="flex2">&nbsp;</label>
-            {{#unless object.requiresAgeAdjustments.edu.rolled}}
+<div class="panel flexcol">
+  <h1>{{localize 'CoC7.InvestigatorWizard.TitleAdjustCharacteristics'}}</h1>
+  <div class="scroll-section">
+    {{#unless pulpRuleIgnoreAgePenalties}}
+      {{#if coc7Config.requiresAgeAdjustments.edu}}
+        {{#if (eq 1 coc7Config.requiresAgeAdjustments.edu.total)}}
+          <h3 class="section-heading">{{localize 'CoC7.InvestigatorWizard.MakeEDUImprovementCheck' total=coc7Config.requiresAgeAdjustments.edu.total}}</h3>
+        {{else}}
+          <h3 class="section-heading">{{localize 'CoC7.InvestigatorWizard.MakeEDUImprovementChecks' total=coc7Config.requiresAgeAdjustments.edu.total}}</h3>
+        {{/if}}
+        <div class="place-characteristics flexcol">
+          <div></div>
+          <div class="flexrow">
+            <label class="flex2">{{localize 'CHARAC.Education'}} ({{coc7Config.setupPoints.edu}}%):</label>
+            <div class="item-controls"></div>
+            <div class="not-draggable">{{points.edu.value}}%</div>
+            <div class="item-controls"></div>
+          </div>
+          <div class="flexrow" style="min-height: calc(var(--button-size) + 4px);">
+            <div class="flex2"></div>
+            {{#unless coc7Config.requiresAgeAdjustments.edu.rolled}}
               <button class="roll_edu">{{localize 'CoC7.RollDice'}}</button>
             {{/unless}}
-          </li>
-        </ol>
-      </div>
-      <p>&nbsp</p>
-    {{/if}}
-    {{#if object.requiresAgeAdjustments.deduct}}
-      <h2>{{localize 'CoC7.InvestigatorWizard.DeductPointsFromCharacteristics' total=object.requiresAgeAdjustments.deduct.total from=deductFrom}}</h2>
-      <div class="flexcol-coc7">
-        <ol class="item-list">
-          {{#each object.requiresAgeAdjustments.deduct.from as |characteristic|}}
-            <li class="item flexrow-coc7" data-offset="{{characteristic}}" data-min="{{lookup (lookup ../points characteristic) 'min'}}" data-max="0">
-              <div class="item-name flexrow-coc7">
-                <label class="flex2">{{localize (lookup (lookup ../points characteristic) 'label')}} ({{lookup ../object.setupPoints characteristic}}%):</label>
-                <a class="decrease-10-characteristic"><i class="fas fa-angles-down"></i></a>
-                <a class="decrease-characteristic"><i class="fas fa-minus-circle"></i></a>
-                <div>{{lookup (lookup ../points characteristic) 'value'}}% ({{#if (gt (lookup ../object.setupModifiers characteristic) 0)}}+{{/if}}{{lookup ../object.setupModifiers characteristic}})</div>
-                <a class="increase-characteristic"><i class="fas fa-plus-circle"></i></a>
-                <a class="increase-10-characteristic"><i class="fas fa-angles-up"></i></a>
+            <div class="flex2"></div>
+          </div>
+          <div style="min-height: calc(var(--button-size) + 4px);"></div>
+        </div>
+      {{/if}}
+      {{#if coc7Config.requiresAgeAdjustments.deduct}}
+        <h3 class="section-heading">{{localize 'CoC7.InvestigatorWizard.DeductPointsFromCharacteristics' total=coc7Config.requiresAgeAdjustments.deduct.total from=deductFrom}}</h3>
+        <div class="place-characteristics flexcol">
+          <div></div>
+          {{#each coc7Config.requiresAgeAdjustments.deduct.from as |characteristic|}}
+            <div class="input-line flexrow" data-key="{{characteristic}}" data-min="{{lookup (lookup ../points characteristic) 'min'}}" data-max="0">
+              <label class="flex2">{{localize (lookup (lookup ../points characteristic) 'label')}} ({{lookup ../coc7Config.setupPoints characteristic}}%):</label>
+              <div class="item-controls">
+                <a class="item-control" data-action="modify-characteristic" data-by="-10"><i class="fa-solid fa-angles-down"></i></a>
+                <a class="item-control" data-action="modify-characteristic" data-by="-1"><i class="fa-regular fa-minus-circle"></i></a>
               </div>
-            </li>
+              <div class="not-draggable">{{lookup (lookup ../points characteristic) 'value'}}% ({{#if (gt (lookup ../coc7Config.setupModifiers characteristic) 0)}}+{{/if}}{{lookup ../coc7Config.setupModifiers characteristic}})</div>
+              <div class="item-controls">
+                <a class="item-control" data-action="modify-characteristic" data-by="1"><i class="fa-regular fa-plus-circle"></i></a>
+                <a class="item-control" data-action="modify-characteristic" data-by="10"><i class="fa-solid fa-angles-up"></i></a>
+              </div>
+            </div>
           {{/each}}
-          <li class="item flexrow-coc7">
-            <div class="item-name flexrow-coc7">
-              <label class="flex2">{{localize 'CoC7.CharacteristicsPoints'}}:</label>
-              <div class="nothing-10-characteristic"></div>
-              <div class="nothing-characteristic"></div>
-              <div>
-                <span class='total'>{{deductTotal}}</span>
-                <span class='sep'>/</span>
-                <span class='value'>{{object.requiresAgeAdjustments.deduct.total}}</span>
-              </div>
-              <div class="nothing-characteristic"></div>
-              <div class="nothing-10-characteristic"></div>
+          <div></div>
+          <div class="flexrow">
+            <label class="flex2">{{localize 'CoC7.CharacteristicsPoints'}}:</label>
+            <div class="item-controls"></div>
+            <div class="not-draggable">
+              <span class='total'>{{deductTotal}}</span>
+              <span class='sep'>/</span>
+              <span class='value'>{{coc7Config.requiresAgeAdjustments.deduct.total}}</span>
             </div>
-          </li>
-        </ol>
-      </div>
-      <p>&nbsp</p>
-    {{/if}}
-    {{#if object.requiresAgeAdjustments.reduce}}
-      <h2>{{localize 'CoC7.InvestigatorWizard.ReducePointsFromCharacteristic' total=object.requiresAgeAdjustments.reduce.total from=reduceFrom}}</h2>
-      <div class="flexcol-coc7">
-        <ol class="item-list">
-          <li class="item flexrow-coc7">
-            <div class="item-name flexrow-coc7">
-              <label class="flex2">{{localize (lookup (lookup points object.requiresAgeAdjustments.reduce.from) 'label')}} ({{lookup object.setupPoints object.requiresAgeAdjustments.reduce.from}}%):</label>
-              <div>{{lookup (lookup points object.requiresAgeAdjustments.reduce.from) 'value'}}%</div>
-            </div>
-          </li>
-        </ol>
-      </div>
-      <p>&nbsp</p>
-    {{/if}}
-    {{#if object.requiresAgeAdjustments.luck}}
-      <h2>{{localize 'CoC7.InvestigatorWizard.RollTwiceForLuck'}}</h2>
-      <div class="flexcol-coc7">
-        <ol class="item-list">
-          <li class="item flexrow-coc7">
-            <label class="flex2">{{localize 'CoC7.Luck'}} ({{object.setupPoints.luck}}% / {{object.setupModifiers.luck}}%):</label>
-            <div>{{luckValue}}%</div>
-          </li>
-          <li class="item flexrow-coc7" style="min-height: 2.1rem;">
-            <label class="flex2">&nbsp;</label>
-            {{#unless object.setupModifiers.luck}}
+            <div class="item-controls"></div>
+          </div>
+          <div style="min-height: calc(var(--button-size) + 4px);"></div>
+        </div>
+      {{/if}}
+      {{#if coc7Config.requiresAgeAdjustments.reduce}}
+        <h3 class="section-heading">{{localize 'CoC7.InvestigatorWizard.ReducePointsFromCharacteristic' total=coc7Config.requiresAgeAdjustments.reduce.total from=reduceFrom}}</h3>
+        <div class="place-characteristics flexcol">
+          <div></div>
+          <div class="flexrow">
+            <label class="flex2">{{localize (lookup (lookup points coc7Config.requiresAgeAdjustments.reduce.from) 'label')}} ({{lookup coc7Config.setupPoints coc7Config.requiresAgeAdjustments.reduce.from}}%):</label>
+            <div class="item-controls"></div>
+            <div class="not-draggable">{{lookup (lookup points coc7Config.requiresAgeAdjustments.reduce.from) 'value'}}%</div>
+            <div class="item-controls"></div>
+          </div>
+          <div style="min-height: calc(var(--button-size) + 4px);"></div>
+        </div>
+      {{/if}}
+      {{#if coc7Config.requiresAgeAdjustments.luck}}
+        <h3 class="section-heading">{{localize 'CoC7.InvestigatorWizard.RollTwiceForLuck'}}</h3>
+        <div class="place-characteristics flexcol">
+          <div></div>
+          <div class="flexrow">
+            <label class="flex2">{{localize 'CoC7.Luck'}} ({{coc7Config.setupPoints.luck}}% / {{coc7Config.setupModifiers.luck}}%):</label>
+            <div class="item-controls"></div>
+            <div class="not-draggable">{{luckValue}}%</div>
+            <div class="item-controls"></div>
+          </div>
+          <div class="flexrow" style="min-height: calc(var(--button-size) + 4px);">
+            <div class="flex2"></div>
+            {{#unless coc7Config.setupModifiers.luck}}
               <button class="roll_luck">{{localize 'CoC7.RollDice'}}</button>
             {{/unless}}
-          </li>
-        </ol>
-      </div>
-      <p>&nbsp</p>
-    {{/if}}
-  {{/unless}}
+            <div class="flex2"></div>
+          </div>
+          <div style="min-height: calc(var(--button-size) + 4px);"></div>
+        </div>
+      {{/if}}
+    {{/unless}}
+  </div>
 </div>

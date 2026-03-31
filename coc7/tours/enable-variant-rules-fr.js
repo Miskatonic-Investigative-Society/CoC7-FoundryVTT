@@ -1,6 +1,10 @@
-import EnableVariantRulesEn from './enable-variant-rules-en.js'
+import CoC7EnableVariantRulesEn from './enable-variant-rules-en.js'
 
-export default class EnableVariantRulesFr extends EnableVariantRulesEn {
+export default class CoC7EnableVariantRulesFr extends CoC7EnableVariantRulesEn {
+  /**
+   * Tour configuration
+   * @param {object} config
+   */
   constructor (config) {
     super({
       title: 'Activez les règles optionnelles.',

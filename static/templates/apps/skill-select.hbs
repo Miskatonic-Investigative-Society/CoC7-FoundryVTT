@@ -1,24 +1,13 @@
-<form id="skill-selection-form" class="coc7 skill-selector">
-  <div class="flexcol-coc7">
-    <div class='flexrow-coc7 header counter'>
-      <label>{{ localize 'CoC7.Chosen' }} :</label>
-      <span class="count">0</span>
-      <span class="sep">/</span>
-      <span>{{optionsCount}}</span>
-    </div>
-
-    <ol class="item-list">
-      {{#each skills as |skill i|}}
-        <li class="item flexrow-coc7" data-index="{{i}}">
-          <div class="item-name flexrow-coc7">
-            <h4>{{skill.name}} ({{skill.system.base}}%)</h4>
-          </div>
-          <div class="item-controls">
-            <a class="item-control select-skill" title="{{localize 'CoC7.SelectNewSkill'}}"><i class="fas fa-plus"></i></a>
-          </div>
-        </li>
-      {{/each}}
-    </ol>
-
+<div class="flexcol scrollable" style="gap: 0.375rem;">
+  <div class="item-list flexcol">
+    <label style="flex: 0;white-space: nowrap">{{localize 'CoC7.Chosen'}}: {{selectedCount}}/{{optionsCount}}</label>
+    {{#each skills as |skill|}}
+      <div class="flexrow">
+        <label style="white-space: nowrap">{{skill.name}} ({{skill.system.base}}%)</label>
+        <div class="item-controls" style="flex: 0 0 auto;">
+          {{#unless (lookup ../selected skill.id)}}<a class="item-control" data-action="skill-select" data-id="{{skill.id}}"><i class="fa-regular fa-plus-circle"></i></a>{{/unless}}
+        </div>
+      </div>
+    {{/each}}
   </div>
-</form>
+</div>

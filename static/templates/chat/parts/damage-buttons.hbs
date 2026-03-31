@@ -1,0 +1,12 @@
+<div class="keeper-only-block coc7-card-buttons flexrow">
+  <button data-action="setRollAsModifier">{{localize 'CoC7.RollAsModifier.Button'}}</button>
+</div>
+{{#if isDamage}}
+  <div class="coc7-card-buttons flexrow">
+    <button data-action="applyValue">{{localize 'CoC7.RollAsModifier.Modifier.DamageName' name=(localize name)}}</button>
+  </div>
+{{else if isHeal}}
+  <div class="coc7-card-buttons flexrow">
+    <button data-action="applyValue">{{localize 'CoC7.RollAsModifier.Modifier.HealName' name=(localize name)}}</button>
+  </div>
+{{/if}}

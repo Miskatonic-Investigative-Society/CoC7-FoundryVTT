@@ -1,14 +1,13 @@
-<html>
-  <ul style="color: red;">
-    {{#each losses as |loss key|}}
-      <li>{{loss.characteristicName}}: -{{loss.loss}} {{localize "CoC7.Points"}}</li>
-    {{/each}}
-  </ul>
-  <hr>
-  <div class="coc7-chat-toggler gm-visible-only">
-    {{localize "CoC7.Description"}}
+<ul style="color: red;">
+  {{#each losses as |loss key|}}
+    <li>{{loss.characteristicName}}: -{{loss.loss}} {{localize 'CoC7.Points'}}</li>
+  {{/each}}
+</ul>
+<div class="keeper-only-block" style="margin-top: 0.5rem">
+  <div class="coc7-card-buttons flexrow">
+    <button data-action="toggleBlock" data-offset="0">{{localize 'CoC7.Description'}}</button>
   </div>
-  <div class="coc7-chat-toggled">
+  <div class="coc7-chat-toggled coc7-formatted-text">
     {{{description}}}
   </div>
-</html>
+</div>

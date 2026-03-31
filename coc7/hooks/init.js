@@ -1,29 +1,36 @@
-/* global Combat, CONFIG, foundry, fromUuid, game, Hooks, TextEditor */
-import configureDocuments from '../setup/configure-documents.js'
-import preloadHandlebarsTemplates from '../setup/load-templates.js'
-import registerSettings from '../setup/register-settings.js'
-import registerSheets from '../setup/register-sheets.js'
-import { rollInitiative } from '../apps/combat.js'
-import handlebarsHelper from '../setup/handlebars-helper.js'
-import CompendiumFilter from '../setup/compendium-filter.js'
-import { COC7 } from '../constants.js'
+/* global Combat CONFIG foundry fromUuid game Hooks TextEditor */
+import { ERAS } from '../constants.js'
+import CoC7ClickableEvents from '../apps/clickable-events.js'
+import CoC7Combat from '../apps/combat.js'
+import CoC7CompendiumFilter from '../setup/compendium-filter.js'
+import CoC7DiceSoNiceReadyLast from './dice-so-nice-ready-last.js'
+import CoC7HandlebarsHelper from '../setup/handlebars-helper.js'
 import CoC7Link from '../apps/link.js'
+import CoC7LoadTemplates from '../setup/load-templates.js'
+import CoC7MessageResults from '../apps/message-results.js'
+import CoC7ModelsConfigureDocuments from '../setup/configure-documents.js'
+import CoC7ModelsRegisterSheets from '../setup/register-sheets.js'
+import CoC7RegisterDice from '../setup/register-dice.js'
+import CoC7RegisterSettings from '../setup/register-settings.js'
 import CoC7Utilities from '../apps/utilities.js'
 import CoCID from '../apps/coc-id.js'
-import DiceSoNiceReadyLast from './dice-so-nice-ready-last.js'
-import CoC7ClickableEvents from '../apps/clickable-events.js'
-import CoC7ChatDamage from '../apps/chat-damage.js'
+import CoCIDSkillCache from '../setup/coc-id-skill-cache.js'
 import deprecated from '../deprecated.js'
 
 export default function () {
-  if (foundry.utils.isNewerVersion(game.version, '13')) {
-    const link = document.createElement('link')
-    link.setAttribute('href', 'https://fonts.googleapis.com/css?family=Noto%20Sans|Voltaire|Lusitana')
-    link.setAttribute('rel', 'stylesheet')
-    link.setAttribute('type', 'text/css')
-    link.setAttribute('media', 'all')
-    document.head.append(link)
+  // FoundryVTT v13 @import escapes href
+  const link = document.createElement('link')
+  link.setAttribute('href', 'https://fonts.googleapis.com/css?family=Noto%20Sans|Voltaire|Lusitana')
+  link.setAttribute('rel', 'stylesheet')
+  link.setAttribute('type', 'text/css')
+  link.setAttribute('media', 'all')
+  document.head.append(link)
+
+  if (!foundry.utils.isNewerVersion(game.version, 13)) {
+    /* // FoundryVTT V12 */
+    document.body.classList.add('running-v12')
   }
+
   game.CoC7 = {
     macros: {
       skillCheck: CoC7Utilities.skillCheckMacro,
@@ -31,19 +38,22 @@ export default function () {
       check: CoC7Utilities.checkMacro,
       linkMacro: CoC7Link.linkMacro
     },
-    cards: {
-      DamageCard: CoC7ChatDamage
-    },
     dev: {
       dice: {
         alwaysCrit: false,
         alwaysFumble: false
       }
     },
-    eras: (era, name) => {
-      COC7.eras[era] = name
+    eras: (era, name, icon = 'fa-solid fa-info-circle') => {
+      ERAS[era] = {
+        name,
+        icon
+      }
     },
-    tables: {},
+    skillNames: new CoCIDSkillCache(),
+    // Manual,
+    messageResults: CoC7MessageResults.loadMessage,
+    messagePermissionQueue: [],
     ClickRegionLeftUuid: CoC7ClickableEvents.ClickRegionLeftUuid,
     ClickRegionRightUuid: CoC7ClickableEvents.ClickRegionRightUuid,
     hasPermissionDocument: CoC7ClickableEvents.hasPermissionDocument,
@@ -53,18 +63,21 @@ export default function () {
     toggleTileJournalPages: CoC7ClickableEvents.toggleTileJournalPages,
     toScene: CoC7ClickableEvents.toScene
   }
-  Combat.prototype.rollInitiative = rollInitiative
+  Combat.prototype.rollInitiative = CoC7Combat.rollInitiative
 
-  configureDocuments()
-  preloadHandlebarsTemplates()
-  registerSettings()
-  registerSheets()
-  handlebarsHelper()
-  CompendiumFilter()
+  CoC7ModelsConfigureDocuments()
+  CoC7LoadTemplates()
+  CoC7RegisterSettings()
+  CoC7ModelsRegisterSheets()
+  CoC7HandlebarsHelper()
+  CoC7CompendiumFilter()
   CoCID.init()
+  CoC7RegisterDice()
   CoC7Link.init()
-  Hooks.once('diceSoNiceReady', DiceSoNiceReadyLast)
+  Hooks.once('diceSoNiceReady', CoC7DiceSoNiceReadyLast)
   CoC7ClickableEvents.initSelf()
+
+  deprecated.CoCID()
   deprecated.init()
 
   CONFIG.TextEditor.enrichers.push({
@@ -79,9 +92,9 @@ export default function () {
       const parts = selectors?.split(/\s*,\s*/)
       if (parts) {
         const keys = parts.reduce((c, i) => {
-          const keyval = i.match(/^(([^:]+):)(.+)?$/)
-          if (keyval) {
-            c[keyval[2]] = keyval[3]
+          const keyVal = i.match(/^(([^:]+):)(.+)?$/)
+          if (keyVal) {
+            c[keyVal[2]] = keyVal[3]
           } else {
             c.uuid = i
           }
@@ -112,67 +125,14 @@ export default function () {
                   a.dataset[k] = v
                 }
               }
-              a.innerHTML = `<img src="${keys.img}" height="16px" style="vertical-align:bottom;border:0;">${data.name}`
+              a.innerHTML = `<img src="${keys.img}" style="border:0;display:inline-block;height:16px;margin-right:2px;vertical-align:text-top;">${data.name}`
               return a
             }
           }
         }
       }
 
-      return TextEditor.createAnchor(data)
+      return (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).createAnchor(data)
     }
   })
-
-  /* // FoundryVTT V12 */
-  if (typeof CONFIG.Token.movement === 'undefined') {
-    CONFIG.Token.movement = {
-      actions: {
-        walk: {
-          label: 'TOKEN.MOVEMENT.ACTIONS.walk.label',
-          icon: 'fa-solid fa-person-walking',
-          order: 0
-        },
-        fly: {
-          label: 'TOKEN.MOVEMENT.ACTIONS.fly.label',
-          icon: 'fa-solid fa-person-fairy',
-          order: 1
-        },
-        swim: {
-          label: 'TOKEN.MOVEMENT.ACTIONS.swim.label',
-          icon: 'fa-solid fa-person-swimming',
-          order: 2
-        },
-        burrow: {
-          label: 'TOKEN.MOVEMENT.ACTIONS.burrow.label',
-          icon: 'fa-solid fa-person-digging',
-          order: 3
-        },
-        crawl: {
-          label: 'TOKEN.MOVEMENT.ACTIONS.crawl.label',
-          icon: 'fa-solid fa-person-praying',
-          order: 4
-        },
-        climb: {
-          label: 'TOKEN.MOVEMENT.ACTIONS.climb.label',
-          icon: 'fa-solid fa-person-through-window',
-          order: 5
-        },
-        jump: {
-          label: 'TOKEN.MOVEMENT.ACTIONS.jump.label',
-          icon: 'fa-solid fa-person-running-fast',
-          order: 6
-        },
-        blink: {
-          label: 'TOKEN.MOVEMENT.ACTIONS.blink.label',
-          icon: 'fa-solid fa-person-from-portal',
-          order: 7
-        },
-        displace: {
-          label: 'TOKEN.MOVEMENT.ACTIONS.displace.label',
-          icon: 'fa-solid fa-transporter-1',
-          order: 8
-        }
-      }
-    }
-  }
 }

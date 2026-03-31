@@ -1,0 +1,22 @@
+{{#each diceGroups as |diceGroup|}}
+  <div class="inline-tooltip flexcol">
+    <div class="flexrow">
+      <div>{{../messageFlavor}}</div>
+      <div class="dice-total{{#if diceGroup.isCritical}} critical{{else if diceGroup.isFumble}} fumble{{else if diceGroup.isRegularFailure}} failure{{else if diceGroup.isExtremeSuccess}} success-extreme{{else if diceGroup.isHardSuccess}} success-hard{{else if diceGroup.isRegularSuccess}} success-regular{{/if}}">{{diceGroup.total}}{{#if ../flatDiceModifier}} ({{#if (gt ../flatDiceModifier 0)}}+{{/if}}{{../flatDiceModifier}}){{/if}}{{#unless @last}} {{localize 'CoC7.PushedRoll'}}{{/unless}}{{#if ../luckSpent}} - {{localize 'CoC7.LuckSpentAlt'}} ({{../luckSpent}}){{/if}}</div>
+    </div>
+    <div class="flexrow">
+      {{#each diceGroup.decaders}}
+        <div class="die-result{{#unless this.active}} discarded{{/unless}}">{{this.result}}</div>
+      {{/each}}
+      <div class="die-result">{{diceGroup.unit}}</div>
+      <div></div>
+      <div class="dice-formula{{#if diceGroup.isCritical}} critical{{else if diceGroup.isFumble}} fumble{{else if diceGroup.isSuccess}} success{{else}} failure{{/if}}">
+        {{#if (ne diceGroup.successLevelIcons.hint '')}}
+          {{#each diceGroup.successLevelIcons.icons as |icon|}}
+            <i class="fa-solid fa-{{icon}}"></i>
+          {{/each}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+{{/each}}

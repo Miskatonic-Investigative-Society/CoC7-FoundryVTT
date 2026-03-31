@@ -1,74 +1,24 @@
-<form class="{{cssClass}}" autocomplete="off">
-  <div class="container">
-    <div class="portrait">
-      <img src="{{item.img}}" title="{{item.name}}" data-edit="img" />
+<div class="flexrow item-header">
+  <div class="flexcol item-property">
+    <div class="flexrow">
+      <input type="text" name="name" value="{{document.name}}" placeholder="{{localize 'CoC7.Name'}}" />
     </div>
-    <div class="information">
-      <div class="flexrow-coc7">
-        <input class="name" name="name" type="text" value="{{item.name}}" />
+    {{#if isKeeper}}
+      <div class="flexrow">
+        <label>{{localize 'CoC7.Source'}}:</label>
+        <input type="text" name="system.source" value="{{document.system.source}}" />
       </div>
-      {{#if isKeeper}}
-        <div class="flexrow-coc7">
-          <label>{{localize "CoC7.Source"}}:</label>
-          <input type="text" name="system.source" value="{{data.system.source}}" />
-        </div>
-        <div class="flexrow-coc7">
-          <label>{{localize "CoC7.SpellCastingTime"}}:</label>
-          <input type="text" name="system.castingTime" value="{{data.system.castingTime}}" />
-        </div>
-      {{/if}}
-    </div>
-    <div class="aside">
-      {{#if (and hasOwner (or isKeeper isOwner))}}
-        <div class="flexrow-coc7">
-          <span id="cast-spell" class="cast-button">
-            <label>
-              {{localize "CoC7.Cast"}}
-            </label>
-          </span>
-          {{#if isKeeper}}
-            <span id="cast-spell-hidden" class="cast-button">
-              <label>
-                {{localize "CoC7.CastHidden"}}
-              </label>
-            </span>
-          {{/if}}
-        </div>
-      {{/if}}
-    </div>
-    <nav class="navigation tabs" data-group="primary">
-      <a data-tab="description">
-        <div class="tab-name">
-          <span>
-            {{localize "CoC7.Description"}}
-          </span>
-        </div>
-      </a>
-      {{#if isKeeper}}
-        <a data-tab="details">
-          <div class="tab-name">
-            <span>
-              {{localize "CoC7.Details"}}
-            </span>
-          </div>
-        </a>
-        <a data-tab="notes" class="keeper-only-tab" title="{{localize 'CoC7.GmNotes'}}">
-          <div class="tab-name">
-            <span><i class="game-icon game-icon-tentacles-skull"></i></span>
-          </div>
-        </a>
-      {{/if}}
-    </nav>
-    <section class="body">
-      <div class="tab" data-group="primary" data-tab="description">
-        {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
+      <div class="flexrow">
+        <label>{{localize 'CoC7.SpellCastingTime'}}:</label>
+        <input type="text" name="system.castingTime" value="{{document.system.castingTime}}" />
       </div>
-      <div class="tab" data-group="primary" data-tab="details">
-        {{> "systems/CoC7/templates/items/spell-tab-details.hbs"}}
-      </div>
-      <div class="tab" data-group="primary" data-tab="notes">
-        {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
-      </div>
-    </section>
+    {{/if}}
   </div>
-</form>
+  <div class="spell-casting flexcol">
+    {{#if (and isEmbedded (or isKeeper isOwner))}}
+      <button class="item-control" data-action="castSpell">{{localize 'CoC7.Cast'}}</button>
+      <button class="item-control" data-action="castSpell" data-property="hidden">{{localize 'CoC7.CastHidden'}}</button>
+    {{/if}}
+  </div>
+  <img class="profile-img" src="{{document.img}}" data-action="editImage" data-edit="img" />
+</div>

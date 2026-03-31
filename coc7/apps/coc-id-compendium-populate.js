@@ -1,52 +1,84 @@
-/* global CONFIG Folder FormApplication foundry game Item */
-export default class CoCIDCompendiumPopulate extends FormApplication {
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      id: 'coc-id-actor-update-items',
-      classes: ['coc7', 'dialog', 'investigator-wizard'],
-      title: game.i18n.localize('CoC7.ActorCoCIDItemsBest'),
-      template: 'systems/CoC7/templates/apps/coc-id-compendium-populate.hbs',
-      width: 520,
-      height: 250,
-      closeOnSubmit: false
-    })
+/* global CONFIG Folder foundry game Item */
+import { FOLDER_ID } from '../constants.js'
+
+export default class CoCIDCompendiumPopulate extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2) {
+  /**
+   * @inheritdoc
+   */
+  constructor (...args) {
+    const coc7Config = args.pop()
+    super(...args)
+    this.coc7Config = coc7Config
   }
 
-  activateListeners (html) {
-    super.activateListeners(html)
-
-    html
-      .find('select[name=pack]')
-      .click(this._onSelectPack.bind(this))
-
-    html
-      .find('.toggle-switch')
-      .click(this._onClickToggle.bind(this))
-  }
-
-  _onSelectPack (event) {
-    this.object.packList = event.target.value
-  }
-
-  _onClickToggle (event) {
-    const key = event.target.dataset.property
-    if (key) {
-      const type = this.object.types.findIndex(t => t.id === key)
-      this.object.types[type].toggle = !this.object.types[type].toggle
-      this.render(true)
+  static DEFAULT_OPTIONS = {
+    id: 'coc-id-actor-update-items',
+    tag: 'form',
+    classes: ['coc7', 'dialog'],
+    window: {
+      contentClasses: [
+        'standard-form'
+      ],
+      title: 'CoC7.CoCIDCompendiumPopulate'
+    },
+    form: {
+      closeOnSubmit: false,
+      handler: CoCIDCompendiumPopulate.#onSubmit
+    },
+    position: {
+      width: 550
     }
   }
 
-  async _updateObject (event, formData) {
-    if (event.submitter?.dataset.button === 'update') {
-      if (event.submitter.className.indexOf('currently-submitting') > -1) {
+  static PARTS = {
+    form: {
+      template: 'systems/' + FOLDER_ID + '/templates/apps/coc-id-compendium-populate.hbs',
+      scrollable: ['']
+    },
+    footer: {
+      template: 'templates/generic/form-footer.hbs'
+    }
+  }
+
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
+
+    this.element.querySelector('select[name=pack]')?.addEventListener('change', (event) => {
+      this.coc7Config.packList = event.target.value
+    })
+    this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', (event) => {
+      const propertyId = event.target.dataset.property
+      const index = this.coc7Config.types.findIndex(t => t.id === propertyId)
+      if (index > -1) {
+        this.coc7Config.types[index].toggle = !this.coc7Config.types[index].toggle
+      }
+      this.render({ force: true })
+    }))
+  }
+
+  /**
+   * Submit the configuration form.
+   * @param {SubmitEvent} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
+   * @returns {Promise<void>}
+   */
+  static async #onSubmit (event, form, formData) {
+    if (event.submitter?.dataset.action === 'update') {
+      if (event.submitter.classList.contains('currently-submitting')) {
         return
       }
       event.submitter.classList.add('currently-submitting')
-      const included = this.object.types.filter(t => t.toggle).map(t => t.id)
-      const destination = game.packs.get(this.object.packList)
+      const included = this.coc7Config.types.filter(t => t.toggle).map(t => t.id)
+      const destination = game.packs.get(this.coc7Config.packList)
       if (included.length && destination) {
-        const items = await game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^i.(' + included.join('|') + ')'), type: 'i', showLoading: true })
+        const items = await game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^i.(' + included.join('|') + ')'), type: 'i', showLoading: true })
         const folders = await [...new Set(items.map(d => d.type))].reduce(async (sc, t) => {
           const name = game.i18n.localize('TYPES.Item.' + t)
           let folder = destination.folders.find(d => d.name === name)
@@ -55,7 +87,7 @@ export default class CoCIDCompendiumPopulate extends FormApplication {
               name,
               type: 'Item'
             }, {
-              pack: this.object.packList
+              pack: this.coc7Config.packList
             })
           }
           const c = await sc
@@ -70,19 +102,73 @@ export default class CoCIDCompendiumPopulate extends FormApplication {
           doc.folder = folders[doc.type]
           return doc
         })
-        await Item.implementation.createDocuments(newDocs, { pack: this.object.packList })
+        await Item.implementation.createDocuments(newDocs, { pack: this.coc7Config.packList })
         destination.render(true)
       } else {
         event.submitter.classList.remove('currently-submitting')
         return
       }
+      this.close()
     }
-    this.close()
   }
 
-  static async create (options = {}) {
-    options.packLists = game.modules.contents.filter(m => m.active && m.id !== 'call-of-cthulhu-foundryvtt-investigator-wizard' && !m.id.match(/^cha-coc-fvtt-/)).reduce((c, m) => {
-      m.packs.filter(p => p.type === 'Item').forEach(p => {
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+
+    switch (partId) {
+      case 'form':
+        context.coc7Config = this.coc7Config
+        break
+      case 'footer':
+        context.buttons = []
+        context.buttons.push({
+          type: 'submit',
+          action: 'close',
+          label: 'Cancel',
+          icon: 'fa-solid fa-ban'
+        })
+        if (this.coc7Config.packLists.length > 0) {
+          context.buttons.push({
+            type: 'submit',
+            action: 'update',
+            label: 'CoC7.CoCIDCompendiumPopulateButton',
+            icon: 'fa-solid fa-check'
+          })
+        }
+        break
+    }
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<HTMLElement>}
+   */
+  async _renderFrame (options) {
+    const frame = await super._renderFrame(options)
+
+    /* // FoundryV12 polyfill */
+    if (!foundry.utils.isNewerVersion(game.version, 13)) {
+      frame.setAttribute('open', true)
+    }
+
+    return frame
+  }
+
+  /**
+   * Create popup
+   */
+  static async create () {
+    const packLists = game.modules.contents.filter(m => m.active && m.id !== 'call-of-cthulhu-foundryvtt-investigator-wizard' && !m.id.match(/^cha-coc-fvtt-/)).reduce((c, m) => {
+      m.packs.filter(p => p.type === 'Item' && !game.packs.get(p.id).locked).forEach(p => {
         c.push({
           group: m.title,
           value: p.id,
@@ -92,9 +178,7 @@ export default class CoCIDCompendiumPopulate extends FormApplication {
       return c
     }, [])
 
-    options.packList = options.packLists[0].value
-
-    options.types = Object.keys(CONFIG.Item.sheetClasses).filter(t => t !== 'base').map(t => {
+    const types = Object.keys(CONFIG.Item.sheetClasses).filter(t => t !== 'base').map(t => {
       return {
         id: t,
         label: game.i18n.localize('TYPES.Item.' + t),
@@ -102,6 +186,10 @@ export default class CoCIDCompendiumPopulate extends FormApplication {
       }
     }).sort((a, b) => a.id.localeCompare(b.id))
 
-    new CoCIDCompendiumPopulate(options).render(true)
+    new CoCIDCompendiumPopulate({}, {}, {
+      packLists,
+      packList: packLists.reduce((c, d) => { if (c === '') { c = d.id } return c }, ''),
+      types
+    }).render({ force: true })
   }
 }

@@ -1,18 +1,19 @@
-/* global Actor, CONFIG, fetch, foundry, game, ui */
-import CoCActor from '../models/actor/document-class.js'
-import CoC7DirectoryPicker from '../apps/directory-picker.js'
+/* global Actor CONFIG fetch foundry game ui */
+// cSpell:words injurues malf subskill skillname
+import { FOLDER_ID } from '../constants.js'
+import CoC7ModelsItemSkillSystem from '../models/item/skill-system.js'
+import CoC7DirectoryPicker from './directory-picker.js'
 import CoC7Utilities from './utilities.js'
+import deprecated from '../deprecated.js'
 
-/**
- * CoC7ActorImporter helper class to import an Actor from the raw text description.
- */
 export default class CoC7DholeHouseActorImporter {
   /**
-   * Compose the Backstory from the different blocks.
-   * @param {} backstoryJSON DholeHouse backstory JSON
-   * @returns HTML with the formatted backstory
+   * Convert backstory key into html
+   * @param {object} backstoryJSON
+   * @returns {object}
    */
   static getBackstory (backstoryJSON) {
+    // <key>, <title>, <class name ?? key>
     const sections = [
       ['description', 'Description'],
       ['traits', 'Traits'],
@@ -34,35 +35,31 @@ export default class CoC7DholeHouseActorImporter {
         if (typeof section[2] === 'undefined' || section[2] === '') {
           section[2] = section[0]
         }
-        backstory.block.push(
-          `<h3>${section[1]}</h3>\n<div class="${section[2]}">\n${
-            backstoryJSON[section[0]]
-          }\n</div>`
-        )
+        backstory.block.push(`<h3>${section[1]}</h3>\n<div class="${section[2]}">\n${backstoryJSON[section[0]]}\n</div>`)
         backstory.sections.push({
           title: section[1],
           value: backstoryJSON[section[0]]
         })
       }
     }
-    backstory.block =
-      '<h2>Backstory</h2>\n' + backstory.block.join('\n', backstory.block)
+    backstory.block = '<h2>Backstory</h2>\n' + backstory.block.join('\n', backstory.block)
     return backstory
   }
 
   /**
-   *
-   * @param {JSON} dholeHouseData DholeHouseJSON
-   * @returns
+   * Convert Dholehouse JSON into Foundry Actor JSON
+   * @param {object} dholeHouseData
+   * @param {object} options
+   * @param {string} options.source
+   * @param {object} progressBar
+   * @returns {object}
    */
-  static async convertDholeHouseCharacterData (dholeHouseData, options) {
+  static async convertDholeHouseCharacterData (dholeHouseData, options, progressBar) {
     if (CONFIG.debug.CoC7Importer) {
       console.log('Source:', dholeHouseData)
     }
     dholeHouseData = dholeHouseData.Investigator
-    const backstories = CoC7DholeHouseActorImporter.getBackstory(
-      dholeHouseData.Backstory ?? {}
-    )
+    const backstories = CoC7DholeHouseActorImporter.getBackstory(dholeHouseData.Backstory ?? {})
     const cData = {
       name: dholeHouseData.PersonalDetails.Name,
       actor: {
@@ -90,13 +87,8 @@ export default class CoC7DholeHouseActorImporter {
             value: parseInt(dholeHouseData.Characteristics.MagicPts, 10),
             max: parseInt(dholeHouseData.Characteristics.MagicPtsMax, 10)
           },
-          lck: {
-            value: parseInt(dholeHouseData.Characteristics.Luck, 10)
-          },
-          mov: {
-            value: parseInt(dholeHouseData.Characteristics.Move, 10),
-            max: parseInt(dholeHouseData.Characteristics.Move, 10)
-          },
+          lck: { value: parseInt(dholeHouseData.Characteristics.Luck, 10) },
+          mov: { value: parseInt(dholeHouseData.Characteristics.Move, 10) },
           db: { value: dholeHouseData.Characteristics.DamageBonus },
           build: { value: parseInt(dholeHouseData.Characteristics.Build, 10) }
         },
@@ -113,24 +105,26 @@ export default class CoC7DholeHouseActorImporter {
           keeper: game.i18n.localize('CoC7.DholeHouseActorImporterSource')
         }
       },
-      skills: await CoC7DholeHouseActorImporter.extractSkills(
-        dholeHouseData.Skills.Skill ?? [],
-        options
-      ),
-      possesions: await CoC7DholeHouseActorImporter.extractPossessions(
-        dholeHouseData.Possessions?.item ?? [],
-        options
-      )
+      skills: await CoC7DholeHouseActorImporter.extractSkills(dholeHouseData.Skills.Skill ?? [], options, progressBar),
+      possessions: await CoC7DholeHouseActorImporter.extractPossessions(dholeHouseData.Possessions?.item ?? [], options, progressBar)
     }
     return cData
   }
 
+  /**
+   * Convert Dholehouse skill name to system skill name
+   * @param {string} name
+   * @param {string} specialization
+   * @returns {object}
+   */
   static makeSkillName (name, specialization) {
     if (specialization === 'None') {
       specialization = 'Any'
     }
+    let isOwn = false
     if (name === 'Language (Other)' || name === 'Language (Own)') {
       name = 'Language'
+      isOwn = (name === 'Language (Own)')
     } else if (name === 'Operate Heavy Machine') {
       name = 'Operate Heavy Machinery'
     } else if (name === 'Throw' && specialization === '') {
@@ -138,140 +132,169 @@ export default class CoC7DholeHouseActorImporter {
       specialization = 'Throw'
     }
     return {
+      isOwn,
       skillName: specialization === '' ? name : specialization,
       specialization: specialization === '' ? '' : name,
       name: name + (specialization === '' ? '' : ' (' + specialization + ')')
     }
   }
 
-  static async extractSkills (dholeHouseskills, options) {
-    const skills = []
-    for (const skill of dholeHouseskills) {
+  /**
+   * Create skill objects
+   * @param {Array} dholeHouseSkills
+   * @param {object} options
+   * @param {string} options.source
+   * @param {object} progressBar
+   * @returns {Array}
+   */
+  static async extractSkills (dholeHouseSkills, options, progressBar) {
+    const lookFor = []
+    for (const skill of dholeHouseSkills) {
       if (skill.subskill === 'None') {
         continue
       }
-      const parts = CoC7DholeHouseActorImporter.makeSkillName(
-        skill.name,
-        skill.subskill ?? ''
-      )
-      const existing = await CoC7Utilities.guessItem('skill', parts.name, {
-        source: options.source,
-        fallbackAny: true
+      const parts = CoC7DholeHouseActorImporter.makeSkillName(skill.name, skill.subskill ?? '')
+      lookFor.push({
+        isOwn: parts.isOwn,
+        skillName: parts.skillName,
+        specialization: parts.specialization,
+        name: parts.name,
+        value: parseInt(skill.value ?? 0, 10),
+        occupation: (skill.occupation === true || skill.occupation === 'true')
       })
-      let cloned = null
-      if (typeof existing !== 'undefined') {
-        cloned = foundry.utils.duplicate(existing.toObject())
-        cloned.name = parts.name
-        cloned.system.skillName = parts.skillName
-        cloned.system.specialization = parts.specialization
+    }
+    const foundItems = await CoC7Utilities.guessItems('skill', lookFor.map(i => i.name), { source: options.source, fallbackAny: true })
+    const skills = []
+    for (const skill of lookFor) {
+      progressBar.bar.update({ pct: progressBar.current / progressBar.max })
+      progressBar.current++
+      let cloned
+      if (typeof foundItems[skill.name] !== 'undefined') {
+        cloned = foundry.utils.duplicate(foundItems[skill.name])
+        foundry.utils.setProperty(cloned, 'name', skill.name)
+        foundry.utils.setProperty(cloned, 'system.skillName', skill.skillName)
+        foundry.utils.setProperty(cloned, 'system.specialization', skill.specialization)
+        foundry.utils.setProperty(cloned, 'flags.' + FOLDER_ID + '.cocidFlag.id', 'i.skill.' + CoC7Utilities.toKebabCase(skill.name))
         if (cloned.system.properties?.requiresname ?? false) {
-          cloned.system.properties.requiresname = false
+          foundry.utils.setProperty(cloned, 'system.properties.requiresname', false)
         }
         if (cloned.system.properties?.picknameonly ?? false) {
-          cloned.system.properties.picknameonly = false
+          foundry.utils.setProperty(cloned, 'system.properties.picknameonly', false)
         }
       } else {
-        cloned = CoCActor.emptySkill(
-          parts.skillName,
-          parseInt(skill.value ?? 0, 10),
-          {
-            specialization:
-              parts.specialization === '' ? false : parts.specialization
-          }
-        )
-        cloned.system.properties = cloned.system.properties ?? {}
-        if (parts.specialization === 'Fighting') {
-          cloned.system.properties.fighting = true
-          cloned.system.properties.combat = true
-          cloned.system.properties.push = false
-        } else if (parts.specialization === 'Firearms') {
-          cloned.system.properties.firearm = true
-          cloned.system.properties.combat = true
-          cloned.system.properties.push = false
-        } else if (parts.skillName === 'Dodge') {
-          cloned.system.properties.push = false
+        cloned = CoC7ModelsItemSkillSystem.emptyObject({
+          name: skill.name
+        })
+        if (skill.specialization === 'Fighting') {
+          foundry.utils.setProperty(cloned, 'system.properties.fighting', true)
+          foundry.utils.setProperty(cloned, 'system.properties.push', false)
+        } else if (skill.specialization === 'Firearms') {
+          foundry.utils.setProperty(cloned, 'system.properties.firearm', true)
+          foundry.utils.setProperty(cloned, 'system.properties.push', false)
+        } else if (skill.skillName === 'Dodge') {
+          foundry.utils.setProperty(cloned, 'system.properties.push', false)
         }
+        foundry.utils.setProperty(cloned, 'flags.' + FOLDER_ID + '.cocidFlag.id', 'i.skill.' + CoC7Utilities.toKebabCase(cloned.name))
       }
       if (cloned.system.skillName === 'Any') {
-        cloned.name = cloned.name.replace(' (Any)', ' (None)')
-        cloned.system.skillName = 'None'
+        foundry.utils.setProperty(cloned, 'name', cloned.name.replace(' (Any)', ' (None)'))
+        foundry.utils.setProperty(cloned, 'system.skillName', 'None')
+        foundry.utils.setProperty(cloned, 'flags.' + FOLDER_ID + '.cocidFlag.id', 'i.skill.' + CoC7Utilities.toKebabCase(cloned.name))
       }
-      cloned.system.base = parseInt(skill.value ?? 0, 10)
-      cloned.system.value = parseInt(skill.value ?? 0, 10)
-      cloned.system.flags = cloned.system.flags ?? {}
-      cloned.system.flags.occupation =
-        skill.occupation === true || skill.occupation === 'true'
+      foundry.utils.setProperty(cloned, 'system.adjustments.base', parseInt(skill.value ?? 0, 10))
+      foundry.utils.setProperty(cloned, 'system.flags.occupation', (skill.occupation === true || skill.occupation === 'true'))
+      if (skill.isOwn) {
+        foundry.utils.setProperty(cloned, 'system.properties.own', true)
+      }
       skills.push(cloned)
     }
     return skills
   }
 
+  /**
+   * Find skill used by weapon
+   * @param {string} skillName
+   * @param {Actor} character
+   * @returns {Item|undefined}
+   */
   static findWeaponSkillId (skillName, character) {
     const skills = character.getEmbeddedCollection('Item')
     const checkName = skillName.replace(/^\((.+)\)$/, '$1')
-    const characterSkill = skills.find(i => {
-      return (
-        i.system?.skillName === checkName ||
-        i.system?.skillName?.indexOf(checkName) > -1
-      )
-    })
+    const characterSkill = skills.find(doc => doc.system?.skillName === checkName || doc.system?.skillName?.indexOf(checkName) > -1)
     return characterSkill
   }
 
-  static async extractPossessions (dholehousePossessions, options) {
+  /**
+   * Create skill objects
+   * @param {Array|object} dholehousePossessions
+   * @param {object} options
+   * @param {string} options.source
+   * @param {object} progressBar
+   * @returns {Array}
+   */
+  static async extractPossessions (dholehousePossessions, options, progressBar) {
+    const foundItems = await CoC7Utilities.guessItems('item', dholehousePossessions.map(i => i.description), { source: options.source })
     const items = []
     if (!Array.isArray(dholehousePossessions) && dholehousePossessions != null) {
       dholehousePossessions = [dholehousePossessions]
     }
     for (const item of dholehousePossessions) {
-      const existing = await CoC7Utilities.guessItem('item', item.description, {
-        source: options.source
-      })
+      progressBar.bar.update({ pct: progressBar.current / progressBar.max })
+      progressBar.current++
       let cloned = null
-      if (typeof existing !== 'undefined') {
-        cloned = foundry.utils.duplicate(existing.toObject())
+      if (typeof foundItems[item.description] !== 'undefined') {
+        cloned = foundry.utils.duplicate(foundItems[item.description])
       } else {
         cloned = {
           name: item.description,
           type: 'item'
         }
       }
+      foundry.utils.setProperty(cloned, 'name', item.description)
+      foundry.utils.setProperty(cloned, 'flags.' + FOLDER_ID + '.cocidFlag.id', 'i.item.' + CoC7Utilities.toKebabCase(item.description))
       items.push(cloned)
     }
     return items
   }
 
-  static async extractWeapons (dholehouseWeapons, character, options) {
+  /**
+   * Take weapon data and return array of Weapon Items
+   * @param {Array|object} dholehouseWeapons
+   * @param {Actor} character
+   * @param {object} options
+   * @param {string} options.source
+   * @param {object} progressBar
+   * @returns {Array}
+   */
+  static async extractWeapons (dholehouseWeapons, character, options, progressBar) {
+    const foundItems = await CoC7Utilities.guessItems('weapon', dholehouseWeapons.map(i => i.name), { source: options.source })
     const weapons = []
     if (!Array.isArray(dholehouseWeapons)) {
       dholehouseWeapons = [dholehouseWeapons]
     }
     for (const weapon of dholehouseWeapons) {
-      const skill = CoC7DholeHouseActorImporter.findWeaponSkillId(
-        weapon.skillname,
-        character
-      )
+      progressBar.bar.update({ pct: progressBar.current / progressBar.max })
+      progressBar.current++
+      const skill = CoC7DholeHouseActorImporter.findWeaponSkillId(weapon.skillname, character)
       const damage = weapon.damage.replace(/\+DB/i, '')
       const addb = damage !== weapon.damage
-      const existing = await CoC7Utilities.guessItem('weapon', weapon.name, {
-        source: options.source
-      })
       let cloned = null
-      if (typeof existing !== 'undefined') {
-        cloned = foundry.utils.duplicate(existing.toObject())
+      if (typeof foundItems[weapon.name] !== 'undefined') {
+        cloned = foundry.utils.duplicate(foundItems[weapon.name])
         cloned.system.skill.main.name = skill?.name ?? ''
         cloned.system.skill.main.id = skill?.id ?? ''
         cloned.system.range = cloned.system.range ?? {}
         cloned.system.range.normal = cloned.system.range.normal ?? {}
         cloned.system.range.normal.damage = damage
-        cloned.system.ammo = weapon.ammo
-        cloned.system.malfunction = weapon.malf
+        cloned.system.ammo = parseInt(weapon.ammo, 10)
+        cloned.system.bullets = parseInt(weapon.ammo, 10)
+        cloned.system.malfunction = parseInt(weapon.malf, 10)
         cloned.system.properties = cloned.system.properties ?? {}
-        cloned.system.properties.melee =
-          skill?.system.properties?.fighting ?? false
-        cloned.system.properties.rngd =
-          skill?.system.properties?.firearm ?? false
+        cloned.system.properties.melee = skill?.system.properties?.fighting ?? false
+        cloned.system.properties.rngd = skill?.system.properties?.firearm ?? false
         cloned.system.properties.addb = addb
+        foundry.utils.setProperty(cloned, 'name', weapon.name)
+        foundry.utils.setProperty(cloned, 'flags.' + FOLDER_ID + '.cocidFlag.id', 'i.weapon.' + CoC7Utilities.toKebabCase(weapon.name))
       } else {
         cloned = {
           name: weapon.name,
@@ -288,12 +311,20 @@ export default class CoC7DholeHouseActorImporter {
                 damage
               }
             },
-            ammo: weapon.ammo,
-            malfunction: weapon.malf,
+            ammo: parseInt(weapon.ammo, 10),
+            bullets: parseInt(weapon.ammo, 10),
+            malfunction: parseInt(weapon.malf, 10),
             properties: {
               melee: skill?.system.properties?.fighting ?? false,
               rngd: skill?.system.properties?.firearm ?? false,
               addb
+            }
+          },
+          flags: {
+            [FOLDER_ID]: {
+              cocidFlag: {
+                id: 'i.weapon.' + CoC7Utilities.toKebabCase(weapon.name)
+              }
             }
           }
         }
@@ -303,10 +334,14 @@ export default class CoC7DholeHouseActorImporter {
     return weapons
   }
 
+  /**
+   * Convert base 64 png data to png and save
+   * @param {string} base64Portrait
+   * @param {string} fileName
+   * @returns {string}
+   */
   static async savePortrait (base64Portrait, fileName) {
-    const base64Response = await fetch(
-      'data:image/png;base64,' + base64Portrait
-    )
+    const base64Response = await fetch('data:image/png;base64,' + base64Portrait)
     const imageBlob = await base64Response.blob()
     const filePath = CoC7DirectoryPicker.uploadToDefaultDirectory(
       imageBlob,
@@ -315,23 +350,49 @@ export default class CoC7DholeHouseActorImporter {
     return filePath
   }
 
+  /**
+   * Convert Dholehouse JSON into Foundry Actor
+   * @param {object} dholeHouseCharacterData
+   * @param {object} options
+   * @param {string} options.source
+   * @returns {false|object}
+   */
   static async createNPCFromDholeHouse (dholeHouseCharacterData, options) {
     if (!game.user?.can('FILES_UPLOAD')) {
-      ui.notifications.error(
-        game.i18n.localize('CoC7.ActorImporterUploadError')
-      )
+      ui.notifications.error('CoC7.ActorImporterUploadError', { localize: true })
       return false
     }
-    const characterData =
-      await CoC7DholeHouseActorImporter.convertDholeHouseCharacterData(
-        dholeHouseCharacterData,
-        options
-      )
+    // Normalize Skills, Possessions, and Weapons
+    if (typeof dholeHouseCharacterData.Investigator?.Skills?.Skill === 'undefined' || dholeHouseCharacterData.Investigator.Skills.Skill === null) {
+      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Skills.Skill', [])
+    } else if (!Array.isArray(dholeHouseCharacterData.Investigator.Skills.Skill)) {
+      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Skills.Skill', [dholeHouseCharacterData.Investigator.Skills.Skill])
+    }
+    if (typeof dholeHouseCharacterData.Investigator?.Possessions?.item === 'undefined' || dholeHouseCharacterData.Investigator.Possessions.item === null) {
+      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Possessions.item', [])
+    } else if (!Array.isArray(dholeHouseCharacterData.Investigator.Possessions.item)) {
+      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Possessions.item', [dholeHouseCharacterData.Investigator.Possessions.item])
+    }
+    if (typeof dholeHouseCharacterData.Investigator?.Weapons?.weapon === 'undefined' || dholeHouseCharacterData.Investigator.Weapons.weapon === null) {
+      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Weapons.weapon', [])
+    } else if (!Array.isArray(dholeHouseCharacterData.Investigator.Weapons.weapon)) {
+      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Weapons.weapon', [dholeHouseCharacterData.Investigator.Weapons.weapon])
+    }
+    const progressBar = {
+      current: 0,
+      max: dholeHouseCharacterData.Investigator.Skills.Skill.length + dholeHouseCharacterData.Investigator.Possessions.item.length + dholeHouseCharacterData.Investigator.Weapons.weapon.length + 1
+    }
+    /* // FoundryVTT V12 */
+    if (foundry.utils.isNewerVersion(game.version, 13)) {
+      progressBar.bar = ui.notifications.info('CoC7.CoCIDFlag.loading', { localize: true, progress: true, console: false })
+    } else {
+      progressBar.bar = deprecated.displayProgressBar(game.i18n.localize('CoC7.CoCIDFlag.loading'))
+    }
+    const characterData = await CoC7DholeHouseActorImporter.convertDholeHouseCharacterData(dholeHouseCharacterData, options, progressBar)
     if (CONFIG.debug.CoC7Importer) {
       console.log('Character Data:', characterData)
     }
-    const importedCharactersFolder =
-      await CoC7Utilities.createImportCharactersFolderIfNotExists()
+    const importedCharactersFolder = await CoC7Utilities.createImportCharactersFolderIfNotExists()
     if (!CoC7DirectoryPicker.createDefaultDirectory()) {
       return false
     }
@@ -343,9 +404,7 @@ export default class CoC7DholeHouseActorImporter {
     }
     const npc = await Actor.create(actorData)
     // If possible upload the image portrait
-    if (
-      dholeHouseCharacterData.Investigator.PersonalDetails.Portrait?.length > 10
-    ) {
+    if (dholeHouseCharacterData.Investigator.PersonalDetails.Portrait?.length > 10) {
       const fileName = 'avatar-' + npc.id + '.png'
       const portrait = await CoC7DholeHouseActorImporter.savePortrait(
         dholeHouseCharacterData.Investigator.PersonalDetails.Portrait,
@@ -358,26 +417,31 @@ export default class CoC7DholeHouseActorImporter {
       }
     }
     if (CONFIG.debug.CoC7Importer) {
-      console.log('Items: ', characterData.items)
+      console.log('Skills: ', characterData.skills)
     }
-    await npc.createEmbeddedDocuments('Item', characterData.skills, {
-      renderSheet: false
-    })
-    await npc.createEmbeddedDocuments('Item', characterData.possesions, {
-      renderSheet: false
-    })
-    const weapons = await CoC7DholeHouseActorImporter.extractWeapons(
-      dholeHouseCharacterData.Investigator.Weapons?.weapon ?? [],
-      npc,
-      options
-    )
+    if (characterData.skills.length > 0) {
+      await npc.createEmbeddedDocuments('Item', characterData.skills, {
+        renderSheet: false
+      })
+    }
+    if (CONFIG.debug.CoC7Importer) {
+      console.log('Possessions: ', characterData.possessions)
+    }
+    if (characterData.possessions.length > 0) {
+      await npc.createEmbeddedDocuments('Item', characterData.possessions, {
+        renderSheet: false
+      })
+    }
+    const weapons = await CoC7DholeHouseActorImporter.extractWeapons(dholeHouseCharacterData.Investigator.Weapons?.weapon ?? [], npc, options, progressBar)
     if (CONFIG.debug.CoC7Importer) {
       console.log('Weapons: ', weapons)
     }
-    await npc.createEmbeddedDocuments('Item', weapons, {
-      renderSheet: false
-    })
-
+    if (weapons.length > 0) {
+      await npc.createEmbeddedDocuments('Item', weapons, {
+        renderSheet: false
+      })
+    }
+    progressBar.bar.update({ pct: 1 })
     return npc
   }
 }

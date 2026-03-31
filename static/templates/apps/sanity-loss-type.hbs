@@ -1,31 +1,21 @@
-<form>
+<div class="flexcol" style="gap: 0.375rem;">
   <div class="form-group" style="margin: 0 0 10px;">
-    {{ localize 'CoC7.SanityLossTypeDialogBody' }}
+    {{localize 'CoC7.SanityLossTypeDialogBody'}}
   </div>
   <div class="form-group">
-    <label>{{ localize 'CoC7.SanityLossType' }}</label>
-    <select class="field_type">
-      {{selectOptions encounterTypes selected=object.type localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
+    <label>{{localize 'CoC7.SanityLossType'}}</label>
+    <select name="type">
+      {{selectOptions encounterTypes selected=type localize=true valueAttr='key' labelAttr='label'}}
     </select>
   </div>
   <div class="form-group">
-    <label>{{ localize 'CoC7.SanityLossTypeReason' }}</label>
-    <input type="text" class="field_name" value="{{object.name}}" />
+    <label>{{localize 'CoC7.SanityLossTypeReason'}}</label>
+    <input type="text" name="name" value="{{name}}" />
   </div>
   {{#unless isImmunity}}
     <div class="form-group">
-      <label>{{ localize 'CoC7.SanityLossTypeValue' }}</label>
-      <input type="text" class="field_value" value="{{object.value}}" data-dtype="Number">
+      <label>{{localize 'CoC7.SanityLossTypeValue'}}</label>
+      <input type="number" name="value" value="{{value}}" />
     </div>
   {{/unless}}
-  <div class="flexrow-coc7" style="margin: 10px 0 0;">
-    <button class="dialog-button add" type="button" data-button="add">
-      <i class="fas fa-check"></i>
-      {{ localize 'CoC7.Add' }}
-    </button>
-    <button class="dialog-button close" type="button" data-button="close">
-      <i class="fas fa-ban"></i>
-      {{ localize 'CoC7.Cancel' }}
-    </button>
-  </div>
-</form>
+</div>

@@ -1,105 +1,132 @@
-/* global foundry, game, TextEditor */
-import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import { COC7 } from '../../constants.js'
-import CoC7Utilities from '../../apps/utilities.js'
+/* global foundry game TextEditor */
+import { FOLDER_ID, ERAS } from '../../constants.js'
 import CoC7ActiveEffect from '../../apps/active-effect.js'
+import CoC7ModelsItemGlobalSheet from './global-sheet.js'
+import CoC7Utilities from '../../apps/utilities.js'
 
-/**
- * Extend the basic ItemSheet with some very simple modifications
- */
-export default class CoC7ItemSheetV2 extends foundry.appv1.sheets.ItemSheet {
-  /**
-   * Extend and override the default options used by the Simple Item Sheet
-   * @returns {Object}
-   */
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheet', 'item'],
-      template: 'systems/CoC7/templates/items/item-v2-header.hbs',
-      width: 500,
-      height: 450,
-      scrollY: ['.tab.description'],
-      tabs: [
-        {
-          navSelector: '.sheet-navigation',
-          contentSelector: '.sheet-body',
-          initial: 'description'
-        }
-      ]
-    })
-  }
-
-  _getHeaderButtons () {
-    const headerButtons = super._getHeaderButtons()
-    addCoCIDSheetHeaderButton(headerButtons, this)
-    return headerButtons
-  }
-
-  /**
-   * Prepare data for rendering the Item sheet
-   * The prepared data object contains both the actor data as well as additional sheet options
-   */
-  async getData (options = {}) {
-    const sheetData = super.getData(options)
-
-    sheetData.effects = CoC7ActiveEffect.prepareActiveEffectCategories(this.item.effects, { status: false })
-
-    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
-      sheetData.data.system.description.value,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
-      sheetData.data.system.description.keeper,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData._eras = []
-    for (const [key, value] of Object.entries(COC7.eras)) {
-      sheetData._eras.push({
-        price: this.item.system.price[key] ?? 0,
-        id: key,
-        name: game.i18n.localize(value),
-        isEnabled: (this.item.flags?.CoC7?.cocidFlag?.eras ?? {})[key] === true
-      })
+export default class CoC7ModelsItemItemSheetV2 extends CoC7ModelsItemGlobalSheet {
+  static DEFAULT_OPTIONS = {
+    position: {
+      width: 525,
+      height: 450
     }
-    sheetData._eras.sort(CoC7Utilities.sortByNameKey)
+  }
 
-    sheetData.isKeeper = game.user.isGM
-
-    sheetData.worldEra = game.settings.get('CoC7', 'worldEra')
-
-    return sheetData
+  static PARTS = {
+    header: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/item-v2-header.hbs'
+    },
+    tabs: {
+      template: 'templates/generic/tab-navigation.hbs'
+    },
+    description: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-description.hbs',
+      scrollable: ['.editor-content']
+    },
+    activeEffects: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-active-effects.hbs',
+      scrollable: ['']
+    },
+    prices: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-prices.hbs',
+      scrollable: ['']
+    },
+    keeper: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-keeper.hbs',
+      scrollable: ['.editor-content']
+    }
   }
 
   /**
-   * Activate event listeners using the prepared sheet HTML
-   * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
    */
-  activateListeners (html) {
-    super.activateListeners(html)
-    // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
 
-    html.find('.toggle-switch').click(this._onClickToggle.bind(this))
+    const tabs = {
+      description: {
+        icon: '',
+        label: 'CoC7.Description'
+      },
+      activeEffects: {
+        cssClass: 'icon-only-tab',
+        icon: 'game-icon game-icon-aura',
+        tooltip: 'CoC7.Effects'
+      },
+      prices: {
+        cssClass: 'icon-only-tab',
+        icon: 'fa-solid fa-tag',
+        tooltip: 'CoC7.ItemPrice'
+      }
+    }
+    if (game.user.isGM) {
+      tabs.keeper = {
+        cssClass: 'icon-only-tab',
+        icon: 'game-icon game-icon-tentacles-skull',
+        tooltip: 'CoC7.GmNotes'
+      }
+    }
 
-    html
-      .find('.effect-control')
-      .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.item))
+    context.tabs = this.getTabs('primary', 'description', tabs)
+
+    return context
   }
 
-  async _onClickToggle (event) {
-    event.preventDefault()
-    const propertyId = event.currentTarget.closest('.toggle-switch').dataset.property
-    await this.item.toggleProperty(
-      propertyId,
-      false
-    )
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+
+    switch (partId) {
+      case 'header':
+        context.worldEra = game.settings.get(FOLDER_ID, 'worldEra')
+        break
+      case 'description':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.value,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+      case 'activeEffects':
+        context.effects = CoC7ActiveEffect.prepareActiveEffectCategories(context.document.effects, { status: false })
+        break
+      case 'prices':
+        context._eras = []
+        for (const [key, era] of Object.entries(ERAS)) {
+          const isEnabled = (context.document.flags[FOLDER_ID]?.cocidFlag?.eras ?? {})[key] === true
+          context._eras.push({
+            price: (isEnabled ? context.document.system.price[key] : null),
+            id: key,
+            name: game.i18n.localize(era.name),
+            icon: era.icon,
+            isEnabled
+          })
+        }
+        context._eras.sort(CoC7Utilities.sortByNameKey)
+        context.useEraIcons = game.settings.get(FOLDER_ID, 'sheetEraIcons')
+        break
+      case 'keeper':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.keeper,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+    }
+    return context
   }
 }

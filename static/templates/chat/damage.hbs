@@ -1,98 +1,111 @@
-<div class="coc7 chat-card damage">
-
-  <header class="card-header flexcol-coc7">
-    <div class="flexrow-coc7">
-      {{#if displayActorOnCard}}
-        <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36" />
-      {{/if}}
-      <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36" />
-      <h3 style="text-align: center;font-weight: bolder;" class="item-name card-title">{{item.name}}</h3>
-      <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36" />
+<div class="coc7-chat-header flexcol">
+  {{#if attackerUuid}}
+    <div class="flexrow">
+      <div class="left-portrait{{#if (and displayActorOnCard itemImg)}} double-portrait{{/if}} flexrow" data-actor-uuid="{{attackerUuid}}">
+        {{#if displayActorOnCard}}
+          <img class="portrait open-actor" data-actor-uuid="{{attackerUuid}}" src="{{attackerImg}}" data-tooltip="{{attackerName}}" />
+        {{/if}}
+        <img class="portrait open-actor" data-actor-uuid="{{attackerUuid}}" src="{{itemImg}}" data-tooltip="{{itemName}}" />
+      </div>
+      <div class="card-title">
+        {{itemName}}
+      </div>
+      <div class="actor-portrait right-portrait">
+        <img class="portrait" data-actor-uuid="{{targetUuid}}" src="{{targetImg}}" data-tooltip="{{targetName}}" />
+      </div>
     </div>
-
-    <div class="card-content">
-      {{{weapon.system.description.value}}}
+  {{else}}
+    <div class="card-title">{{resultText}}</div>
+  {{/if}}
+</div>
+{{#if rollDamage}}
+  {{#if targetUuid}}
+    <div class="coc7-chat-content">{{targetName}} {{localize 'CoC7.meleeCombatDamageTakes'}} {{weaponDamage}}{{#if weaponAddFullDB}}{{localize 'CoC7.WeaponAddb'}}{{/if}}{{#if weaponAddHalfDB}}{{localize 'CoC7.WeaponAhdb'}}{{/if}} {{localize 'CoC7.meleeCombatDamageFrom'}} {{itemName}}</div>
+  {{else}}
+    <div class="coc7-chat-content">{{attackerName}} {{localize 'CoC7.meleeCombatDamageDeals'}} {{weaponDamage}}{{#if weaponAddFullDB}}{{localize 'CoC7.WeaponAddb'}}{{/if}}{{#if weaponAddHalfDB}}{{localize 'CoC7.WeaponAhdb'}}{{/if}} {{localize 'CoC7.meleeCombatDamageWith'}} {{itemName}}</div>
+  {{/if}}
+{{/if}}
+{{#if (or enrichedItemDescriptionValue hasWeaponSpecial)}}
+  <div class="coc7-chat-description flexcol">
+    <div class="coc7-formatted-text">
+      {{{enrichedItemDescriptionValue}}}
     </div>
-
-    <div class="options gm-select-only">
-      {{#if hardrolled}}
-        {{#if critical}}
-          <span class='tag' title="{{localize 'CoC7.CriticalTitle'}}">{{localize 'CoC7.Critical'}}</span>
-          {{#if impale}}
-            <span class='tag' title="{{localize 'CoC7.ImpaleTitle'}}">{{localize 'CoC7.Impale'}}</span>
-          {{/if}}
-        {{/if}}
-      {{else}}
-        <span class='ic-switch{{#if critical}} switched-on{{/if}}' data-flag='critical' title="{{localize 'CoC7.CriticalTitle'}}">{{localize 'CoC7.Critical'}}</span>
-        {{#if critical}}
-          <span class='ic-switch{{#if impale}} switched-on{{/if}}' data-flag='impale' title="{{localize 'CoC7.ImpaleTitle'}}">{{localize 'CoC7.Impale'}}</span>
-        {{/if}}
-      {{/if}}
-      {{#if damageInflicted}}
-        {{#if ignoreArmor}}
-          <span class='tag gm-visible-only'>{{localize 'CoC7.ArmorIgnored'}}</span>
-        {{else if (and (ne armor '') (ne armor null))}}
-          <span class='tag gm-visible-only'>{{localize 'CoC7.Armor'}}: {{armor}}</span>
-          <span class='tag owner-visible-only'>{{localize 'CoC7.Armor'}}: {{armor}}</span>
-        {{/if}}
-      {{else}}
-        <div class="armor flexrow-coc7">
-          <div class="flexrow-coc7 flex-end gm-visible-only">
-            <a class='ic-switch gm-visible-only{{#unless ignoreArmor}} switched-on{{/unless}}' data-flag='ignoreArmor'>
-              {{#if ignoreArmor}}
-                <i class="game-icon game-icon-armor-downgrade"></i>
-              {{else}}
-                <i class="game-icon game-icon-armor-upgrade"></i>
-              {{/if}}
-            </a>
-            {{#unless ignoreArmor}}
-              <label>{{localize 'CoC7.Armor'}}:</label>
-              <form>
-                <input type='text' name='armor' value='{{armor}}' />
-              </form>
-              {{#if isArmorForula}}
-                <a class='ic-switch gm-visible-only' data-action='rollArmor'>
-                  <i class="fas fa-dice"></i>
-                </a>
-              {{/if}}
-            {{/unless}}
-          </div>
-          <div class="flexrow-coc7 flex-end owner-visible-only owner-info" data-actor-key="{{targetKey}}">
-            {{#unless ignoreArmor}}
-              <label>{{localize 'CoC7.Armor'}}:</label>
-              <span>{{armor}}</span>
-            {{/unless}}
-          </div>
+    {{#if hasWeaponSpecial}}
+      <div class="coc7-formatted-text">
+        <div class="coc7-tags">
+          <span class="tag">{{localize 'CoC7.WeaponSpecial'}}</span>
         </div>
+        {{{enrichedWeaponDescriptionSpecial}}}
+      </div>
+    {{/if}}
+  </div>
+{{/if}}
+{{#if rollDamage}}
+  <div class="{{#unless rollHtml}}not-keeper-block {{/unless}}flexrow">
+    <div class="coc7-tags">
+      {{#if isCritical}}
+        <span class="tag" data-tooltip="CoC7.CriticalTitle">{{localize 'CoC7.Critical'}}</span>
+        {{#if isImpale}}
+          <span class="tag" data-tooltip="CoC7.ImpaleTitle">{{localize 'CoC7.Impale'}}</span>
+        {{/if}}
       {{/if}}
     </div>
-
-  </header>
-
-  {{#if rolled}}
-    {{{_htmlRoll}}}
-    {{#if targetKey}}
-      {{#if damageInflicted}}
-        <div class='card-result'>{{ localize 'CoC7.DamageInflicted'}} : {{totalDamageString}}</div>
+    {{#if targetUuid}}
+      {{#unless ignoreArmor}}
+        <div class="{{#unless rollHtml}}owner-and-keeper-block {{else}}keeper-only-block {{/unless}}flexrow" style="flex: 0 0 auto;" data-actor-uuid="{{targetUuid}}">
+          <label style="flex: 0 0 auto;">{{localize 'CoC7.Armor'}}:</label>
+          <span style="flex: 0 0 auto;">{{targetArmor}}</span>
+        </div>
+      {{/unless}}
+    {{/if}}
+  </div>
+  {{#unless rollHtml}}
+    <div class="keeper-only-block as-whisper-block coc7-card-buttons coc7-half-buttons flexrow">
+      <button class="keeper-only-control{{#if isCritical}} switched-on{{/if}}" data-action="toggleValue" data-set="isCritical" data-tooltip="CoC7.CriticalTitle">{{localize 'CoC7.Critical'}}</button>
+      {{#if isCritical}}
+        <button class="keeper-only-control{{#if isImpale}} switched-on{{/if}}" data-action="toggleValue" data-set="isImpale" data-tooltip="CoC7.ImpaleTitle">{{localize 'CoC7.Impale'}}</button>
       {{else}}
-        <div class="card-buttons gm-visible-only">
-          <button data-action="dealDamage">{{ localize 'CoC7.InflictPain' }} ({{totalDamageString}})</button>
+        <div class="coc7-button-area"></div>
+      {{/if}}
+    </div>
+    {{#if targetUuid}}
+      <div class="keeper-only-block as-whisper-block coc7-card-buttons flexrow">
+        <div></div>
+        <button class="keeper-only-control coc7-short-button{{#if ignoreArmor}} switched-on{{/if}}"data-action="toggleValue" data-set="ignoreArmor">{{#if ignoreArmor}}<i class="game-icon game-icon-armor-downgrade"></i>{{else}}<i class="game-icon game-icon-armor-upgrade"></i>{{/if}}</button>
+        {{#unless ignoreArmor}}
+          <label style="flex: 0 0 auto;">{{localize 'CoC7.Armor'}}:</label>
+          <input type="text" value="{{targetArmor}}">
+          {{#if isArmorFormula}}
+            <button class="keeper-only-control coc7-short-button" data-action="rollArmor"><i class="fa-solid fa-dice"></i></button>
+          {{/if}}
+        {{/unless}}
+      </div>
+    {{/if}}
+    {{#unless isDamageOnlyNumbers}}
+      <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{attackerUuid}}">
+        <button data-action="rollDamage">{{localize 'CoC7.RollDamage'}}: {{damageFormula}}</button>
+      </div>
+    {{/unless}}
+  {{else}}
+    {{{rollHtml}}}
+  {{/unless}}
+  {{#if isDamageOnlyNumbers}}
+    {{#if targetUuid}}
+      {{#if isDamageInflicted}}
+        <div class="coc7-faux-button" style="margin-top: 4px;">{{localize 'CoC7.DamageInflicted'}}: {{inflictDamageText}}</div>
+      {{else}}
+        <div class="keeper-only-block coc7-card-buttons flexrow">
+          <button data-action="dealDamage">{{localize 'CoC7.InflictPain'}} ({{inflictDamageText}})</button>
         </div>
       {{/if}}
     {{else}}
-      <div class='card-result'>{{ localize 'CoC7.TotalDamage' }} : {{totalDamageString}}
-        <div class="die-result-overlay-br">
-          <span>
-            <button data-action="dealDamageToSelectedTarget">
-              <i class="fas fa-user-minus noRemove"></i>
-            </button>
-          </span>
-        </div>
+      <div class="coc7-faux-button" style="margin-top: 4px;">{{localize 'CoC7.TotalDamage'}}: {{inflictDamageText}}</div>
+      <div class="coc7-card-buttons flexrow">
+        <button data-action="applyValue">{{localize 'CoC7.InflictPain'}}</button>
       </div>
     {{/if}}
-  {{else}}
-    <div class="card-buttons owner-only">
-      <button data-action="rollDamage">{{ localize 'CoC7.RollDamage' }}: {{damageFormula}}</button>
-    </div>
   {{/if}}
-</div>
+{{else if attackerUuid}}
+  <div class="coc7-chat-content">{{resultText}}</div>
+{{/if}}
+{{#if (eq @root.foundryGeneration 13)}}<div class="never-expand" data-action="expandRoll"></div>{{/if}}

@@ -1,0 +1,66 @@
+<section class="tab skills flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="skills">
+  {{#if tabs.skills}}
+    <fieldset class="flexcol drop-item" style="min-height: 6rem">
+      <legend>{{localize 'CoC7.CommonSkills'}}</legend>
+      <div class="item-list flexcol">
+        {{#if skillListEmpty}}
+          <div class="item flexcol">
+            <label>{{localize 'CoC7.EmptySkillList'}}</label>
+          </div>
+        {{else}}
+          {{#each skills as |item|}}
+            <div class="item flexrow" data-uuid="{{item.uuid}}" data-id="{{item._id}}" data-cocid="{{item.flags.CoC7.cocidFlag.id}}">
+              <div class="summary">{{item.name}} ({{item.system.base}}%)</div>
+              <div class="item-controls">
+                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+              </div>
+            </div>
+          {{/each}}
+        {{/if}}
+      </div>
+    </fieldset>
+    <fieldset class="flexcol">
+      <legend>{{localize 'CoC7.OptionSkills'}}</legend>
+      <div class="flexrow">
+        <label></label>
+        <div class="item-controls">
+          <a class="item-control" data-action="group-add"><i class="fa-regular fa-plus-circle"></i></a>
+        </div>
+      </div>
+      {{#each groups as |group index|}}
+        <fieldset class="skill-group flexcol drop-item" style="min-height: 6rem" data-group="{{index}}">
+          <div class="form-group flexrow">
+            <label>{{localize 'CoC7.Choose'}}</label>
+            <input class="small" type="text" name="system.groups.{{index}}.options" value="{{group.options}}" placeholder="{{localize 'CoC7.ChoiceNumber'}}" />
+            <div class="item-controls">
+              <a class="item-control" data-action="group-remove"><i class="fa-regular fa-minus-circle"></i></a>
+            </div>
+          </div>
+          <div class="item-list flexcol">
+            {{#if group.isEmpty}}
+              <div class="item flexcol">
+                <label>{{localize 'CoC7.EmptySkillList'}}</label>
+              </div>
+            {{else}}
+              {{#each group.skills as |item|}}
+                <div class="item flexrow" data-uuid="{{item.uuid}}" data-id="{{item._id}}" data-cocid="{{item.flags.CoC7.cocidFlag.id}}">
+                  <div class="summary">{{item.name}} ({{item.system.base}}%)</div>
+                  <div class="item-controls">
+                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                  </div>
+                </div>
+              {{/each}}
+            {{/if}}
+          </div>
+        </fieldset>
+      {{/each}}
+    </fieldset>
+    <fieldset class="flexcol">
+      <legend>{{localize 'CoC7.AdditionalSkills'}}</legend>
+      <div class="form-group flexrow">
+        <input type="text" name="system.personal" value="{{document.system.personal}}" placeholder="0" style="flex: 0 0 2rem;" />
+        <input type="text" name="system.personalText" value="{{document.system.personalText}}" placeholder="{{localize 'CoC7.PersonalSpecialityPlaceholder'}}" />
+      </div>
+    </fieldset>
+  {{/if}}
+</section>

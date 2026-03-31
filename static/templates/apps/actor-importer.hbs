@@ -1,71 +1,49 @@
-<form autocomplete="off">
-  <h2>{{localize 'CoC7.ActorImporter'}}</h2>
-  {{#if (eq importType "dholehouse")}}
-  <div id="coc-prompt" data-text="{{localize 'CoC7.DholeHouseActorImporterSummary'}}">{{localize 'CoC7.DholeHouseActorImporterSummary'}}</div>
-  {{#unless canUpload}}
+<div class="flexcol" style="gap: 0.375rem;">
+  {{#if (eq importType 'dholehouse')}}
+    <div>{{localize 'CoC7.DholeHouseActorImporterSummary'}}</div>
+    {{#unless canUpload}}
       <div class="error">{{localize 'CoC7.UnableToUploadDholeImage'}}</div>
-  {{/unless}}
-    <div class="form-group-stacked">
+    {{/unless}}
   {{else}}
-  <p>{{localize 'CoC7.ActorImporterSummary'}}</p>
+    <div>{{localize 'CoC7.ActorImporterSummary'}}</div>
   {{/if}}
   <div class="form-group">
     <label for="coc-entity-type">{{localize 'CoC7.SelectActorType'}}:</label>
-    <select id="coc-entity-type" name="coc-entity-type">
-      {{selectOptions importTypeOptions selected=importType localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
+    <select id="coc-entity-type" name="coc-entity-type" style="flex: 1">
+      {{selectOptions importTypeOptions selected=importType localize=true valueAttr='key' labelAttr='label'}}
     </select>
   </div>
-  {{#if (or (eq importType "npc") (eq importType "creature"))}}
+  {{#if (or (eq importType 'npc') (eq importType 'creature'))}}
     <div class="form-group">
       <label for="coc-convert-6E">{{localize 'CoC7.ConvertFrom6Edition'}}:</label>
-      <select id="coc-convert-6E" name="coc-convert-6E">
-        {{selectOptions convert6EOptions selected=convert6E localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
+      <select id="coc-convert-6E" name="coc-convert-6E" style="flex: 1">
+        {{selectOptions convert6EOptions selected=convert6E localize=true valueAttr='key' labelAttr='label'}}
       </select>
     </div>
     <div class="form-group">
       <label for="coc-entity-lang">{{localize 'CoC7.SelectSourceLanguage'}}:</label>
-      <select id="coc-entity-lang" name="coc-entity-lang">
+      <select id="coc-entity-lang" name="coc-entity-lang" style="flex: 1">
         {{selectOptions languages selected=language localize=true}}
       </select>
     </div>
   {{/if}}
   <div class="form-group">
     <label for="source">{{localize 'CoC7.ImportSkillItemLocations'}}:</label>
-    <select id="source" name="source">
-      {{selectOptions sourceOptions selected=source localize=true valueAttr="key" nameAttr="key" labelAttr="label"}}
+    <select id="source" name="source" style="flex: 1">
+      {{selectOptions sourceOptions selected=source localize=true valueAttr='key' labelAttr='label'}}
     </select>
   </div>
-  {{#if (eq importType "dholehouse")}}
-    <label for="dholehouse-json-file-picker">{{localize 'CoC7.DholeHousePickYourJSONFile'}}</label><br/>
-      <input id="dholehouse-json-file-picker" name="dholehouse-json-file-picker" type="file" accept="application/json" />
-    </div>
-    <div id="dholehouse-character-preview" class="form-group">
-        <p><strong>{{localize 'CoC7.DholeHouseImportingName'}}</strong>
-        <span id="dholehouse-character-name"></span>
-        </p>
-        {{!-- By defaults the image is a transparent pixel to be replaced when the JSON is loaded --}}
-        <img id="dholehouse-character-portrait" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
-    </div>
-    {{else}}
-    <div id="coc-prompt" data-text="{{localize 'CoC7.PasteTheDataBelow'}}" data-extended="limit">{{localize 'CoC7.PasteTheDataBelow'}}</div>
+  {{#if (eq importType 'dholehouse')}}
+    <label for="dholehouse-json-file-picker">{{localize 'CoC7.DholeHousePickYourJSONFile'}}</label>
+    <input id="dholehouse-json-file-picker" name="dholehouse-json-file-picker" type="file" accept="application/json" />
+    {{#if (and characterName characterImage)}}
+      <div><strong>{{localize 'CoC7.DholeHouseImportingName'}}</strong> <span>{{characterName}}</span></div>
+      <div><img id="dholehouse-character-portrait" src="{{characterImage}}" /></div>
+    {{/if}}
+  {{else}}
+    <div id="coc-prompt" data-text="{{localize 'CoC7.PasteTheDataBelow'}}">{{localize 'CoC7.PasteTheDataBelow'}}</div>
     <div class="form-group">
-      <textarea id="coc-pasted-character-data" name="coc-pasted-character-data" rows="30" style="min-height:300px" placeholder="{{placeholder}}">{{characterData}}</textarea>
+      <textarea id="coc-pasted-character-data" name="coc-pasted-character-data" rows="30" style="min-height: 18rem;" placeholder="{{placeholder}}">{{characterData}}</textarea>
     </div>
   {{/if}}
-  <div class="dialog-buttons flexrow-coc7">
-    <button class="submit-button" data-button="import">
-      <i class="fas fa-file-import"></i>
-      {{localize 'CoC7.Import'}}
-    </button>
-    {{#if (or (eq importType "npc") (eq importType "creature"))}}
-      <button class="submit-button" data-button="getExampleNow">
-        <i class="fas fa-info-circle"></i>
-        {{localize 'CoC7.getTheExample'}}
-      </button>
-    {{/if}}
-    <button class="submit-button" data-button="no">
-      <i class="fas fa-times"></i>
-      {{localize 'CoC7.Cancel'}}
-    </button>
-  </div>
-</form>
+</div>

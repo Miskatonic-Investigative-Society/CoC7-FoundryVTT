@@ -1,130 +1,155 @@
-<h2>{{localize 'CoC7.GmNotes' }}</h2>
-{{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
-{{#if hasConditions}}
-  <div><a class="clear_conditions button">{{localize 'CoC7.ClearAllConditions'}}</a></div>
-{{/if}}
-<div class="bio-section-boxes">
-  <div class="bio-section-events">
-    <div class="section-header flexrow-coc7">
-      <h3>{{localize 'CoC7.SanityLossEncounters'}}</h3>
-      <div class="header-buttons">
-        <a class="sanity-loss-type-add" title="{{localize 'CoC7.AddSanityLossEncounter'}}" data-type="encounter"><i class="fas fa-plus-square"></i></a>
-      </div>
-    </div>
-    <div class="bio-section-value" style="min-height: 80px;">
-      {{#each data.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
-        {{#unless sanityLossEvent.immunity}}
-          <div class="flexrow-coc7" data-offset="{{mythosOffset}}">
-            <div class="bio-section-type">{{sanityLossEvent.type}}</div>
-            <div class="bio-section-values">
-              <input class="mythosEncountersTotalLoss" type="text" value="{{sanityLossEvent.totalLoss}}" data-dtype="Number">
-            </div>
+<section class="tab keeper flexcol scrollable {{tabs.keeper.cssClass}}" data-group="primary" data-tab="keeper">
+  {{#if tabs.keeper}}
+    <header class="tab-header">
+      {{#if hasConditions}}
+        <div class="item-controls"><a class="clear_conditions button"><i class="fa-solid fa-trash"></i>{{localize 'CoC7.ClearAllConditions'}}</a></div>
+      {{/if}}
+      <h2 class="tab-heading">{{localize 'CoC7.GmNotes'}}</h2>
+    </header>
+    <section class="bio-section">
+      <prose-mirror name="system.description.keeper" value="{{document.system.description.keeper}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedDescriptionKeeper}}}</prose-mirror>
+    </section>
+    <div class="boxes">
+      <section class="bio-section">
+        <header class="section-header">
+          <h3 class="section-heading">{{localize 'CoC7.SanityLossEncounters'}}</h3>
+          <div class="item-controls">
+            <a class="item-control" data-action="sanity-loss-type-add" data-type="encounter" data-tooltip="CoC7.AddSanityLossEncounter"><i class="fa-regular fa-plus-circle"></i></a>
+          </div>
+        </header>
+        <div class="events">
+          {{#each document.system.sanityLossEvents as |sanityLossEvent index|}}
+            {{#unless sanityLossEvent.immunity}}
+              <div class="event" data-index="{{index}}">
+                <div class="title">{{sanityLossEvent.type}}</div>
+                <div class="values">
+                  <input name="system.sanityLossEvents.{{index}}.totalLoss" type="text" value="{{sanityLossEvent.totalLoss}}">
+                </div>
+                <div class="item-controls">
+                  <a class="item-control" data-action="sanity-loss-type-delete" data-tooltip="CoC7.DeleteSanityLossEncounter"><i class="fa-solid fa-trash"></i></a>
+                </div>
+              </div>
+            {{/unless}}
+          {{/each}}
+        </div>
+      </section>
+      <section class="bio-section">
+        <header class="section-header">
+          <h3 class="section-heading">{{localize 'CoC7.SanityLossImmunities'}}</h3>
+          <div class="item-controls">
+            <a class="item-control" data-action="sanity-loss-type-add" data-type="immunity" data-tooltip="CoC7.AddSanityLossImmunity"><i class="fa-regular fa-plus-circle"></i></a>
+          </div>
+        </header>
+        <div class="events">
+          {{#each document.system.sanityLossEvents as |sanityLossEvent index|}}
+            {{#if sanityLossEvent.immunity}}
+              <div class="event" data-index="{{index}}">
+                <div class="title">{{sanityLossEvent.type}}</div>
+                <div class="item-controls">
+                  <a class="item-control" data-action="sanity-loss-type-delete" data-tooltip="CoC7.DeleteSanityLossImmunity"><i class="fa-solid fa-trash"></i></a>
+                </div>
+              </div>
+            {{/if}}
+          {{/each}}
+        </div>
+      </section>
+      <section class="bio-section">
+        <header class="section-header">
+          <h3 class="section-heading">{{localize 'CoC7.BackgroundFlags'}}</h3>
+        </header>
+        <div class="events">
+          <div class="event">
+            <div class="title">{{localize 'CoC7.BackgroundFlagsMythosExperienced'}}</div>
             <div class="item-controls">
-              <a class="item-control sanity-loss-type-delete" title="{{localize 'CoC7.DeleteSanityLossEncounter'}}"><i class="fas fa-trash"></i></a>
+              <a class="item-control" data-tooltip="CoC7.BackgroundFlagsMythosExperienced" data-action="toggle-flag" data-toggle-flag="mythosInsanityExperienced">
+                {{#if document.system.flags.mythosInsanityExperienced}}
+                  <i class="fa-regular fa-check-square"></i>
+                {{else}}
+                  <i class="fa-regular fa-square"></i>
+                {{/if}}
+              </a>
             </div>
           </div>
-        {{/unless}}
-      {{/each}}
-    </div>
-  </div>
-  <div class="bio-section-events">
-    <div class="section-header flexrow-coc7">
-      <h3>{{localize 'CoC7.SanityLossImmunities'}}</h3>
-      <div class="header-buttons">
-        <a class="sanity-loss-type-add" title="{{localize 'CoC7.AddSanityLossImmunity'}}" data-type="immunity"><i class="fas fa-plus-square"></i></a>
-      </div>
-    </div>
-    <div class="bio-section-value" style="min-height: 80px;">
-      {{#each data.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
-        {{#if sanityLossEvent.immunity}}
-          <div class="flexrow-coc7" data-offset="{{mythosOffset}}">
-            <div class="bio-section-type">{{sanityLossEvent.type}}</div>
+          <div class="event">
+            <div class="title">{{localize 'CoC7.BackgroundFlagsMythosHardened'}}</div>
             <div class="item-controls">
-              <a class="item-control sanity-loss-type-delete" title="{{localize 'CoC7.DeleteSanityLossImmunity'}}"><i class="fas fa-trash"></i></a>
+              <a class="item-control" data-tooltip="CoC7.BackgroundFlagsMythosHardened" data-action="toggle-flag" data-toggle-flag="mythosHardened">
+                {{#if document.system.flags.mythosHardened}}
+                  <i class="fa-regular fa-check-square"></i>
+                {{else}}
+                  <i class="fa-regular fa-square"></i>
+                {{/if}}
+              </a>
             </div>
+          </div>
+        </div>
+      </section>
+      <section class="bio-section">
+        <header class="section-header">
+          <h3 class="section-heading">{{localize 'CoC7.Books'}}</h3>
+        </header>
+        <div class="events">
+          {{#each document.system.books as |book index|}}
+            <div class="event" data-index="{{index}}">
+              <div class="title">{{book.name}}</div>
+              <div class=""><i class="fa-solid fa-check"></i></div>
+              <div class="">{{localize 'CoC7.BookProgressSummary' fullStudies=book.fullStudies currentPercent=(percentValue book.progress book.necessary)}}</div>
+              <div class="item-controls">
+                <a class="item-control" data-action="bookClear" data-tooltip="CoC7.DeleteBookProgress"><i class="fa-solid fa-trash"></i></a>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </section>
+    </div>
+
+    <section class="bio-section">
+      <header class="section-header">
+        <h3 class="section-heading">{{localize 'CoC7.MonetaryTitle'}}</h3>
+        {{#unless document.system.flags.locked}}
+          <div class="item-controls">
+            <a class="item-control" data-action="monetary-add"><i class="fa-regular fa-plus-circle"></i></a>
+          </div>
+        {{/unless}}
+      </header>
+      <div class="cash-assets">
+        <div class="asset form-group">
+          <label>{{localize 'CoC7.MonetaryFormatTitle'}}</label>
+          <select name="system.monetary.format">
+            {{selectOptions _monetaryFormats selected=document.system.monetary.format localize=true valueAttr='key' labelAttr='val'}}
+          </select>
+        </div>
+        {{#if showCurrencySymbol}}
+          <div class="asset form-group">
+            <label>{{localize 'CoC7.MonetarySymbol'}}</label>
+            <input type="text" name="system.monetary.symbol" value="{{document.system.monetary.symbol}}">
           </div>
         {{/if}}
-      {{/each}}
-    </div>
-  </div>
-</div>
-<div class="bio-section-boxes">
-  <div class="bio-section-events">
-    <div class="section-header flexrow-coc7">
-      <h3>{{localize 'CoC7.BackgroundFlags'}}</h3>
-    </div>
-    <div class="bio-section-value" style="min-height: 80px;">
-      <div class="flexrow-coc7">
-        <div class="bio-section-type">{{localize 'CoC7.BackgroundFlagsMythosExperienced'}}</div>
-        <div class="item-controls">
-          <a class="item-control toggle-keeper-flags" title="{{localize 'CoC7.BackgroundFlagsMythosExperienced'}}" data-flag="mythosInsanityExperienced">
-            {{#if actor.mythosInsanityExperienced}}
-              <i class="far fa-check-square"></i>
-            {{else}}
-              <i class="far fa-square"></i>
-            {{/if}}
-          </a>
-        </div>
+        {{#each document.system.monetary.values as |value index|}}
+          <div class="asset form-group" data-index="{{index}}">
+            <input name="system.monetary.values.{{index}}.name" value="{{localize value.name}}" type="text" placeholder="{{localize 'CoC7.Name'}}">
+            <input name="system.monetary.values.{{index}}.min" value="{{value.min}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMin'}}">
+            <input name="system.monetary.values.{{index}}.max" value="{{value.max}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMax'}}" readonly="readonly">
+            <select name="system.monetary.values.{{index}}.cashType" class="cash-assets-type">
+              {{selectOptions ../_monetaryTypes selected=value.cashType localize=true valueAttr='key' labelAttr='val'}}
+            </select>
+            <input name="system.monetary.values.{{index}}.cashValue" value="{{value.cashValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueCash'}}">
+            <select name="system.monetary.values.{{index}}.assetsType" class="cash-assets-type">
+              {{selectOptions ../_monetaryTypes selected=value.assetsType localize=true valueAttr='key' labelAttr='val'}}
+            </select>
+            <input name="system.monetary.values.{{index}}.assetsValue" value="{{value.assetsValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueAssets'}}">
+            <select name="system.monetary.values.{{index}}.spendingType" class="cash-assets-type">
+              {{selectOptions ../_monetaryTypes selected=value.spendingType localize=true valueAttr='key' labelAttr='val'}}
+            </select>
+            <input name="system.monetary.values.{{index}}.spendingValue" value="{{value.spendingValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueSpendingLevel'}}">
+            {{#unless ../document.system.flags.locked}}
+              <div class="item-controls">
+                <a class="item-control" data-action="monetary-remove"><i class="fa-regular fa-minus-circle"></i></a>
+              </div>
+            {{/unless}}
+          </div>
+        {{/each}}
       </div>
-      <div class="flexrow-coc7">
-        <div class="bio-section-type">{{localize 'CoC7.BackgroundFlagsMythosHardened'}}</div>
-        <div class="item-controls">
-          <a class="item-control toggle-keeper-flags" title="{{localize 'CoC7.BackgroundFlagsMythosHardened'}}" data-flag="mythosHardened">
-            {{#if actor.mythosHardened}}
-              <i class="far fa-check-square"></i>
-            {{else}}
-              <i class="far fa-square"></i>
-            {{/if}}
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div>
-  <div class="section-header flexrow-coc7">
-    <h3>{{localize 'CoC7.MonetaryTitle'}}</h3>
-    {{#unless data.system.flags.locked}}
-      <div class="header-buttons">
-        <a class="item-control add-monetary"><i class="fas fa-plus"></i></a>
-      </div>
-    {{/unless}}
-  </div>
-  <div class="cash-assets">
-    <div class="form-group">
-      <label>{{localize 'CoC7.MonetaryFormatTitle'}}</label>
-      <select name="system.monetary.format">
-        {{selectOptions _monetaryFormats selected=data.system.monetary.format localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
-      </select>
-    </div>
-    {{#if showCurrencySymbol}}
-      <div class="form-group">
-        <label>{{localize 'CoC7.MonetarySymbol'}}</label>
-        <input type="text" name="system.monetary.symbol" value="{{data.system.monetary.symbol}}">
-      </div>
-    {{/if}}
-    {{#each data.system.monetary.values as |value index|}}
-      <div class="flexrow-coc7 form-group item" data-index="{{index}}">
-        <input name="system.monetary.values.{{index}}.name" value="{{localize value.name}}" type="text" placeholder="{{localize 'CoC7.Name'}}">
-        <input name="system.monetary.values.{{index}}.min" value="{{value.min}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMin'}}">
-        <input name="system.monetary.values.{{index}}.max" value="{{value.max}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMax'}}">
-        <select name="system.monetary.values.{{index}}.cashType" class="cash-assets-type">
-          {{selectOptions ../_monetaryTypes selected=value.cashType localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
-        </select>
-        <input name="system.monetary.values.{{index}}.cashValue" value="{{value.cashValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueCash'}}">
-        <select name="system.monetary.values.{{index}}.assetsType" class="cash-assets-type">
-          {{selectOptions ../_monetaryTypes selected=value.assetsType localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
-        </select>
-        <input name="system.monetary.values.{{index}}.assetsValue" value="{{value.assetsValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueAssets'}}">
-        <select name="system.monetary.values.{{index}}.spendingType" class="cash-assets-type">
-          {{selectOptions ../_monetaryTypes selected=value.spendingType localize=true valueAttr="key" nameAttr="key" labelAttr="val"}}
-        </select>
-        <input name="system.monetary.values.{{index}}.spendingValue" value="{{value.spendingValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueSpendingLevel'}}">
-        {{#unless ../data.system.flags.locked}}
-          <a class="item-control remove-monetary"><i class="fas fa-minus"></i></a>
-        {{/unless}}
-      </div>
-    {{/each}}
-  </div>
-</div>
+    </section>
+  {{/if}}
+</section>

@@ -2,25 +2,22 @@
   "id": "CoC7",
   "title": "Call of Cthulhu 7th Edition",
   "description": "An implementation of the Call of Cthulhu 7th Edition game system for Foundry Virtual Tabletop.",
-  "version": "7.24",
+  "version": "8.0.11",
   "authors": [
     {
       "name": "Miskatonic Investigative Society"
     }
   ],
   "compatibility": {
-    "minimum": 12,
-    "verified": 13
+    "minimum": "12",
+    "verified": "13"
   },
   "esmodules": [
-    "lib/socketlib/src/libwrapper_shim.js",
-    "lib/socketlib/src/socketlib.js",
-    "bundle.js"
+    "system.js"
   ],
   "styles": [
-    "https://fonts.googleapis.com/css?family=Noto%20Sans|Voltaire|Lusitana",
     "lib/game-icons/game-icons.css",
-    "coc7g.css"
+    "system.css"
   ],
   "packFolders": [
     {
@@ -205,7 +202,7 @@
   "secondaryTokenAttribute": "attribs.san",
   "url": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT",
   "manifest": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/download/7.24/system.zip",
+  "download": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/download/8.1/system.zip",
   "media": [
     {
       "type": "setup",
@@ -214,6 +211,28 @@
   ],
   "background": "systems/CoC7/assets/images/system-background.jpg",
   "documentTypes": {
+    "Actor": {
+      "character": {},
+      "container": {},
+      "creature": {},
+      "npc": {},
+      "vehicle": {}
+    },
+    "Item": {
+      "archetype": {},
+      "armor": {},
+      "book": {},
+      "chase": {},
+      "experiencePackage": {},
+      "item": {},
+      "occupation": {},
+      "setup": {},
+      "skill": {},
+      "spell": {},
+      "status": {},
+      "talent": {},
+      "weapon": {}
+    },
     "RegionBehavior": {
       "ChaosiumCanvasInterfaceAmbientLightToggle": {},
       "ChaosiumCanvasInterfaceDrawingToggle": {},

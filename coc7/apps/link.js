@@ -1,13 +1,15 @@
-/* global $, canvas, ChatMessage, CONFIG, CONST, foundry, game, ui */
-import CoCActor from '../models/actor/document-class.js'
-import CoC7Check from './check.js'
+/* global canvas ChatMessage CONFIG foundry fromUuid game TextEditor */
+// cSpell:words combinedall combinedany
+import CoC7ActorPickerDialog from './actor-picker-dialog.js'
+import CoC7ChatCombinedMessage from './chat-combined-message.js'
+import CoC7ChatOpposedMessage from './chat-opposed-message.js'
 import CoC7ContentLinkDialog from './content-link-dialog.js'
-import { CoC7GroupMessage } from './coc7-group-message.js'
-import CoC7Utilities from './utilities.js'
+import CoC7DicePool from './dice-pool.js'
 import CoC7SanCheckCard from './san-check-card.js'
-import { chatHelper, isCtrlKey } from '../chat/helper.js'
+import CoC7Utilities from './utilities.js'
+import deprecated from '../deprecated.js'
 
-/**
+/*
  * Allow for parsing of CoC7 elements in chat message and sheets.
  * Format is :
  * @coc7.TYPE_OF_REQUEST[OPTIONS]{DISPLAYED_NAME}
@@ -27,7 +29,7 @@ import { chatHelper, isCtrlKey } from '../chat/helper.js'
  *   name: name of the skill/characteristic.
  *   [difficulty]: ? (blind), 0 (regular), + (hard), ++ (extreme), +++ (critical).
  *   [modifier]: -x (x penalty dice), +x (x bonus dice), 0 (no modifier).
- *   [icon]: icon to use (font awsome).
+ *   [icon]: icon to use (font awesome).
  *   [blind]: will trigger a blind roll.
  *   [pushing]: will trigger a pushed roll
  *
@@ -35,11 +37,38 @@ import { chatHelper, isCtrlKey } from '../chat/helper.js'
  *
  * To add/edit a new link update these sections
  *   fromDropData => Add all defaults here
- *   _createLink => Create HTML from document data
+ *   _createLink => Called by FoundryVTT when processing enrichers RegExp defined in init()
  *   _createDocumentLink => Create @link from document data
  *   _onLinkActorClick => Process link
  */
 export default class CoC7Link {
+  #blind
+  #check
+  #combat
+  #difficulty
+  #hasBlind
+  #hasCombat
+  #hasDifficulty
+  #hasIcon
+  #hasLabel
+  #hasPoolModifier
+  #hasPushing
+  #icon
+  #label
+  #object
+  #poolModifier
+  #pushing
+  #rolls
+  #sanMax
+  #sanMin
+  #sanReason
+  #subtype
+  #name
+
+  /**
+   * Check types
+   * @returns {object}
+   */
   static get CHECK_TYPE () {
     return {
       CHECK: 'check',
@@ -49,6 +78,10 @@ export default class CoC7Link {
     }
   }
 
+  /**
+   * Check link types
+   * @returns {object}
+   */
   static get LINK_TYPE () {
     return {
       CHARACTERISTIC: 'characteristic',
@@ -57,500 +90,548 @@ export default class CoC7Link {
     }
   }
 
+  /**
+   * Set up Enricher, click, drag, and class
+   */
   static init () {
     CONFIG.CoC7Link = {
       documentClass: CoC7Link
     }
-    const body = $('body')
-    body.on('click', 'a.coc7-link', CoC7Link._onLinkClick)
-    body.on('dragstart', 'a.coc7-link', event => CoC7Link._onDragCoC7Link(event))
-
+    document.body.addEventListener('click', event => {
+      if (event.target?.closest('a.coc7-link')) {
+        CoC7Link._onLinkClick(event)
+      }
+    })
+    document.body.addEventListener('dragstart', event => {
+      if (event.target?.closest('a.coc7-link')) {
+        CoC7Link._onDragCoC7Link(event)
+      }
+    })
     CONFIG.TextEditor.enrichers.push({
-      pattern: new RegExp('@(coc7)\\.' + '(check|effect|item|sanloss)' + '\\[([^\\[\\]]*(?:\\[[^\\[\\]]*(?:\\[[^\\[\\]]*\\])*[^\\[\\]]*\\])*[^\\[\\]]*)\\]' + '(?:{([^}]+)})?', 'gi'),
+      pattern: new RegExp('@(coc7)\\.' + '(check|effect|item|sanloss)' + '\\[((?:[^\\[\\]]*(?:\\[[^\\[\\]]*[^\\[\\]]*\\])*[^\\[\\]]*)*)\\]' + '(?:{([^}]+)})?', 'gi'),
       enricher: CoC7Link._createLink
     })
   }
 
-  static _linkFromEvent (event) {
-    const a = event.currentTarget
-    const i = a.querySelector('[data-link-icon]')
+  /**
+   * Get link data from Event
+   * @param {ClickEvent|DragEvent} event
+   * @returns {object}
+   */
+  static _linkDataFromEvent (event) {
+    const a = event.target.closest('a.coc7-link')
     const data = foundry.utils.duplicate(a.dataset)
-
-    const oldType = data.type
-
-    data.type = 'CoC7Link'
-    data.icon = null
-
-    if (oldType) {
-      data.linkType = oldType
-    }
-
-    if (
-      data.object &&
-      (typeof data.object === 'string' || data.object instanceof String)
-    ) {
-      data.object = JSON.parse(data.object)
-      // data.linkType = CoC7Link.LINK_TYPE.EFFECT
-    }
-
-    if (
-      i.dataset &&
-      i.dataset.linkIcon &&
-      i.dataset.linkIcon !== 'fas fa-dice'
-    ) {
-      data.icon = i.dataset.linkIcon
-    }
-    data.displayName = a.dataset.displayName ? a.innerText : null
-    if (data.difficulty) {
-      data.difficulty = CoC7Utilities.convertDifficulty(data.difficulty)
-    }
+    data.label = event.target.innerText
     return data
   }
 
+  /**
+   * Toggle document flag
+   * @param {DragEvent} event
+   */
   static _onDragCoC7Link (event) {
-    const data = CoC7Link._linkFromEvent(event)
-    event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
+    event.stopPropagation()
+    const dragData = CoC7Link._linkDataFromEvent(event)
+    event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
   }
 
   /**
-   * A helper function to handle obtaining the relevant Document from dropped data provided via a DataTransfer event.
-   * The dropped data could have:
-   * 1. A data object explicitly provided
-   * @memberof ClientDocumentMixin
-   *
-   * @param {object} data           The data object extracted from a DataTransfer event
-   * @param {object} options        Additional options which affect drop data behavior
-   * @returns {Promise<Document>}   The resolved Document
-   * @throws If a Document could not be retrieved from the provided data.
+   * Create instance from drop data
+   * @param {object} data
+   * @param {string} data.check
+   * @param {string} data.subtype optional
+   * @param {string} data.name optional
+   * @param {string} data.sanMax optional
+   * @param {string} data.sanMin optional
+   * @param {string} data.sanReason optional
+   * @param {string|object} data.object optional
+   * @param {string} data.rolls optional
+   * @param {string|integer} data.difficulty optional
+   * @param {integer} data.poolModifier optional
+   * @param {string} data.icon optional
+   * @param {string|boolean} data.blind optional
+   * @param {string|boolean} data.combat optional
+   * @param {string|boolean} data.pushing optional
+   * @param {string} data.label optional
+   * @returns {CoC7Link}
    */
-  static async fromDropData (data, options = {}) {
+  static async fromDropData (data) {
     const cls = new CoC7Link()
-    cls.object = foundry.utils.mergeObject({
-      type: 'CoC7Link',
-      check: CoC7Link.CHECK_TYPE.CHECK,
-      linkType: CoC7Link.LINK_TYPE.SKILL,
-      difficulty: CoC7Check.difficultyLevel.regular,
-      modifier: 0,
-      object: {
-        label: game.i18n.localize('CoC7.EffectNew'),
-        icon: 'icons/svg/aura.svg',
-        changes: []
-      }
-    }, data)
-    for (const key of ['name', 'displayName', 'icon', 'id', 'pack', 'sanMin', 'sanMax', 'sanReason']) {
-      cls.object[key] = cls.object[key] ?? ''
+    cls.#check = data.check
+    cls.#subtype = data.subtype
+    cls.#name = data.name
+    cls.#sanMax = data.sanMax
+    cls.#sanMin = data.sanMin
+    cls.#sanReason = data.sanReason
+    if (typeof data.object === 'string') {
+      cls.#object = JSON.parse(data.object)
+    } else {
+      cls.#object = data.object
     }
-    if (typeof cls.object.object.icon !== 'undefined' && typeof cls.object.object.external !== 'undefined' && ['http', 'https'].includes(cls.object.object.external)) {
-      cls.object.object.icon = cls.object.object.external + '://' + cls.object.object.icon
+    cls.#rolls = data.rolls
+    if (typeof data.difficulty !== 'undefined') {
+      cls.#difficulty = data.difficulty
+      cls.#hasDifficulty = true
     }
-    cls.options = options
+    if (typeof data.poolModifier !== 'undefined') {
+      cls.#poolModifier = data.poolModifier
+      cls.#hasPoolModifier = true
+    }
+    if (typeof data.icon !== 'undefined') {
+      cls.#icon = data.icon
+      cls.#hasIcon = true
+    }
+    if (data.blind === true || data.blind === 'true') {
+      cls.#blind = true
+      cls.#hasBlind = true
+    }
+    if (data.combat === true || data.combat === 'true') {
+      cls.#combat = true
+      cls.#hasCombat = true
+    }
+    if (data.pushing === true || data.pushing === 'true') {
+      cls.#pushing = true
+      cls.#hasPushing = true
+    }
+    if (typeof data.label !== 'undefined' && data.label.toString().length) {
+      cls.#label = data.label
+      cls.#hasLabel = true
+    }
     return cls
   }
 
-  static async _createLink (match) {
-    const name = match[4] ?? undefined
-    const options = match[3] ?? undefined
-    const type = match[2] ?? undefined
-
+  /**
+   * Create link
+   * @param {RegExpMatchArray} match
+   * @param {object} options
+   * @param {boolean?} options.custom
+   * @param {boolean?} options.documents
+   * @param {boolean?} options.embeds
+   * @param {boolean?} options.links
+   * @param {any?} options.relativeTo
+   * @param {object|Function} options.rollData
+   * @param {boolean?} options.rolls
+   * @param {boolean?} options.secrets
+   * @returns {Promise<HTMLElement | null>}
+   */
+  static async _createLink (match, options) {
     const data = {
       cls: ['coc7-link'],
-      dataset: { check: type },
-      icon: null,
-      blind: false,
-      name
-    }
-
-    if (type === CoC7Link.CHECK_TYPE.EFFECT) {
-      data.effect = JSON.parse(options)
-      data.dataset.object = options
-      if (typeof data.effect.icon !== 'undefined' && typeof data.effect.external !== 'undefined' && ['http', 'https'].includes(data.effect.external)) {
-        data.effect.icon = data.effect.external + '://' + data.effect.icon
+      dataset: {
+        type: 'CoC7Link',
+        check: match[2]
       }
+    }
+    const object = match[3]
+    let name = match[4]
+    let icon = 'fa-solid fa-dice'
+    let img = ''
+
+    if (data.dataset.check === CoC7Link.CHECK_TYPE.EFFECT) {
+      const effect = JSON.parse(object)
+      // Change old keys
+      if (typeof effect.label !== 'undefined') {
+        if (typeof effect.name === 'undefined') {
+          deprecated.warningLogger({
+            was: '@coc7.effect[label:]',
+            now: '@coc7.effect[name:]',
+            until: 15
+          })
+          effect.name = effect.label
+          delete effect.label
+        }
+      }
+      if (typeof effect.icon !== 'undefined') {
+        if (typeof effect.img === 'undefined') {
+          deprecated.warningLogger({
+            was: '@coc7.effect[icon:]',
+            now: '@coc7.effect[img:]',
+            until: 15
+          })
+          effect.img = effect.icon
+          delete effect.icon
+        }
+      }
+      data.dataset.object = JSON.stringify(effect)
+      if (typeof effect.external !== 'undefined' && ['http', 'https'].includes(effect.external)) {
+        img = effect.external + '://' + effect.img
+      }
+      data.dataset.tooltip = game.i18n.localize('DOCUMENT.ActiveEffect')
     } else {
-      const matches = options.matchAll(/[^,]+/gi)
+      const matches = object.matchAll(/[^,]+/gi)
       for (const match of Array.from(matches)) {
         let [key, value] = match[0].split(':')
+        // Change old keys
+        switch (key) {
+          case 'modifier':
+            deprecated.warningLogger({
+              was: '@coc7.check[modifier:]',
+              now: '@coc7.effect[poolModifier:]',
+              until: 15
+            })
+            key = 'poolModifier'
+            break
+          case 'type':
+            deprecated.warningLogger({
+              was: '@coc7.check[type:]',
+              now: '@coc7.effect[subtype:]',
+              until: 15
+            })
+            key = 'subtype'
+            break
+        }
         if (key === 'icon') {
-          data.icon = value
+          icon = value
         }
         if (typeof value === 'undefined') {
           if (key === 'blind') {
-            value = true
-            data.blind = true && [CoC7Link.CHECK_TYPE.CHECK].includes(type.toLowerCase())
-          } else if (key === 'pushing') {
-            value = true
-            data.pushing = true && [CoC7Link.CHECK_TYPE.CHECK].includes(type.toLowerCase())
-          } else if (key === 'combat') {
-            value = true
-            data.combat = true && [CoC7Link.CHECK_TYPE.CHECK].includes(type.toLowerCase())
+            if ([CoC7Link.CHECK_TYPE.CHECK, CoC7Link.CHECK_TYPE.SANLOSS, CoC7Link.CHECK_TYPE.ITEM].includes(data.dataset.check.toLowerCase())) {
+              value = true
+            } else {
+              continue
+            }
+          } else if (['combat', 'pushing'].includes(key)) {
+            if ([CoC7Link.CHECK_TYPE.CHECK].includes(data.dataset.check.toLowerCase())) {
+              value = true
+            } else {
+              continue
+            }
           }
         }
         data.dataset[key] = value
       }
-      if (typeof data.dataset.icon !== 'undefined' && typeof data.dataset.external !== 'undefined' && ['http', 'https'].includes(data.dataset.external)) {
-        data.dataset.icon = data.dataset.external + '://' + data.dataset.icon
-        data.icon = data.dataset.icon
-      }
-    }
-
-    let title
-    const difficulty = CoC7Check.difficultyString(data.dataset.difficulty)
-
-    switch (type.toLowerCase()) {
-      case CoC7Link.CHECK_TYPE.CHECK: {
-        let humanName = data.dataset.name
-        if (['attributes', 'attribute', 'attrib', 'attribs'].includes(data.dataset.type?.toLowerCase())) {
-          if (data.dataset.name === 'lck') {
-            humanName = game.i18n.localize('CoC7.Luck')
-          }
-          if (data.dataset.name === 'san') {
-            humanName = game.i18n.localize('CoC7.Sanity')
-          }
-        } else if (['charac', 'char', 'characteristic', 'characteristics'].includes(data.dataset.type?.toLowerCase())) {
-          humanName = CoC7Utilities.getCharacteristicNames(data.dataset.name)?.label
-        } else {
-          if (!name && data.dataset.name.match(/^.\.[^\\.]*\..+$/)) {
-            const cocIdName = (await game.system.api.cocid.fromCoCID(data.dataset.name))?.[0]?.name
-            if (cocIdName) {
-              humanName = cocIdName
+      const difficulty = CoC7DicePool.difficultyString(data.dataset.difficulty)
+      switch (data.dataset.check.toLowerCase()) {
+        case CoC7Link.CHECK_TYPE.CHECK:
+          {
+            let humanName = name
+            if (['attributes', 'attribute', 'attrib', 'attribs'].includes(data.dataset.subtype?.toLowerCase())) {
+              if (['lck', 'san'].includes(data.dataset.name)) {
+                humanName = CoC7Utilities.getAttributeNames(data.dataset.name)?.label
+              }
+            } else if (['charac', 'char', 'characteristic', 'characteristics'].includes(data.dataset.subtype?.toLowerCase())) {
+              humanName = CoC7Utilities.getCharacteristicNames(data.dataset.name)?.label
+            } else if (['skill'].includes(data.dataset.subtype?.toLowerCase())) {
+              humanName = data.dataset.name
+              if (data.dataset.name.match(/^.\.[^\\.]*\..+$/)) {
+                const cocIdName = (await game.CoC7.cocid.fromCoCID(data.dataset.name))?.[0]?.name
+                if (cocIdName) {
+                  humanName = cocIdName
+                }
+              }
+            } else if (['combinedall', 'combinedany', 'opposed'].includes(data.dataset.subtype?.toLowerCase())) {
+              humanName = '?'
             }
+            data.dataset.tooltip = game.i18n.format(
+              `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.poolModifier ? '' : 'Modif'}${!data.dataset.pushing ? '' : 'Pushing'}`,
+              {
+                difficulty,
+                modifier: data.dataset.poolModifier,
+                name: humanName
+              }
+            )
           }
-        }
-        title = game.i18n.format(
-          `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.modifier ? '' : 'Modif'}${data.pushing ? 'Pushing' : ''}`,
+          break
+        case CoC7Link.CHECK_TYPE.SANLOSS:
+          data.dataset.tooltip = game.i18n.format(
+            `CoC7.LinkSanLoss${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.poolModifier ? '' : 'Modif'}`,
+            {
+              difficulty,
+              modifier: data.dataset.poolModifier,
+              sanMin: data.dataset.sanMin,
+              sanMax: data.dataset.sanMax
+            }
+          )
+          break
+        case CoC7Link.CHECK_TYPE.ITEM:
           {
-            difficulty,
-            modifier: data.dataset.modifier,
-            name: humanName
+            let humanName = data.dataset.name
+            if (humanName.match(/^.\.[^\\.]*\..+$/)) {
+              const cocIdName = (await game.CoC7.cocid.fromCoCID(humanName))?.[0]?.name
+              if (cocIdName) {
+                humanName = cocIdName
+              }
+            }
+            data.dataset.tooltip = game.i18n.format(
+              `CoC7.LinkItem${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.poolModifier ? '' : 'Modif'}`,
+              {
+                difficulty,
+                modifier: data.dataset.poolModifier,
+                name: humanName
+              }
+            )
           }
-        )
-        break
+          break
       }
-
-      case CoC7Link.CHECK_TYPE.SANLOSS:
-        title = game.i18n.format(
-          `CoC7.LinkSanLoss${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.modifier ? '' : 'Modif'}`,
-          {
-            difficulty,
-            modifier: data.dataset.modifier,
-            sanMin: data.dataset.sanMin,
-            sanMax: data.dataset.sanMax
-          }
-        )
-        break
-
-      case CoC7Link.CHECK_TYPE.ITEM:
-        title = game.i18n.format(
-          `CoC7.LinkItem${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.modifier ? '' : 'Modif'}`,
-          {
-            difficulty,
-            modifier: data.dataset.modifier,
-            name: data.dataset.name
-          }
-        )
-        break
-
-      case CoC7Link.CHECK_TYPE.EFFECT:
-        title = data.effect.label
-        break
     }
-
-    if (!name) {
-      data.name = title
-    } else {
-      data.dataset.displayName = true
-    }
-
     const a = document.createElement('a')
-    a.title = game.user.isGM ? data.name : title
-    a.classList.add(...data.cls)
+    a.classList.add(data.cls)
     for (const [k, v] of Object.entries(data.dataset)) {
       a.dataset[k] = v
     }
     a.draggable = true
-    data.icon = data.icon ?? data.effect?.icon ?? 'fas fa-dice'
-    // check if it's an image or an icon
-    if (data.icon.includes('\\') || data.icon.includes('.')) {
-      data.img = data.icon
+    if (data.dataset.blind === true) {
+      a.innerHTML += '<i class="fa-solid fa-eye-slash"></i>'
     }
-    if (data.blind) {
-      a.innerHTML += '<i class="fas fa-eye-slash"></i>'
-    }
-    if (data.img) {
-      a.innerHTML += `<img data-link-icon="${data.icon}" src="${data.img}">`
+    if (img) {
+      a.innerHTML += `<img src="${img}">`
     } else {
-      a.innerHTML += `<i data-link-icon="${data.icon}" class="link-icon ${data.icon}"></i>`
+      a.innerHTML += `<i class="${icon}"></i>`
     }
-    a.innerHTML += `<span>${data.name}</span>`
-
+    if (!name && data.dataset.tooltip) {
+      name = data.dataset.tooltip
+    }
+    a.innerHTML += `<span>${name}</span>`
     return a
   }
 
   /**
-   * Create a content link for this document.
-   * @param {object} eventData                     The parsed object of data provided by the drop transfer event.
-   * @param {object} [options]                     Additional options to configure link generation.
-   * @param {ClientDocument} [options.relativeTo]  A document to generate a link relative to.
-   * @param {string} [options.label]               A custom label to use instead of the document's name.
+   * Given a Drop event, returns a Content link if possible such as "@Actor[ABC123]", else `null`
+   * @param {object} eventData
+   * @param {object} options
+   * @param {ClientDocument} options.relativeTo
+   * @param {string} options.label
    * @returns {string}
-   * @internal
    */
   _createDocumentLink (eventData, { relativeTo, label } = {}) {
-    if (!eventData.check) {
-      return ''
-    }
-    switch (eventData.check.toLowerCase()) {
-      case CoC7Link.CHECK_TYPE.CHECK: {
-        // @coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}
-        // @coc7.check[blind,type:characteristic,name:str,difficulty:1,modifier:0,icon:fa fa-link]{Strength}
-        // @coc7.check[blind,type:attribute,name:lck,difficulty:1,modifier:0,icon:fa fa-link]{Luck}
-        // @coc7.check[blind,type:skill,name:Law,difficulty:1,modifier:0,icon:fa fa-link]{Law}
-        if (!eventData.linkType || (!eventData.name && !eventData.rolls)) {
-          return ''
+    const options = []
+    let toggles = false
+    switch (this.#check?.toLowerCase()) {
+      case CoC7Link.CHECK_TYPE.CHECK:
+        // @coc7.check[subtype:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}
+        // @coc7.check[blind,subtype:characteristic,name:str,difficulty:1,modifier:0,icon:fa fa-link]{Strength}
+        // @coc7.check[blind,subtype:attribute,name:lck,difficulty:1,modifier:0,icon:fa fa-link]{Luck}
+        // @coc7.check[blind,subtype:skill,name:Law,difficulty:1,modifier:0,icon:fa fa-link]{Law}
+        options.push('subtype:' + this.#subtype)
+        if (this.#name) {
+          options.push('name:' + this.#name)
         }
-        let options = `${eventData.blind ? 'blind,' : ''}${eventData.pushing ? 'pushing,' : ''}type:${eventData.linkType}`
-        if (eventData.name) {
-          options += `,name:${eventData.name}`
-        } else if (eventData.rolls) {
-          options += `,rolls:${eventData.rolls}`
-          if (eventData.combat) {
-            options += ',combat'
-          }
+        if (this.#rolls) {
+          options.push('rolls:' + this.#rolls)
         }
-        if (typeof eventData.difficulty !== 'undefined' && eventData.difficulty !== CoC7Check.difficultyLevel.regular) {
-          options += `,difficulty:${eventData.difficulty}`
-        }
-        if (typeof eventData.modifier !== 'undefined' && eventData.modifier !== 0) {
-          options += `,modifier:${eventData.modifier}`
-        }
-        if (eventData.icon) {
-          const parts = eventData.icon.match(/^(https?):\/\/(.+)$/)
-          if (parts) {
-            options += `,external:${parts[1]},icon:${parts[2]}`
-          } else {
-            options += `,icon:${eventData.icon}`
-          }
-        }
-        if (eventData.pack) {
-          options += `,pack:${eventData.pack}`
-        }
-        if (eventData.id) {
-          options += `,id:${eventData.id}`
-        }
-        let link = `@coc7.check[${options}]`
-        const displayName = eventData.displayName ?? (label ?? '')
-        if (displayName) {
-          link += `{${displayName}}`
-        }
-        return link
-      }
-
-      case CoC7Link.CHECK_TYPE.SANLOSS: {
+        toggles = true
+        break
+      case CoC7Link.CHECK_TYPE.SANLOSS:
         // @coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}
-        if (!eventData.sanMax || !eventData.sanMin) {
-          return ''
+        options.push('sanMin:' + this.#sanMin)
+        options.push('sanMax:' + this.#sanMax)
+        if (this.#sanReason) {
+          options.push('sanReason:' + this.#sanReason)
         }
-        let options = `${eventData.blind ? 'blind,' : ''}sanMax:${eventData.sanMax},sanMin:${eventData.sanMin}`
-        if (eventData.sanReason) {
-          options += `,sanReason:${eventData.sanReason}`
+        toggles = true
+        break
+      case CoC7Link.CHECK_TYPE.ITEM:
+        // @coc7.item[type:optional,name:Shotgun,difficulty:+,modifier:-1]{Hard Shotgun check(-1)}
+        if (this.#name) {
+          options.push('name:' + this.#name)
         }
-        if (eventData.difficulty && eventData.difficulty !== CoC7Check.difficultyLevel.regular) {
-          options += `,difficulty:${eventData.difficulty}`
-        }
-        if (eventData.modifier && eventData.modifier !== 0) {
-          options += `,modifier:${eventData.modifier}`
-        }
-        if (eventData.icon) {
-          const parts = eventData.icon.match(/^(https?):\/\/(.+)$/)
+        toggles = true
+        break
+      case CoC7Link.CHECK_TYPE.EFFECT:
+        {
+          // @coc7.effect[{"name":"Test","img":"icons/svg/aura.svg","changes":[{"key":"system.unknown.test","mode":2,"value":"5"}],"tint":"#e91616","duration":{"seconds":null,"rounds":6,"turns":null}}]{Testing}
+          const json = foundry.utils.duplicate(this.#object)
+          const parts = json.img.match(/^(https?):\/\/(.+)$/)
           if (parts) {
-            options += `,external:${parts[1]},icon:${parts[2]}`
-          } else {
-            options += `,icon:${eventData.icon}`
+            json.external = parts[1]
+            json.img = parts[2]
           }
+          json.description = json.description.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          options.push(JSON.stringify(json))
         }
-        let link = `@coc7.sanloss[${options}]`
-        const displayName = eventData.displayName ?? (label ?? '')
-        if (displayName) {
-          link += `{${displayName}}`
-        }
-        return link
+        break
+    }
+    if (options.length === 0) {
+      return '?'
+    }
+    if (toggles) {
+      if (this.#hasBlind) {
+        options.push(this.#blind ? 'blind' : '')
       }
-
-      case CoC7Link.CHECK_TYPE.ITEM: {
-        // @coc7.item[type:optional,name:Shotgun,difficulty:+,modifier:-1]{Hard Shitgun check(-1)}
-        if (!eventData.name) {
-          return ''
-        }
-        let options = `${eventData.blind ? 'blind,' : ''}name:${eventData.name}`
-        if (eventData.icon) {
-          const parts = eventData.icon.match(/^(https?):\/\/(.+)$/)
-          if (parts) {
-            options += `,external:${parts[1]},icon:${parts[2]}`
-          } else {
-            options += `,icon:${eventData.icon}`
-          }
-        }
-        if (eventData.pack) {
-          options += `,pack:${eventData.pack}`
-        }
-        if (eventData.id) {
-          options += `,id:${eventData.id}`
-        }
-        let link = `@coc7.item[${options}]`
-        const displayName = eventData.displayName ?? (label ?? '')
-        if (displayName) {
-          link += `{${displayName}}`
-        }
-        return link
+      if (this.#hasCombat) {
+        options.push(this.#combat ? 'combat' : '')
       }
-
-      case CoC7Link.CHECK_TYPE.EFFECT: {
-        // @coc7.effect[{"label":"Kapow","icon":"icons/svg/aura.svg","changes":[{"key":"system.unknown.test","mode":2,"value":"5"}],"tint":"#e91616","duration":{"seconds":null,"rounds":6,"turns":null}}]{Kapowing}
-        // const effectData = foundry.utils.deepClone(eventData)
-        // if (!this.effectIsTemp) delete effectData.duration
-        // if (effectData.changes?.length === 0) delete effectData.changes
-        // if (!effectData.disabled) delete effectData.disabled
-        // if (!effectData.tint) delete effectData.tint
-        const parts = eventData.object.icon.match(/^(https?):\/\/(.+)$/)
-        if (parts) {
-          eventData.object.external = parts[1]
-          eventData.object.icon = parts[2]
-        }
-        let link = `@coc7.effect[${JSON.stringify(eventData.object)}]`
-        const displayName = eventData.displayName ?? (label ?? '')
-        if (displayName) {
-          link += `{${displayName}}`
-        }
-        return link
+      if (this.#hasDifficulty) {
+        options.push('difficulty:' + this.#difficulty)
+      }
+      if (this.#hasPoolModifier) {
+        options.push('poolModifier:' + this.#poolModifier)
+      }
+      if (this.#hasIcon) {
+        options.push('icon:' + this.#icon)
+      }
+      if (this.#hasPushing) {
+        options.push(this.#pushing ? 'pushing' : '')
       }
     }
-    return '?'
+    const link = '@coc7.' + this.#check?.toLowerCase() + '[' + options.join(',') + ']' + (this.#hasLabel ? '{' + this.#label + '}' : '')
+    return link
   }
 
+  /**
+   * Process Actor Link
+   * @param {Document|null} actor
+   * @param {object} options
+   * @param {boolean} shiftKey
+   */
   static async _onLinkActorClick (actor, options, { shiftKey = false } = {}) {
+    if (!actor && !['combinedall', 'combinedany', 'combined', 'opposed'].includes(options.subtype.toLowerCase())) {
+      return
+    } else if (actor && actor.actor) {
+      actor = actor.actor
+    }
     switch (options.check) {
       case CoC7Link.CHECK_TYPE.CHECK:
-        if (['charac', 'char', 'characteristic', 'characteristics'].includes(options.linkType.toLowerCase())) {
-          return actor.characteristicCheck(
-            options.name,
-            shiftKey,
-            options
-          )
-        }
-        if (['skill'].includes(options.linkType.toLowerCase())) {
-          return actor.skillCheck(options, shiftKey, options)
-        }
-        if (['attributes', 'attribute', 'attrib', 'attribs'].includes(options.linkType.toLowerCase())) {
-          return actor.attributeCheck(options.name, shiftKey, options)
-        }
-        if (['combinedall', 'combinedany', 'opposed'].includes(options.linkType.toLowerCase())) {
-          return CoC7GroupMessage.createGroupMessage({
-            type: options.linkType.toLowerCase(),
-            rollRequisites: options.rolls.split('&&'),
-            isCombat: Boolean(options.combat ?? false)
-          })
+        switch (options.subtype.toLowerCase()) {
+          case 'charac':
+          case 'char':
+          case 'characteristic':
+          case 'characteristics':
+            actor.characteristicCheck(options.name, shiftKey, options)
+            break
+          case 'skill':
+            actor.skillCheck(options.name, shiftKey, options)
+            break
+          case 'attributes':
+          case 'attribute':
+          case 'attrib':
+          case 'attribs':
+            actor.attributeCheck(options.name, shiftKey, options)
+            break
+          case 'combinedall':
+          case 'combinedany':
+          case 'combined':
+            CoC7ChatCombinedMessage.createGroupMessage({
+              defaultActor: actor.uuid ?? null,
+              isCombat: Boolean(options.combat ?? false),
+              rollRequisites: options.rolls.split('&&'),
+              type: options.subtype.toLowerCase()
+            })
+            break
+          case 'opposed':
+            CoC7ChatOpposedMessage.createGroupMessage({
+              defaultActor: actor.uuid ?? null,
+              isCombat: Boolean(options.combat ?? false),
+              rollRequisites: options.rolls.split('&&')
+            })
+            break
         }
         break
-
       case CoC7Link.CHECK_TYPE.SANLOSS:
-        CoC7SanCheckCard.create(actor.actorKey, options, {
-          fastForward: shiftKey
+        CoC7SanCheckCard.create(CoC7Utilities.getActorUuid(actor), {
+          sanMax: options.sanMax,
+          sanMin: options.sanMin,
+          sanReason: options.sanReason,
+          difficulty: options.difficulty,
+          poolModifier: options.poolModifier
         })
-        return
-
+        break
       case CoC7Link.CHECK_TYPE.ITEM:
-        return actor.weaponCheck(options, shiftKey)
-
+        await actor.weaponCheck(options, shiftKey)
+        break
       case CoC7Link.CHECK_TYPE.EFFECT:
-        await actor.createEmbeddedDocuments('ActiveEffect', [{
-          label: options.object.label,
-          icon: options.object.icon,
-          changes: options.object.changes
-        }])
+        await actor.createEmbeddedDocuments('ActiveEffect', [
+          JSON.parse(options.object)
+        ])
         break
     }
   }
 
-  static toChatMessage (options) {
-    const option = {
-      speaker: {
-        alias: game.user.name
-      }
-    }
-    let message
-    const link = (new CoC7Link())._createDocumentLink(options)
-    if (options.check === CoC7Link.CHECK_TYPE.EFFECT) {
-      message = `<div class="effect-message">${link}</div>`
+  /**
+   * Send current link to chat
+   */
+  toChatMessage () {
+    let content
+    const link = this._createDocumentLink(null)
+    if (this.#check === CoC7Link.CHECK_TYPE.EFFECT) {
+      content = `<div class="effect-message">${link}</div>`
     } else {
-      message = game.i18n.format('CoC7.MessageCheckRequestedWait', {
+      content = game.i18n.format('CoC7.MessageCheckRequestedWait', {
         check: link
       })
     }
-    chatHelper.createMessage(null, message, option)
+    const messageData = {
+      speaker: {
+        alias: game.user.name
+      },
+      content
+    }
+    ChatMessage.create(messageData)
   }
 
-  static toWhisperMessage (options, actors) {
+  /**
+   * Send whisper for each actor to each user that has owner permissions
+   * @param {Array} actors
+   */
+  toWhisperMessage (actors) {
+    const messagesData = []
     for (const actor of actors) {
-      const option = {
-        speaker: {
-          alias: game.user.name
-        },
-        whisper: actor.owners.map(a => a.id)
-      }
-      let message
-      const link = (new CoC7Link())._createDocumentLink(options)
-      if (options.check === CoC7Link.CHECK_TYPE.EFFECT) {
-        message = `<div class="effect-message">${link}</div>`
+      let content
+      const link = this._createDocumentLink(null)
+      if (this.#check === CoC7Link.CHECK_TYPE.EFFECT) {
+        content = `<div class="effect-message">${link}</div>`
       } else {
-        message = game.i18n.format('CoC7.MessageTargetCheckRequested', {
+        content = game.i18n.format('CoC7.MessageTargetCheckRequested', {
           name: actor.name,
           check: link
         })
       }
-      chatHelper.createMessage(null, message, option)
-    }
-  }
-
-  static async makeMacroData (data) {
-    const linkObj = await CoC7Link.fromDropData(data)
-    const regEx = new RegExp('@(coc7)\\.' + '(check|effect|item|sanloss)' + '\\[([^\\[\\]]*(?:\\[[^\\[\\]]*(?:\\[[^\\[\\]]*\\])*[^\\[\\]]*\\])*[^\\[\\]]*)\\]' + '(?:{([^}]+)})?', 'gi')
-    const match = regEx.exec(linkObj.link)
-    if (match) {
-      const element = await CoC7Link._createLink(match)
-      return {
-        name: element.querySelector('span').innerHTML.trim(),
-        type: 'script',
-        command: 'game.CoC7.macros.linkMacro(' + JSON.stringify(data) + ')'
-      }
-    }
-    return false
-  }
-
-  static async linkMacro (data) {
-    const linkObj = await CoC7Link.fromDropData(data)
-    const regEx = new RegExp('@(coc7)\\.' + '(check|effect|item|sanloss)' + '\\[([^\\[\\]]*(?:\\[[^\\[\\]]*(?:\\[[^\\[\\]]*\\])*[^\\[\\]]*\\])*[^\\[\\]]*)\\]' + '(?:{([^}]+)})?', 'gi')
-    const match = regEx.exec(linkObj.link)
-    if (match) {
-      CoC7Link._createLink(match).then(element => {
-        CoC7Link._onLinkClick({
-          currentTarget: element
-        })
+      messagesData.push({
+        speaker: {
+          alias: game.user.name
+        },
+        whisper: actor.owners.map(a => a.id),
+        content
       })
     }
-    return false
+    ChatMessage.create(messagesData)
+  }
+
+  /**
+   * Make Macro from object
+   * @param {object} data
+   * @returns {string|object}
+   */
+  static async makeMacroData (data) {
+    const linkObj = await CoC7Link.fromDropData(data)
+    return {
+      name: linkObj.#label,
+      type: 'script',
+      command: 'game.CoC7.macros.linkMacro(' + JSON.stringify(data) + ')'
+    }
+  }
+
+  /**
+   * Make Macro from object
+   * @param {object} data
+   */
+  static async linkMacro (data) {
+    const linkObj = await CoC7Link.fromDropData(data)
+    /* // FoundryVTT V12 */
+    ;(foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      linkObj._createDocumentLink(),
+      {
+        async: true,
+        secrets: false
+      }
+    ).then(string => {
+      const element = document.createElement('div')
+      element.innerHTML = string
+      CoC7Link._onLinkClick({
+        target: element.querySelector('a')
+      })
+    })
   }
 
   /**
    * Trigger a check when a link is clicked.
-   * Depending the origin
-   * @param {*} event
-   *
+   * @param {ClickEvent} event
    */
   static async _onLinkClick (event) {
-    const options = CoC7Link._linkFromEvent(event)
+    const options = CoC7Link._linkDataFromEvent(event)
 
     if (game.user.isGM) {
-      if (isCtrlKey(event)) {
+      if (CoC7Utilities.isCtrlKey(event)) {
         CoC7ContentLinkDialog.create(options)
         return
       }
@@ -566,127 +647,16 @@ export default class CoC7Link {
         CoC7Link._onLinkActorClick(actor, options, { shiftKey: event.shiftKey })
         return
       }
-      CoC7Link.toChatMessage(options)
-      return
+      const link = await CoC7Link.fromDropData(options)
+      link.toChatMessage()
     } else {
-      const speaker = ChatMessage.getSpeaker()
-      let actor = ChatMessage.getSpeakerActor(speaker)
-      if (!actor) {
-        const actors = game.actors.filter(a => (a.ownership[game.user.id] ?? a.ownership.default) === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)
-        if (actors.length === 1) {
-          actor = actors[0]
-        } else {
-          const actors = game.actors.filter(a => (a.ownership[game.user.id] ?? a.ownership.default) === CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)
-          if (actors.length === 1) {
-            actor = actors[0]
-          }
+      const actorUuid = await CoC7ActorPickerDialog.create()
+      if (actorUuid) {
+        const actor = await fromUuid(actorUuid)
+        if (actor) {
+          CoC7Link._onLinkActorClick(actor, options, { shiftKey: event.shiftKey })
         }
       }
-      if (actor) {
-        CoC7Link._onLinkActorClick(actor, options, { shiftKey: event.shiftKey })
-        return
-      }
     }
-    ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'))
-  }
-
-  setValue (key, value) {
-    this.object[key] = value
-  }
-
-  get link () {
-    return this._createDocumentLink(this.object)
-  }
-
-  get id () {
-    return this.object.id
-  }
-
-  get pack () {
-    return this.object.pack
-  }
-
-  get checkType () {
-    return this.object.check
-  }
-
-  get difficulty () {
-    return this.object.difficulty
-  }
-
-  get icon () {
-    return this.object.icon
-  }
-
-  get displayName () {
-    return this.object.displayName
-  }
-
-  get modifier () {
-    return this.object.modifier
-  }
-
-  get linkType () {
-    return this.object.linkType
-  }
-
-  get sanMin () {
-    return this.object.sanMin
-  }
-
-  get sanMax () {
-    return this.object.sanMax
-  }
-
-  get sanReason () {
-    return this.object.sanReason
-  }
-
-  get effect () {
-    return this.object.object
-  }
-
-  get checkName () {
-    if (this.isCharacteristicCheck) {
-      const characteristics = CoCActor.getCharacteristicDefinition()
-      return characteristics.find(c => c.key === this.object.name || c.shortName === this.object.name || c.label === this.object.name)?.key ?? ''
-    }
-    return this.object.name
-  }
-
-  get isCheck () {
-    return this.object.check === CoC7Link.CHECK_TYPE.CHECK
-  }
-
-  get isCharacteristicCheck () {
-    return this.isCheck && this.object.linkType === CoC7Link.LINK_TYPE.CHARACTERISTIC
-  }
-
-  get isAttributeCheck () {
-    return this.isCheck && this.object.linkType === CoC7Link.LINK_TYPE.ATTRIBUTE
-  }
-
-  get isSkillCheck () {
-    return this.isCheck && this.object.linkType === CoC7Link.LINK_TYPE.SKILL
-  }
-
-  get isItemCheck () {
-    return this.object.check === CoC7Link.CHECK_TYPE.ITEM
-  }
-
-  get isSanLossCheck () {
-    return this.object.check === CoC7Link.CHECK_TYPE.SANLOSS
-  }
-
-  get isEffect () {
-    return this.object.check === CoC7Link.CHECK_TYPE.EFFECT
-  }
-
-  get isBlind () {
-    return this.isCheck && this.object.blind
-  }
-
-  get isPushing () {
-    return this.isCheck && this.object.pushing
   }
 }

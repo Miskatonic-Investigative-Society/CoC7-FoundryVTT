@@ -1,3 +1,7 @@
+/**
+ * Add decader dice to DsN
+ * @param {DsN} dice3d
+ */
 export default function (dice3d) {
   dice3d.addDicePreset({
     type: 'dt',

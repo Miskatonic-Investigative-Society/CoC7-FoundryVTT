@@ -1,5 +1,12 @@
-import { CoC7Combat } from '../apps/combat.js'
+import CoC7Combat from '../apps/combat.js'
 
-export default function (app, html, data) {
-  CoC7Combat.renderCombatTracker(app, html, data)
+/**
+ * Render Hook
+ * @param {ApplicationV2} application
+ * @param {HTMLElement} element
+ * @param {ApplicationRenderContext} context
+ * @param {ApplicationRenderOptions} options
+ */
+export default function (application, element, context, options) {
+  CoC7Combat.renderCombatTracker(application, element, context, options)
 }

@@ -1,78 +1,124 @@
-/* global foundry, game, TextEditor */
-import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import { COC7 } from '../../constants.js'
+/* global foundry game TextEditor */
+import { FOLDER_ID } from '../../constants.js'
+import CoC7ModelsItemGlobalSheet from './global-sheet.js'
 
-/**
- * Extend the basic ItemSheet with some very simple modifications
- */
-export default class CoC7TalentSheet extends foundry.appv1.sheets.ItemSheet {
-  /**
-   *
-   */
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheet', 'talent'],
-      template: 'systems/CoC7/templates/items/talent-header.hbs',
+export default class CoC7ModelsItemTalentSheet extends CoC7ModelsItemGlobalSheet {
+  static DEFAULT_OPTIONS = {
+    position: {
       width: 525,
-      height: 480,
-      scrollY: ['.tab.description'],
-      tabs: [
-        {
-          navSelector: '.sheet-navigation',
-          contentSelector: '.sheet-body',
-          initial: 'description'
-        }
-      ]
-    })
+      height: 480
+    }
   }
 
-  _getHeaderButtons () {
-    const headerButtons = super._getHeaderButtons()
-    addCoCIDSheetHeaderButton(headerButtons, this)
-    return headerButtons
+  static PARTS = {
+    header: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/talent-header.hbs'
+    },
+    tabs: {
+      template: 'templates/generic/tab-navigation.hbs'
+    },
+    description: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-properties-description.hbs',
+      scrollable: ['']
+    },
+    details: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/talent-tab-details.hbs',
+      scrollable: ['']
+    },
+    keeper: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-keeper.hbs',
+      scrollable: ['']
+    }
   }
 
-  /* Prepare data for rendering the Item sheet
-   * The prepared data object contains both the actor data as well as additional sheet options
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
    */
-  async getData () {
-    const sheetData = super.getData()
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
 
-    sheetData.itemProperties = []
-
-    for (const [key, value] of Object.entries(this.item.system.type)) {
-      if (value) {
-        sheetData.itemProperties.push(
-          COC7.talentType[key] ? COC7.talentType[key] : null
-        )
+    const tabs = {
+      description: {
+        icon: '',
+        label: 'CoC7.Description'
+      },
+      details: {
+        icon: '',
+        label: 'CoC7.Details'
+      }
+    }
+    if (game.user.isGM) {
+      tabs.keeper = {
+        cssClass: 'icon-only-tab',
+        icon: 'game-icon game-icon-tentacles-skull',
+        tooltip: 'CoC7.GmNotes'
       }
     }
 
-    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
-      sheetData.data.system.description.value,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
+    context.tabs = this.getTabs('primary', 'description', tabs)
 
-    sheetData.enrichedDescriptionNotes = await TextEditor.enrichHTML(
-      sheetData.data.system.description.notes,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
+    return context
+  }
 
-    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
-      sheetData.data.system.description.keeper,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
 
-    sheetData.isKeeper = game.user.isGM
-    return sheetData
+    switch (partId) {
+      case 'description':
+        context._properties = []
+        for (const [key, value] of context.document.system.schema.getField('type').entries()) {
+          if (context.document.system.type[key] === true) {
+            context._properties.push(value.label)
+          }
+        }
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.value,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+      case 'details':
+        context._types = []
+        for (const [key, value] of context.document.system.schema.getField('type').entries()) {
+          context._types.push({
+            id: key,
+            name: value.label,
+            tooltip: value.hint,
+            isEnabled: context.document.system.type[key] === true
+          })
+        }
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionNotes = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.notes,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+      case 'keeper':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.keeper,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+    }
+    return context
   }
 }

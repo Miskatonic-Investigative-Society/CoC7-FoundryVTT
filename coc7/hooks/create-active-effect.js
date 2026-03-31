@@ -1,35 +1,41 @@
 /* global game */
-import { COC7 } from '../constants.js'
+import { FOLDER_ID, STATUS_EFFECTS } from '../constants.js'
 import CoC7ActiveEffect from '../apps/active-effect.js'
 
-export default function (data, options, userId) {
+/**
+ * Active Effect was added
+ * @param {Document} document
+ * @param {object} options
+ * @param {string} userId
+ */
+export default function (document, options, userId) {
   if (game.userId === userId) {
-    const statusKey = CoC7ActiveEffect.getStatusKey(data)
+    const statusKey = CoC7ActiveEffect.getStatusKey(document)
     if (statusKey) {
       switch (statusKey) {
-        case COC7.status.indefInsane:
-        case COC7.status.unconscious:
-        case COC7.status.criticalWounds:
-        case COC7.status.dying:
-        case COC7.status.prone:
-        case COC7.status.dead:
-          data.parent.setCondition(statusKey, {
+        case STATUS_EFFECTS.indefInsane:
+        case STATUS_EFFECTS.unconscious:
+        case STATUS_EFFECTS.criticalWounds:
+        case STATUS_EFFECTS.dying:
+        case STATUS_EFFECTS.prone:
+        case STATUS_EFFECTS.dead:
+          document.parent.conditionsSet([statusKey], {
             forceValue: true
           })
           break
-        case COC7.status.tempoInsane:
+        case STATUS_EFFECTS.tempoInsane:
           {
-            const realTime = data.flags.CoC7?.realTime
+            const realTime = document.flags[FOLDER_ID]?.realTime
             let duration = null
             if (realTime === true) {
-              duration = data.duration?.rounds
+              duration = document.duration?.rounds
             } else if (realTime === false) {
-              duration = data.duration?.seconds
+              duration = document.duration?.seconds
               if (!isNaN(duration)) {
                 duration = Math.floor(duration / 3600)
               }
             }
-            data.parent.setCondition(COC7.status.tempoInsane, {
+            document.parent.conditionsSet([statusKey], {
               forceValue: true,
               realTime,
               duration

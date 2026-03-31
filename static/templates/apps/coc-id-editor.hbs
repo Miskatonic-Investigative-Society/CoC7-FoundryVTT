@@ -1,160 +1,171 @@
-<form class="{{cssClass}}" autocomplete="off">
-  <h2>{{localize 'CoC7.CoCIDFlag.title'}}</h2>
-  <p>{{{localize 'CoC7.CoCIDFlag.summary' type=object.type}}}</p>
+<div class="flexcol form-gapped scrollable-y">
+  <div>{{{localize 'CoC7.CoCIDFlag.summary' type=object.type}}}</div>
   <input type="hidden" name="id" value="{{id}}">
-  <div class="form-group">
+  <div class="flexrow form-group">
     <label for="_existing">{{localize 'CoC7.CoCIDFlag.key'}}:</label>
-    <div class="flexrow-coc7" style="flex: 2; border: 1px solid transparent; padding: 1px 3px 1px 0;">
+    <div class="flexrow form-value">
       {{#if existingKeys.length}}
-        <select style="margin-left: -2px;" name="known">
+        <select name="known">
           <option value="">{{localize 'CoC7.CoCIDFlag.new'}}</option>
-          {{selectOptions existingKeys selected=id localize=true valueAttr="k" nameAttr="k" labelAttr="name"}}
+          {{selectOptions existingKeys selected=id localize=false valueAttr='k' labelAttr='name'}}
         </select>
       {{else}}
-        <span style="flex: 0; margin-top: 2px;">{{idPrefix}}</span>
-        <input type="text" style="flex: 2;" name="_existing" value="{{_existing}}" data-prefix="{{idPrefix}}">
+        <span class="flexauto">{{idPrefix}}</span>
+        <input type="text" name="_existing" value="{{_existing}}" data-prefix="{{idPrefix}}">
       {{/if}}
-      {{#if options.editable}}
-        <a style="flex: 0 0 20px; align-self: center; text-align: right;" title="{{localize 'CoC7.CoCIDFlag.guess'}}" data-guess="{{guessCode}}"><i class="fas fa-wand-magic"></i></a>
+      {{#if editable}}
+        <span class="flexauto">
+          <a class="control" data-tooltip="CoC7.CoCIDFlag.guess" data-guess="{{guessCode}}"><i class="fa-solid fa-wand-magic"></i></a>
+        </span>
       {{/if}}
     </div>
   </div>
   {{#if (and existingKeys.length (not isSystemID))}}
-    <div class="form-group">
+    <div class="flexrow form-group">
       <label>&nbsp;</label>
-      <div class="flexrow-coc7" style="flex: 2; border: 1px solid transparent; padding: 1px 3px 1px 0;">
-        <span style="flex: 0; margin-top: 2px;">{{idPrefix}}</span>
-        <input type="text" style="flex: 2;" name="_existing" value="{{_existing}}" data-prefix="{{idPrefix}}">
+      <div class="flexrow form-value">
+        <span class="flexauto">{{idPrefix}}</span>
+        <input type="text" name="_existing" value="{{_existing}}" data-prefix="{{idPrefix}}">
       </div>
     </div>
   {{/if}}
-  <div class="form-group">
+  <div class="flexrow form-group">
     <label for="lang">{{localize 'CoC7.language'}}:</label>
-    <select style="flex: 2;" name="lang">
-      {{selectOptions supportedLanguages selected=lang}}
-    </select>
+    <div class="form-value">
+      <select name="lang">
+        {{selectOptions supportedLanguages selected=lang localize=false}}
+      </select>
+    </div>
   </div>
-  <div class="form-group">
+  <div class="form-group toggle-row flexrow">
     <label>{{localize 'CoC7.Eras'}}:</label>
-    <div style="flex: 2; border: 1px solid transparent; padding: 1px 3px 1px 0;">
-      {{#each eras as |era key|}}
-        <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{era.name}}</span>
+    <div class="form-value toggle-attributes flexrow" data-set="eras">
+      {{#each _eras as |row|}}
+        <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}">{{row.name}}</button>
       {{/each}}
     </div>
   </div>
-  <div class="form-group">
+  <div class="flexrow form-group">
     <label for="priority">{{localize 'CoC7.CoCIDFlag.priority'}}:</label>
-    <div style="flex: 2; border: 1px solid transparent; padding: 1px 3px 1px 0;">
-      <input type="number" style="width: 50px; margin-left: -2px" name="priority" value="{{priority}}">
+    <div class="form-value">
+      <input class="short-number" type="number" name="priority" value="{{priority}}">
     </div>
   </div>
-
-  <fieldset class="item-sheet-properties">
-    <legend>Info</legend>
+  <fieldset class="flexcol form-gapped">
+    <legend>{{localize 'CoC7.CoCIDFlag.info'}}</legend>
     <label>{{localize 'CoC7.CoCIDFlag.others'}}:</label>
-    <div class="form-group">
-      <div>
-        <details>
-          <summary>{{localize 'CoC7.CoCIDFlag.documents-in-world' count=worldDuplicates}}{{#if warnDuplicateWorldPriority}} <span class="warning"><i class="fas fa-exclamation-triangle"></i>{{localize 'CoC7.CoCIDFlag.error.duplicate'}}</span>{{/if}}</summary>
-          <table>
-            <tr>
-              {{#each usedEras as |era|}}
-                <td class="eracolumn"><a title="{{era.name}}"><i class="fas fa-info-circle"></i></a></td>
-              {{/each}}
-              <td class="shorttext"><b>{{localize 'CoC7.CoCIDFlag.priority'}}</b></td>
-              <td class="shorttext"><b>{{localize 'CoC7.language'}}</b></td>
-              <td><b>{{localize 'DOCUMENT.Document'}}</b></td>
-              <td><b>{{localize 'DOCUMENT.Folder'}}</b></td>
-            </tr>
-            {{#each worldDocumentInfo}}
-              <tr>
-                {{#each ../usedEras as |era|}}
-                  <td class="eracolumn"><a title="{{era.name}}">
-                      {{#if (lookup ../eras era.id)}}
-                        <i class="fas fa-circle"></i>
-                      {{else}}
-                        <i class="far fa-circle"></i>
-                      {{/if}}
-                    </a></td>
-                {{/each}}
-                <td class="shorttext">{{priority}}</td>
-                <td class="shorttext">{{lang}}</td>
-                <td>{{{link}}}</td>
-                <td>{{{folder}}}</td>
-              </tr>
+    <div class="flexcol">
+      <details>
+        <summary>{{localize 'CoC7.CoCIDFlag.documents-in-world' count=worldDuplicates}}{{#if warnDuplicateWorldPriority}} <span class="warning"><i class="fa-solid fa-exclamation-triangle"></i>{{localize 'CoC7.CoCIDFlag.error.duplicate'}}</span>{{/if}}</summary>
+        <table>
+          <tr>
+            {{#each usedEras as |era|}}
+              <td class="era-column"><a data-tooltip="{{era.name}}"><i class="{{era.icon}}"></i></a></td>
             {{/each}}
-          </table>
-        </details>
-        <details>
-          <summary>{{localize 'CoC7.CoCIDFlag.documents-in-compendiums' count=compendiumDuplicates}}{{#if warnDuplicateCompendiumPriority}} <span class="warning"><i class="fas fa-exclamation-triangle"></i>{{localize 'CoC7.CoCIDFlag.error.duplicate'}}</span>{{/if}}</summary>
-          <table>
+            <td class="short-text"><b>{{localize 'CoC7.CoCIDFlag.priority'}}</b></td>
+            <td class="short-text"><b>{{localize 'CoC7.language'}}</b></td>
+            <td><b>{{localize 'DOCUMENT.Document'}}</b></td>
+            <td><b>{{localize 'DOCUMENT.Folder'}}</b></td>
+          </tr>
+          {{#each worldDocumentInfo}}
             <tr>
-              {{#each usedEras as |era|}}
-                <td class="eracolumn"><a title="{{era.name}}"><i class="fas fa-info-circle"></i></a></td>
+              {{#each ../usedEras as |era|}}
+                <td class="era-column"><a data-tooltip="{{era.name}}">
+                    {{#if (lookup ../eras era.id)}}
+                      <i class="fa-solid fa-circle"></i>
+                    {{else}}
+                      <i class="fa-regular fa-circle"></i>
+                    {{/if}}
+                  </a></td>
               {{/each}}
-              <td class="shorttext"><b>{{localize 'CoC7.CoCIDFlag.priority'}}</b></td>
-              <td class="shorttext"><b>{{localize 'CoC7.language'}}</b></td>
-              <td><b>{{localize 'DOCUMENT.Document'}}</b></td>
-              <td><b>{{localize 'COMPENDIUM.Name'}}</b></td>
+              <td class="short-text">{{priority}}</td>
+              <td class="short-text">{{lang}}</td>
+              <td>{{{link}}}</td>
+              <td>{{{folder}}}</td>
             </tr>
-            {{#each compendiumDocumentInfo}}
-              <tr>
-                {{#each ../usedEras as |era|}}
-                  <td class="eracolumn"><a title="{{era.name}}">
-                      {{#if (lookup ../eras era.id)}}
-                        <i class="fas fa-circle"></i>
-                      {{else}}
-                        <i class="far fa-circle"></i>
-                      {{/if}}
-                    </a></td>
-                {{/each}}
-                <td class="shorttext">{{priority}}</td>
-                <td class="shorttext">{{lang}}</td>
-                <td>{{{link}}}</td>
-                <td>{{{folder}}}</td>
-              </tr>
+          {{/each}}
+        </table>
+      </details>
+      <details>
+        <summary>{{localize 'CoC7.CoCIDFlag.documents-in-compendiums' count=compendiumDuplicates}}{{#if warnDuplicateCompendiumPriority}} <span class="warning"><i class="fa-solid fa-exclamation-triangle"></i>{{localize 'CoC7.CoCIDFlag.error.duplicate'}}</span>{{/if}}</summary>
+        <table>
+          <tr>
+            {{#each usedEras as |era|}}
+              <td class="era-column"><a data-tooltip="{{era.name}}"><i class="{{era.icon}}"></i></a></td>
             {{/each}}
-          </table>
-        </details>
-      </div>
+            <td class="short-text"><b>{{localize 'CoC7.CoCIDFlag.priority'}}</b></td>
+            <td class="short-text"><b>{{localize 'CoC7.language'}}</b></td>
+            <td><b>{{localize 'DOCUMENT.Document'}}</b></td>
+            <td><b>{{localize 'COMPENDIUM.Name'}}</b></td>
+          </tr>
+          {{#each compendiumDocumentInfo}}
+            <tr>
+              {{#each ../usedEras as |era|}}
+                <td class="era-column"><a data-tooltip="{{era.name}}">
+                    {{#if (lookup ../eras era.id)}}
+                      <i class="fa-solid fa-circle"></i>
+                    {{else}}
+                      <i class="fa-regular fa-circle"></i>
+                    {{/if}}
+                  </a></td>
+              {{/each}}
+              <td class="short-text">{{priority}}</td>
+              <td class="short-text">{{lang}}</td>
+              <td>{{{link}}}</td>
+              <td>{{{folder}}}</td>
+            </tr>
+          {{/each}}
+        </table>
+      </details>
     </div>
-    <div class="form-group">
+    <div class="flexrow form-group">
       <label>{{localize 'CoC7.CoCIDFlag.foundry-id'}}:</label>
-      <div class="flexrow-coc7">
-        <input type="text" value="{{object.id}}" readonly>
-        <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
-          <i class="fas fa-copy"></i>
-        </a>
+      <div class="flexrow form-value">
+        <input type="text" value="{{document.id}}" readonly>
+        <span class="flexauto">
+          <a data-tooltip="CoC7.CopyToClipboard" class="control copy-to-clipboard"><i class="fa-solid fa-copy"></i></a>
+        </span>
       </div>
     </div>
-    <div class="form-group">
+    <div class="flexrow form-group">
       <label>{{localize 'CoC7.CoCIDFlag.foundry-uuid'}}:</label>
-      <div class="flexrow-coc7">
-        <input type="text" value="{{object.uuid}}" readonly>
-        <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
-          <i class="fas fa-copy"></i>
-        </a>
+      <div class="flexrow form-value">
+        <input type="text" value="{{document.uuid}}" readonly>
+        <span class="flexauto">
+          <a data-tooltip="CoC7.CopyToClipboard" class="control copy-to-clipboard"><i class="fa-solid fa-copy"></i></a>
+        </span>
       </div>
     </div>
-    <div class="form-group">
+    {{#if id}}
+      <div class="flexrow form-group">
+        <label>{{localize 'CoC7.CoCIDFlag.key'}}:</label>
+        <div class="flexrow form-value">
+          <input type="text" value="{{id}}" readonly>
+          <span class="flexauto">
+            <a data-tooltip="CoC7.CopyToClipboard" class="control copy-to-clipboard"><i class="fa-solid fa-copy"></i></a>
+          </span>
+        </div>
+      </div>
+    {{/if}}
+    <div class="flexrow form-group">
       <label>{{localize 'CoC7.CoCIDFlag.get-this-document'}}:</label>
-      <div class="flexrow-coc7">
-        <input type="text" value="await fromUuid('{{object.uuid}}')" readonly>
-        <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
-          <i class="fas fa-copy"></i>
-        </a>
+      <div class="flexrow form-value">
+        <input type="text" value="await fromUuid('{{document.uuid}}')" readonly>
+        <span class="flexauto">
+          <a data-tooltip="CoC7.CopyToClipboard" class="control copy-to-clipboard"><i class="fa-solid fa-copy"></i></a>
+        </span>
       </div>
     </div>
-    {{#if (or id)}}
-      <div class="form-group">
+    {{#if id}}
+      <div class="flexrow form-group">
         <label>{{localize 'CoC7.CoCIDFlag.get-document-like-this'}}:</label>
-        <div class="flexrow-coc7">
-          <input type="text" value="await game.system.api.cocid.fromCoCID('{{id}}', '{{lang}}')" readonly>
-          <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
-            <i class="fas fa-copy"></i>
-          </a>
+        <div class="flexrow form-value">
+          <input type="text" value="await game.CoC7.cocid.fromCoCID('{{id}}', '{{lang}}')" readonly>
+          <span class="flexauto">
+            <a data-tooltip="CoC7.CopyToClipboard" class="control copy-to-clipboard"><i class="fa-solid fa-copy"></i></a>
+          </span>
         </div>
       </div>
     {{/if}}
   </fieldset>
-</form>
+</div>

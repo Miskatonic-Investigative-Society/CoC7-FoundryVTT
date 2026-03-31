@@ -1,4 +1,4 @@
-/* global canvas, CONFIG, CONST, DocumentSheetConfig, foundry, fromUuid, game, NotesLayer, RegionBehavior, TokenLayer */
+/* global canvas CONFIG CONST DocumentSheetConfig foundry fromUuid game NotesLayer RegionBehavior TokenLayer */
 import ChaosiumCanvasInterfaceAmbientLightToggle from './chaosium-canvas-interface-ambient-light-toggle.js'
 import ChaosiumCanvasInterfaceDrawingToggle from './chaosium-canvas-interface-drawing-toggle.js'
 import ChaosiumCanvasInterfaceMapPinToggle from './chaosium-canvas-interface-map-pin-toggle.js'
@@ -9,22 +9,37 @@ import ChaosiumCanvasInterfaceTileToggle from './chaosium-canvas-interface-tile-
 import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
 
 export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.RegionBehaviorType {
+  /**
+   * Set up Clickable Events and Chaosium Canvas Interface
+   */
   static initSelf () {
     /* // FoundryVTT V12 */
     if (game.release.generation === 12) {
       class NoteDocumentPolyfill extends CONFIG.Note.documentClass {
+        /**
+         * Name field for FoundryVTT v12 Note
+         * @returns {string}
+         */
         get name () {
           return (this.text?.length ? this.text : this.label)
         }
       }
       CONFIG.Note.documentClass = NoteDocumentPolyfill
       class TileDocumentPolyfill extends CONFIG.Tile.documentClass {
+        /**
+         * Name field for FoundryVTT v12 Tile
+         * @returns {string}
+         */
         get name () {
           return this.collectionName + ': ' + this.id
         }
       }
       CONFIG.Tile.documentClass = TileDocumentPolyfill
       class DrawingDocumentPolyfill extends CONFIG.Drawing.documentClass {
+        /**
+         * Name field for FoundryVTT v12 Drawing
+         * @returns {string}
+         */
         get name () {
           return this.collectionName + ': ' + this.id
         }
@@ -62,7 +77,8 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
 
     Object.assign(CONFIG.RegionBehavior.typeIcons, typeIcons)
 
-    DocumentSheetConfig.registerSheet(
+    /* // FoundryVTT V12 */
+    ;(foundry.applications.apps?.DocumentSheetConfig ?? DocumentSheetConfig).registerSheet(
       RegionBehavior,
       'CoC7',
       foundry.applications.sheets.RegionBehaviorConfig,
@@ -136,6 +152,10 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
     })
   }
 
+  /**
+   * Create Schema
+   * @returns {DataSchema}
+   */
   static defineSchema () {
     return {
       mouseOver: new foundry.data.fields.JavaScriptField({
@@ -188,6 +208,10 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
     }
   }
 
+  /**
+   * Trigger Clickable Event or Chaosium Canvas Interface behavior left click function
+   * @param {string} docUuid
+   */
   static async ClickRegionLeftUuid (docUuid) {
     const doc = await fromUuid(docUuid)
     if (doc) {
@@ -197,6 +221,10 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
     }
   }
 
+  /**
+   * Trigger Clickable Event or Chaosium Canvas Interface behavior right click function
+   * @param {string} docUuid
+   */
   static async ClickRegionRightUuid (docUuid) {
     const doc = await fromUuid(docUuid)
     if (doc) {
@@ -206,11 +234,21 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
     }
   }
 
+  /**
+   * Does the current user have at least observer permission on the document
+   * @param {string} documentUuid
+   * @returns {boolean}
+   */
   static async hasPermissionDocument (documentUuid) {
     const doc = await fromUuid(documentUuid)
     return doc?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER) ?? false
   }
 
+  /**
+   * Call from Clickable Event Behavior Macro
+   * @param {Event} event
+   * @param {string} destinationRegion
+   */
   static async InSceneRelativeTeleport (event, destinationRegion) {
     if (event.name === 'tokenMoveIn') {
       // region MUST be the same shape with no transformation
@@ -266,6 +304,15 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
     }
   }
 
+  /**
+   * Map Pin Toggle along with Journal Entry Pages
+   * @param {boolean} toggle
+   * @param {object} options
+   * @param {Array} options.journalPageUuids
+   * @param {Array} options.noteUuids
+   * @param {int} options.permissionFalse
+   * @param {int} options.permissionTrue
+   */
   static async MapPinToggle (toggle, { journalPageUuids = [], noteUuids = [], permissionFalse = CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE, permissionTrue = CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER } = {}) {
     game.socket.emit('system.CoC7', { type: 'toggleMapNotes', toggle: true })
     game.settings.set('core', NotesLayer.TOGGLE_SETTING, true)
@@ -296,19 +343,36 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
     }
   }
 
+  /**
+   * Option document with optional page and anchor
+   * @param {string} documentUuid
+   * @param {string|null} pageId
+   * @param {string|null} anchor
+   */
   static async openDocument (documentUuid, pageId = null, anchor = null) {
     const doc = await fromUuid(documentUuid)
     if (doc?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)) {
       if (pageId) {
         if (doc.pages.get(pageId)?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)) {
+          /* // FoundryVTT V12 */
           doc.sheet.render(true, { pageId, anchor })
         }
       } else {
+        /* // FoundryVTT V12 */
         doc.sheet.render(true)
       }
     }
   }
 
+  /**
+   * Toggle Tile visibility, Journal Entry permission, and Journal Entry Page permissions
+   * @param {boolean} active
+   * @param {Array} tileUuids
+   * @param {Array} journalUuids
+   * @param {Array} pageUuids
+   * @param {object} options
+   * @param {int} options.pagePermission
+   */
   static async toggleTileJournalPages (active, tileUuids, journalUuids, pageUuids, { pagePermission = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER } = {}) {
     for (const docUuid of tileUuids) {
       const doc = await fromUuid(docUuid)
@@ -340,6 +404,10 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
     }
   }
 
+  /**
+   * View scene
+   * @param {string} sceneUuid
+   */
   static async toScene (sceneUuid) {
     const doc = await fromUuid(sceneUuid)
     if (doc) {

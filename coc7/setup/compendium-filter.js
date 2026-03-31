@@ -1,5 +1,5 @@
 /* global Compendium CONFIG foundry game Hooks SearchFilter */
-import { COC7 } from '../constants.js'
+import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7Utilities from '../apps/utilities.js'
 
 /* // FoundryVTT v12 */
@@ -27,7 +27,7 @@ function matchSearchEntriesItem (app, isNameSearch, query, type, era, entryIds, 
     } else {
       const matchName = (!isNameSearch || query.test(SearchFilter.cleanQuery(app._getEntryName(entry))))
       const matchType = (type === '' || type === entry.type)
-      const eras = Object.keys(entry.flags?.CoC7?.cocidFlag?.eras ?? {})
+      const eras = Object.keys(entry.flags?.[FOLDER_ID]?.cocidFlag?.eras ?? {})
       const matchEras = (era === '' || eras.length === 0 || eras.includes(era))
       if (matchName && matchType && matchEras) {
         // Otherwise, if we are searching by name, match the entry name
@@ -159,7 +159,7 @@ function _onSearchFilter (event, query, rgx, html) {
         const entries = this.collection.index ?? this.collection.contents
         entryIds.forEach((entryId) => {
           const entry = entries.get(entryId)
-          if ((type !== '' && entry.type !== type) || (era !== '' && !(entry.flags?.CoC7?.cocidFlag?.eras?.[era] ?? false))) {
+          if ((type !== '' && entry.type !== type) || (era !== '' && !(entry.flags?.[FOLDER_ID]?.cocidFlag?.eras?.[era] ?? false))) {
             entryIds.delete(entryId)
           }
         })
@@ -218,7 +218,7 @@ export default function () {
         }
       }
       selectEras.push('<option value="">' + game.i18n.localize('CoC7.All') + '</option>')
-      for (const era of Object.entries(COC7.eras).map(e => { return { id: e[0], name: game.i18n.localize(e[1]) } }).sort(CoC7Utilities.sortByNameKey)) {
+      for (const era of Object.entries(ERAS).map(e => { return { id: e[0], name: game.i18n.localize(e[1].name) } }).sort(CoC7Utilities.sortByNameKey)) {
         selectEras.push('<option value="' + era.id + '"' + (selectedEra === era.id ? ' selected="selected"' : '') + '>' + era.name + '</option>')
       }
       let uncommon = game.i18n.localize('CoC7.SkillRarityShort')
@@ -248,7 +248,7 @@ export default function () {
         const header = html.querySelector('header.directory-header search')
         {
           const search = document.createElement('search')
-          search.classList.add(['compendium-search-filter', 'hidden'])
+          search.classList.add('compendium-search-filter', 'hidden')
           search.innerHTML = '<i class="fa-regular fa-calendar"></i><select name="coc7era">' + selectEras.join('') + '</select>'
           header.after(search)
         }
@@ -271,7 +271,7 @@ export default function () {
       } else {
         const header = html[0].querySelector('header.directory-header')
         const search = document.createElement('search')
-        search.classList.add('compendiumfilter')
+        search.classList.add('compendium-search-filter')
         search.innerHTML = '<div class="header-search flexrow"><i class="fa-solid fa-layer-group"></i><select name="coc7type">' + selectTypes.join('') + '</select></div>' +
           '<div class="header-search flexrow hidden"><i class="fa-regular fa-calendar"></i><select name="coc7era">' + selectEras.join('') + '</select></div>'
         header.after(search)

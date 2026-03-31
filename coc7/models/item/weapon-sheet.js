@@ -1,141 +1,154 @@
-/* global foundry, game, TextEditor */
-import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import { COC7 } from '../../constants.js'
-import { isCtrlKey } from '../../chat/helper.js'
+/* global foundry game TextEditor */
+import { FOLDER_ID, ERAS } from '../../constants.js'
+import CoC7ModelsItemGlobalSheet from './global-sheet.js'
 import CoC7Utilities from '../../apps/utilities.js'
 
-/**
- * Extend the basic ItemSheet with some very simple modifications
- */
-export default class CoC7WeaponSheet extends foundry.appv1.sheets.ItemSheet {
+export default class CoC7ModelsItemWeaponSheet extends CoC7ModelsItemGlobalSheet {
+  static DEFAULT_OPTIONS = {
+    position: {
+      width: 600,
+      height: 500
+    }
+  }
+
+  static PARTS = {
+    header: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/weapon-header.hbs'
+    },
+    tabs: {
+      template: 'templates/generic/tab-navigation.hbs'
+    },
+    details: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/weapon-tab-details.hbs',
+      scrollable: ['']
+    },
+    description: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-description.hbs',
+      scrollable: ['']
+    },
+    prices: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-prices.hbs',
+      scrollable: ['']
+    },
+    keeper: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-keeper.hbs',
+      scrollable: ['']
+    }
+  }
+
   /**
-   *
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
    */
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheet', 'item'],
-      width: 545,
-      height: 480,
-      tabs: [
-        {
-          navSelector: '.sheet-tabs',
-          contentSelector: '.sheet-body',
-          initial: 'skills'
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
+
+    const tabs = {
+      details: {
+        icon: '',
+        label: 'CoC7.ItemDetails'
+      },
+      description: {
+        icon: '',
+        label: 'CoC7.Description'
+      },
+      prices: {
+        cssClass: 'icon-only-tab',
+        icon: 'fa-solid fa-tag',
+        tooltip: 'CoC7.ItemPrice'
+      }
+    }
+    if (game.user.isGM) {
+      tabs.keeper = {
+        cssClass: 'icon-only-tab',
+        icon: 'game-icon game-icon-tentacles-skull',
+        tooltip: 'CoC7.GmNotes'
+      }
+    }
+
+    context.tabs = this.getTabs('primary', 'details', tabs)
+
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+
+    switch (partId) {
+      case 'header':
+        context._properties = [{
+          id: 'melee',
+          name: 'CoC7.Weapon.Property.Melee',
+          tooltip: '',
+          isEnabled: context.document.system.properties.rngd !== true
+        }]
+        for (const [key, value] of context.document.system.schema.getField('properties').entries()) {
+          context._properties.push({
+            id: key,
+            name: value.label,
+            tooltip: value.hint,
+            isEnabled: context.document.system.properties[key] === true
+          })
         }
-      ]
-    })
-  }
-
-  /**
-   *
-   */
-  get template () {
-    const path = 'systems/CoC7/templates/items'
-    return `${path}/weapon-header.hbs`
-  }
-
-  _getHeaderButtons () {
-    const headerButtons = super._getHeaderButtons()
-    addCoCIDSheetHeaderButton(headerButtons, this)
-    return headerButtons
-  }
-
-  /**
-   * Prepare data for rendering the Item sheet
-   * The prepared data object contains both the actor data as well as additional sheet options
-   */
-  async getData () {
-    const sheetData = super.getData()
-
-    sheetData.hasOwner = this.item.isEmbedded === true
-    if (sheetData.hasOwner) {
-      sheetData.weaponSkillGroups = this.actor.weaponSkillGroups(this.item.system.properties.rngd)
+        context.usesAlternateSkill = context.document.system.usesAlternateSkill
+        if (context.document.isEmbedded) {
+          context.weaponSkillGroups = context.document.parent.weaponSkillGroups(context.document.system.properties.rngd)
+        }
+        break
+      case 'details':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionSpecial = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.special,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+      case 'description':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.value,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+      case 'prices':
+        context._eras = []
+        for (const [key, era] of Object.entries(ERAS)) {
+          const isEnabled = (context.document.flags[FOLDER_ID]?.cocidFlag?.eras ?? {})[key] === true
+          context._eras.push({
+            price: (isEnabled ? context.document.system.price[key] : null),
+            id: key,
+            name: game.i18n.localize(era.name),
+            icon: era.icon,
+            isEnabled
+          })
+        }
+        context._eras.sort(CoC7Utilities.sortByNameKey)
+        context.useEraIcons = game.settings.get(FOLDER_ID, 'sheetEraIcons')
+        break
+      case 'keeper':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.keeper,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
     }
-
-    sheetData._properties = []
-    for (const [key, value] of Object.entries(COC7.weaponProperties)) {
-      sheetData._properties.push({
-        id: key,
-        name: value,
-        isEnabled: this.item.system.properties[key] === true
-      })
-    }
-
-    sheetData._eras = []
-    for (const [key, value] of Object.entries(COC7.eras)) {
-      sheetData._eras.push({
-        price: this.item.system.price[key] ?? 0,
-        id: key,
-        name: game.i18n.localize(value),
-        isEnabled: (this.item.flags?.CoC7?.cocidFlag?.eras ?? {})[key] === true
-      })
-    }
-    sheetData._eras.sort(CoC7Utilities.sortByNameKey)
-
-    sheetData.usesAlternateSkill =
-      this.item.system.properties.auto === true ||
-      this.item.system.properties.brst === true ||
-      this.item.system.properties.thrown === true
-
-    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
-      sheetData.data.system.description.value,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.enrichedDescriptionSpecial = await TextEditor.enrichHTML(
-      sheetData.data.system.description.special,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
-      sheetData.data.system.description.keeper,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.isKeeper = game.user.isGM
-    return sheetData
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Activate event listeners using the prepared sheet HTML
-   * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
-   */
-  activateListeners (html) {
-    super.activateListeners(html)
-
-    // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return
-    html.find('.toggle-switch').click(this._onClickToggle.bind(this))
-    html.find('.weapon-property').click(this._onPropertyClick.bind(this))
-  }
-
-  /**
-   *
-   * @param {*} event
-   */
-  async _onClickToggle (event) {
-    event.preventDefault()
-    const propertyId = event.currentTarget.closest('.toggle-switch').dataset.property
-    await this.item.toggleProperty(
-      propertyId,
-      isCtrlKey(event)
-    )
-  }
-
-  async _onPropertyClick (event) {
-    event.preventDefault()
-    const propertyId = event.currentTarget.closest('.weapon-property').dataset.property
-    await this.item.toggleProperty(propertyId)
+    return context
   }
 }

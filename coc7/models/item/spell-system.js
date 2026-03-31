@@ -1,26 +1,92 @@
-/* global ChatMessage, foundry, game, renderTemplate, ui */
-import CoC7Item from './document-class.js'
-import CoC7SanCheckCard from '../../apps/san-check-card.js'
+/* global ChatMessage CONST foundry game Item renderTemplate ui */
+import { FOLDER_ID } from '../../constants.js'
+import CoC7ModelsItemGlobalSystem from './global-system.js'
 
-export default class CoC7Spell extends CoC7Item {
-  constructor (data, context) {
-    if (typeof data.img === 'undefined') {
-      data.img = 'systems/CoC7/assets/icons/pentagram-rose.svg'
-    }
-    super(data, context)
-    this.context = context
+export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSystem {
+  /**
+   * Default img
+   * @returns {string}
+   */
+  static get defaultImg () {
+    return 'systems/' + FOLDER_ID + '/assets/icons/pentagram-rose.svg'
   }
 
-  async cast (priv) {
-    if (!this.isOwned) {
-      /** This is not owned by any Actor */
-      return ui.notifications.error(game.i18n.localize('CoC7.NotOwned'))
+  /**
+   * Create Schema
+   * @returns {DataSchema}
+   */
+  static defineSchema () {
+    const fields = foundry.data.fields
+    return {
+      /* // FoundryVTT V13 - not required
+      alternativeNames: [],
+      effects: [],
+      learned: false,
+      */
+      castingTime: new fields.StringField({ initial: '' }),
+      costs: new fields.SchemaField({
+        hitPoints: new fields.StringField({ initial: '0' }),
+        magicPoints: new fields.StringField({ initial: '0' }),
+        others: new fields.StringField({ initial: '' }),
+        sanity: new fields.StringField({ initial: '0' }),
+        power: new fields.StringField({ initial: '0' })
+      }),
+      description: new fields.SchemaField({
+        /* // FoundryVTT V13 - not required
+        chat: '',
+        */
+        value: new fields.HTMLField({ initial: '' }),
+        keeper: new fields.HTMLField({ initial: '' }),
+        alternativeNames: new fields.HTMLField({ initial: '' })
+      }),
+      source: new fields.StringField({ initial: '' }),
+      type: new fields.SchemaField({
+        bind: new fields.BooleanField({ label: 'CoC7.BindSpell', initial: false }),
+        call: new fields.BooleanField({ label: 'CoC7.CallSpell', initial: false }),
+        combat: new fields.BooleanField({ label: 'CoC7.CombatSpell', initial: false }),
+        contact: new fields.BooleanField({ label: 'CoC7.ContactSpell', initial: false }),
+        dismiss: new fields.BooleanField({ label: 'CoC7.DismissSpell', initial: false }),
+        enchantment: new fields.BooleanField({ label: 'CoC7.EnchantmentSpell', initial: false }),
+        gate: new fields.BooleanField({ label: 'CoC7.GateSpell', initial: false }),
+        summon: new fields.BooleanField({ label: 'CoC7.SummonSpell', initial: false })
+      })
     }
-    const costs = foundry.utils.duplicate(this.system.costs)
+  }
+
+  /**
+   * Create empty object for this item type
+   * @param {object} options
+   * @returns {object}
+   */
+  static emptyObject (options) {
+    const object = foundry.utils.mergeObject({
+      name: game.i18n.localize('CoC7.NewSpellName'),
+      type: 'spell',
+      system: new CoC7ModelsItemSpellSystem().toObject()
+    }, options)
+    return object
+  }
+
+  /**
+   * Cast a spell
+   * @param {boolean} privateRoll
+   */
+  async cast (privateRoll) {
+    let actor
+    if (this.parent.parent instanceof Item) {
+      actor = this.parent.parent.actor
+    } else if (this.parent.actor?.isOwner) {
+      actor = this.parent.actor
+    } else {
+      /** This is not owned by any Actor */
+      ui.notifications.error('CoC7.NotOwned', { localize: true })
+      return
+    }
+    const costs = foundry.utils.duplicate(this.costs)
     const losses = []
     // TODO: Temporary disable while automation is improved
     // let convertSurplusIntoHitPoints
-    // costs.magicPoints = CoC7Utilities.isFormula(costs.magicPoints)
+    // costs.magicPoints = !new Roll(costs.magicPoints.toString()).isDeterministic
     //   ? (await new Roll(costs.magicPoints).roll({ async: true })).total
     //   : parseInt(costs.magicPoints)
     // if (
@@ -66,7 +132,6 @@ export default class CoC7Spell extends CoC7Item {
     //   if (!convertSurplusIntoHitPoints) return
     // }
     for (const [key, loss] of Object.entries(costs)) {
-      console.log('costs', key, loss)
       if (!loss || Number(loss) === 0) continue
       let characteristicName = game.i18n.localize('CoC7.OtherCosts')
       switch (key) {
@@ -84,26 +149,56 @@ export default class CoC7Spell extends CoC7Item {
       }
       losses.push({ characteristicName, loss })
     }
-    const template = 'systems/CoC7/templates/chat/spell.hbs'
-    const description = this.system.description.value
-    const html = await renderTemplate(template, { description, losses })
+    const template = 'systems/' + FOLDER_ID + '/templates/chat/spell.hbs'
+    const description = this.description.value
+    /* // FoundryVTT V12 */
+    const html = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(template, { description, losses })
     let chatData = {
       user: game.user.id,
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: this.name,
+      speaker: ChatMessage.getSpeaker({ actor }),
+      flavor: this.parent.name,
       content: html
     }
-    if (priv) {
-      chatData = ChatMessage.applyRollMode(chatData, 'gmroll')
+    if (privateRoll) {
+      chatData = ChatMessage.applyRollMode(chatData, CONST.DICE_ROLL_MODES.PRIVATE)
     }
-    return await ChatMessage.create(chatData)
+    await ChatMessage.create(chatData)
   }
 
-  // TODO: Temporary disable while automation is improved
+  /**
+   * Migrate old style data to new
+   * @param {object} source
+   * @returns {object}
+   */
+  static migrateData (source) {
+    // Moved cost.hp to costs.hitPoints
+    if (typeof source.cost?.hp !== 'undefined' && typeof source.costs?.hitPoints === 'undefined') {
+      foundry.utils.setProperty(source, 'costs.hitPoints', source.cost.hp)
+    }
+    // Moved cost.mp to costs.magicPoints
+    if (typeof source.cost?.mp !== 'undefined' && typeof source.costs?.magicPoints === 'undefined') {
+      foundry.utils.setProperty(source, 'costs.magicPoints', source.cost.mp)
+    }
+    // Moved cost.san to costs.sanity
+    if (typeof source.cost?.san !== 'undefined' && typeof source.costs?.sanity === 'undefined') {
+      foundry.utils.setProperty(source, 'costs.sanity', source.cost.san)
+    }
+    // Moved cost.pow to costs.power
+    if (typeof source.cost?.pow !== 'undefined' && typeof source.costs?.power === 'undefined') {
+      foundry.utils.setProperty(source, 'costs.power', source.cost.pow)
+    }
+    // Migrate description to object
+    if (typeof source.description === 'string') {
+      foundry.utils.setProperty(source, 'description.value', source.description)
+    }
+    return super.migrateData(source)
+  }
+
+  // TODO: XXXX Temporary disable while automation is improved
   // async resolveLosses (characteristic, value, priv) {
   //   let characteristicName
   //   let loss
-  //   if (CoC7Utilities.isFormula(value)) {
+  //   if (!new Roll(value.toString()).isDeterministic) {
   //     loss = (await new Roll(value).roll({ async: true })).total
   //   } else {
   //     loss = parseInt(value)
@@ -132,82 +227,43 @@ export default class CoC7Spell extends CoC7Item {
   //   return { characteristicName, loss }
   // }
 
-  /** Bypass the Sanity check and just roll the damage */
-  async grantSanityLoss (value, priv) {
-    const template = CoC7SanCheckCard.template
-    let html = await renderTemplate(template, {})
-    let chatData = {
-      user: game.user.id,
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: game.i18n.format('CoC7.CastingSpell', {
-        spell: this.name
-      }),
-      content: html
-    }
-    if (priv) {
-      chatData = ChatMessage.applyRollMode(chatData, 'gmroll')
-    }
-    const message = await ChatMessage.create(chatData)
-    const card = await message.getHTML()
-    if (typeof card.length !== 'undefined' && card.length === 1) {
-      const sanityLoss = value
-      html = card.find('.chat-card')[0]
-      html.dataset.object = escape(
-        JSON.stringify({
-          actorKey: this.actor.id,
-          fastForward: false,
-          sanData: {
-            sanMin: sanityLoss,
-            sanMax: sanityLoss
-          }
-        })
-      )
-      const sanityCheck = CoC7SanCheckCard.getFromCard(html)
-      await sanityCheck.bypassRollSan()
-      await sanityCheck.rollSanLoss()
-      await sanityCheck.updateChatCard()
-      return sanityCheck.sanLoss
-    }
-  }
-
-  async update (data, context) {
-    if (
-      typeof this.context.parent !== 'undefined' &&
-      typeof this.context.bookId !== 'undefined'
-    ) {
-      let item
-      let book
-      // let spellData
-      if (this.context.parent === null) {
-        item = game.items.get(this.context.bookId)
-        book = item.toObject()
-      } else {
-        book = this.context.parent.items.get(this.context.bookId).toObject()
-      }
-      for (let i = 0, im = book.system.spells.length; i < im; i++) {
-        if (book.system.spells[i]._id === this.id) {
-          book.system.spells[i] = foundry.utils.mergeObject(book.system.spells[i], data)
-          // spellData = book.system.spells[i]
-        }
-      }
-      if (this.context.parent === null) {
-        await item.update({
-          'system.spells': book.system.spells
-        })
-        this.sheet.object = new CoC7Spell(
-          book.system.spells.find(spell => spell._id === this.id),
-          this.context
-        )
-      } else {
-        await this.context.parent.updateEmbeddedDocuments('Item', [book])
-        this.sheet.object = new CoC7Spell(
-          book.system.spells.find(spell => spell._id === this.id),
-          this.context
-        )
-      }
-      this.sheet.render(true)
-    } else {
-      await super.update(data, context)
-    }
-  }
+  // TODO: XXXX Temporary disable while automation is improved
+  // /** Bypass the Sanity check and just roll the damage */
+  // async grantSanityLoss (value, priv) {
+  // import CoC7SanCheckCard from '../../chat/cards/san-check.js'
+  //   const template = CoC7SanCheckCard.template
+  //   let html = await renderTemplate(template, {})
+  //   let chatData = {
+  //     user: game.user.id,
+  //     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+  //     flavor: game.i18n.format('CoC7.CastingSpell', {
+  //       spell: this.name
+  //     }),
+  //     content: html
+  //   }
+  //   if (priv) {
+  //     chatData = ChatMessage.applyRollMode(chatData, CONST.DICE_ROLL_MODES.PRIVATE)
+  //   }
+  //   const message = await ChatMessage.create(chatData)
+  //   const card = await message.getHTML()
+  //   if (typeof card.length !== 'undefined' && card.length === 1) {
+  //     const sanityLoss = value
+  //     html = card.find('.chat-card')[0]
+  //     html.dataset.object = escape(
+  //       JSON.stringify({
+  //         actorKey: this.actor.id,
+  //         fastForward: false,
+  //         sanData: {
+  //           sanMin: sanityLoss,
+  //           sanMax: sanityLoss
+  //         }
+  //       })
+  //     )
+  //     const sanityCheck = CoC7SanCheckCard.getFromCard(html)
+  //     await sanityCheck.bypassRollSan()
+  //     await sanityCheck.rollSanLoss()
+  //     await sanityCheck.updateChatCard()
+  //     return sanityCheck.sanLoss
+  //   }
+  // }
 }

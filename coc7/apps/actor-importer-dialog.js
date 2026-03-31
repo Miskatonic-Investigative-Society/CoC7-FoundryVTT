@@ -1,259 +1,268 @@
-/* global $, CONFIG, FileReader, FormApplication, foundry, game, Hooks, ui */
+/* global CONFIG FileReader foundry game Hooks ui */
+// cSpell:words iwms wmis
+import { FOLDER_ID } from '../constants.js'
 import CoC7ActorImporter from './actor-importer.js'
-import CoC7DholeHouseActorImporter from './dholehouse-importer.js'
 import CoC7ActorImporterRegExp from './actor-importer-regexp.js'
-import CoC7Utilities from './utilities.js'
+import CoC7DholeHouseActorImporter from './dholehouse-importer.js'
 
-export default class CoC7ActorImporterDialog extends FormApplication {
-  /** @override */
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'dialog', 'actor-importer'],
-      title: game.i18n.localize('CoC7.ActorImporter'),
-      template: 'systems/CoC7/templates/apps/actor-importer.hbs',
+export default class CoC7ActorImporterDialog extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2) {
+  /**
+   * @inheritdoc
+   */
+  constructor (...args) {
+    const coc7Config = args.pop()
+    super(...args)
+    this.coc7Config = coc7Config
+  }
+
+  static DEFAULT_OPTIONS = {
+    id: 'actor-importer-dialog',
+    tag: 'form',
+    classes: ['coc7', 'dialog'],
+    window: {
+      title: 'CoC7.ActorImporter',
+      contentClasses: [
+        'standard-form'
+      ]
+    },
+    form: {
       closeOnSubmit: false,
-      width: 600,
-      height: 'auto'
-    })
-  }
-
-  /** @override */
-  async getData () {
-    const data = await super.getData()
-
-    data.importType = data.object.importType
-    data.convert6E = data.object.convert6E
-    data.source = data.object.source
-    data.characterData = data.object.characterData
-    data.canUpload = game.user?.can('FILES_UPLOAD')
-    if (['npc', 'creature'].includes(data.importType)) {
-      data.languages = CoC7ActorImporterRegExp.getTranslations()
-      data.language = CoC7ActorImporterRegExp.checkLanguage(
-        data.object.language
-      )
-      data.placeholder = CoC7ActorImporterRegExp.getExampleText(data.language)
+      handler: CoC7ActorImporterDialog.#onSubmit
+    },
+    position: {
+      width: 600
     }
-
-    data.importTypeOptions = [
-      {
-        key: 'npc',
-        label: 'CoC7.NonPlayingCharacter'
-      },
-      {
-        key: 'creature',
-        label: 'CoC7.Creature'
-      },
-      {
-        key: 'dholehouse',
-        label: 'CoC7.DholeHouseActorImporter'
-      }
-    ]
-
-    data.convert6EOptions = [
-      {
-        key: 'coc-guess',
-        label: 'CoC7.Guess'
-      },
-      {
-        key: 'coc-convert',
-        label: 'CoC7.Convert'
-      },
-      {
-        key: 'coc-no-convert',
-        label: 'CoC7.NoConvert'
-      }
-    ]
-
-    data.sourceOptions = [
-      {
-        key: '',
-        label: 'CoC7.ImportActorItemsNone'
-      },
-      {
-        key: 'i',
-        label: 'CoC7.ImportActorItemsItem'
-      },
-      {
-        key: 'iwms',
-        label: 'CoC7.ImportActorItemsItemWorldModuleSystem'
-      },
-      {
-        key: 'wmis',
-        label: 'CoC7.ImportActorItemsWorldModuleItemSystem'
-      }
-    ]
-
-    return data
   }
 
-  activateListeners (html) {
-    super.activateListeners(html)
-
-    html.find('#dholehouse-character-preview').hide()
-    html
-      .find('#coc-entity-type,#coc-entity-lang')
-      .change(this._onChangeSubmit.bind(this))
-    html
-      .find('#dholehouse-json-file-picker')
-      .change(this._onJSONFileSelected.bind(this))
-
-    html
-      .find('#coc-pasted-character-data')
-      .on('keyup', function (e) {
-        const charactersTooExtended = $(this)
-          .val()
-          .match(/[\udbc0-\udbfe][\udc00-\udfff]/)
-        const prompt = $('#coc-prompt')
-        if (prompt.data('extended') && charactersTooExtended) {
-          prompt
-            .html(game.i18n.localize('CoC7.TextFieldInvalidCharacters'))
-            .addClass('error')
-        } else {
-          prompt.html(prompt.data('text')).removeClass('error')
-        }
-      })
-      .trigger('keyup')
-
-    html.find('.submit-button').click(this._onClickSubmit.bind(this))
-    html.find('form').submit(e => {
-      e.preventDefault()
-    })
+  static PARTS = {
+    form: {
+      template: 'systems/' + FOLDER_ID + '/templates/apps/actor-importer.hbs',
+      scrollable: ['']
+    },
+    footer: {
+      template: 'templates/generic/form-footer.hbs'
+    }
   }
 
   /**
-   *
-   * @returns getInputs extracts the data from the input fields and
-   * adds a `.` at the end if it's not already there.
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
    */
-  static getInputs (form) {
-    const inputs = {}
-    inputs.entity = form.find('#coc-entity-type').val().trim()
-    if (CONFIG.debug.CoC7Importer) {
-      console.debug('entity type:', inputs.entity)
-    }
-    if (form.find('#coc-convert-6E').length > 0) {
-      inputs.convertFrom6E = form.find('#coc-convert-6E').val().trim()
-    }
-    if (form.find('#coc-entity-lang').length > 0) {
-      inputs.lang = CoC7ActorImporterRegExp.checkLanguage(
-        form.find('#coc-entity-lang').val().trim()
-      )
-    }
-    if (form.find('#source').length > 0) {
-      inputs.source = form.find('#source').val().trim()
-    }
-    if (form.find('#coc-pasted-character-data').length > 0) {
-      inputs.text = form.find('#coc-pasted-character-data').val().trim()
-    }
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
 
-    if (CONFIG.debug.CoC7Importer) {
-      console.debug('received text', '##' + inputs.text + '##')
-    }
-    return inputs
-  }
-
-  _onJSONFileSelected (event) {
-    const jsonFileInput = document.getElementById('dholehouse-json-file-picker')
-    const portraitImage = document.getElementById(
-      'dholehouse-character-portrait'
-    )
-    const characterName = document.getElementById('dholehouse-character-name')
-    const preview = document.getElementById('dholehouse-character-preview')
-    const file = jsonFileInput.files[0]
-    const dialog = this
-    const fileReader = new FileReader()
-    fileReader.onload = function (e) {
-      try {
-        dialog.characterJSON = JSON.parse(fileReader.result)
-      } catch (e) {
-        $('#coc-prompt')
-          .html(game.i18n.localize('CoC7.TextFieldInvalidJSON'))
-          .addClass('error')
-        event.preventDefault()
-        return
-      }
-      const personalDetails =
-        dialog.characterJSON?.Investigator?.PersonalDetails
-      if (!personalDetails) {
-        ui.notifications.error(
-          game.i18n.localize('CoC7.DholeHouseInvalidActor')
-        )
-        return
-      }
-      characterName.textContent = personalDetails.Name
-      portraitImage.src = 'data:image/png;base64,' + personalDetails.Portrait
-      preview.style.display = 'block'
-      $('.dialog.actor-importer').height('auto')
-    }
-    fileReader.readAsText(file)
-  }
-
-  _onChangeSubmit (event) {
-    this._onSubmit(event)
-  }
-
-  async _onClickSubmit (event) {
-    const id = event.currentTarget.dataset.button
-    if (id === 'no') {
-      this.close()
-    } else if (id === 'getExampleNow') {
-      const content = CoC7ActorImporterRegExp.getExampleText(
-        this.object.language
-      )
-      CoC7Utilities.copyToClipboard(content).then(() => {
-        return ui.notifications.info(game.i18n.localize('CoC7.Copied'))
-      })
-    } else if (id === 'import') {
-      const app = $(event.currentTarget).closest('div.dialog.actor-importer')
-      app.hide()
-      const form = $(event.currentTarget).closest('form')
-      const inputs = CoC7ActorImporterDialog.getInputs(form)
-      if (inputs.entity === 'dholehouse' && this.characterJSON) {
-        const character =
-          await CoC7DholeHouseActorImporter.createNPCFromDholeHouse(
-            this.characterJSON,
-            { source: inputs.source }
-          )
-        if (character !== false) {
-          if (CONFIG.debug.CoC7Importer) {
-            console.debug('character:', character)
+    switch (partId) {
+      case 'form':
+        context.importType = this.coc7Config.importType
+        context.convert6E = this.coc7Config.convert6E
+        context.source = this.coc7Config.source
+        context.characterData = this.coc7Config.characterData
+        context.canUpload = game.user?.can('FILES_UPLOAD')
+        switch (context.importType) {
+          case 'npc':
+          case 'creature':
+            context.languages = CoC7ActorImporterRegExp.getTranslations()
+            context.language = CoC7ActorImporterRegExp.checkLanguage(this.coc7Config.language)
+            context.placeholder = CoC7ActorImporterRegExp.getExampleText(context.language)
+            break
+          case 'dholehouse':
+            {
+              const personalDetails = this.coc7Config.characterJSON?.Investigator?.PersonalDetails
+              if (personalDetails) {
+                context.characterName = personalDetails.Name
+                context.characterImage = 'data:image/png;base64,' + personalDetails.Portrait
+              }
+            }
+            break
+        }
+        context.importTypeOptions = [
+          {
+            key: 'npc',
+            label: 'CoC7.NonPlayingCharacter'
+          },
+          {
+            key: 'creature',
+            label: 'CoC7.Creature'
+          },
+          {
+            key: 'dholehouse',
+            label: 'CoC7.DholeHouseActorImporter'
           }
-          ui.notifications.info(
-            game.i18n.format('CoC7.ActorImported', {
+        ]
+        context.convert6EOptions = [
+          {
+            key: 'coc-guess',
+            label: 'CoC7.Guess'
+          },
+          {
+            key: 'coc-convert',
+            label: 'CoC7.Convert'
+          },
+          {
+            key: 'coc-no-convert',
+            label: 'CoC7.NoConvert'
+          }
+        ]
+        context.sourceOptions = [
+          {
+            key: '',
+            label: 'CoC7.ImportActorItemsNone'
+          },
+          {
+            key: 'i',
+            label: 'CoC7.ImportActorItemsItem'
+          },
+          {
+            key: 'iwms',
+            label: 'CoC7.ImportActorItemsItemWorldModuleSystem'
+          },
+          {
+            key: 'wmis',
+            label: 'CoC7.ImportActorItemsWorldModuleItemSystem'
+          }
+        ]
+        break
+      case 'footer':
+        context.buttons = [{
+          type: 'submit',
+          action: 'close',
+          label: 'CoC7.Cancel',
+          icon: 'fa-solid fa-times'
+        }]
+        if (['npc', 'creature'].includes(this.coc7Config.importType)) {
+          context.buttons.push({
+            type: 'submit',
+            action: 'getExampleNow',
+            label: 'CoC7.getTheExample',
+            icon: 'fa-solid fa-info-circle'
+          })
+        }
+        context.buttons.push({
+          type: 'submit',
+          action: 'import',
+          label: 'CoC7.Import',
+          icon: 'fa-solid fa-file-import'
+        })
+        break
+    }
+
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
+
+    this.element.querySelector('select[name=coc-entity-type]')?.addEventListener('change', (event) => {
+      this.coc7Config.importType = event.currentTarget.value
+      this.render({ force: true })
+    })
+    this.element.querySelector('select[name=coc-entity-lang]')?.addEventListener('change', (event) => {
+      this.coc7Config.language = event.currentTarget.value
+      this.render({ force: true })
+    })
+    this.element.querySelector('input[name=dholehouse-json-file-picker]')?.addEventListener('change', (event) => {
+      const files = event.currentTarget.files
+      if (typeof files[0] !== 'undefined') {
+        const application = this
+        const fileReader = new FileReader()
+        fileReader.onload = function (e) {
+          try {
+            application.coc7Config.characterJSON = JSON.parse(fileReader.result)
+          } catch (e) {
+            application.coc7Config.characterJSON = {}
+            const prompt = application.element.querySelector('#coc-prompt')
+            prompt.innerHTML = game.i18n.localize('CoC7.TextFieldInvalidJSON')
+            prompt.classList.add('warning')
+            return
+          }
+          const personalDetails = application.coc7Config.characterJSON?.Investigator?.PersonalDetails
+          if (!personalDetails) {
+            application.coc7Config.characterJSON = {}
+            ui.notifications.error('CoC7.DholeHouseInvalidActor', { localize: true })
+            return
+          }
+          application.render({ force: true })
+        }
+        fileReader.readAsText(files[0])
+      }
+    })
+    const pastedData = this.element.querySelector('textarea[name=coc-pasted-character-data]')
+    if (pastedData) {
+      pastedData.addEventListener('keyup', (event) => {
+        const prompt = this.element.querySelector('#coc-prompt')
+        if (event.currentTarget.value.match(/[\udbc0-\udbfe][\udc00-\udfff]/)) {
+          prompt.innerHTML = game.i18n.localize('CoC7.TextFieldInvalidCharacters')
+          prompt.classList.add('warning')
+        } else {
+          prompt.innerHTML = prompt.dataset.text
+          prompt.classList.remove('warning')
+        }
+      })
+      pastedData.dispatchEvent(new Event('keyup'))
+    }
+  }
+
+  /**
+   * Submit the configuration form.
+   * @param {SubmitEvent} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
+   * @returns {Promise<void>}
+   */
+  static async #onSubmit (event, form, formData) {
+    switch (event.submitter.dataset.action) {
+      case 'getExampleNow':
+        {
+          const content = CoC7ActorImporterRegExp.getExampleText(this.coc7Config.language)
+          game.clipboard.copyPlainText(content).then(() => {
+            ui.notifications.info('CoC7.Copied', { localize: true, console: false })
+          })
+        }
+        break
+      case 'import':
+        this.coc7Config.characterData = formData.object['coc-pasted-character-data']
+        this.coc7Config.convert6E = formData.object['coc-convert-6E']
+        this.coc7Config.source = formData.object.source
+        if (this.coc7Config.importType === 'dholehouse' && typeof this.coc7Config.characterJSON?.Investigator?.PersonalDetails !== 'undefined') {
+          const app = document.getElementById('actor-importer-dialog')
+          app.style.display = 'none'
+          const character = await CoC7DholeHouseActorImporter.createNPCFromDholeHouse(this.coc7Config.characterJSON, { source: this.coc7Config.source })
+          if (character !== false) {
+            if (CONFIG.debug.CoC7Importer) {
+              console.debug('character:', character)
+            }
+            /* // FoundryVTT V12 */
+            ui.notifications.info(game.i18n.format('CoC7.ActorImported', {
               actorType: game.i18n.localize('TYPES.Actor.character'),
               actorName: character.name
-            })
-          )
-          await character.sheet.render(true)
+            }), { console: false })
+            await character.sheet.render({ force: true })
+            this.close()
+          } else {
+            app.style.display = ''
+          }
+        } else if (this.coc7Config.characterData !== '') {
           this.close()
-        } else {
-          app.show()
+          CoC7ActorImporterDialog.importActor({
+            convertFrom6E: this.coc7Config.convert6E,
+            entity: this.coc7Config.importType,
+            lang: this.coc7Config.language,
+            source: this.coc7Config.source,
+            // testMode: true,
+            text: this.coc7Config.characterData
+          })
         }
-      } else if (inputs.text && inputs.text !== '') {
-        CoC7ActorImporterDialog.importActor(inputs)
-        this.close()
-      } else {
-        app.show()
-      }
+        break
     }
-  }
-
-  /** @override
-   * A subclass of the FormApplication must implement the _updateObject method.
-   */
-  async _updateObject (event, formData) {
-    this.object.importType = formData['coc-entity-type']
-    this.object.characterData = formData['coc-pasted-character-data']?.trim()
-    if (typeof formData['coc-convert-6E'] !== 'undefined') {
-      this.object.convert6E = formData['coc-convert-6E']
-    }
-    if (typeof formData['coc-entity-lang'] !== 'undefined') {
-      this.object.language = formData['coc-entity-lang']
-    }
-    if (typeof formData.source !== 'undefined') {
-      this.object.source = formData.source
-    }
-    this.render(true)
   }
 
   /**
@@ -275,15 +284,28 @@ export default class CoC7ActorImporterDialog extends FormApplication {
     if (CONFIG.debug.CoC7Importer) {
       console.debug('createdActor:', createdActor)
     }
-    ui.notifications.info(
-      game.i18n.format('CoC7.ActorImported', {
-        actorType: createdActor.type?.toUpperCase(),
-        actorName: createdActor.name
-      })
-    )
-    await createdActor.sheet.render(true)
-    // const updated = await CoC7Updater.updateActor(npc)
-    // console.debug('updated:', updated)
+    /* // FoundryVTT V12 */
+    ui.notifications.info(game.i18n.format('CoC7.ActorImported', {
+      actorType: game.i18n.localize('TYPES.Actor.' + createdActor.type),
+      actorName: createdActor.name
+    }), { console: false })
+    await createdActor.sheet.render({ force: true })
+  }
+
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<HTMLElement>}
+   */
+  async _renderFrame (options) {
+    const frame = await super._renderFrame(options)
+
+    /* // FoundryV12 polyfill */
+    if (!foundry.utils.isNewerVersion(game.version, 13)) {
+      frame.setAttribute('open', true)
+    }
+
+    return frame
   }
 
   /**
@@ -295,20 +317,20 @@ export default class CoC7ActorImporterDialog extends FormApplication {
    * @param {string|null} options.language
    * @param {string} options.source
    */
-  static async create (options = {}) {
-    options.importType = options.importType ?? 'npc'
-    options.language =
-      options.language ?? CoC7ActorImporterRegExp.checkLanguage(null)
-    options.convert6E = options.language ?? 'coc-guess'
-    options.source = options.source ?? 'iwms'
-    options.characterData = options.characterData ?? ''
-
-    new CoC7ActorImporterDialog(options).render(true)
+  static async create ({ characterData = '', convert6E = 'coc-guess', importType = 'npc', language = null, source = 'iwms' } = {}) {
+    new CoC7ActorImporterDialog({}, {}, {
+      characterData,
+      characterJSON: {},
+      convert6E,
+      importType,
+      language: CoC7ActorImporterRegExp.checkLanguage(language),
+      source
+    }).render({ force: true })
   }
 }
 
 Hooks.once('ready', () => {
   if (game.modules.get('CoC7-Importer-Tests')?.active) {
-    window.CoC7ActorImporter = CoC7ActorImporter
+    game.CoC7.actorImporter = CoC7ActorImporter
   }
 })

@@ -1,425 +1,320 @@
-<form class="{{cssClass}} flexcol-coc7 {{#if permissionLimited}}permission-limited{{/if}}" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}}>
-  <div class="token-extras">
-    {{#if canDragToken}}
-      <div draggable="true" class="token-drag-handle" title="{{ localize 'CoC7.ActorIsTokenHint'}}"><i class="fas fa-user-circle"></i></div>
-    {{/if}}
-    {{#if linkedActor}}
-      <div title="{{ localize 'CoC7.ActorDataLinked'}}"><i class="fas fa-link"></i></div>
-    {{else}}
-      <div title="{{ localize 'CoC7.ActorDataNotLinked'}}"><i class="fas fa-unlink"></i></div>
-    {{/if}}
-    {{#if isToken}}
-      <div title="{{ localize 'CoC7.ActorIsSyntheticActor'}}"><i class="game-icon game-icon-backup"></i></div>
-    {{/if}}
-  </div>
-  {{!-- Sheet Header --}}
-  <header class="sheet-header flexrow-coc7" style="flex: 0 0 auto;padding-bottom: 10px;border-bottom: 2px groove;">
-    {{#unless permissionLimited}}
-      <div class="flexcol-coc7">
-        <div class="infos flexrow-coc7" style="flex: 0 0 auto;display: flex;">
-          {{#if isCreature}}
-            <div class="flexrow-coc7 flex1">
-              <label>{{localize 'CoC7.Name'}}</label>
-              <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CoC7.Name'}}" />
-            </div>
-            <div class="flexrow-coc7 flex1">
-              <label>{{localize 'CoC7.Type'}}</label>
-              <input name="system.infos.type" type="text" value="{{data.system.infos.type}}" />
-            </div>
+<div class="npc flexcol">
+  <div class="character-details flexrow">
+    <div class="character-detail">
+      <div class="title">{{localize 'CoC7.Name'}}</div>
+      <input class="detail-value name-value" type="text" name="name" value="{{document.name}}" placeholder="{{localize 'CoC7.Name'}}" />
+      {{#if (eq document.type 'creature')}}
+        <div class="title">{{localize 'CoC7.Type'}}</div>
+        <input class="detail-value" type="text" name="system.infos.type" value="{{document.system.infos.type}}" />
+      {{else}}
+        <div class="title">{{localize 'CoC7.Occupation'}}</div>
+        <input class="detail-value" type="text" name="system.infos.occupation" value="{{document.system.infos.occupation}}" />
+        {{#if pulpRuleOrganization}}
+          <div class="title">{{localize 'CoC7.Organization'}}</div>
+          <input class="detail-value" type="text" name="system.infos.organization" value="{{document.system.infos.organization}}" />
+        {{/if}}
+        <div class="title">{{localize 'CoC7.Age'}}</div>
+        <input class="detail-value age-value" type="text" name="system.infos.age" value="{{document.system.infos.age}}" />
+      {{/if}}
+      <div class="token-extras">
+        {{#if canDragToken}}
+          <div class="item-controlled-width token-drag-handle" draggable="true" data-tooltip="CoC7.ActorIsTokenHint" data-token-uuid="{{tokenUuid}}"><i class="fa-solid fa-user-circle"></i></div>
+        {{/if}}
+        {{#if linkedActor}}
+          <div class="item-controlled-width" data-tooltip="CoC7.ActorDataLinked"><i class="fa-solid fa-link"></i></div>
+        {{else}}
+          <div class="item-controlled-width" data-tooltip="CoC7.ActorDataNotLinked"><i class="fa-solid fa-unlink"></i></div>
+        {{/if}}
+        {{#if isToken}}
+          <div class="item-controlled-width" data-tooltip="CoC7.ActorIsSyntheticActor"><i class="game-icon game-icon-backup"></i></div>
+        {{/if}}
+        {{#unless document.system.flags.locked}}
+          {{#if document.system.flags.displayFormula}}
+            <div class="item-controlled-width" data-tooltip="CoC7.NpcCharacteristicsFormula"><i class="fa-solid fa-square-root-alt"></i></div>
           {{else}}
-            <div class="flexrow-coc7 flex2">
-              <label>{{localize 'CoC7.Name'}}</label>
-              <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CoC7.Name'}}" />
-            </div>
-            <div class="flexrow-coc7 flex2">
-              <label>{{localize 'CoC7.Occupation'}}</label>
-              <input name="system.infos.occupation" type="text" value="{{data.system.infos.occupation}}" />
-            </div>
-            {{#if pulpRuleOrganization}}
-              <div class="flexrow-coc7 flex2">
-                <label>{{localize 'CoC7.Organization'}}</label>
-                <input name="system.infos.organization" type="text" value="{{data.system.infos.organization}}" />
-              </div>
-            {{/if}}
-            <div class="flexrow-coc7 flex1">
-              <label>{{localize 'CoC7.Age'}}</label>
-              <input name="system.infos.age" type="text" value="{{data.system.infos.age}}" />
-            </div>
+            <div class="item-controlled-width" data-tooltip="CoC7.NpcCharacteristicsValues"><i class="fa-solid fa-user-edit"></i></div>
           {{/if}}
-        </div>
-
-        <div class="characteritics flexrow-coc7" style="flex: 0 0 auto;display: flex;">
-          {{#each data.system.characteristics as |characteristic key|}}
-            {{#if ../data.system.flags.locked}}
-              {{#if characteristic.display}}
-                <div class="flexcol-coc7 char-box" style=" margin-right: 2px;" data-characteristic="{{key}}">
-                  <div class="characteristic-label rollable" draggable="true" style="text-align: left;">
-                    <label data-context-menu="skill-roll" data-target-type="characteristic">{{localize characteristic.short}}</label>
-                  </div>
-                  <div style="text-align:center;border: 1px groove;margin-right: 2px;">
-                    {{#if characteristic.editable}}
-                      <input class="characteristic-score" style="text-align: center;" type="text" name="system.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number">
-                    {{else}}
-                      <input class="characteristic-score read-only" style="text-align: center;" type="text" name="system.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number" {{#if ../data.system.flags.locked}}readonly{{/if}}>
-                    {{/if}}
-                  </div>
-                </div>
-              {{/if}}
-            {{else}}
-              <div class="flexcol-coc7" style=" margin-right: 2px;" data-characteristic="{{key}}">
-                <div class="characteristic-label rollable" draggable="true" style="text-align: left;">
+        {{/unless}}
+        <div class="item-controlled-width slide-out-notes clickable{{#if document.system.flags.panelNotes}} slid-out-notes{{/if}}" style="text-align: center"><i class="fa-solid fa-note-sticky"></i></div>
+      </div>
+    </div>
+  </div>
+  <div class="attribute-details flexrow">
+    <div class="attribute-detail flexcol">
+      <div class="characteristics flexrow">
+        {{#each characteristics as |characteristic key|}}
+          {{#if ../document.system.flags.locked}}
+            {{#if (or characteristic.value characteristic.formula)}}
+              <div class="characteristic attribute flexcol" data-characteristic="{{key}}">
+                <div class="characteristic-name rollable" draggable="true" data-tooltip-key="{{key}}">
                   <label>{{localize characteristic.short}}</label>
                 </div>
-                {{#if ../displayFormula}}
-                  <div style="text-align:center;border: 1px groove;margin-right: 2px;">
-                    <input class="characteristic-formula" style="text-align: center;" type="text" name="system.characteristics.{{key}}.formula" value="{{characteristic.formula}}">
-                  </div>
-                {{else}}
-                  <div style="text-align:center;border: 1px groove;margin-right: 2px;">
-                    {{#if characteristic.editable}}
-                      <input class="characteristic-score" style="text-align: center;" type="text" name="system.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number">
-                    {{else}}
-                      <input class="characteristic-score {{#if ../data.system.flags.locked}}read-only{{/if}}" style="text-align: center;" type="text" name="system.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number" {{#if ../data.system.flags.locked}}readonly{{/if}}>
-                    {{/if}}
-                  </div>
-                {{/if}}
+                <input class="detail-value characteristic-value{{#unless characteristic.activeEffectValue}} read-only{{/unless}}" type="text"{{#unless characteristic.activeEffectValue}} name="system.characteristics.{{key}}.value"{{/unless}} value="{{characteristic.value}}" readonly>
               </div>
             {{/if}}
-          {{/each}}
-        </div>
-
-        <div class="attribute-list flexrow-coc7" style="display: flex;">
-          <div class="flexrow-coc7 flex1 attribute" style="display: flex;" data-attrib="hp">
-            <label class="attribute-label">{{localize 'CoC7.HP'}} :</label>
-            <input class="attribute-value" type="text" name="system.attribs.hp.value" value="{{data.system.attribs.hp.value}}" data-dtype="Number" />
-            <span style="flex: none;font-size: 14px;line-height:20px;">/</span>
-            {{#if data.system.attribs.hp.auto}}
-              <input class="attribute-max" type="text" name="system.attribs.hp.max" value="{{data.system.attribs.hp.max}}" data-dtype="Number" readonly />
-            {{else}}
-              <input class="attribute-max {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.hp.max" value="{{data.system.attribs.hp.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
-            {{/if}}
-
-            {{#unless data.system.flags.locked}}
-              <div class="auto-toggle {{#if data.system.attribs.hp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
-            {{/unless}}
-          </div>
-          {{#if data.system.flags.locked}}
-            <div class="flexrow-coc7 flex1 attribute" data-attrib="mp">
-              {{#if hasMp}}
-                <label class="attribute-label">{{localize 'CoC7.MP'}} :</label>
-                <input class="attribute-value" type="text" name="system.attribs.mp.value" value="{{data.system.attribs.mp.value}}" data-dtype="Number" />
-                <span style="flex: none;font-size: 14px;line-height:20px;">/</span>
-                {{#if data.system.attribs.mp.auto}}
-                  <input class="attribute-max" type="text" name="system.attribs.mp.max" value="{{data.system.attribs.mp.max}}" data-dtype="Number" readonly />
-                {{else}}
-                  <input class="attribute-max {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.mp.max" value="{{data.system.attribs.mp.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
-                {{/if}}
-              {{/if}}
-            </div>
-
-            <div class="flexrow-coc7 flex1 attribute" data-attrib="san">
-              {{#if hasSan}}
-                <label class="attribute-label rollable" draggable="true" data-context-menu="san-roll" data-target-type="attribute">{{localize 'CoC7.SAN'}} :</label>
-                <input class="attribute-value" type="text" name="system.attribs.san.value" value="{{data.system.attribs.san.value}}" data-dtype="Number" />
-                <span style="flex: none;font-size: 14px;line-height:20px;">/</span>
-                {{#if data.system.attribs.san.auto}}
-                  <input class="attribute-max" type="text" name="system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" readonly />
-                {{else}}
-                  <input class="attribute-max {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
-                {{/if}}
-              {{/if}}
-            </div>
-
-            <div class="flexrow-coc7 flex1 attribute" data-attrib="lck">
-              {{#if hasLuck}}
-                <label class="attribute-label rollable" draggable="true">{{localize 'CoC7.Luck'}} :</label>
-                <input class="attribute-value single read-only" type="text" name="system.attribs.lck.value" value="{{data.system.attribs.lck.value}}" data-dtype="Number" readonly>
-              {{/if}}
-            </div>
           {{else}}
-            <div class="flexrow-coc7 flex1 attribute" data-attrib="mp">
-              <label class="attribute-label" draggable="true">{{localize 'CoC7.MP'}} :</label>
-              <input class="attribute-value" type="text" name="system.attribs.mp.value" value="{{data.system.attribs.mp.value}}" data-dtype="Number" />
-              <span style="flex: none;font-size: 14px;line-height:20px;">/</span>
-              {{#if data.system.attribs.mp.auto}}
-                <input class="attribute-max" type="text" name="system.attribs.mp.max" value="{{data.system.attribs.mp.max}}" data-dtype="Number" readonly />
+            <div class="characteristic flexcol">
+              <div class="characteristic-name">
+                <label>{{localize characteristic.short}}</label>
+              </div>
+              {{#if ../document.system.flags.displayFormula}}
+                <input class="detail-value formula-value" type="text" name="system.characteristics.{{key}}.formula" value="{{characteristic.formula}}">
               {{else}}
-                <input class="attribute-max {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.mp.max" value="{{data.system.attribs.mp.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
+                <input class="detail-value characteristic-value" type="text" name="system.characteristics.{{key}}.value" value="{{characteristic.sourceValue}}">
               {{/if}}
-              <div class="auto-toggle {{#if data.system.attribs.mp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
-            </div>
-
-            <div class="flexrow-coc7 flex1 attribute" data-attrib="san">
-              <label class="attribute-label rollable">{{localize 'CoC7.SAN'}} :</label>
-              <input class="attribute-value" type="text" name="system.attribs.san.value" value="{{data.system.attribs.san.value}}" data-dtype="Number" />
-              <span style="flex: none;font-size: 14px;line-height:20px;">/</span>
-              {{#if data.system.attribs.san.auto}}
-                <input class="attribute-max" type="text" name="system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" readonly />
-              {{else}}
-                <input class="attribute-max {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
-              {{/if}}
-              <div class="auto-toggle {{#if data.system.attribs.san.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
-            </div>
-
-            <div class="flexrow-coc7 flex1 attribute" data-attrib="lck">
-              <label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
-              <input class="attribute-value single read-only" type="text" name="system.attribs.lck.value" value="{{data.system.attribs.lck.value}}" data-dtype="Number">
             </div>
           {{/if}}
+        {{/each}}
+      </div>
+      <div class="attributes flexrow" style="gap: 1rem">
+        <div class="attribute flexrow" data-attrib="hp">
+          <div class="attribute-name">{{localize 'CoC7.HP'}}:</div>
+          <input class="detail-value attribute-value{{#if attribs.hp.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.hp.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{attribs.hp.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.hp.value" value="{{attribs.hp.sourceValue}}" {{/if}}{{else}} name="system.attribs.hp.value" value="{{attribs.hp.value}}" {{/if}} />
+          <span>/</span>
+          <input class="detail-value attribute-max{{#if (and (not document.system.flags.locked) (not document.system.attribs.hp.auto))}} not-auto{{/if}}{{#if attribs.hp.activeEffectMax}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.hp.activeEffectMax}}{{#if @root.document.system.flags.locked}} value="{{attribs.hp.max}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.hp.max" value="{{attribs.hp.sourceMax}}" {{/if}}{{else}} name="system.attribs.hp.max" value="{{attribs.hp.max}}" {{/if}}{{#if (or document.system.flags.locked document.system.attribs.hp.auto)}} readonly{{/if}} />
+          {{#unless document.system.flags.locked}}
+            <a class="item-control{{#if document.system.attribs.hp.auto}} auto-on{{else}} auto-off{{/if}}" data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" data-tooltip-class="coc7-wider-tooltip"><i class="fa-solid fa-cogs"></i></a>
+          {{/unless}}
         </div>
-
-        <div class="attribute-list flexrow-coc7" style="flex: 0 0 auto;">
-          <div style="flex: 2">
-            <div class="flexrow-coc7 flex1 attribute" data-attrib="mov">
-              <label>{{localize 'CoC7.Mov'}} :</label>
-              {{#if data.system.attribs.mov.auto}}
-                <span class="attribute-value single" type="text" style="line-height: 22px;flex: 0 0 1.54rem;"> {{data.system.attribs.mov.value}} </span>
-              {{else}}
-                <input class="attribute-value single {{#if data.system.flags.locked}}read-only{{/if}}" style="flex: 0 0 1.54rem;" type="text" name="system.attribs.mov.value" value="{{data.system.attribs.mov.value}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
-              {{/if}}
-
-              {{#unless data.system.flags.locked}}
-                <select class="attribute-dtype" name="system.attribs.mov.type" style="height: auto;">
-                  {{selectOptions movementTypes selected=data.system.attribs.mov.type localize=true valueAttr="id" labelAttr="name"}}
+        <div class="attribute flexrow" data-attrib="mp">
+          {{#unless (and document.system.flags.locked (eq document.system.attribs.mp.value null))}}
+            <div class="attribute-name">{{localize 'CoC7.MP'}}:</div>
+            <input class="detail-value attribute-value{{#if attribs.mp.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.mp.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{attribs.mp.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.mp.value" value="{{attribs.mp.sourceValue}}" {{/if}}{{else}} name="system.attribs.mp.value" value="{{attribs.mp.value}}" {{/if}} />
+            <span>/</span>
+            <input class="detail-value attribute-max{{#if (and (not document.system.flags.locked) (not document.system.attribs.mp.auto))}} not-auto{{/if}}{{#if attribs.mp.activeEffectMax}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.mp.activeEffectMax}}{{#if @root.document.system.flags.locked}} value="{{attribs.mp.max}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.mp.max" value="{{attribs.mp.sourceMax}}" {{/if}}{{else}} name="system.attribs.mp.max" value="{{attribs.mp.max}}" {{/if}}{{#if (or document.system.flags.locked document.system.attribs.mp.auto)}} readonly{{/if}} />
+            {{#unless document.system.flags.locked}}
+              <a class="item-control{{#if document.system.attribs.mp.auto}} auto-on{{else}} auto-off{{/if}}" data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" data-tooltip-class="coc7-wider-tooltip"><i class="fa-solid fa-cogs"></i></a>
+            {{/unless}}
+          {{/unless}}
+        </div>
+        <div class="attribute flexrow" data-attrib="san">
+          {{#unless (and document.system.flags.locked (eq document.system.attribs.san.value null))}}
+            <div class="attribute-name{{#if document.system.flags.locked}} rollable{{/if}}" {{#if document.system.flags.locked}} draggable="true" data-tooltip-key="san" {{/if}}>{{localize 'CoC7.SAN'}}:</div>
+            <input class="detail-value attribute-value{{#if attribs.san.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.san.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{attribs.san.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.san.value" value="{{attribs.san.sourceValue}}" {{/if}}{{else}} name="system.attribs.san.value" value="{{attribs.san.value}}" {{/if}} />
+            <span>/</span>
+            <input class="detail-value attribute-max{{#if (and (not document.system.flags.locked) (not document.system.attribs.san.auto))}} not-auto{{/if}}{{#if attribs.san.activeEffectMax}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.san.activeEffectMax}}{{#if @root.document.system.flags.locked}} value="{{attribs.san.max}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.san.max" value="{{attribs.san.sourceMax}}" {{/if}}{{else}} name="system.attribs.san.max" value="{{attribs.san.max}}" {{/if}}{{#if (or document.system.flags.locked document.system.attribs.san.auto)}} readonly{{/if}} />
+            {{#unless document.system.flags.locked}}
+              <a class="item-control{{#if document.system.attribs.san.auto}} auto-on{{else}} auto-off{{/if}}" data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" data-tooltip-class="coc7-wider-tooltip"><i class="fa-solid fa-cogs"></i></a>
+            {{/unless}}
+          {{/unless}}
+        </div>
+        <div class="attribute flexrow" data-attrib="lck">
+          {{#unless (and document.system.flags.locked (eq attribs.lck.sourceValue null))}}
+            <div class="attribute-name rollable" {{#if document.system.flags.locked}} draggable="true" data-tooltip-key="lck" {{/if}}>{{localize 'CoC7.Luck'}}:</div>
+            <input class="detail-value attribute-value{{#if attribs.lck.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.lck.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{attribs.lck.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.lck.value" value="{{attribs.lck.sourceValue}}" {{/if}}{{else}} name="system.attribs.lck.value" value="{{attribs.lck.value}}" {{/if}} />
+          {{/unless}}
+        </div>
+      </div>
+      <div class="attributes flexrow" style="gap: 0.5rem">
+        <div class="attribute-mov flexcol">
+          <div class="attribute flexrow" data-attrib="mov">
+            <div class="attribute-name">{{localize 'CoC7.Mov'}}:</div>
+            <input class="detail-value attribute-value{{#if attribs.mov.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.mov.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{attribs.mov.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.mov.value" value="{{attribs.mov.sourceValue}}" {{/if}}{{else}} name="system.attribs.mov.value" value="{{attribs.mov.value}}" {{/if}} {{#if (or document.system.flags.locked document.system.attribs.mov.auto)}} readonly{{/if}}/>
+            {{#unless document.system.flags.locked}}
+              <select class="detail-value" name="system.attribs.mov.type">
+                {{selectOptions movementTypes selected=document.system.attribs.mov.type localize=true valueAttr='id' labelAttr='name'}}
+              </select>
+              <a class="item-control{{#if document.system.attribs.mov.auto}} auto-on{{else}} auto-off{{/if}}" data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" data-tooltip-class="coc7-wider-tooltip"><i class="fa-solid fa-cogs"></i></a>
+            {{else}}
+              <input class="detail-value attribute-max was-select" type="text" value="{{localize (selectValue movementTypes document.system.attribs.mov.type 'id' 'name')}}" readonly>
+            {{/unless}}
+          </div>
+          {{#each special.movement as |movement key|}}
+            <div class="attribute flexrow">
+              <div class="attribute-name">{{localize 'CoC7.Mov'}}:</div>
+              <input class="detail-value attribute-value{{#if movement.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if movement.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{movement.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.special.movement.{{key}}.value" value="{{movement.sourceValue}}" {{/if}}{{else}} name="system.special.movement.{{key}}.value" value="{{movement.value}}" {{#if @root.document.system.flags.locked}} readonly{{/if}}{{/if}}>
+              {{#unless ../document.system.flags.locked}}
+                <select class="detail-value" name="system.special.movement.{{key}}.type">
+                  {{selectOptions ../movementTypes selected=movement.type localize=true valueAttr='id' labelAttr='name'}}
                 </select>
-                <div class="auto-toggle {{#if data.system.attribs.mov.auto}}auto-on{{else}}auto-off{{/if}}" style="flex: 0 0 1.2rem"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
+                <a class="item-control" data-action="movement-remove" data-index="{{key}}"><i class="fa-regular fa-minus-circle"></i></a>
               {{else}}
-                <span class="attribute-value single" type="text" style="line-height: 22px;">{{localize (selectValue movementTypes data.system.attribs.mov.type 'id' 'name')}}</span>
+                <input class="detail-value attribute-max was-select" type="text" value="{{localize (selectValue ../movementTypes movement.type 'id' 'name')}}" readonly>
               {{/unless}}
             </div>
-            {{#each data.system.special.movement as |movement key|}}
-              <div class="flexrow-coc7 flex1 attribute">
-                <label>{{localize 'CoC7.Mov'}} :</label>
-                <input class="attribute-value single {{#if ../data.system.flags.locked}}read-only{{/if}}" style="flex: 0 0 1.54rem;" type="text" name="system.special.movement.{{key}}.value" value="{{movement.value}}" data-dtype="Number" {{#if ../data.system.flags.locked}}readonly{{/if}}>
-                {{#unless ../data.system.flags.locked}}
-                  <select class="attribute-dtype" name="system.special.movement.{{key}}.type" style="height: auto;">
-                    {{selectOptions ../movementTypes selected=movement.type localize=true valueAttr="id" labelAttr="name"}}
-                  </select>
-                  <div class="remove-movement" style="padding-left: 4px;flex: 0 0 1.2rem" data-index="{{key}}"><i class="fas fa-minus-circle" style="padding-top: 0.3rem;"></i></div>
-                {{else}}
-                  <span class="attribute-value single" type="text" style="line-height: 22px;">{{localize (selectValue ../movementTypes movement.type 'id' 'name')}}</span>
-                {{/unless}}
-              </div>
-            {{/each}}
-            {{#unless data.system.flags.locked}}
-              <div class="flexrow-coc7 flex1 attribute">
-                <label>{{localize 'CoC7.Mov'}} :</label>
-                <div class="add-movement"><i class="fas fa-plus-circle" style="padding-top: 0.3rem;"></i></div>
-              </div>
-            {{/unless}}
-          </div>
-          <div class="flexrow-coc7 flex1 attribute" data-attrib="db" data-roll-formula="{{data.system.attribs.db.value}}">
-            <label class="attribute-label rollable">{{localize 'CoC7.DB'}} :</label>
-
-            {{#if data.system.attribs.db.auto}}
-              <span class="attribute-value single" type="text" style="line-height: 22px;"> {{data.system.attribs.db.value}} </span>
-            {{else}}
-              <input class="attribute-value single {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.db.value" value="{{data.system.attribs.db.value}}" data-dtype="String" {{#if data.system.flags.locked}}readonly{{/if}}>
-            {{/if}}
-
-            {{#unless data.system.flags.locked}}
-              <div class="auto-toggle {{#if data.system.attribs.db.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
-            {{/unless}}
-          </div>
-          <div class="flexrow-coc7 flex1 attribute" data-attrib="build">
-            <label>{{localize 'CoC7.Build'}} :</label>
-            {{#if data.system.attribs.build.auto}}
-              <span class="attribute-value single" type="text" style="line-height: 22px;"> {{data.system.attribs.build.value}} </span>
-            {{else}}
-              <input class="attribute-value single {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.build.value" value="{{data.system.attribs.build.value}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
-            {{/if}}
-
-            {{#unless data.system.flags.locked}}
-              <div class="auto-toggle {{#if data.system.attribs.build.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
-            {{/unless}}
-          </div>
-          <div class="flexrow-coc7 flex1 attribute" data-attrib="armor">
-            <label>{{localize 'CoC7.Armor'}} :</label>
-            {{#if data.system.flags.locked}}
-              {{#if data.system.attribs.armor.notes}}
-                <div title="{{localize 'CoC7.ToolTipSeeNotes'}}"><i class="fa-solid fa-note-sticky" style="padding-top: 4px;"></i></div>
-              {{/if}}
-            {{else}}
-            <div class="notes-toggle {{#if data.system.attribs.armor.notes}}auto-on{{else}}auto-off{{/if}}"><i class="fa-solid fa-note-sticky" style="padding-top: 4px;"></i></div>
-            {{/if}}
-            <input class="attribute-value single {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.armor.value" value="{{data.system.attribs.armor.value}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
-          </div>
+          {{/each}}
+          {{#unless document.system.flags.locked}}
+            <div class="attribute flexrow">
+              <div class="attribute-name">{{localize 'CoC7.Mov'}}:</div>
+              <div style="flex: 4; padding: 0 3px"></div>
+              <a class="item-control" data-action="movement-add"><i class="fa-regular fa-plus-circle"></i></a>
+            </div>
+          {{/unless}}
         </div>
-
-        <div class="condition-monitors flexrow-coc7">
-          {{#if isDying}}
-            <a class='dying-check' style="text-align: center;font-size: 20px;" title="{{localize 'CoC7.DyingCheck'}}"><i class="fas fa-dice-d20"></i></a>
+        <div class="attribute flexrow" data-attrib="db">
+          <div class="attribute-name rollable" data-tooltip="CoC7.ToolTipDB" data-tooltip-class="coc7-wider-tooltip">{{localize 'CoC7.DB'}}:</div>
+          <input class="detail-value attribute-max{{#if attribs.db.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.db.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{attribs.db.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.db.value" value="{{attribs.db.sourceValue}}" {{/if}}{{else}} name="system.attribs.db.value" value="{{attribs.db.value}}" {{/if}} {{#if (or document.system.flags.locked document.system.attribs.db.auto)}} readonly{{/if}}/>
+          {{#unless document.system.flags.locked}}
+            <a class="item-control{{#if document.system.attribs.db.auto}} auto-on{{else}} auto-off{{/if}}" data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" data-tooltip-class="coc7-wider-tooltip"><i class="fa-solid fa-cogs"></i></a>
+          {{/unless}}
+        </div>
+        <div class="attribute flexrow" data-attrib="build">
+          <div class="attribute-name">{{localize 'CoC7.Build'}}:</div>
+          <input class="detail-value attribute-max{{#if attribs.build.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.build.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{attribs.build.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.build.value" value="{{attribs.build.sourceValue}}" {{/if}}{{else}} name="system.attribs.build.value" value="{{attribs.build.value}}" {{/if}} {{#if (or document.system.flags.locked document.system.attribs.build.auto)}} readonly{{/if}}/>
+          {{#unless document.system.flags.locked}}
+            <a class="item-control{{#if document.system.attribs.build.auto}} auto-on{{else}} auto-off{{/if}}" data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" data-tooltip-class="coc7-wider-tooltip"><i class="fa-solid fa-cogs"></i></a>
+          {{/unless}}
+        </div>
+        <div class="attribute flexrow" data-attrib="armor">
+          <div class="attribute-name">{{localize 'CoC7.Armor'}}:</div>
+          {{#if document.system.flags.locked}}
+            {{#if attribs.armor.notes}}
+              <a class="notes-toggle" data-tooltip="CoC7.ToolTipSeeNotes"><i class="fa-solid fa-note-sticky"></i></a>
+            {{/if}}
           {{else}}
-            <a class="condition-monitor {{#if data.system.conditions.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-condition='prone'> <i class="game-icon game-icon-falling"></i></a>
-            <a class="condition-monitor {{#if data.system.conditions.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-condition="unconscious"> <i class="game-icon game-icon-knocked-out-stars"></i></a>
-            <a class="condition-monitor {{#if data.system.conditions.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-condition="criticalWounds"> <i class="fas fa-user-injured"></i></a>
-            <a class="condition-monitor {{#if data.system.conditions.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-condition="dying"> <i class="fas fa-heartbeat"></i></a>
-
-            <a class="condition-monitor {{#if data.system.conditions.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.BoutOfMadness'}}{{#if actor.getTempoInsaneDurationText}}: {{actor.getTempoInsaneDurationText}}{{/if}}" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></a>
-            <a class="condition-monitor {{#if data.system.conditions.indefInsane.value}}status-on{{/if}}" title="{{#if data.system.conditions.indefInsane.value}}{{localize 'CoC7.UnderlyingInsanity'}}{{else}}{{localize 'CoC7.IndefiniteInsanity'}}{{/if}}" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>
-            <div class="flex1"></div>
-
-            <div class="san-check flexrow-coc7" style="flex: 8; font-size: 12px;" draggable="true" data-context-menu="san-loss-roll" data-target-type="san-check">
-              <label class="roll-san rollable" style="text-align: right;" title="{{ localize 'CoC7.SanRollHint'}}">{{ localize "CoC7.SANLoss" }} :</label>
-              {{#if data.system.flags.locked}}
-                <span class="san-value pass flex1" style="line-height: 22px;padding-left: 2px; text-align: right;" placeholder="{{localize 'CoC7.SANLossPass'}}">{{data.system.special.sanLoss.checkPassed}}</span>
-                <span class="flex0" style="line-height: 22px;">/</span>
-                <span class="san-value failed flex1" style="line-height: 22px;padding-left: 2px;" placeholder="{{localize 'CoC7.SANLossFail'}}">{{data.system.special.sanLoss.checkFailled}}</span>
-              {{else}}
-                <input class="san-value flex1" style="text-align: right;" type="text" name="system.special.sanLoss.checkPassed" value="{{data.system.special.sanLoss.checkPassed}}" data-dtype="String" placeholder="{{localize 'CoC7.SANLossPass'}}">
-                <span class="flex0" style="line-height: 22px;">/</span>
-                <input class="san-value flex1" type="text" name="system.special.sanLoss.checkFailled" value="{{data.system.special.sanLoss.checkFailled}}" data-dtype="String" placeholder="{{localize 'CoC7.SANLossFail'}}">
-              {{/if}}
+            <a class="notes-toggle item-control{{#if attribs.armor.notes}} auto-on{{else}} auto-off{{/if}}" data-action="notes-toggle"><i class="fa-solid fa-note-sticky"></i></a>
+          {{/if}}
+          <input class="detail-value attribute-max{{#if attribs.armor.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.armor.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{attribs.armor.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.armor.value" value="{{attribs.armor.sourceValue}}" {{/if}}{{else}} name="system.attribs.armor.value" value="{{attribs.armor.value}}" {{/if}} {{#if (or document.system.flags.locked document.system.attribs.armor.auto)}} readonly{{/if}}/>
+        </div>
+      </div>
+      <div class="attributes flexrow" style="gap: 2rem">
+        <div class="conditions flexrow">
+          {{#if document.system.conditions.dying.value}}
+            <div style="text-align: center;">
+              <a class="item-control" data-tooltip="CoC7.DyingCheck" data-action="dying-check"><i class="fa-solid fa-dice-d20"></i></a>
             </div>
-            <div class="flex1"></div>
-
-            <div class="flexrow-coc7 sheet-controls" style="flex: 0 0 96px;align-content: flex-start;">
-              {{#if allowFormula}}
-                {{#if data.system.flags.locked}}
-                  <div style="flex: 0 0 32px;"></div>
-                {{else}}
-                  {{#if displayFormula}}
-                    <div style="flex: 0 0 32px;"></div>
-                  {{else}}
-                    <a class="roll-characteritics" style="flex: 0 0 16px;color: darkred;" data-html="true" title="{{localize 'CoC7.NpcRollCharacteristics'}}"> <i class="fas fa-dice"></i></a>
-                    <a class="average-characteritics" style="flex: 0 0 16px;color: darkred;" title="{{localize 'CoC7.NpcAvarageCharacteristics'}}"> <i class="fas fa-balance-scale"></i></a>
-                  {{/if}}
-                {{/if}}
-              {{else}}
-                <div style="flex: 0 0 16px;"></div>
-              {{/if}}
-              {{#if data.system.flags.locked}}
-                <a class="lock" style="flex: 0 0 32px;align-content: flex-start;" title="{{localize 'CoC7.UnlockActor'}}" data-locked="true"> <i class="fas fa-lock"></i></a>
-              {{else}}
-                <a class="lock" style="flex: 0 0 16px;" title="{{localize 'CoC7.LockActor'}}" data-locked="false"> <i class="fas fa-lock-open"></i></a>
-                {{#if allowFormula}}
-                  {{#if displayFormula}}
-                    <a class="formula" style="flex: 0 0 16px;" title="{{localize 'CoC7.NpcCharacteristicsValues'}}" data-locked="true"> <i class="fas fa-user-edit"></i></a>
-                  {{else}}
-                    <a class="formula" style="flex: 0 0 16px;" title="{{localize 'CoC7.NpcCharacteristicsFormula'}}" data-locked="false"> <i class="fas fa-square-root-alt"></i></a>
-                  {{/if}}
-                {{/if}}
-              {{/if}}
-            </div>
+          {{else}}
+            <a class="item-control{{#if document.system.conditions.prone.value}} status-on{{/if}}" data-tooltip="CoC7.Prone" data-action="condition" data-condition="prone"><i class="game-icon game-icon-falling"></i></a>
+            <a class="item-control{{#if document.system.conditions.unconscious.value}} status-on{{/if}}" data-tooltip="CoC7.Unconsious" data-action="condition" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars"></i></a>
+            <a class="item-control{{#if document.system.conditions.criticalWounds.value}} status-on{{/if}}" data-tooltip="CoC7.CriticalWounds" data-action="condition" data-condition="criticalWounds"><i class="fa-solid fa-user-injured"></i></a>
+            <a class="item-control status-off" data-tooltip="CoC7.Dying" data-action="condition" data-condition="dying"><i class="fa-solid fa-heartbeat"></i></a>
+            <a class="item-control{{#if document.system.conditions.tempoInsane.value}} status-on{{/if}}" data-tooltip="{{localize 'CoC7.BoutOfMadness'}}{{#if document.getTempoInsaneDurationText}}: {{document.getTempoInsaneDurationText}}{{/if}}" data-action="condition" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></a>
+            <a class="item-control{{#if document.system.conditions.indefInsane.value}} status-on{{/if}}" data-tooltip="{{#if document.system.conditions.indefInsane.value}}CoC7.UnderlyingInsanity{{else}}CoC7.IndefiniteInsanity{{/if}}" data-action="condition" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>
+          {{/if}}
+        </div>
+        <div class="attribute san-check flexrow" draggable="true">
+          {{#if (or (not document.system.flags.locked) document.system.special.sanLoss.checkPassed document.system.special.sanLoss.checkFailled)}}
+            <div class="roll-san rollable" data-tooltip="CoC7.SanRollHint">{{localize 'CoC7.SANLoss'}}:</div>
+            <input class="detail-value attribute-value{{#if special.sanLoss.activeEffectCheckPassed}} modified-by-active-effect{{/if}}" type="text" {{#if special.sanLoss.activeEffectCheckPassed}}{{#if @root.document.system.flags.locked}} value="{{special.sanLoss.checkPassed}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.special.sanLoss.checkPassed" value="{{special.sanLoss.sourceCheckPassed}}" {{/if}}{{else}} name="system.special.sanLoss.checkPassed" value="{{special.sanLoss.checkPassed}}" {{#if @root.document.system.flags.locked}} readonly{{/if}}{{/if}}>
+            <span>/</span>
+            <input class="detail-value attribute-max{{#if special.sanLoss.activeEffectCheckFailled}} modified-by-active-effect{{/if}}" type="text" {{#if special.sanLoss.activeEffectCheckFailled}}{{#if @root.document.system.flags.locked}} value="{{special.sanLoss.checkFailled}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.special.sanLoss.checkFailled" value="{{special.sanLoss.sourceCheckFailled}}" {{/if}}{{else}} name="system.special.sanLoss.checkFailled" value="{{special.sanLoss.checkFailled}}" {{#if @root.document.system.flags.locked}} readonly{{/if}}{{/if}}>
+          {{/if}}
+        </div>
+        <div class="item-controls" style="justify-content: flex-end; flex: 0 0 6.5rem;">
+          {{#if (and (not document.system.flags.locked) (not document.system.flags.displayFormula))}}
+            <a class="item-control item-controlled-width" data-action="characteristics-roll" data-tooltip="CoC7.NpcRollCharacteristics"><i class="fa-solid fa-dice"></i></a>
+            <a class="item-control item-controlled-width" data-action="characteristics-average" data-tooltip="CoC7.NpcAvarageCharacteristics"><i class="fa-solid fa-balance-scale"></i></a>
+          {{/if}}
+          {{#if document.system.flags.locked}}
+            <a class="item-control item-controlled-width" data-action="toggle-flag" data-toggle-flag="locked" data-tooltip="CoC7.UnlockActor"><i class="fa-solid fa-lock"></i></a>
+          {{else}}
+            {{#if document.system.flags.displayFormula}}
+              <a class="item-control item-controlled-width" data-action="toggle-flag" data-toggle-flag="displayFormula" data-tooltip="CoC7.NpcCharacteristicsValues"><i class="fa-solid fa-user-edit"></i></a>
+            {{else}}
+              <a class="item-control item-controlled-width" data-action="toggle-flag" data-toggle-flag="displayFormula" data-tooltip="CoC7.NpcCharacteristicsFormula"><i class="fa-solid fa-square-root-alt"></i></a>
+            {{/if}}
+            <a class="item-control item-controlled-width" data-action="toggle-flag" data-toggle-flag="locked" data-tooltip="CoC7.LockActor"><i class="fa-solid fa-lock-open"></i></a>
           {{/if}}
         </div>
       </div>
-    {{/unless}}
-    {{#if isDead}}
-      <div class="condition-monitor {{#if data.system.status.dead.value}}status-on{{/if}}" data-condition="dead" style="flex: 0 0 100px;margin: 6px;">
-        <i style="font-size: 100px;color: darkred;line-height: 100px;" class="game-icon game-icon-tombstone"></i>
-      </div>
-    {{else}}
-      {{#if isDying}}
-        <div class="condition-monitor {{#if data.system.status.dying.value}}status-on{{/if}}" data-condition="dying" style="flex: 0 0 100px;margin: 6px;">
-          <i style="font-size: 100px;color: darkred;line-height: 100px;" class="fas fa-heartbeat"></i>
-        </div>
+    </div>
+    <div class="profile-img conditions">
+      {{#if document.system.conditions.dead.value}}
+        <a class="item-control{{#if document.system.conditions.dead.value}} status-on{{/if}}" data-action="condition" data-condition="dead">
+          <i class="game-icon game-icon-tombstone"></i>
+        </a>
+      {{else if document.system.conditions.dying.value}}
+        <a class="item-control{{#if document.system.conditions.dying.value}} status-on{{/if}}" data-action="condition" data-condition="dying">
+          <i class="fa-solid fa-heartbeat"></i>
+        </a>
       {{else}}
-        <img class="profile-img" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />
+        <img src="{{document.img}}" data-action="editImage" data-edit="img" />
       {{/if}}
-    {{/if}}
-  </header>
-
-  {{!-- Sheet Body --}}
-  {{#unless permissionLimited}}
-    <section class="sheet-body">
-      <div class="tab">
-
-        <section class="sheet-section">
-          <div class="section-header flexrow-coc7" data-pannel="skills">
-            <h3 class="flex1">{{localize 'CoC7.Skills'}}</h3>
-            {{#unless data.system.flags.locked}}
-              <div style="flex: 0 0 14px;">
-                <a class="add-item" title="{{localize 'CoC7.AddSkill'}}" data-type="skill"><i class="fas fa-plus-circle"></i></a>
-              </div>
-            {{/unless}}
-          </div>
-          <div class="pannel skills expanded" style="padding-top: 1px;border-bottom: 2px groove;">
-            {{> "systems/CoC7/templates/actors/npc-v2/tab/skills.hbs"}}
-          </div>
-        </section>
-
-        <section class="sheet-section">
-          <div class="section-header flexrow-coc7" data-pannel="combat">
-            <h3 class="flex1">{{localize 'CoC7.Combat'}}</h3>
-            {{#unless data.system.flags.locked}}
-              <div style="flex: 0 0 14px;">
-                <a class="add-item" title="{{localize 'CoC7.AddWeapon'}}" data-type="weapon" data-melee="true"><i class="fas fa-plus-circle"></i></a>
-              </div>
-            {{/unless}}
-          </div>
-          <div class="pannel combat expanded" style="padding-top: 1px;border-bottom: 2px groove;">
-            <div class="flexrow-coc7" style="border-bottom: 1px groove;justify-content: flex-end;">
-              <h4 {{#if attacksRollable}}class="attacks-per-round rollable" {{/if}} style="height:18px;padding: 1px 0 1px 2px;margin: 0;overflow: hidden;flex:0 0 auto;">{{localize 'CoC7.AttacksPerRound'}} :</h4>
-              {{#if data.system.flags.locked}}
-                <div style="flex: 0 0 3rem;height: fit-content;padding: 0 2px;text-align: center;">{{data.system.special.attacksPerRound}}</div>
-              {{else}}
-                <input style="flex: 0 0 3rem;height: fit-content;padding: 0 2px;text-align: center;" type="text" name="system.special.attacksPerRound" value="{{data.system.special.attacksPerRound}}">
-              {{/if}}
+    </div>
+  </div>
+  <div class="tab-group flexcol" data-panel="Skills" {{#if document.system.flags.panelSkills}} data-html-element-toggled="on" {{/if}}>
+    <div class="tab-group-header">
+      {{#unless document.system.flags.locked}}
+        <div class="item-controls">
+        </div>
+      {{/unless}}
+      <div class="tab-group-title">{{localize 'CoC7.Skills'}}</div>
+      {{#unless document.system.flags.locked}}
+        <div class="item-controls">
+          <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddSkill" data-type="skill"><i class="fa-regular fa-plus-circle"></i></a>
+        </div>
+      {{/unless}}
+    </div>
+    <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelSkills}} html-element-hidden{{/unless}}">
+      {{> 'systems/CoC7/templates/actors/npc-v2/tab/skills.hbs'}}
+    </div>
+  </div>
+  <div class="tab-group flexcol" data-panel="Combat" {{#if document.system.flags.panelCombat}} data-html-element-toggled="on" {{/if}}>
+    <div class="tab-group-header">
+      {{#unless document.system.flags.locked}}
+        <div class="item-controls">
+        </div>
+      {{/unless}}
+      <div class="tab-group-title">{{localize 'CoC7.Combat'}}</div>
+      {{#unless document.system.flags.locked}}
+        <div class="item-controls">
+          <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddWeapon" data-type="weapon" data-melee="true"><i class="fa-regular fa-plus-circle"></i></a>
+        </div>
+      {{/unless}}
+    </div>
+    <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelCombat}} html-element-hidden{{/unless}}">
+      <div class="combat-line flexrow">
+        <div></div>
+        <div class="attacks-per-round{{#if attacksRollable}} rollable{{/if}}">{{localize 'CoC7.AttacksPerRound'}}:</div>
+        <input class="detail-value{{#if special.attacksPerRound.activeEffectValue}} modified-by-active-effect{{/if}}" style="flex: 0 0 4rem;" type="text" {{#if special.attacksPerRound.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{special.attacksPerRound.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.special.attacksPerRound" value="{{special.attacksPerRound.sourceValue}}" {{/if}}{{else}} name="system.special.attacksPerRound" value="{{special.attacksPerRound.value}}" {{#if @root.document.system.flags.locked}} readonly {{/if}}{{/if}}>
+      </div>
+      {{> 'systems/CoC7/templates/actors/npc-v2/tab/combat.hbs'}}
+    </div>
+  </div>
+  {{#if hasInventory}}
+    <div class="tab-group flexcol" data-panel="Inventory" {{#if document.system.flags.panelInventory}} data-html-element-toggled="on" {{/if}}>
+      <div class="tab-group-header">
+        <div class="tab-group-title">{{localize 'CoC7.Inventory'}}</div>
+      </div>
+      <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelInventory}} html-element-hidden{{/unless}}">
+        {{> 'systems/CoC7/templates/actors/npc-v2/tab/inventory-items.hbs'}}
+      </div>
+    </div>
+  {{/if}}
+  <div class="tab-group tab-group-notes flexcol{{#unless document.system.flags.panelNotes}} sliding-out-notes slide-out-notes{{/unless}}" data-panel="Notes" data-slide-under="on">
+    <div class="tab-group-header">
+      <div class="tab-group-title">{{localize 'CoC7.Notes'}}</div>
+    </div>
+    <section class="tab-group-tab scrollable">
+      <prose-mirror name="system.biography.personalDescription.value" value="{{document.system.biography.personalDescription.value}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedBiographyPersonalDescription}}}</prose-mirror>
+    </section>
+  </div>
+  {{#if macros.length}}
+    <div class="tab-group flexcol" data-panel="Macro" {{#if document.system.flags.panelMacros}} data-html-element-toggled="on" {{/if}}>
+      <div class="tab-group-header">
+        <div class="tab-group-title">{{localize 'DOCUMENT.Macros'}}</div>
+      </div>
+      <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelMacros}} html-element-hidden{{/unless}}">
+        {{#each macros as |macro key|}}
+          <div class="macro-row flexrow">
+            <div class="item-control clickable" data-action="execute-macro" data-uuid="{{macro.uuid}}">{{macro.name}}</div>
+            <div class="item-controls">
+              <a class="item-control clickable" data-action="remove-macro" data-index="{{key}}"><i class="fa-solid fa-trash"></i></a>
             </div>
-            {{> "systems/CoC7/templates/actors/npc-v2/tab/combat.hbs"}}
           </div>
-        </section>
-
-        {{#if hasInventory}}
-          <section class="sheet-section">
-            <div class="section-header flexrow-coc7" data-pannel="inventory">
-              <h3 class="flex1">{{localize 'CoC7.Inventory'}}</h3>
-            </div>
-            <div class="inventory flexrow-coc7 pannel expanded">
-              {{> "systems/CoC7/templates/actors/npc-v2/tab/inventory-items.hbs"}}
-            </div>
-          </section>
-        {{/if}}
-
-        <section class="sheet-section">
-          <div class="section-header flexrow-coc7" data-pannel="description">
-            <h3 class="flex1">{{localize 'CoC7.Notes'}} </h3>
-          </div>
-          <div class="description pannel expanded resizededitor">
-            {{editor enrichedBiographyPersonalDescription target="system.biography.personalDescription.value" engine="prosemirror" button=true owner=owner editable=editable}}
-          </div>
-        </section>
-
-        {{#if macros.length}}
-          <section class="sheet-section">
-            <div class="section-header flexrow-coc7" data-pannel="macros">
-              <h3 class="flex1">{{localize 'DOCUMENT.Macros'}}</h3>
-            </div>
-            <div class="macros flexcol-coc7 pannel expanded" style="padding: 0 0.2em;">
-              {{#each macros as |macro key|}}
-                <div class="flexrow">
-                  <div class="macro-click execute-macro" data-uuid="{{macro.uuid}}">{{macro.name}}</div>
-                  <div class="macro-click remove-macro" style="flex: 0 0 auto" data-index="{{key}}"><i class="fas fa-trash"></i></div>
-                </div>
-              {{/each}}
-            </div>
-          </section>
-        {{/if}}
-
-        <section class="sheet-section">
-          <div class="section-header flexrow-coc7" data-pannel="effects">
-            <h3 class="flex1">{{localize 'CoC7.Effects'}} <i class="game-icon game-icon-aura"></i></h3>
-          </div>
-          <div class="effects flexrow-coc7 pannel">
-            {{> "systems/CoC7/templates/common/active-effects.hbs"}}
-          </div>
-        </section>
-
-        {{#if isKeeper}}
-          <section class="sheet-section">
-            <div class="section-header flexrow-coc7" data-pannel="keeper">
-              <h3 class="flex1 keeper-only-tab">{{localize 'CoC7.GmNotes'}} <i class="game-icon game-icon-tentacles-skull"></i></h3>
-            </div>
-            <div class="keeper pannel resizededitor">
-              {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
-              {{#if hasConditions}}
-                <div><a class="clear_conditions button">{{localize 'CoC7.ClearAllConditions'}}</a></div>
-              {{/if}}
-            </div>
-          </section>
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+  <div class="tab-group flexcol" data-panel="Effects" {{#if document.system.flags.panelEffects}} data-html-element-toggled="on" {{/if}}>
+    <div class="tab-group-header">
+      <div class="tab-group-title">{{localize 'CoC7.Effects'}} <i class="game-icon game-icon-aura"></i></div>
+    </div>
+    <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelEffects}} html-element-hidden{{/unless}}">
+      {{> 'systems/CoC7/templates/common/active-effects.hbs'}}
+    </div>
+  </div>
+  {{#if isKeeper}}
+    <div class="tab-group flexcol" data-panel="Keeper" {{#if document.system.flags.panelKeeper}} data-html-element-toggled="on" {{/if}}>
+      <div class="tab-group-header">
+        <div class="tab-group-title">{{localize 'CoC7.GmNotes'}} <i class="game-icon game-icon-tentacles-skull"></i></div>
+      </div>
+      <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelKeeper}} html-element-hidden{{/unless}}">
+        <prose-mirror name="system.description.keeper" value="{{document.system.description.keeper}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedDescriptionKeeper}}}</prose-mirror>
+        {{#if hasConditions}}
+          <div><a class="clear_conditions button">{{localize 'CoC7.ClearAllConditions'}}</a></div>
         {{/if}}
       </div>
-    </section>
-  {{/unless}}
-</form>
+    </div>
+  {{/if}}
+</div>

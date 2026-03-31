@@ -1,5 +1,12 @@
-import CoC7CharacterSheet from '../models/actor/character-sheet-v2.js'
+import CoCIDEditor from '../apps/coc-id-editor.js'
 
-export default function (app, html, data) {
-  CoC7CharacterSheet.renderSheet(app, html, data)
+/**
+ * Render Hook
+ * @param {ApplicationV2} application
+ * @param {HTMLElement} element
+ * @param {ApplicationRenderContext} context
+ * @param {ApplicationRenderOptions} options
+ */
+export default function (application, element, context, options) {
+  CoCIDEditor.addCoCIDSheetHeaderButton(application, element)
 }

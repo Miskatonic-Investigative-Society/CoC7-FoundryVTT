@@ -1,0 +1,27 @@
+<div class="sheet-extras">
+  {{#if canDragToken}}
+    <div class="tag token-drag-handle" draggable="true" data-tooltip="CoC7.ActorIsTokenHint" data-token-uuid="{{tokenUuid}}"><i class="fa-solid fa-user-circle"></i></div>
+  {{/if}}
+  {{#if linkedActor}}
+    <div class="tag" data-tooltip="CoC7.ActorDataLinked"><i class="fa-solid fa-link"></i></div>
+  {{else}}
+    <div class="tag" data-tooltip="CoC7.ActorDataNotLinked"><i class="fa-solid fa-unlink"></i></div>
+  {{/if}}
+  {{#if isToken}}
+    <div class="tag" data-tooltip="CoC7.ActorIsSyntheticActor"><i class="game-icon game-icon-backup"></i></div>
+  {{/if}}
+
+  {{#if allowUnlock}}
+    {{#if document.system.flags.locked}}
+      <a class="item-control button" data-action="toggle-flag" data-toggle-flag="locked" data-tooltip="CoC7.UnlockActor"><i class="fa-solid fa-lock"></i></a>
+    {{else}}
+      <a class="item-control button" data-action="toggle-flag" data-toggle-flag="locked" data-tooltip="CoC7.LockActor"><i class="fa-solid fa-lock-open"></i></a>
+    {{/if}}
+  {{else}}
+    {{#if document.system.flags.locked}}
+      <a class="item-control-disabled button" data-tooltip="CoC7.UnlockActor"><i class="fa-solid fa-lock"></i></a>
+    {{else}}
+      <a class="item-control-disabled button" data-tooltip="CoC7.LockActor"><i class="fa-solid fa-lock-open"></i></a>
+    {{/if}}
+  {{/if}}
+</div>

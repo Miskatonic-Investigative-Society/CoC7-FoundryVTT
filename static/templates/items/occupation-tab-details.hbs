@@ -1,0 +1,39 @@
+<section class="tab details flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="details">
+  {{#if tabs.details}}
+    <fieldset class="flexrow">
+      <legend>{{localize 'CoC7.OccupationType'}}</legend>
+      <div class="toggle-row flexrow">
+        <div class="toggle-attributes flexrow" data-set="type">
+          {{#each _type as |row|}}
+            <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+          {{/each}}
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="flexcol">
+      <legend>{{localize 'CoC7.OccupationPoints'}}</legend>
+      {{#each _occupationSkillPoints as |row|}}
+        <div class="form-group toggle-row flexrow" style="align-items: baseline;">
+          <div class="toggle-attributes flexrow" data-set="occupationSkillPoints.{{row.id}}">
+            <button class="toggle-switch{{#if row.selected}} switched-on{{/if}}" data-property="selected" type="button">{{localize row.label}}</button>
+          </div>
+          {{#if row.selected}}
+            <div class="toggle-attributes flexrow" data-set="occupationSkillPoints.{{row.id}}">
+              <button class="toggle-switch{{#if row.optional}} switched-on{{/if}}" data-property="optional" type="button">{{localize 'CoC7.Optional'}}</button>
+            </div>
+            <input type="number" name="system.occupationSkillPoints.{{row.id}}.multiplier" value="{{row.multiplier}}" placeholder="{{localize 'CoC7.Multiplier'}}" />
+          {{else}}
+            <div class="input-replacement-gap">&nbsp;</div>
+          {{/if}}
+        </div>
+      {{/each}}
+    </fieldset>
+    <fieldset class="flexrow">
+      <legend>{{localize 'CoC7.CoCIDFlag.keys.i.skill.credit-rating'}}</legend>
+      <div class="form-group flexrow">
+        <input type="number" name="system.creditRating.min" value="{{document.system.creditRating.min}}" placeholder="{{localize 'CoC7.Minimum'}}" />
+        <input type="number" name="system.creditRating.max" value="{{document.system.creditRating.max}}" placeholder="{{localize 'CoC7.Maximum'}}" />
+      </div>
+    </fieldset>
+  {{/if}}
+</section>

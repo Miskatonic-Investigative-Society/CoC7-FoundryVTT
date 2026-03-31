@@ -1,232 +1,292 @@
-/* global Dialog, game, renderTemplate, Roll */
-export default class CoC7CharacteristicRollDialog extends Dialog {
-  constructor (data, options) {
-    super(data, options)
+/* global ChatMessage CONFIG FormDataExtended foundry game Roll */
+import { FOLDER_ID } from '../constants.js'
+import CoC7Utilities from './utilities.js'
 
-    this.rolled = data.rolled || {}
+export default class CoC7CharacteristicRollDialog extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2) {
+  /**
+   * @inheritdoc
+   */
+  constructor (...args) {
+    const coc7Config = args.pop()
+    super(...args)
+    this.coc7Config = coc7Config
   }
 
-  activateListeners (html) {
-    super.activateListeners(html)
-    html.on('change', 'input', this._onChangeInput.bind(this))
-    html.on('submit', 'form', this._onSubmit.bind(this))
-    html.on(
-      'click',
-      '.roll-characteristic',
-      this._onRollCharacteristic.bind(this)
-    )
-    html.on(
-      'click',
-      '.increase-characteristic',
-      this._onIncreaseCharacteristic.bind(this)
-    )
-    html.on(
-      'click',
-      '.decrease-characteristic',
-      this._onDecreaseCharacteristic.bind(this)
-    )
-    html.on(
-      'click',
-      '.reset-characteristic',
-      this._onResetCharacteristic.bind(this)
-    )
-    html.on('click', 'button', this._onButton.bind(this))
-  }
-
-  async _onRollCharacteristic (event) {
-    event.preventDefault()
-    const li = event.currentTarget.closest('.item')
-    const characKey = li.dataset.key
-    await this.rollCharacteristic(characKey)
-  }
-
-  async _onIncreaseCharacteristic (event) {
-    event.preventDefault()
-    const li = event.currentTarget.closest('.item')
-    const characKey = li.dataset.key
-    this.increaseCharacteristic(characKey)
-  }
-
-  async _onDecreaseCharacteristic (event) {
-    event.preventDefault()
-    const li = event.currentTarget.closest('.item')
-    const characKey = li.dataset.key
-    this.decreaseCharacteristic(characKey)
-  }
-
-  async _onResetCharacteristic (event) {
-    event.preventDefault()
-    const li = event.currentTarget.closest('.item')
-    const characKey = li.dataset.key
-    this.resetCharacteristic(characKey)
-  }
-
-  async _onButton (event) {
-    const action = event.currentTarget.dataset.action
-    if (action === 'roll') {
-      for (const char of [
-        'str',
-        'con',
-        'siz',
-        'dex',
-        'app',
-        'int',
-        'pow',
-        'edu',
-        'luck'
-      ]) {
-        await this.rollCharacteristic(char)
-      }
-    }
-    this.checkTotal()
-    if (action === 'validate' && this.data.data.validate) {
-      this.close()
+  static DEFAULT_OPTIONS = {
+    tag: 'form',
+    classes: ['coc7', 'dialog'],
+    window: {
+      contentClasses: [
+        'standard-form'
+      ]
+    },
+    form: {
+      closeOnSubmit: false,
+      handler: CoC7CharacteristicRollDialog.#onSubmit
+    },
+    position: {
+      width: 360
     }
   }
 
-  async rollCharacteristic (key) {
-    const li = this._element[0].querySelector(`li.item[data-key=${key}]`)
-    const input = li?.querySelector('input')
-    const formula = this.data.data.characteristics.rolls[key]
-    if (input && formula) {
-      if (isNaN(Number(formula))) {
-        const roll = new Roll(formula)
-        await roll.evaluate({ async: true })
-        roll.toMessage({
-          flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
-            label: this.data.data.characteristics.list[key].label,
-            formula
-          })
-        })
-        input.value = roll.total
-      } else input.value = Number(formula)
-      this.data.data.characteristics.values[key] = Number(input.value)
-      if (!this.rolled) this.rolled = {}
-      this.rolled[key] = true
+  static PARTS = {
+    form: {
+      template: 'systems/' + FOLDER_ID + '/templates/apps/char-roll.hbs',
+      scrollable: ['']
+    },
+    footer: {
+      template: 'templates/generic/form-footer.hbs'
     }
-    this.checkTotal()
   }
 
-  async increaseCharacteristic (key) {
-    const li = this._element[0].querySelector(`li.item[data-key=${key}]`)
-    const input = li?.querySelector('input')
-    if (input) {
-      input.value = Number(input.value) + 1
-      this.data.data.characteristics.values[key] = Number(input.value)
-    }
-    this.checkTotal()
-  }
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
 
-  async decreaseCharacteristic (key) {
-    const li = this._element[0].querySelector(`li.item[data-key=${key}]`)
-    const input = li?.querySelector('input')
-    if (input && Number(input.value) > 0) {
-      input.value = Number(input.value) - 1
-      this.data.data.characteristics.values[key] = Number(input.value)
-    }
-    this.checkTotal()
-  }
-
-  async resetCharacteristic (key) {
-    const li = this._element[0].querySelector(`li.item[data-key=${key}]`)
-    const input = li?.querySelector('input')
-    if (input) {
-      input.value = null
-      this.data.data.characteristics.values[key] = 0
-    }
-    this.checkTotal()
-  }
-
-  async _onChangeInput (event) {
-    event.preventDefault()
-    const input = event.currentTarget
-    const value = Number(input.value)
-    if (!isNaN(value)) {
-      this.data.data.characteristics.values[input.name] = value
-    }
-
-    this.checkTotal()
-  }
-
-  checkTotal () {
-    this.data.data.characteristics.points.total = 0
-    for (const [key, value] of Object.entries(
-      this.data.data.characteristics.values
-    )) {
-      if (key !== 'luck') {
-        this.data.data.characteristics.points.total += value
-      }
-    }
-
-    const validation = this._element[0].querySelector('.points')
-    if (this.data.data.characteristics.points.enabled) {
-      if (
-        Number(this.data.data.characteristics.points.total) !==
-        Number(this.data.data.characteristics.points.value)
-      ) {
-        validation.classList.add('warning')
-        this.data.data.validate = false
+    this.element.querySelectorAll('input').forEach((element) => element.addEventListener('keyup', async (event) => {
+      this.formKeyFromEvent(event)
+      const total = this.totalPoints
+      this.element.querySelector('.total-points').innerText = total
+      const pointsSummary = this.element.querySelector('.points-summary')
+      if (this.pointsWarning) {
+        pointsSummary.classList.add('warning')
       } else {
-        validation.classList.remove('warning')
-        this.data.data.validate = true
+        pointsSummary.classList.remove('warning')
       }
-      const value = validation.querySelector('.value')
-      value.innerText = this.data.data.characteristics.points.value
-    }
+    }))
+    this.element.querySelectorAll('.roll-characteristic').forEach((element) => element.addEventListener('click', async (event) => {
+      const key = this.formKeyFromEvent(event)
+      await this.rollCharacteristic(key)
+      this.render({ force: true })
+    }))
+    this.element.querySelectorAll('.increase-characteristic').forEach((element) => element.addEventListener('click', async (event) => {
+      const key = this.formKeyFromEvent(event)
+      this.coc7Config.values[key] = Math.min(100, this.coc7Config.values[key] + (CoC7Utilities.isCtrlKey(event) ? 10 : 1))
+      this.render({ force: true })
+    }))
+    this.element.querySelectorAll('.decrease-characteristic').forEach((element) => element.addEventListener('click', async (event) => {
+      const key = this.formKeyFromEvent(event)
+      this.coc7Config.values[key] = Math.max(0, this.coc7Config.values[key] - (CoC7Utilities.isCtrlKey(event) ? 10 : 1))
+      this.render({ force: true })
+    }))
+    this.element.querySelectorAll('.reset-characteristic').forEach((element) => element.addEventListener('click', async (event) => {
+      const key = this.formKeyFromEvent(event)
+      this.coc7Config.values[key] = null
+      this.render({ force: true })
+    }))
+  }
 
-    const total = validation.querySelector('.total')
-    total.innerText = this.data.data.characteristics.points.total
-
-    if (this.data.data.characteristics.rolls.enabled) {
-      this.data.data.validate = Object.values(this.data.data.characteristics.values).filter(val => isNaN(parseInt(val))).length === 0
+  /**
+   * Roll Characteristic or luck
+   * @param {string} key
+   */
+  async rollCharacteristic (key) {
+    if (key === 'luck' && this.coc7Config.attribs.luck.formula) {
+      const roll = await new Roll(this.coc7Config.attribs.luck.formula).roll()
+      roll.toMessage({
+        flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
+          label: CoC7Utilities.getAttributeNames('lck')?.label,
+          formula: this.coc7Config.attribs.luck.formula
+        })
+      })
+      this.coc7Config.values.luck = roll.total
+    } else if (typeof this.coc7Config.characteristics[key] !== 'undefined' && this.coc7Config.characteristics[key].formula) {
+      const roll = await new Roll(this.coc7Config.characteristics[key].formula).roll()
+      roll.toMessage({
+        flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
+          label: CoC7Utilities.getCharacteristicNames(key)?.label,
+          formula: this.coc7Config.characteristics[key].formula
+        })
+      })
+      this.coc7Config.values[key] = roll.total
     }
   }
 
-  async _onSubmit (event) {
-    event.preventDefault()
+  /**
+   * Submit the configuration form.
+   * @param {SubmitEvent} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
+   * @returns {Promise<void>}
+   */
+  static async #onSubmit (event, form, formData) {
+    if (event.submitter.dataset.action === 'roll') {
+      const rolls = []
+      for (const [key, field] of CONFIG.Actor.dataModels.character.schema.getField('characteristics').entries()) {
+        if (this.coc7Config.characteristics[key].formula) {
+          const roll = await new Roll(this.coc7Config.characteristics[key].formula, {}, { flavor: game.i18n.localize(field.hint) }).roll()
+          rolls.push(roll)
+          this.coc7Config.values[key] = roll.total
+        }
+      }
+      if (this.coc7Config.attribs.luck.formula) {
+        const roll = await new Roll(this.coc7Config.attribs.luck.formula, {}, { flavor: game.i18n.localize(CONFIG.Actor.dataModels.character.schema.getField('attribs').getField('lck').hint) }).roll()
+        rolls.push(roll)
+        this.coc7Config.values.luck = roll.total
+      }
+      ChatMessage.create({
+        rolls
+      })
+      this.render({ force: true })
+    } else if (event.submitter.dataset.action === 'validate') {
+      let okay = Object.values(this.coc7Config.values).every(v => typeof v === 'number')
+      if (this.coc7Config.isPoints && this.coc7Config.points !== this.totalPoints) {
+        okay = false
+      }
+      if (okay) {
+        this.coc7Config.resolve(this.coc7Config.values)
+        this.close()
+      }
+    }
   }
 
-  static async create (data) {
-    const rolled = {}
-    data.characteristics.points.total = 0
-    for (const [key, value] of Object.entries(data.characteristics.values)) {
+  /**
+   * Are rolls and points valid?
+   * @returns {boolean}
+   */
+  get pointsWarning () {
+    return (this.coc7Config.isPoints && this.totalPoints !== this.coc7Config.points) || !Object.values(this.coc7Config.values).every(v => typeof v === 'number')
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get title () {
+    return game.i18n.localize(this.coc7Config.isPoints ? 'CoC7.SpendPoints' : 'CoC7.RollCharac')
+  }
+
+  /**
+   * Total characteristic points
+   * @returns {int}
+   */
+  get totalPoints () {
+    return Object.keys(this.coc7Config.characteristics).reduce((c, key) => {
       if (key !== 'luck') {
-        data.characteristics.points.total += value || 0
+        c += parseInt(this.coc7Config.values[key] ?? 0, 10)
       }
-      if (!isNaN(value) && value > 0) {
-        rolled[key] = true
+      return c
+    }, 0)
+  }
+
+  /**
+   * Update values and get key from Event
+   * @param {Event} event
+   * @returns {string}
+   */
+  formKeyFromEvent (event) {
+    event.preventDefault()
+    const li = event.currentTarget.closest('.item')
+    const form = event.currentTarget.closest('form')
+    const formData = new (foundry.applications.ux.FormDataExtended ?? FormDataExtended)(form)
+    for (const key in this.coc7Config.values) {
+      if (typeof formData.object[key] !== 'undefined' && formData.object[key].toString().length && !isNaN(Number(formData.object[key]))) {
+        this.coc7Config.values[key] = Number(formData.object[key])
+      } else {
+        this.coc7Config.values[key] = null
       }
     }
+    return li.dataset.key
+  }
 
-    if (data.characteristics.points.enabled) {
-      if (
-        Number(data.characteristics.points.total) !==
-        Number(data.characteristics.points.value)
-      ) {
-        data.pointsWarning = true
-      }
-    }
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
 
-    const html = await renderTemplate(
-      'systems/CoC7/templates/apps/char-roll.hbs',
-      data
-    )
-    return new Promise(resolve => {
-      const dlg = new CoC7CharacteristicRollDialog(
-        {
-          title: data.title,
-          content: html,
-          data,
-          rolled,
-          buttons: {},
-          close: () => {
-            if (data.validate) return resolve(true)
-            else return resolve(false)
+    switch (partId) {
+      case 'form':
+        context.characteristics = {}
+        for (const [key, field] of CONFIG.Actor.dataModels.character.schema.getField('characteristics').entries()) {
+          context.characteristics[key] = {
+            formula: this.coc7Config.characteristics[key].formula,
+            label: field.hint
           }
-        },
-        { classes: ['coc7', 'dialog', 'char-select'] }
-      )
-      dlg.render(true)
+        }
+        context.isPoints = this.coc7Config.isPoints
+        context.isRolls = this.coc7Config.isRolls
+        context.totalPoints = this.totalPoints
+        context.points = this.coc7Config.points
+        context.pointsWarning = this.pointsWarning
+        context.luck = {
+          formula: this.coc7Config.attribs.luck.formula,
+          label: CONFIG.Actor.dataModels.character.schema.getField('attribs').getField('lck').hint
+        }
+        context.values = this.coc7Config.values
+        break
+      case 'footer':
+        context.buttons = []
+        if (this.coc7Config.isRolls) {
+          context.buttons.push({
+            type: 'roll',
+            action: 'roll',
+            label: 'CoC7.RollDice',
+            icon: 'fa-solid fa-dice'
+          })
+        }
+        context.buttons.push({
+          type: 'submit',
+          action: 'validate',
+          label: 'CoC7.Validate',
+          icon: 'fa-solid fa-check'
+        })
+        break
+    }
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<HTMLElement>}
+   */
+  async _renderFrame (options) {
+    const frame = await super._renderFrame(options)
+
+    /* // FoundryV12 polyfill */
+    if (!foundry.utils.isNewerVersion(game.version, 13)) {
+      frame.setAttribute('open', true)
+    }
+
+    return frame
+  }
+
+  /**
+   * Create popup
+   * @param {object} options
+   * @param {boolean} options.isPoints
+   * @param {boolean} options.isRolls
+   * @param {integer} options.points
+   * @param {object} options.attribs
+   * @param {object} options.characteristics
+   * @returns {object}
+   */
+  static async create ({ isPoints = false, isRolls = false, points = 460, attribs = {}, characteristics = {} } = {}) {
+    const values = {
+      luck: attribs.luck.value
+    }
+    for (const key in characteristics) {
+      values[key] = characteristics[key].value
+    }
+    return await new Promise(resolve => {
+      new CoC7CharacteristicRollDialog({}, {}, {
+        attribs,
+        characteristics,
+        isPoints,
+        isRolls,
+        points,
+        resolve,
+        values
+      }).render({ force: true })
     })
   }
 }

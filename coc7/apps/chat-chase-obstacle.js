@@ -1,976 +1,1182 @@
-/* global foundry, game, Roll, ui */
-import CoC7Check from './check.js'
-import { EnhancedChatCard } from '../common/chatcardlib/src/chatcardlib.js'
+/* global ChatMessage foundry fromUuid game renderTemplate Roll ui */
+import { FOLDER_ID } from '../constants.js'
 import CoC7DicePool from './dice-pool.js'
-import { _participant } from '../models/chase/participant.js'
+import CoC7SystemSocket from './system-socket.js'
 import CoC7Utilities from './utilities.js'
-import { createInlineRoll } from '../chat/helper.js'
 
-export default class CoC7ChatChaseObstacle extends EnhancedChatCard {
-  /** @override */
-  static get defaultOptions () {
-    const options = foundry.utils.mergeObject(super.defaultOptions, {
-      template: 'systems/CoC7/templates/chat/chase-obstacle.hbs',
-      GMUpdate: true
-    })
-    options.classes.push('obstacle-card')
-    return options
+export default class CoC7ChatChaseObstacle {
+  #asyncChase
+  #breakOrNegotiateDefined
+  #cardOpen
+  #cardResolved
+  #checkThreshold
+  #closed
+  #consumeBonusDice
+  #dicePool
+  #failedConsequencesRolled
+  #forward
+  #hasBonusDice
+  #ignoreArmor
+  #locationId
+  #movementActionArray
+  #movePlayer
+  #obstacle
+  #obstacleDamageRolled
+  #obstacleDestroyed
+  #obstacleDefined
+  #participantId
+  #playerActionDefined
+  #reflectObstacleChanges
+  #targetArmor
+  #totalActionCost
+  #totalCautiousApproach
+  #totalObstacleDamage
+  #totalPlayerDamageTaken
+  #tryToBreak
+  #tryToNegotiate
+  #weaponKey
+  #weaponOtherDamage
+
+  /**
+   * Constructor
+   */
+  constructor () {
+    this.#breakOrNegotiateDefined = false
+    this.#cardOpen = true
+    this.#cardResolved = false
+    this.#checkThreshold = 1
+    this.#closed = false
+    this.#consumeBonusDice = true
+    this.#dicePool = CoC7DicePool.newPool({ })
+    this.#failedConsequencesRolled = false
+    this.#forward = false
+    this.#hasBonusDice = false
+    this.#ignoreArmor = false
+    this.#locationId = ''
+    this.#movementActionArray = []
+    this.#movePlayer = false
+    this.#obstacle = {
+      checkName: '',
+      failedActionCost: 0,
+      failedCheckDamage: 0,
+      hasActionCost: false,
+      hasDamage: false,
+      hasHitPoints: false,
+      HitPoints: 0,
+      isBarrier: true,
+      name: ''
+    }
+    this.#obstacleDamageRolled = false
+    this.#obstacleDefined = false
+    this.#obstacleDestroyed = false
+    this.#participantId = ''
+    this.#playerActionDefined = false
+    this.#reflectObstacleChanges = true
+    this.#targetArmor = 0
+    this.#totalActionCost = 0
+    this.#totalCautiousApproach = 0
+    this.#totalObstacleDamage = 0
+    this.#totalPlayerDamageTaken = 0
+    this.#tryToBreak = false
+    this.#tryToNegotiate = false
+    this.#weaponKey = ''
+    this.#weaponOtherDamage = ''
   }
 
-  /** @override */
-  async getData () {
-    const data = await super.getData()
-
-    data.status = []
-    data.strings = {}
-    data.displayActorOnCard = game.settings.get('CoC7', 'displayActorOnCard')
-    // data.participant = new _participant(this.participantData)
-
-    data.status.push({
-      name:
-        game.i18n.localize('CoC7.ActionCost') + ` :${this.data.totalActionCost}`
-    })
-
-    data.card.breakableObstacle =
-      data.data.obstacle?.barrier && data.data.obstacle.hasHitPoints // TODO: Check if usefull
-    data.card.validCheck = false
-
-    if (
-      data.data.states?.obstacleDefined &&
-      (data.data.obstacle.hazard ||
-        (data.data.obstacle.barrier && !data.data.obstacle.hasHitPoints))
-    ) {
-      data.data.states.tryToNegotiate = true
-      data.data.states.tryToBreak = false
-      data.data.states.breakOrNegotiateDefined = true
-    }
-
-    if (this.participant?.actor) {
-      data.skill = this.participant.actor.find(data.data.obstacle.checkName)
-      data.checkOptions = this.chase.getActorSkillsAndCharacteristics(
-        this.data.participantUuid
-      )
-      if (data.skill) {
-        data.validCheck = true
-        data.validSkill = true
-      } else if (data.data.obstacle.checkName && data.data.checkThreshold) {
-        data.validCheck = true
-      }
-    } else {
-      data.checkOptions = this.chase.allSkillsAndCharacteristics
-      data.dummyActor = true
-      if (data.data.obstacle.checkName && data.data.checkThreshold) {
-        data.validCheck = true
-      }
-    }
-
-    if (!data.data.bonusDice) data.data.bonusDice = 0
-
-    if (
-      data.data.bonusDice < 2 &&
-      data.data.totalActionCost < data.data.movementAction
-    ) {
-      data.canTakeCautiousApproach = true
-    }
-
-    data.customWeapon = false
-    if (this.data.weaponChoice === '0') {
-      data.customWeapon = true
-    }
-
-    if (data.validCheck) {
-      let checkName, value
-      if (data.skill) {
-        checkName = data.skill.value.name
-        value = data.skill.value.value
-      } else {
-        checkName = data.data.obstacle.checkName
-        value = data.data.checkThreshold
-      }
-      data.strings.checkRollRequest = game.i18n.format('CoC7.AskRoll', {
-        name: checkName,
-        value
-      })
-      if (data.data.bonusDice !== 0) {
-        if (data.data.bonusDice > 0) {
-          data.strings.checkRollRequest += ` (+${data.data.bonusDice})`
-        } else data.strings.checkRollRequest += ` (${data.data.bonusDice})`
-      }
-    }
-
-    if (data.data.states?.obstacleDefined) {
-      data.strings.obstacleDefined = game.i18n.format('CoC7.FacingObstacle', {
-        type: data.data.obstacle.barrier
-          ? game.i18n.localize('CoC7.ABarrier')
-          : game.i18n.localize('CoC7.AHazard')
-      })
-      if (data.data.obstacle.name) {
-        data.strings.obstacleDefined += ` (${data.data.obstacle.name})`
-      }
-
-      data.data.states.canAskRoll = true
-      // data.data.states.obstacleCanBeBroken = false
-      if (data.data.obstacle.barrier) {
-        data.status.push({ name: game.i18n.localize('CoC7.Barrier') })
-        if (data.data.obstacle.hasHitPoints) {
-          data.status.push({ name: game.i18n.localize('CoC7.Breakable') })
-          // data.data.states.obstacleCanBeBroken = true
+  /**
+   * Create melee initiator message
+   * @param {object} options
+   * @param {string} options.chaseUuid
+   * @param {string} options.locationId
+   * @param {string} options.participantId
+   * @param {boolean} options.forward
+   */
+  static async createMessage ({ chaseUuid, locationId, participantId, forward } = {}) {
+    if (chaseUuid && locationId && typeof forward === 'boolean') {
+      const chase = await fromUuid(chaseUuid)
+      if (chase) {
+        const location = chase.system.locations.list.find(l => l.uuid === locationId)
+        const allParticipants = (await chase.system.allParticipants()).all
+        const participant = allParticipants.find(l => l.uuid === participantId)
+        if (location && participant) {
+          const check = new CoC7ChatChaseObstacle()
+          check.chase = chaseUuid
+          check.#breakOrNegotiateDefined = false
+          check.#dicePool.poolModifier = participant.bonusDice
+          check.#forward = forward
+          check.#hasBonusDice = participant.bonusDice !== 0
+          check.#locationId = locationId
+          check.#movementActionArray = participant.movementActionArray
+          check.#obstacle = {
+            checkName: location.obstacleDetails.checkName,
+            failedActionCost: location.obstacleDetails.failedActionCost,
+            failedCheckDamage: location.obstacleDetails.failedCheckDamage,
+            hasActionCost: location.obstacleDetails.hasActionCost,
+            hasDamage: location.obstacleDetails.hasDamage,
+            hasHitPoints: location.obstacleDetails.hasHitPoints,
+            HitPoints: location.obstacleDetails.HitPoints,
+            isBarrier: location.obstacleDetails.barrier,
+            name: location.obstacleDetails.name
+          }
+          check.#obstacleDefined = false
+          check.#participantId = participantId
+          check.#targetArmor = (participant.actor?.isToken ? participant.actor.token.actor : participant.actor)?.system?.attribs.armor.value ?? '0'
+          const chatData = await check.getChatData()
+          await ChatMessage.create(chatData)
+          return
         }
       }
-      if (data.data.obstacle.hazard) {
-        data.status.push({ name: game.i18n.localize('CoC7.Hazard') })
-      }
+    }
+    ui.notifications.warn('CoC7.Errors.UnparsableRoll', { localize: true })
+  }
 
-      if (this.data.states.tryToNegotiate) {
-        if (!data.validCheck) {
-          data.status.push({
-            name: game.i18n.localize('CoC7.NoValidCheck'),
-            css: 'error'
-          })
-          data.strings.EnterValueTitle = game.i18n.format(
-            'CoC7.SkillSelectBase',
-            { name: data.data.obstacle.checkName }
-          )
-          if (!data.data.checkThreshold) data.data.states.canAskRoll = false
-        } else if (!data.validSkill) {
-          data.status.push({
-            name: game.i18n.localize('CoC7.NoValidSkill'),
-            css: 'warning'
-          })
+  /**
+   * Get chase item promise
+   * @returns {Promise<Document>} async Actor
+   */
+  get chase () {
+    return this.#asyncChase
+  }
+
+  /**
+   * Set chase item from uuid
+   * @param {string} value
+   */
+  set chase (value) {
+    this.#asyncChase = (typeof value === 'string' ? fromUuid(value) : undefined)
+  }
+
+  /**
+   * Is armor formula
+   * @returns {boolean}
+   */
+  get #isArmorFormula () {
+    return (!this.#targetArmor.toString().match(/^\d+$/))
+  }
+
+  /**
+   * Roll Armor
+   * @param {string} messageId
+   */
+  async rollArmor (messageId) {
+    const chase = (await this.chase)
+    const allParticipants = (await chase.system.allParticipants()).all
+    const participant = allParticipants.find(l => l.uuid === this.#participantId)
+    if (participant) {
+      const newValue = document.querySelector('[data-message-id="' + messageId + '"] input[type=text]')?.value
+      if (typeof newValue !== 'undefined') {
+        this.#targetArmor = newValue
+      }
+      this.#targetArmor = (await new Roll(this.#targetArmor, (participant.actor?.isToken ? participant.actor.token.actor : participant.actor)?.parsedValues() ?? {}).roll()).total
+    }
+  }
+
+  /**
+   * Add luck to existing pool
+   * @param {integer} luckSpend
+   * @returns {boolean}
+   */
+  async addLuck (luckSpend) {
+    const chase = (await this.chase)
+    const allParticipants = (await chase.system.allParticipants()).all
+    const participant = allParticipants.find(l => l.uuid === this.#participantId)
+    if (participant) {
+      const newLuck = parseInt(participant.actor?.system.attribs.lck.value ?? 0, 10) - parseInt(luckSpend, 10)
+      if (newLuck >= 0) {
+        if (await participant.actor.spendLuck(luckSpend) !== false) {
+          this.#dicePool.luckSpent = this.#dicePool.luckSpent + parseInt(luckSpend, 10)
+          return true
         }
       }
+    }
+    return false
+  }
 
-      if (this.data.states.tryToBreak) {
-        let damageStatus = game.i18n.localize('CoC7.BreakDown')
-        if (this.data.objects?.obstacleDamageRoll?.total) {
-          damageStatus += ` : ${this.data.objects.obstacleDamageRoll.total}`
-        }
-        data.status.push({
-          name: damageStatus
-        })
-
-        if (this.data.states.obstacleDamageRolled) {
-          if (this.data.objects?.obstacleDamageRoll?.total <= 0) {
-            data.strings.obstacleDamage =
-              game.i18n.localize('CoC7.NoDamageDealt')
+  /**
+   * Click Event
+   * @param {ClickEvent} event
+   * @param {Document} message
+   */
+  static async _onClickEvent (event, message) {
+    switch (event.currentTarget?.dataset?.action) {
+      case 'setValue':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            switch (event.currentTarget.dataset.set) {
+              case 'obstacle.barrier':
+                check.#obstacle.isBarrier = true
+                break
+              case 'obstacle.hazard':
+                check.#obstacle.isBarrier = false
+                break
+              case 'obstacle.hasHitPoints':
+                check.#obstacle.hasHitPoints = !check.#obstacle.hasHitPoints
+                break
+              case 'consumeBonusDice':
+                check.#consumeBonusDice = !check.#consumeBonusDice
+                break
+              case 'reflectObstacleChanges':
+                check.#reflectObstacleChanges = !check.#reflectObstacleChanges
+                break
+              case 'obstacleDestroyed':
+                check.#obstacleDestroyed = !check.#obstacleDestroyed
+                break
+              case 'ignoreArmor':
+                check.#ignoreArmor = !check.#ignoreArmor
+                break
+              case 'obstacle.hasActionCost':
+                check.#obstacle.hasActionCost = !check.#obstacle.hasActionCost
+                break
+              case 'obstacle.hasDamage':
+                check.#obstacle.hasDamage = !check.#obstacle.hasDamage
+                break
+              case 'movePlayer':
+                check.#movePlayer = !check.#movePlayer
+                break
+            }
+            check.updateMessage()
           } else {
-            data.inlineDamageRoll = createInlineRoll(
-              this.data.objects.obstacleDamageRoll
-            )?.outerHTML
-            data.strings.obstacleDamage = game.i18n.format('CoC7.DamageDealt', {
-              value: data.inlineDamageRoll
-            })
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
           }
         }
+        break
+      case 'defineObstacle':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            const name = document.querySelector('li.chat-message.message[data-message-id="' + message.id + '"] input[data-set="obstacle.name"]')
+            if (name) {
+              check.#obstacle.name = name.value
+            }
+            check.#obstacleDefined = true
+            if (!check.#obstacle.isBarrier || (check.#obstacle.isBarrier && !check.#obstacle.hasHitPoints)) {
+              check.#tryToNegotiate = true
+              check.#tryToBreak = false
+              check.#breakOrNegotiateDefined = true
+            }
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'tryToBreakDownObstacle':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#tryToNegotiate = false
+            check.#tryToBreak = true
+            check.#breakOrNegotiateDefined = true
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'tryToNegotiateObstacle':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#tryToNegotiate = true
+            check.#tryToBreak = false
+            check.#breakOrNegotiateDefined = true
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'cancelObstacleDefinition':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#obstacleDefined = false
+            check.#tryToNegotiate = false
+            check.#tryToBreak = false
+            check.#breakOrNegotiateDefined = false
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'takeCautiousApproach':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            const chase = (await check.chase)
+            const allParticipants = (await chase.system.allParticipants()).all
+            const participant = allParticipants.find(l => l.uuid === check.#participantId)
+            if (participant) {
+              check.#totalCautiousApproach++
+              check.#dicePool.poolModifier++
+              check.#totalActionCost++
+              check.#hasBonusDice = true
+              if (participant.actions <= check.#totalActionCost) {
+                check.#consumeBonusDice = false
+                check.#cardResolved = true
+                check.#movePlayer = false
+              } else {
+                check.#consumeBonusDice = true
+              }
+              check.updateMessage()
+            } else {
+              ui.notifications.warn('CoC7.Errors.UnparsableActor', { localize: true })
+            }
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'requestRoll':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#playerActionDefined = true
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'askRollObstacleDamage':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#playerActionDefined = true
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'rollObstacleDamage':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            const chase = (await check.chase)
+            const allParticipants = (await chase.system.allParticipants()).all
+            const participant = allParticipants.find(l => l.uuid === check.#participantId)
+            const listWeapons = participant.actorWeapons(check.#weaponOtherDamage)
+            const weapon = listWeapons.find(w => w.value === check.#weaponKey)
+            if (weapon) {
+              const roll = await new Roll(weapon.damage.toString(), {}, { reason: 'obstacleDamage' }).roll()
+              check.#obstacleDamageRolled = true
+              check.message.rolls.push(roll)
+              check.#totalActionCost++
+              check.#cardResolved = true
+              check.#totalObstacleDamage = roll.total
+              check.#obstacleDestroyed = check.#obstacle.HitPoints <= check.#totalObstacleDamage
+            }
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'rollSkillCheck':
+        if (!event.currentTarget.classList.contains('disabled')) {
+          event.currentTarget.classList.add('disabled')
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            await check.#dicePool.roll()
+            check.#totalActionCost++
+            if (check.#dicePool.isSuccess) {
+              check.#movePlayer = true
+              check.#cardResolved = true
+            }
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'rollArmor':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            await check.rollArmor(message.id)
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
+      case 'rollFailConsequences':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            if (check.#obstacle.hasDamage && !check.#dicePool.isSuccess) {
+              const roll = await new Roll(check.#obstacle.failedCheckDamage.toString(), {}, { reason: 'failedCheckDamage' }).roll()
+              check.message.rolls.push(roll)
+              check.#totalPlayerDamageTaken = Math.max(0, parseInt(roll.total, 10) - check.#targetArmor)
+            }
+            if (!check.#obstacle.isBarrier && check.#obstacle.hasActionCost && !check.#dicePool.isSuccess) {
+              const roll = await new Roll(check.#obstacle.failedActionCost.toString(), {}, { reason: 'failedActionCost' }).roll()
+              check.message.rolls.push(roll)
+              check.#totalActionCost += (roll.total - 1) // 1 action already spend for skill check
+            }
+            check.#failedConsequencesRolled = true
+            check.#cardResolved = true
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
+      case 'luck':
+        {
+          const luckSpend = event.currentTarget?.dataset?.luckSpend
+          if (luckSpend) {
+            const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+            if (await check.addLuck(parseInt(luckSpend, 10))) {
+              check.updateMessage()
+            }
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'validateCard':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            const chase = (await check.chase)
+            const allParticipants = (await chase.system.allParticipants()).all
+            const participant = allParticipants.find(l => l.uuid === check.#participantId)
+            if (participant) {
+              const obstacleUpdates = {
+                obstacleDetails: {}
+              }
+              const participantUpdates = {}
+              if (check.#reflectObstacleChanges) {
+                const location = chase.system.locations.list.find(l => l.uuid === check.#locationId)
+                if (location) {
+                  const obstacle = foundry.utils.duplicate(check.#obstacle)
+                  if (obstacle.isBarrier) {
+                    obstacleUpdates.obstacleDetails.barrier = true
+                    obstacleUpdates.obstacleDetails.hazard = false
+                  } else {
+                    obstacleUpdates.obstacleDetails.barrier = false
+                    obstacleUpdates.obstacleDetails.hazard = true
+                  }
+                  delete obstacle.isBarrier
+                  for (const k in obstacle) {
+                    if (location.obstacleDetails[k] !== obstacle[k]) {
+                      obstacleUpdates.obstacleDetails[k] = obstacle[k]
+                    }
+                  }
+                }
+              }
+              if (check.#obstacleDestroyed) {
+                obstacleUpdates.obstacle = false
+                obstacleUpdates.obstacleDetails.hazard = false
+                obstacleUpdates.obstacleDetails.barrier = false
+              }
+
+              if (check.#totalObstacleDamage > 0 && check.#obstacle.hasHitPoints) {
+                obstacleUpdates.obstacleDetails.HitPoints = Math.max(0, parseInt(obstacleUpdates.obstacleDetails.HitPoints, 10) - check.#totalObstacleDamage)
+              }
+
+              if (check.#totalPlayerDamageTaken > 0) {
+                if (participant.actor) {
+                  await participant.actor.dealDamage(check.#totalPlayerDamageTaken, { ignoreArmor: true })
+                } else {
+                  participantUpdates.syntheticHp = Math.max(0, parseInt(participant.syntheticHp, 10) - check.#totalPlayerDamageTaken)
+                }
+              }
+
+              if (check.#totalActionCost > 0) {
+                participantUpdates.currentMovementActions = parseInt(participant.currentMovementActions, 10) - check.#totalActionCost
+              }
+
+              if (check.#consumeBonusDice) {
+                participantUpdates.bonusDice = 0
+              } else {
+                participantUpdates.bonusDice = check.#dicePool.poolModifier
+              }
+
+              if (check.#movePlayer) {
+                chase.system.moveParticipantToLocation(participant.uuid, check.#locationId, { render: false })
+              }
+
+              const changes = {
+                system: {}
+              }
+              if (Object.keys(participantUpdates).length > 0) {
+                changes.system.participants = foundry.utils.duplicate(chase.system.participants)
+                const found = changes.system.participants.findIndex(p => p.uuid === participant.uuid)
+                if (found > -1) {
+                  changes.system.participants[found] = foundry.utils.mergeObject(changes.system.participants[found], participantUpdates)
+                }
+              }
+              if (Object.keys(obstacleUpdates.obstacleDetails).length > 0 || Object.keys(obstacleUpdates).length > 1) {
+                changes.system.locations = {
+                  list: foundry.utils.duplicate(chase.system.locations.list)
+                }
+                const found = changes.system.locations.list.findIndex(p => p.uuid === check.#locationId)
+                if (found > -1) {
+                  changes.system.locations.list[found] = foundry.utils.mergeObject(changes.system.locations.list[found], obstacleUpdates)
+                }
+              }
+              if (Object.keys(changes.system).length) {
+                chase.update(changes, { render: false })
+              }
+              check.#closed = true
+              await chase.system.activateNextParticipantTurn() // Render will be done there !
+              check.updateMessage()
+            }
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
+    }
+  }
+
+  /**
+   * Change Event
+   * @param {ClickEvent} event
+   * @param {Document} message
+   */
+  static async _onChangeEvent (event, message) {
+    switch (event.currentTarget?.dataset?.changeSet) {
+      case 'check-name':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#obstacle.checkName = event.currentTarget.value
+            if (check.#obstacle.checkName !== event.currentTarget.value) {
+              check.#checkThreshold = 1
+            }
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'bonusDice':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#dicePool.poolModifier = event.target.value
+            CoC7Utilities.messageUpdatedThen(message.id, () => {
+              setTimeout(() => {
+                document.querySelector('[data-message-id="' + message.id + '"] input[type=range][name=bonusDice]').focus()
+              }, 50)
+            })
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
+      case 'checkThreshold':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#checkThreshold = event.target.value
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'weapon-key':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#weaponKey = event.target.value
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'weaponOtherDamage':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#weaponOtherDamage = event.target.value
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'targetArmor':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#targetArmor = event.target.value
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'obstacle.failedActionCost':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#obstacle.failedActionCost = event.target.value
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'obstacle.failedCheckDamage':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#obstacle.failedCheckDamage = event.target.value
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'totalActionCost':
+        {
+          const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
+          if (check) {
+            check.#obstacle.totalActionCost = event.target.value
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+    }
+  }
+
+  /**
+   * Render Chat Message
+   * @param {documents.ChatMessage} message
+   * @param {HTMLElement} html
+   * @param {ApplicationRenderContext} context
+   * @param {false|Array} allowed
+   */
+  static async _onRenderMessage (message, html, context, allowed) {
+    if (game.user.isGM) {
+      html.querySelectorAll('[data-action]').forEach((element) => {
+        element.addEventListener('click', event => CoC7ChatChaseObstacle._onClickEvent(event, message))
+      })
+      html.querySelectorAll('[data-change-set]').forEach((element) => {
+        element.addEventListener('change', event => CoC7ChatChaseObstacle._onChangeEvent(event, message))
+      })
+      html.querySelectorAll('input[type=range]').forEach((element) => {
+        element.addEventListener('change', event => CoC7ChatChaseObstacle._onChangeEvent(event, message))
+      })
+    }
+  }
+
+  /**
+   * Create Message Data object
+   * @returns {object}
+   */
+  async getTemplateData () {
+    const chase = (await this.chase)
+    const allParticipants = (await chase.system.allParticipants()).all
+    const participant = allParticipants.find(l => l.uuid === this.#participantId)
+    const actor = participant.actor
+    const getRollableValue = await participant.getRollableValue(this.#obstacle.checkName)
+    this.#dicePool.threshold = (getRollableValue.exiting ? getRollableValue.value : this.#checkThreshold)
+    const data = {
+      actionLost: false,
+      actionLostText: '',
+      actorImg: (actor ? (actor.isToken ? actor.token.texture.src : actor.img) : ''),
+      actorName: (actor ? (actor.isToken ? actor.token.name : actor.name) : ''),
+      actorUuid: CoC7Utilities.getActorUuid(actor),
+      bonusDice: Math.abs(this.#dicePool.poolModifier),
+      bonusType: game.i18n.localize(this.#dicePool.poolModifier < 0 ? 'CoC7.DiceModifierPenalty' : 'CoC7.DiceModifierBonus'),
+      breakOrNegotiateDefined: this.#breakOrNegotiateDefined,
+      buttons: this.#dicePool.availableButtons({ luckAvailable: (actor?.isToken ? actor.token.actor : actor)?.system.attribs.lck.value ?? 0, isPushable: false }),
+      canTakeCautiousApproach: false,
+      cardOpen: this.#cardOpen,
+      cardResolved: this.#cardResolved,
+      cautiousApproachType: '',
+      chaseUuid: chase.uuid,
+      checkFailed: '',
+      checkRolled: this.#dicePool.isRolled,
+      checkRollRequest: '',
+      checkThreshold: this.#dicePool.threshold,
+      closed: this.#closed,
+      consumeBonusDice: this.#consumeBonusDice,
+      damageTaken: '',
+      diceGroups: this.#dicePool.diceGroups,
+      displayActorOnCard: (actor ? game.settings.get(FOLDER_ID, 'displayActorOnCard') : false),
+      displayResultType: game.settings.get(FOLDER_ID, 'displayResultType'),
+      displayCheckSuccessLevel: game.settings.get(FOLDER_ID, 'displayCheckSuccessLevel'),
+      existingCheckName: getRollableValue.exiting,
+      failedActionCostRoll: '',
+      failedConsequencesRolled: this.#failedConsequencesRolled,
+      failedCheckDamageRoll: '',
+      finalOutcome: '',
+      flatDiceModifier: this.#dicePool.flatDiceModifier,
+      flatThresholdModifier: this.#dicePool.flatThresholdModifier,
+      foundryGeneration: game.release.generation,
+      hasBonusDice: this.#hasBonusDice,
+      ignoreArmor: this.#ignoreArmor,
+      isArmorFormula: this.#isArmorFormula,
+      isSuccess: this.#dicePool.isSuccess,
+      listOptions: participant.listOptions,
+      listWeapons: participant.actorWeapons(this.#weaponOtherDamage),
+      luckSpent: this.#dicePool.luckSpent,
+      movementActionArray: this.#movementActionArray,
+      movePlayer: this.#movePlayer,
+      obstacle: this.#obstacle,
+      obstacleDamage: '',
+      obstacleDamageRoll: '',
+      obstacleDamageRolled: this.#obstacleDamageRolled,
+      obstacleDamageTotal: 0,
+      obstacleDefinedText: '',
+      obstacleDefined: this.#obstacleDefined,
+      obstacleDefinitionChanged: false,
+      obstacleDestroyed: this.#obstacleDestroyed,
+      obstaclePassed: '',
+      playerActionDefined: this.#playerActionDefined,
+      playerIntentions: '',
+      poolModifier: this.#dicePool.poolModifier,
+      reflectObstacleChanges: this.#reflectObstacleChanges,
+      statuses: [{
+        name: game.i18n.localize('CoC7.ActionCost') + ' :' + this.#totalActionCost
+      }],
+      targetArmor: this.#targetArmor,
+      totalActionCost: this.#totalActionCost,
+      totalCautiousApproach: this.#totalCautiousApproach,
+      totalObstacleDamage: this.#totalObstacleDamage,
+      totalPlayerDamageTaken: this.#totalPlayerDamageTaken,
+      tryToBreak: this.#tryToBreak,
+      tryToNegotiate: this.#tryToNegotiate,
+      validCheck: false,
+      validFailedRolls: false,
+      validObstacleDamage: false,
+      weaponKey: '',
+      weaponName: '',
+      weaponOtherDamage: this.#weaponOtherDamage
+    }
+    if (data.buttons.addBonus2 === true) {
+      data.buttons.addBonus2 = false
+    }
+    if (data.buttons.addBonus1 === true) {
+      data.buttons.addBonus1 = false
+    }
+    if (data.buttons.addPenalty1 === true) {
+      data.buttons.addPenalty1 = false
+    }
+    if (data.buttons.addPenalty2 === true) {
+      data.buttons.addPenalty2 = false
+    }
+    const weaponIndex = data.listWeapons.findIndex(w => w.value === this.#weaponKey)
+    if (weaponIndex === -1) {
+      this.#weaponKey = data.listWeapons[0].value
+    } else {
+      data.weaponName = data.listWeapons[weaponIndex].name + (data.listWeapons[weaponIndex].value === 'other' ? ' (' + data.listWeapons[weaponIndex].damage + ')' : '')
+      data.validObstacleDamage = (this.#obstacle.hasHitPoints && !isNaN(Number(this.#obstacle.HitPoints)) && Number(this.#obstacle.HitPoints) > 0 && Roll.validate(data.listWeapons[weaponIndex].damage))
+    }
+    data.weaponKey = this.#weaponKey
+    if (this.#dicePool.poolModifier < CoC7DicePool.maxDiceBonus && this.#totalActionCost < participant.actions) {
+      data.canTakeCautiousApproach = true
+    }
+    if (this.#checkThreshold !== '' && !isNaN(Number(this.#checkThreshold))) {
+      data.validCheck = true
+    }
+    if (this.#obstacleDefined) {
+      if (this.#obstacle.isBarrier) {
+        data.statuses.push({
+          name: game.i18n.localize('CoC7.Barrier')
+        })
+        if (this.#obstacle.hasHitPoints) {
+          data.statuses.push({
+            name: game.i18n.localize('CoC7.Breakable')
+          })
+        }
+      } else {
+        data.statuses.push({
+          name: game.i18n.localize('CoC7.Hazard')
+        })
+      }
+      if (this.#tryToBreak) {
+        let name = game.i18n.localize('CoC7.BreakDown')
+        if (this.#obstacleDamageRolled) {
+          const roll = this.message.rolls.find(r => r.options.reason === 'obstacleDamage')
+          if (roll) {
+            if (roll.total <= 0) {
+              data.obstacleDamage = game.i18n.localize('CoC7.NoDamageDealt')
+            } else {
+              data.obstacleDamageRoll = roll.toAnchor().outerHTML
+              data.obstacleDamage = game.i18n.format('CoC7.DamageDealt', {
+                value: data.obstacleDamageRoll
+              })
+              data.obstacleDamageTotal = roll.total
+              name += ': ' + roll.total
+            }
+          }
+        }
+        data.statuses.push({
+          name
+        })
+      }
+      if (this.#tryToNegotiate) {
+        data.statuses.push({
+          name: game.i18n.localize('CoC7.Negotiate')
+        })
+      }
+      const location = chase.system.locations.list.find(l => l.uuid === this.#locationId)
+      if (location) {
+        const obstacle = foundry.utils.duplicate(this.#obstacle)
+        if (obstacle.isBarrier) {
+          obstacle.barrier = true
+          obstacle.hazard = false
+        } else {
+          obstacle.barrier = false
+          obstacle.hazard = true
+        }
+        delete obstacle.isBarrier
+        data.obstacleDefinitionChanged = !Object.keys(this.#obstacle).every(k => location.obstacleDetails[k] === obstacle[k])
+      }
+      data.validFailedRolls = (this.#obstacle.isBarrier || !this.#obstacle.hasActionCost || Roll.validate(this.#obstacle.failedActionCost.toString())) && (!this.#obstacle.hasDamage || Roll.validate(this.#obstacle.failedCheckDamage.toString()))
+      data.obstacleDefinedText = game.i18n.format('CoC7.FacingObstacle', { type: game.i18n.localize(this.#obstacle.isBarrier ? 'CoC7.ABarrier' : 'CoC7.AHazard') })
+      if (this.#obstacle.name) {
+        data.obstacleDefinedText += ' (' + this.#obstacle.name + ')'
+      }
+      if (this.#playerActionDefined) {
+        if (!this.#obstacle.isBarrier) {
+          data.playerIntentions = game.i18n.localize('CoC7.TryToNegotiateHazard')
+        } else if (this.#tryToNegotiate) {
+          data.playerIntentions = game.i18n.localize('CoC7.TryToGetPastBarriers')
+        } else if (this.#tryToBreak) {
+          data.playerIntentions = game.i18n.localize('CoC7.TryToBreak')
+        }
       }
 
-      if (this.data.states.tryToNegotiate) {
-        data.status.push({ name: game.i18n.localize('CoC7.Negotiate') })
-      }
-
-      if (this.data.totalCautiousApproach) {
+      if (this.#totalCautiousApproach) {
         const cautiousStatus = {
           name: game.i18n.localize('CoC7.Cautious'),
           css: ''
         }
-        if (this.data.totalCautiousApproach > 1) {
+        if (this.#totalCautiousApproach > 1) {
           cautiousStatus.css = 'strong'
-          data.strings.cautiousApproachType = game.i18n.localize(
-            'CoC7.BeingVeryCautious'
-          )
+          data.cautiousApproachType = game.i18n.localize('CoC7.BeingVeryCautious')
         } else {
-          data.strings.cautiousApproachType =
-            game.i18n.localize('CoC7.BeingCautious')
+          data.cautiousApproachType = game.i18n.localize('CoC7.BeingCautious')
         }
-
-        if (this.data.flags.consumeBonusDice) cautiousStatus.css += ' consume'
-        data.status.push(cautiousStatus)
+        if (this.#consumeBonusDice) {
+          cautiousStatus.css += ' consume'
+        }
+        data.statuses.push(cautiousStatus)
       }
-
-      if (this.data.objects?.check) {
-        if (this.data.obstacle.hazard) this.data.movePlayer = true // On hazard, you pass even if you fail your roll
-        if (this.data.objects.check.passed) {
-          if (typeof this.data.movePlayer === 'undefined') this.data.movePlayer = true
-          data.strings.obstaclePassed = game.i18n.localize(
-            'CoC7.ObstaclePassed'
-          )
-          if (this.data.objects.check.luckSpent) {
-            data.strings.obstaclePassed += ` (${game.i18n.localize(
-              'CoC7.GotLucky'
-            )})`
+      if (this.#playerActionDefined && !data.checkRolled && !this.#tryToBreak) {
+        data.checkRollRequest = game.i18n.format('CoC7.AskRoll', {
+          name: this.#obstacle.checkName,
+          value: data.checkThreshold
+        })
+        if (this.#dicePool.poolModifier > 0) {
+          data.checkRollRequest += ' (+' + this.#dicePool.poolModifier + ')'
+        } else if (this.#dicePool.poolModifier < 0) {
+          data.checkRollRequest += ' (' + this.#dicePool.poolModifier + ')'
+        }
+      }
+      if (data.checkRolled) {
+        if (!this.#obstacle.isBarrier) {
+          this.#movePlayer = true // On hazard, you pass even if you fail your roll
+        }
+        if (this.#dicePool.isSuccess) {
+          this.#movePlayer = true
+          data.obstaclePassed = game.i18n.localize('CoC7.ObstaclePassed')
+          if (this.#dicePool.luckSpent) {
+            data.obstaclePassed += ' (' + game.i18n.localize('CoC7.GotLucky') + ')'
           }
-          data.status.push({
+          data.statuses.push({
             name: game.i18n.localize('CoC7.Success'),
             css: 'success'
           })
-        } else if (this.data.objects.check.isFumble) {
-          data.strings.checkFailed = game.i18n.localize('CoC7.ObstacleFumble')
-          data.status.push({
-            name: game.i18n.localize('CoC7.Fumble'),
-            css: 'fumble'
-          })
         } else {
-          data.strings.checkFailed = game.i18n.localize('CoC7.ObstacleFail')
-          data.status.push({
-            name: game.i18n.localize('CoC7.Failure'),
-            css: 'failure'
-          })
+          if (this.#dicePool.isFumble) {
+            data.checkFailed = game.i18n.localize('CoC7.ObstacleFumble')
+            data.statuses.push({
+              name: game.i18n.localize('CoC7.Fumble'),
+              css: 'fumble'
+            })
+          } else {
+            data.checkFailed = game.i18n.localize('CoC7.ObstacleFail')
+            data.statuses.push({
+              name: game.i18n.localize('CoC7.Failure'),
+              css: 'failure'
+            })
+          }
+          const roll = this.message.rolls.find(r => r.options.reason === 'failedCheckDamage')
+          if (roll) {
+            data.failedCheckDamageRoll = roll.toAnchor().outerHTML
+            if (this.#totalPlayerDamageTaken === 0) {
+              data.damageTaken = game.i18n.localize('CoC7.YouTakeNoDamage')
+            } else {
+              data.damageTaken = game.i18n.format('CoC7.YouTakeSomeDamage', { amount: this.#totalPlayerDamageTaken })
+            }
+            data.statuses.push({
+              name: game.i18n.localize('CoC7.TotalDamage') + ' :' + this.#totalPlayerDamageTaken
+            })
+          }
+          if (!this.#obstacle.isBarrier && this.#obstacle.hasActionCost) {
+            const roll = this.message.rolls.find(r => r.options.reason === 'failedActionCost')
+            if (roll) {
+              data.failedActionCostRoll = roll.toAnchor().outerHTML
+              data.actionLost = true
+              data.actionLostText = game.i18n.localize('CoC7.YouLostTime')
+            }
+          }
         }
       }
-    }
-
-    if (this.data.states.playerActionDefined) {
-      if (this.data.obstacle.hazard) {
-        data.strings.playerIntentions = game.i18n.localize(
-          'CoC7.TryToNegotiateHazard'
-        )
-      } else if (this.data.obstacle.barrier) {
-        if (this.data.states.tryToNegotiate) {
-          data.strings.playerIntentions = game.i18n.localize(
-            'CoC7.TryToGetPastBarriers'
-          )
-        } else if (this.data.states.tryToBreak) {
-          data.strings.playerIntentions = game.i18n.localize('CoC7.TryToBreak')
-        }
-      }
-    }
-
-    if (this.data.states.checkRolled) {
-      if (this.data.states.cardResolved) {
-        // If the card is resolved the check is frozen
-        data.htmlCheck = await this.data.objects.check.inlineCheck?.outerHTML
-      } else data.htmlCheck = await this.data.objects.check.getHtmlRoll()
-    }
-
-    // if (this.data.objects?.failedDamageRoll) {
-    //   if (!data.data.armor) {
-    //     if (this.participant.actor)
-    //       data.data.armor =
-    //         this.participant.actor.data.data.attribs.armor.value || 0
-    //   }
-    //   if (data.data.armor) {
-    //     if (isNaN(Number(data.data.armor))) data.data.armor = null
-    //   }
-    // }
-
-    if (this.data.states.cardResolved) {
-      data.playerDamageTaken = false
-      data.obstalceDefinitionChanged = false
-
-      // Has the obstacle changed ?
-      const diff = this.listChanges()
-      if (diff.changes) {
-        data.obstalceDefinitionChanged = true
-      }
-
-      // Is player taking damage
-      if (this.data.obstacle.hasDamage && this.data.objects?.check?.isFailure) {
-        data.playerDamageTaken = true
-        data.inlineDamageTakenRoll = createInlineRoll(
-          this.data.objects.failedDamageRoll
-        )?.outerHTML
-        // if (data.data.totalPlayerDamageTaken < 0)
-        //   data.data.totalPlayerDamageTaken = 0
-
-        if (data.data.totalPlayerDamageTaken === 0) {
-          data.strings.damageTaken = game.i18n.localize('CoC7.YouTakeNoDamage')
-        } else {
-          data.strings.damageTaken = game.i18n.format(
-            'CoC7.YouTakeSomeDamage',
-            { amount: data.data.totalPlayerDamageTaken }
-          )
-        }
-        data.status.push({
-          name:
-            game.i18n.localize('CoC7.TotalDamage') +
-            ` :${data.data.totalPlayerDamageTaken}`
+      if (this.#cardResolved) {
+        data.statuses.push({
+          name: game.i18n.localize('CoC7.CardResolved')
         })
       }
-
-      if (
-        this.data.obstacle.hasActionCost &&
-        this.data.obstacle.hazard &&
-        this.data.objects?.check?.isFailure
-      ) {
-        data.actionLost = true
-        data.strings.actionLost = game.i18n.localize('CoC7.YouLostTime')
-        data.inlineActionLostRoll = createInlineRoll(
-          this.data.objects.failedActionRoll
-        )?.outerHTML
-      }
-
-      data.status.push({
-        name: game.i18n.localize('CoC7.CardResolved')
-      })
-    }
-
-    if (this.data.states.closed) {
-      if (this.data.movePlayer) {
-        data.strings.finalOutcome = game.i18n.localize('CoC7.MoveToLocation')
-      } else {
-        data.strings.finalOutcome = game.i18n.localize(
-          'CoC7.DontMoveToLocation'
-        )
+      if (this.#closed) {
+        if (this.#movePlayer) {
+          data.finalOutcome = game.i18n.localize('CoC7.MoveToLocation')
+        } else {
+          data.finalOutcome = game.i18n.localize('CoC7.DontMoveToLocation')
+        }
       }
     }
     return data
   }
 
-  /** @override */
-  async GMUpdate () {
-    if (!game.user.isGM) {
-      console.error('CoC7: GMUpdate called from non GM user')
-      return
-    }
-    if (this.data.states.cardResolved) {
-      // Card is resolved, compute all formulas and damage.
-      if (this.data.objects?.failedDamageRoll?.total) {
-        const totalDamage = this.data.objects.failedDamageRoll.total
-        const armorValue = this.data.flags.ignoreArmor ? 0 : this.data.armor
-        if (CoC7Utilities.isFormula(armorValue)) {
-          this.data.armor = (
-            await new Roll(armorValue).roll({ async: true })
-          ).total
-        } else if (!isNaN(Number(armorValue))) {
-          this.data.armor = Number(armorValue)
-        }
-
-        if (typeof this.data.totalPlayerDamageTaken === 'undefined') {
-          this.data.totalPlayerDamageTaken = totalDamage - this.data.armor
-          if (this.data.totalPlayerDamageTaken < 0) {
-            this.data.totalPlayerDamageTaken = 0
+  /**
+   * Create Chat Message object
+   * @returns {object}
+   */
+  async getChatData () {
+    const data = await this.getTemplateData()
+    let chatData = {
+      flags: {
+        [FOLDER_ID]: {
+          load: {
+            as: 'CoC7ChatChaseObstacle',
+            actorUuid: data.actorUuid,
+            breakOrNegotiateDefined: this.#breakOrNegotiateDefined,
+            cardOpen: this.#cardOpen,
+            cardResolved: this.#cardResolved,
+            chaseUuid: data.chaseUuid,
+            checkThreshold: this.#checkThreshold,
+            closed: this.#closed,
+            consumeBonusDice: this.#consumeBonusDice,
+            dicePool: this.#dicePool.toObject(),
+            failedConsequencesRolled: this.#failedConsequencesRolled,
+            forward: this.#forward,
+            hasBonusDice: this.#hasBonusDice,
+            ignoreArmor: this.#ignoreArmor,
+            locationId: this.#locationId,
+            movementActionArray: this.#movementActionArray,
+            movePlayer: this.#movePlayer,
+            obstacle: this.#obstacle,
+            obstacleDamageRolled: this.#obstacleDamageRolled,
+            obstacleDefined: this.#obstacleDefined,
+            obstacleDestroyed: this.#obstacleDestroyed,
+            participantId: this.#participantId,
+            playerActionDefined: this.#playerActionDefined,
+            reflectObstacleChanges: this.#reflectObstacleChanges,
+            targetArmor: this.#targetArmor,
+            totalActionCost: this.#totalActionCost,
+            totalCautiousApproach: this.#totalCautiousApproach,
+            totalObstacleDamage: this.#totalObstacleDamage,
+            totalPlayerDamageTaken: this.#totalPlayerDamageTaken,
+            tryToBreak: this.#tryToBreak,
+            tryToNegotiate: this.#tryToNegotiate,
+            weaponKey: this.#weaponKey,
+            weaponOtherDamage: this.#weaponOtherDamage
           }
         }
-      }
-
-      if (undefined === this.data.reflectObstaleChanges) {
-        this.data.reflectObstaleChanges = true // By default reflect changes
-      }
-
-      if (undefined === this.data.movePlayer) {
-        this.data.movePlayer =
-          (this.data.states.tryToNegotiate || this.data.obstacle.hazard) &&
-          !this.data.states.failedConsequencesRolled
-      }
-
-      if (
-        this.data.obstacle.barrier &&
-        this.data.obstacle.hasHitPoints &&
-        this.data.objects?.obstacleDamageRoll?.total
-      ) {
-        if (undefined === this.data.totalObstacleDamage) {
-          this.data.totalObstacleDamage =
-            this.data.objects.obstacleDamageRoll.total
-        }
-        if (undefined === this.data.flags.obstacleDestoyed) {
-          this.data.flags.obstacleDestoyed =
-            this.data.obstacle.HitPoints - this.data.totalObstacleDamage <= 0
-        }
-      }
+      },
+      rolls: (this.message?.rolls ?? []).concat(this.#dicePool.newRolls),
+      /* // FoundryVTT V12 */
+      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/chase-obstacle.hbs', data)
     }
-
-    if (this.data.states.closed) {
-      this.data.movementActionArray = foundry.utils.duplicate(
-        this.participant.movementActionArray
-      )
-      this.data.EEC_ACTION = { detachData: true }
-    }
+    chatData = ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
+    return chatData
   }
 
-  /** @override */
-  async localCompute () {}
-
-  /** @override */
-  async assignObjects () {
-    if (
-      this.data.objects?.check &&
-      this.data.objects.check?.constructor?.name === 'Object'
-    ) {
-      this.data.objects.check = CoC7Check.fromData(this.data.objects.check)
+  /**
+   * Create CoC7ChatCombatMelee from message
+   * @param {Document} message
+   * @returns {CoC7ChatCombatMelee}
+   */
+  static async loadFromMessage (message) {
+    const keys = [
+      'breakOrNegotiateDefined',
+      'cardOpen',
+      'cardResolved',
+      'chaseUuid',
+      'checkThreshold',
+      'closed',
+      'consumeBonusDice',
+      'failedConsequencesRolled',
+      'forward',
+      'locationId',
+      'hasBonusDice',
+      'ignoreArmor',
+      'movementActionArray',
+      'movePlayer',
+      'obstacle',
+      'obstacleDamageRolled',
+      'obstacleDefined',
+      'obstacleDestroyed',
+      'participantId',
+      'playerActionDefined',
+      'reflectObstacleChanges',
+      'targetArmor',
+      'totalActionCost',
+      'totalCautiousApproach',
+      'totalObstacleDamage',
+      'tryToBreak',
+      'tryToNegotiate',
+      'weaponKey',
+      'weaponOtherDamage'
+    ]
+    if (message.id && message.flags[FOLDER_ID]?.load?.as === 'CoC7ChatChaseObstacle' && keys.every(k => typeof message.flags[FOLDER_ID]?.load?.[k] !== 'undefined') && CoC7DicePool.isValidPool(message.flags[FOLDER_ID]?.load?.dicePool)) {
+      const check = new CoC7ChatChaseObstacle()
+      check.message = message
+      const load = foundry.utils.duplicate(message.flags[FOLDER_ID].load)
+      check.chase = load.chaseUuid
+      check.#breakOrNegotiateDefined = load.breakOrNegotiateDefined
+      check.#cardOpen = load.cardOpen
+      check.#cardResolved = load.cardResolved
+      check.#checkThreshold = load.checkThreshold
+      check.#closed = load.closed
+      check.#consumeBonusDice = load.consumeBonusDice
+      check.#dicePool = CoC7DicePool.fromObject(load.dicePool)
+      check.#failedConsequencesRolled = load.failedConsequencesRolled
+      check.#forward = load.forward
+      check.#locationId = load.locationId
+      check.#hasBonusDice = load.hasBonusDice
+      check.#ignoreArmor = load.ignoreArmor
+      check.#movementActionArray = load.movementActionArray
+      check.#movePlayer = load.movePlayer
+      check.#obstacle = load.obstacle
+      check.#obstacleDamageRolled = load.obstacleDamageRolled
+      check.#obstacleDefined = load.obstacleDefined
+      check.#obstacleDestroyed = load.obstacleDestroyed
+      check.#participantId = load.participantId
+      check.#playerActionDefined = load.playerActionDefined
+      check.#reflectObstacleChanges = load.reflectObstacleChanges
+      check.#targetArmor = load.targetArmor
+      check.#totalActionCost = load.totalActionCost
+      check.#totalCautiousApproach = load.totalCautiousApproach
+      check.#totalObstacleDamage = load.totalObstacleDamage
+      check.#tryToBreak = load.tryToBreak
+      check.#tryToNegotiate = load.tryToNegotiate
+      check.#weaponKey = load.weaponKey
+      check.#weaponOtherDamage = load.weaponOtherDamage
+      return check
     }
-
-    if (
-      this.data.objects?.obstacleDamageRoll &&
-      this.data.objects.obstacleDamageRoll?.constructor?.name === 'Object'
-    ) {
-      this.data.objects.obstacleDamageRoll = Roll.fromData(
-        this.data.objects.obstacleDamageRoll
-      )
-    }
-    if (
-      this.data.objects?.failedDamageRoll &&
-      this.data.objects.failedDamageRoll?.constructor?.name === 'Object'
-    ) {
-      this.data.objects.failedDamageRoll = Roll.fromData(
-        this.data.objects.failedDamageRoll
-      )
-    }
-    if (
-      this.data.objects?.failedActionRoll &&
-      this.data.objects.failedActionRoll?.constructor?.name === 'Object'
-    ) {
-      this.data.objects.failedActionRoll = Roll.fromData(
-        this.data.objects.failedActionRoll
-      )
-    }
+    ui.notifications.warn('CoC7.Errors.UnableToLoadMessage', { localize: true })
+    throw new Error('CoC7.Errors.UnableToLoadMessage')
   }
 
-  /** @override */
-  async initialize () {
-    // const chase = await fromUuid(this.data.chaseUuid)
-    if (!this.chase) return
-    if (typeof this.chase.activeParticipantData?.uuid === 'undefined') {
-      return
-    }
-
-    if (typeof this.data === 'undefined') this.data = {}
-    if (typeof this.data.states === 'undefined') this.data.states = {}
-
-    // const location = chase.getLocationData(this.data.locationUuid)
-    this.data.obstacle = this.location?.obstacleDetails // Feed the obstacle definition
-    // this.data.participantData = chase.activeParticipantData
-    this.data.participantUuid = this.chase.activeParticipantData.uuid
-
-    if (this.participantData?.bonusDice > 0) {
-      this.data.bonusDice = this.participantData.bonusDice
-      this.data.flags.consumeBonusDice = true
-      this.data.flags.hasBonusDice = this.participant.hasBonusDice
-    }
-
-    this.data.movementActionArray = foundry.utils.duplicate(
-      this.participant.movementActionArray
-    )
-    this.data.movementAction = this.participant.currentMovementActions
-    this.data.totalActionCost = 0
-  }
-
-  get participant () {
-    if (!this.participantData) return undefined
-    // if (!this._participant)
-    //   this._participant = new _participant(this.participantData)
-    // return this._participant
-    return new _participant(this.participantData) // TO RESET
-  }
-
-  get participantData () {
-    if (!this.chase) return undefined
-    if (!this.data.participantUuid) return undefined
-    return this.chase.getParticipantData(this.data.participantUuid)
-  }
-
-  get location () {
-    if (!this.chase) return undefined
-    return this.chase.getLocationData(this.data.locationUuid)
-  }
-
-  get obstacle () {
-    if (!this.location) return undefined
-    return this.location.obstacleDetails
-  }
-
-  get chase () {
-    if (!this.data.chaseUuid) return undefined
-    if (!this._chase) this._chase = CoC7Utilities.SfromUuid(this.data.chaseUuid)
-    return this._chase
-  }
-
-  get roll () {
-    let rollData
-    if (this.participant.actor && this.data.obstacle.checkName) {
-      const actorSkill = this.participant.actor.find(
-        this.data.obstacle.checkName
-      )
-      if (typeof actorSkill !== 'undefined') {
-        rollData = actorSkill
-      } else {
-        rollData = {
-          type: 'value',
-          value: {
-            name: this.data.obstacle.checkName,
-            threshold: this.data.checkThreshold
-          }
-        }
-      }
-      rollData.actor = { actorKey: this.participant.actor.id }
-    } else {
-      if (this.data.obstacle.checkName && this.data.checkThreshold) {
-        rollData = {
-          type: 'value',
-          value: {
-            name: this.data.obstacle.checkName,
-            threshold: this.data.checkThreshold
-          },
-          actor: {
-            name: this.participant.name
-          }
-        }
-      }
-    }
-    if (rollData) {
-      rollData.diceModifier = this.data?.bonusDice || 0
-      rollData.difficulty = CoC7Check.difficultyLevel.regular
-      rollData.denyPush = true
-    }
-    return rollData || undefined
-  }
-
-  get validFailedRolls () {
-    if (!this.data.objects?.check?.isFailure) return false
-    if (this.data.obstacle.hasDamage) {
-      const damage =
-        typeof this.data.obstacle.failedCheckDamage === 'number'
-          ? `${this.data.obstacle.failedCheckDamage}`
-          : this.data.obstacle.failedCheckDamage
-      if (!this.data.obstacle.failedCheckDamage) return false
-      if (
-        this.data.obstacle.failedCheckDamage &&
-        !Roll.validate(damage) // Validate only take a string, if damage is a number convert to a string
-      ) {
-        return false
-      }
-    }
-    if (this.data.obstacle.hazard && this.data.obstacle.hasActionCost) {
-      const actionCost =
-        typeof this.data.obstacle.failedActionCost === 'number'
-          ? `${this.data.obstacle.failedActionCost}`
-          : this.data.obstacle.failedActionCost
-      if (!this.data.obstacle.failedActionCost) return false
-      if (this.data.obstacle.failedActionCost && !Roll.validate(actionCost)) {
-        return false
-      }
-    }
-    return true
-  }
-
-  get weaponsOptions () {
-    const weapons = []
-    this.participant.actor?.itemTypes?.weapon?.forEach(w => {
-      let formula = w.system.range.normal.damage
-      let db = this.participant.actor.db
-      if (db === null || Number(db) === 0) {
-        db = ''
-      } else {
-        db = `${db}`
-      }
-
-      if (db && !db.startsWith('-')) db = '+' + db
-      if (w.system.properties.addb) formula = formula + db
-      if (w.system.properties.ahbd) formula = formula + db + '/2'
-      weapons.push({
-        name: `${w.name} (${formula})`,
-        damage: formula,
-        uuid: w.uuid
-      })
-    })
-    weapons.sort(CoC7Utilities.sortByNameKey)
-
-    if (
-      !weapons.find(w =>
-        w.name
-          .toUpperCase()
-          .startsWith(
-            game.i18n.localize('CoC7.UnarmedWeaponName')?.toUpperCase()
-          )
-      )
-    ) {
-      let db = ''
-      if (this.participant.actor) {
-        db = this.participant.actor.db
-        if (db && !db.startsWith('-')) db = '+' + db
-        if (db === null || Number(db) === 0) db = ''
-      }
-
-      weapons.unshift({
-        name: `${game.i18n.localize('CoC7.UnarmedWeaponName')} (1D3${db})`,
-        damage: `1D3${db}`,
-        uuid: 'unarmed'
-      })
-    }
-
-    weapons.push({
-      name: game.i18n.localize('CoC7.Other'),
-      damage: this.data?.customWeaponDamage || null,
-      uuid: 0
-    })
-    return weapons
-  }
-
-  get usedWeapon () {
-    if (!this.data?.weaponChoice) {
-      if (!this.weaponsOptions) return undefined
-      if (!this.data) this.data = {} // useless !!!
-      this.data.weaponChoice = this.weaponsOptions[0].uuid
-    }
-
-    if (this.data.weaponChoice) {
-      const weapon = this.weaponsOptions.find(
-        e => e.uuid === this.data.weaponChoice
-      )
-      if (weapon) return weapon
-    }
-  }
-
-  get inflictedDamageFormula () {
-    if (this.usedWeapon) {
-      const weapon = this.usedWeapon
-      if (weapon && weapon.damage && Roll.validate(weapon.damage)) {
-        return weapon.damage
-      }
-      return undefined
-    }
-    return undefined
-  }
-
-  get validObstacleDamage () {
-    if (
-      this.data.obstacle.hasHitPoints &&
-      !isNaN(Number(this.data.obstacle.HitPoints)) &&
-      Number(this.data.obstacle.HitPoints) > 0 &&
-      this.inflictedDamageFormula
-    ) {
-      return true
-    }
-    return false
-  }
-
-  get strings () {
-    const strings = {}
-    strings.damageRollRequest = this.usedWeapon.name
-
-    return strings
-  }
-
-  // Actions :
-  async validateCard (options) {
-    let loactionChanged
-    let participantChaged = false
-    const obstacleUpdate = {}
-    obstacleUpdate.obstacleDetails = {}
-    const participantUpdate = {}
-    if (this.data.flags.obstacleDestoyed) {
-      loactionChanged = true
-      obstacleUpdate.obstacle = false
-      obstacleUpdate.obstacleDetails.hazard = false
-      obstacleUpdate.obstacleDetails.barrier = false
-    }
-
-    const diff = this.listChanges()
-    if (diff.changes) {
-      if (this.data.reflectObstaleChanges) {
-        for (const [key, value] of Object.entries(diff.obstacle)) {
-          if (key !== 'type') {
-            obstacleUpdate.obstacleDetails[value.key] = value.new
-            loactionChanged = true
-          }
-        }
-      }
-    }
-
-    if (this.data.totalObstacleDamage > 0 && this.data.obstacle.hasHitPoints) {
-      let remainingHp = this.data.obstacle.HitPoints
-      remainingHp -= this.data.totalObstacleDamage
-      if (remainingHp < 0) remainingHp = 0
-      if (this.obstacle.HitPoints !== remainingHp) {
-        obstacleUpdate.obstacleDetails.HitPoints = remainingHp
-        this.data.obstacle.HitPoints = remainingHp
-        loactionChanged = true
-      }
-    }
-
-    if (this.data.totalPlayerDamageTaken > 0) {
-      participantChaged = true
-      if (this.participant.actor) {
-        await this.participant.actor.dealDamage(
-          this.data.totalPlayerDamageTaken,
-          { ignoreArmor: true }
-        )
-      } else {
-        participantUpdate.hp = this.participantData.hp
-        participantUpdate.hp -= this.data.totalPlayerDamageTaken
-        if (participantUpdate.hp < 0) participantUpdate.hp = 0
-      }
-    }
-
-    if (this.data.totalActionCost > 0) {
-      participantChaged = true
-      participantUpdate.currentMovementActions =
-        this.participantData.currentMovementActions
-      participantUpdate.currentMovementActions -= this.data.totalActionCost
-    }
-
-    if (typeof this.data.flags.consumeBonusDice === 'undefined') this.data.flags.consumeBonusDice = true // Bonus dice awarded during flow are being consumed
-
-    if (this.data.flags.consumeBonusDice) {
-      participantChaged = true
-      participantUpdate.bonusDice = 0
-    } else {
-      if (
-        !isNaN(this.data.bonusDice) &&
-        this.data.bonusDice !== this.participant.bonusDice
-      ) {
-        participantUpdate.bonusDice = this.data.bonusDice
-      }
-    }
-
-    if (this.data.movePlayer) {
-      let targetLocation
-      if (this.data.forward) {
-        targetLocation = this.location
-      } else {
-        targetLocation = this.chase.getLocationShift(this.location.uuid, {
-          skip: -1
+  /**
+   * Save changes to existing Chat Message
+   */
+  async updateMessage () {
+    if (this.message) {
+      const diff = foundry.utils.diffObject(this.message.toObject(), await this.getChatData())
+      if (!this.message.canUserModify(game.user, 'update')) {
+        CoC7SystemSocket.requestKeeperAction({
+          type: 'messagePermission',
+          messageId: this.message.id,
+          who: game.user.id,
+          updates: diff
         })
-      }
-
-      if (targetLocation.uuid) {
-        await this.chase.moveParticipantToLocation(
-          this.participantData.uuid,
-          targetLocation.uuid,
-          {
-            scrollToLocation: true,
-            activateLocation: false,
-            render: false
-          }
-        )
+      } else {
+        await this.message.update(diff)
       }
     }
-
-    if (loactionChanged) {
-      await this.chase.updateLocation(this.location.uuid, obstacleUpdate, {
-        render: false
-      })
-    }
-    if (participantChaged) {
-      await this.chase.updateParticipant(
-        this.participantData.uuid,
-        participantUpdate,
-        { render: false }
-      )
-    }
-    this.data.states.closed = true
-    await this.chase.activateNextParticipantTurn() // Render will be done there !
-    return true
   }
 
-  async defineObstacle (options) {
-    if (!this.data.states) this.data.states = {}
-    this.data.states.obstacleDefined = true
-    return true
-  }
-
-  async tryToNegotiateObstacle (options) {
-    this.data.states.breakOrNegotiateDefined = true
-    this.data.states.tryToNegotiate = true
-    this.data.states.tryToBreak = false
-    return true
-  }
-
-  async tryToBreakDownObstacle (options) {
-    this.data.states.breakOrNegotiateDefined = true
-    this.data.states.tryToNegotiate = false
-    this.data.states.tryToBreak = true
-    return true
-  }
-
-  async cancelObstacleDefinition (options) {
-    this.data.states.obstacleDefined = false
-    this.data.states.breakOrNegotiateDefined = false
-    this.data.states.tryToNegotiate = false
-    this.data.states.tryToBreak = false
-    return true
-  }
-
-  async cancelBreakOrPassChoice (options) {
-    if (!this.data.obstacle.hasHitPoints) return this.cancelObstacleDefinition()
-    this.data.states.breakOrNegotiateDefined = false
-    this.data.states.tryToNegotiate = false
-    this.data.states.tryToBreak = false
-    return true
-  }
-
-  async requestRoll (options) {
-    this.data.states.playerActionDefined = true
-    return true
-  }
-
-  async takeCautiousApproach (options) {
-    if (!this.data.totalCautiousApproach) this.data.totalCautiousApproach = 0
-    this.data.totalCautiousApproach += 1
-    this.data.bonusDice += 1
-    this.data.totalActionCost += 1
-    if (!this.data.flags.consumeBonusDice) {
-      this.data.flags.consumeBonusDice = true
-    }
-    if (!this.data.flags.hasBonusDice) {
-      this.data.flags.hasBonusDice = true
-    }
-    if (this.data.movementAction <= this.data.totalActionCost) { // All mov action have been used to take cuatious approach.
-      this.data.flags.consumeBonusDice = false // Do not consume the bonus dice.
-      this.data.states.cardResolved = true
-      this.data.movePlayer = false
-    }
-    return true
-  }
-
-  async rollSkillCheck (options) {
-    const target = options.event.currentTarget
-    if (target.classList.contains('disabled')) return
-    target.classList.toggle('disabled')
-    if (!this.roll) {
-      ui.notifications.error(game.i18n.localize('CoC7.NothingToRoll'))
-      return
-    }
-    if (!this.data.objects) this.data.objects = {}
-    this.data.objects.check = CoC7Check.createFromActorRollData(this.roll)
-    if (!this.data.objects.check) return false
-    this.data.objects.check.denyPush = true // Obstacle check can't be pushed
-    await this.data.objects.check._perform({ forceDSN: true })
-    this.data.totalActionCost += 1
-    this.data.states.checkRolled = true
-    target.classList.toggle('disabled')
-    if (this.data.objects.check.passed) {
-      this.data.movePlayer = true
-      this.data.states.cardResolved = true
-    } else {
-      if (typeof this.data.armor === 'undefined' && this.participant.actor) {
-        this.data.armor =
-          this.participant.actor.system.attribs.armor.value || 0
+  /**
+   * Migrate older html
+   * @param {object} options
+   * @param {integer} options.offset
+   * @param {object} options.updates
+   * @param {object} options.deleteIds
+   */
+  static async migrateOlderMessages ({ offset, updates, deleteIds } = {}) {
+    const message = game.messages.contents[offset]
+    const div = document.createElement('div')
+    div.innerHTML = message.content
+    const contents = div.children[0]
+    if (contents) {
+      const dataSet = JSON.parse(decodeURIComponent(contents.dataset.object))
+      const chase = await fromUuid(dataSet.data.chaseUuid)
+      const participant = chase.participants?.find(p => p.uuid === dataSet.data.participantUuid)
+      const update = {
+        ['flags.' + FOLDER_ID + '.load.as']: 'CoC7ChatChaseObstacle',
+        ['flags.' + FOLDER_ID + '.load.actorUuid']: participant?.docUuid ?? '',
+        ['flags.' + FOLDER_ID + '.load.breakOrNegotiateDefined']: dataSet.data.states?.breakOrNegotiateDefined ?? false,
+        ['flags.' + FOLDER_ID + '.load.cardOpen']: true,
+        ['flags.' + FOLDER_ID + '.load.cardResolved']: dataSet.data.states?.cardResolved ?? false,
+        ['flags.' + FOLDER_ID + '.load.chaseUuid']: dataSet.data.chaseUuid,
+        ['flags.' + FOLDER_ID + '.load.checkThreshold']: dataSet.data.checkThreshold ?? 1,
+        ['flags.' + FOLDER_ID + '.load.closed']: dataSet.data.states?.cardResolved ?? false,
+        ['flags.' + FOLDER_ID + '.load.consumeBonusDice']: dataSet.data.flags?.consumeBonusDice ?? false,
+        ['flags.' + FOLDER_ID + '.load.dicePool.bonusCount']: 0, //
+        ['flags.' + FOLDER_ID + '.load.dicePool.currentPoolModifier']: 0, //
+        ['flags.' + FOLDER_ID + '.load.dicePool.difficulty']: 1, //
+        ['flags.' + FOLDER_ID + '.load.dicePool.flatDiceModifier']: 0, //
+        ['flags.' + FOLDER_ID + '.load.dicePool.flatThresholdModifier']: 0, //
+        ['flags.' + FOLDER_ID + '.load.dicePool.luckSpent']: 0, //
+        ['flags.' + FOLDER_ID + '.load.dicePool.groups']: [], //
+        ['flags.' + FOLDER_ID + '.load.dicePool.penaltyCount']: 0, //
+        ['flags.' + FOLDER_ID + '.load.dicePool.rolledDice']: [{
+          rolled: true, //
+          baseDie: 9, //
+          bonusDice: [], //
+          penaltyDice: [], //
+          unitDie: 10 //
+        }],
+        ['flags.' + FOLDER_ID + '.load.dicePool.suppressRollData']: false,
+        ['flags.' + FOLDER_ID + '.load.dicePool.threshold']: dataSet.data.checkThreshold ?? 1,
+        ['flags.' + FOLDER_ID + '.load.failedConsequencesRolled']: dataSet.data.states?.failedConsequencesRolled ?? false,
+        ['flags.' + FOLDER_ID + '.load.forward']: dataSet.data.forward ?? false,
+        ['flags.' + FOLDER_ID + '.load.hasBonusDice']: dataSet.data.flags?.hasBonusDice ?? false,
+        ['flags.' + FOLDER_ID + '.load.ignoreArmor']: dataSet.data.flags?.ignoreArmor ?? false,
+        ['flags.' + FOLDER_ID + '.load.locationId']: dataSet.data.locationUuid ?? '',
+        ['flags.' + FOLDER_ID + '.load.movementActionArray']: dataSet.data.movementActionArray ?? [],
+        ['flags.' + FOLDER_ID + '.load.movePlayer']: dataSet.data.movePlayer ?? [],
+        ['flags.' + FOLDER_ID + '.load.obstacle.checkName']: dataSet.data.obstacle?.checkName ?? '',
+        ['flags.' + FOLDER_ID + '.load.obstacle.failedActionCost']: dataSet.data.obstacle?.failedActionCost ?? '0',
+        ['flags.' + FOLDER_ID + '.load.obstacle.failedCheckDamage']: dataSet.data.obstacle?.failedCheckDamage ?? '0',
+        ['flags.' + FOLDER_ID + '.load.obstacle.hasActionCost']: dataSet.data.obstacle?.hasActionCost ?? false,
+        ['flags.' + FOLDER_ID + '.load.obstacle.hasDamage']: dataSet.data.obstacle?.hasDamage ?? false,
+        ['flags.' + FOLDER_ID + '.load.obstacle.hasHitPoints']: dataSet.data.obstacle?.hasHitPoints ?? false,
+        ['flags.' + FOLDER_ID + '.load.obstacle.HitPoints']: dataSet.data.obstacle?.HitPoints ?? 0,
+        ['flags.' + FOLDER_ID + '.load.obstacle.isBarrier']: dataSet.data.obstacle?.barrier ?? false,
+        ['flags.' + FOLDER_ID + '.load.obstacle.name']: dataSet.data.obstacle?.name ?? '',
+        ['flags.' + FOLDER_ID + '.load.obstacleDamageRolled']: dataSet.data.states?.obstacleDamageRolled ?? false,
+        ['flags.' + FOLDER_ID + '.load.obstacleDefined']: dataSet.data.states?.obstacleDefined ?? false,
+        ['flags.' + FOLDER_ID + '.load.obstacleDestroyed']: false,
+        ['flags.' + FOLDER_ID + '.load.participantId']: dataSet.data.participantUuid,
+        ['flags.' + FOLDER_ID + '.load.playerActionDefined']: dataSet.data.states?.playerActionDefined ?? false,
+        ['flags.' + FOLDER_ID + '.load.reflectObstacleChanges']: false,
+        ['flags.' + FOLDER_ID + '.load.targetArmor']: dataSet.data.armor ?? 0,
+        ['flags.' + FOLDER_ID + '.load.totalActionCost']: dataSet.data.totalActionCost ?? 0,
+        ['flags.' + FOLDER_ID + '.load.totalCautiousApproach']: dataSet.data.totalCautiousApproach ?? 0,
+        ['flags.' + FOLDER_ID + '.load.totalObstacleDamage']: dataSet.data.totalObstacleDamage ?? 0,
+        ['flags.' + FOLDER_ID + '.load.closed']: dataSet.data.totalPlayerDamageTaken ?? 0,
+        ['flags.' + FOLDER_ID + '.load.tryToBreak']: dataSet.data.states?.tryToBreak ?? false,
+        ['flags.' + FOLDER_ID + '.load.tryToNegotiate']: dataSet.data.states?.tryToNegotiate ?? false,
+        ['flags.' + FOLDER_ID + '.load.weaponKey']: dataSet.data.weaponChoice ?? '',
+        ['flags.' + FOLDER_ID + '.load.weaponOtherDamage']: dataSet.data.customWeaponDamage ?? ''
       }
+      const merged = foundry.utils.mergeObject(message, update, { inplace: false })
+      const check = await CoC7ChatChaseObstacle.loadFromMessage(merged)
+      const data = await check.getTemplateData()
+      update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/chase-obstacle.hbs', data)
+      update._id = message.id
+      updates.push(update)
     }
-
-    return true
-  }
-
-  async useLuck (options) {
-    await CoC7Check.alter(this.data.objects.check, 'useLuck', {
-      target: options.event.currentTarget,
-      update: false
-    })
-    if (this.data.objects.check.passed) {
-      this.data.states.cardResolved = true
-      this.data.movePlayer = true
-      this.data.totalActionCost += 1
-    }
-    return true
-  }
-
-  async rollFailConsequences (options) {
-    if (!this.data.objects) this.data.objects = {}
-    if (this.data.obstacle.hasDamage && this.data.objects.check?.isFailure) {
-      const damage =
-        typeof this.data.obstacle.failedCheckDamage === 'number'
-          ? `${this.data.obstacle.failedCheckDamage}`
-          : this.data.obstacle.failedCheckDamage
-      this.data.objects.failedDamageRoll = new Roll(damage)
-      await this.data.objects.failedDamageRoll.evaluate({ async: true })
-    }
-    if (this.data.obstacle.hazard) {
-      if (
-        this.data.obstacle.hasActionCost &&
-        this.data.objects.check?.isFailure
-      ) {
-        const actionCost =
-          typeof this.data.obstacle.failedActionCost === 'number'
-            ? `${this.data.obstacle.failedActionCost}`
-            : this.data.obstacle.failedActionCost
-        this.data.objects.failedActionRoll = new Roll(actionCost)
-        await this.data.objects.failedActionRoll.evaluate({ async: true })
-        this.data.totalActionCost += (this.data.objects.failedActionRoll.total - 1) // 1 action already spend for skill check
-      }
-    }
-
-    this.data.states.failedConsequencesRolled = true
-    this.data.states.cardResolved = true
-    return true
-  }
-
-  async askRollObstacleDamage (options) {
-    this.data.states.playerActionDefined = true
-    return true
-  }
-
-  async rollObstacleDamage (options) {
-    if (!this.data.objects) this.data.objects = {}
-    this.data.objects.obstacleDamageRoll = new Roll(this.usedWeapon?.damage)
-    await this.data.objects.obstacleDamageRoll.evaluate({ async: true })
-    await CoC7DicePool.showRollDice3d(this.data.objects.obstacleDamageRoll)
-    this.data.states.obstacleDamageRolled = true
-    this.data.totalActionCost += 1
-    this.data.states.cardResolved = true
-    return true
-  }
-
-  // List all changes
-  listChanges (validate = false) {
-    const diff = {
-      obstacle: {},
-      player: {},
-      changes: false
-    }
-    const names = {
-      barrier: game.i18n.localize('CoC7.Type'),
-      hazard: game.i18n.localize('CoC7.Type'),
-      hasHitPoints: game.i18n.localize('CoC7.Breakable'),
-      HitPoints: game.i18n.localize('CoC7.HitPoints'),
-      hasActionCost: game.i18n.localize('CoC7.ActionCost'),
-      failedActionCost: game.i18n.localize('CoC7.ActionCost'),
-      hasDamage: game.i18n.localize('CoC7.FightBack'),
-      failedCheckDamage: game.i18n.localize('CoC7.WeaponDamage'),
-      checkName: game.i18n.localize('CoC7.Check'),
-      name: game.i18n.localize('CoC7.Name')
-    }
-
-    if (validate && !this.data.validation) {
-      this.data.validation = {}
-    }
-
-    const newObstacle = foundry.utils.diffObject(
-      this.obstacle,
-      this.data.obstacle
-    )
-    // const oldObstacle = foundry.utils.diffObject(this.data.obstacle, this.obstacle)
-
-    for (const [key] of Object.entries(newObstacle)) {
-      // if ('barrier' == key || 'hazard' == key)
-      // {
-      //   diff.changes = true
-      //   diff.obstacle.type = {
-      //     old: game.i18n.localize(
-      //       this.obstacle.barrier ? 'CoC7.Barrier' : 'CoC7.Hazard'
-      //     ),
-      //     new: game.i18n.localize(
-      //       this.data.obstacle.barrier ? 'CoC7.Barrier' : 'CoC7.Hazard'
-      //     ),
-      //     key: 'type',
-      //     name: game.i18n.localize('CoC7.Type')
-      //   }
-      //   if (validate) {
-      //     this.data.validation[key] = true
-      //     this.data.validation.type = true
-      //   }
-      // }
-      // else
-      // {
-      if (
-        !(
-          (newObstacle[key] === '' && this.obstacle[key] === null) ||
-          (!isNaN(Number(newObstacle[key])) &&
-            Number(newObstacle[key]) === this.obstacle[key])
-        )
-      ) {
-        diff.changes = true
-
-        diff.obstacle[key] = {
-          old: this.obstacle[key],
-          new: newObstacle[key],
-          name: names[key],
-          key
-        }
-        if (validate) this.data.validation[key] = true
-      }
-      // }
-    }
-
-    return diff
   }
 }

@@ -1,25 +1,30 @@
 /* global game */
-export default function (data, html, options) {
-  let imageReplaced = false
-  let textReplaced = false
-  if (game.settings.get('CoC7', 'overrideGameArtwork')) {
-    if (game.settings.get('CoC7', 'artPauseImage').toLowerCase() === 'null') {
-      html.find('img').remove()
-    }
-    if (game.settings.get('CoC7', 'artPauseImage') !== '') {
-      html.find('img').attr('src', game.settings.get('CoC7', 'artPauseImage'))
-      imageReplaced = true
-    }
+import { FOLDER_ID } from '../constants.js'
 
-    if (game.settings.get('CoC7', 'artPauseText') !== '') {
-      html.find('h3').html(game.settings.get('CoC7', 'artPauseText'))
-      textReplaced = true
+/**
+ * Render Hook
+ * @deprecated FoundryVTT v12
+ * @param {Application} application
+ * @param {jQuery} html
+ * @param {object} data
+ */
+export default function (application, html, data) {
+  let imageReplacement = 'systems/' + FOLDER_ID + '/assets/images/timetrap2.webp'
+  let textReplacement = game.i18n.localize('CoC7.PauseName')
+  if (game.settings.get(FOLDER_ID, 'overrideGameArtwork')) {
+    if (game.settings.get(FOLDER_ID, 'artPauseImage').toLowerCase() === 'null') {
+      imageReplacement = ''
+    } else if (game.settings.get(FOLDER_ID, 'artPauseImage') !== '') {
+      imageReplacement = game.settings.get(FOLDER_ID, 'artPauseImage')
+    }
+    if (game.settings.get(FOLDER_ID, 'artPauseText') !== '') {
+      textReplacement = game.settings.get(FOLDER_ID, 'artPauseText')
     }
   }
-  if (!imageReplaced) {
-    html.find('img').attr('src', 'systems/CoC7/assets/images/timetrap2.webp')
+  if (imageReplacement === '') {
+    html.find('img').remove()
+  } else {
+    html.find('img').attr('src', imageReplacement)
   }
-  if (!textReplaced) {
-    html.find('figcaption').html(game.i18n.localize('CoC7.PauseName'))
-  }
+  html.find('figcaption').html(textReplacement)
 }

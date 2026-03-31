@@ -1,0 +1,42 @@
+<section class="tab details flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="details">
+  {{#if tabs.details}}
+    <fieldset class="flexrow">
+      <div class="columns flexrow">
+        <div class="column-third flexrow">
+          <label>{{localize 'CoC7.WeaponMalfunction'}}:</label>
+          <input class="small" type="text" name="system.malfunction" value="{{document.system.malfunction}}" placeholder="-" />
+        </div>
+        <div class="column-third flexrow" data-tooltip="CoC7.WeaponUsesPerRoundHint">
+          <label>{{localize 'CoC7.WeaponUsesPerRound'}}:</label>
+          <input class="small" type="text" name="system.usesPerRound.normal" value="{{document.system.usesPerRound.normal}}" placeholder="-" />
+        </div>
+        <div class="column-third flexrow">
+          <label>{{localize 'CoC7.WeaponMax'}}:</label>
+          <input class="small" type="text" name="system.usesPerRound.max" value="{{document.system.usesPerRound.max}}" placeholder="-" />
+        </div>
+        <div class="column-third flexrow">
+          <label>{{localize 'CoC7.WeaponBulletsInMag'}}:</label>
+          <input class="small" type="text" name="system.bullets" value="{{document.system.bullets}}" placeholder="-" />
+        </div>
+        {{#if document.system.properties.brst}}
+          <div class="column-third flexrow" data-tooltip="CoC7.BurstSizeHint">
+            <label>{{localize 'CoC7.BurstSize'}}:</label>
+            <input class="small" type="text" name="system.usesPerRound.burst" value="{{document.system.usesPerRound.burst}}" placeholder="-" />
+          </div>
+        {{/if}}
+        {{#if document.system.properties.blst}}
+          <div class="column-third flexrow">
+            <label>{{localize 'CoC7.Weapon.BlastRadius'}}:</label>
+            <input type="text" name="system.blastRadius" value="{{document.system.blastRadius}}" placeholder="-" />
+          </div>
+        {{/if}}
+      </div>
+    </fieldset>
+    {{#if document.system.properties.spcl}}
+      <fieldset class="flexrow">
+        <legend>{{localize 'CoC7.WeaponSpecial'}}</legend>
+        <prose-mirror name="system.description.special" value="{{document.system.description.special}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedDescriptionSpecial}}}</prose-mirror>
+      </fieldset>
+    {{/if}}
+  {{/if}}
+</section>

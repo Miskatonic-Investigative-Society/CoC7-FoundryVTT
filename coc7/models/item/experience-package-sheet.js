@@ -1,260 +1,264 @@
-/* global $ DragDrop foundry game TextEditor */
-import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import CoC7Item from './document-class.js'
-import CoC7Utilities from '../../apps/utilities.js'
-import { DropCoCID } from '../../apps/drop-coc-id.js'
+/* global DragDrop foundry game TextEditor */
+import { FOLDER_ID } from '../../constants.js'
+import CoC7ModelsItemGlobalSheet from './global-sheet.js'
+import deprecated from '../../deprecated.js'
 
-export default class CoC7ExperiencePackageSheet extends foundry.appv1.sheets.ItemSheet {
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheet', 'armor'],
-      template: 'systems/CoC7/templates/items/experience-package-header.hbs',
-      width: 520,
-      height: 480,
-      dragDrop: [{ dragSelector: '.item' }],
-      scrollY: ['.tab.description'],
-      tabs: [
-        {
-          navSelector: '.sheet-navigation',
-          contentSelector: '.sheet-body',
-          initial: 'description'
-        }
-      ]
-    })
-  }
-
-  _getHeaderButtons () {
-    const headerButtons = super._getHeaderButtons()
-    addCoCIDSheetHeaderButton(headerButtons, this)
-    return headerButtons
-  }
-
-  async getData () {
-    const sheetData = super.getData()
-
-    sheetData.data.system.skills = await game.system.api.cocid.expandItemArray({ itemList: sheetData.data.system.skills })
-
-    sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
-
-    sheetData.data.system.skills.sort(CoC7Utilities.sortByNameKey)
-
-    for (let index = 0, len = sheetData.data.system.groups.length; index < len; index++) {
-      sheetData.data.system.groups[index].skills = await game.system.api.cocid.expandItemArray({ itemList: sheetData.data.system.groups[index].skills })
-
-      sheetData.data.system.groups[index].isEmpty = sheetData.data.system.groups[index].skills.length === 0
-
-      sheetData.data.system.groups[index].skills.sort(CoC7Utilities.sortByNameKey)
+export default class CoC7ModelsItemExperiencePackageSheet extends CoC7ModelsItemGlobalSheet {
+  static DEFAULT_OPTIONS = {
+    position: {
+      width: 525,
+      height: 480
     }
+  }
 
-    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
-      sheetData.data.system.description.value,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
-      sheetData.data.system.description.keeper,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.isKeeper = game.user.isGM
-    return sheetData
+  static PARTS = {
+    header: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/experience-package-header.hbs'
+    },
+    tabs: {
+      template: 'templates/generic/tab-navigation.hbs'
+    },
+    description: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-description.hbs',
+      scrollable: ['.editor-content']
+    },
+    details: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/experience-package-tab-details.hbs',
+      scrollable: ['']
+    },
+    skills: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/experience-package-tab-skills.hbs',
+      scrollable: ['']
+    },
+    keeper: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-keeper.hbs',
+      scrollable: ['.editor-content']
+    }
   }
 
   /**
-   * Activate event listeners using the prepared sheet HTML
-   * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
    */
-  activateListeners (html) {
-    super.activateListeners(html)
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
+
+    const tabs = {
+      description: {
+        icon: '',
+        label: 'CoC7.Description'
+      }
+    }
+    if (!context.document.isEmbedded) {
+      tabs.details = {
+        icon: '',
+        label: 'CoC7.Details'
+      }
+      tabs.skills = {
+        icon: '',
+        label: 'CoC7.Skills'
+      }
+    }
+    if (game.user.isGM) {
+      tabs.keeper = {
+        cssClass: 'icon-only-tab',
+        icon: 'game-icon game-icon-tentacles-skull',
+        tooltip: 'CoC7.GmNotes'
+      }
+    }
+
+    context.tabs = this.getTabs('primary', 'description', tabs)
+
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+
+    switch (partId) {
+      case 'description':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.value,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+      case 'details':
+        context._properties = []
+        for (const [key, value] of context.document.system.schema.getField('properties').entries()) {
+          context._properties.push({
+            id: key,
+            name: value.label,
+            tooltip: value.hint,
+            isEnabled: context.document.system.properties[key] === true
+          })
+        }
+        break
+      case 'skills':
+        context.skills = await context.document.system.items()
+        context.skillListEmpty = context.skills.length === 0
+        context.groups = await context.document.system.skillGroups()
+        break
+      case 'keeper':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.keeper,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+    }
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
+
+    if (context.document.isEmbedded) {
+      /* // FoundryVTT V12 */
+      if (!this._toggleDisabled) {
+        deprecated.disableForm(this.options.window.frame, this.element)
+      } else {
+        this._toggleDisabled(true)
+      }
+    }
+
+    this.element.querySelectorAll('.item div.summary').forEach((element) => element.addEventListener('click', this._onItemSummary.bind(this)))
 
     // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return
-    html.find('.toggle-property').click(this._onPropertyClick.bind(this))
-    html.find('.sanity-loss-type-add').click(this._onAddSanityLossReason.bind(this))
-    html.find('.sanity-loss-type-delete').click(this._onDeleteSanityLossReason.bind(this))
-    html.find('.item-delete').click(event => this._onItemDelete(event, 'skills'))
-    html.find('.group-item-delete').click(this._onGroupItemDelete.bind(this))
-    html.find('.group-control').click(this._onGroupControl.bind(this))
+    if (!this.isEditable) return
 
-    const dragDrop = new DragDrop({
-      dropSelector: '.droppable',
-      callbacks: { drop: this._onDrop.bind(this) }
-    })
-    dragDrop.bind(html[0])
-  }
-
-  async _onDrop (event, type = 'skill', collectionName = 'skills') {
-    event.preventDefault()
-    event.stopPropagation()
-
-    const optionalSkill = event?.currentTarget?.classList?.contains('optional-skills')
-    const ol = event?.currentTarget?.closest('ol')
-    const index = ol?.dataset?.group
-
-    const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
-
-    let useCoCID = 0
-    const collection = this.item.system[collectionName] ? foundry.utils.duplicate(this.item.system[collectionName]) : []
-    const groups = this.item.system.groups ? foundry.utils.duplicate(this.item.system.groups) : []
-
-    for (const item of dataList) {
-      if (!item || !item.system) continue
-      if (![type].includes(item.type)) {
-        continue
-      }
-
-      if (optionalSkill) {
-        if (!CoC7Item.isAnySpec(item)) {
-          // Generic specialization can be included many times
-          if (collection.find(el => el.name === item.name)) {
-            continue // If skill is already in main don't add it
-          }
-          if (groups[index].skills.find(el => el.name === item.name)) {
-            continue // If skill is already in group don't add it
-          }
-        }
-
-        if (useCoCID === 0) {
-          useCoCID = await DropCoCID.create()
-        }
-        groups[index].skills = groups[index].skills.concat([DropCoCID.processItem(useCoCID, item)])
-      } else {
-        if (!CoC7Item.isAnySpec(item)) {
-          // Generic specialization can be included many times
-          if (collection.find(el => el.name === item.name)) {
-            continue
-          }
-
-          for (let i = 0; i < groups.length; i++) {
-            // If the same skill is in one of the group remove it from the groups
-            const index = groups[i].skills.findIndex(
-              el => el.name === item.name
-            )
-            if (index !== -1) {
-              groups[i].skills.splice(index, 1)
+    this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', (event) => {
+      switch (event.currentTarget.dataset.action) {
+        case 'group-add':
+          this.scrollToNewLast('fieldset.skill-group')
+          this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+          this.document.update({
+            'system.groups': this.document.system.groups.concat([{}])
+          })
+          break
+        case 'group-remove':
+          {
+            this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+            const group = event.target.closest('fieldset[data-group]')
+            if (group) {
+              const groups = foundry.utils.duplicate(this.document.system.groups)
+              groups.splice(Number(group.dataset.group), 1)
+              this.document.update({ 'system.groups': groups })
             }
           }
-        }
-        if (useCoCID === 0) {
-          useCoCID = await DropCoCID.create()
-        }
-        collection.push(DropCoCID.processItem(useCoCID, item))
+          break
+        case 'item-delete':
+          this._onItemDelete(event)
+          break
+        case 'sanity-loss-type-add':
+          this._onSanityLossReasonAdd(event)
+          break
+        case 'sanity-loss-type-delete':
+          this._onSanityLossReasonDelete(event)
+          break
       }
-    }
-    await this.item.update({ 'system.groups': groups })
-    await this.item.update({ [`system.${collectionName}`]: collection })
+    }))
+
+    /* // FoundryVTT V12 */
+    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+      dropSelector: '.drop-item',
+      permissions: {
+        drop: true
+      },
+      callbacks: {
+        drop: this._onItemDrop.bind(this)
+      }
+    }).bind(this.element)
   }
 
-  async _onGroupControl (event) {
+  /**
+   * Drop
+   * @param {ClickEvent} event
+   */
+  async _onItemDrop (event) {
+    const group = event.target.closest('fieldset[data-group]')
+    const source = (group ? 'system.groups.' + group.dataset.group : 'system')
+    this._onItemDropEvent(event, source, ['skill'])
+  }
+
+  /**
+   * Delete embedded item
+   * @param {ClickEvent} event
+   */
+  async _onItemDelete (event) {
+    const group = event.currentTarget.closest('fieldset[data-group]')
+    const source = (group ? 'system.groups.' + group.dataset.group : 'system')
+    this._onItemDeleteEvent(event, source)
+  }
+
+  /**
+   * Toggle embedded item description
+   * @param {ClickEvent} event
+   */
+  async _onItemSummary (event) {
+    const group = event.currentTarget.closest('fieldset[data-group]')
+    const source = (group ? 'system.groups.' + group.dataset.group : 'system')
+    this._onItemSummaryEvent(event, source)
+  }
+
+  /**
+   * Add Sanity Loss Reason Row
+   * @param {ClickEvent} event
+   */
+  async _onSanityLossReasonAdd (event) {
     event.preventDefault()
-    const a = event.currentTarget
-
-    // Add new damage component
-    if (a.classList.contains('add-group')) {
-      await this._onSubmit(event) // Submit any unsaved changes
-      const groups = this.item.system.groups
-      await this.item.update({
-        'system.groups': groups.concat([{ options: 0, skills: [] }])
-      })
-    }
-
-    if (a.classList.contains('remove-group')) {
-      await this._onSubmit(event) // Submit any unsaved changes
-      const groups = foundry.utils.duplicate(this.item.system.groups)
-      const ol = a.closest('.item-list.group')
-      groups.splice(Number(ol.dataset.group), 1)
-      await this.item.update({ 'system.groups': groups })
-    }
+    this.scrollToNewLast('div.sanity-lost-row')
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    await this.document.update({
+      'system.immunity': this.document.system.immunity.concat([''])
+    })
   }
 
-  async _onItemDelete (event, collectionName = 'items') {
-    const item = $(event.currentTarget).closest('.item')
-    const itemId = item.data('item-id')
-    const CoCId = item.data('cocid')
-    const itemIndex = this.item.system[collectionName].findIndex(i => (itemId && i._id === itemId) || (CoCId && i === CoCId))
-    if (itemIndex > -1) {
-      const collection = this.item.system[collectionName] ? foundry.utils.duplicate(this.item.system[collectionName]) : []
-      collection.splice(itemIndex, 1)
-      await this.item.update({ [`system.${collectionName}`]: collection })
-    }
-  }
-
-  async _onGroupItemDelete (event) {
-    const item = $(event.currentTarget).closest('.item')
-    const group = Number(item.closest('.item-list.group').data('group'))
-    const groups = foundry.utils.duplicate(this.item.system.groups)
-    if (typeof groups[group] !== 'undefined') {
-      const itemId = item.data('item-id')
-      const CoCId = item.data('cocid')
-      const itemIndex = groups[group].skills.findIndex(i => (itemId && i._id === itemId) || (CoCId && i === CoCId))
-      if (itemIndex > -1) {
-        groups[group].skills.splice(itemIndex, 1)
-        await this.item.update({ 'system.groups': groups })
-      }
-    }
-  }
-
-  async _onPropertyClick (event) {
+  /**
+   * Remove Sanity Loss Reason Row
+   * @param {ClickEvent} event
+   */
+  async _onSanityLossReasonDelete (event) {
     event.preventDefault()
-    const key = event.currentTarget.dataset.property
-    const propertyId = event.currentTarget.closest('.toggle-attributes').dataset.set
-    const value = !(this.item.system[propertyId][key] ?? false)
-    const changes = { ['system.' + propertyId + '.' + key]: value }
-    if (propertyId === 'properties' && key === 'sanitySame') {
-      if (value) {
-        changes['system.' + propertyId + '.cthulhuGain'] = true
-        changes['system.' + propertyId + '.sanityLoss'] = false
-      }
-    } else if (propertyId === 'properties' && key === 'sanityLoss') {
-      if (value) {
-        changes['system.' + propertyId + '.sanitySame'] = false
-      }
-    } else if (propertyId === 'properties' && key === 'cthulhuGain') {
-      if (!value) {
-        changes['system.' + propertyId + '.sanitySame'] = false
-      }
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    const group = event.currentTarget.closest('.form-group')
+    if (group && typeof group.dataset.index !== 'undefined') {
+      const immunity = foundry.utils.duplicate(this.document.system.immunity)
+      immunity.splice(Number(group.dataset.index), 1)
+      await this.document.update({ 'system.immunity': immunity })
     }
-    await this.item.update(changes)
   }
 
-  async _onAddSanityLossReason (event) {
-    event.preventDefault()
-    const immunity = this.item.system.immunity ?? []
-    immunity.push('')
-    await this.item.update({ 'system.immunity': immunity })
-  }
-
-  async _onDeleteSanityLossReason (event) {
-    event.preventDefault()
-    const index = $(event.currentTarget).closest('.form-group').data('index')
-    const immunity = this.item.system.immunity ?? []
-    immunity.splice(index, 1)
-    await this.item.update({ 'system.immunity': immunity })
-  }
-
-  _updateObject (event, formData) {
-    const system = foundry.utils.expandObject(formData)?.system
-    if (system.immunity) {
-      formData['system.immunity'] = Object.values(
-        system.immunity || []
-      )
-    }
-    if (system.groups) {
-      formData['system.groups'] = Object.values(
-        system.groups || []
-      )
-      for (let index = 0; index < this.item.system.groups.length; index++) {
-        formData[`system.groups.${index}.skills`] = foundry.utils.duplicate(
-          this.item.system.groups[index].skills
-        )
-      }
-    }
-    super._updateObject(event, formData)
+  /**
+   * @inheritdoc
+   * @param {SubmitEvent|null} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
+   * @returns {object}
+   */
+  _processFormData (event, form, formData) {
+    const object = super._processFormData(event, form, formData)
+    this._mergeFormData(object, 'groups')
+    return object
   }
 }

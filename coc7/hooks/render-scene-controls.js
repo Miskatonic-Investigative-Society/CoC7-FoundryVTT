@@ -1,8 +1,16 @@
 import CoC7SceneControls from '../apps/scene-controls.js'
 
-export default function (app, html, data) {
-  if (typeof html.querySelector === 'function') {
-    html.querySelector('button[data-tool="coc7dummy"]')?.closest('li').remove()
+/**
+ * Render Hook
+ * @param {ApplicationV2} application
+ * @param {HTMLElement} element
+ * @param {ApplicationRenderContext} context
+ * @param {ApplicationRenderOptions} options
+ */
+export default function (application, element, context, options) {
+  /* // FoundryVTT V12 */
+  if (typeof element.querySelector === 'function') {
+    element.querySelector('button[data-tool="coc7dummy"]')?.closest('li').remove()
   }
-  CoC7SceneControls.renderControls(app, html, data)
+  CoC7SceneControls.renderControls(application, element, context, options)
 }

@@ -4,11 +4,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 [cs.json (381 untranslated strings)](#csjson)
 
-[it.json (419 untranslated strings)](#itjson)
+[it.json (417 untranslated strings)](#itjson)
 
-[pt-BR.json (577 untranslated strings)](#pt-brjson)
+[pt-BR.json (571 untranslated strings)](#pt-brjson)
 
-[ru.json (499 untranslated strings)](#rujson)
+[ru.json (487 untranslated strings)](#rujson)
 
 [uk.json (382 untranslated strings)](#ukjson)
 
@@ -399,7 +399,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## it.json
-419 untranslated strings
+417 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -415,8 +415,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
 "CoC7.AddArmor": "Add armor",
 "CoC7.AddedEmbeddedItems": "Added {names}",
-"CoC7.AdditionalBonusDie": "Additional Bonus Die",
-"CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.AlternativeNames": "Alternative names",
@@ -822,7 +820,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-577 untranslated strings
+571 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -838,8 +836,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
 "CoC7.AddArmor": "Add armor",
 "CoC7.AddedEmbeddedItems": "Added {names}",
-"CoC7.AdditionalBonusDie": "Additional Bonus Die",
-"CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.AlternativeNames": "Alternative names",
@@ -1118,10 +1114,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorExperiencePackageArchetype": "You can not use Experience Packages if Archetypes are enabled",
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ErrorExperiencePackageNotInvestigator": "You can only use Experience Package on Investigators",
-"CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
 "CoC7.ErrorOpposedRollsMissingAttackerDefender": "An opposed card needs an attacker and defender",
-"CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.ErrorUnknownDistanceUnit": "Unknown distance unit, using {distance}{unit} as {distance} yards",
 "CoC7.Errors.IncorrectAttribute": "Incorrect Attribute",
@@ -1288,7 +1282,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.PromptAddSpells": "Add spells",
 "CoC7.PromptAddStatus": "Add a Phobia/Mania",
 "CoC7.RangedSpecializationName": "Ranged",
-"CoC7.RealRollDecaderPlaceholderName": "10's",
 "CoC7.RequestRoll": "Request roll",
 "CoC7.RollAsModifier.ActiveEffect.Grouped": "Modify Active Effect",
 "CoC7.RollAsModifier.ActiveEffect.GroupedName": "Grouped Temporary Modifications",
@@ -1342,7 +1335,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SkillNameSmb": "Submachine Gun",
 "CoC7.SkillOwn": "Own",
 "CoC7.SkillRanged": "Ranged",
-"CoC7.SkillSpecializationIsUnique": "Unique Specialization",
 "CoC7.SkillTotalExperiencePackagePoints": "Experience Package points",
 "CoC7.SkilllHintFighting": "Ctrl + Click to not default specialization name",
 "CoC7.SkilllHintFirearm": "Ctrl + Click to not default specialization name",
@@ -1403,7 +1395,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-499 untranslated strings
+487 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -1419,8 +1411,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
 "CoC7.AddArmor": "Add armor",
 "CoC7.AddedEmbeddedItems": "Added {names}",
-"CoC7.AdditionalBonusDie": "Additional Bonus Die",
-"CoC7.AdditionalPenaltyDie": "Additional Penalty Die",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.AlternativeNames": "Alternative names",
@@ -1693,26 +1683,18 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EmptyStatusList": "Add a phobia/mania by dropping it here.",
 "CoC7.EraGasLightPulp": "Cthulhu by Gaslight - Pulp",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
-"CoC7.ErrorActorHasNoWeaponNamed": "Actor {actorName} has no weapon named {weaponName}",
 "CoC7.ErrorActorHasTooManyWeaponsNamed": "`Actor {actorName} has more than one weapon named {weaponName}. The first found will be used`",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
-"CoC7.ErrorEvaluatingDamage": "Error evaluating damage",
 "CoC7.ErrorExperiencePackageArchetype": "You can not use Experience Packages if Archetypes are enabled",
 "CoC7.ErrorExperiencePackageNotGM": "Your keeper must apply Experience Packages",
 "CoC7.ErrorExperiencePackageNotInvestigator": "You can only use Experience Package on Investigators",
-"CoC7.ErrorManeuverNotPossible": "Your opponent is too strong for you to perform a maneuver",
-"CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
-"CoC7.ErrorNoDodgeSkill": "Actor doesn't have a dodge skill",
 "CoC7.ErrorNoTokensSelected": "No tokens selected",
-"CoC7.ErrorNotEnoughLuck": "{actor} didn't have enough luck to pass the check",
 "CoC7.ErrorNotFound": ""{missing}" not found!",
 "CoC7.ErrorNotFoundForActor": "{missing} not found for actor {actor}!",
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
 "CoC7.ErrorOpposedRollsMissingAttackerDefender": "An opposed card needs an attacker and defender",
-"CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
 "CoC7.ErrorUnableToParseArmorFormula": "Unable to process armor value: {value}. Ignoring armor.",
 "CoC7.ErrorUnableToParseFormula": "{value} is not a valid formula",
-"CoC7.ErrorUnableToParseSkillFormula": "Unable to parse formula: {value} for skill {name}",
 "CoC7.ErrorUnexpectedSkillsText": "Unexpected skills text, please raise a bug report with the text you are attempting to import",
 "CoC7.ErrorUnexpectedWeaponText": "Unexpected weapons text, please raise a bug report with the text you are attempting to import",
 "CoC7.ErrorUnknownDistanceUnit": "Unknown distance unit, using {distance}{unit} as {distance} yards",
@@ -1739,7 +1721,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ExperiencePackageSkill": "Experience Package Skill",
 "CoC7.ExperiencePackageSpellList": "Known Spells",
 "CoC7.Inactive": "Inactive",
-"CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 "CoC7.InfoLessSkillThanOptions": "There's only {skillCount} of {optionsCount} options, adding all of them",
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.InitiativeRoll": "Initiative roll",
@@ -1753,7 +1734,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": "{name} check - pushing({modifier})",
 "CoC7.LinkCheckPushing": "{name} check - pushing",
-"CoC7.LocationInit": "You can't  remove a starting location",
 "CoC7.LocationNotEmpty": "You can't remove a location with an actor",
 "CoC7.LocationPing": "Ping Location",
 "CoC7.MapNoteNoBackground": "Hide Background",

@@ -1,0 +1,31 @@
+<section class="tab portraitConfig flexcol scrollable {{tabs.portraitConfig.cssClass}}" data-group="primary" data-tab="portraitConfig">
+  {{#unless document.system.flags.locked}}
+    <header class="tab-header">
+      <h2 class="tab-heading">{{localize 'CoC7.PortraitOptions'}}</h2>
+    </header>
+    <div class="flexrow">
+      <div class="option-box">
+        <div class="photo-frame" data-object-fit="contain">
+          <img class="photo portrait-frame" src="{{document.img}}" style="object-fit: contain;">
+        </div>
+      </div>
+      <div class="option-box">
+        <div class="photo-frame" data-object-fit="cover">
+          <img class="photo portrait-frame" src="{{document.img}}" style="object-fit: cover;">
+        </div>
+      </div>
+    </div>
+    <div class="flexrow">
+      <div class="option-box">
+        <div class="photo-frame" data-object-fit="fill">
+          <img class="photo portrait-frame" src="{{document.img}}" style="object-fit: fill;">
+        </div>
+      </div>
+      <div class="option-box">
+        <div class="photo-frame" data-object-fit="none">
+          <img class="photo portrait-frame" src="{{document.img}}" style="object-fit: none;">
+        </div>
+      </div>
+    </div>
+  {{/unless}}
+</section>

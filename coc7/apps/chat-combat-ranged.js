@@ -1,809 +1,335 @@
-/* global $, ChatMessage, foundry, game, renderTemplate, Roll, ui */
+/* global canvas ChatMessage CONFIG CONST foundry fromUuid game Hooks renderTemplate Roll TextEditor ui */
+import { FOLDER_ID, DICE_POOL_REASONS, TARGET_ALLOWED } from '../constants.js'
 import CoC7DicePool from './dice-pool.js'
-import CoC7Check from './check.js'
-import { chatHelper, CoC7Roll, CoC7Damage } from '../chat/helper.js'
+import CoC7SystemSocket from './system-socket.js'
 import CoC7Utilities from './utilities.js'
 
 export default class CoC7ChatCombatRanged {
-  constructor (actorKey = null, itemId = null, fastForward = false) {
-    this.actorKey = actorKey
-    this.itemId = itemId
-    this.fastForward = fastForward
-    this.resolved = false
-    this.cover = false
-    this.surprised = false
-    this.autoSuccess = false
-    this.messageId = null
-    this.targetCard = null
-    this.rolled = false
-    this.singleShot = false
-    this.multipleShots = false
-    this.burst = false
-    this.fullAuto = false
-    this.tokenKey = null
-    this.aimed = false
-    this.bonusDieA = false
-    this.bonusDieB = false
-    this.penaltyDieA = false
-    this.penaltyDieB = false
-    this.totalBulletsFired = 0
-    this._targets = []
-    for (const t of [...game.user.targets]) {
-      const target = new CoC7RangeTarget(`${t.scene.id}.${t.id}`) //
-      target.token = t
-      this._targets.push(target)
-    }
-    if (this._targets.length) {
-      this._targets = [this._targets[0]]
-      // temporarily only allow one target
-      this._targets[0].active = true
-    } else {
-      const target = new CoC7RangeTarget()
-      target.active = true
-      this._targets.push(target)
-    }
-    if (actorKey) {
-      const actor = chatHelper.getActorFromKey(actorKey) // REFACTORING (2)
-      this.token = chatHelper.getTokenFromKey(actorKey) // REFACTORING (2)
-      if (this.token) this.tokenKey = actor.tokenKey
-      if (itemId) {
-        const weapon = actor.items.get(itemId)
-        if (weapon) {
-          if (this.weapon.singleShot) {
-            this.singleShot = true
-          } else if (this.weapon.system.properties.auto) {
-            this.fullAuto = true
-          }
-        }
-      }
-    }
-    if (this.tokenKey) {
-      for (const t of this._targets) {
-        if (t.token && this.token) {
-          t.distance = chatHelper.getDistance(t.token, this.token)
-          t.roundedDistance = Math.round(t.distance.value * 100) / 100
-          t.distanceUnit = t.distance.unit
-          const distInYd =
-            Math.round(chatHelper.toYards(t.distance) * 100) / 100
-          // if( distInYd){
-          if (this.actor) {
-            t.pointBlankRange = false
-            const pbRangeInYd =
-              this.actor.system.characteristics.dex.value / 15
-            if (distInYd <= pbRangeInYd) t.toggleFlag('pointBlankRange')
-          }
-          if (t.pointBlankRange !== true && this.weapon) {
-            if (this.weapon.baseRange) {
-              t.baseRange = false
-              t.longRange = false
-              t.extremeRange = false
-              t.outOfRange = false
-              if (this.weapon.system.properties.shotgun) {
-                if (distInYd <= this.weapon.baseRange) {
-                  t.baseRange = true
-                } else if (distInYd <= this.weapon.longRange) {
-                  t.longRange = true
-                } else if (distInYd <= this.weapon.extremeRange) {
-                  t.extremeRange = true
-                } else {
-                  t.outOfRange = true
-                }
-              } else {
-                if (distInYd <= this.weapon.baseRange) t.baseRange = true
-                if (
-                  distInYd > this.weapon.baseRange &&
-                  distInYd <= this.weapon.baseRange * 2
-                ) {
-                  t.longRange = true
-                }
-                if (
-                  distInYd > this.weapon.baseRange * 2 &&
-                  distInYd <= this.weapon.baseRange * 4
-                ) {
-                  t.extremeRange = true
-                }
-                if (distInYd > this.weapon.baseRange * 4) t.outOfRange = true
-              }
-              if (
-                !(t.baseRange || t.longRange || t.extremeRange || t.outOfRange)
-              ) {
-                t.baseRange = true
-              }
-            }
-          }
-          // }
-        } else t.baseRange = true
-      }
-    }
+  #aiming
+  #asyncAttacker
+  #asyncItem
+  #burst
+  #damage
+  #damageDealt
+  #damageRolled
+  #fullAuto
+  #multipleShots
+  #weaponRolled
+  #sceneUuid
+  #singleShot
+  #shots
+  #targets
+  #totalBulletsFired
+  #volleyMax
+  #volleySize
+
+  /**
+   * Constructor
+   */
+  constructor () {
+    // this.#asyncActor = undefined
+    // this.#asyncItem = undefined
+    this.#weaponRolled = false
+    this.#singleShot = false
+    this.#multipleShots = false
+    this.#burst = false
+    this.#fullAuto = false
+    this.#totalBulletsFired = 0
+    this.#targets = []
+    this.#volleyMax = 0
+    this.#volleySize = 0
+    this.#shots = []
+    this.#aiming = false
+    this.#sceneUuid = ''
+    this.#damage = []
+    this.#damageDealt = false
+    this.#damageRolled = false
   }
 
-  get displayActorOnCard () {
-    return game.settings.get('CoC7', 'displayActorOnCard')
-  }
-
-  get actorImg () {
-    const img = chatHelper.getActorImgFromKey(this.actorKey)
-    if (img) return img
-    return '../icons/svg/mystery-man-black.svg'
-  }
-
-  get actor () {
-    return chatHelper.getActorFromKey(this.actorKey) // REFACTORING (2)
-  }
-
-  get item () {
-    return this.actor.items.get(this.itemId)
-  }
-
-  get weapon () {
-    return this.item
-  }
-
-  get targets () {
-    if (!this._targets) this._targets = []
-    return this._targets
-  }
-
-  get target () {
-    if (this.targets && this.targets.length) return this.targets.pop()
-    return null
-  }
-
-  get skills () {
-    return this.actor.getWeaponSkills(this.itemId)
-  }
-
-  get mainWeaponSkill () {
-    return this.actor.items.get(this.weapon.system.skill.main.id)
-  }
-
-  get autoWeaponSkill () {
-    if (this.weapon.system.skill.alternativ.id) {
-      return this.actor.items.get(this.weapon.system.skill.alternativ.id)
-    }
-    return this.mainWeaponSkill
-  }
-
-  get autoFire () {
-    return this.burst || this.fullAuto
-  }
-
-  get multiTarget () {
-    return this.fullAuto || this.multipleShots
-  }
-
-  get aiming () {
-    if (undefined === this._aiming) {
-      this._aiming = this.actor.getActorFlag('aiming')
-    }
-    return this._aiming
-  }
-
-  get activeTarget () {
-    if (!this._targets.length) return null
-    return this._targets.find(t => t.active)
-  }
-
-  get shots () {
-    if (undefined === this._shots) this._shots = []
-    return this._shots
-  }
-
-  get currentShotRank () {
-    return this.shots.length + 1
-  }
-
-  get activeTargetShotDifficulty () {
-    return this.shotDifficulty()
-  }
-
-  set aiming (b) {
-    this._aiming = b
-  }
-
-  get didAnyShotHit () {
-    let anyHit = false
-    for (const r of this.rolls) {
-      anyHit = anyHit || r.isSuccess
-    }
-    return anyHit
-  }
-
-  get successfulHits () {
-    const hits = []
-    for (let index = 0; index < this.rolls.length; index++) {
-      if (this.rolls[index].isSuccess) {
-        const hit = {
-          roll: this.rolls[index],
-          shot: this.shots[index]
-        }
-        hits.push(hit)
-      }
-    }
-    if (hits.length !== 0) return hits
-    else return null
-  }
-
-  get shotFired () {
-    return this.shots ? this.shots.length : 0
-  }
-
-  get totalAmmo () {
-    return this.weapon.getBulletLeft()
-  }
-
-  get maxShots () {
-    if (this.fullAuto) return '∞'
-    // return this.weapon.data.data.usesPerRound.max;
-
-    return this.weapon.system.usesPerRound.max
-      ? parseInt(this.weapon.system.usesPerRound.max)
-      : 1
-  }
-
-  get ignoreAmmo () {
-    return game.settings.get('CoC7', 'disregardAmmo')
-  }
-
-  get ignoreUsesPerRound () {
-    return game.settings.get('CoC7', 'disregardUsePerRound')
-  }
-
-  get outOfAmmo () {
-    if (this.ignoreAmmo) return false
-    if (this.totalBulletsFired >= this.weapon.getBulletLeft()) return true
-    return false
-  }
-
-  get outOfShots () {
-    if (this.ignoreUsesPerRound) return false
-    if (this.shots) return this.shots.length >= this.maxShots
-    return false
-  }
-
-  get volleySize () {
-    if (!this.weapon.system.properties.auto) return 1
-    if (this._volleySize) return this._volleySize
-    const size = Math.floor(this.autoWeaponSkill.value / 10)
-    return size < 3 ? 3 : size
-  }
-
-  set volleySize (x) {
-    if (x >= Math.floor(this.autoWeaponSkill.value / 10)) {
-      this._volleySize = Math.floor(this.autoWeaponSkill.value / 10)
-    } else if (x <= 3) {
-      this._volleySize = 3
-    }
-    this._volleySize = parseInt(x)
-  }
-
-  get isVolleyMinSize () {
-    if (this.volleySize === 3) return true
-    return false
-  }
-
-  get isVolleyMaxSize () {
-    const maxSize =
-      Math.floor(this.autoWeaponSkill.value / 10) < 3
-        ? 3
-        : Math.floor(this.autoWeaponSkill.value / 10)
-    if (maxSize === this.volleySize) return true
-    return false
-  }
-
-  getTargetFromKey (key) {
-    return this._targets.find(t => key === t.actorKey)
-  }
-
-  calcTargetsDifficulty () {
-    for (const t of this.targets) {
-      t.shotDifficulty = this.shotDifficulty(t)
-    }
-  }
-
-  get calculatedBonusDice () {
-    return (this._calculatedModifier > 2 ? this._calculatedModifier : 0)
-  }
-
-  get calculatedPenaltyDice () {
-    return (this._calculatedModifier < -2 ? -this._calculatedModifier : 0)
-  }
-
-  shotDifficulty (t = null) {
-    const target = t || this.activeTarget
-    let damage = this.weapon.system.range.normal.damage
-    if (this.weapon.system.properties.shotgun) {
-      if (t.longRange) damage = this.weapon.system.range.long.damage
-      if (t.extremeRange) damage = this.weapon.system.range.extreme.damage
-    }
-    let modifier = parseInt(target.modifier, 10)
-    let difficulty
-    this.weapon.system.properties.shotgun
-      ? (difficulty = 1)
-      : (difficulty = target.difficulty)
-    let difficultyName = ''
-    if (this.aiming && this.currentShotRank === 1) modifier++
-    if (this.reload) modifier--
-    if (this.multipleShots && !this.fullAuto) modifier--
-    if (this.fullAuto) modifier -= this.currentShotRank - 1
-    if (this.bonusDieA) modifier++
-    if (this.bonusDieB) modifier++
-    if (this.penaltyDieA) modifier--
-    if (this.penaltyDieB) modifier--
-    this._calculatedModifier = modifier
-    if (modifier < -2) {
-      const excess = Math.abs(modifier + 2)
-      difficulty += excess
-      if (difficulty > CoC7Check.difficultyLevel.critical) {
-        difficulty = CoC7Check.difficultyLevel.impossible
-      }
-      modifier = -2
-    } else if (modifier > 2) {
-      modifier = 2
-    }
-
-    if (CoC7Check.difficultyLevel.regular === difficulty) {
-      difficultyName = `${game.i18n.localize('CoC7.RollDifficultyRegular')}`
-    }
-    if (CoC7Check.difficultyLevel.hard === difficulty) {
-      difficultyName = `${game.i18n.localize('CoC7.RollDifficultyHard')}`
-    }
-    if (CoC7Check.difficultyLevel.extreme === difficulty) {
-      difficultyName = `${game.i18n.localize('CoC7.RollDifficultyExtreme')}`
-    }
-    if (CoC7Check.difficultyLevel.critical === difficulty) {
-      difficultyName = `${game.i18n.localize('CoC7.RollDifficultyCritical')}`
-    }
-    if (CoC7Check.difficultyLevel.impossible === difficulty) {
-      difficultyName = `${game.i18n.localize('CoC7.RollDifficultyImpossible')}`
-    }
-
+  /**
+   * Target Sizes
+   * @returns {object}
+   */
+  static get TARGET_SIZE () {
     return {
-      level: difficulty,
-      name: difficultyName,
-      modifier,
-      damage,
-      impossible: difficulty === CoC7Check.difficultyLevel.impossible
+      normal: 'normal',
+      small: 'small',
+      big: 'big'
     }
   }
 
   /**
-   * Shoot at the active target. Add it to the list of shots.
-   * TODO : recalculer la difficulté de tous les shots !.
+   * Create melee initiator message
+   * @param {object} options
+   * @param {string} options.attackerUuid
+   * @param {string} options.itemUuid
+   * @param {Array} options.targetUuids
    */
-  addShotAtCurrentTarget () {
-    this.calcTargetsDifficulty()
-    const shot = {
-      target: this.activeTarget,
-      extremeRange: this.activeTarget.extremeRange,
-      actorKey: this.activeTarget.actorKey,
-      actorName: this.activeTarget.name,
-      difficulty: this.activeTarget.shotDifficulty.level,
-      modifier: this.activeTarget.shotDifficulty.modifier,
-      damage: this.activeTarget.shotDifficulty.damage,
-      bulletsShot: 1,
-      transitBullets: 0,
-      bulletsShotTransit: 1,
-      transit: false
+  static async createMessage ({ attackerUuid, itemUuid, targetUuids } = {}) {
+    if (attackerUuid) {
+      const check = new CoC7ChatCombatRanged()
+      check.attacker = attackerUuid
+      check.item = itemUuid
+      check.#sceneUuid = canvas.scene.uuid
+      const attacker = (await check.attacker)
+      const item = (await check.item)
+      if (attacker && item) {
+        check.#volleySize = check.#volleyMax = Math.max(CoC7DicePool.minVolleySize, Math.floor((item.system.skillAlternative?.system.value ?? 0) / 10))
+        if (item.system.singleShot) {
+          check.#singleShot = true
+        } else if (item.system.properties.auto) {
+          check.#fullAuto = true
+        }
+        let poolModifier = 0
+        if (item.type === 'weapon') {
+          poolModifier += item.system.bonusDice ?? 0
+          const skill = attacker.items.get(item.system.skill.main.id)
+          if (skill?.type === 'skill') {
+            poolModifier += item.system?.bonusDice ?? 0
+          }
+        }
+        const baseRange = await item.system.baseRange()
+        const longRange = await item.system.longRange()
+        const extremeRange = await item.system.extremeRange()
+        const attackerToken = attacker.getDependentTokens({ scene: canvas.scene }).find(doc => doc.object)
+        let active = true
+        let distanceError = false
+        const targetSource = {
+          active: true,
+          roundedDistance: 0,
+          img: '',
+          name: '',
+          uuid: '',
+          unit: canvas.grid.units,
+          poolKeys: [],
+          poolModifier,
+          baseRange: true,
+          longRange: false,
+          extremeRange: false,
+          outOfRange: false,
+          mov: 8,
+          size: CoC7ChatCombatRanged.TARGET_SIZE.normal
+        }
+        for (const targetUuid of targetUuids) {
+          const target = await fromUuid(targetUuid)
+          if (target && TARGET_ALLOWED.includes(target.type)) {
+            const targetData = foundry.utils.mergeObject(foundry.utils.duplicate(targetSource), {
+              active,
+              img: (target.isToken ? target.token.texture.src : target.img),
+              name: (target.isToken ? target.token.name : target.name),
+              uuid: targetUuid,
+              mov: target.system.attribs.mov.value
+            })
+            if (target.system.attribs.build <= -2) {
+              targetData.size = CoC7ChatCombatRanged.TARGET_SIZE.small
+            } else if (target.system.attribs.build >= 4) {
+              targetData.size = CoC7ChatCombatRanged.TARGET_SIZE.big
+            }
+            active = false
+            const targetToken = target.getDependentTokens({ scene: canvas.scene }).find(doc => doc.object)
+            if (targetToken && attackerToken) {
+              const distanceBetweenTokens = CoC7Utilities.distanceBetweenTokens(attackerToken, targetToken)
+              targetData.roundedDistance = distanceBetweenTokens.roundedDistance
+              const pbRangeInYd = attacker.system.characteristics.dex.value / 15
+              if (distanceBetweenTokens.yards <= pbRangeInYd) {
+                targetData.baseRange = false
+                targetData.poolKeys.push('pointBlankRange')
+              } else if (distanceBetweenTokens.yards <= longRange) {
+                targetData.baseRange = false
+                targetData.longRange = true
+              } else if (distanceBetweenTokens.yards <= extremeRange) {
+                targetData.baseRange = false
+                targetData.extremeRange = true
+              } else if (distanceBetweenTokens.yards > baseRange) {
+                targetData.baseRange = false
+                targetData.outOfRange = true
+              }
+            } else {
+              distanceError = true
+            }
+            check.#targets.push(targetData)
+          }
+        }
+        if (check.#targets.length === 0) {
+          check.#targets.push(targetSource)
+        }
+        if (distanceError && !game.settings.get(FOLDER_ID, 'distanceTheatreOfTheMind')) {
+          ui.notifications.warn('CoC7.MessageDistanceCalculationFailure', { localize: true })
+        }
+        const chatData = await check.getChatData()
+        await ChatMessage.create(chatData)
+        return
+      }
     }
+    ui.notifications.warn('CoC7.Errors.UnparsableRoll', { localize: true })
+  }
 
-    let bulletLeft = this.totalAmmo - this.totalBulletsFired
-
-    if (this.fullAuto) {
-      if (this.currentShotRank > 1) {
-        const previousShot = this.shots[this.currentShotRank - 2]
-        if (previousShot.actorKey !== this.activeTarget.actorKey) {
-          const distance = chatHelper.getDistance(
-            chatHelper.getTokenFromKey(previousShot.actorKey),
-            chatHelper.getTokenFromKey(this.activeTarget.actorKey)
-          )
-          shot.transitBullets = Math.floor(chatHelper.toYards(distance))
-          if (shot.transitBullets >= bulletLeft && !this.ignoreAmmo) {
+  /**
+   * Shoot at the active target. Add it to the list of shots.
+   */
+  async addShotAtCurrentTarget () {
+    const item = (await this.item)
+    const data = await this.getTemplateData()
+    const activeTarget = data.targets.find(t => t.active)
+    const itemSkill = ((this.#burst || this.#fullAuto) ? item.system.skillAlternative : item.system.skillMain)
+    const shot = {
+      bulletsShot: 1,
+      damage: activeTarget.damage,
+      extremeRange: activeTarget.extremeRange,
+      targetUuid: activeTarget.uuid,
+      actorName: activeTarget.name,
+      dicePool: CoC7DicePool.newPool({
+        difficulty: activeTarget.difficulty,
+        flatDiceModifier: 0,
+        flatThresholdModifier: 0,
+        poolModifiers: [activeTarget.finalPoolModifier],
+        threshold: parseInt(itemSkill.system.value, 10),
+        malfunctionThreshold: (item.system.malfunction || undefined)
+      }),
+      skillName: itemSkill.name,
+      transitBullets: 0
+    }
+    let bulletLeft = (item.system.ammo ?? 0) - this.#totalBulletsFired
+    if (this.#fullAuto) {
+      if (this.#shots.length > 0) {
+        const previousShot = this.#shots[this.#shots.length - 1]
+        if (previousShot.targetUuid !== activeTarget.uuid) {
+          const scene = await fromUuid(this.#sceneUuid)
+          let tokenLast = await fromUuid(previousShot.targetUuid)
+          if (tokenLast.token) {
+            tokenLast = tokenLast.token
+          } else {
+            tokenLast = tokenLast.getDependentTokens({ scene }).find(doc => doc.object)
+          }
+          let tokenThis = await fromUuid(activeTarget.uuid)
+          if (tokenThis.token) {
+            tokenThis = tokenThis.token
+          } else {
+            tokenThis = tokenThis.getDependentTokens({ scene }).find(doc => doc.object)
+          }
+          const distanceBetweenTokens = CoC7Utilities.distanceBetweenTokens(tokenLast, tokenThis)
+          shot.transitBullets = Math.floor(distanceBetweenTokens.yards)
+          if (shot.transitBullets >= bulletLeft && !game.settings.get(FOLDER_ID, 'disregardAmmo')) {
             shot.transitBullets = bulletLeft
             bulletLeft = 0
+          } else {
+            bulletLeft -= shot.transitBullets
           }
-          this.totalBulletsFired =
-            parseInt(this.totalBulletsFired) + shot.transitBullets
-          shot.transit = true
         }
       }
-      shot.bulletsShot = this.volleySize
-      if (shot.bulletsShot <= 3) shot.bulletsShot = 3
-      if (shot.bulletsShot >= bulletLeft && !this.ignoreAmmo) {
+      shot.bulletsShot = Math.min(Math.max(CoC7DicePool.minVolleySize, this.#volleySize), this.#volleyMax)
+      if (shot.bulletsShot >= bulletLeft && !game.settings.get(FOLDER_ID, 'disregardAmmo')) {
         shot.bulletsShot = bulletLeft
         bulletLeft = 0
       }
-      // bulletsShotTransit is for localizing CoC7.ShotBullets using parameters, localize does not accept adding a parameter as a sum of shot.bulletsShot + shot.transitBullets, so I create a new value in advance to use instead
-      shot.bulletsShotTransit = shot.bulletsShot + shot.transitBullets
-    }
-    if (this.burst) {
-      shot.bulletsShot = parseInt(this.weapon.system.usesPerRound.burst)
-        ? parseInt(this.weapon.system.usesPerRound.burst)
-        : 1
-      if (shot.bulletsShot >= bulletLeft && !this.ignoreAmmo) {
+    } else if (this.#burst) {
+      shot.bulletsShot = (!isNaN(Number(item.system.usesPerRound.burst || 1)) ? Number(item.system.usesPerRound.burst || 1) : 1)
+      if (shot.bulletsShot >= bulletLeft && !game.settings.get(FOLDER_ID, 'disregardAmmo')) {
         shot.bulletsShot = bulletLeft
         bulletLeft = 0
       }
     }
-
-    this.totalBulletsFired = parseInt(this.totalBulletsFired) + shot.bulletsShot
-
-    if (this.aiming) {
-      this.aiming = false
-      this.aimed = true
-    }
-
-    this.shots.push(shot)
+    this.#totalBulletsFired = parseInt(this.#totalBulletsFired, 10) + parseInt(shot.bulletsShot, 10) + parseInt(shot.transitBullets, 10)
+    this.#shots.push(shot)
   }
 
-  get template () {
-    return 'systems/CoC7/templates/chat/range-initiator.hbs'
-  }
-
-  async createChatCard () {
-    this.calcTargetsDifficulty()
-    const html = await renderTemplate(this.template, this)
-
-    // const element = $(html)[0];
-    // const targetElement = element.querySelector('.targetTest');
-    // this.target.attachToElement(targetElement);
-    const speakerData = {}
-    const token = chatHelper.getTokenFromKey(this.actorKey)
-    if (token) speakerData.token = token.document
-    else speakerData.actor = this.actor
-
-    const speaker = ChatMessage.getSpeaker(speakerData)
-    // if( this.actor.isToken) speaker.alias = this.actor.token.name;
-
-    const user = this.actor.user ? this.actor.user : game.user
-    const chatData = {
-      user: user.id,
-      speaker,
-      content: html
-    }
-
-    const rollMode = game.settings.get('core', 'rollMode')
-    if (['gmroll', 'blindroll'].includes(rollMode)) {
-      chatData.whisper = ChatMessage.getWhisperRecipients('GM')
-    }
-    // if ( rollMode === 'blindroll' ) chatData['blind'] = true;
-    chatData.blind = false
-
-    const chatMessage = await ChatMessage.create(chatData)
-
-    return chatMessage
-  }
-
-  async updateChatCard () {
-    this.calcTargetsDifficulty()
-    const html = await renderTemplate(this.template, this)
-
-    const message = game.messages.get(this.messageId)
-
-    const msg = await message.update({ content: html })
-    await ui.chat.updateMessage(msg, false)
-    return msg
-  }
-
-  toggleFlag (flagName) {
-    const flag = flagName.includes('-')
-      ? chatHelper.hyphenToCamelCase(flagName)
-      : flagName
-    if (
-      flag === 'singleShot' ||
-      flag === 'multipleShots' ||
-      flag === 'fullAuto'
-    ) {
-      this.singleShot = false
-      this.multipleShots = false
-      this.fullAuto = false
-      if (flag === 'fullAuto') this.burst = false
-      this[flag] = true
-    } else if (flag === 'burst') {
-      this.fullAuto = false
-      if (!this.singleShot && !this.multipleShots) this.singleShot = true
-      this.burst = !this.burst
-    } else {
-      this[flag] = !this[flag]
-      console.log(flag, this[flag])
-    }
-  }
-
-  async resolveCard () {
-    this.rolls = []
-    if (this.multiTarget) {
-      let weaponMalfunction = false
-      let index = 0
-      while (!weaponMalfunction && this.shots.length > index) {
-        const roll = await this.shootAtTarget(this.shots[index])
-        if (roll.dice?.roll) {
-          await CoC7DicePool.showRollDice3d(roll.dice.roll)
+  /**
+   * Roll Damage
+   */
+  async rollCard () {
+    const item = (await this.item)
+    const data = await this.getTemplateData()
+    if (this.#fullAuto || this.#multipleShots) {
+      for (const offset in this.#shots) {
+        await this.#shots[offset].dicePool.roll()
+        await item.system.shootAmmunition(this.#shots[offset].bulletsShot + this.#shots[offset].transitBullets)
+        if (this.#shots[offset].dicePool.isMalfunction) {
+          this.#shots[offset].dicePool.setSuccess(false)
+          break
         }
-        await this.weapon.shootBullets(
-          parseInt(this.shots[index].bulletsShot) +
-            parseInt(this.shots[index].transitBullets)
-        )
-        if (roll.hasMalfunction) {
-          roll.isSuccess = false
-          weaponMalfunction = true
+      }
+    } else {
+      const activeTarget = data.targets.find(t => t.active)
+      if (activeTarget) {
+        const itemSkill = ((this.#burst || this.#fullAuto) ? item.system.skillAlternative : item.system.skillMain)
+        const shot = {
+          bulletsShot: Math.min(item.system.ammo || 0, (this.#burst && !isNaN(Number(item.system.usesPerRound.burst || 1)) ? Number(item.system.usesPerRound.burst || 1) : 1)),
+          damage: activeTarget.damage,
+          extremeRange: activeTarget.extremeRange,
+          targetUuid: activeTarget.uuid,
+          actorName: activeTarget.name,
+          dicePool: await CoC7DicePool.rollNewPool({
+            difficulty: activeTarget.difficulty,
+            flatDiceModifier: 0,
+            flatThresholdModifier: 0,
+            poolModifier: activeTarget.finalPoolModifier,
+            threshold: parseInt(itemSkill.system.value, 10),
+            malfunctionThreshold: (item.system.malfunction || undefined)
+          }),
+          skillName: itemSkill.name,
+          transitBullets: 0
         }
-        index++
-        this.rolls.push(roll)
-      }
-    } else {
-      const roll = await this.shootAtTarget()
-      if (roll.dice?.roll) {
-        await CoC7DicePool.showRollDice3d(roll.dice.roll)
-      }
-      let bulletFired = this.burst
-        ? parseInt(this.weapon.system.usesPerRound.burst)
-        : 1
-      if (bulletFired >= this.totalAmmo) bulletFired = this.totalAmmo
-      const shot = {
-        target: this.activeTarget,
-        extremeRange: this.activeTarget.extremeRange,
-        actorKey: this.activeTarget.actorKey,
-        actorName: this.activeTarget.name,
-        difficulty: this.activeTarget.shotDifficulty.level,
-        modifier: this.activeTarget.shotDifficulty.modifier,
-        damage: this.activeTarget.shotDifficulty.damage,
-        bulletsShot: bulletFired,
-        transitBullets: 0,
-        transit: false
-      }
-      await this.weapon.shootBullets(bulletFired)
-
-      if (roll.hasMalfunction) {
-        roll.isSuccess = false
-      }
-      this.shots.push(shot)
-      this.rolls.push(roll)
-    }
-    this.resolved = true
-    this.rolled = true
-
-    await this.updateChatCard()
-  }
-
-  async shootAtTarget (shot = null) {
-    const target = shot
-      ? this.getTargetFromKey(shot.actorKey)
-      : this.activeTarget
-    const check = new CoC7Check()
-    check.actorKey = this.actorKey
-    check.actor = this.actorKey
-    check.item = this.itemId
-    check.canBePushed = false
-    // Combat roll cannot be blind or unknown
-    check.isBlind = false
-    check.isUnkonwn = false
-    if (this.autoFire) check.skill = this.autoWeaponSkill
-    else check.skill = this.mainWeaponSkill
-    if (this.multiTarget) {
-      check.difficulty = shot.difficulty
-      check.diceModifier = shot.modifier
-    } else {
-      this.calcTargetsDifficulty()
-      this.totalBulletsFired = parseInt(this.totalBulletsFired) + 1
-      if (this.aiming) {
-        this.aiming = false
-        this.aimed = true
-      }
-      check.difficulty = this.activeTarget.shotDifficulty.level
-      check.diceModifier = this.activeTarget.shotDifficulty.modifier
-    }
-
-    check.details = `${game.i18n.localize('CoC7.Target')}: ${target.name}`
-    check.targetKey = target.actorKey
-
-    await check.roll()
-    return check
-  }
-
-  static getFromMessageId (messageId) {
-    const message = game.messages.get(messageId)
-    if (!message) return null
-    const card = $(message.content)[0]
-
-    const initiator = CoC7ChatCombatRanged.getFromCard(card, messageId)
-    initiator.messageId = messageId
-
-    return initiator
-  }
-
-  changeVolleySize (x) {
-    this.volleySize = this.volleySize + x
-    this.updateChatCard()
-  }
-
-  static updateCardSwitch (event, publishUpdate = true) {
-    const card = event.currentTarget.closest('.range.initiator')
-    const flag = event.currentTarget.dataset.flag
-    const camelFlag = chatHelper.hyphenToCamelCase(flag)
-
-    // update only for local player
-    if (!publishUpdate) {
-      card.dataset[camelFlag] = card.dataset[camelFlag] !== 'true'
-      event.currentTarget.classList.toggle('switched-on')
-      event.currentTarget.dataset.selected = card.dataset[camelFlag]
-    } else {
-      // update card for all player
-      const initiator = CoC7ChatCombatRanged.getFromCard(card)
-      if (event.currentTarget.classList.contains('target-flag')) {
-        const target = event.currentTarget.closest('.target')
-        const key = parseInt(target.dataset.targetKey)
-        initiator.targets[key].toggleFlag(camelFlag)
-      } else initiator.toggleFlag(camelFlag)
-      initiator.updateChatCard()
-    }
-  }
-
-  passRoll (rollIndex) {
-    const roll = this.rolls[rollIndex]
-    const luckAmount = parseInt(roll.luckNeeded)
-    if (!this.actor.spendLuck(luckAmount)) {
-      ui.notifications.error(
-        `${this.actor.name} does not have enough luck to pass the check`
-      )
-      return
-    }
-    roll.successLevel = roll.difficulty
-    roll.isSuccess = true
-    roll.luckSpent = true
-    this.updateChatCard()
-  }
-
-  upgradeRoll (rollIndex, upgradeindex) {
-    // TODO : Check if this needs to be async
-    const roll = this.rolls[rollIndex]
-    const increasedSuccess = roll.increaseSuccess[upgradeindex]
-    const luckAmount = parseInt(increasedSuccess.luckAmount)
-    if (!this.actor.spendLuck(luckAmount)) {
-      ui.notifications.error(
-        `${this.actor.name} does not have enough luck to pass the check`
-      )
-      return
-    }
-    const newSuccessLevel = parseInt(increasedSuccess.newSuccessLevel)
-    roll.successLevel = newSuccessLevel
-    if (roll.difficulty <= newSuccessLevel) roll.isSuccess = true
-    roll.luckSpent = true
-    this.updateChatCard() // TODO : Check if this needs to be async
-  }
-
-  static getFromCard (card, messageId = null) {
-    const rangeInitiator = new CoC7ChatCombatRanged()
-    rangeInitiator._targets = []
-    if (messageId) rangeInitiator.messageId = messageId
-    else if (card.closest('.message')) {
-      rangeInitiator.messageId = card.closest('.message').dataset.messageId
-    }
-
-    chatHelper.getObjectFromElement(rangeInitiator, card)
-    const cardTargets = card.querySelectorAll('.target')
-    for (const t of cardTargets) {
-      const target = CoC7RangeTarget.getFromElement(t)
-      rangeInitiator.targets.push(target)
-    }
-
-    const cardShots = card.querySelectorAll('.shot')
-    if (cardShots) {
-      for (const s of cardShots) {
-        const shot = {}
-        chatHelper.getObjectFromElement(shot, s)
-        rangeInitiator.shots.push(shot)
+        if (shot.dicePool.isMalfunction) {
+          shot.dicePool.setSuccess(false)
+        }
+        if (!this.#fullAuto && !this.#multipleShots) {
+          this.#totalBulletsFired++
+        }
+        await item.system.shootAmmunition(shot.bulletsShot)
+        this.#shots.push(shot)
       }
     }
-    // else {
-    //  const shot = {
-    //      shotOrder: 0,
-    //      actorKey: null,
-    //      actorName: 'dummy'
-    //  }
-    // }
-
-    rangeInitiator.rolls = []
-    const rolls = card.querySelectorAll('.roll-result')
-    for (const r of rolls) {
-      const roll = CoC7Roll.getFromElement(r)
-      rangeInitiator.rolls.push(roll)
-    }
-
-    rangeInitiator.damage = []
-    const damageRolls = card.querySelectorAll('.damage-results')
-    for (const dr of damageRolls) {
-      const damageRoll = CoC7Damage.getFromElement(dr)
-      rangeInitiator.damage.push(damageRoll)
-    }
-
-    return rangeInitiator
+    this.#weaponRolled = true
   }
 
+  /**
+   * Roll damage values
+   */
   async rollDamage () {
-    this.damage = []
-    const hits = this.successfulHits
-
-    // let volleySize = 1;
-    // if( this.fullAuto) {
-    //  volleySize = this.volleySize;
-    //  if(volleySize < 3) volleySize = 3;
-    // }
-    // if( this.burst) volleySize = parseInt(this.weapon.data.data.usesPerRound.burst);
-    for (let i = 0; i < hits.length; i++) {
-      const h = hits[i]
-      const volleySize = parseInt(h.shot.bulletsShot)
-      const damageRolls = []
-
-      if (volleySize > 0) {
-        let damageFormula = String(h.shot.damage)
-        if (!damageFormula || damageFormula === '') damageFormula = '0'
-        const damageWithoutDB = damageFormula
-        if (this.item.system.properties.addb) {
-          damageFormula = damageFormula + '+' + this.actor.db
+    const attacker = (await this.attacker)
+    const item = (await this.item)
+    const hits = this.#shots.filter(s => s.dicePool.isSuccess && s.bulletsShot > 0)
+    for (const shot of hits) {
+      if (shot.bulletsShot > 0) {
+        const damageWithoutDB = shot.damage
+        let damageFormula = damageWithoutDB
+        if (item.system.properties.addb) {
+          damageFormula = damageFormula + '+' + (attacker.system.attribs.db.value || '0')
         }
-        if (this.item.system.properties.ahdb) {
-          damageFormula = damageFormula + CoC7Utilities.halfDB(this.actor.db)
+        if (item.system.properties.ahdb) {
+          damageFormula = damageFormula + CoC7Utilities.halfDB((attacker.system.attribs.db.value || '0'))
         }
-        const damageDie = CoC7Damage.getMainDie(damageFormula)
-        const maxDamage = new Roll(damageFormula)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
-        const criticalDamageFormula = this.weapon.impale
-          ? `${damageWithoutDB} + ${maxDamage}`
-          : `${maxDamage}`
-        const criticalDamageDie = CoC7Damage.getMainDie(criticalDamageFormula)
+        const maxDamage = new Roll(damageFormula).evaluateSync({ maximize: true }).total
+        const criticalDamageFormula = (item.system.properties.impl ? damageWithoutDB + ' + ' : '') + maxDamage
 
         let impalingShots = 0
-        let successfulShots = 0
+        let successfulShots = 1
         let critical = false
-        if (this.fullAuto || this.burst) {
-          successfulShots = Math.floor(volleySize / 2)
+        if (this.#fullAuto || this.#burst) {
+          successfulShots = Math.max(1, Math.floor(shot.bulletsShot / 2))
         }
-        if (successfulShots === 0) successfulShots = 1
-        if (h.roll.successLevel >= CoC7Check.difficultyLevel.extreme) {
-          impalingShots = successfulShots
-          successfulShots = volleySize - impalingShots
-          critical = true
-          if (
-            CoC7Check.difficultyLevel.critical !== h.roll.successLevel &&
-            (CoC7Check.difficultyLevel.extreme <= h.roll.difficulty ||
-              h.shot.extremeRange)
-          ) {
-            successfulShots = volleySize
-            impalingShots = 0
-            critical = false
+        if (shot.dicePool.successLevel >= CoC7DicePool.difficultyLevel.extreme) {
+          if (shot.dicePool.successLevel === CoC7DicePool.difficultyLevel.critical || !shot.extremeRange) {
+            impalingShots = successfulShots
+            critical = true
           }
+          successfulShots = shot.bulletsShot - impalingShots
         }
-
-        let total = 0
+        const shotCritical = []
         for (let index = 0; index < successfulShots; index++) {
-          const roll = new Roll(damageFormula)
-          /** MODIF 0.8.x **/
-          await roll.evaluate({ async: true })
-          await CoC7DicePool.showRollDice3d(roll)
-          /*****************/
-          const dice = []
-          for (const die of roll.dice) {
-            for (const result of die.results) {
-              dice.push({
-                faces: die.faces,
-                result: result.result
-              })
-            }
-          }
-          damageRolls.push({
-            formula: damageFormula,
-            total: roll.total,
-            die: damageDie,
-            dice,
-            critical: false
-          })
-          total += roll.total
+          shotCritical.push(false)
         }
         for (let index = 0; index < impalingShots; index++) {
-          const roll = new Roll(criticalDamageFormula)
-          await roll.evaluate()
-          await CoC7DicePool.showRollDice3d(roll)
+          shotCritical.push(true)
+        }
+        let total = 0
+        const parts = []
+        for (const isCritical of shotCritical) {
+          const roll = await new Roll(isCritical ? criticalDamageFormula : damageFormula).roll()
           const dice = []
+          let rollMethod
           for (const die of roll.dice) {
+            rollMethod = rollMethod ?? CONFIG.Dice.fulfillment.methods[die.method]
             for (const result of die.results) {
               dice.push({
                 faces: die.faces,
@@ -811,24 +337,19 @@ export default class CoC7ChatCombatRanged {
               })
             }
           }
-          damageRolls.push({
-            formula: criticalDamageFormula,
+          parts.push({
+            icon: (rollMethod?.interactive === true && !rollMethod.icon ? '<i class="fa-solid fa-bluetooth"></i>' : rollMethod?.icon),
+            method: (rollMethod?.label ?? ''),
+            formula: (isCritical ? criticalDamageFormula : damageFormula),
             total: roll.total,
-            die: criticalDamageDie,
-            dice,
-            critical: true
+            rolls: dice
           })
+          this.message.rolls.push(roll)
           total += roll.total
         }
-
-        let targetName = 'dummy'
-        let target = chatHelper.getTokenFromKey(h.roll.targetKey)
-        if (!target) target = chatHelper.getActorFromKey(h.roll.targetKey) // REFACTORING (2)
-        if (target) targetName = target.name
-
         const blastRangeDamage = []
-        if (this.weapon.system?.properties?.blst ?? false) {
-          const blastRadius = parseInt(this.weapon.system.blastRadius)
+        if (item.system?.properties?.blst ?? false) {
+          const blastRadius = parseInt(item.system.blastRadius)
           if (!isNaN(blastRadius)) {
             blastRangeDamage.push(game.i18n.format('CoC7.rangeCombatBlastDamage', {
               min: 0,
@@ -847,245 +368,915 @@ export default class CoC7ChatCombatRanged {
             }))
           }
         }
-
-        this.damage.push({
-          targetKey: h.roll.targetKey,
-          targetName,
-          rolls: damageRolls,
-          total,
-          critical,
+        this.#damage.push({
+          isCritical: critical,
           dealt: false,
+          actorName: shot.actorName,
+          targetUuid: shot.targetUuid,
           resultString: game.i18n.format('CoC7.rangeCombatDamage', {
-            name: targetName,
+            name: shot.actorName,
             total
           }),
-          blastRangeDamage
+          blastRangeDamage,
+          parts
         })
       }
     }
-
-    this.damageRolled = this.damage.length !== 0
-    this.updateChatCard()
+    this.#damageRolled = true
   }
 
+  /**
+   * Deal damage
+   */
   async dealDamage () {
-    for (let dIndex = 0; dIndex < this.damage.length; dIndex++) {
-      const actor = chatHelper.getActorFromKey(this.damage[dIndex].targetKey) // REFACTORING (2)
-      if (actor === null) {
-        ui.notifications.error(game.i18n.localize('CoC7.NoTargetToDamage'))
+    for (const offset in this.#damage) {
+      const actor = await fromUuid(this.#damage[offset].targetUuid)
+      if (!actor) {
+        ui.notifications.error('CoC7.NoTargetToDamage', { localize: true })
       } else {
-        this.damage[dIndex].totalTaken = 0
-        this.damage[dIndex].totalAbsorbed = 0
-        for (
-          let rIndex = 0;
-          rIndex < this.damage[dIndex].rolls.length;
-          rIndex++
-        ) {
-          const dealtAmount = await actor.dealDamage(
-            this.damage[dIndex].rolls[rIndex].total
-          )
-          this.damage[dIndex].totalTaken += dealtAmount
-          this.damage[dIndex].rolls[rIndex].taken = dealtAmount
-          this.damage[dIndex].rolls[rIndex].absorbed =
-            this.damage[dIndex].rolls[rIndex].total - dealtAmount
-          this.damage[dIndex].totalAbsorbed +=
-            this.damage[dIndex].rolls[rIndex].total - dealtAmount
+        let totalTaken = 0
+        let totalAbsorbed = 0
+        for (const part of this.#damage[offset].parts) {
+          const dealtAmount = await actor.dealDamage(part.total)
+          totalTaken += dealtAmount
+          totalAbsorbed += part.total - dealtAmount
         }
-        this.damage[dIndex].dealt = true
-        this.damage[dIndex].resultString = game.i18n.format(
-          'CoC7.rangeCombatDamageArmor',
-          {
-            name: this.damage[dIndex].targetName,
-            total: this.damage[dIndex].totalTaken,
-            armor: this.damage[dIndex].totalAbsorbed
-          }
-        )
-      }
-    }
-    this.damageDealt = true
-    this.updateChatCard()
-  }
-}
-
-export class CoC7RangeTarget {
-  constructor (actorKey = null) {
-    this.actorKey = actorKey
-    this.cover = false
-    this.pointBlankRange = false
-    this.baseRange = true
-    this.longRange = false
-    this.extremeRange = false
-    this.inMelee = false
-  }
-
-  get big () {
-    if (undefined === this._big) {
-      if (this.actor && this.actor.build) this._big = this.actor.build >= 4
-      else this._big = false
-    }
-    return this._big
-  }
-
-  set big (b) {
-    this._big = b
-  }
-
-  get small () {
-    if (undefined === this._small) {
-      if (this.actor && this.actor.build) this._small = this.actor.build <= -2
-      else this._small = false
-    }
-    return this._small
-  }
-
-  set small (b) {
-    this._small = b
-  }
-
-  get normal () {
-    return !this.big && !this.small
-  }
-
-  set normal (b) {
-    this._big = false
-    this._small = false
-  }
-
-  get isFast () {
-    if (this.actor && this.actor.mov) return this.actor.mov >= 8
-    return false
-  }
-
-  get fast () {
-    if (undefined === this._fast) {
-      // if( this.actor && this.actor.mov) this._fast = this.actor.mov >= 8;
-      // else this._fast = false;
-      this._fast = false
-    }
-    return this._fast
-  }
-
-  set fast (b) {
-    this._fast = b
-  }
-
-  get actor () {
-    if (this.actorKey && !this._actor) {
-      this._actor = chatHelper.getActorFromKey(this.actorKey) // REFACTORING (2)
-    }
-    return this._actor
-  }
-
-  get name () {
-    if (this.token) return this.token.name
-    if (this.actor) return this.actor.name
-    return 'Dummy'
-  }
-
-  get img () {
-    if (this.token) {
-      if (this.token.document?.texture.src) {
-        return this.token.document?.texture.src
-      }
-    }
-    if (this.actor) return this.actor.data.img
-    return '../icons/svg/mystery-man-black.svg'
-  }
-
-  get token () {
-    if (!this._token && this.actorKey) {
-      this._token = chatHelper.getTokenFromKey(this.actorKey)
-    }
-    return this._token
-  }
-
-  get sizeText () {
-    if (this.big) {
-      return game.i18n.localize('CoC7.rangeCombatCard.BigTargetTitle')
-    }
-    if (this.small) {
-      return game.i18n.localize('CoC7.rangeCombatCard.SmallTargetTitle')
-    }
-    return game.i18n.localize('CoC7.rangeCombatCard.NormalTargetTitle')
-  }
-
-  get sizeLabel () {
-    if (this.big) return game.i18n.localize('CoC7.rangeCombatCard.BigTarget')
-    if (this.small) return game.i18n.localize('CoC7.combatCard.SmallTarget')
-    return game.i18n.localize('CoC7.rangeCombatCard.NormalTarget')
-  }
-
-  get difficulty () {
-    if (this.baseRange || this.pointBlankRange) {
-      return CoC7Check.difficultyLevel.regular
-    }
-    if (this.longRange) return CoC7Check.difficultyLevel.hard
-    if (this.extremeRange) return CoC7Check.difficultyLevel.extreme
-    return CoC7Check.difficultyLevel.impossible
-  }
-
-  get modifier () {
-    let modifier = 0
-    if (this.cover) modifier--
-    if (this.pointBlankRange) modifier++
-    if (this.fast) modifier--
-    if (this.small) modifier--
-    if (this.big) modifier++
-    if (this.inMelee) modifier--
-    if (this.surprised) modifier++
-    return modifier
-  }
-
-  set token (t) {
-    this._token = t
-  }
-
-  static getFromElement (element) {
-    const target = new CoC7RangeTarget()
-    chatHelper.getObjectFromElement(target, element)
-    return target
-  }
-
-  static changeDisplayedTarget (event) {
-    if (!event.currentTarget.classList.contains('target-selector')) return null
-    const targetSelector = event.currentTarget
-    const targets = targetSelector.closest('.targets')
-    const targetList = targets.querySelectorAll('.target')
-    return targetList
-  }
-
-  attachToElement (element) {
-    chatHelper.attachObjectToElement(this, element)
-  }
-
-  toggleFlag (flag) {
-    if (
-      flag === 'baseRange' ||
-      flag === 'longRange' ||
-      flag === 'extremeRange' ||
-      flag === 'pointBlankRange'
-    ) {
-      this.pointBlankRange = false
-      this.baseRange = false
-      this.longRange = false
-      this.extremeRange = false
-      this.outOfRange = false
-      this[flag] = true
-    } else if (flag === 'size') {
-      if (this.small) {
-        this.small = false
-        this.big = true
-      } else if (this.big) {
-        this.small = false
-        this.big = false
-      } else this.small = true
-    } else this[flag] = !this[flag]
-    if (this.actor && flag === 'fast' && this.fast && !this.isFast) {
-      ui.notifications.warn(
-        game.i18n.format('CoC7.WarnFastTargetWithWrongMOV', {
-          mov: this.actor.mov
+        this.#damage[offset].dealt = true
+        this.#damage[offset].resultString = game.i18n.format('CoC7.rangeCombatDamageArmor', {
+          name: this.#damage[offset].actorName,
+          total: totalTaken,
+          armor: totalAbsorbed
         })
+      }
+    }
+    this.#damageDealt = true
+  }
+
+  /**
+   * Create CoC7ChatCombatRanged from message
+   * @param {Document} message
+   * @returns {CoC7ChatCombatRanged}
+   */
+  static async loadFromMessage (message) {
+    const keys = [
+      'actorUuid',
+      'aiming',
+      'burst',
+      'damage',
+      'damageDealt',
+      'damageRolled',
+      'fullAuto',
+      'itemUuid',
+      'multipleShots',
+      'sceneUuid',
+      'shots',
+      'singleShot',
+      'targets',
+      'totalBulletsFired',
+      'volleyMax',
+      'volleySize',
+      'weaponRolled'
+    ]
+    if (message.id && message.flags[FOLDER_ID]?.load?.as === 'CoC7ChatCombatRanged' && keys.every(k => typeof message.flags[FOLDER_ID]?.load?.[k] !== 'undefined') && message.flags[FOLDER_ID].load.shots.every(s => CoC7DicePool.isValidPool(s.dicePool))) {
+      const check = new CoC7ChatCombatRanged()
+      check.message = message
+      const load = foundry.utils.duplicate(message.flags[FOLDER_ID].load)
+      check.attacker = load.actorUuid
+      check.#aiming = load.aiming
+      check.#burst = load.burst
+      check.#damage = load.damage
+      check.#damageDealt = load.damageDealt
+      check.#damageRolled = load.damageRolled
+      check.#fullAuto = load.fullAuto
+      check.item = load.itemUuid
+      check.#multipleShots = load.multipleShots
+      check.#sceneUuid = load.sceneUuid
+      check.#shots = load.shots.reduce((c, s) => {
+        s.dicePool = CoC7DicePool.fromObject(s.dicePool)
+        c.push(s)
+        return c
+      }, [])
+      check.#singleShot = load.singleShot
+      check.#targets = load.targets
+      check.#totalBulletsFired = load.totalBulletsFired
+      check.#volleyMax = load.volleyMax
+      check.#volleySize = load.volleySize
+      check.#weaponRolled = load.weaponRolled
+      return check
+    }
+    ui.notifications.warn('CoC7.Errors.UnableToLoadMessage', { localize: true })
+    throw new Error('CoC7.Errors.UnableToLoadMessage')
+  }
+
+  /**
+   * Click Event on dice roll
+   * @param {ClickEvent} event
+   * @param {Document} message
+   */
+  static async _onClickEvent (event, message) {
+    switch (event.currentTarget?.dataset?.action) {
+      case 'toggleValue':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          const set = event.currentTarget.dataset.set
+          if (check && set) {
+            switch (set) {
+              case 'singleShot':
+                if (check.#singleShot) {
+                  return
+                }
+                check.#singleShot = true
+                check.#fullAuto = check.#multipleShots = false
+                break
+              case 'multipleShots':
+                if (check.#multipleShots) {
+                  return
+                }
+                check.#multipleShots = true
+                check.#fullAuto = check.#singleShot = false
+                break
+              case 'burst':
+                check.#burst = !check.#burst
+                check.#fullAuto = false
+                if (!check.#multipleShots && !check.#singleShot) {
+                  check.#singleShot = true
+                }
+                break
+              case 'fullAuto':
+                if (check.#fullAuto) {
+                  return
+                }
+                check.#fullAuto = true
+                check.#burst = check.#multipleShots = check.#singleShot = false
+                break
+              case 'aiming':
+                if (check.#shots.length === 0) {
+                  check.#aiming = !check.#aiming
+                }
+                break
+              default:
+                ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+                return
+            }
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'volley-size-decrease':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          if (check) {
+            check.#volleySize = Math.max(CoC7DicePool.minVolleySize, check.#volleySize - 1)
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'volley-size-increase':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          if (check) {
+            check.#volleySize = Math.min(check.#volleyMax, check.#volleySize + 1)
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'toggleTargetValue':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          const set = event.currentTarget.dataset.set
+          const offset = event.currentTarget.closest('.ranged-targets-option').dataset.offset
+          if (check && set && typeof offset !== 'undefined') {
+            switch (set) {
+              case 'size':
+                {
+                  const keys = Object.keys(CoC7ChatCombatRanged.TARGET_SIZE)
+                  const current = keys.findIndex(k => k === check.#targets[offset].size)
+                  if (current > -1) {
+                    check.#targets[offset].size = keys[(current + 1) % keys.length]
+                  }
+                  check.updateMessage()
+                }
+                break
+              case 'baseRange':
+              case 'longRange':
+              case 'extremeRange':
+              case 'outOfRange':
+                {
+                  const keys = ['baseRange', 'longRange', 'extremeRange', 'outOfRange']
+                  for (const key of keys) {
+                    check.#targets[offset][key] = (set === key)
+                  }
+                  const index = check.#targets[offset].poolKeys.findIndex(k => k === 'pointBlankRange')
+                  if (index > -1) {
+                    check.#targets[offset].poolKeys.splice(index, 1)
+                  }
+                  const oldActive = check.#targets.findIndex(t => t.active)
+                  if (oldActive > -1) {
+                    check.#targets[oldActive].active = false
+                  }
+                  check.#targets[offset].active = true
+                  check.updateMessage()
+                }
+                break
+            }
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'toggleTargetKey':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          const set = event.currentTarget.dataset.set
+          const offset = event.currentTarget.closest('.ranged-targets-option').dataset.offset
+          if (check && set && typeof offset !== 'undefined') {
+            if (DICE_POOL_REASONS[set]?.forRanged === true) {
+              const oldActive = check.#targets.findIndex(t => t.active)
+              if (oldActive > -1) {
+                check.#targets[oldActive].active = false
+              }
+              check.#targets[offset].active = true
+              const index = check.#targets[offset].poolKeys.findIndex(k => k === set)
+              if (index === -1) {
+                check.#targets[offset].poolKeys.push(set)
+                check.#targets[offset].poolKeys.sort()
+                if (set === 'pointBlankRange') {
+                  const keys = ['baseRange', 'longRange', 'extremeRange', 'outOfRange']
+                  for (const key of keys) {
+                    check.#targets[offset][key] = false
+                  }
+                } else if (set === 'fast' && check.#targets[offset].mov < 8) {
+                  ui.notifications.warn(game.i18n.format('CoC7.WarnFastTargetWithWrongMOV', { mov: check.#targets[offset].mov }))
+                }
+              } else {
+                check.#targets[offset].poolKeys.splice(index, 1)
+                if (set === 'pointBlankRange') {
+                  check.#targets[offset].baseRange = true
+                }
+              }
+              check.updateMessage()
+            } else {
+              ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+            }
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
+      case 'range-initiator-roll':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          if (check) {
+            await check.rollCard()
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
+      case 'luck':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          const luckSpend = event.currentTarget.dataset.luckSpend
+          const shotOffset = event.currentTarget.dataset.shotOffset
+          if (check && luckSpend && typeof shotOffset !== 'undefined' && typeof check.#shots[shotOffset] !== 'undefined') {
+            const attacker = (await check.attacker)
+            const newLuck = parseInt(attacker?.system.attribs.lck.value ?? 0, 10) - parseInt(luckSpend, 10)
+            if (newLuck >= 0) {
+              if (await attacker.spendLuck(luckSpend) !== false) {
+                check.#shots[shotOffset].dicePool.luckSpent = check.#shots[shotOffset].dicePool.luckSpent + parseInt(luckSpend, 10)
+              }
+            }
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
+      case 'range-initiator-shoot':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          const offset = event.currentTarget.closest('.ranged-targets-option').dataset.offset
+          if (check && typeof offset !== 'undefined') {
+            const oldActive = check.#targets.findIndex(t => t.active)
+            if (oldActive > -1) {
+              check.#targets[oldActive].active = false
+            }
+            check.#targets[offset].active = true
+            await check.addShotAtCurrentTarget()
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
+      case 'roll-range-damage':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          if (check) {
+            await check.rollDamage()
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
+      case 'deal-range-damage':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          if (check) {
+            await check.dealDamage()
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
+    }
+  }
+
+  /**
+   * Switch target without reloading message
+   * @param {ClickEvent} event
+   */
+  static async _onSwitchTargetEvent (event) {
+    const offset = event.currentTarget?.dataset?.offset
+    if (typeof offset !== 'undefined') {
+      const messageHtml = event.currentTarget.closest('.message-content')
+      messageHtml.querySelector('.ranged-targets-portraits .switch-target.active').classList.remove('active')
+      messageHtml.querySelector('.ranged-targets-option.active').classList.remove('active')
+      messageHtml.querySelector('.ranged-targets-portraits .switch-target[data-offset="' + offset + '"]').classList.add('active')
+      messageHtml.querySelector('.ranged-targets-option[data-offset="' + offset + '"]').classList.add('active')
+      return
+    }
+    ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+  }
+
+  /**
+   * Click Event on dice roll
+   * @param {ClickEvent} event
+   * @param {Document} message
+   */
+  static async _onChangeEvent (event, message) {
+    switch (event.target?.type) {
+      case 'range':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          const set = event.target.dataset.set
+          const offset = event.target.closest('.ranged-targets-option').dataset.offset
+          if (check && set && typeof offset !== 'undefined') {
+            const oldActive = check.#targets.findIndex(t => t.active)
+            if (oldActive > -1) {
+              check.#targets[oldActive].active = false
+            }
+            check.#targets[offset].active = true
+            check.#targets[offset].poolModifier = event.target.value
+            CoC7Utilities.messageUpdatedThen(message.id, () => {
+              setTimeout(() => {
+                document.querySelector('[data-message-id="' + message.id + '"] .ranged-targets-option[data-offset="' + offset + '"] input[type=range][data-set="' + set + '"]').focus()
+              }, 50)
+            })
+            check.updateMessage()
+          }
+        }
+        break
+    }
+  }
+
+  /**
+   * Render Chat Message
+   * @param {documents.ChatMessage} message
+   * @param {HTMLElement} html
+   * @param {ApplicationRenderContext} context
+   * @param {false|Array} allowed
+   */
+  static async _onRenderMessage (message, html, context, allowed) {
+    if (game.user.isGM || allowed) {
+      html.querySelectorAll('[data-action]').forEach((element) => {
+        if (game.user.isGM || allowed.includes(element.parentElement.dataset.actorUuid)) {
+          element.addEventListener('click', event => CoC7ChatCombatRanged._onClickEvent(event, message))
+        }
+      })
+      html.querySelectorAll('.switch-target').forEach((element) => {
+        if (game.user.isGM || allowed.includes(element.dataset.actorUuid)) {
+          element.addEventListener('click', async event => CoC7ChatCombatRanged._onSwitchTargetEvent(event))
+        }
+      })
+    }
+    if (game.user.isGM) {
+      html.querySelectorAll('input[type=range]').forEach((element) => {
+        element.addEventListener('change', event => CoC7ChatCombatRanged._onChangeEvent(event, message))
+      })
+    }
+    html.querySelectorAll('.coc7-formatted-text').forEach((element) => {
+      const div = document.createElement('div')
+      div.id = 'temporary-measure-' + Math.floor(Math.random() * 100)
+      div.style.width = 'var(--sidebar-width)'
+      div.style.visibility = 'hidden'
+      div.style.position = 'absolute'
+      div.append(element.cloneNode(true))
+      document.body.appendChild(div)
+      if (div.offsetHeight > 50) {
+        element.classList.add('overflowing')
+        element.addEventListener('click', event => element.classList.remove('overflowing'))
+      }
+      document.getElementById(div.id)?.remove()
+    })
+  }
+
+  /**
+   * Get attacker actor promise
+   * @returns {Promise<Document>} async Actor
+   */
+  get attacker () {
+    return this.#asyncAttacker
+  }
+
+  /**
+   * Set attacker actor from document/uuid
+   * @param {string} value
+   */
+  set attacker (value) {
+    this.#asyncAttacker = (typeof value === 'string' ? fromUuid(value) : undefined)
+  }
+
+  /**
+   * Get item promise
+   * @returns {Promise<Document>} async Actor
+   */
+  get item () {
+    return this.#asyncItem
+  }
+
+  /**
+   * Set item from document/uuid
+   * @param {string} value
+   */
+  set item (value) {
+    if (typeof value === 'string' && value !== '') {
+      this.#asyncItem = fromUuid(value)
+      return
+    }
+    throw new Error('Invalid item')
+  }
+
+  /**
+   * Create Message Data object
+   * @returns {object}
+   */
+  async getTemplateData () {
+    const attacker = (await this.attacker)
+    const item = (await this.item)
+    const usesPerRoundMax = Number(item?.system.usesPerRound.max || 1)
+    const data = {
+      aiming: this.#aiming,
+      attackerImg: (attacker?.isToken ? attacker.token.texture.src : attacker?.img),
+      attackerName: (attacker?.isToken ? attacker.token.name : attacker?.name),
+      attackerUuid: CoC7Utilities.getActorUuid(attacker),
+      burst: this.#burst,
+      damage: this.#damage,
+      damageDealt: this.#damageDealt,
+      damageRolled: this.#damageRolled,
+      didAnyShotHit: !!this.#shots.find(s => s.dicePool.isSuccess),
+      displayActorOnCard: game.settings.get(FOLDER_ID, 'displayActorOnCard'),
+      enrichedWeaponDescriptionSpecial: '',
+      /* // FoundryVTT V12 */
+      enrichedItemDescriptionValue: await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        item?.system.description?.value,
+        {
+          async: true,
+          secrets: false
+        }
+      ),
+      excessBonusDice: 0,
+      excessPenaltyDice: 0,
+      foundryGeneration: game.release.generation,
+      fullAuto: this.#fullAuto,
+      hasWeaponSpecial: item?.system.properties.spcl,
+      item,
+      itemImg: item?.img,
+      itemName: item?.name,
+      itemUuid: item?.uuid,
+      malfunctionTxt: game.i18n.format('CoC7.Malfunction', {
+        itemName: item?.name
+      }),
+      maxShots: (this.#fullAuto ? '∞' : (isNaN(usesPerRoundMax) ? '1' : usesPerRoundMax)),
+      multipleShots: this.#multipleShots,
+      outOfAmmo: (!game.settings.get(FOLDER_ID, 'disregardAmmo') && this.#totalBulletsFired >= item?.system.ammo),
+      outOfShots: false,
+      poolBonus: [],
+      poolPenalty: [],
+      shots: this.#shots.reduce((c, s) => {
+        c.push(Object.keys(s).reduce((c, k) => {
+          if (k === 'dicePool') {
+            c[k] = s[k]
+            c.buttons = s[k].availableButtons({ luckAvailable: attacker?.system.attribs.lck.value, key: 'skill', isPushable: false })
+          } else {
+            c[k] = s[k]
+          }
+          return c
+        }, {}))
+        return c
+      }, []),
+      shotFired: this.#shots.length,
+      singleShot: this.#singleShot,
+      sizeTooltip: {
+        [CoC7ChatCombatRanged.TARGET_SIZE.big]: game.i18n.localize('CoC7.rangeCombatCard.BigTargetTitle'),
+        [CoC7ChatCombatRanged.TARGET_SIZE.small]: game.i18n.localize('CoC7.rangeCombatCard.SmallTargetTitle'),
+        [CoC7ChatCombatRanged.TARGET_SIZE.normal]: game.i18n.localize('CoC7.rangeCombatCard.NormalTargetTitle')
+      },
+      sizeLabel: {
+        [CoC7ChatCombatRanged.TARGET_SIZE.big]: game.i18n.localize('CoC7.rangeCombatCard.BigTarget'),
+        [CoC7ChatCombatRanged.TARGET_SIZE.small]: game.i18n.localize('CoC7.combatCard.SmallTarget'),
+        [CoC7ChatCombatRanged.TARGET_SIZE.normal]: game.i18n.localize('CoC7.rangeCombatCard.NormalTarget')
+      },
+      targets: foundry.utils.duplicate(this.#targets),
+      totalAmmo: item?.system.ammo ?? 0,
+      totalBulletsFired: this.#totalBulletsFired,
+      volleyMax: this.#volleyMax,
+      volleyMin: CoC7DicePool.minVolleySize,
+      volleySize: this.#volleySize,
+      weaponRolled: this.#weaponRolled
+    }
+    if (!game.settings.get(FOLDER_ID, 'disregardUsePerRound') && data.maxShots !== '∞' && this.#shots.length >= data.maxShots) {
+      data.outOfShots = true
+    }
+    for (const key in DICE_POOL_REASONS) {
+      if (DICE_POOL_REASONS[key].forRanged) {
+        const type = (DICE_POOL_REASONS[key].forBonus ? 'poolBonus' : (DICE_POOL_REASONS[key].forPenalty ? 'poolPenalty' : ''))
+        if (type) {
+          const row = {
+            key,
+            name: game.i18n.localize(DICE_POOL_REASONS[key].name),
+            tooltip: game.i18n.localize(DICE_POOL_REASONS[key].tooltip)
+          }
+          data[type].push(row)
+        }
+      }
+    }
+    for (const offset in data.targets) {
+      let difficulty = CoC7DicePool.difficultyLevel.regular
+      let poolModifier = data.targets[offset].poolModifier
+      let damage = item?.system.range.normal.damage
+      if (!item?.system.properties.shotgun) {
+        if (data.targets[offset].longRange) {
+          difficulty = CoC7DicePool.difficultyLevel.hard
+          damage = item?.system.range.long.damage
+        } else if (data.targets[offset].extremeRange) {
+          difficulty = CoC7DicePool.difficultyLevel.extreme
+          damage = item?.system.range.extreme.damage
+        }
+      }
+      if (this.#aiming && this.#shots.length === 0) {
+        poolModifier++
+      }
+      // if (this.reload) modifier--
+      if (this.#multipleShots && !this.#fullAuto) {
+        poolModifier++
+      }
+      if (this.#fullAuto) {
+        poolModifier -= this.#shots.length
+      }
+      if (data.targets[offset].size === CoC7ChatCombatRanged.TARGET_SIZE.small) {
+        poolModifier--
+      } else if (data.targets[offset].size === CoC7ChatCombatRanged.TARGET_SIZE.big) {
+        poolModifier++
+      }
+      for (const poolRow of data.poolBonus) {
+        if (data.targets[offset].poolKeys.includes(poolRow.key)) {
+          poolModifier++
+        }
+      }
+      for (const poolRow of data.poolPenalty) {
+        if (data.targets[offset].poolKeys.includes(poolRow.key)) {
+          poolModifier--
+        }
+      }
+      if (poolModifier > CoC7DicePool.maxDiceBonus) {
+        data.excessBonusDice = poolModifier
+        poolModifier = CoC7DicePool.maxDiceBonus
+      } else if (poolModifier < -CoC7DicePool.maxDicePenalty) {
+        data.excessPenaltyDice = -poolModifier
+        const excess = Math.abs(poolModifier + 2)
+        difficulty += excess
+        if (difficulty > CoC7DicePool.difficultyLevel.critical) {
+          difficulty = CoC7DicePool.difficultyLevel.impossible
+        }
+        poolModifier = -CoC7DicePool.maxDicePenalty
+      }
+      if (data.targets[offset].outOfRange) {
+        difficulty = CoC7DicePool.difficultyLevel.impossible
+      }
+      data.targets[offset].damage = String(damage || '0')
+      data.targets[offset].difficulty = difficulty
+      data.targets[offset].finalPoolModifier = poolModifier
+      data.targets[offset].absolutePoolModifier = Math.abs(poolModifier)
+      data.targets[offset].impossible = (difficulty === CoC7DicePool.difficultyLevel.impossible)
+      switch (difficulty) {
+        case CoC7DicePool.difficultyLevel.regular:
+          data.targets[offset].difficultyName = game.i18n.localize('CoC7.RollDifficultyRegularTitle')
+          break
+        case CoC7DicePool.difficultyLevel.hard:
+          data.targets[offset].difficultyName = game.i18n.localize('CoC7.RollDifficultyHardTitle')
+          break
+        case CoC7DicePool.difficultyLevel.extreme:
+          data.targets[offset].difficultyName = game.i18n.localize('CoC7.RollDifficultyExtremeTitle')
+          break
+        case CoC7DicePool.difficultyLevel.critical:
+          data.targets[offset].difficultyName = game.i18n.localize('CoC7.RollDifficultyCriticalTitle')
+          break
+        case CoC7DicePool.difficultyLevel.impossible:
+          data.targets[offset].difficultyName = game.i18n.localize('CoC7.RollDifficultyImpossibleTitle')
+          break
+      }
+    }
+    if (data.hasWeaponSpecial) {
+      data.enrichedWeaponDescriptionSpecial = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        item.system.description.special,
+        {
+          async: true,
+          secrets: false
+        }
       )
+    }
+    return data
+  }
+
+  /**
+   * Create Chat Message object
+   * @returns {object}
+   */
+  async getChatData () {
+    const data = await this.getTemplateData()
+    const chatData = {
+      flags: {
+        [FOLDER_ID]: {
+          load: {
+            as: 'CoC7ChatCombatRanged',
+            actorUuid: data.attackerUuid,
+            aiming: this.#aiming,
+            burst: this.#burst,
+            damage: this.#damage,
+            damageDealt: this.#damageDealt,
+            damageRolled: this.#damageRolled,
+            cardOpen: true,
+            fullAuto: this.#fullAuto,
+            itemUuid: data.itemUuid,
+            multipleShots: this.#multipleShots,
+            sceneUuid: this.#sceneUuid,
+            shots: this.#shots.reduce((c, s) => {
+              c.push(Object.keys(s).reduce((c, k) => {
+                if (k === 'dicePool') {
+                  c[k] = s[k].toObject()
+                } else {
+                  c[k] = s[k]
+                }
+                return c
+              }, {}))
+              return c
+            }, []),
+            singleShot: this.#singleShot,
+            targets: this.#targets,
+            totalBulletsFired: this.#totalBulletsFired,
+            volleyMax: this.#volleyMax,
+            volleySize: this.#volleySize,
+            weaponRolled: this.#weaponRolled
+          }
+        }
+      },
+      rolls: (this.message?.rolls ?? []).concat(this.#shots.reduce((c, s) => c.concat(s.dicePool.newRolls), [])),
+      /* // FoundryVTT V12 */
+      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/range-initiator.hbs', data)
+    }
+    if (typeof this.message?.whisper === 'undefined') {
+      if ([CONST.DICE_ROLL_MODES.PRIVATE].includes(game.settings.get('core', 'rollMode'))) {
+        chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+      } else if (CONST.DICE_ROLL_MODES.BLIND === game.settings.get('core', 'rollMode')) {
+        chatData.blind = true
+      }
+    }
+    return chatData
+  }
+
+  /**
+   * Save changes to existing Chat Message
+   */
+  async updateMessage () {
+    if (this.message) {
+      const diff = foundry.utils.diffObject(this.message.toObject(), await this.getChatData())
+      if (!this.message.canUserModify(game.user, 'update')) {
+        CoC7SystemSocket.requestKeeperAction({
+          type: 'messagePermission',
+          messageId: this.message.id,
+          who: game.user.id,
+          updates: diff
+        })
+      } else {
+        await this.message.update(diff)
+        Hooks.call('messageUpdatedCoC7', this.message.id)
+      }
+    }
+  }
+
+  /**
+   * Migrate older html
+   * @param {object} options
+   * @param {integer} options.offset
+   * @param {object} options.updates
+   * @param {object} options.deleteIds
+   */
+  static async migrateOlderMessages ({ offset, updates, deleteIds } = {}) {
+    const message = game.messages.contents[offset]
+    const div = document.createElement('div')
+    div.innerHTML = message.content
+    const contents = div.children[0]
+    if (contents) {
+      const actorUuid = CoC7Utilities.oldStyleToUuid(contents.dataset.actorKey)
+      const targetsHtml = contents.querySelectorAll('.targets')
+      const targets = []
+      for (const targetHtml of targetsHtml) {
+        const header = targetHtml.querySelector('.target-selector')
+        const img = header.querySelector('img.open-actor')
+        const tab = targetHtml.querySelector('.target[data-key="' + header.dataset.key + '"]')
+        const poolKeys = []
+        if (tab.dataset.cover === 'true') {
+          poolKeys.push('cover')
+        }
+        if (tab.dataset.surprised === 'true') {
+          poolKeys.push('surprisedRanged')
+        }
+        if (tab.dataset.pointBlankRange === 'true') {
+          poolKeys.push('pointBlankRange')
+        }
+        if (tab.dataset.inMelee === 'true') {
+          poolKeys.push('inMelee')
+        }
+        if (tab.dataset.fast === 'true') {
+          poolKeys.push('fast')
+        }
+        let poolModifier = 0
+        if (tab.dataset.penaltyDieA === 'true') {
+          poolModifier--
+        }
+        if (tab.dataset.penaltyDieB === 'true') {
+          poolModifier--
+        }
+        if (tab.dataset.bonusDieA === 'true') {
+          poolModifier++
+        }
+        if (tab.dataset.bonusDieB === 'true') {
+          poolModifier++
+        }
+        targets.push({
+          active: tab.dataset.active === 'true',
+          roundedDistance: Number(tab.dataset.roundedDistance) || 0,
+          img: img.src,
+          name: img.alt,
+          uuid: CoC7Utilities.oldStyleToUuid(tab.dataset.actorKey),
+          unit: tab.dataset.distanceUnit,
+          poolKeys,
+          poolModifier,
+          baseRange: tab.dataset.baseRange === 'true',
+          longRange: tab.dataset.longRange === 'true',
+          extremeRange: tab.dataset.extremeRange === 'true',
+          outOfRange: tab.dataset.outOfRange === 'true',
+          mov: 10, // Default
+          size: (tab.dataset.small === 'true' ? CoC7ChatCombatRanged.TARGET_SIZE.small : (tab.dataset.big === 'true' ? CoC7ChatCombatRanged.TARGET_SIZE.big : CoC7ChatCombatRanged.TARGET_SIZE.normal))
+        })
+      }
+      const shots = []
+      const diceResults = contents.querySelectorAll('.results .dice-result')
+      for (const diceResult of diceResults) {
+        const diceValues = diceResult.dataset.total.match(/(\d)(\d)$/)
+        const weaponData = diceResult.querySelector('.dice-formula').innerHTML.match(/^(.+?) \((\d+)\)/m)
+        const shotsHtml = contents.querySelectorAll('.shots .shot')
+        for (const shotHtml of shotsHtml) {
+          const poolModifier = Number(shotHtml.dataset.modifier) || 0
+          shots.push({
+            bulletsShot: shotHtml.dataset.bulletsShot,
+            damage: shotHtml.dataset.damage,
+            extremeRange: false, // Default
+            targetUuid: (shotHtml.dataset.actorKey === '' ? '' : CoC7Utilities.oldStyleToUuid(shotHtml.dataset.actorKey)),
+            actorName: shotHtml.dataset.actorName,
+            dicePool: {
+              bonusCount: Math.max(0, poolModifier),
+              currentPoolModifier: poolModifier,
+              difficulty: shotHtml.dataset.difficulty,
+              flatDiceModifier: 0,
+              flatThresholdModifier: 0,
+              luckSpent: 0,
+              groups: [],
+              malfunctionThreshold: 100, // Default
+              penaltyCount: Math.min(0, poolModifier),
+              rolledDice: [
+                {
+                  rolled: !!diceValues,
+                  baseDie: (diceValues ? (diceValues[1] === '0' ? 10 : Number(diceValues[1])) : 0),
+                  bonusDice: [],
+                  penaltyDice: [],
+                  unitDie: (diceValues ? (diceValues[2] === '0' ? 10 : Number(diceValues[2])) : 0)
+                }
+              ],
+              suppressRollData: false,
+              threshold: Number(((weaponData?.[2] ?? 1) || 1).toString().trim())
+            },
+            skillName: ((weaponData?.[1] ?? 1) || 1).toString().trim(),
+            transitBullets: shotHtml.dataset.transitBullets
+          })
+        }
+      }
+      const damage = []
+      const damageDiceResults = contents.querySelectorAll('.damage .damage-results')
+      for (const diceResult of damageDiceResults) {
+        const diceFormulas = diceResult.querySelectorAll('.dice-formula')
+        const blastRangeDamage = []
+        for (const diceFormula of diceFormulas) {
+          blastRangeDamage.push(diceFormula.innerHTML.trim())
+        }
+        const parts = []
+        const rollHtml = diceResult.querySelectorAll('.dice-rolls li.roll')
+        const rolls = []
+        const dice = {}
+        let total = 0
+        for (const roll of rollHtml) {
+          const faces = Number(roll.dataset.faces) || 1
+          const result = Number(roll.dataset.result) || 1
+          rolls.push({
+            faces,
+            result
+          })
+          if (typeof dice[faces.toString()] === 'undefined') {
+            dice[faces.toString()] = 0
+          }
+          total = total + result
+          dice[faces.toString()]++
+        }
+        const diceTotal = Number(diceResult.querySelector('.part-total').innerHTML)
+        parts.push({
+          method: '',
+          formula: Object.keys(dice).reduce((c, d) => { c.push(dice[d] + 'D' + d); return c }, []).join(' + ') + (total - diceTotal > 0 ? ' + ' + (total - diceTotal) : ''),
+          total,
+          rolls
+        })
+        damage.push({
+          isCritical: diceResult.dataset.critical === 'true',
+          dealt: diceResult.dataset.dealt === 'true',
+          actorName: diceResult.dataset.targetName,
+          targetUuid: CoC7Utilities.oldStyleToUuid(diceResult.dataset.targetKey),
+          resultString: (blastRangeDamage.length > 1 ? '' : blastRangeDamage.pop()),
+          blastRangeDamage,
+          parts
+        })
+      }
+      const update = {
+        ['flags.' + FOLDER_ID + '.load.as']: 'CoC7ChatCombatRanged',
+        ['flags.' + FOLDER_ID + '.load.actorUuid']: actorUuid,
+        ['flags.' + FOLDER_ID + '.load.aiming']: contents.dataset.aiming === 'true',
+        ['flags.' + FOLDER_ID + '.load.burst']: contents.dataset.burst === 'true',
+        ['flags.' + FOLDER_ID + '.load.damage']: damage,
+        ['flags.' + FOLDER_ID + '.load.damageDealt']: contents.dataset.damageDealt === 'true',
+        ['flags.' + FOLDER_ID + '.load.damageRolled']: contents.dataset.damageRolled === 'true',
+        ['flags.' + FOLDER_ID + '.load.cardOpen']: contents.dataset.resolved !== 'true',
+        ['flags.' + FOLDER_ID + '.load.fullAuto']: contents.dataset.fullAuto === 'true',
+        ['flags.' + FOLDER_ID + '.load.itemUuid']: actorUuid + '.Item.' + contents.dataset.fullAuto.itemId,
+        ['flags.' + FOLDER_ID + '.load.multipleShots']: contents.dataset.multipleShots === 'true',
+        ['flags.' + FOLDER_ID + '.load.sceneUuid']: contents.dataset.actorKey.replace(/^([^.]+)(\..+)?$/, 'Scene.$1'),
+        ['flags.' + FOLDER_ID + '.load.shots']: shots,
+        ['flags.' + FOLDER_ID + '.load.singleShot']: contents.dataset.singleShot === 'true',
+        ['flags.' + FOLDER_ID + '.load.targets']: targets,
+        ['flags.' + FOLDER_ID + '.load.totalBulletsFired']: Number(contents.dataset.totalBulletsFired) || 0,
+        ['flags.' + FOLDER_ID + '.load.volleyMax']: Number(contents.dataset.volleySize) || 0, //
+        ['flags.' + FOLDER_ID + '.load.volleySize']: Number(contents.dataset.volleySize) || 0,
+        ['flags.' + FOLDER_ID + '.load.weaponRolled']: contents.dataset.rolled === 'true'
+      }
+      const merged = foundry.utils.mergeObject(message, update, { inplace: false })
+      const check = await CoC7ChatCombatRanged.loadFromMessage(merged)
+      const data = await check.getTemplateData()
+      data.attackerUuid = update['flags.' + FOLDER_ID + '.load.actorUuid']
+      {
+        const html = contents.querySelector('.card-content').innerHTML.split('<span class="tag">Special</span>').map(h => h.trim())
+        data.enrichedItemDescriptionValue = html[0] ?? ''
+        data.enrichedWeaponDescriptionSpecial = html[1] ?? ''
+        data.hasWeaponSpecial = data.enrichedWeaponDescriptionSpecial.length
+      }
+      {
+        const html = contents.querySelector('.open-actor')
+        data.itemImg = html.src
+        data.itemName = html.title
+        data.itemUuid = update['flags.' + FOLDER_ID + '.load.itemUuid']
+        data.malfunctionTxt = game.i18n.format('CoC7.Malfunction', {
+          itemName: data.itemName
+        })
+      }
+      update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/range-initiator.hbs', data)
+      update._id = message.id
+      updates.push(update)
     }
   }
 }

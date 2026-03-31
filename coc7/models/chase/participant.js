@@ -1,565 +1,478 @@
-/* global game, ui */
-import { chatHelper } from '../../chat/helper.js'
+/* global CONFIG foundry fromUuid game renderTemplate */
+import { FOLDER_ID, TARGET_ALLOWED } from '../../constants.js'
 import CoC7Check from '../../apps/check.js'
+import CoC7DicePool from '../../apps/dice-pool.js'
 import CoC7Utilities from '../../apps/utilities.js'
 
-export class _participant {
-  constructor (data = {}) {
-    this.data = data
+export default class CoC7ChaseParticipant {
+  #actionsOffset
+  #actor
+  #canAssist
+  #listOptions
+  #isFirstLocation
+  #isLastLocation
+  #isTooFast
+  #isTooSlow
+  #participant
+  #speedCheckResult
+
+  /**
+   * Constructor
+   * @param {Array} participants
+   * @param {integer} offset
+   */
+  constructor (participants, offset) {
+    this.#participant = participants[offset]
+    this.#actionsOffset = 0
+    this.#canAssist = false
+    this.#isFirstLocation = false
+    this.#isLastLocation = false
+    for (const participant of participants) {
+      if (participant.chaser === this.#participant.chaser) {
+        this.#canAssist = true
+        break
+      }
+    }
+    for (const key in this.#participant) {
+      Object.defineProperty(this, key, {
+        get: function () { return this.#participant[key] }
+      })
+    }
   }
 
-  _fetch () {
-    if (!this._doc && this.data.docUuid) {
-      this._doc = CoC7Utilities.getDocumentFromKey(this.data.docUuid)
-    }
-
-    if (!this._actor) {
-      if (this._doc) {
-        switch (this._doc.constructor?.name) {
-          case 'TokenDocument':
-            this._actor = this._doc.actor
-            break
-
-          case 'CoCActor':
-            this._actor = this._doc
-            break
-          default:
-            break
-        }
-      } else this._actor = CoC7Utilities.getActorFromKey(this.data.docUuid)
-    }
-  }
-
+  /**
+   * Get the actor
+   * @throws Error if not loaded
+   * @returns {Document|null}
+   */
   get actor () {
-    this._fetch()
-    return this._actor
+    if (typeof this.#actor === 'undefined') {
+      throw new Error('Did not participant.loadUuids')
+    }
+    return this.#actor
   }
 
+  /**
+   * Is this an Actor that can be in a chase
+   * @throws Error if not loaded
+   * @returns {boolean}
+   */
   get isActor () {
-    return this.hasActor || this.hasVehicle
+    if (typeof this.#actor === 'undefined') {
+      throw new Error('Did not participant.loadUuids')
+    }
+    return TARGET_ALLOWED.includes(this.#actor?.type)
   }
 
-  get isActive () {
-    return this.data.active || false
-  }
-
-  get key () {
-    if (this.hasVehicle) return this.vehicle.actorKey
-    if (this.hasActor) return this.actor.actorKey
-    return undefined
-  }
-
+  /**
+   * Get actor icon or default icon
+   * @throws Error if not loaded
+   * @returns {string}
+   */
   get icon () {
-    if (!this.isActor) {
-      return 'systems/CoC7/assets/icons/question-circle-regular.svg'
+    if (typeof this.#actor === 'undefined') {
+      throw new Error('Did not participant.loadUuids')
     }
-    if (this.hasVehicle) return this.vehicle.img
-    if (this.hasActor) return this.actor.img
-    return undefined
-  }
-
-  get driver () {
-    if (!this._driver) {
-      this._driver = CoC7Utilities.getActorFromKey(this.data.docUuid)
+    if (this.#actor?.isToken) {
+      return this.#actor.token.texture.src
     }
-    return this._driver
-  }
-
-  get vehicle () {
-    if (this.data.vehicleKey) {
-      this._vehicle = chatHelper.getActorFromKey(this.data.vehicleKey)
+    if (this.#actor?.img) {
+      return this.#actor.img
     }
-    return this._vehicle
+    return 'systems/' + FOLDER_ID + '/assets/icons/question-circle-regular.svg'
   }
 
-  get hasActor () {
-    return !!this.actor
+  /**
+   * Set actions offset value
+   */
+  set actions (value) {
+    this.#actionsOffset = Number(value)
   }
 
-  get hasVehicle () {
-    return !!this.vehicle
+  /**
+   * Get actions available (MOV - participant minimum movement + 1)
+   * @returns {integer}
+   */
+  get actions () {
+    return this.adjustedMov - this.#actionsOffset + 1
   }
 
-  get name () {
-    if (this.hasVehicle) return this.vehicle.name
-    if (this.hasActor) return this.actor.name
-    return this.data.name || undefined
-  }
-
-  get mov () {
-    if (!this.data.mov) {
-      if (this.hasVehicle) this.data.mov = this.vehicle.mov
-      else if (this.hasActor) this.data.mov = this.actor.mov
-    }
-
-    if (this.data.mov) {
-      if (!isNaN(Number(this.data.mov))) this.data.hasValidMov = true
-      else {
-        this.data.hasValidMov = false
-        this.data.mov = undefined
-      }
-    }
-
-    return this.data.mov
-  }
-
-  get uuid () {
-    return this.data.uuid
-  }
-
-  get hasMaxBonusDice () {
-    return this.bonusDice >= 2
-  }
-
-  get bonusDice () {
-    if (
-      isNaN(this.data.bonusDice) ||
-      this.data.bonusDice < 0 ||
-      this.data.bonusDice > 2
-    ) {
-      return 0
-    }
-    return this.data.bonusDice
-  }
-
-  set bonusDice (x) {
-    if (isNaN(x)) {
-      ui.notifications.error('Bonus dice can Only be a number')
-      return
-    }
-    if (x > 2) {
-      ui.notifications.error('Max 2 bonus dice')
-      return
-    }
-    if (x < 0) {
-      ui.notifications.error('No negativ bonus dice')
-      return
-    }
-    this.data.bonusDice = x
-  }
-
+  /**
+   * Get Actor HP
+   * @returns {integer}
+   */
   get hp () {
-    if (!this.data.hp) {
-      this.data.hp = 0
+    if (typeof this.#actor === 'undefined') {
+      throw new Error('Did not participant.loadUuids')
     }
-    if (this.actor) {
-      this.data.hp = this.actor.hp
+    return this.#actor?.system.attribs.hp.value ?? this.syntheticHp
+  }
+
+  /**
+   * Get available attributes, characteristics, and skills
+   * @returns {Array}
+   */
+  get listOptions () {
+    if (typeof this.#actor === 'undefined') {
+      throw new Error('Did not participant.loadUuids')
     }
-
-    return this.data.hp
+    return this.#listOptions
   }
 
-  set hp (x) {
-    this.data.hp = x
-    if (this.actor) {
-      this.actor.setHp(x)
-    }
+  /**
+   * Is Speed Roll Set and not yet rolled
+   * @returns {boolean}
+   */
+  get rollableSpeedCheck () {
+    return (this.#participant.speedCheck?.name.length && this.#participant.speedCheck?.score > 0)
   }
 
-  addBonusDice () {
-    if (this.data.bonusDice >= 2) {
-      ui.notifications.error('Already have max bonus dice')
-      return
-    }
-    this.data.bonusDice += 1
+  /**
+   * Is Speed Roll Set and not yet rolled
+   * @returns {boolean}
+   */
+  get rolledSpeedCheck () {
+    return typeof this.#participant.speedCheck?.checkData?.flags !== 'undefined'
   }
 
-  removeBonusDice () {
-    if (this.data.bonusDice <= 0) {
-      ui.notifications.error('Already have 0 bonus dice')
-      return
-    }
-    this.data.bonusDice -= 1
+  /**
+   * Is Speed Roll in progress
+   * @returns {boolean}
+   */
+  get rollingSpeedCheck () {
+    return this.#participant.speedCheck?.checkData?.rolling === true
   }
 
-  resetBonusDice () {
-    this.data.bonusDice = 0
-  }
-
-  get hasBonusDice () {
-    return this.hasOneBonusDice || this.hasTwoBonusDice
-  }
-
-  get hasOneBonusDice () {
-    return this.bonusDice >= 1
-  }
-
-  get hasTwoBonusDice () {
-    return this.bonusDice >= 2
-  }
-
-  get canAssist () {
-    return this.assist?.length > 0
-  }
-
-  get canBeCautious () {
-    return !this.hasMaxBonusDice
-  }
-
-  get assist () {
-    return this.data.assist || []
-  }
-
-  get dex () {
-    if (!this.data.dex) {
-      if (this.hasVehicle && this.hasDriver) {
-        this.data.dex = this.driver.characteristics.dex.value
-      } else if (this.hasActor) {
-        this.data.dex = this.actor.characteristics.dex.value
-      }
-    }
-
-    if (this.data.dex) {
-      if (!isNaN(Number(this.data.dex))) this.data.hasValidDex = true
-      else {
-        this.data.hasValidDex = false
-        this.data.dex = 0
-      }
-    }
-
-    return this.data.dex
-  }
-
-  get hasAGunReady () {
-    return this.data.hasAGunReady || false
-  }
-
-  get initiative () {
-    let init = this.dex
-    if (this.hasAGunReady) {
-      init += 50
-    }
-    // if( this.speedCheck){
-    //   if(this.speedCheck.score) init += this.speedCheck.score/100
-    // }
-
-    return init
-  }
-
-  get isChaser () {
-    return !!this.data.chaser
-  }
-
-  get isPrey () {
-    return !this.isChaser
-  }
-
-  get isValid () {
-    return this.hasValidDex && this.hasValidMov
-  }
-
-  get hasValidDex () {
-    return !isNaN(Number(this.data.dex))
-  }
-
-  get hasValidMov () {
-    return !isNaN(Number(this.data.mov))
-  }
-
-  get hasDriver () {
-    return this.hasVehicle && this.hasActor
-  }
-
+  /**
+   * Get speed roll movement modification
+   * @returns {integer}
+   */
   get movAdjustment () {
-    if (this.data.speedCheck?.rollDataString) {
-      const roll = CoC7Check.fromRollString(this.data.speedCheck.rollDataString)
-      if (roll) {
-        if (!roll.standby) {
-          if (roll.successLevel >= CoC7Check.successLevel.extreme) return 1
-          else if (roll.failed) return -1
-        }
+    if (CoC7DicePool.isValidPool(this.#participant.speedCheck?.checkData?.flags?.[FOLDER_ID].load?.dicePool)) {
+      const dicePool = CoC7DicePool.fromObject(this.#participant.speedCheck.checkData.flags[FOLDER_ID].load.dicePool)
+      if (dicePool.isCritical) {
+        return 1
+      } else if (!dicePool.isSuccess) {
+        return -1
       }
     }
     return 0
   }
 
+  /**
+   * Get participants movement modified by speed roll
+   * @returns {integer}
+   */
   get adjustedMov () {
-    if (typeof this.mov === 'undefined') return undefined
-    if (isNaN(Number(this.mov))) return undefined
-    return Number(this.mov) + this.movAdjustment
+    return parseInt(this.#participant.mov || 0, 10) + this.movAdjustment
   }
 
-  get hasMovAdjustment () {
-    return this.hasBonusMov || this.hasMalusMov
-  }
-
-  get hasBonusMov () {
-    if (this.data.movAdjustment > 0) return true
-    return false
-  }
-
-  get hasMalusMov () {
-    if (this.data.movAdjustment < 0) return true
-    return false
-  }
-
-  // get options(){
-  //  return {
-  //    exclude: [],
-  //    excludeStartWith: '_'
-  //  };
-  // }
-
-  // get dataString(){
-  //  return JSON.stringify(this, (key,value)=>{
-  //    if( null === value) return undefined;
-  //    if( this.options.exclude?.includes(key)) return undefined;
-  //    if( key.startsWith(this.options.excludeStartWith)) return undefined;
-  //    return value;
-  //  });
-  // }
-
-  tooSlow () {
-    this.data.excluded = true
-  }
-
-  includeInChase () {
-    this.data.excluded = false
-    this.data.escaped = false
-  }
-
-  escaped () {
-    this.data.escaped = true
-  }
-
-  set slowest (x) {
-    this.data.slowest = x
-  }
-
-  get slowest () {
-    return this.data.slowest
-  }
-
-  set fastest (x) {
-    this.data.fastest = x
-  }
-
-  get fastest () {
-    return this.data.fastest
-  }
-
-  calculateMovementActions (minMov) {
-    if (
-      typeof this.movementAction === 'undefined' ||
-      typeof this.adjustedMov === 'undefined' ||
-      isNaN(minMov)
-    ) {
-      this.movementAction = 0
-    } else {
-      this.movementAction = 1 + (this.adjustedMov - minMov)
+  /**
+   * Get movement css classes
+   * @returns {string}
+   */
+  get adjustedMovClasses () {
+    const movAdjustment = this.movAdjustment
+    if (movAdjustment < 0) {
+      return ' downgrade'
+    } else if (movAdjustment > 0) {
+      return ' upgrade'
     }
-    // if( this.movementAction < 0) this.movementAction = 0
+    return ''
   }
 
-  set movementAction (x) {
-    this.data.movementAction = x
-  }
-
-  get movementAction () {
-    return this.data.movementAction
-  }
-
-  set currentMovementActions (x) {
-    this.data.currentMovementActions = x
-  }
-
-  get currentMovementActions () {
-    return this.data.currentMovementActions || 0
-  }
-
-  get hasMaxMvtActions () {
-    return this.currentMovementActions >= this.movementAction
-  }
-
-  get hasNoMvtActions () {
-    return this.currentMovementActions <= 0
-  }
-
-  addMovementActions (x = 1) {
-    this.currentMovementActions += x
-    if (this.currentMovementActions > this.movementAction) {
-      this.currentMovementActions = this.movementAction
+  /**
+   * Get speed check result
+   * @returns {object}
+   */
+  get speedCheckResult () {
+    if (typeof this.#actor === 'undefined') {
+      throw new Error('Did not participant.loadUuids')
     }
+    return this.#speedCheckResult
   }
 
-  alterMovementActions (x) {
-    this.currentMovementActions += x
-    if (this.currentMovementActions > this.movementAction) {
-      this.currentMovementActions = this.movementAction
+  /**
+   * Has a speed check threshold
+   * @returns {boolean}
+   */
+  get hasSpeedCheckValue () {
+    if (typeof this.#actor === 'undefined') {
+      throw new Error('Did not participant.loadUuids')
     }
+    const value = this.#listOptions.find(row => row.name === this.#participant.speedCheck.name)
+    return !!(value?.value)
   }
 
+  /**
+   * Is participant too fast to be included
+   * @returns {boolean}
+   */
+  get tooFast () {
+    return this.#isTooFast === true
+  }
+
+  /**
+   * Is participant too slow to be included
+   * @returns {boolean}
+   */
+  get tooSlow () {
+    return this.#isTooSlow === true
+  }
+
+  /**
+   * Is participant at first location
+   * @returns {boolean}
+   */
+  get isFirstLocation () {
+    return this.#isFirstLocation === true
+  }
+
+  /**
+   * Is participant at last location
+   * @returns {boolean}
+   */
+  get isLastLocation () {
+    return this.#isLastLocation === true
+  }
+
+  /**
+   * Can assist
+   * @returns {boolean}
+   */
+  get canAssist () {
+    return this.#canAssist === true
+  }
+
+  /**
+   * Array of css classes for actions
+   * @returns {Array}
+   */
   get movementActionArray () {
-    const baseArray = Array(this.movementAction).fill('base')
+    const baseArray = Array(this.actions).fill('base')
     if (this.currentMovementActions >= 0) {
       for (let i = 0; i < this.currentMovementActions; i++) {
         baseArray[i] = 'base available'
       }
       return baseArray
     }
+    const deficitArray = Array(Math.abs(this.currentMovementActions)).fill('deficit')
+    return deficitArray.concat(baseArray)
+  }
 
-    if (this.currentMovementActions < 0) {
-      const deficitArray = Array(Math.abs(this.currentMovementActions)).fill(
-        'deficit'
-      )
-      return deficitArray.concat(baseArray)
+  /**
+   * Get in total initiative value
+   * @returns {integer}
+   */
+  get initiativeValue () {
+    return this.dex + (this.hasAGunReady ? 50 : 0)
+  }
+
+  /**
+   * Hax maximum movement actions
+   * @returns {boolean}
+   */
+  get hasMaxMvtActions () {
+    return this.actions === this.currentMovementActions
+  }
+
+  /**
+   * Check too fast or slow
+   * @param {object} options
+   * @param {integer} options.fastestChaser
+   * @param {integer} options.slowestPrey
+   * @param {boolean} options.includeEscaped
+   * @param {boolean} options.includeLatecomers
+   */
+  setFastSlow ({ fastestChaser, slowestPrey, includeEscaped, includeLatecomers }) {
+    if (this.chaser) {
+      this.#isTooFast = false
+      if (this.adjustedMov < slowestPrey) {
+        this.#isTooSlow = !includeLatecomers
+      }
+    } else {
+      this.#isTooSlow = false
+      if (this.adjustedMov > fastestChaser) {
+        this.#isTooFast = !includeEscaped
+      }
     }
   }
 
-  get cssClass () {
-    const cssClasses = []
-    if (this.isChaser) cssClasses.push('chaser')
-    else cssClasses.push('prey')
-    if (this.data.excluded) cssClasses.push('excluded', 'too_slow')
-    if (this.data.escaped) cssClasses.push('escaped')
-    if (this.data.fastest) cssClasses.push('fastest')
-    if (this.data.slowest) cssClasses.push('slowest')
-    if (this.data.active) cssClasses.push('active')
-    if (this.data.currentMovementActions <= 0) cssClasses.push('no-actions')
-    return cssClasses.join(' ')
+  /**
+   * Is at first or last location
+   * @param {boolean} isFirstLocation
+   * @param {boolean} isLastLocation
+   */
+  setFirstLast (isFirstLocation, isLastLocation) {
+    this.#isFirstLocation = isFirstLocation
+    this.#isLastLocation = isLastLocation
   }
 
-  get speedCheck () {
-    const check = {}
-    if (this.data.speedCheck?.name) check.name = this.data.speedCheck.name
-    if (this.data.speedCheck?.score) check.score = this.data.speedCheck.score
-    check.cssClasses = ''
-    if (this.data.speedCheck?.rollDataString) {
-      check.roll = CoC7Check.fromRollString(this.data.speedCheck.rollDataString)
-      if (check.roll) {
-        if (!check.roll.standby || check.roll.hasCard) {
-          check.rolled = true
-          check.inlineRoll = check.roll.inlineCheck.outerHTML
-          check.cssClasses += 'rolled'
-          if (!check.roll.standby) {
-            if (check.roll.successLevel >= CoC7Check.successLevel.extreme) {
-              check.modifierCss = 'upgrade'
-            } else if (check.roll.failed) check.modifierCss = 'downgrade'
-            if (
-              check.roll.successLevel >= CoC7Check.successLevel.extreme ||
-              check.roll.failed
-            ) {
-              check.hasModifier = true
+  /**
+   * Preload the async functions
+   */
+  async loadUuids () {
+    if (this.#participant.docUuid) {
+      this.#actor = await fromUuid(this.#participant.docUuid)
+    } else {
+      this.#actor = null
+    }
+    this.#listOptions = await CONFIG.Actor.documentClass.everyField(this.#actor)
+    this.#speedCheckResult = await this.runSpeedCheck()
+  }
+
+  /**
+   * Parse speed check message
+   * @returns {object}
+   */
+  async runSpeedCheck () {
+    if (this.rolledSpeedCheck) {
+      const merged = foundry.utils.duplicate(this.#participant.speedCheck.checkData)
+      merged.id = 'X'
+      const check = await CoC7Check.loadFromMessage(merged)
+      const data = await check.getTemplateData()
+      data.messageFlavor = check.flavor
+      return {
+        isCritical: check.isCritical,
+        isFumble: check.isFumble,
+        isRegularFailure: check.isRegularFailure,
+        isSuccess: check.isSuccess,
+        tooltip: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/inline-roll.hbs', data),
+        value: check.total
+      }
+    }
+    return {
+      isCritical: false,
+      isFumble: false,
+      isRegularFailure: false,
+      isSuccess: false,
+      tooltip: '',
+      value: ''
+    }
+  }
+
+  /**
+   * Attempt to get value for skill base or actors value
+   * @param {string} key
+   * @returns {object}
+   */
+  async getRollableValue (key) {
+    if (typeof this.#actor === 'undefined') {
+      throw new Error('Did not participant.loadUuids')
+    }
+    let output = 0
+    const value = this.#listOptions.find(row => row.name === key)
+    if (value?.value) {
+      output = {
+        exiting: true,
+        value: value.value
+      }
+    } else if (value && this.#actor) {
+      const parsedValues = this.#actor.parsedValues()
+      const skills = [
+        {
+          system: {
+            base: value.base,
+            adjustments: {
+              base: 0
             }
           }
         }
+      ]
+      await CoC7Utilities.setMultipleSkillBases(parsedValues, skills)
+      output = {
+        exiting: false,
+        value: skills[0].system.adjustments.base
       }
     }
-    if (this.hasActor) {
-      check.options = []
-      for (const c of ['con']) {
-        const characteristic = this.actor.getCharacteristic(c)
-        if (characteristic?.value) check.options.push(characteristic.label)
-      }
-
-      for (const s of this.actor.driveSkills) {
-        check.options.push(s.name)
-      }
-
-      for (const s of this.actor.pilotSkills) {
-        check.options.push(s.name)
-      }
-      check.hasOptions = !!check.options.length
-
-      if (this.data.speedCheck?.id) {
-        let item = this.actor.find(this.data.speedCheck.id)
-        if (!item) {
-          const gameItem = game.items.get(this.data.speedCheck.id)
-          if (gameItem) item = this.actor.find(gameItem.name)
-        }
-
-        if (item) {
-          if (item.type === 'item' && item.value.data?.type === 'skill') {
-            check.ref = item.value
-            check.name = item.value.name
-            check.type = 'skill'
-            check.isSkill = true
-            check.refSet = true
-            check.score = item.value.value
-          }
-          if (item.type === 'characteristic') {
-            check.ref = item.value
-            check.name = item.value.label
-            check.type = 'characteristic'
-            check.isCharacteristic = true
-            check.refSet = true
-            check.score = item.value.value
-          }
-          if (item.type === 'attribute') {
-            check.ref = item.value
-            check.name = item.value.label
-            check.type = 'attribute'
-            check.isAttribute = true
-            check.refSet = true
-            check.score = item.value.value
-          }
-        }
-      } else if (this.data.speedCheck?.name) {
-        const item = this.actor.find(this.data.speedCheck.name)
-        if (item) {
-          if (item.type === 'item' && item.value.data?.type === 'skill') {
-            check.ref = item.value
-            check.name = item.value.name
-            check.type = 'skill'
-            check.isSkill = true
-            check.refSet = true
-            check.score = item.value.value
-          }
-          if (item.type === 'characteristic') {
-            check.ref = item.value
-            check.name = item.value.label
-            check.type = 'characteristic'
-            check.isCharacteristic = true
-            check.refSet = true
-            check.score = item.value.value
-          }
-          if (item.type === 'attribute') {
-            check.ref = item.value
-            check.name = item.value.label
-            check.type = 'attribute'
-            check.isAttribute = true
-            check.refSet = true
-            check.score = item.value.value
-          }
-        }
-      }
-    } else if (this.data.speedCheck?.id) {
-      const item = game.items.get(this.data.speedCheck.id)
-      if (item) {
-        if (item.data?.type === 'skill') {
-          check.ref = item
-          check.name = item.name
-          check.type = 'skill'
-          check.isSkill = true
-          check.refSet = false
-          check.score = item.base
-        }
-      }
-    } else if (this.data.speedCheck?.name && this.data.speedCheck?.score) {
-      check.name = this.data.speedCheck.name
-      check.score = this.data.speedCheck.score
-      check.refSet = false
-    }
-
-    check.canBeRolled = true
-
-    if (!check.rolled && !check.score) {
-      check.cssClasses += ' invalid'
-      check.canBeRolled = false
-    }
-    check.isValid = check.rolled && !isNaN(check.score)
-
-    return check
+    return output
   }
-}
 
-export function sortByRoleAndDex (a, b) {
-  if (!a && b) return 1
-  if (!b && a) return -1
-  if (!a && !b) return 0
-  // Put chasers first
-  if (b.chaser && !a.chaser) return 1
-  if (a.chaser && !b.chaser) return -1
-  // If sametype sort by dex
-  return a.dex - b.dex
+  /**
+   * Get the actor weapons
+   * @param {string} otherDamage
+   * @throws Error if not loaded
+   * @returns {object}
+   */
+  actorWeapons (otherDamage) {
+    if (typeof this.#actor === 'undefined') {
+      throw new Error('Did not participant.loadUuids')
+    }
+    const weapons = this.#actor?.items.filter(doc => doc.type === 'weapon').map(doc => {
+      const damageWithoutDB = doc.system.range.normal.damage
+      let damageFormula = damageWithoutDB
+      if (doc.system.properties.addb) {
+        damageFormula = damageFormula + '+' + (this.#actor.system.attribs.db.value || '0')
+      }
+      if (doc.system.properties.ahdb) {
+        damageFormula = damageFormula + CoC7Utilities.halfDB((this.#actor.system.attribs.db.value || '0'))
+      }
+      return {
+        name: doc.name,
+        cocidFlagId: doc.flags?.[FOLDER_ID]?.cocidFlag?.id ?? '',
+        damage: damageFormula,
+        editableDamage: false,
+        label: doc.name + ' (' + damageFormula + ')',
+        value: doc.uuid,
+        uuid: doc.uuid
+      }
+    })
+    weapons.sort(CoC7Utilities.sortByNameKey)
+
+    const unarmedName = game.i18n.localize('CoC7.UnarmedWeaponName').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+    const unarmedIndex = weapons.findIndex(w => w.cocidFlagId === 'i.weapon.brawl' || w.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase() === unarmedName)
+    if (unarmedIndex === -1) {
+      const damageFormula = '1D3' + '+' + (this.#actor?.system.attribs.db.value || '0')
+      weapons.unshift({
+        name: game.i18n.localize('CoC7.UnarmedWeaponName'),
+        cocidFlagId: 'i.weapon.brawl',
+        damage: damageFormula,
+        editableDamage: false,
+        label: game.i18n.localize('CoC7.UnarmedWeaponName') + ' (' + damageFormula + ')',
+        value: 'unarmed',
+        uuid: ''
+      })
+    }
+
+    weapons.push({
+      name: game.i18n.localize('CoC7.Other'),
+      cocidFlagId: '',
+      damage: otherDamage,
+      editableDamage: true,
+      label: game.i18n.localize('CoC7.Other'),
+      value: 'other',
+      uuid: ''
+    })
+    return weapons
+  }
+
+  /**
+   * Attempt to get value for skill base or actors value
+   * @param {Document|null} actor
+   * @param {Array} listOptions
+   * @param {string} key
+   * @returns {integer}
+   */
+  static async getPercentValue (actor, listOptions, key) {
+    let output = 0
+    const value = listOptions.find(row => row.name === key)
+    if (value?.value) {
+      output = value.value
+    } else if (value && actor) {
+      const parsedValues = actor.parsedValues()
+      const skills = [
+        {
+          system: {
+            base: value.base,
+            adjustments: {
+              base: 0
+            }
+          }
+        }
+      ]
+      await CoC7Utilities.setMultipleSkillBases(parsedValues, skills)
+      output = skills[0].system.adjustments.base
+    }
+    return output
+  }
 }

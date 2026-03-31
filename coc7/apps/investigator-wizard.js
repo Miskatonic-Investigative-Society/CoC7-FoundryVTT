@@ -1,34 +1,66 @@
-/* global $, Actor, ChatMessage, CONST, FormApplication, foundry, game, Hooks, renderTemplate, Roll, TextEditor, ui */
-import CoC7AverageRoll from '../apps/average-roll.js'
-import { COC7 } from '../constants.js'
-import CoCActor from '../models/actor/document-class.js'
-import CoC7OccupationSheet from '../models/item/occupation-sheet.js'
+/* global Actor ChatMessage CONFIG CONST DragDrop foundry game Hooks renderTemplate Roll TextEditor ui */
+import { FOLDER_ID, ERAS } from '../constants.js'
+import CoC7DicePool from './dice-pool.js'
+import CoC7ModelsActorDocumentClass from '../models/actor/document-class.js'
+import CoC7ModelsItemOccupationSystem from '../models/item/occupation-system.js'
+import CoC7SkillSpecializationSelectDialog from './skill-specialization-select-dialog.js'
+import CoC7SystemSocket from './system-socket.js'
 import CoC7Utilities from './utilities.js'
-import { SkillSpecializationSelectDialog } from '../apps/skill-specialization-select-dialog.js'
 
-export class CoC7InvestigatorWizard extends FormApplication {
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      id: 'investigator-wizard-application',
-      classes: ['coc7', 'dialog', 'investigator-wizard'],
-      title: game.i18n.localize('CoC7.InvestigatorWizard.Title'),
-      template: 'systems/CoC7/templates/apps/investigator-wizard/body.hbs',
-      width: 520,
-      height: 600,
-      closeOnSubmit: false,
-      scrollY: ['.scrollsection'],
-      dragDrop: [{ dragSelector: '.draggable', dropSelector: null }]
-    })
+export default class CoC7InvestigatorWizard extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2) {
+  /**
+   * @inheritdoc
+   */
+  constructor (...args) {
+    const coc7Config = args.pop()
+    super(...args)
+    this.coc7Config = coc7Config
   }
 
-  get pageList () {
+  static DEFAULT_OPTIONS = {
+    id: 'investigator-wizard-application',
+    tag: 'form',
+    classes: ['coc7', 'dialog', 'investigator-wizard'],
+    window: {
+      contentClasses: [
+        'standard-form'
+      ],
+      title: 'CoC7.InvestigatorWizard.Title'
+    },
+    form: {
+      closeOnSubmit: false,
+      handler: CoC7InvestigatorWizard.#onSubmit
+    },
+    position: {
+      width: 540,
+      height: 650
+    }
+  }
+
+  static PARTS = {
+    form: {
+      template: 'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/body.hbs',
+      scrollable: [
+        '.scroll-section'
+      ]
+    },
+    footer: {
+      template: 'templates/generic/form-footer.hbs'
+    }
+  }
+
+  /**
+   * List of page numbers
+   * @returns {object}
+   */
+  static get PageList () {
     return {
       PAGE_NONE: -1,
       PAGE_INTRODUCTION: 0,
       PAGE_CONFIGURATION: 1,
       PAGE_SETUPS: 2,
       PAGE_ARCHETYPES: 3,
-      PAGE_CHARACTISTICS: 4,
+      PAGE_CHARACTERISTICS: 4,
       PAGE_ATTRIBUTES: 5,
       PAGE_VIEW_ATTRIBUTES: 6,
       PAGE_OCCUPATIONS: 7,
@@ -41,7 +73,11 @@ export class CoC7InvestigatorWizard extends FormApplication {
     }
   }
 
-  get characteristicsMethods () {
+  /**
+   * List of characteristic generation methods
+   * @returns {object}
+   */
+  static get CharacteristicsMethods () {
     return {
       METHOD_DEFAULT: 1,
       METHOD_ROLL: 1,
@@ -51,30 +87,51 @@ export class CoC7InvestigatorWizard extends FormApplication {
     }
   }
 
+  /**
+   * CoC ID for Credit Rating
+   * @returns {string}
+   */
   get cocidCreditRating () {
     return 'i.skill.credit-rating'
   }
 
+  /**
+   * CoC ID for Cthulhu Mythos
+   * @returns {string}
+   */
+  get cocidCthulhuMythos () {
+    return 'i.skill.cthulhu-mythos'
+  }
+
+  /**
+   * CoC ID for Language Own
+   * system.properties.own is now preferred
+   * @returns {string}
+   */
   get cocidLanguageOwn () {
     return 'i.skill.language-own'
   }
 
+  /**
+   * Get page order based on world settings
+   * @returns {object}
+   */
   get pageOrder () {
-    const pages = this.pageList
+    const pages = CoC7InvestigatorWizard.PageList
     let pageOrder = [
       pages.PAGE_INTRODUCTION
     ]
     if (game.user.isGM) {
       pageOrder.push(pages.PAGE_CONFIGURATION)
     }
-    if (this.object.defaultSetup === '') {
+    if (this.coc7Config.defaultSetup === '') {
       pageOrder.push(pages.PAGE_SETUPS)
     }
-    if (game.settings.get('CoC7', 'pulpRuleArchetype')) {
+    if (game.settings.get(FOLDER_ID, 'pulpRuleArchetype')) {
       pageOrder.push(pages.PAGE_ARCHETYPES)
     }
-    pageOrder.push(pages.PAGE_CHARACTISTICS)
-    if (!game.settings.get('CoC7', 'pulpRuleIgnoreAgePenalties')) {
+    pageOrder.push(pages.PAGE_CHARACTERISTICS)
+    if (!game.settings.get(FOLDER_ID, 'pulpRuleIgnoreAgePenalties')) {
       pageOrder.push(pages.PAGE_ATTRIBUTES)
     }
     pageOrder = pageOrder.concat([
@@ -82,7 +139,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       pages.PAGE_OCCUPATIONS,
       pages.PAGE_OCCUPATION_SKILLS
     ])
-    if (game.settings.get('CoC7', 'pulpRuleArchetype')) {
+    if (game.settings.get(FOLDER_ID, 'pulpRuleArchetype')) {
       pageOrder.push(pages.PAGE_ARCHETYPE_SKILLS)
     }
     pageOrder = pageOrder.concat([
@@ -94,9 +151,13 @@ export class CoC7InvestigatorWizard extends FormApplication {
     return pageOrder
   }
 
+  /**
+   * Load cached items
+   * @returns {Promise<object>}
+   */
   static async loadCacheItemByCoCID () {
     return new Promise((resolve, reject) => {
-      game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: /^i\./, type: 'i', showLoading: true }).then((items) => {
+      game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: /^i\./, type: 'i', showLoading: true }).then((items) => {
         const list = {}
         for (const item of items) {
           list[item.flags.CoC7.cocidFlag.id] = item
@@ -106,47 +167,66 @@ export class CoC7InvestigatorWizard extends FormApplication {
     })
   }
 
+  /**
+   * Filter cached CoC IDs
+   * @param {RegExp} regexp
+   * @returns {Array}
+   */
   async filterCacheItemByCoCID (regexp) {
-    return Object.entries(await this.object.cacheCoCID).filter(entry => entry[0].match(regexp)).map(entry => entry[1])
+    return Object.entries(await this.coc7Config.cacheCoCID).filter(entry => entry[0].match(regexp)).map(entry => entry[1])
   }
 
+  /**
+   * Get Cached Item
+   * @param {string} id
+   * @returns {Document|false}
+   */
   async getCacheItemByCoCID (id) {
-    return (await this.object.cacheCoCID)[id] ?? false
+    return (await this.coc7Config.cacheCoCID)[id] ?? false
   }
 
-  async expandItemArray (itemList) {
-    const items = itemList.filter(it => typeof it !== 'string')
-    const cocids = itemList.filter(it => typeof it === 'string')
+  /**
+   * Convert Item cocid strings into Item documents and merge them into the items array
+   * @param {Array} items
+   * @param {Array} cocids
+   * @returns {Array}
+   */
+  async mergeItemArrays (items, cocids) {
+    const documents = [].concat(items)
     if (cocids.length) {
-      const source = await this.object.cacheCoCID
+      const source = await this.coc7Config.cacheCoCID
       const missing = []
       for (const cocid of cocids) {
         if (typeof source[cocid] !== 'undefined') {
-          items.push(source[cocid])
+          documents.push(source[cocid])
         } else {
           missing.push(cocid)
         }
       }
       if (missing.length) {
-        const era = game.i18n.format(COC7.eras[this.object.defaultEra] ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: this.object.defaultEra })
+        const era = game.i18n.format(ERAS[this.coc7Config.defaultEra]?.name ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: this.coc7Config.defaultEra })
+        /* // FoundryVTT V12 */
         ui.notifications.warn(game.i18n.format('CoC7.CoCIDFlag.error.documents-not-found', { cocids: missing.join(', '), lang: game.i18n.lang, era }))
       }
     }
-    return items
+    return documents
   }
 
+  /**
+   * Set age adjustment object based on age
+   */
   getAgeAdjustments () {
-    for (const key in this.object.setupModifiers) {
-      this.object.setupModifiers[key] = 0
+    for (const key in this.coc7Config.setupModifiers) {
+      this.coc7Config.setupModifiers[key] = 0
     }
     // edu: optional - number of edu improvement checks
     // deduct: optional - deduct [total] between [from]
-    // reduce: optional - deduct [totla] from [from]
+    // reduce: optional - deduct [total] from [from]
     // luck: optional - reroll luck and take higher
-    if (!game.settings.get('CoC7', 'pulpRuleIgnoreAgePenalties')) {
-      if (this.object.age >= 40) {
-        const key = Math.floor(this.object.age / 10)
-        this.object.requiresAgeAdjustments = {
+    if (!game.settings.get(FOLDER_ID, 'pulpRuleIgnoreAgePenalties')) {
+      if (this.coc7Config.age >= 40) {
+        const key = Math.floor(this.coc7Config.age / 10)
+        this.coc7Config.requiresAgeAdjustments = {
           edu: {
             total: (key - 2 > 4 ? 4 : key - 2),
             rolled: false
@@ -161,15 +241,15 @@ export class CoC7InvestigatorWizard extends FormApplication {
             from: 'app'
           }
         }
-      } else if (this.object.age >= 20) {
-        this.object.requiresAgeAdjustments = {
+      } else if (this.coc7Config.age >= 20) {
+        this.coc7Config.requiresAgeAdjustments = {
           edu: {
             total: 1,
             rolled: false
           }
         }
-      } else if (this.object.age >= 15) {
-        this.object.requiresAgeAdjustments = {
+      } else if (this.coc7Config.age >= 15) {
+        this.coc7Config.requiresAgeAdjustments = {
           deduct: {
             total: 5,
             from: ['str', 'siz'],
@@ -182,46 +262,45 @@ export class CoC7InvestigatorWizard extends FormApplication {
           luck: true
         }
       }
-      if (typeof this.object.requiresAgeAdjustments.reduce !== 'undefined') {
-        this.object.setupModifiers[this.object.requiresAgeAdjustments.reduce.from] = -this.object.requiresAgeAdjustments.reduce.total
+      if (typeof this.coc7Config.requiresAgeAdjustments.reduce !== 'undefined') {
+        this.coc7Config.setupModifiers[this.coc7Config.requiresAgeAdjustments.reduce.from] = -this.coc7Config.requiresAgeAdjustments.reduce.total
       }
     }
   }
 
-  async getData () {
-    const sheetData = await super.getData()
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
 
-    sheetData.isKeeper = game.user.isGM
+    context.isKeeper = game.user.isGM
+    context.pages = CoC7InvestigatorWizard.PageList
+    context.canNext = false
+    context.createButton = false
+    context.coc7Config = this.coc7Config
 
-    sheetData.pages = this.pageList
-
-    sheetData.canNext = false
-    sheetData.createButton = false
-
-    let setup
-    let archetype
-    let occupation
-
-    let showMonetary = false
-
-    switch (sheetData.object.step) {
-      case sheetData.pages.PAGE_INTRODUCTION:
-        sheetData.era = game.i18n.format(COC7.eras[sheetData.object.defaultEra] ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: sheetData.object.defaultEra })
-        sheetData.canNext = true
+    switch (context.coc7Config.step) {
+      case context.pages.PAGE_INTRODUCTION:
+        context.era = game.i18n.format(ERAS[context.coc7Config.defaultEra]?.name ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: context.coc7Config.defaultEra })
+        context.canNext = true
         break
 
-      case sheetData.pages.PAGE_CONFIGURATION:
+      case context.pages.PAGE_CONFIGURATION:
         if (game.user.isGM) {
-          sheetData.setups = await this.filterCacheItemByCoCID(/^i\.setup\./)
-          sheetData.setupOptions = sheetData.setups.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
-          sheetData.occupations = await this.filterCacheItemByCoCID(/^i\.occupation\./)
-          sheetData.archetypes = await this.filterCacheItemByCoCID(/^i\.archetype\./)
-          setup = sheetData.setups.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.defaultSetup)
+          context.setups = await this.filterCacheItemByCoCID(/^i\.setup\./)
+          context.setupOptions = context.setups.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+          context.occupations = await this.filterCacheItemByCoCID(/^i\.occupation\./)
+          context.archetypes = await this.filterCacheItemByCoCID(/^i\.archetype\./)
+          const setup = context.setups.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.defaultSetup)
           if (typeof setup === 'undefined') {
-            sheetData.object.defaultSetup = ''
-            sheetData.object.setup = ''
+            context.coc7Config.defaultSetup = ''
+            context.coc7Config.setup = ''
           } else {
-            sheetData.description = await TextEditor.enrichHTML(
+            /* // FoundryVTT V12 */
+            context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
               setup.system.description.value,
               {
                 async: true,
@@ -229,73 +308,75 @@ export class CoC7InvestigatorWizard extends FormApplication {
               }
             )
           }
-          sheetData.ownership = {
+          context.ownership = {
             [CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE]: 'OWNERSHIP.NONE',
             [CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED]: 'OWNERSHIP.LIMITED',
             [CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER]: 'OWNERSHIP.OBSERVER',
             [CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER]: 'OWNERSHIP.OWNER'
           }
-          sheetData._eras = []
-          for (const [key, value] of Object.entries(COC7.eras)) {
-            sheetData._eras.push({
+          context._eras = []
+          for (const [key, era] of Object.entries(ERAS)) {
+            context._eras.push({
               id: key,
-              name: game.i18n.localize(value)
+              name: game.i18n.localize(era.name)
             })
           }
-          sheetData.characteristicsMethods = this.characteristicsMethods
-          sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_DEFAULT
-          if (sheetData.object.enforcePointBuy) {
-            sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_POINTS
-          } else if (this.object.chooseRolledValues) {
-            sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_CHOOSE
-          } else if (this.object.quickFireValues.length) {
-            sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_VALUES
+          context.characteristicsMethods = CoC7InvestigatorWizard.CharacteristicsMethods
+          context.characteristicsMethod = context.characteristicsMethods.METHOD_DEFAULT
+          if (context.coc7Config.enforcePointBuy) {
+            context.characteristicsMethod = context.characteristicsMethods.METHOD_POINTS
+          } else if (context.coc7Config.chooseRolledValues) {
+            context.characteristicsMethod = context.characteristicsMethods.METHOD_CHOOSE
+          } else if (context.coc7Config.quickFireValues.length) {
+            context.characteristicsMethod = context.characteristicsMethods.METHOD_VALUES
           }
-          sheetData._eras.sort(CoC7Utilities.sortByNameKey)
-          sheetData.hasArchetypes = game.settings.get('CoC7', 'pulpRuleArchetype')
-          sheetData.canNext = true
+          context._eras.sort(CoC7Utilities.sortByNameKey)
+          context.hasArchetypes = game.settings.get(FOLDER_ID, 'pulpRuleArchetype')
+          context.canNext = true
         }
         break
 
-      case sheetData.pages.PAGE_SETUPS:
-        if (sheetData.object.defaultSetup === '') {
-          sheetData.setups = await this.filterCacheItemByCoCID(/^i\.setup\./)
-          sheetData.setups.sort(CoC7Utilities.sortByNameKey)
-          sheetData.setupOptions = sheetData.setups.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
-          if (sheetData.object.setup !== '') {
-            setup = sheetData.setups.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.setup)
+      case context.pages.PAGE_SETUPS:
+        if (context.coc7Config.defaultSetup === '') {
+          context.setups = await this.filterCacheItemByCoCID(/^i\.setup\./)
+          context.setups.sort(CoC7Utilities.sortByNameKey)
+          context.setupOptions = context.setups.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+          if (context.coc7Config.setup !== '') {
+            const setup = context.setups.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.setup)
             if (typeof setup !== 'undefined') {
-              sheetData.description = await TextEditor.enrichHTML(
+              /* // FoundryVTT V12 */
+              context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
                 setup.system.description.value,
                 {
                   async: true,
                   secrets: game.user.isGM
                 }
               )
-              sheetData.canNext = true
+              context.canNext = true
             }
           }
         }
         break
 
-      case sheetData.pages.PAGE_ARCHETYPES:
-        sheetData.archetypes = await this.filterCacheItemByCoCID(/^i\.archetype\./)
-        if (sheetData.archetypes.length === 0) {
-          sheetData.canNext = true
+      case context.pages.PAGE_ARCHETYPES:
+        context.archetypes = await this.filterCacheItemByCoCID(/^i\.archetype\./)
+        if (context.archetypes.length === 0) {
+          context.canNext = true
         } else {
-          sheetData.archetypes.sort(CoC7Utilities.sortByNameKey)
-          sheetData.archetypeOptions = sheetData.archetypes.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
-          if (sheetData.object.archetype !== '') {
-            archetype = sheetData.archetypes.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.archetype)
+          context.archetypes.sort(CoC7Utilities.sortByNameKey)
+          context.archetypeOptions = context.archetypes.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+          if (context.coc7Config.archetype !== '') {
+            const archetype = context.archetypes.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.archetype)
             if (typeof archetype !== 'undefined') {
-              sheetData.description = await TextEditor.enrichHTML(
+              /* // FoundryVTT V12 */
+              context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
                 archetype.system.description.value,
                 {
                   async: true,
                   secrets: game.user.isGM
                 }
               )
-              sheetData.bonusPoints = archetype.system.bonusPoints
+              context.bonusPoints = archetype.system.bonusPoints
               const coreCharacteristics = []
               for (const coreCharacteristic in archetype.system.coreCharacteristics) {
                 if (archetype.system.coreCharacteristics[coreCharacteristic]) {
@@ -303,51 +384,53 @@ export class CoC7InvestigatorWizard extends FormApplication {
                 }
               }
               if (coreCharacteristics.length === 0) {
-                this.object.coreCharacteristic = ''
+                this.coc7Config.coreCharacteristic = ''
               } else if (coreCharacteristics.length === 1) {
-                this.object.coreCharacteristic = coreCharacteristics[0]
+                this.coc7Config.coreCharacteristic = coreCharacteristics[0]
               }
-              sheetData.coreCharacteristic = coreCharacteristics.map(c => c.toLocaleUpperCase()).join(' ' + game.i18n.localize('CoC7.Or') + ' ')
+              context.coreCharacteristic = coreCharacteristics.map(c => c.toLocaleUpperCase()).join(' ' + game.i18n.localize('CoC7.Or') + ' ')
               const skills = []
-              archetype.system.skills = await this.expandItemArray(archetype.system.skills)
+              archetype.system.skills = await this.mergeItemArrays(archetype.system.itemDocuments, archetype.system.itemKeys)
               for (const skill of archetype.system.skills) {
                 skills.push(skill.name)
               }
-              sheetData.skills = skills.join(', ')
-              sheetData.suggestedOccupations = await TextEditor.enrichHTML(
+              context.skills = skills.join(', ')
+              /* // FoundryVTT V12 */
+              context.suggestedOccupations = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
                 archetype.system.suggestedOccupations,
                 {
                   async: true,
                   secrets: game.user.isGM
                 }
               )
-              sheetData.suggestedTraits = await TextEditor.enrichHTML(
+              /* // FoundryVTT V12 */
+              context.suggestedTraits = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
                 archetype.system.suggestedTraits,
                 {
                   async: true,
                   secrets: game.user.isGM
                 }
               )
-              sheetData.canNext = true
+              context.canNext = true
             }
           }
         }
         break
 
-      case sheetData.pages.PAGE_CHARACTISTICS:
-        sheetData.characteristicsMethods = this.characteristicsMethods
-        sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_ROLL
-        if (sheetData.object.setup !== '') {
-          setup = await this.getCacheItemByCoCID(this.object.setup)
+      case context.pages.PAGE_CHARACTERISTICS:
+        context.characteristicsMethods = CoC7InvestigatorWizard.CharacteristicsMethods
+        context.characteristicsMethod = context.characteristicsMethods.METHOD_ROLL
+        if (context.coc7Config.setup !== '') {
+          const setup = await this.getCacheItemByCoCID(this.coc7Config.setup)
           if (typeof setup !== 'undefined') {
-            if (setup.system.characteristics.points.enabled || this.object.enforcePointBuy) {
-              sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_POINTS
-            } else if (this.object.chooseRolledValues) {
-              sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_CHOOSE
-            } else if (this.object.quickFireValues.length) {
-              sheetData.characteristicsMethod = sheetData.characteristicsMethods.METHOD_VALUES
+            if (setup.system.characteristics.points.enabled || this.coc7Config.enforcePointBuy) {
+              context.characteristicsMethod = context.characteristicsMethods.METHOD_POINTS
+            } else if (this.coc7Config.chooseRolledValues) {
+              context.characteristicsMethod = context.characteristicsMethods.METHOD_CHOOSE
+            } else if (this.coc7Config.quickFireValues.length) {
+              context.characteristicsMethod = context.characteristicsMethods.METHOD_VALUES
             }
-            sheetData.setup = {
+            context.setup = {
               total: 0,
               points: setup.system.characteristics.points.value,
               characteristics: [
@@ -397,578 +480,1133 @@ export class CoC7InvestigatorWizard extends FormApplication {
                 label: 'CoC7.Luck'
               }
             }
-            sheetData.coreCharacteristics = []
-            if (sheetData.object.archetype !== '') {
-              archetype = await this.getCacheItemByCoCID(this.object.archetype)
+            context.coreCharacteristics = []
+            if (context.coc7Config.archetype !== '') {
+              const archetype = await this.getCacheItemByCoCID(this.coc7Config.archetype)
               if (typeof archetype !== 'undefined') {
                 for (const coreCharacteristic in archetype.system.coreCharacteristics) {
                   if (archetype.system.coreCharacteristics[coreCharacteristic]) {
-                    sheetData.coreCharacteristics.push({
+                    context.coreCharacteristics.push({
                       key: coreCharacteristic,
-                      name: game.i18n.format(sheetData.setup.characteristics.find(c => c.key === coreCharacteristic)?.label ?? 'Unknown')
+                      name: game.i18n.format(context.setup.characteristics.find(c => c.key === coreCharacteristic)?.label ?? 'Unknown')
                     })
                   }
                 }
-                sheetData.coreCharacteristics.sort(CoC7Utilities.sortByNameKey)
-                if (this.object.coreCharacteristic !== '') {
+                context.coreCharacteristics.sort(CoC7Utilities.sortByNameKey)
+                if (this.coc7Config.coreCharacteristic !== '') {
                   if (archetype.system.coreCharacteristicsFormula.enabled) {
-                    sheetData.setup.characteristics.find(c => c.key === this.object.coreCharacteristic).roll = archetype.system.coreCharacteristicsFormula.value
+                    context.setup.characteristics.find(c => c.key === this.coc7Config.coreCharacteristic).roll = archetype.system.coreCharacteristicsFormula.value
                   }
                 }
               }
             }
             let empties = false
-            for (const key in sheetData.object.setupPoints) {
-              if (sheetData.object.setupPoints[key] !== '') {
+            for (const key in context.coc7Config.setupPoints) {
+              if (context.coc7Config.setupPoints[key] !== '') {
                 if (key !== 'luck') {
-                  sheetData.setup.total += parseInt(sheetData.object.setupPoints[key], 10)
+                  context.setup.total += parseInt(context.coc7Config.setupPoints[key], 10)
                 }
               } else {
                 empties = true
               }
             }
-            if (this.object.coreCharacteristic) {
-              sheetData.coreCharacteristic = this.object.coreCharacteristic.toLocaleUpperCase()
+            if (this.coc7Config.coreCharacteristic) {
+              context.coreCharacteristic = this.coc7Config.coreCharacteristic.toLocaleUpperCase()
             }
-            if (!empties && this.object.age >= 15) {
-              if ([sheetData.characteristicsMethods.METHOD_ROLL, sheetData.characteristicsMethods.METHOD_VALUES, sheetData.characteristicsMethods.METHOD_CHOOSE].includes(sheetData.characteristicsMethod)) {
-                sheetData.canNext = true
-              } else if (sheetData.setup.total.toString() === sheetData.setup.points.toString()) {
-                sheetData.canNext = true
+            if (!empties && this.coc7Config.age >= 15) {
+              if ([context.characteristicsMethods.METHOD_ROLL, context.characteristicsMethods.METHOD_VALUES, context.characteristicsMethods.METHOD_CHOOSE].includes(context.characteristicsMethod)) {
+                context.canNext = true
+              } else if (context.setup.total.toString() === context.setup.points.toString()) {
+                context.canNext = true
               }
             }
           }
         }
         break
 
-      case sheetData.pages.PAGE_ATTRIBUTES:
-        sheetData.pulpRuleIgnoreAgePenalties = game.settings.get('CoC7', 'pulpRuleIgnoreAgePenalties')
-        sheetData.canNext = true
-        sheetData.points = {}
-        for (const key in this.object.setupModifiers) {
-          sheetData.points[key] = {
-            value: parseInt(this.object.setupPoints[key], 10) + parseInt(this.object.setupModifiers[key], 10),
-            min: -parseInt(this.object.setupPoints[key], 10) + 1,
+      case context.pages.PAGE_ATTRIBUTES:
+        context.pulpRuleIgnoreAgePenalties = game.settings.get(FOLDER_ID, 'pulpRuleIgnoreAgePenalties')
+        context.canNext = true
+        context.points = {}
+        for (const key in this.coc7Config.setupModifiers) {
+          context.points[key] = {
+            value: parseInt(this.coc7Config.setupPoints[key], 10) + parseInt(this.coc7Config.setupModifiers[key], 10),
+            min: -parseInt(this.coc7Config.setupPoints[key], 10) + 1,
             label: CoC7Utilities.getCharacteristicNames(key).label
           }
         }
-        if (typeof this.object.requiresAgeAdjustments.edu !== 'undefined' && !this.object.requiresAgeAdjustments.edu.rolled) {
-          sheetData.canNext = false
+        if (typeof this.coc7Config.requiresAgeAdjustments.edu !== 'undefined' && !this.coc7Config.requiresAgeAdjustments.edu.rolled) {
+          context.canNext = false
         }
-        if (typeof this.object.requiresAgeAdjustments.deduct !== 'undefined') {
-          sheetData.deductTotal = 0
-          for (const key of this.object.requiresAgeAdjustments.deduct.from) {
-            sheetData.deductTotal = sheetData.deductTotal - parseInt(this.object.setupModifiers[key], 10)
+        if (typeof this.coc7Config.requiresAgeAdjustments.deduct !== 'undefined') {
+          context.deductTotal = 0
+          for (const key of this.coc7Config.requiresAgeAdjustments.deduct.from) {
+            context.deductTotal = context.deductTotal - parseInt(this.coc7Config.setupModifiers[key], 10)
           }
-          sheetData.deductFrom = this.object.requiresAgeAdjustments.deduct.from.map(n => game.i18n.localize('CHARAC.' + n.toUpperCase())).join(', ').replace(/(, )([^,]+)$/, '$1' + game.i18n.localize('CoC7.Or') + ' $2').replace(/^([^,]+),([^,]+)$/, '$1$2')
-          if (sheetData.deductTotal !== this.object.requiresAgeAdjustments.deduct.total) {
-            sheetData.canNext = false
+          context.deductFrom = this.coc7Config.requiresAgeAdjustments.deduct.from.map(n => game.i18n.localize('CHARAC.' + n.toUpperCase())).join(', ').replace(/(, )([^,]+)$/, '$1' + game.i18n.localize('CoC7.Or') + ' $2').replace(/^([^,]+),([^,]+)$/, '$1$2')
+          if (context.deductTotal !== this.coc7Config.requiresAgeAdjustments.deduct.total) {
+            context.canNext = false
           }
         }
-        if (typeof this.object.requiresAgeAdjustments.reduce !== 'undefined') {
-          sheetData.reduceFrom = game.i18n.localize('CHARAC.' + this.object.requiresAgeAdjustments.reduce.from.toUpperCase())
+        if (typeof this.coc7Config.requiresAgeAdjustments.reduce !== 'undefined') {
+          context.reduceFrom = game.i18n.localize('CHARAC.' + this.coc7Config.requiresAgeAdjustments.reduce.from.toUpperCase())
         }
-        if (typeof this.object.requiresAgeAdjustments.luck !== 'undefined') {
-          sheetData.luckValue = Math.max(this.object.setupPoints.luck, this.object.setupModifiers.luck)
-          if (this.object.setupModifiers.luck === 0) {
-            sheetData.canNext = false
+        if (typeof this.coc7Config.requiresAgeAdjustments.luck !== 'undefined') {
+          context.luckValue = Math.max(this.coc7Config.setupPoints.luck, this.coc7Config.setupModifiers.luck)
+          if (this.coc7Config.setupModifiers.luck === 0) {
+            context.canNext = false
           }
         }
         break
 
-      case sheetData.pages.PAGE_VIEW_ATTRIBUTES:
-        sheetData.points = {}
-        for (const key in this.object.setupModifiers) {
-          sheetData.points[key] = {
-            value: parseInt(this.object.setupPoints[key], 10) + parseInt(this.object.setupModifiers[key], 10),
+      case context.pages.PAGE_VIEW_ATTRIBUTES:
+        context.points = {}
+        for (const key in this.coc7Config.setupModifiers) {
+          context.points[key] = {
+            value: parseInt(this.coc7Config.setupPoints[key], 10) + parseInt(this.coc7Config.setupModifiers[key], 10),
             prefix: '',
             suffix: '%',
             label: CoC7Utilities.getCharacteristicNames(key).label
           }
         }
-        sheetData.points.db = {
-          value: CoCActor.dbFromCharacteristics(sheetData.points),
+        context.points.db = {
+          value: CoC7ModelsActorDocumentClass.dbFromCharacteristics(context.points),
           prefix: '',
           suffix: '',
           label: 'CoC7.BonusDamage'
         }
-        if (isNaN(sheetData.points.db.value) || Number(sheetData.points.db.value) >= 0) {
-          sheetData.points.db.prefix = '+'
+        if (isNaN(context.points.db.value) || Number(context.points.db.value) >= 0) {
+          context.points.db.prefix = '+'
         }
-        sheetData.points.build = {
-          value: CoCActor.buildFromCharacteristics(sheetData.points),
+        context.points.build = {
+          value: CoC7ModelsActorDocumentClass.buildFromCharacteristics(context.points),
           prefix: '',
           suffix: '',
           label: 'CoC7.Build'
         }
-        if (Number(sheetData.points.build.value) >= 0) {
-          sheetData.points.build.prefix = '+'
+        if (Number(context.points.build.value) >= 0) {
+          context.points.build.prefix = '+'
         }
-        sheetData.points.hp = {
-          value: CoCActor.hpFromCharacteristics(sheetData.points, 'character'),
+        context.points.hp = {
+          value: CoC7ModelsActorDocumentClass.hpFromCharacteristics(context.points, 'character'),
           prefix: '',
           suffix: '',
           label: 'CoC7.HitPoints'
         }
-        sheetData.points.hp.prefix = sheetData.points.hp.value + '/'
-        sheetData.points.mp = {
-          value: CoCActor.mpFromCharacteristics(sheetData.points),
+        context.points.hp.prefix = context.points.hp.value + '/'
+        context.points.mp = {
+          value: CoC7ModelsActorDocumentClass.mpFromCharacteristics(context.points),
           prefix: '',
           suffix: '',
           label: 'CoC7.MagicPoints'
         }
-        sheetData.points.mp.prefix = sheetData.points.mp.value + '/'
-        sheetData.points.san = {
-          value: sheetData.points.pow.value,
+        context.points.mp.prefix = context.points.mp.value + '/'
+        context.points.san = {
+          value: context.points.pow.value,
           prefix: '',
           suffix: '/99',
           label: 'CoC7.Sanity'
         }
-        sheetData.points.mov = {
-          value: CoCActor.movFromCharacteristics(sheetData.points, 'character', this.object.age),
+        context.points.mov = {
+          value: CoC7ModelsActorDocumentClass.movFromCharacteristics(context.points, 'character', this.coc7Config.age),
           prefix: '',
           suffix: '',
           label: 'CoC7.Movement'
         }
-        sheetData.canNext = true
+        this.coc7Config.parsedValues = {
+          armor: 0,
+          sanMax: 99
+        }
+        for (const key in context.points) {
+          this.coc7Config.parsedValues[(key === 'luck' ? 'lck' : key)] = context.points[key].value
+          if (context.points[key].prefix !== '' && context.points[key].prefix !== '+') {
+            this.coc7Config.parsedValues[key + 'Max'] = context.points[key].value
+          }
+        }
+        context.canNext = true
         break
 
-      case sheetData.pages.PAGE_OCCUPATIONS:
-        sheetData.occupations = await this.filterCacheItemByCoCID(/^i\.occupation\./)
-        sheetData.occupations.sort(CoC7Utilities.sortByNameKey)
-        sheetData.occupationOptions = sheetData.occupations.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
-        if (sheetData.object.occupation !== '') {
-          occupation = sheetData.occupations.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.occupation)
+      case context.pages.PAGE_OCCUPATIONS:
+        context.occupations = await this.filterCacheItemByCoCID(/^i\.occupation\./)
+        context.occupations.sort(CoC7Utilities.sortByNameKey)
+        context.occupationOptions = context.occupations.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+        if (context.coc7Config.occupation !== '') {
+          const occupation = context.occupations.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.occupation)
           if (typeof occupation !== 'undefined') {
-            sheetData.description = await TextEditor.enrichHTML(
+            /* // FoundryVTT V12 */
+            context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
               occupation.system.description.value,
               {
                 async: true,
                 secrets: game.user.isGM
               }
             )
-            sheetData.occupationPointsString = CoC7OccupationSheet.occupationPointsString(occupation.system.occupationSkillPoints)
-            sheetData.creditRating = occupation.system.creditRating
-            sheetData.personal = occupation.system.personal
-            sheetData.personalText = occupation.system.personalText
-            sheetData.skills = await this.expandItemArray(occupation.system.skills)
-            sheetData.groups = {}
+            context.occupationPointsString = CoC7ModelsItemOccupationSystem.getOccupationPointsString(occupation.system.occupationSkillPoints)
+            context.creditRating = occupation.system.creditRating
+            context.personal = occupation.system.personal
+            context.personalText = occupation.system.personalText
+            context.skills = await this.mergeItemArrays(occupation.system.itemDocuments, occupation.system.itemKeys)
+            context.groups = {}
             for (let index = 0; index < occupation.system.groups.length; index++) {
-              sheetData.groups[index] = {
+              context.groups[index] = {
                 options: occupation.system.groups[index].options,
                 skills: []
               }
-              sheetData.groups[index].skills = await this.expandItemArray(occupation.system.groups[index].skills)
+              context.groups[index].skills = await this.mergeItemArrays(occupation.system.groups[index].itemDocuments, occupation.system.groups[index].itemKeys)
             }
-            sheetData.points = 0
+            context.points = 0
             const options = []
-            for (const [key, carac] of Object.entries(occupation.system.occupationSkillPoints)) {
-              if (carac.selected) {
-                if (carac.optional) {
-                  options.push(carac.multiplier * (parseInt(this.object.setupPoints[key], 10) + parseInt(this.object.setupModifiers[key], 10)))
+            for (const [key, value] of Object.entries(occupation.system.occupationSkillPoints)) {
+              if (value.selected) {
+                if (value.optional) {
+                  options.push(value.multiplier * (parseInt(this.coc7Config.setupPoints[key], 10) + parseInt(this.coc7Config.setupModifiers[key], 10)))
                 } else {
-                  sheetData.points += carac.multiplier * (parseInt(this.object.setupPoints[key], 10) + parseInt(this.object.setupModifiers[key], 10))
+                  context.points += value.multiplier * (parseInt(this.coc7Config.setupPoints[key], 10) + parseInt(this.coc7Config.setupModifiers[key], 10))
                 }
               }
             }
             if (options.length > 0) {
-              sheetData.points += Math.max(...options)
+              context.points += Math.max(...options)
             }
-            sheetData.canNext = true
+            context.canNext = true
           }
         }
         break
 
-      case sheetData.pages.PAGE_INVESTIGATOR:
-        sheetData.language = (typeof this.object.skillItems[this.cocidLanguageOwn] !== 'undefined')
-        if (sheetData.language) {
-          sheetData.languageName = this.object.skillItems[this.cocidLanguageOwn].item.name
+      case context.pages.PAGE_OCCUPATION_SKILLS:
+        context.default = 0
+        context.selected = 0
+        context.skillItems = []
+        for (const key in this.coc7Config.skillItems) {
+          let group = 'other'
+          const rows = context.coc7Config.skillItems[key].rows.length
+          const isMultiple = context.coc7Config.skillItems[key].flags.isMultiple
+          if (isMultiple) {
+            context.skillItems.push({
+              key,
+              index: -1,
+              name: context.coc7Config.skillItems[key].item.name,
+              group,
+              toggle: false,
+              isCreditRating: false,
+              isMultiple: true,
+              isPickable: false
+            })
+          }
+          for (let index = 0; index < rows; index++) {
+            let isPickable = false
+            if (context.coc7Config.skillItems[key].rows[index].isOccupationDefault) {
+              group = 'default'
+              if (isMultiple) {
+                isPickable = true
+              }
+              context.default++
+            } else if (context.coc7Config.skillItems[key].rows[index].inOccupationGroup !== false) {
+              group = context.coc7Config.skillItems[key].rows[index].inOccupationGroup
+              if (isMultiple) {
+                isPickable = true
+              }
+            } else {
+              group = 'other'
+            }
+            let toggle = context.coc7Config.skillItems[key].rows[index].occupationToggle
+            if (isPickable) {
+              toggle = false
+            }
+            let specialization = context.coc7Config.skillItems[key].item.system.specialization
+            let skillName = context.coc7Config.skillItems[key].item.system.skillName
+            let picked = false
+            let deletable = false
+            if (typeof context.coc7Config.skillItems[key].rows[index].selected === 'string') {
+              picked = true
+              skillName = context.coc7Config.skillItems[key].rows[index].selected
+            } else if (context.coc7Config.skillItems[key].rows[index].selected !== false) {
+              picked = true
+              specialization = context.coc7Config.skillItems[key].rows[index].selected.system.specialization
+              skillName = context.coc7Config.skillItems[key].rows[index].selected.system.skillName
+            }
+            if (toggle || (isPickable && picked)) {
+              context.selected++
+            }
+            let name = context.coc7Config.skillItems[key].item.name
+            if (key === this.cocidLanguageOwn) {
+              name = specialization + ' (' + skillName + ')'
+            } else if (!isPickable && picked) {
+              name = specialization + ' (' + skillName + ')'
+            }
+            if (!isPickable && picked) {
+              deletable = !context.coc7Config.skillItems[key].rows[index].archetypeToggle
+            }
+            context.skillItems.push({
+              key,
+              index,
+              name,
+              group: group.toString(),
+              toggle,
+              isCreditRating: context.coc7Config.skillItems[key].rows[index].isCreditRating,
+              isMultiple: false,
+              isPickable,
+              picked,
+              deletable,
+              specialization,
+              skillName
+            })
+          }
+        }
+        context.max = (parseInt(context.default, 10) || 0) + (parseInt(context.coc7Config.personal, 10) || 0) + Object.values(context.coc7Config.occupationGroups).reduce((s, v) => s + (parseInt(v, 10) || 0), 0)
+        context.skillItems.sort(CoC7Utilities.sortByNameKey)
+        if (context.selected === context.max) {
+          context.canNext = true
+        }
+        break
+
+      case context.pages.PAGE_ARCHETYPE_SKILLS:
+        context.max = 0
+        context.selected = 0
+        context.skillItems = []
+        for (const key in this.coc7Config.skillItems) {
+          let group = 'other'
+          const rows = context.coc7Config.skillItems[key].rows.length
+          const isMultiple = context.coc7Config.skillItems[key].flags.isMultiple
+          if (isMultiple) {
+            context.skillItems.push({
+              key,
+              index: -1,
+              name: context.coc7Config.skillItems[key].item.name,
+              group,
+              toggle: false,
+              isCreditRating: false,
+              isMultiple: true,
+              isPickable: false
+            })
+          }
+          for (let index = 0; index < rows; index++) {
+            let isPickable = false
+            if (context.coc7Config.skillItems[key].rows[index].isArchetypeDefault) {
+              group = 'default'
+              if (isMultiple) {
+                isPickable = true
+              }
+              context.max++
+            } else {
+              group = 'other'
+            }
+            let toggle = context.coc7Config.skillItems[key].rows[index].archetypeToggle
+            if (isPickable) {
+              toggle = false
+            }
+            let specialization = context.coc7Config.skillItems[key].item.system.specialization
+            let skillName = context.coc7Config.skillItems[key].item.system.skillName
+            let picked = false
+            let deletable = false
+            if (typeof context.coc7Config.skillItems[key].rows[index].selected === 'string') {
+              picked = true
+              skillName = context.coc7Config.skillItems[key].rows[index].selected
+            } else if (context.coc7Config.skillItems[key].rows[index].selected !== false) {
+              picked = true
+              specialization = context.coc7Config.skillItems[key].rows[index].selected.system.specialization
+              skillName = context.coc7Config.skillItems[key].rows[index].selected.system.skillName
+            }
+            if (toggle || (isPickable && picked)) {
+              context.selected++
+            }
+            let name = context.coc7Config.skillItems[key].item.name
+            if (key === this.cocidLanguageOwn) {
+              name = specialization + ' (' + skillName + ')'
+            } else if (!isPickable && picked) {
+              name = specialization + ' (' + skillName + ')'
+            }
+            if (!isPickable && picked) {
+              deletable = !context.coc7Config.skillItems[key].rows[index].occupationToggle
+            }
+            context.skillItems.push({
+              key,
+              index,
+              name,
+              group: group.toString(),
+              toggle,
+              isCreditRating: false,
+              isMultiple: false,
+              isPickable,
+              picked,
+              deletable,
+              specialization,
+              skillName
+            })
+          }
+        }
+        context.skillItems.sort(CoC7Utilities.sortByNameKey)
+        if (context.selected === context.max) {
+          context.canNext = true
+        }
+        break
+
+      case context.pages.PAGE_POINTS_SKILLS:
+        {
+          context.skills = []
+          context.creditRatingOkay = !(this.coc7Config.creditRating.max > 0)
+          context.personal = {
+            count: 0,
+            total: 2 * (parseInt(this.coc7Config.setupPoints.int, 10) + parseInt(this.coc7Config.setupModifiers.int, 10)),
+            remaining: 0
+          }
+          context.occupation = {
+            count: 0,
+            total: 0,
+            remaining: 0
+          }
+          context.archetype = {
+            count: 0,
+            total: 0,
+            remaining: 0
+          }
+          let showMonetary = false
+          if (context.coc7Config.setup !== '') {
+            showMonetary = (await this.getCacheItemByCoCID(context.coc7Config.setup)).system.monetary.values.length > 0
+          }
+          if (context.coc7Config.occupation !== '') {
+            const occupation = await this.getCacheItemByCoCID(this.coc7Config.occupation)
+            if (occupation) {
+              const options = []
+              for (const [key, value] of Object.entries(occupation.system.occupationSkillPoints)) {
+                if (value.selected) {
+                  if (value.optional) {
+                    options.push(value.multiplier * (parseInt(this.coc7Config.setupPoints[key], 10) + parseInt(this.coc7Config.setupModifiers[key], 10)))
+                  } else {
+                    context.occupation.total += value.multiplier * (parseInt(this.coc7Config.setupPoints[key], 10) + parseInt(this.coc7Config.setupModifiers[key], 10))
+                  }
+                }
+              }
+              if (options.length > 0) {
+                context.occupation.total += Math.max(...options)
+              }
+            }
+          }
+          if (this.coc7Config.archetype !== '') {
+            const archetype = await game.CoC7.cocid.fromCoCID(this.coc7Config.archetype)
+            if (archetype.length === 1) {
+              context.archetype.total = archetype[0].system.bonusPoints
+            }
+          }
+          if (Object.keys(this.coc7Config.skillItems).length > 0) {
+            const skills = {}
+            const parsedValues = foundry.utils.duplicate(context.coc7Config.parsedValues)
+            for (const key in this.coc7Config.skillItems) {
+              const skill = this.coc7Config.skillItems[key]
+              for (let index = 0, im = skill.rows.length; index < im; index++) {
+                const row = skill.rows[index]
+                if (!skill.flags.isMultiple || row.selected !== false) {
+                  let item = foundry.utils.duplicate(skill.item)
+                  if (row.selected !== false && typeof row.selected !== 'string') {
+                    item = foundry.utils.duplicate(row.selected)
+                  }
+                  item.system.adjustments.personal = Number(row.personalPoints)
+                  item.system.adjustments.occupation = Number(row.occupationPoints)
+                  item.system.adjustments.archetype = Number(row.archetypePoints)
+                  item.system.adjustments.experience = Number(row.experiencePoints)
+                  skills[key + '.' + index] = item
+                  if (key === this.cocidCthulhuMythos) {
+                    parsedValues.sanMax = 99 - Number(row.personalPoints) + Number(row.occupationPoints) + Number(row.archetypePoints) + Number(row.experiencePoints)
+                  }
+                }
+              }
+            }
+            if (typeof skills[this.cocidCthulhuMythos + '.0'] !== 'undefined') {
+              await CoC7Utilities.setMultipleSkillBases(parsedValues, [skills[this.cocidCthulhuMythos + '.0']])
+              parsedValues.sanMax = Math.max(0, parsedValues.sanMax - skills[this.cocidCthulhuMythos + '.0'].system.adjustments.base)
+            }
+            await CoC7Utilities.setMultipleSkillBases(parsedValues, skills)
+
+            for (const key in this.coc7Config.skillItems) {
+              const skill = this.coc7Config.skillItems[key]
+              for (let index = 0, im = skill.rows.length; index < im; index++) {
+                if (typeof skills[key + '.' + index] !== 'undefined') {
+                  const row = skill.rows[index]
+                  const item = foundry.utils.duplicate(skills[key + '.' + index])
+                  const base = item.system.adjustments.base
+                  let totalPoints = parseInt(base, 10)
+                  if (Number(row.personalPoints) > 0) {
+                    const num = Number(row.personalPoints)
+                    context.personal.count += num
+                    totalPoints = totalPoints + num
+                  }
+                  if (Number(row.occupationPoints) > 0) {
+                    const num = Number(row.occupationPoints)
+                    context.occupation.count += num
+                    totalPoints = totalPoints + num
+                  }
+                  if (Number(row.archetypePoints) > 0) {
+                    const num = Number(row.archetypePoints)
+                    context.archetype.count += num
+                    totalPoints = totalPoints + num
+                  }
+                  if (Number(row.experiencePoints) > 0) {
+                    const num = Number(row.experiencePoints)
+                    totalPoints = totalPoints + num
+                  }
+                  let name = item.name
+                  if (key === this.cocidLanguageOwn) {
+                    name = item.system.specialization + ' (' + item.system.skillName + ')'
+                  } else if (skill.flags.isCreditRating) {
+                    name = name + ' [' + this.coc7Config.creditRating.min + ' - ' + this.coc7Config.creditRating.max + ']'
+                    if (totalPoints >= this.coc7Config.creditRating.min && totalPoints <= this.coc7Config.creditRating.max) {
+                      context.creditRatingOkay = true
+                    }
+                  } else if (typeof row.selected === 'string') {
+                    name = item.system.specialization + ' (' + row.selected + ')'
+                  }
+                  context.skills.push({
+                    key,
+                    index,
+                    name,
+                    isOccupation: row.occupationToggle,
+                    isArchetype: row.archetypeToggle,
+                    base,
+                    personalPoints: row.personalPoints,
+                    occupationPoints: row.occupationPoints,
+                    archetypePoints: row.archetypePoints,
+                    experiencePoints: row.experiencePoints,
+                    totalPoints,
+                    showCreditRating: showMonetary && key === this.cocidCreditRating
+                  })
+                }
+              }
+            }
+            context.skills.sort(CoC7Utilities.sortByNameKey)
+            if (context.creditRatingOkay) {
+              context.canNext = true
+            }
+          }
+
+          context.personal.remaining = context.personal.total - context.personal.count
+          context.occupation.remaining = context.occupation.total - context.occupation.count
+          context.archetype.remaining = context.archetype.total - context.archetype.count
+        }
+        break
+
+      case context.pages.PAGE_INVESTIGATOR:
+        context.own = {}
+        for (const key in this.coc7Config.own) {
+          const options = await this.coc7Config.own[key].options
+          context.own[key] = foundry.utils.duplicate(this.coc7Config.own[key])
+          context.own[key].options = []
+          for (const item of options) {
+            if (item.flags.CoC7.cocidFlag.id !== key && !item.system.properties.requiresname && !item.system.properties.picknameonly && !item.system.properties.own) {
+              context.own[key].options.push({
+                name: item.name,
+                key: item.flags.CoC7.cocidFlag.id
+              })
+            }
+          }
+          context.own[key].options.sort(CoC7Utilities.sortByNameKey)
+        }
+        context.canNext = true
+        break
+
+      case context.pages.PAGE_BACKSTORY:
+        {
+          const allBackstories = await this.coc7Config.cacheBackstories
+          context.backstories = {}
+          const bioSectionKeys = Object.entries(Object.assign(foundry.utils.flattenObject(game.i18n._fallback.CoC7?.CoCIDFlag?.keys ?? {}), foundry.utils.flattenObject(game.i18n.translations.CoC7?.CoCIDFlag?.keys ?? {}))).filter(e => e[0].startsWith('rt..'))
+          for (let index = 0; index < this.coc7Config.bioSections.length; index++) {
+            let rolls = ''
+            if (this.coc7Config.bioSections[index].name.startsWith('rt..')) {
+              rolls = this.coc7Config.bioSections[index].name
+            } else {
+              const match = this.coc7Config.bioSections[index].name.match(/^CoC7\.CoCIDFlag\.keys\.(rt\.\..+)$/)
+              if (match) {
+                rolls = match[1]
+              } else {
+                const match = bioSectionKeys.find(e => e[1] === this.coc7Config.bioSections[index].name)
+                if (match) {
+                  rolls = match[0]
+                }
+              }
+            }
+            context.backstories[index] = {
+              index,
+              name: this.coc7Config.bioSections[index].name,
+              rolls: (rolls !== '' && game.CoC7.cocid.findCocIdInList(rolls, allBackstories).length ? rolls : ''),
+              value: this.coc7Config.bioSections[index].value
+            }
+          }
+        }
+        context.canNext = true
+        context.createButton = game.user.hasPermission('ACTOR_CREATE')
+        break
+
+      case context.pages.PAGE_CREATE:
+        context.canNext = true
+        context.createButton = true
+        break
+    }
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+
+    switch (partId) {
+      case 'footer':
+        context.buttons = []
+        if (context.coc7Config.step > 0) {
+          context.buttons.push({
+            type: 'submit',
+            action: 'back',
+            label: 'CoC7.InvestigatorWizard.BackStep',
+            icon: 'fa-solid fa-backward'
+          })
         } else {
-          sheetData.languageName = ''
+          context.buttons.push({
+            type: 'nothing',
+            cssClass: 'no-button'
+          })
         }
-        sheetData.canNext = true
-        break
-
-      case sheetData.pages.PAGE_OCCUPATION_SKILLS:
-        sheetData.default = 0
-        sheetData.selected = 0
-        sheetData.skillItems = []
-        for (const key in this.object.skillItems) {
-          let group = 'other'
-          const rows = sheetData.object.skillItems[key].rows.length
-          const isMultiple = sheetData.object.skillItems[key].flags.isMultiple
-          if (isMultiple) {
-            sheetData.skillItems.push({
-              key,
-              index: -1,
-              name: sheetData.object.skillItems[key].item.name,
-              group,
-              toggle: false,
-              isCreditRating: false,
-              isMultiple: true,
-              isPickable: false
-            })
-          }
-          for (let index = 0; index < rows; index++) {
-            let isPickable = false
-            if (sheetData.object.skillItems[key].rows[index].isOccupationDefault) {
-              group = 'default'
-              if (isMultiple) {
-                isPickable = true
-              }
-              sheetData.default++
-            } else if (sheetData.object.skillItems[key].rows[index].inOccupationGroup !== false) {
-              group = sheetData.object.skillItems[key].rows[index].inOccupationGroup
-              if (isMultiple) {
-                isPickable = true
-              }
-            } else {
-              group = 'other'
-            }
-            let toggle = sheetData.object.skillItems[key].rows[index].occupationToggle
-            if (isPickable) {
-              toggle = false
-            }
-            let specialization = sheetData.object.skillItems[key].item.system.specialization
-            let skillName = sheetData.object.skillItems[key].item.system.skillName
-            let picked = false
-            let deleteable = false
-            if (typeof sheetData.object.skillItems[key].rows[index].selected === 'string') {
-              picked = true
-              skillName = sheetData.object.skillItems[key].rows[index].selected
-            } else if (sheetData.object.skillItems[key].rows[index].selected !== false) {
-              picked = true
-              specialization = sheetData.object.skillItems[key].rows[index].selected.system.specialization
-              skillName = sheetData.object.skillItems[key].rows[index].selected.system.skillName
-            }
-            if (toggle || (isPickable && picked)) {
-              sheetData.selected++
-            }
-            let name = sheetData.object.skillItems[key].item.name
-            if (key === this.cocidLanguageOwn) {
-              name = specialization + ' (' + skillName + ')'
-            } else if (!isPickable && picked) {
-              name = specialization + ' (' + skillName + ')'
-            }
-            if (!isPickable && picked) {
-              deleteable = !sheetData.object.skillItems[key].rows[index].archetypeToggle
-            }
-            sheetData.skillItems.push({
-              key,
-              index,
-              name,
-              group: group.toString(),
-              toggle,
-              isCreditRating: sheetData.object.skillItems[key].rows[index].isCreditRating,
-              isMultiple: false,
-              isPickable,
-              picked,
-              deleteable,
-              specialization,
-              skillName
-            })
-          }
-        }
-        sheetData.max = (parseInt(sheetData.default, 10) || 0) + (parseInt(sheetData.object.personal, 10) || 0) + Object.values(sheetData.object.occupationGroups).reduce((s, v) => s + (parseInt(v, 10) || 0), 0)
-        sheetData.skillItems.sort(CoC7Utilities.sortByNameKey)
-        if (sheetData.selected === sheetData.max) {
-          sheetData.canNext = true
+        if (!context.canNext) {
+          context.buttons.push({
+            type: 'nothing',
+            cssClass: 'no-button'
+          })
+        } else if (context.createButton) {
+          context.buttons.push({
+            type: 'submit',
+            action: 'next',
+            label: 'CoC7.InvestigatorWizard.CreateStep',
+            icon: 'fa-solid fa-user'
+          })
+        } else {
+          context.buttons.push({
+            type: 'submit',
+            action: 'next',
+            label: 'CoC7.InvestigatorWizard.NextStep',
+            icon: 'fa-solid fa-forward'
+          })
         }
         break
+    }
 
-      case sheetData.pages.PAGE_ARCHETYPE_SKILLS:
-        sheetData.max = 0
-        sheetData.selected = 0
-        sheetData.skillItems = []
-        for (const key in this.object.skillItems) {
-          let group = 'other'
-          const rows = sheetData.object.skillItems[key].rows.length
-          const isMultiple = sheetData.object.skillItems[key].flags.isMultiple
-          if (isMultiple) {
-            sheetData.skillItems.push({
-              key,
-              index: -1,
-              name: sheetData.object.skillItems[key].item.name,
-              group,
-              toggle: false,
-              isCreditRating: false,
-              isMultiple: true,
-              isPickable: false
-            })
-          }
-          for (let index = 0; index < rows; index++) {
-            let isPickable = false
-            if (sheetData.object.skillItems[key].rows[index].isArchetypeDefault) {
-              group = 'default'
-              if (isMultiple) {
-                isPickable = true
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
+
+    const form = this.element
+
+    switch (context.coc7Config.step) {
+      case context.pages.PAGE_CONFIGURATION:
+        form.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', async (event) => {
+          const key = event.currentTarget.dataset.property
+          switch (key) {
+            case 'default-enabled':
+              if (this.coc7Config.defaultQuantity === 0) {
+                this.coc7Config.defaultQuantity = 1
+              } else {
+                this.coc7Config.defaultQuantity = 0
               }
-              sheetData.max++
-            } else {
-              group = 'other'
-            }
-            let toggle = sheetData.object.skillItems[key].rows[index].archetypeToggle
-            if (isPickable) {
-              toggle = false
-            }
-            let specialization = sheetData.object.skillItems[key].item.system.specialization
-            let skillName = sheetData.object.skillItems[key].item.system.skillName
-            let picked = false
-            let deleteable = false
-            if (typeof sheetData.object.skillItems[key].rows[index].selected === 'string') {
-              picked = true
-              skillName = sheetData.object.skillItems[key].rows[index].selected
-            } else if (sheetData.object.skillItems[key].rows[index].selected !== false) {
-              picked = true
-              specialization = sheetData.object.skillItems[key].rows[index].selected.system.specialization
-              skillName = sheetData.object.skillItems[key].rows[index].selected.system.skillName
-            }
-            if (toggle || (isPickable && picked)) {
-              sheetData.selected++
-            }
-            let name = sheetData.object.skillItems[key].item.name
-            if (key === this.cocidLanguageOwn) {
-              name = specialization + ' (' + skillName + ')'
-            } else if (!isPickable && picked) {
-              name = specialization + ' (' + skillName + ')'
-            }
-            if (!isPickable && picked) {
-              deleteable = !sheetData.object.skillItems[key].rows[index].occupationToggle
-            }
-            sheetData.skillItems.push({
-              key,
-              index,
-              name,
-              group: group.toString(),
-              toggle,
-              isCreditRating: false,
-              isMultiple: false,
-              isPickable,
-              picked,
-              deleteable,
-              specialization,
-              skillName
-            })
+              game.settings.set(FOLDER_ID, 'InvestigatorWizardQuantity', this.coc7Config.defaultQuantity)
+              this.render({ force: true })
+              break
+            case 'rerolls-enabled':
+              this.coc7Config.rerollsEnabled = !this.coc7Config.rerollsEnabled
+              game.settings.set(FOLDER_ID, 'InvestigatorWizardRerolls', this.coc7Config.rerollsEnabled)
+              this.render({ force: true })
+              break
+            case 'characteristics-method':
+              switch (Number(event.currentTarget.dataset.value)) {
+                case CoC7InvestigatorWizard.CharacteristicsMethods.METHOD_DEFAULT:
+                  this.coc7Config.enforcePointBuy = false
+                  this.coc7Config.chooseRolledValues = false
+                  this.coc7Config.quickFireValues = []
+                  break
+                case CoC7InvestigatorWizard.CharacteristicsMethods.METHOD_POINTS:
+                  this.coc7Config.enforcePointBuy = true
+                  this.coc7Config.chooseRolledValues = false
+                  this.coc7Config.quickFireValues = []
+                  break
+                case CoC7InvestigatorWizard.CharacteristicsMethods.METHOD_VALUES:
+                  this.coc7Config.enforcePointBuy = false
+                  this.coc7Config.chooseRolledValues = false
+                  this.coc7Config.quickFireValues = (game.settings.get(FOLDER_ID, 'pulpRuleArchetype') ? [90, 80, 70, 60, 60, 50, 50, 40] : [80, 70, 60, 60, 50, 50, 50, 40])
+                  break
+                case CoC7InvestigatorWizard.CharacteristicsMethods.METHOD_CHOOSE:
+                  this.coc7Config.enforcePointBuy = false
+                  this.coc7Config.chooseRolledValues = true
+                  this.coc7Config.quickFireValues = []
+                  break
+              }
+              game.settings.set(FOLDER_ID, 'InvestigatorWizardPointBuy', this.coc7Config.enforcePointBuy)
+              game.settings.set(FOLDER_ID, 'InvestigatorWizardQuickFire', this.coc7Config.quickFireValues)
+              game.settings.set(FOLDER_ID, 'InvestigatorWizardChooseValues', this.coc7Config.chooseRolledValues)
+              this.render({ force: true })
+              break
           }
-        }
-        sheetData.skillItems.sort(CoC7Utilities.sortByNameKey)
-        if (sheetData.selected === sheetData.max) {
-          sheetData.canNext = true
-        }
+        }))
+        form.querySelectorAll('.quick-fire-values input').forEach((element) => element.addEventListener('blur', async (event) => {
+          const match = event.target.name.match(/^quick-fire-values-(\d+)$/)
+          const value = Number(event.target.value)
+          if (match && value > 0) {
+            this.coc7Config.quickFireValues[match[1]] = value
+          }
+          this.coc7Config.quickFireValues.sort().reverse()
+          this.coc7Config.placeable = foundry.utils.duplicate(this.coc7Config.quickFireValues)
+          this.render({ force: true })
+        }))
+        form.querySelector('input[name=default-quantity]')?.addEventListener('blur', async (event) => {
+          this.coc7Config.defaultQuantity = Number(event.target.value)
+          game.settings.set(FOLDER_ID, 'InvestigatorWizardQuantity', this.coc7Config.defaultQuantity)
+          this.render({ force: true })
+        })
+        form.querySelector('select[name=default-ownership]')?.addEventListener('blur', async (event) => {
+          this.coc7Config.defaultOwnership = Number(event.target.value)
+          game.settings.set(FOLDER_ID, 'InvestigatorWizardOwnership', this.coc7Config.defaultOwnership)
+          this.render({ force: true })
+        })
+        form.querySelector('select[name=world-era]')?.addEventListener('change', async (event) => {
+          const started = Date.now()
+          form.querySelector('.era-change').style.display = 'block'
+          form.querySelector('.scroll-section').style.display = 'none'
+          form.querySelector('footer.form-footer').style.display = 'none'
+          this.coc7Config.defaultEra = event.target.value
+          await game.settings.set(FOLDER_ID, 'worldEra', this.coc7Config.defaultEra)
+          this.coc7Config.cacheCoCID = await CoC7InvestigatorWizard.loadCacheItemByCoCID()
+          // To prevent flashing show message for at least 500 ms
+          const buffer = 500 - (Date.now() - started)
+          // Don't bother if less than 10ms remaining
+          if (buffer > 10) {
+            await new Promise(resolve => setTimeout(resolve, buffer))
+          }
+          this.render({ force: true })
+        })
+        form.querySelector('select[name=default-setup]')?.addEventListener('change', async (event) => {
+          this.coc7Config.defaultSetup = event.target.value
+          game.settings.set(FOLDER_ID, 'InvestigatorWizardSetup', this.coc7Config.defaultSetup)
+          this.coc7Config.setup = this.coc7Config.defaultSetup
+          this.clearSetupPoints()
+          await this.setSkillLists()
+          this.render({ force: true })
+        })
         break
 
-      case sheetData.pages.PAGE_POINTS_SKILLS:
-        sheetData.skills = []
-        sheetData.creditRatingOkay = !(this.object.creditRating.max > 0)
-        sheetData.personal = {
-          count: 0,
-          total: 2 * (parseInt(this.object.setupPoints.int, 10) + parseInt(this.object.setupModifiers.int, 10)),
-          remaining: 0
-        }
-        sheetData.occupation = {
-          count: 0,
-          total: 0,
-          remaining: 0
-        }
-        sheetData.archetype = {
-          count: 0,
-          total: 0,
-          remaining: 0
-        }
-        if (sheetData.object.setup !== '') {
-          showMonetary = (await this.getCacheItemByCoCID(sheetData.object.setup)).system.monetary.values.length > 0
-        }
-        if (sheetData.object.occupation !== '') {
-          occupation = await this.getCacheItemByCoCID(this.object.occupation)
-          if (occupation) {
-            const options = []
-            for (const [key, carac] of Object.entries(occupation.system.occupationSkillPoints)) {
-              if (carac.selected) {
-                if (carac.optional) {
-                  options.push(carac.multiplier * (parseInt(this.object.setupPoints[key], 10) + parseInt(this.object.setupModifiers[key], 10)))
-                } else {
-                  sheetData.occupation.total += carac.multiplier * (parseInt(this.object.setupPoints[key], 10) + parseInt(this.object.setupModifiers[key], 10))
-                }
+      case context.pages.PAGE_SETUPS:
+        form.querySelector('select[name=coc-setup]')?.addEventListener('change', async (event) => {
+          this.coc7Config.setup = event.target.value
+          this.clearSetupPoints()
+          await this.setSkillLists()
+          this.render({ force: true })
+        })
+        break
+
+      case context.pages.PAGE_ARCHETYPES:
+        form.querySelector('select[name=coc-archetype]')?.addEventListener('change', async (event) => {
+          this.coc7Config.archetype = event.target.value
+          this.coc7Config.coreCharacteristic = ''
+          this.clearSetupPoints()
+          await this.setSkillLists()
+          this.render({ force: true })
+        })
+        break
+
+      case context.pages.PAGE_CHARACTERISTICS:
+        /* // FoundryVTT V12 */
+        new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+          dragSelector: '.draggable',
+          permissions: {
+            dragstart: true,
+            drop: true
+          },
+          callbacks: {
+            dragstart: this._onDragStart.bind(this),
+            drop: this._onDragDrop.bind(this)
+          }
+        }).bind(this.element)
+        form.querySelector('select[name=coc-core-characteristic]')?.addEventListener('change', async (event) => {
+          this.coc7Config.coreCharacteristic = event.target.value
+          this.clearSetupPoints()
+          this.coc7Config.placeable = foundry.utils.duplicate(this.coc7Config.quickFireValues)
+          this.render({ force: true })
+        })
+        form.querySelector('button.roll_choose')?.addEventListener('click', async (event) => {
+          event.preventDefault()
+          if (this.coc7Config.setup !== '') {
+            const setup = await this.getCacheItemByCoCID(this.coc7Config.setup)
+            if (typeof setup !== 'undefined') {
+              const rollFormulas = {}
+              for (const key of CONFIG.Actor.dataModels.character.schema.getField('characteristics').keys()) {
+                rollFormulas[key] = setup.system.characteristics.rolls[key]
               }
-            }
-            if (options.length > 0) {
-              sheetData.occupation.total += Math.max(...options)
-            }
-          }
-        }
-        if (this.object.archetype !== '') {
-          const archetype = await game.system.api.cocid.fromCoCID(this.object.archetype)
-          if (archetype.length === 1) {
-            sheetData.archetype.total = archetype[0].system.bonusPoints
-          }
-        }
-        if (Object.keys(this.object.skillItems).length > 0) {
-          for (const key in this.object.skillItems) {
-            const skill = this.object.skillItems[key]
-            for (let index = 0, im = skill.rows.length; index < im; index++) {
-              const row = skill.rows[index]
-              if (!skill.flags.isMultiple || row.selected !== false) {
-                let item = foundry.utils.duplicate(skill.item)
-                if (row.selected !== false && typeof row.selected !== 'string') {
-                  item = foundry.utils.duplicate(row.selected)
-                }
-                let base = item.system.base
-                if (!Number.isNumeric(base)) {
-                  for (const key in this.object.setupPoints) {
-                    const regEx = new RegExp('@' + key, 'i')
-                    base = base.replace(regEx, parseInt(this.object.setupPoints[key], 10) + parseInt(this.object.setupModifiers[key], 10))
+              if (this.coc7Config.archetype !== '') {
+                const archetype = await this.getCacheItemByCoCID(this.coc7Config.archetype)
+                if (typeof archetype !== 'undefined') {
+                  if (this.coc7Config.coreCharacteristic !== '') {
+                    if (archetype.system.coreCharacteristicsFormula.enabled) {
+                      rollFormulas[this.coc7Config.coreCharacteristic] = archetype.system.coreCharacteristicsFormula.value
+                    }
                   }
                 }
-                if (!Number.isNumeric(base)) {
-                  base = Math.floor(new CoC7AverageRoll('(' + base + ')')[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true, maximize: true }).total)
-                }
-                let totalPoints = parseInt(base, 10)
-                if (Number(row.personalPoints) > 0) {
-                  const num = Number(row.personalPoints)
-                  sheetData.personal.count += num
-                  totalPoints = totalPoints + num
-                }
-                if (Number(row.occupationPoints) > 0) {
-                  const num = Number(row.occupationPoints)
-                  sheetData.occupation.count += num
-                  totalPoints = totalPoints + num
-                }
-                if (Number(row.archetypePoints) > 0) {
-                  const num = Number(row.archetypePoints)
-                  sheetData.archetype.count += num
-                  totalPoints = totalPoints + num
-                }
-                if (Number(row.experiencePoints) > 0) {
-                  const num = Number(row.experiencePoints)
-                  totalPoints = totalPoints + num
-                }
-                let name = item.name
-                if (key === this.cocidLanguageOwn) {
-                  name = item.system.specialization + ' (' + item.system.skillName + ')'
-                } else if (skill.flags.isCreditRating) {
-                  name = name + ' [' + this.object.creditRating.min + ' - ' + this.object.creditRating.max + ']'
-                  if (totalPoints >= this.object.creditRating.min && totalPoints <= this.object.creditRating.max) {
-                    sheetData.creditRatingOkay = true
+              }
+              rollFormulas.luck = setup.system.characteristics.rolls.luck
+              const rollCharacteristicValues = (!context.coc7Config.chooseRolledValues && !context.coc7Config.enforcePointBuy && setup.system.characteristics.rolls.enabled)
+              if (!rollCharacteristicValues) {
+                this.coc7Config.rolledValues = []
+              }
+              const rolls = []
+              for (const [key, field] of CONFIG.Actor.dataModels.character.schema.getField('characteristics').entries()) {
+                if (!rollCharacteristicValues || this.coc7Config.setupPoints[key] === '' || this.coc7Config.rerollsEnabled) {
+                  const roll = await new Roll(rollFormulas[key].toString(), {}, { flavor: game.i18n.localize(field.hint) }).roll()
+                  if (rollCharacteristicValues) {
+                    this.coc7Config.setupPoints[key] = Number(roll.total)
+                  } else {
+                    this.coc7Config.rolledValues.push({
+                      value: roll.total,
+                      assigned: false
+                    })
                   }
-                } else if (typeof row.selected === 'string') {
-                  name = item.system.specialization + ' (' + row.selected + ')'
+                  rolls.push(roll)
                 }
-                sheetData.skills.push({
-                  key,
-                  index,
-                  name,
-                  isOccupation: row.occupationToggle,
-                  isArchetype: row.archetypeToggle,
-                  base,
-                  personalPoints: row.personalPoints,
-                  occupationPoints: row.occupationPoints,
-                  archetypePoints: row.archetypePoints,
-                  experiencePoints: row.experiencePoints,
-                  totalPoints,
-                  showCreditRating: showMonetary && key === this.cocidCreditRating
+              }
+              if (rollCharacteristicValues && (this.coc7Config.setupPoints.luck === '' || this.coc7Config.rerollsEnabled)) {
+                const roll = await new Roll(rollFormulas.luck.toString(), {}, { flavor: game.i18n.localize('CoC7.Luck') }).roll()
+                this.coc7Config.setupPoints.luck = Number(roll.total)
+                rolls.push(roll)
+              }
+              if (rolls.length) {
+                ChatMessage.create({
+                  user: game.user.id,
+                  speaker: {
+                    alias: game.user.name
+                  },
+                  rolls,
+                  whisper: ChatMessage.getWhisperRecipients('GM')
                 })
               }
             }
           }
-          sheetData.skills.sort(CoC7Utilities.sortByNameKey)
-          if (sheetData.creditRatingOkay) {
-            sheetData.canNext = true
+          this.render({ force: true })
+        })
+        form.querySelectorAll('input.save-on-blur').forEach((element) => element.addEventListener('blur', async (event) => {
+          const key = event.target.closest('.input-line').dataset.key
+          switch (key) {
+            case 'age':
+              {
+                const age = Number(event.target.value)
+                if (age > 0) {
+                  this.coc7Config.age = age
+                  this.getAgeAdjustments()
+                }
+              }
+              break
+            default:
+              {
+                const value = Number(event.target.value)
+                if (value > 0) {
+                  this.coc7Config.setupPoints[key] = value
+                }
+              }
+              break
           }
-        }
-
-        sheetData.personal.remaining = sheetData.personal.total - sheetData.personal.count
-        sheetData.occupation.remaining = sheetData.occupation.total - sheetData.occupation.count
-        sheetData.archetype.remaining = sheetData.archetype.total - sheetData.archetype.count
+          this.render({ force: true })
+        }))
+        form.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
+          switch (event.currentTarget.dataset.action) {
+            case 'roll-characteristic':
+              {
+                const inputLine = event.currentTarget.closest('.input-line')
+                const key = inputLine.dataset.key
+                const formula = inputLine.dataset.formula
+                if (formula) {
+                  let hint = CONFIG.Actor.dataModels.character.schema.getField('characteristics').get(key)?.hint
+                  if (typeof hint === 'undefined') {
+                    hint = (key === 'luck' ? 'CoC7.Luck' : '')
+                  }
+                  const roll = await new Roll(formula.toString(), {}, { flavor: game.i18n.localize(hint) }).roll()
+                  inputLine.querySelector('input').value = roll.total
+                  this.coc7Config.setupPoints[key] = Number(roll.total)
+                  ChatMessage.create({
+                    user: game.user.id,
+                    speaker: {
+                      alias: game.user.name
+                    },
+                    rolls: [roll],
+                    whisper: ChatMessage.getWhisperRecipients('GM')
+                  })
+                  this.render({ force: true })
+                }
+              }
+              break
+            case 'modify-characteristic':
+              {
+                const inputLine = event.currentTarget.closest('.input-line')
+                const key = inputLine.dataset.key
+                const by = parseInt(event.currentTarget.dataset.by, 10)
+                const input = inputLine.querySelector('input')
+                let value = Number(input.value) + by
+                if ((inputLine.dataset.min ?? '') !== '') {
+                  value = Math.max(parseInt(inputLine.dataset.min, 10), value)
+                }
+                if ((inputLine.dataset.max ?? '') !== '') {
+                  value = Math.min(parseInt(inputLine.dataset.max, 10), value)
+                }
+                input.value = this.coc7Config.setupPoints[key] = value
+                this.render({ force: true })
+              }
+              break
+          }
+        }))
         break
 
-      case sheetData.pages.PAGE_BACKSTORY:
-        {
-          const allBackstories = await this.object.cacheBackstories
-          sheetData.backstories = {}
-          for (let index = 0; index < this.object.bioSections.length; index++) {
-            let rolls = ''
-            if (this.object.bioSections[index].name.startsWith('rt..')) {
-              rolls = this.object.bioSections[index].name
-            } else {
-              const match = this.object.bioSections[index].name.match(/^CoC7\.CoCIDFlag\.keys\.(rt\.\..+)$/)
-              if (match) {
-                rolls = match[1]
+      case context.pages.PAGE_ATTRIBUTES:
+        form.querySelector('button.roll_edu')?.addEventListener('click', async (event) => {
+          event.preventDefault()
+          if (typeof this.coc7Config.requiresAgeAdjustments.edu !== 'undefined') {
+            if (!this.coc7Config.requiresAgeAdjustments.edu.rolled && this.coc7Config.requiresAgeAdjustments.edu.total) {
+              let value = parseInt(this.coc7Config.setupPoints.edu, 10)
+              const message = []
+              for (let rolls = this.coc7Config.requiresAgeAdjustments.edu.total; rolls > 0; rolls--) {
+                const upgradeRoll = await CoC7DicePool.rollNewPool({ })
+                if (upgradeRoll.total > value) {
+                  const augmentDie = await new Roll('1d10').evaluate()
+                  message.push(`<span class="coc7-upgrade-success">${game.i18n.format(
+                    'CoC7.DevSuccess',
+                    {
+                      item: game.i18n.localize('CHARAC.Education'),
+                      die: upgradeRoll.total,
+                      score: value,
+                      augment: augmentDie.total
+                    }
+                  )}</span><br>`)
+                  value = value + parseInt(augmentDie.total, 10)
+                } else {
+                  message.push(`<span class="coc7-upgrade-failed">${game.i18n.format(
+                    'CoC7.DevFailure',
+                    {
+                      item: game.i18n.localize('CHARAC.Education'),
+                      die: upgradeRoll.total,
+                      score: value
+                    }
+                  )}</span><br>`)
+                }
+              }
+              ChatMessage.create({
+                flavor: game.i18n.localize('CoC7.RollAll4Dev'),
+                user: game.user.id,
+                speaker: {
+                  alias: game.user.name
+                },
+                content: message.join(''),
+                whisper: ChatMessage.getWhisperRecipients('GM')
+              })
+              this.coc7Config.setupModifiers.edu = value - parseInt(this.coc7Config.setupPoints.edu, 10)
+              this.coc7Config.requiresAgeAdjustments.edu.rolled = true
+              this.render({ force: true })
+            }
+          }
+        })
+        form.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
+          switch (event.currentTarget.dataset.action) {
+            case 'modify-characteristic':
+              {
+                const inputLine = event.currentTarget.closest('.input-line')
+                const key = inputLine.dataset.key
+                const by = parseInt(event.currentTarget.dataset.by, 10)
+                let value = Number(this.coc7Config.setupModifiers[key]) + by
+                if ((inputLine.dataset.min ?? '') !== '') {
+                  value = Math.max(parseInt(inputLine.dataset.min, 10), value)
+                }
+                if ((inputLine.dataset.max ?? '') !== '') {
+                  value = Math.min(parseInt(inputLine.dataset.max, 10), value)
+                }
+                this.coc7Config.setupModifiers[key] = value
+                this.render({ force: true })
+              }
+              break
+          }
+        }))
+        form.querySelector('button.roll_luck')?.addEventListener('click', async (event) => {
+          const setup = await this.getCacheItemByCoCID(this.coc7Config.setup)
+          if (setup) {
+            const die = await new Roll(setup.system.characteristics.rolls.luck.toString()).evaluate()
+            this.coc7Config.setupModifiers.luck = [die.total]
+            /* // FoundryVTT V12 */
+            const html = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(Roll.CHAT_TEMPLATE, {
+              formula: game.i18n.localize('CoC7.InvestigatorWizard.RollTwiceForLuck') + ': ' + setup.system.characteristics.rolls.luck.toString(),
+              tooltip: await die.getTooltip(),
+              total: die.total
+            })
+            ChatMessage.create({
+              user: game.user.id,
+              speaker: {
+                alias: game.user.name
+              },
+              content: html,
+              whisper: ChatMessage.getWhisperRecipients('GM')
+            })
+            this.render({ force: true })
+          }
+        })
+        break
+
+      case context.pages.PAGE_OCCUPATIONS:
+        form.querySelector('select[name=coc-occupation]')?.addEventListener('change', async (event) => {
+          this.coc7Config.occupation = event.target.value
+          await this.setSkillLists()
+          this.render({ force: true })
+        })
+        break
+
+      case context.pages.PAGE_OCCUPATION_SKILLS:
+      case context.pages.PAGE_ARCHETYPE_SKILLS:
+        form.querySelectorAll('.clickable').forEach((element) => element.addEventListener('click', async (event) => {
+          this._onClickPickSkill(event)
+        }))
+        form.querySelectorAll('.rollable').forEach((element) => element.addEventListener('click', async (event) => {
+          this._onToggleSkill(event)
+        }))
+        form.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
+          switch (event.currentTarget.dataset.action) {
+            case 'delete-skill':
+              this._onClickDeleteSkill(event)
+          }
+        }))
+        /* // FoundryVTT V12 */
+        new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+          dragSelector: '.draggable',
+          permissions: {
+            dragstart: true,
+            drop: true
+          },
+          callbacks: {
+            dragstart: this._onDragStart.bind(this),
+            drop: this._onDragDrop.bind(this)
+          }
+        }).bind(this.element)
+        break
+
+      case context.pages.PAGE_POINTS_SKILLS:
+        form.querySelectorAll('.skill-adjustment').forEach((element) => element.addEventListener('blur', async (event) => {
+          const input = event.currentTarget
+          const adjustment = input.dataset.adjustment
+          const row = input.closest('.points-row')
+          const key = row.dataset.key
+          const index = row.dataset.index
+          if (typeof this.coc7Config.skillItems[key]?.rows[index][adjustment] !== 'undefined') {
+            this.coc7Config.skillItems[key].rows[index][adjustment] = input.value
+          }
+          this.render({ force: true })
+        }))
+        break
+
+      case context.pages.PAGE_INVESTIGATOR:
+        form.querySelectorAll('file-picker').forEach((element) => element.addEventListener('change', async (event) => {
+          this.coc7Config[event.currentTarget.name] = event.currentTarget.value
+          this.render({ force: true })
+        }))
+        form.querySelectorAll('input.save-on-blur').forEach((element) => element.addEventListener('blur', async (event) => {
+          switch (event.currentTarget.name) {
+            case 'name':
+            case 'residence':
+            case 'birthplace':
+              this.coc7Config[event.currentTarget.name] = event.currentTarget.value
+              break
+            default:
+              if (typeof this.coc7Config.own[event.currentTarget.name] !== 'undefined') {
+                this.coc7Config.own[event.currentTarget.name].value = event.currentTarget.value
+              }
+              break
+          }
+        }))
+        form.querySelectorAll('select.save-on-change').forEach((element) => element.addEventListener('change', async (event) => {
+          if (typeof this.coc7Config.own[event.currentTarget.dataset.key] !== 'undefined') {
+            this.coc7Config.own[event.currentTarget.dataset.key].selected = event.currentTarget.value
+          }
+          this.render({ force: true })
+        }))
+        break
+
+      case context.pages.PAGE_BACKSTORY:
+        form.querySelectorAll('textarea.backstory-text').forEach((element) => element.addEventListener('blur', async (event) => {
+          const textarea = event.currentTarget
+          const index = textarea.dataset.index
+          if (typeof this.coc7Config.bioSections[index] !== 'undefined') {
+            this.coc7Config.bioSections[index].value = textarea.value
+          }
+        }))
+        form.querySelectorAll('button.backstory-reset').forEach((element) => element.addEventListener('click', async (event) => {
+          const index = event.currentTarget.dataset.index
+          if (typeof this.coc7Config.bioSections[index] !== 'undefined') {
+            this.coc7Config.bioSections[index].value = ''
+          }
+          this.render({ force: true })
+        }))
+        form.querySelectorAll('button.backstory-roll').forEach((element) => element.addEventListener('click', async (event) => {
+          const button = event.currentTarget
+          const index = button.dataset.index
+          const key = button.dataset.key
+          if (typeof this.coc7Config.bioSections[index] !== 'undefined') {
+            const table = await game.CoC7.cocid.fromCoCID(key)
+            if (table.length === 1) {
+              const tableResults = await table[0].roll()
+              for (const tableResult of tableResults.results) {
+                if (tableResult.type === CONST.TABLE_RESULT_TYPES.TEXT) {
+                  /* // FoundryVTT V12 */
+                  this.coc7Config.bioSections[index].value = (this.coc7Config.bioSections[index].value + '\n' + (tableResult.description ?? tableResult.text).trim()).trim()
+                }
               }
             }
-            sheetData.backstories[index] = {
-              index,
-              name: this.object.bioSections[index].name,
-              rolls: (rolls !== '' && game.system.api.cocid.findCocIdInList(rolls, allBackstories).length ? rolls : ''),
-              value: this.object.bioSections[index].value
-            }
           }
-        }
-        sheetData.canNext = true
-        sheetData.createButton = game.user.hasPermission('ACTOR_CREATE')
-        break
-
-      case sheetData.pages.PAGE_CREATE:
-        sheetData.canNext = true
-        sheetData.createButton = true
-        break
-    }
-
-    return sheetData
-  }
-
-  activateListeners (html) {
-    super.activateListeners(html)
-    html.keypress(e => /textarea/i.test((e.target || e.srcElement).tagName) || (e.keyCode || e.which || e.charCode || 0) !== 13)
-    html.find('.submit_on_change').change(this._onChangeSubmit.bind(this))
-    html.find('.roll-characteristic').click(this._onRollCharacteristic.bind(this))
-    html.find('.increase-10-characteristic').click(this._onIncreaseCharacteristic10.bind(this))
-    html.find('.increase-characteristic').click(this._onIncreaseCharacteristic.bind(this))
-    html.find('.decrease-characteristic').click(this._onDecreaseCharacteristic.bind(this))
-    html.find('.decrease-10-characteristic').click(this._onDecreaseCharacteristic10.bind(this))
-    html.find('button.roll_all').click(this._onRollAll.bind(this))
-    html.find('button.roll_choose').click(this._onRollChoose.bind(this))
-    html.find('button.roll_edu').click(this._onRollEdu.bind(this))
-    html.find('button.roll_luck').click(this._onRollLuck.bind(this))
-    html.find('.item input.submit_on_blur').blur(this._onChangeSubmit.bind(this))
-    html.find('.item input.save-characteristic-on-blur').blur(this._onChangeSaveCharacteristic.bind(this))
-    html.find('.item.toggleable').click(this._onToggleSkill.bind(this))
-    html.find('.item.clickable').click(this._onClickPickSkill.bind(this))
-    html.find('.skills-list input').click(this._onClickSkillSpecial.bind(this))
-    html.find('.skills-list .remove-skill').click(this._onClickRemoveSkill.bind(this))
-    html.find('.item input.skill-adjustment').blur(this._onChangeSkillPoints.bind(this))
-    html.find('textarea.backstory-text').keyup(this._onChangeBackstoryText.bind(this))
-    html.find('button.backstory-roll').click(this._onRollBackstory.bind(this))
-    html.find('button.backstory-reset').click(this._onResetBackstory.bind(this))
-  }
-
-  async rollMessage (rolls) {
-    if (rolls.length) {
-      const html = []
-      for (const roll of rolls) {
-        html.push(await renderTemplate(Roll.CHAT_TEMPLATE, {
-          formula: (CoC7Utilities.getCharacteristicNames(roll[0])?.label ?? roll[0]) + ': ' + roll[1],
-          tooltip: await roll[2].getTooltip(),
-          total: roll[2].total
+          this.render({ force: true })
         }))
-      }
-      ChatMessage.create({
-        user: game.user.id,
-        speaker: {
-          alias: game.user.name
-        },
-        content: html.join('<div>&nbsp;</div>'),
-        whisper: ChatMessage.getWhisperRecipients('GM')
-      })
+        break
     }
   }
 
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<HTMLElement>}
+   */
+  async _renderFrame (options) {
+    const frame = await super._renderFrame(options)
+
+    /* // FoundryV12 polyfill */
+    if (!foundry.utils.isNewerVersion(game.version, 13)) {
+      frame.setAttribute('open', true)
+    }
+
+    return frame
+  }
+
+  /**
+   * Add Item to List with configured toggles
+   * @param {Document} item
+   * @param {object} options
+   * @param {boolean} options.isOccupationDefault
+   * @param {boolean} options.inOccupationGroup
+   * @param {boolean} options.occupationToggle
+   * @param {boolean} options.isArchetypeDefault
+   * @param {boolean} options.archetypeToggle
+   * @param {boolean} options.isCreditRating
+   */
   addItemToList (item, { isOccupationDefault = false, inOccupationGroup = false, occupationToggle = false, isArchetypeDefault = false, archetypeToggle = false, isCreditRating = false } = {}) {
     const key = (item.flags.CoC7?.cocidFlag?.id ?? item.name)
     if (item.type !== 'skill') {
-      this.object.investigatorItems.push(item)
+      this.coc7Config.investigatorItems.push(item)
       return
     }
-    const isMultiple = !!(item.system.properties.special && ((item.system.properties.requiresname && !(item.system.properties.onlyone ?? false)) || item.system.properties.picknameonly || item.name === game.i18n.format('CoC7.AnySpecName')))
+    const isMultiple = (item.system.properties.special && !item.system.properties.own && key !== this.cocidLanguageOwn && (item.system.properties.requiresname || item.system.properties.picknameonly || item.system.skillName === game.i18n.format('CoC7.AnySpecName')))
     const flags = {
       isOccupationDefault,
       inOccupationGroup,
@@ -984,92 +1622,98 @@ export class CoC7InvestigatorWizard extends FormApplication {
       personalPoints: '',
       selected: false
     }
-    if (typeof this.object.skillItems[key] === 'undefined') {
-      this.object.skillItems[key] = {
+    if (typeof this.coc7Config.skillItems[key] === 'undefined') {
+      this.coc7Config.skillItems[key] = {
         item,
         flags: foundry.utils.mergeObject(flags, { isMultiple }, { inplace: false }),
         rows: []
       }
       if (!isMultiple || !(isOccupationDefault === false && inOccupationGroup === false && isArchetypeDefault === false)) {
-        this.object.skillItems[key].rows.push(foundry.utils.mergeObject(flags, rows, { inplace: false }))
+        this.coc7Config.skillItems[key].rows.push(foundry.utils.mergeObject(flags, rows, { inplace: false }))
       }
     } else {
       if (!isMultiple) {
         for (const flag in flags) {
-          this.object.skillItems[key].rows[0][flag] = this.object.skillItems[key].rows[0][flag] || flags[flag]
+          this.coc7Config.skillItems[key].rows[0][flag] = this.coc7Config.skillItems[key].rows[0][flag] || flags[flag]
         }
       } else {
-        this.object.skillItems[key].rows.push(foundry.utils.mergeObject(flags, rows, { inplace: false }))
+        this.coc7Config.skillItems[key].rows.push(foundry.utils.mergeObject(flags, rows, { inplace: false }))
       }
       for (const flag in flags) {
-        this.object.skillItems[key].flags[flag] = this.object.skillItems[key].flags[flag] || flags[flag]
+        this.coc7Config.skillItems[key].flags[flag] = this.coc7Config.skillItems[key].flags[flag] || flags[flag]
       }
     }
     if (!isMultiple && flags.isCreditRating) {
-      this.object.skillItems[key].rows[0].occupationPoints = this.object.creditRating.min
+      this.coc7Config.skillItems[key].rows[0].occupationPoints = this.coc7Config.creditRating.min
     }
   }
 
+  /**
+   * Clear setup points
+   */
   clearSetupPoints () {
-    for (const key in this.object.setupPoints) {
-      this.object.setupPoints[key] = ''
+    for (const key in this.coc7Config.setupPoints) {
+      this.coc7Config.setupPoints[key] = ''
     }
-    this.object.rolledValues = []
+    this.coc7Config.rolledValues = []
   }
 
+  /**
+   * Set skill lists based on currently selected setup, occupation, and archetype
+   */
   async setSkillLists () {
-    this.object.skillItems = {}
-    this.object.occupationGroups = {}
-    this.object.investigatorItems = []
-    this.object.placeable = foundry.utils.duplicate(this.object.quickFireValues)
-    const setup = await this.getCacheItemByCoCID(this.object.setup)
-    const occupation = await this.getCacheItemByCoCID(this.object.occupation)
+    this.coc7Config.skillItems = {}
+    this.coc7Config.occupationGroups = {}
+    this.coc7Config.investigatorItems = []
+    this.coc7Config.placeable = foundry.utils.duplicate(this.coc7Config.quickFireValues)
+    const setup = await this.getCacheItemByCoCID(this.coc7Config.setup)
+    const occupation = await this.getCacheItemByCoCID(this.coc7Config.occupation)
     let archetype = false
-    if (this.object.archetype !== '') {
-      archetype = await this.getCacheItemByCoCID(this.object.archetype)
+    if (this.coc7Config.archetype !== '') {
+      archetype = await this.getCacheItemByCoCID(this.coc7Config.archetype)
     }
-    if (setup && occupation && (!game.settings.get('CoC7', 'pulpRuleArchetype') || archetype)) {
-      this.object.bioSections = []
+    if (setup && occupation && (!game.settings.get(FOLDER_ID, 'pulpRuleArchetype') || archetype)) {
+      this.coc7Config.bioSections = []
       for (let index = 0; index < setup.system.bioSections.length; index++) {
-        this.object.bioSections.push({
+        this.coc7Config.bioSections.push({
           name: setup.system.bioSections[index],
           value: ''
         })
       }
-      this.object.personal = occupation.system.personal
-      this.object.personalText = occupation.system.personalText
-      this.object.creditRating = occupation.system.creditRating
+      this.coc7Config.personal = occupation.system.personal
+      this.coc7Config.personalText = occupation.system.personalText
+      this.coc7Config.creditRating = occupation.system.creditRating
       let items = []
-      items = await this.expandItemArray(setup.system.items)
+      items = await this.mergeItemArrays(setup.system.itemDocuments, setup.system.itemKeys)
       for (let index = 0, im = items.length; index < im; index++) {
         this.addItemToList(items[index])
       }
-      items = await this.expandItemArray(occupation.system.skills)
+      items = await this.mergeItemArrays(occupation.system.itemDocuments, occupation.system.itemKeys)
       for (let index = 0, im = items.length; index < im; index++) {
         this.addItemToList(items[index], { isOccupationDefault: true, occupationToggle: true })
       }
       for (let group = 0, gm = occupation.system.groups.length; group < gm; group++) {
-        this.object.occupationGroups[group] = occupation.system.groups[group].options
-        items = await this.expandItemArray(occupation.system.groups[group].skills)
+        this.coc7Config.occupationGroups[group] = occupation.system.groups[group].options
+        items = await this.mergeItemArrays(occupation.system.groups[group].itemDocuments, occupation.system.groups[group].itemKeys)
         for (let index = 0, im = items.length; index < im; index++) {
           this.addItemToList(items[index], { inOccupationGroup: group })
         }
       }
       if (archetype) {
-        items = await this.expandItemArray(archetype.system.skills)
+        items = await this.mergeItemArrays(archetype.system.itemDocuments, archetype.system.itemKeys)
         for (let index = 0, im = items.length; index < im; index++) {
           this.addItemToList(items[index], { isArchetypeDefault: true, archetypeToggle: true })
         }
       }
-      if (Number(this.object.creditRating.max) > 0) {
+      if (Number(this.coc7Config.creditRating.max) > 0) {
         const nameCreditRating = game.i18n.format('CoC7.CoCIDFlag.keys.' + this.cocidCreditRating)
         const flags = { isOccupationDefault: true, occupationToggle: true, isCreditRating: true }
-        if (typeof this.object.skillItems[this.cocidCreditRating] !== 'undefined') {
-          this.addItemToList(this.object.skillItems[this.cocidCreditRating].item, flags)
-        } else if (typeof this.object.skillItems[nameCreditRating] !== 'undefined') {
-          this.addItemToList(this.object.skillItems[nameCreditRating].item, flags)
+        if (typeof this.coc7Config.skillItems[this.cocidCreditRating] !== 'undefined') {
+          this.addItemToList(this.coc7Config.skillItems[this.cocidCreditRating].item, flags)
+        } else if (typeof this.coc7Config.skillItems[nameCreditRating] !== 'undefined') {
+          this.addItemToList(this.coc7Config.skillItems[nameCreditRating].item, flags)
         } else {
-          const skill = await game.system.api.cocid.fromCoCID(this.cocidCreditRating)
+          const skill = await game.CoC7.cocid.fromCoCID(this.cocidCreditRating)
           if (skill.length) {
             this.addItemToList(skill[0], flags)
           }
@@ -1078,6 +1722,10 @@ export class CoC7InvestigatorWizard extends FormApplication {
     }
   }
 
+  /**
+   * Set drag data
+   * @param {DragEvent} event
+   */
   _onDragStart (event) {
     if (event.currentTarget.dataset.characteristicKey) {
       const dragData = { type: 'investigatorCharacteristic', key: event.currentTarget.dataset.characteristicKey, value: event.currentTarget.dataset.value }
@@ -1088,162 +1736,170 @@ export class CoC7InvestigatorWizard extends FormApplication {
     }
   }
 
-  _canDragStart (selector) {
-    return true
-  }
-
-  _canDragDrop (selector) {
-    return true
-  }
-
-  async _onDrop (event) {
+  /**
+   * Process dropped characteristic values or skill Items
+   * @param {DropEvent} event
+   */
+  async _onDragDrop (event) {
     try {
       const dataList = JSON.parse(event.dataTransfer.getData('text/plain'))
-      if (dataList.type === 'investigatorCharacteristic') {
-        dataList.destination = event.target.closest('li').dataset.characteristicKey
-        if (typeof dataList.destination === 'undefined') {
-          dataList.destination = event.target.closest('li').dataset.empty
-        }
-        dataList.okay = false
-        if (dataList.destination === 'x') {
-          const offset = this.object.rolledValues.findIndex(i => i.assigned === true)
-          if (offset > -1) {
-            this.object.rolledValues[offset] = {
-              value: this.object.setupPoints[dataList.key],
-              assigned: false
+      switch (dataList.type) {
+        case 'investigatorCharacteristic':
+          dataList.destination = event.target.closest('.drop-location').dataset.characteristicKey
+          if (typeof dataList.destination === 'undefined') {
+            dataList.destination = event.target.closest('.drop-location').dataset.empty
+          }
+          dataList.okay = false
+          if (dataList.destination === 'x') {
+            const offset = this.coc7Config.rolledValues.findIndex(i => i.assigned === true)
+            if (offset > -1) {
+              this.coc7Config.rolledValues[offset] = {
+                value: this.coc7Config.setupPoints[dataList.key],
+                assigned: false
+              }
+              this.coc7Config.setupPoints[dataList.key] = ''
             }
-            this.object.setupPoints[dataList.key] = ''
-          }
-          dataList.okay = true
-        } else if (dataList.key === '-' && typeof this.object.setupPoints[dataList.destination] !== 'undefined') {
-          const index = this.object.placeable.indexOf(parseInt(dataList.value, 10))
-          if (index !== -1) {
-            this.object.placeable.splice(index, 1)
-          }
-          if (this.object.setupPoints[dataList.destination] !== '') {
-            this.object.placeable.push(parseInt(this.object.setupPoints[dataList.destination], 10))
-          }
-          this.object.setupPoints[dataList.destination] = parseInt(dataList.value, 10)
-          this.object.placeable.sort().reverse()
-          dataList.okay = true
-        } else if (typeof this.object.setupPoints[dataList.key] !== 'undefined' && dataList.destination === '-') {
-          if (this.object.setupPoints[dataList.key] !== '') {
-            this.object.placeable.push(parseInt(this.object.setupPoints[dataList.key], 10))
-            this.object.setupPoints[dataList.key] = ''
-            this.object.placeable.sort().reverse()
+            dataList.okay = true
+          } else if (dataList.key === '-' && typeof this.coc7Config.setupPoints[dataList.destination] !== 'undefined') {
+            const index = this.coc7Config.placeable.indexOf(parseInt(dataList.value, 10))
+            if (index !== -1) {
+              this.coc7Config.placeable.splice(index, 1)
+            }
+            if (this.coc7Config.setupPoints[dataList.destination] !== '') {
+              this.coc7Config.placeable.push(parseInt(this.coc7Config.setupPoints[dataList.destination], 10))
+            }
+            this.coc7Config.setupPoints[dataList.destination] = parseInt(dataList.value, 10)
+            this.coc7Config.placeable.sort().reverse()
+            dataList.okay = true
+          } else if (typeof this.coc7Config.setupPoints[dataList.key] !== 'undefined' && dataList.destination === '-') {
+            if (this.coc7Config.setupPoints[dataList.key] !== '') {
+              this.coc7Config.placeable.push(parseInt(this.coc7Config.setupPoints[dataList.key], 10))
+              this.coc7Config.setupPoints[dataList.key] = ''
+              this.coc7Config.placeable.sort().reverse()
+              dataList.okay = true
+            }
+          } else if (typeof this.coc7Config.setupPoints[dataList.key] !== 'undefined' && typeof this.coc7Config.setupPoints[dataList.destination] !== 'undefined') {
+            const temp = (this.coc7Config.setupPoints[dataList.key] === '' ? '' : parseInt(this.coc7Config.setupPoints[dataList.key], 10))
+            this.coc7Config.setupPoints[dataList.key] = (this.coc7Config.setupPoints[dataList.destination] === '' ? '' : parseInt(this.coc7Config.setupPoints[dataList.destination], 10))
+            this.coc7Config.setupPoints[dataList.destination] = temp
             dataList.okay = true
           }
-        } else if (typeof this.object.setupPoints[dataList.key] !== 'undefined' && typeof this.object.setupPoints[dataList.destination] !== 'undefined') {
-          const temp = (this.object.setupPoints[dataList.key] === '' ? '' : parseInt(this.object.setupPoints[dataList.key], 10))
-          this.object.setupPoints[dataList.key] = (this.object.setupPoints[dataList.destination] === '' ? '' : parseInt(this.object.setupPoints[dataList.destination], 10))
-          this.object.setupPoints[dataList.destination] = temp
-          dataList.okay = true
-        }
-        if (dataList.okay) {
-          this.render(true)
-          return
-        }
-      } else if (dataList.type === 'investigatorValue') {
-        dataList.destination = event.target.closest('li').dataset.characteristicKey
-        dataList.okay = false
-        if (typeof dataList.destination !== 'undefined' && this.object.rolledValues[dataList.offset].assigned === false) {
-          let old
-          if (this.object.setupPoints[dataList.destination] !== '') {
-            old = this.object.setupPoints[dataList.destination]
+          if (dataList.okay) {
+            this.render({ force: true })
+            return
           }
-          this.object.setupPoints[dataList.destination] = this.object.rolledValues[dataList.offset].value
-          if (typeof old !== 'undefined') {
-            this.object.rolledValues[dataList.offset].value = old
-          } else {
-            this.object.rolledValues[dataList.offset].assigned = true
+          break
+        case 'investigatorValue':
+          dataList.destination = event.target.closest('.drop-location').dataset.characteristicKey
+          dataList.okay = false
+          if (typeof dataList.destination !== 'undefined' && this.coc7Config.rolledValues[dataList.offset].assigned === false) {
+            let old
+            if (this.coc7Config.setupPoints[dataList.destination] !== '') {
+              old = this.coc7Config.setupPoints[dataList.destination]
+            }
+            this.coc7Config.setupPoints[dataList.destination] = this.coc7Config.rolledValues[dataList.offset].value
+            if (typeof old !== 'undefined') {
+              this.coc7Config.rolledValues[dataList.offset].value = old
+            } else {
+              this.coc7Config.rolledValues[dataList.offset].assigned = true
+            }
+            dataList.okay = true
           }
-          dataList.okay = true
-        }
-        if (dataList.okay) {
-          this.render(true)
-          return
-        }
+          if (dataList.okay) {
+            this.render({ force: true })
+            return
+          }
+          break
       }
     } catch (err) {
     }
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
-    if ([this.pageList.PAGE_ARCHETYPE_SKILLS, this.pageList.PAGE_OCCUPATION_SKILLS].includes(this.object.step)) {
+    if ([CoC7InvestigatorWizard.PageList.PAGE_ARCHETYPE_SKILLS, CoC7InvestigatorWizard.PageList.PAGE_OCCUPATION_SKILLS].includes(this.coc7Config.step)) {
       for (const item of dataList) {
         if (item.type === 'skill') {
           this.addItemToList(item)
-          this.render(true)
+          this.render({ force: true })
         }
       }
     }
   }
 
-  _onClickSkillSpecial (event) {
+  /**
+   * Remove picked (any) skill
+   * @param {Event} event
+   */
+  async _onClickDeleteSkill (event) {
     event.stopPropagation()
-  }
-
-  _onClickRemoveSkill (event) {
-    event.stopPropagation()
-    const key = event.currentTarget?.parentNode?.dataset?.key
-    const index = event.currentTarget?.parentNode?.dataset?.index
-    if (typeof this.object.skillItems[key]?.rows[index] !== 'undefined') {
-      this.object.skillItems[key].rows.splice(index, index)
-      this.render(true)
+    const key = event.currentTarget?.closest('.toggle')?.dataset?.key
+    const index = event.currentTarget?.closest('.toggle')?.dataset?.index
+    if (typeof this.coc7Config.skillItems[key]?.rows[index] !== 'undefined') {
+      this.coc7Config.skillItems[key].rows.splice(index, 1)
+      this.render({ force: true })
     }
   }
 
+  /**
+   * Toggle skill and refresh
+   * @param {Event} event
+   */
   async _onToggleSkill (event) {
     const key = event.currentTarget?.dataset?.key
     const index = event.currentTarget?.dataset?.index
     const toggleKey = event.currentTarget?.dataset?.toggleKey
-    if (typeof this.object.skillItems[key]?.rows[index] !== 'undefined') {
-      this.object.skillItems[key].rows[index][toggleKey] = !this.object.skillItems[key].rows[index][toggleKey]
-      this.render(true)
+    if (typeof this.coc7Config.skillItems[key]?.rows[index] !== 'undefined') {
+      this.coc7Config.skillItems[key].rows[index][toggleKey] = !this.coc7Config.skillItems[key].rows[index][toggleKey]
+      this.render({ force: true })
     }
   }
 
+  /**
+   * Pick Skill
+   * @param {Event} event
+   */
   async _onClickPickSkill (event) {
     const key = event.currentTarget?.dataset?.key
     const index = event.currentTarget?.dataset?.index
     const toggleKey = event.currentTarget?.dataset?.toggleKey
-    if (typeof this.object.skillItems[key] !== 'undefined') {
+    if (typeof this.coc7Config.skillItems[key] !== 'undefined') {
       if (index > -1) {
-        this.object.skillItems[key].rows[index][toggleKey] = false
-        this.object.skillItems[key].rows[index].selected = false
-        this.render(true)
+        this.coc7Config.skillItems[key].rows[index][toggleKey] = false
+        this.coc7Config.skillItems[key].rows[index].selected = false
       }
       let skillList = []
-      const group = game.system.api.cocid.guessGroupFromKey(key)
+      const group = game.CoC7.cocid.guessGroupFromKey(key)
       if (group) {
-        skillList = (await game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
+        skillList = (await game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
           return !(item.system.properties?.special && !!(item.system.properties?.requiresname || item.system.properties?.picknameonly))
         })
         if (skillList.length > 1) {
           skillList.sort(CoC7Utilities.sortByNameKey)
         }
       }
-      const skillData = await SkillSpecializationSelectDialog.create({
+      const skillData = await CoC7SkillSpecializationSelectDialog.create({
         skills: skillList,
-        allowCustom: (this.object.skillItems[key].item.system.properties?.requiresname ?? false),
+        allowCustom: (this.coc7Config.skillItems[key].item.system.properties?.requiresname ?? false),
         fixedBaseValue: true,
-        specializationName: this.object.skillItems[key].item.system.specialization,
-        label: this.object.skillItems[key].item.name
+        specializationName: this.coc7Config.skillItems[key].item.system.specialization,
+        label: this.coc7Config.skillItems[key].item.name
       })
       if (index > -1) {
         if (skillData.selected !== '') {
-          this.object.skillItems[key].rows[index].selected = skillList.find(i => i.id === skillData.selected)
-          this.object.skillItems[key].rows[index][toggleKey] = true
+          this.coc7Config.skillItems[key].rows[index].selected = skillList.find(i => i.id === skillData.selected)
+          this.coc7Config.skillItems[key].rows[index][toggleKey] = true
         } else if (skillData.name !== '') {
-          this.object.skillItems[key].rows[index].selected = skillData.name
-          this.object.skillItems[key].rows[index][toggleKey] = true
+          this.coc7Config.skillItems[key].rows[index].selected = skillData.name
+          this.coc7Config.skillItems[key].rows[index][toggleKey] = true
         }
       } else {
         let selected = false
+        let newCoCId = false
         if (skillData.selected !== '') {
           selected = skillList.find(i => i.id === skillData.selected)
         } else if (skillData.name !== '') {
           selected = skillData.name
+          newCoCId = true
         }
-        this.object.skillItems[key].rows.push({
+        this.coc7Config.skillItems[key].rows.push({
           isOccupationDefault: false,
           inOccupationGroup: false,
           isArchetypeDefault: false,
@@ -1254,506 +1910,128 @@ export class CoC7InvestigatorWizard extends FormApplication {
           archetypePoints: '',
           experiencePoints: '',
           personalPoints: '',
-          selected
+          selected,
+          newCoCId
         })
       }
-      this.render(true)
+      this.render({ force: true })
     }
   }
 
-  async _onChangeSkillPoints (event) {
-    const input = $(event.currentTarget)
-    const adjustment = input.data('adjustment')
-    const li = input.closest('li')
-    const key = li.data('key')
-    const index = li.data('index')
-    if (typeof this.object.skillItems[key]?.rows[index][adjustment] !== 'undefined') {
-      this.object.skillItems[key].rows[index][adjustment] = input.val()
-    }
-    this.render(true)
-  }
-
-  async _onChangeBackstoryText (event) {
-    const textarea = $(event.currentTarget)
-    const index = textarea.data('index')
-    if (typeof this.object.bioSections[index] !== 'undefined') {
-      this.object.bioSections[index].value = textarea.val()
-    }
-  }
-
-  async _onRollBackstory (event) {
-    const button = $(event.currentTarget)
-    const index = button.data('index')
-    const key = button.data('key')
-    if (typeof this.object.bioSections[index] !== 'undefined') {
-      const rolltable = await game.system.api.cocid.fromCoCID(key)
-      if (rolltable.length === 1) {
-        const tableResults = await rolltable[0].roll()
-        for (const tableResult of tableResults.results) {
-          if (tableResult.type === CONST.TABLE_RESULT_TYPES.TEXT) {
-            this.object.bioSections[index].value = (this.object.bioSections[index].value + '\n' + tableResult.text.trim()).trim()
-          }
-        }
-      }
-    }
-    this.render(true)
-  }
-
-  async _onResetBackstory (event) {
-    const button = $(event.currentTarget)
-    const index = button.data('index')
-    if (typeof this.object.bioSections[index] !== 'undefined') {
-      this.object.bioSections[index].value = ''
-    }
-    this.render(true)
-  }
-
-  async _onRollLuck (event) {
-    const setup = await this.getCacheItemByCoCID(this.object.setup)
-    if (setup) {
-      const die = await new Roll(setup.system.characteristics.rolls.luck.toString()).evaluate()
-      this.object.setupModifiers.luck = [die.total]
-      const html = await renderTemplate(Roll.CHAT_TEMPLATE, {
-        formula: game.i18n.localize('CoC7.InvestigatorWizard.RollTwiceForLuck') + ': ' + setup.system.characteristics.rolls.luck.toString(),
-        tooltip: await die.getTooltip(),
-        total: die.total
-      })
-      ChatMessage.create({
-        user: game.user.id,
-        speaker: {
-          alias: game.user.name
-        },
-        content: html,
-        whisper: ChatMessage.getWhisperRecipients('GM')
-      })
-      this.render(true)
-    }
-  }
-
-  async _onRollEdu (event) {
-    event.preventDefault()
-    if (typeof this.object.requiresAgeAdjustments.edu !== 'undefined') {
-      if (!this.object.requiresAgeAdjustments.edu.rolled && this.object.requiresAgeAdjustments.edu.total) {
-        let value = parseInt(this.object.setupPoints.edu, 10)
-        const message = []
-        for (let rolls = this.object.requiresAgeAdjustments.edu.total; rolls > 0; rolls--) {
-          const die = await new Roll('1d100').evaluate()
-          if (die.total > value) {
-            const augmentDie = await new Roll('1d10').evaluate()
-            message.push(`<span class="upgrade-success">${game.i18n.format(
-              'CoC7.DevSuccess',
-              {
-                item: game.i18n.localize('CHARAC.Education'),
-                die: die.total,
-                score: value,
-                augment: augmentDie.total
-              }
-            )}</span><br>`)
-            value = value + parseInt(augmentDie.total, 10)
-          } else {
-            message.push(`<span class="upgrade-failed">${game.i18n.format(
-              'CoC7.DevFailure',
-              {
-                item: game.i18n.localize('CHARAC.Education'),
-                die: die.total,
-                score: value
-              }
-            )}</span><br>`)
-          }
-        }
-        ChatMessage.create({
-          flavor: game.i18n.localize('CoC7.RollAll4Dev'),
-          user: game.user.id,
-          speaker: {
-            alias: game.user.name
-          },
-          content: message.join(''),
-          whisper: ChatMessage.getWhisperRecipients('GM')
-        })
-        this.object.setupModifiers.edu = value - parseInt(this.object.setupPoints.edu, 10)
-        this.object.requiresAgeAdjustments.edu.rolled = true
-        this.render(true)
-      }
-    }
-  }
-
-  async _onRollAll (event) {
-    event.preventDefault()
-    const rolls = []
-    for (const key of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu', 'luck']) {
-      const result = await this.rollCharacteristic(key)
-      if (result !== false) {
-        rolls.push(result)
-      }
-    }
-    this.rollMessage(rolls)
-    this.render(true)
-  }
-
-  async _onRollChoose (event) {
-    event.preventDefault()
-    if (this.object.setup !== '') {
-      const setup = await this.getCacheItemByCoCID(this.object.setup)
-      if (typeof setup !== 'undefined') {
-        const rollFormulas = {}
-        for (const key of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu']) {
-          rollFormulas[key] = setup.system.characteristics.rolls[key]
-        }
-        if (this.object.archetype !== '') {
-          const archetype = await this.getCacheItemByCoCID(this.object.archetype)
-          if (typeof archetype !== 'undefined') {
-            if (this.object.coreCharacteristic !== '') {
-              if (archetype.system.coreCharacteristicsFormula.enabled) {
-                rollFormulas[this.object.coreCharacteristic] = archetype.system.coreCharacteristicsFormula.value
-              }
-            }
-          }
-        }
-        this.object.rolledValues = []
-        const html = []
-        for (const key in rollFormulas) {
-          const roll = new Roll(rollFormulas[key].toString())
-          await roll.evaluate()
-          this.object.rolledValues.push({
-            value: roll.total,
-            assigned: false
-          })
-          html.push(await renderTemplate(Roll.CHAT_TEMPLATE, {
-            formula: rollFormulas[key].toString(),
-            tooltip: await roll.getTooltip(),
-            total: roll.total
-          }))
-        }
-        ChatMessage.create({
-          user: game.user.id,
-          speaker: {
-            alias: game.user.name
-          },
-          content: html.join('<div>&nbsp;</div>'),
-          whisper: ChatMessage.getWhisperRecipients('GM')
-        })
-      }
-    }
-    this.render(true)
-  }
-
-  async _onIncreaseCharacteristic10 (event) {
-    event.preventDefault()
-    const li = event.currentTarget.closest('.item')
-    if (typeof li.dataset.offset !== 'undefined' && typeof li.dataset.min !== 'undefined' && typeof li.dataset.max !== 'undefined') {
-      this.modifyOffset(li.dataset.offset, 10, li.dataset.min, li.dataset.max)
-    } else if (typeof li.dataset.key !== 'undefined') {
-      this.modifyCharacteristic(li.dataset.key, 10)
-    }
-    this.render(true)
-  }
-
-  async _onIncreaseCharacteristic (event) {
-    event.preventDefault()
-    const li = event.currentTarget.closest('.item')
-    if (typeof li.dataset.offset !== 'undefined' && typeof li.dataset.min !== 'undefined' && typeof li.dataset.max !== 'undefined') {
-      this.modifyOffset(li.dataset.offset, 1, li.dataset.min, li.dataset.max)
-    } else if (typeof li.dataset.key !== 'undefined') {
-      this.modifyCharacteristic(li.dataset.key, 1)
-    }
-    this.render(true)
-  }
-
-  async _onDecreaseCharacteristic (event) {
-    event.preventDefault()
-    const li = event.currentTarget.closest('.item')
-    if (typeof li.dataset.offset !== 'undefined' && typeof li.dataset.min !== 'undefined' && typeof li.dataset.max !== 'undefined') {
-      this.modifyOffset(li.dataset.offset, -1, li.dataset.min, li.dataset.max)
-    } else if (typeof li.dataset.key !== 'undefined') {
-      this.modifyCharacteristic(li.dataset.key, -1)
-    }
-    this.render(true)
-  }
-
-  _onDecreaseCharacteristic10 (event) {
-    event.preventDefault()
-    const li = event.currentTarget.closest('.item')
-    if (typeof li.dataset.offset !== 'undefined' && typeof li.dataset.min !== 'undefined' && typeof li.dataset.max !== 'undefined') {
-      this.modifyOffset(li.dataset.offset, -10, li.dataset.min, li.dataset.max)
-    } else if (typeof li.dataset.key !== 'undefined') {
-      this.modifyCharacteristic(li.dataset.key, -10)
-    }
-    this.render(true)
-  }
-
-  modifyOffset (key, value, min, max) {
-    this.object.setupModifiers[key] = Math.max(Math.min(parseInt(this.object.setupModifiers[key], 10) + value, parseInt(max, 10)), parseInt(min, 10))
-  }
-
-  modifyCharacteristic (key, value) {
-    const li = this._element[0].querySelector(`li.item[data-key=${key}]`)
-    const input = li?.querySelector('input')
-    if (input) {
-      input.value = Number(input.value) + value
-      this.object.setupPoints[key] = Number(input.value)
-    }
-  }
-
-  async _onRollCharacteristic (event) {
-    event.preventDefault()
-    const li = event.currentTarget.closest('.item')
-    const characKey = li.dataset.key
-    const result = await this.rollCharacteristic(characKey)
-    if (result !== false) {
-      this.rollMessage([result])
-    }
-    this.render(true)
-  }
-
-  async rollCharacteristic (key) {
-    const li = $(`#investigator-wizard-application li.item[data-key=${key}]`)
-    const input = li.find('input')
-    const formula = li.data('roll')
-    if (input && formula) {
-      if (this.object.rerollsEnabled || this.object.setupPoints[key] === '') {
-        const roll = new Roll(formula.toString())
-        await roll.evaluate()
-        input.val(roll.total)
-        this.object.setupPoints[key] = Number(roll.total)
-        return [key, formula.toString(), roll]
-      }
-    }
-    return false
-  }
-
-  /** @override
-   * A subclass of the FormApplication must implement the _onChangeSubmit method.
+  /**
+   * Get next/back page number
+   * @param {int} direction
+   * @returns {int}
    */
-  _onChangeSubmit (event) {
-    this._onSubmit(event)
-  }
-
-  _onChangeSaveCharacteristic (event) {
-    const obj = $(event.currentTarget)
-    const name = obj.prop('name')
-    if (typeof this.object.setupPoints[name] !== 'undefined') {
-      this.object.setupPoints[name] = obj.val()
-      let empties = false
-      let total = 0
-      for (const key in this.object.setupPoints) {
-        if (this.object.setupPoints[key] !== '') {
-          if (key !== 'luck') {
-            total += parseInt(this.object.setupPoints[key], 10)
-          }
-        } else {
-          empties = true
-        }
-      }
-      const objTotal = obj.closest('ol.item-list').find('span.total')
-      const max = parseInt(objTotal.siblings('span.value').text(), 10)
-      objTotal.text(total)
-      if (total === max && !empties) {
-        if (obj.closest('form').find('button.submit-button[data-button=next]').length === 0) {
-          this.render(true)
-        }
-      } else {
-        if (obj.closest('form').find('button.submit-button[data-button=next]').length > 0) {
-          this.render(true)
-        }
-      }
-    }
-  }
-
   getPageNumber (direction) {
     const pageOrder = this.pageOrder
-    const key = parseInt(Object.keys(pageOrder).find(key => pageOrder[key] === this.object.step), 10) + direction
+    const key = parseInt(Object.keys(pageOrder).find(key => pageOrder[key] === this.coc7Config.step), 10) + direction
     return pageOrder[key]
   }
 
-  /** @override
-   * A subclass of the FormApplication must implement the _updateObject method.
+  /**
+   * Submit the configuration form.
+   * @param {SubmitEvent} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
+   * @returns {Promise<void>}
    */
-  async _updateObject (event, formData) {
-    if (['back', 'next'].includes(event.submitter?.dataset.button)) {
-      if (event.submitter.className.indexOf('currently-submitting') > -1) {
+  static async #onSubmit (event, form, formData) {
+    if (['back', 'next'].includes(event.submitter?.dataset.action)) {
+      if (event.submitter.classList.contains('currently-submitting')) {
         return
       }
-      event.submitter.className = event.submitter.className + ' currently-submitting'
+      event.submitter.classList.add('currently-submitting')
     }
-    if (typeof formData['default-setup'] !== 'undefined' && typeof formData['world-era'] !== 'undefined' && typeof formData['default-ownership'] !== 'undefined') {
-      if (this.object.defaultSetup !== formData['default-setup']) {
-        this.object.defaultSetup = formData['default-setup']
-        game.settings.set('CoC7', 'InvestigatorWizardSetup', this.object.defaultSetup)
-        this.object.setup = this.object.defaultSetup
-        this.clearSetupPoints()
-        await this.setSkillLists()
-      }
-      if (this.object.defaultOwnership !== formData['default-ownership']) {
-        this.object.defaultOwnership = formData['default-ownership']
-        game.settings.set('CoC7', 'InvestigatorWizardOwnership', this.object.defaultOwnership)
-      }
-      if (this.object.defaultEra !== formData['world-era']) {
-        const obj = $(this.element.find('form'))
-        const started = Date.now()
-        obj.find('.dialog-buttons:first').hide()
-        obj.find('.scrollsection:first').hide()
-        obj.find('.erachange:first').show()
-        this.object.defaultEra = formData['world-era']
-        await game.settings.set('CoC7', 'worldEra', this.object.defaultEra)
-        this.object.cacheCoCID = await CoC7InvestigatorWizard.loadCacheItemByCoCID()
-        // To prevent flashing show message for at least 500 ms
-        const buffer = 500 - (Date.now() - started)
-        // Don't bother if less than 10ms remaining
-        if (buffer > 10) {
-          await new Promise(resolve => setTimeout(resolve, buffer))
-        }
-      }
-      if ((typeof formData['characteristics-method'] !== 'undefined')) {
-        const type = Number(formData['characteristics-method'])
-        if (type === this.characteristicsMethods.METHOD_DEFAULT) {
-          this.object.enforcePointBuy = false
-          this.object.chooseRolledValues = false
-          this.object.quickFireValues = []
-        } else if (type === this.characteristicsMethods.METHOD_POINTS) {
-          this.object.enforcePointBuy = true
-          this.object.chooseRolledValues = false
-          this.object.quickFireValues = []
-        } else if (type === this.characteristicsMethods.METHOD_VALUES) {
-          this.object.enforcePointBuy = false
-          this.object.chooseRolledValues = false
-          if (game.settings.get('CoC7', 'pulpRuleArchetype')) {
-            this.object.quickFireValues = [90, 80, 70, 60, 60, 50, 50, 40]
-          } else {
-            this.object.quickFireValues = [80, 70, 60, 60, 50, 50, 50, 40]
-          }
-        } else if (type === this.characteristicsMethods.METHOD_CHOOSE) {
-          this.object.enforcePointBuy = false
-          this.object.chooseRolledValues = true
-          this.object.quickFireValues = []
-        }
-        game.settings.set('CoC7', 'InvestigatorWizardPointBuy', this.object.enforcePointBuy)
-        game.settings.set('CoC7', 'InvestigatorWizardQuickFire', this.object.quickFireValues)
-        game.settings.set('CoC7', 'InvestigatorWizardChooseValues', this.object.chooseRolledValues)
-      }
-      this.object.rerollsEnabled = (typeof formData['rerolls-enabled'] === 'string')
-      game.settings.set('CoC7', 'InvestigatorWizardRerolls', this.object.rerollsEnabled)
-      for (let i = 0, im = this.object.quickFireValues.length; i < im; i++) {
-        const num = Number(formData['quick-fire-values-' + i])
-        if (num > 0) {
-          this.object.quickFireValues[i] = num
-        }
-      }
-      this.object.quickFireValues.sort().reverse()
-      this.object.placeable = foundry.utils.duplicate(this.object.quickFireValues)
-      if (typeof formData['default-enabled'] === 'string') {
-        if (this.object.defaultQuantity.toString() === '0') {
-          this.object.defaultQuantity = 1
-          game.settings.set('CoC7', 'InvestigatorWizardQuantity', this.object.defaultQuantity)
-        } else {
-          this.object.defaultQuantity = formData['default-quantity']
-          game.settings.set('CoC7', 'InvestigatorWizardQuantity', this.object.defaultQuantity)
-        }
-      } else if (this.object.defaultQuantity.toString() !== '0') {
-        this.object.defaultQuantity = 0
-        game.settings.set('CoC7', 'InvestigatorWizardQuantity', this.object.defaultQuantity)
-      }
-    } else if (typeof formData['coc-setup'] !== 'undefined') {
-      if (this.object.setup !== formData['coc-setup']) {
-        this.object.setup = formData['coc-setup']
-        this.clearSetupPoints()
-        await this.setSkillLists()
-      }
-    } else if (typeof formData['coc-archetype'] !== 'undefined') {
-      if (this.object.archetype !== formData['coc-archetype']) {
-        this.object.archetype = formData['coc-archetype']
-        this.object.coreCharacteristic = ''
-        this.clearSetupPoints()
-        await this.setSkillLists()
-      }
-    } else if (typeof formData['coc-occupation'] !== 'undefined') {
-      if (this.object.occupation !== formData['coc-occupation']) {
-        this.object.occupation = formData['coc-occupation']
-        await this.setSkillLists()
-      }
-    } else {
-      for (const key in this.object.setupPoints) {
-        if (typeof formData[key] !== 'undefined' && this.object.setupPoints[key] !== formData[key]) {
-          this.object.setupPoints[key] = formData[key]
-        }
-      }
-      if (typeof formData['coc-core-characteristic'] !== 'undefined' && this.object.coreCharacteristic !== formData['coc-core-characteristic']) {
-        this.object.coreCharacteristic = formData['coc-core-characteristic']
-        this.clearSetupPoints()
-        this.object.placeable = foundry.utils.duplicate(this.object.quickFireValues)
-      }
-    }
-    const flatKeys = ['name', 'age', 'residence', 'birthplace', 'language', 'avatar', 'token']
-    for (const key of flatKeys) {
-      if (typeof formData[key] !== 'undefined' && this.object[key] !== formData[key]) {
-        this.object[key] = formData[key]
-        if (key === 'age') {
-          this.getAgeAdjustments()
-        }
-      }
-    }
-    if (event.submitter?.dataset.button === 'back') {
+    if (event.submitter?.dataset.action === 'back') {
       const pageNumber = this.getPageNumber(-1)
       if (typeof pageNumber !== 'undefined') {
-        this.object.step = pageNumber
+        this.coc7Config.step = pageNumber
         // When moving step reset scroll height
-        const obj = this.element.find('.scrollsection')
-        if (obj.length && obj[0].scrollTop) {
-          obj[0].scrollTop = 0
+        const obj = this.element.querySelector('.scroll-section')
+        if (obj && obj.scrollTop) {
+          obj.scrollTop = 0
         }
       }
-    } else if (event.submitter?.dataset.button === 'next') {
-      if (this.object.step === this.pageList.PAGE_CREATE || (this.object.step === this.pageList.PAGE_BACKSTORY && game.user.hasPermission('ACTOR_CREATE'))) {
+    } else if (event.submitter?.dataset.action === 'next') {
+      await this.coc7Config.cacheCoCID
+      if (this.coc7Config.step === CoC7InvestigatorWizard.PageList.PAGE_CREATE || (this.coc7Config.step === CoC7InvestigatorWizard.PageList.PAGE_BACKSTORY && game.user.hasPermission('ACTOR_CREATE'))) {
         this.attemptToCreate()
         return
       } else {
         const pageNumber = this.getPageNumber(1)
         if (typeof pageNumber !== 'undefined') {
-          this.object.step = pageNumber
+          switch (pageNumber) {
+            case CoC7InvestigatorWizard.PageList.PAGE_INVESTIGATOR:
+              {
+                const own = {}
+                for (const key in this.coc7Config.skillItems) {
+                  const skill = this.coc7Config.skillItems[key]
+                  for (let index = 0, im = skill.rows.length; index < im; index++) {
+                    const row = skill.rows[index]
+                    if (!skill.flags.isMultiple || row.selected !== false) {
+                      let item = foundry.utils.duplicate(skill.item)
+                      if (row.selected !== false && typeof row.selected !== 'string') {
+                        item = foundry.utils.duplicate(row.selected)
+                      }
+                      if (item.system.properties.own || key === this.cocidLanguageOwn) {
+                        const regEx = new RegExp('^' + CoC7Utilities.quoteRegExp(game.CoC7.cocid.guessGroupFromDocument(item)))
+                        own[key] = {
+                          name: item.name,
+                          specialization: item.system.specialization,
+                          options: game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: regEx, type: 'i' }),
+                          selected: this.coc7Config.own[key]?.selected ?? '',
+                          value: this.coc7Config.own[key]?.value ?? ''
+                        }
+                      }
+                    }
+                  }
+                }
+                this.coc7Config.own = own
+              }
+              break
+          }
+          this.coc7Config.step = pageNumber
           // When moving step reset scroll height
-          const obj = this.element.find('.scrollsection')
-          if (obj.length && obj[0].scrollTop) {
-            obj[0].scrollTop = 0
+          const obj = this.element.querySelector('.scroll-section')
+          if (obj && obj.scrollTop) {
+            obj.scrollTop = 0
           }
         }
       }
     }
-    this.render(true)
+    this.render({ force: true })
   }
 
+  /**
+   * Attempt to create the character if unable to ACTOR_CREATE trigger a isGM socket request
+   */
   async attemptToCreate () {
-    const actorData = await this.normalizeCharacterData(this.object)
+    const actorData = await this.normalizeCharacterData(this.coc7Config)
     if (game.user.hasPermission('ACTOR_CREATE')) {
       const actor = await CoC7InvestigatorWizard.createCharacter(actorData)
-      actor.sheet.render(true)
+      actor.sheet.render({ force: true })
       this.close()
     } else {
-      const keepers = game.users.filter(u => u.active && u.isGM)
-      if (keepers.length) {
-        actorData.ownership[game.user.id] = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
-        const data = {
-          type: 'character-wizard',
-          listener: keepers[0].id,
-          payload: actorData
-        }
-        game.socket.emit('system.CoC7', data)
-        ui.notifications.info(
-          game.i18n.localize('CoC7.InvestigatorWizard.CreatingInvestigator')
-        )
+      actorData.document.ownership[game.user.id] = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
+      if (CoC7SystemSocket.requestKeeperAction({
+        type: 'characterWizard',
+        payload: actorData
+      })) {
+        ui.notifications.info('CoC7.InvestigatorWizard.CreatingInvestigator', { localize: true })
         this.close()
-      } else {
-        ui.notifications.error(
-          game.i18n.localize('CoC7.ErrorMissingKeeperUser')
-        )
       }
     }
   }
 
+  /**
+   * Convert form object into character data and skill/weapon items
+   * @param {object} data
+   * @returns {object}
+   */
   async normalizeCharacterData (data) {
-    const weaponSkills = {
-      melee: {},
-      rngd: {}
-    }
     const items = []
+    const embeddedItems = []
     for (const key in data.skillItems) {
       const skill = data.skillItems[key]
       for (let index = 0, im = skill.rows.length; index < im; index++) {
@@ -1770,18 +2048,6 @@ export class CoC7InvestigatorWizard extends FormApplication {
           if (row.archetypeToggle) {
             item.system.flags.archetype = true
           }
-          let base = item.system.base
-          if (!Number.isNumeric(base)) {
-            for (const key in data.setupPoints) {
-              const regEx = new RegExp('@' + key, 'i')
-              base = base.replace(regEx, parseInt(data.setupPoints[key], 10) + parseInt(data.setupModifiers[key], 10))
-            }
-          }
-          if (!Number.isNumeric(base)) {
-            base = Math.floor(new CoC7AverageRoll('(' + base + ')')[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true, maximize: true }).total)
-          }
-          item.system.base = base
-          item.system.adjustments = item.system.adjustments ?? {}
           if (Number(row.personalPoints) > 0) {
             item.system.adjustments.personal = parseInt(row.personalPoints, 10)
           }
@@ -1794,49 +2060,49 @@ export class CoC7InvestigatorWizard extends FormApplication {
           if (Number(row.experiencePoints) > 0) {
             item.system.adjustments.experience = parseInt(row.experiencePoints, 10)
           }
-          if (key === this.cocidLanguageOwn) {
-            item.system.skillName = data.language
-            item.name = item.system.specialization + ' (' + item.system.skillName + ')'
-          } else if (typeof row.selected === 'string') {
+          if (item.system.properties.own || key === this.cocidLanguageOwn) {
+            if (data.own[key].selected !== '') {
+              const options = await this.coc7Config.own[key].options
+              const newItem = options.find(doc => doc.flags.CoC7.cocidFlag.id === data.own[key].selected)
+              if (newItem) {
+                const base = item.system.base
+                item = foundry.utils.duplicate(newItem)
+                item.system.base = base
+              }
+            } else {
+              item.system.skillName = data.own[key].value
+              item._id = foundry.utils.randomID()
+              foundry.utils.setProperty(item, 'system.properties.requiresname', false)
+              foundry.utils.setProperty(item, 'system.properties.picknameonly', false)
+              item.name = item.system.specialization + ' (' + item.system.skillName + ')'
+              row.newCoCId = true
+            }
+            foundry.utils.setProperty(item, 'system.properties.own', true)
+          } else if (row.selected !== false) {
             item.system.skillName = row.selected
             item._id = foundry.utils.randomID()
+            foundry.utils.setProperty(item, 'system.properties.requiresname', false)
+            foundry.utils.setProperty(item, 'system.properties.picknameonly', false)
             item.name = item.system.specialization + ' (' + item.system.skillName + ')'
-            if (typeof item.flags.CoC7?.cocidFlag?.id !== 'undefined') {
-              item.flags.CoC7.cocidFlag.id = game.system.api.cocid.guessId(item)
-            }
+            row.newCoCId = true
           }
-          if (item.system.properties?.fighting) {
-            weaponSkills.melee[item.name] = item._id
-            weaponSkills.melee[item.system.skillName] = item._id
-          } else if (item.system.properties?.firearm || item.system.properties?.ranged) {
-            weaponSkills.rngd[item.name] = item._id
-            weaponSkills.rngd[item.system.skillName] = item._id
+          if (row.newCoCId) {
+            item.flags.CoC7.cocidFlag.id = 'i.skill.' + CoC7Utilities.toKebabCase(item.name)
           }
-          items.push(item)
+          embeddedItems.push(item)
         }
       }
     }
     for (const sourceItem of data.investigatorItems) {
       const item = foundry.utils.duplicate(sourceItem)
-      if (item.system.properties.melee) {
-        if (typeof weaponSkills.melee[item.system.skill.main.name] !== 'undefined') {
-          item.system.skill.main.id = weaponSkills.melee[item.system.skill.main.name]
-        }
-        if (typeof weaponSkills.melee[item.system.skill.alternativ.name] !== 'undefined') {
-          item.system.skill.alternativ.id = weaponSkills.melee[item.system.skill.alternativ.name]
-        }
-      } else if (item.system.properties.rngd) {
-        if (typeof weaponSkills.rngd[item.system.skill.main.name] !== 'undefined') {
-          item.system.skill.main.id = weaponSkills.rngd[item.system.skill.main.name]
-        }
-        if (typeof weaponSkills.rngd[item.system.skill.alternativ.name] !== 'undefined') {
-          item.system.skill.alternativ.id = weaponSkills.rngd[item.system.skill.alternativ.name]
-        }
+      if (item.type === 'weapon') {
+        embeddedItems.push(item)
+      } else {
+        items.push(item)
       }
-      items.push(item)
     }
     let monetary = {}
-    const setup = await this.getCacheItemByCoCID(this.object.setup)
+    const setup = await this.getCacheItemByCoCID(this.coc7Config.setup)
     if (setup) {
       monetary = foundry.utils.duplicate(setup.system.monetary)
     }
@@ -1846,23 +2112,23 @@ export class CoC7InvestigatorWizard extends FormApplication {
       archetype: 0
     }
     if (data.archetype !== '') {
-      const archetype = await game.system.api.cocid.fromCoCID(data.archetype)
+      const archetype = await game.CoC7.cocid.fromCoCID(data.archetype)
       if (archetype.length === 1) {
         items.push(archetype[0].toObject())
         development.archetype = archetype[0].system.bonusPoints
       }
     }
     if (data.occupation !== '') {
-      const occupation = await game.system.api.cocid.fromCoCID(data.occupation)
+      const occupation = await game.CoC7.cocid.fromCoCID(data.occupation)
       if (occupation.length === 1) {
         items.push(occupation[0].toObject())
         const options = []
-        for (const [key, carac] of Object.entries(occupation[0].system.occupationSkillPoints)) {
-          if (carac.selected) {
-            if (carac.optional) {
-              options.push(carac.multiplier * (parseInt(data.setupPoints[key], 10) + parseInt(data.setupModifiers[key], 10)))
+        for (const [key, value] of Object.entries(occupation[0].system.occupationSkillPoints)) {
+          if (value.selected) {
+            if (value.optional) {
+              options.push(value.multiplier * (parseInt(data.setupPoints[key], 10) + parseInt(data.setupModifiers[key], 10)))
             } else {
-              development.occupation += carac.multiplier * (parseInt(data.setupPoints[key], 10) + parseInt(data.setupModifiers[key], 10))
+              development.occupation += value.multiplier * (parseInt(data.setupPoints[key], 10) + parseInt(data.setupModifiers[key], 10))
             }
           }
         }
@@ -1873,7 +2139,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
     }
     const biography = []
     const backstory = []
-    if (game.settings.get('CoC7', 'oneBlockBackstory')) {
+    if (game.settings.get(FOLDER_ID, 'oneBlockBackstory')) {
       for (let index = 0, im = data.bioSections.length; index < im; index++) {
         backstory.push('<h3>' + game.i18n.localize(data.bioSections[index].name) + '</h3>' + '<p>' + data.bioSections[index].value.split(/[\r\n]+/).join('</p><p>') + '</p>')
       }
@@ -1886,123 +2152,132 @@ export class CoC7InvestigatorWizard extends FormApplication {
       }
     }
     const actorData = {
-      type: 'character',
-      name: data.name,
-      img: data.avatar,
-      system: {
-        characteristics: {
-          str: {
-            value: parseInt(data.setupPoints.str, 10) + parseInt(data.setupModifiers.str, 10)
-          },
-          con: {
-            value: parseInt(data.setupPoints.con, 10) + parseInt(data.setupModifiers.con, 10)
-          },
-          siz: {
-            value: parseInt(data.setupPoints.siz, 10) + parseInt(data.setupModifiers.siz, 10)
-          },
-          dex: {
-            value: parseInt(data.setupPoints.dex, 10) + parseInt(data.setupModifiers.dex, 10)
-          },
-          app: {
-            value: parseInt(data.setupPoints.app, 10) + parseInt(data.setupModifiers.app, 10)
-          },
-          int: {
-            value: parseInt(data.setupPoints.int, 10) + parseInt(data.setupModifiers.int, 10)
-          },
-          pow: {
-            value: parseInt(data.setupPoints.pow, 10) + parseInt(data.setupModifiers.pow, 10)
-          },
-          edu: {
-            value: parseInt(data.setupPoints.edu, 10) + parseInt(data.setupModifiers.edu, 10)
-          }
-        },
-        attribs: {
-          lck: {
-            value: Math.max(parseInt(data.setupPoints.luck, 10), parseInt(data.setupModifiers.luck, 10))
-          },
-          san: {
-            value: parseInt(data.setupPoints.pow, 10) + parseInt(data.setupModifiers.pow, 10)
-          }
-        },
-        infos: {
-          age: data.age,
-          residence: data.residence,
-          birthplace: data.birthplace
-        },
-        development,
-        biography,
-        backstory: backstory.join('<p></p>'),
-        monetary
-      },
-      prototypeToken: {
+      document: {
+        type: 'character',
         name: data.name,
-        actorLink: true,
-        texture: {
-          src: data.token
+        img: data.avatar,
+        system: {
+          characteristics: {
+            str: {
+              value: parseInt(data.setupPoints.str, 10) + parseInt(data.setupModifiers.str, 10)
+            },
+            con: {
+              value: parseInt(data.setupPoints.con, 10) + parseInt(data.setupModifiers.con, 10)
+            },
+            siz: {
+              value: parseInt(data.setupPoints.siz, 10) + parseInt(data.setupModifiers.siz, 10)
+            },
+            dex: {
+              value: parseInt(data.setupPoints.dex, 10) + parseInt(data.setupModifiers.dex, 10)
+            },
+            app: {
+              value: parseInt(data.setupPoints.app, 10) + parseInt(data.setupModifiers.app, 10)
+            },
+            int: {
+              value: parseInt(data.setupPoints.int, 10) + parseInt(data.setupModifiers.int, 10)
+            },
+            pow: {
+              value: parseInt(data.setupPoints.pow, 10) + parseInt(data.setupModifiers.pow, 10)
+            },
+            edu: {
+              value: parseInt(data.setupPoints.edu, 10) + parseInt(data.setupModifiers.edu, 10)
+            }
+          },
+          attribs: {
+            lck: {
+              value: Math.max(parseInt(data.setupPoints.luck, 10), parseInt(data.setupModifiers.luck, 10))
+            },
+            san: {
+            }
+          },
+          infos: {
+            age: data.age,
+            residence: data.residence,
+            birthplace: data.birthplace
+          },
+          development,
+          biography,
+          backstory: backstory.join('<p></p>'),
+          monetary
         },
-        disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
-        sight: {
-          enabled: true
+        prototypeToken: {
+          name: data.name,
+          actorLink: true,
+          texture: {
+            src: data.token
+          },
+          disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+          sight: {
+            enabled: true
+          }
+        },
+        items,
+        ownership: {
+          default: parseInt(data.defaultOwnership, 10)
         }
       },
-      items,
-      ownership: {
-        default: parseInt(data.defaultOwnership, 10)
-      }
+      embeddedItems
     }
+    actorData.document.system.attribs.san.value = actorData.document.system.characteristics.pow.value
+    actorData.document.system.attribs.san.dailyLimit = Math.floor(actorData.document.system.characteristics.pow.value / 5)
     return actorData
   }
 
+  /**
+   * Attempt to create Actor for player
+   * @param {object} actorData
+   */
   static async createCharacterFromData (actorData) {
     const actor = await CoC7InvestigatorWizard.createCharacter(actorData)
-    const functionId = Hooks.on('renderActorSheet', (app, html, data) => {
-      if (app.object.id === actor.id) {
+    const functionId = Hooks.on('renderActorSheetV2', (app, html, data) => {
+      if (app.document.id === actor.id) {
         game.socket.emit('system.CoC7', {
           type: 'open-character',
-          listener: Object.keys(actorData.ownership).find(k => k !== 'default'),
+          listener: Object.keys(actorData.document.ownership).find(k => k !== 'default'),
           payload: actor.id
         })
-        Hooks.off('renderActorSheet', functionId)
+        Hooks.off('renderActorSheetV2', functionId)
       }
     })
-    actor.sheet.render(true)
+    actor.sheet.render({ force: true })
   }
 
+  /**
+   * Create Actor
+   * @param {object} actorData
+   * @returns {Document}
+   */
   static async createCharacter (actorData) {
-    const actor = await Actor.create(actorData)
-    await actor.update({
-      'system.attribs.hp.value': actor.rawHpMax,
-      'system.attribs.mp.value': actor.rawMpMax,
-      'system.attribs.san.max': actor.rawMpMax
-    })
-    await actor.resetDailySanity()
+    const actor = await Actor.create(actorData.document)
+    await actor.createEmbeddedDocuments('Item', actorData.embeddedItems)
     return actor
   }
 
   /**
    * create it's the default way to create the CoC7CharacterWizard
+   * @param {object} options
    */
   static async create (options = {}) {
     // Attempt to fix bad setting
-    if (game.settings.get('CoC7', 'InvestigatorWizardChooseValues') !== true && game.settings.get('CoC7', 'InvestigatorWizardChooseValues') !== false) {
-      await game.settings.set('CoC7', 'InvestigatorWizardChooseValues', game.settings.get('CoC7', 'InvestigatorWizardChooseValues')[0] ?? false)
+    if (game.settings.get(FOLDER_ID, 'InvestigatorWizardChooseValues') !== true && game.settings.get(FOLDER_ID, 'InvestigatorWizardChooseValues') !== false) {
+      await game.settings.set(FOLDER_ID, 'InvestigatorWizardChooseValues', game.settings.get(FOLDER_ID, 'InvestigatorWizardChooseValues')[0] ?? false)
     }
-    // Try and prerequst as many CoCIDs due to the way they have to be loaded
+    // Try and pre-request as many CoCIDs due to the way they have to be loaded
     options = foundry.utils.mergeObject({
       step: 0,
-      defaultSetup: game.settings.get('CoC7', 'InvestigatorWizardSetup'),
-      defaultQuantity: game.settings.get('CoC7', 'InvestigatorWizardQuantity'),
-      defaultOwnership: game.settings.get('CoC7', 'InvestigatorWizardOwnership'),
-      defaultEra: game.settings.get('CoC7', 'worldEra'),
-      rerollsEnabled: game.settings.get('CoC7', 'InvestigatorWizardRerolls'),
-      enforcePointBuy: game.settings.get('CoC7', 'InvestigatorWizardPointBuy'),
-      quickFireValues: game.settings.get('CoC7', 'InvestigatorWizardQuickFire'),
-      chooseRolledValues: game.settings.get('CoC7', 'InvestigatorWizardChooseValues'),
-      placeable: foundry.utils.duplicate(game.settings.get('CoC7', 'InvestigatorWizardQuickFire')),
+      defaultSetup: game.settings.get(FOLDER_ID, 'InvestigatorWizardSetup'),
+      defaultQuantity: game.settings.get(FOLDER_ID, 'InvestigatorWizardQuantity'),
+      defaultOwnership: game.settings.get(FOLDER_ID, 'InvestigatorWizardOwnership'),
+      defaultEra: game.settings.get(FOLDER_ID, 'worldEra'),
+      rerollsEnabled: game.settings.get(FOLDER_ID, 'InvestigatorWizardRerolls'),
+      enforcePointBuy: game.settings.get(FOLDER_ID, 'InvestigatorWizardPointBuy'),
+      quickFireValues: game.settings.get(FOLDER_ID, 'InvestigatorWizardQuickFire'),
+      chooseRolledValues: game.settings.get(FOLDER_ID, 'InvestigatorWizardChooseValues'),
+      placeable: foundry.utils.duplicate(game.settings.get(FOLDER_ID, 'InvestigatorWizardQuickFire')),
       cacheCoCID: CoC7InvestigatorWizard.loadCacheItemByCoCID(),
-      cacheBackstories: game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: /^rt\.\.backstory-/, type: 'rt' }),
+      cacheBackstories: game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: /^rt\.\.backstory-/, type: 'rt' }),
       cacheItems: {},
-      setup: game.settings.get('CoC7', 'InvestigatorWizardSetup'),
+      setup: game.settings.get(FOLDER_ID, 'InvestigatorWizardSetup'),
       skillItems: {},
       occupationGroups: {},
       investigatorItems: [],
@@ -2029,6 +2304,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         luck: 0
       },
       rolledValues: [],
+      parsedValues: {},
       archetype: '',
       coreCharacteristic: '',
       occupation: '',
@@ -2044,10 +2320,10 @@ export class CoC7InvestigatorWizard extends FormApplication {
       requiresAgeAdjustments: false,
       residence: '',
       birthplace: '',
-      language: '',
+      own: {},
       avatar: 'icons/svg/mystery-man.svg',
       token: 'icons/svg/mystery-man.svg'
     }, options)
-    new CoC7InvestigatorWizard(options).render(true)
+    new CoC7InvestigatorWizard({}, {}, options).render({ force: true })
   }
 }

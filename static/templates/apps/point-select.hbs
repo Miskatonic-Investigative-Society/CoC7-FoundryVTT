@@ -1,21 +1,15 @@
-<form id="skill-selection-form" class="coc7 skill-selector">
-    <div class="flexcol-coc7">
-        <div class='flexrow-coc7 header'>{{ localize 'CoC7.SkillTotalOccupation' }} :<div class="points">{{total}}</div></div>
-        <ol class="item-list">
-            {{#each characteristics as |characteristic key|}}
-                {{#if characteristic.selected}}
-                    <li class="item flexrow-coc7 {{#if characteristic.optional}}selectable{{else}}selected{{/if}}" data-key="{{key}}">
-                        <div class="item-name flexrow-coc7">
-                            <h4>{{characteristic.name}} ({{characteristic.value}}x{{characteristic.multiplier}}:{{characteristic.total}})</h4>
-                        </div>
-                    </li>
-                {{/if}}
-            {{/each}}
-        </ol>
-
-        <div class='card-buttons owner-only'>
-            <button class='inactive validate' data-action="validate">{{ localize 'CoC7.Validate' }}</button>
-        </div>
-
-    </div>
-</form>
+<div class="flexcol" style="gap: 0.375rem;">
+  <div class="item-list flexcol">
+    <label style="flex: 0;white-space: nowrap; text-align: center;">{{localize 'CoC7.SkillTotalOccupation'}}: {{total}}</label>
+    {{#each characteristicOptional as |characteristic|}}
+      <div class="flexrow selectable{{#if (eq ../selected characteristic.key)}} selected{{/if}}" style="justify-content: center;" data-key="{{characteristic.key}}">
+        <label style="flex: 0;white-space: nowrap">{{localize characteristic.label}} ({{characteristic.value}}x{{characteristic.multiplier}}:{{characteristic.total}})</label>
+      </div>
+    {{/each}}
+    {{#each characteristicFixed as |characteristic|}}
+      <div class="flexrow selected" style="justify-content: center;" data-key="{{characteristic.key}}">
+        <label style="flex: 0;white-space: nowrap">{{localize characteristic.label}} ({{characteristic.value}}x{{characteristic.multiplier}}:{{characteristic.total}})</label>
+      </div>
+    {{/each}}
+  </div>
+</div>

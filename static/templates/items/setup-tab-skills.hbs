@@ -1,0 +1,23 @@
+<section class="tab skills flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="skills">
+  {{#if tabs.skills}}
+    <fieldset class="flexcol drop-item" style="flex: 1">
+      <legend>{{localize 'CoC7.CommonSkills'}}</legend>
+      <div class="item-list flexcol">
+        {{#if skillListEmpty}}
+          <div class="item flexcol">
+            <label>{{localize 'CoC7.EmptySkillList'}}</label>
+          </div>
+        {{else}}
+          {{#each skills as |item|}}
+            <div class="item flexrow" data-uuid="{{item.uuid}}" data-id="{{item._id}}" data-cocid="{{item.flags.CoC7.cocidFlag.id}}">
+              <div class="summary">{{item.name}} ({{item.system.base}}%)</div>
+              <div class="item-controls">
+                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+              </div>
+            </div>
+          {{/each}}
+        {{/if}}
+      </div>
+    </fieldset>
+  {{/if}}
+</section>

@@ -195,9 +195,6 @@ export default class WebpackConfig {
         if (fs.existsSync(copyFrom = path.join(this.#config.rootFolder, 'static', this.#config.type + '.json'))) {
           copyConfig.push({ from: copyFrom, to: this.#config.type + '.json' })
         }
-        if (fs.existsSync(copyFrom = path.join(this.#config.rootFolder, 'template' + '.json'))) {
-          copyConfig.push({ from: copyFrom, to: 'template' + '.json' })
-        }
         break
     }
     if (fs.existsSync(copyFrom = path.join(this.#config.rootFolder, 'static/assets/'))) {
@@ -293,14 +290,14 @@ export default class WebpackConfig {
       output: {
         clean: this.#config.buildMode === 'production',
         path: path.join(process.cwd(), 'dist'),
-        filename: 'bundle' + '.js'
+        filename: this.#config.type + '.js'
       },
       performance: {
         maxAssetSize: 1200000
       },
       plugins: [
         new MiniCssExtractPlugin({
-          filename: 'coc7g' + '.css',
+          filename: this.#config.type + '.css',
           insert: 'head'
         }),
         new WebpackBar({})

@@ -1,3 +1,4 @@
+_id: 'KgyqcEJZZztYfpEr'
 name: 'Goon'
 type: 'npc'
 img: 'systems/CoC7/assets/icons/cultist.svg'
@@ -56,7 +57,10 @@ items:
     _id: 'PSkJAIU89V7wn2Bb'
     system:
       base: '0'
-      value: '50'
+      adjustments:
+        personal: 50
+      skillName: 'Be a pain'
+      specialization: ''
       properties:
         push: true
   - name: 'Dodge'
@@ -67,7 +71,10 @@ items:
       description:
         value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
       base: '32'
-      value: '32'
+      adjustments:
+        base: 32
+      skillName: 'Dodge'
+      specialization: ''
     flags:
       CoC7:
         cocidFlag:
@@ -82,7 +89,10 @@ items:
       description:
         value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
       base: 25
-      value: 25
+      adjustments:
+        base: 25
+      skillName: 'Brawl'
+      specialization: 'Fighting'
       properties:
         fighting: true
         combat: true
@@ -101,7 +111,10 @@ items:
       description:
         value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
       base: 25
-      value: 25
+      adjustments:
+        base: 25
+      skillName: 'Rifle/Shotgun'
+      specialization: 'Firearms'
       properties:
         firearm: true
         combat: true
@@ -120,7 +133,10 @@ items:
       description:
         value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
       base: 0
-      value: 0
+      adjustments:
+        base: 0
+      skillName: 'English'
+      specialization: 'Language'
       properties:
         push: true
         special: true
@@ -138,7 +154,10 @@ items:
     _id: 'uPgX46VUlJXStTpn'
     system:
       base: '0'
-      value: '95'
+      adjustments:
+        personal: 95
+      skillName: 'Receive orders'
+      specialization: ''
       properties:
         push: true
   - name: 'Try hard'
@@ -147,7 +166,10 @@ items:
     _id: 'UoYy6krp3cyOCqSk'
     system:
       base: '0'
-      value: '10'
+      adjustments:
+        personal: 10
+      skillName: 'Try hard'
+      specialization: ''
       properties:
         push: true
   - name: 'Club'
@@ -161,7 +183,7 @@ items:
         normal:
           damage: '1D4'
       properties:
-        melee: true
+        rngd: false
         ahdb: true
         slnt: true
         stun: true
@@ -183,7 +205,7 @@ items:
         normal:
           damage: '1D3'
       properties:
-        melee: true
+        rngd: false
         addb: true
     flags:
       CoC7:
@@ -214,7 +236,6 @@ items:
           lang: en
           priority: 0
     _id: 'Hhs2rs3HsTO3opFQ'
-_id: 'KgyqcEJZZztYfpEr'
 flags:
   CoC7:
     cocidFlag:
@@ -306,7 +327,10 @@ items:
           priority: 0
     _id: 'QGfaG02IPLjpBpJL'
     system:
-      value: 45
+      adjustments:
+        personal: 45
+      skillName: 'Bark orders'
+      specialization: ''
       properties:
         push: true
   - name: 'Be a pain'
@@ -320,7 +344,10 @@ items:
           priority: 0
     _id: 'KyVm9jlTiIu9vNVv'
     system:
-      value: 0
+      adjustments:
+        personal: 0
+      skillName: 'Be a pain'
+      specialization: ''
       properties:
         push: true
   - name: 'Dodge'
@@ -331,7 +358,10 @@ items:
       description:
         value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
       base: '25'
-      value: '25'
+      adjustments:
+        personal: 25
+      skillName: 'Dodge'
+      specialization: ''
     flags:
       CoC7:
         cocidFlag:
@@ -346,7 +376,10 @@ items:
       description:
         value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
       base: 25
-      value: 25
+      adjustments:
+        personal: 25
+      skillName: 'Brawl'
+      specialization: 'Fighting'
       properties:
         fighting: true
         combat: true
@@ -365,7 +398,10 @@ items:
       description:
         value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
       base: 25
-      value: 25
+      adjustments:
+        personal: 25
+      skillName: 'Rifle/Shotgun'
+      specialization: 'Firearms'
       properties:
         firearm: true
         combat: true
@@ -384,7 +420,10 @@ items:
       description:
         value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
       base: 50
-      value: 50
+      adjustments:
+        personal: 50
+      skillName: 'English'
+      specialization: 'Language'
       properties:
         push: true
         special: true
@@ -401,7 +440,10 @@ items:
     img: 'systems/CoC7/assets/icons/skills.svg'
     _id: 'qPH6Yf5B82vN4RHu'
     system:
-      value: 80
+      adjustments:
+        personal: 80
+      skillName: 'Takeover the world'
+      specialization: ''
     flags:
       CoC7:
         cocidFlag:
@@ -413,7 +455,10 @@ items:
     img: 'systems/CoC7/assets/icons/skills.svg'
     _id: 'CxqOOhOKLcEi2hRQ'
     system:
-      value: 75
+      adjustments:
+        personal: 75
+      skillName: 'Torment the PC'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -433,7 +478,7 @@ items:
         normal:
           damage: '1D3'
       properties:
-        melee: true
+        rngd: false
         addb: true
     flags:
       CoC7:
@@ -531,6 +576,9 @@ system:
      value: null
    - title: Traits
      value: null
+  flags:
+    skillListMode: false
+    skillShowUncommon: true
 items:
   - _id: UOuN0gESXPp2HXwH
     name: Accounting
@@ -540,7 +588,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 5
-      value: null
+      adjustments:
+        base: 5
+      skillName: 'Accounting'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -557,7 +608,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 1
-      value: null
+      adjustments:
+        base: 1
+      skillName: 'Anthropology'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -574,7 +628,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 5
-      value: null
+      adjustments:
+        base: 5
+      skillName: 'Appraise'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -591,7 +648,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 1
-      value: null
+      adjustments:
+        base: 1
+      skillName: 'Archaeology'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -608,7 +668,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 5
-      value: null
+      adjustments:
+        base: 5
+      skillName: 'Acting'
+      specialization: 'Art/Craft'
       properties:
         special: true
         push: true
@@ -626,7 +689,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 15
-      value: null
+      adjustments:
+        base: 15
+      skillName: 'Charm'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -643,7 +709,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 20
-      value: null
+      adjustments:
+        base: 20
+      skillName: 'Climb'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -660,7 +729,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 0
-      value: null
+      adjustments:
+        base: 0
+      skillName: 'Credit Rating'
+      specialization: ''
       properties:
         noxpgain: true
         push: true
@@ -678,9 +750,11 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 0
-      value: null
+      adjustments:
+        base: 0
+      skillName: 'Cthulhu Mythos'
+      specialization: ''
       properties:
-        noadjustments: true
         noxpgain: true
     flags:
       CoC7:
@@ -696,7 +770,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 5
-      value: null
+      adjustments:
+        base: 5
+      skillName: 'Disguise'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -713,7 +790,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 25
-      value: null
+      adjustments:
+        base: 25
+      skillName: 'Dodge'
+      specialization: ''
     flags:
       CoC7:
         cocidFlag:
@@ -728,7 +808,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 20
-      value: null
+      adjustments:
+        base: 20
+      skillName: 'Drive Auto'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -745,7 +828,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 10
-      value: null
+      adjustments:
+        base: 10
+      skillName: 'Electrical Repair'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -762,7 +848,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 5
-      value: null
+      adjustments:
+        base: 5
+      skillName: 'Fast Talk'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -779,7 +868,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 25
-      value: null
+      adjustments:
+        base: 25
+      skillName: 'Brawl'
+      specialization: 'Fighting'
       properties:
         fighting: true
         combat: true
@@ -791,14 +883,17 @@ items:
           lang: en
           priority: 0
   - _id: sWt5Q3ZXd6NlwhXU
-    name: Fighting (Throw)
+    name: Throw
     type: skill
     img: systems/CoC7/assets/icons/skills/fighting_throw.svg
     system:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 20
-      value: null
+      adjustments:
+        base: 20
+      skillName: 'Throw'
+      specialization: ''
       properties:
         fighting: true
         combat: true
@@ -806,7 +901,7 @@ items:
     flags:
       CoC7:
         cocidFlag:
-          id: i.skill.fighting-throw
+          id: i.skill.throw
           lang: en
           priority: 0
   - _id: KmDGtn7ukUFVb265
@@ -817,7 +912,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 20
-      value: null
+      adjustments:
+        base: 20
+      skillName: 'Handgun'
+      specialization: 'Firearms'
       properties:
         firearm: true
         combat: true
@@ -836,7 +934,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 25
-      value: null
+      adjustments:
+        base: 25
+      skillName: 'Rifle/Shotgun'
+      specialization: 'Firearms'
       properties:
         firearm: true
         combat: true
@@ -855,7 +956,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 30
-      value: null
+      adjustments:
+        base: 30
+      skillName: 'First Aid'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -872,7 +976,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 5
-      value: null
+      adjustments:
+        base: 5
+      skillName: 'History'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -889,7 +996,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 15
-      value: null
+      adjustments:
+        base: 15
+      skillName: 'Intimidate'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -906,7 +1016,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 20
-      value: null
+      adjustments:
+        base: 20
+      skillName: 'Jump'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -923,7 +1036,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 65
-      value: null
+      adjustments:
+        base: 65
+      skillName: 'English'
+      specialization: 'Language'
       properties:
         push: true
         special: true
@@ -943,7 +1059,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 5
-      value: null
+      adjustments:
+        base: 5
+      skillName: 'Law'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -960,7 +1079,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 20
-      value: null
+      adjustments:
+        base: 20
+      skillName: 'Library Use'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -977,7 +1099,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 20
-      value: null
+      adjustments:
+        base: 20
+      skillName: 'Listen'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -994,7 +1119,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 1
-      value: null
+      adjustments:
+        base: 1
+      skillName: 'Locksmith'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1011,7 +1139,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 10
-      value: null
+      adjustments:
+        base: 10
+      skillName: 'Mechanical Repair'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1028,7 +1159,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 1
-      value: null
+      adjustments:
+        base: 1
+      skillName: 'Medicine'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1045,7 +1179,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 10
-      value: null
+      adjustments:
+        base: 10
+      skillName: 'Natural World'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1062,7 +1199,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 10
-      value: null
+      adjustments:
+        base: 10
+      skillName: 'Navigate'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1079,7 +1219,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 5
-      value: null
+      adjustments:
+        base: 5
+      skillName: 'Occult'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1096,7 +1239,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 1
-      value: null
+      adjustments:
+        base: 1
+      skillName: 'Operate Heavy Machinery'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1113,7 +1259,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 10
-      value: null
+      adjustments:
+        base: 10
+      skillName: 'Persuade'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1130,7 +1279,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 1
-      value: null
+      adjustments:
+        base: 1
+      skillName: 'Psychoanalysis'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1147,7 +1299,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 10
-      value: null
+      adjustments:
+        base: 10
+      skillName: 'Psychology'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1164,7 +1319,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 5
-      value: null
+      adjustments:
+        base: 5
+      skillName: 'Ride'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1181,7 +1339,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 1
-      value: null
+      adjustments:
+        base: 1
+      skillName: 'Chemistry'
+      specialization: 'Science'
       properties:
         special: true
         push: true
@@ -1199,7 +1360,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 10
-      value: null
+      adjustments:
+        base: 10
+      skillName: 'Sleight of Hand'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1216,7 +1380,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 25
-      value: null
+      adjustments:
+        base: 25
+      skillName: 'Spot Hidden'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1233,7 +1400,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 20
-      value: null
+      adjustments:
+        base: 20
+      skillName: 'Stealth'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1245,12 +1415,15 @@ items:
   - _id: 8jAVwbgzWc0zRXGL
     name: Survival (Desert)
     type: skill
-    img: modules/call-of-cthulhu-foundryvtt-investigator-wizard/assets/game-icons/lorc/campfire.svg
+    img: systems/CoC7/assets/icons/skills/survival_any.svg
     system:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 10
-      value: null
+      adjustments:
+        base: 10
+      skillName: 'Desert'
+      specialization: 'Survival'
       properties:
         special: true
         push: true
@@ -1268,7 +1441,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 20
-      value: null
+      adjustments:
+        base: 20
+      skillName: 'Swim'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1285,7 +1461,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 10
-      value: null
+      adjustments:
+        base: 10
+      skillName: 'Track'
+      specialization: ''
       properties:
         push: true
     flags:
@@ -1305,7 +1484,7 @@ items:
         normal:
           damage: '1D3'
       properties:
-        melee: true
+        rngd: false
         addb: true
     flags:
       CoC7:
@@ -1317,8 +1496,6 @@ items:
 _id: 'JuI2aWDSEuQNKeUI'
 flags:
   CoC7:
-    skillListMode: false
-    skillShowUncommon: true
     cocidFlag:
       id: a.character.1920-character
       lang: en
@@ -1351,7 +1528,7 @@ items:
         normal:
           damage: '1D6+1'
       properties:
-        melee: true
+        rngd: false
         addb: true
 ---
 name: 'Creature example'
@@ -1432,7 +1609,10 @@ items:
       description:
         value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
       base: 25
-      value: 50
+      adjustments:
+        base: 50
+      skillName: 'Brawl'
+      specialization: 'Fighting'
       properties:
         fighting: true
         combat: true
@@ -1448,7 +1628,10 @@ items:
     img: systems/CoC7/assets/icons/skills.svg
     system:
       base: 0
-      value: 75
+      adjustments:
+        base: 75
+      skillName: 'Slice PCs in small cubes'
+      specialization: 'Fighting'
       properties:
         special: true
         fighting: true
@@ -1473,7 +1656,7 @@ items:
         normal:
           damage: '10D6'
       properties:
-        melee: true
+        rngd: false
         spcl: true
     flags:
       CoC7:
@@ -1495,7 +1678,7 @@ items:
         normal:
           damage: '1D3'
       properties:
-        melee: true
+        rngd: false
         addb: true
         slnt: true
     flags:

@@ -1,59 +1,59 @@
-/* global CONST, foundry, game */
+/* global CONST foundry game */
+import { FOLDER_ID } from '../constants.js'
 import CoC7ActorImporterDialog from '../apps/actor-importer-dialog.js'
-import { CoC7InvestigatorWizard } from '../apps/investigator-wizard.js'
+import CoC7InvestigatorWizard from '../apps/investigator-wizard.js'
 
-export default function (application, html, data) {
+/**
+ * Render Hook
+ * @param {ApplicationV2} application
+ * @param {HTMLElement} element
+ * @param {ApplicationRenderContext} context
+ * @param {ApplicationRenderOptions} options
+ */
+export default function (application, element, context, options) {
   // Allow Investigator Wizard
   //  * If the user role is allowed to create actors
   //  * If the user has less owned actors than allowed in settings
   let allowWizard = game.user.hasPermission('ACTOR_CREATE')
   if (!allowWizard) {
-    const allowed = game.settings.get('CoC7', 'InvestigatorWizardQuantity')
+    const allowed = game.settings.get(FOLDER_ID, 'InvestigatorWizardQuantity')
     if (allowed > 0) {
-      const existing = game.actors.filter(a => [a.ownership.default, (a.ownership[game.user.id] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE)].includes(CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)).length
+      const existing = game.actors.filter(d => d.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)).length
       allowWizard = existing < allowed
     }
   }
 
   if (allowWizard) {
+    const link = document.createElement('button')
+    link.type = 'button'
+    link.dataset.action = 'investigatorWizard'
+    const span = document.createElement('span')
+    span.textContent = game.i18n.localize('CoC7.InvestigatorWizard.Title')
+    link.append(span)
     /* // FoundryVTT v12 */
     if (foundry.utils.isNewerVersion(game.version, '13')) {
-      const menu = html.querySelector('footer.directory-footer')
-      const link = document.createElement('a')
-      link.classList.add('investigator-wizard')
-      link.textContent = game.i18n.localize('CoC7.InvestigatorWizard.Title')
-      menu.append(link)
-      html.querySelector('.investigator-wizard').addEventListener('click', () => CoC7InvestigatorWizard.create())
+      application.options.actions.investigatorWizard = () => { CoC7InvestigatorWizard.create() }
+      element.querySelector('footer.directory-footer').append(link)
     } else {
-      html
-        .find('footer.directory-footer')
-        .append('<a class="investigator-wizard">' + game.i18n.localize('CoC7.InvestigatorWizard.Title') + '</a>')
-      html.find('.investigator-wizard').click(() => {
-        CoC7InvestigatorWizard.create()
-      })
+      element.find('footer.directory-footer').append(link)
+      element.find('button[data-action=investigatorWizard').click(() => { CoC7InvestigatorWizard.create() })
     }
   }
 
   if (game.user.hasPermission('ACTOR_CREATE')) {
+    const link = document.createElement('button')
+    link.type = 'button'
+    link.dataset.action = 'actorImporter'
+    const span = document.createElement('span')
+    span.textContent = game.i18n.localize('CoC7.ActorImporter')
+    link.append(span)
     /* // FoundryVTT v12 */
     if (foundry.utils.isNewerVersion(game.version, '13')) {
-      const menu = html.querySelector('footer.directory-footer')
-      const link = document.createElement('a')
-      link.classList.add('actor-import')
-      link.textContent = game.i18n.localize('CoC7.ActorImporter')
-      menu.append(link)
-      html.querySelector('.actor-import').addEventListener('click', () => CoC7ActorImporterDialog.create())
+      application.options.actions.actorImporter = () => { CoC7ActorImporterDialog.create() }
+      element.querySelector('footer.directory-footer').append(link)
     } else {
-      html
-        .find('footer.directory-footer')
-        .append(
-          '<a class="actor-import">' +
-            game.i18n.localize('CoC7.ActorImporter') +
-            '</a>'
-        )
-      html.find('.actor-import').click(() => {
-        CoC7ActorImporterDialog.create()
-      })
+      element.find('footer.directory-footer').append(link)
+      element.find('button[data-action=actorImporter').click(() => { CoC7ActorImporterDialog.create() })
     }
   }
 }

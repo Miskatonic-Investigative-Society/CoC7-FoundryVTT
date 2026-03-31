@@ -1,88 +1,149 @@
-/* global $, foundry, game, TextEditor */
-import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
+/* global foundry game Item TextEditor */
+import { FOLDER_ID } from '../../constants.js'
+import CoC7ModelsItemGlobalSheet from './global-sheet.js'
 
-export default class CoC7SpellSheet extends foundry.appv1.sheets.ItemSheet {
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      template: 'systems/CoC7/templates/items/spell-header.hbs',
-      classes: ['coc7', 'item', 'spell'],
-      width: 500,
-      height: 'auto',
-      resizable: false,
-      scrollY: ['.body'],
-      tabs: [
-        {
-          navSelector: '.navigation',
-          contentSelector: '.body',
-          initial: 'description'
-        }
-      ]
-    })
+export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet {
+  static DEFAULT_OPTIONS = {
+    position: {
+      width: 525,
+      height: 480
+    }
   }
 
-  _getHeaderButtons () {
-    const headerButtons = super._getHeaderButtons()
-    addCoCIDSheetHeaderButton(headerButtons, this)
-    return headerButtons
-  }
-
-  async getData () {
-    const sheetData = super.getData()
-    sheetData.hasOwner = this.item.isEmbedded === true
-    sheetData.isKeeper = game.user.isGM
-    sheetData.isOwner = this.item.isOwner
-
-    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
-      sheetData.data.system.description.value,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
-      sheetData.data.system.description.keeper,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.enrichedDescriptionAlternativeNames = await TextEditor.enrichHTML(
-      sheetData.data.system.description.alternativeNames,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    return sheetData
-  }
-
-  activateListeners (html) {
-    super.activateListeners(html)
-    html.find('.option').click(event => this.modifyType(event))
-    html.find('#cast-spell').click(event => {
-      event.preventDefault()
-      this.item.cast(false)
-    })
-    html.find('#cast-spell-hidden').click(event => {
-      event.preventDefault()
-      this.item.cast(true)
-    })
+  static PARTS = {
+    header: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/spell-header.hbs'
+    },
+    tabs: {
+      template: 'templates/generic/tab-navigation.hbs'
+    },
+    description: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-description.hbs',
+      scrollable: ['']
+    },
+    details: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/spell-tab-details.hbs',
+      scrollable: ['']
+    },
+    keeper: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-keeper.hbs',
+      scrollable: ['']
+    }
   }
 
   /**
-   * Toggle the checkboxes for type when user clicks on the corresponding
-   * label, not sure if this works on engines other than V8
-   * @param {jQuery} event @see activateListeners
-   * @returns {jQuery.Event} click
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
    */
-  modifyType (event) {
-    event.preventDefault()
-    /** Prevents propagation of the same event from being called */
-    event.stopPropagation()
-    const toggleSwitch = $(event.currentTarget)
-    return toggleSwitch.prev().trigger('click')
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
+
+    const tabs = {
+      description: {
+        icon: '',
+        label: 'CoC7.Description'
+      }
+    }
+    if (game.user.isGM) {
+      tabs.details = {
+        icon: '',
+        label: 'CoC7.Details'
+      }
+      tabs.keeper = {
+        cssClass: 'icon-only-tab',
+        icon: 'game-icon game-icon-tentacles-skull',
+        tooltip: 'CoC7.GmNotes'
+      }
+    }
+
+    context.tabs = this.getTabs('primary', 'description', tabs)
+
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+
+    switch (partId) {
+      case 'header':
+        context.isKeeper = game.user.isGM
+        if (context.document.parent instanceof Item) {
+          context.isEmbedded = true
+          context.isOwner = context.document?.parent.actor?.isOwner
+        } else {
+          context.isEmbedded = context.document.isEmbedded
+          context.isOwner = context.document?.actor?.isOwner
+        }
+        break
+      case 'description':
+        context._types = []
+        for (const [key, value] of context.document.system.schema.getField('type').entries()) {
+          context._types.push({
+            id: key,
+            name: value.label,
+            tooltip: value.hint,
+            isEnabled: context.document.system.type[key] === true
+          })
+        }
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.value,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+      case 'details':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionAlternativeNames = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.alternativeNames,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+      case 'keeper':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.keeper,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+    }
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
+
+    this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', (event) => {
+      switch (event.currentTarget.dataset.action) {
+        case 'castSpell':
+          {
+            const hidden = event.currentTarget.dataset.property === 'hidden'
+            this.document.system.cast(hidden)
+          }
+          break
+      }
+    }))
   }
 }

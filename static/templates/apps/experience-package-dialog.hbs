@@ -1,86 +1,87 @@
-<form class="flexcol coc7">
-  {{#if system.properties.cthulhuGain}}
-    <div class="form-group" style="flex: 0 0 auto;">
-      <label>{{localize 'CoC7.MythosGain'}}</label>
-      <input type="text" name="system.cthulhuGain" value="{{system.cthulhuGain}}" placeholder="{{localize 'CoC7.MythosGain'}}"{{#if rolled}} disabled{{/if}} />
-    </div>
-  {{else if system.properties.sanityLoss}}
-    <div class="form-group" style="flex: 0 0 auto;">
-      <label>{{localize 'CoC7.SANLoss'}}</label>
-      <input type="text" name="system.sanityLoss" value="{{system.sanityLoss}}" placeholder="{{localize 'CoC7.SANLoss'}}"{{#if rolled}} disabled{{/if}} />
-    </div>
-  {{/if}}
-  {{#if (or system.properties.cthulhuGain system.properties.sanityLoss)}}
-    <div class="form-group" style="flex: 0 0 auto;">
-      <label>&nbsp;</label>
-      {{#if rolled}}
-        <div class="flex1" style="line-height: 28px; text-align: center; border: 2px solid transparent; padding: 1px;">{{rolled}}</div>
-      {{else}}
-        <button class="rollvalue flex1">{{localize 'CoC7.RollDice'}}</button>
+<div class="flexcol" style="gap: 0.375rem;">
+  {{#if (or isCthulhuGain isSanityLoss)}}
+    <fieldset class="flexcol" style="flex: 0 0 auto;">
+      {{#if isCthulhuGain}}
+        <div class="form-group" style="flex: 0 0 auto;">
+          <label>{{localize 'CoC7.MythosGain'}}</label>
+          <input type="text" name="cthulhuGain" value="{{cthulhuGain}}" placeholder="{{localize 'CoC7.MythosGain'}}"{{#if rolled}} disabled{{/if}} />
+        </div>
+      {{else if isSanityLoss}}
+        <div class="form-group" style="flex: 0 0 auto;">
+          <label>{{localize 'CoC7.SANLoss'}}</label>
+          <input type="text" name="sanityLoss" value="{{sanityLoss}}" placeholder="{{localize 'CoC7.SANLoss'}}"{{#if rolled}} disabled{{/if}} />
+        </div>
       {{/if}}
-    </div>
+      <div class="form-group" style="flex: 0 0 auto;">
+        <label>&nbsp;</label>
+        {{#if rolled}}
+          <div style="flex: 1; line-height: 28px; text-align: center; border: 2px solid transparent; padding: 0 0.1875rem;">{{rolled}}</div>
+        {{else}}
+          <button style="flex: 1; padding: 0 0.1875rem;" data-action="roll">{{localize 'CoC7.RollDice'}}</button>
+        {{/if}}
+      </div>
+    </fieldset>
   {{/if}}
-  {{#if system.addSpells}}
-    <div class="flexcol" style="flex: 0 0 auto; min-height: 5rem;">
-      <h3 class="form-header">{{ localize "CoC7.ExperiencePackageSpellList" }}</h3>
+  {{#if addSpells}}
+    <fieldset class="flexcol drop-item" style="flex: 0 0 auto; min-height: 5rem;">
+      <legend>{{localize 'CoC7.ExperiencePackageSpellList'}}</legend>
       {{#unless spells.length}}
-        <h3 style="text-align: center; border: 0;">{{localize 'CoC7.EmptySpellList'}}</h3>
+        <div style="text-align: center; border: 0;">{{localize 'CoC7.EmptySpellList'}}</div>
       {{/unless}}
-      <ol class="item-list">
+      <div class="item-list">
         {{#each spells as |spell|}}
-          <li class="item flexrow" data-item-id="{{spell._id}}" data-type="spell">
-            <div class="item-name flexrow">
-              <h4>{{spell.name}}</h4>
-            </div>
+          <div class="item flexrow" data-item-id="{{spell._id}}" data-type="spell">
+            <div class="summary">{{spell.name}}</div>
             <div class="item-controls">
-              <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+              <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
             </div>
-          </li>
+          </div>
         {{/each}}
-      </ol>
-    </div>
+      </div>
+    </fieldset>
   {{/if}}
   {{#each backstory as |type index|}}
-    <div class="form-group" style="flex: 0 0 auto;">
-      <label>{{localize 'CoC7.InvestigatorWizard.TitleBackstory'}}</label>
-      <select data-backstory-index="{{index}}">
-        <option value="">&nbsp;</option>
-        {{selectOptions ../backstoryOptions selected=type.type localize=true}}
-      </select>
-    </div>
-    <div class="flexcol backstoryBlock" style="flex: 0 0 auto; min-height: 5.7rem;" data-index="{{index}}">
-      {{#if (eq type.type 'CoC7.PromptAddInjuryScar')}}
-        <textarea class="backstory-text">{{type.value}}</textarea>
-      {{else if (eq type.type 'CoC7.PromptAddStatus')}}
-        {{#unless type.value}}
-          <h3 style="text-align: center; border: 0;">{{localize 'CoC7.EmptyStatusList'}}</h3>
-        {{else}}
-          <ol class="item-list">
-            <li class="item flexrow" data-item-id="{{type.value._id}}" data-type="status">
-              <div class="item-name flexrow">
-                <h4>{{type.value.name}}</h4>
+    <fieldset class="flexcol" style="flex: 0 0 auto; min-height: 5rem;">
+      <legend class="flexrow">
+        {{localize 'CoC7.InvestigatorWizard.TitleBackstory'}}
+        <select data-backstory-index="{{index}}">
+          <option value="">&nbsp;</option>
+          {{selectOptions ../backstoryOptions selected=type.type localize=true}}
+        </select>
+      </legend>
+      <div class="flexcol drop-item backstoryBlock" style="flex: 0 0 auto; min-height: 5.7rem; justify-content: space-between;" data-index="{{index}}">
+        {{#if (eq type.type 'CoC7.PromptAddInjuryScar')}}
+          <textarea class="backstory-text" style="flex: 1">{{type.value}}</textarea>
+        {{else if (eq type.type 'CoC7.PromptAddStatus')}}
+          {{#unless type.value}}
+            <div style="text-align: center; border: 0;">{{localize 'CoC7.EmptyStatusList'}}</div>
+          {{else}}
+            <div class="item-list">
+              <div class="item flexrow" data-item-id="{{type.value._id}}" data-type="status">
+                <div class="summary">{{type.value.name}}</div>
+                <div class="item-controls">
+                  <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                </div>
               </div>
-              <div class="item-controls">
-                <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
-              </div>
-            </li>
-          </ol>
-        {{/unless}}
-      {{else if (eq type.type 'CoC7.AddSanityLossEncounter')}}
-        <div class="form-group">
-          <label>{{ localize 'CoC7.SanityLossTypeReason' }}</label>
-          <input type="text" value="{{type.value.reason}}" data-name="reason" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize 'CoC7.SanityLossTypeValue' }}</label>
-          <input type="text" value="{{type.value.points}}"data-name="points" data-dtype="Number">
-        </div>
-        <div class="form-group">
-          <label>{{ localize 'CoC7.ExperiencePackageApplySanity' }}</label>
-          <div class="flex1"><input type="checkbox" name="system.backgroundInjury" {{checked type.value.apply}}></div>
-        </div>
-      {{/if}}
-    </div>
+            </div>
+          {{/unless}}
+        {{else if (eq type.type 'CoC7.AddSanityLossEncounter')}}
+          <div class="form-group">
+            <label>{{localize 'CoC7.SanityLossTypeReason'}}</label>
+            <input type="text" value="{{type.value.reason}}" data-name="reason" />
+          </div>
+          <div class="form-group">
+            <label>{{localize 'CoC7.SanityLossTypeValue'}}</label>
+            <input type="number" value="{{type.value.points}}" data-name="points">
+          </div>
+          <div class="form-group toggle-row flexrow">
+            <label>{{localize 'CoC7.ExperiencePackageApplySanity'}}</label>
+            <div class="toggle-attributes flexrow" style="flex: 1; justify-content: center;">
+              <button class="item-control toggle-switch{{#if type.value.apply}} switched-on{{/if}}" data-action="toggle-switch" data-toggle="{{index}}">{{localize 'CoC7.ExperiencePackageApplySanity'}}</button>
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    </fieldset>
   {{/each}}
-  <p>&nbsp;</p>
-</form>
+</div>

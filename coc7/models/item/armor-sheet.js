@@ -1,64 +1,104 @@
 /* global foundry game TextEditor */
-import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
+import { FOLDER_ID } from '../../constants.js'
 import CoC7ActiveEffect from '../../apps/active-effect.js'
+import CoC7ModelsItemGlobalSheet from './global-sheet.js'
 
-export default class CoC7ArmorSheet extends foundry.appv1.sheets.ItemSheet {
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheet', 'armor'],
-      template: 'systems/CoC7/templates/items/armor-header.hbs',
-      width: 520,
-      height: 480,
-      dragDrop: [{ dragSelector: '.item' }],
-      scrollY: ['.tab.description'],
-      tabs: [
-        {
-          navSelector: '.sheet-navigation',
-          contentSelector: '.sheet-body',
-          initial: 'description'
-        }
-      ]
-    })
+export default class CoC7ModelsItemArmorSheet extends CoC7ModelsItemGlobalSheet {
+  static DEFAULT_OPTIONS = {
+    position: {
+      width: 525,
+      height: 480
+    }
   }
 
-  _getHeaderButtons () {
-    const headerButtons = super._getHeaderButtons()
-    addCoCIDSheetHeaderButton(headerButtons, this)
-    return headerButtons
+  static PARTS = {
+    header: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/armor-header.hbs'
+    },
+    tabs: {
+      template: 'templates/generic/tab-navigation.hbs'
+    },
+    description: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-description.hbs',
+      scrollable: ['']
+    },
+    activeEffects: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-active-effects.hbs',
+      scrollable: ['']
+    },
+    keeper: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-keeper.hbs',
+      scrollable: ['.editor-content']
+    }
   }
 
-  async getData () {
-    const sheetData = super.getData()
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
 
-    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
-      sheetData.data.system.description.value,
-      {
-        async: true,
-        secrets: sheetData.editable
+    const tabs = {
+      description: {
+        icon: '',
+        label: 'CoC7.Description'
+      },
+      activeEffects: {
+        cssClass: 'icon-only-tab',
+        icon: 'game-icon game-icon-aura',
+        tooltip: 'CoC7.Effects'
       }
-    )
-
-    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
-      sheetData.data.system.description.keeper,
-      {
-        async: true,
-        secrets: sheetData.editable
+    }
+    if (game.user.isGM) {
+      tabs.keeper = {
+        cssClass: 'icon-only-tab',
+        icon: 'game-icon game-icon-tentacles-skull',
+        tooltip: 'CoC7.GmNotes'
       }
-    )
+    }
 
-    sheetData.effects = CoC7ActiveEffect.prepareActiveEffectCategories(
-      this.item.effects
-    )
+    context.tabs = this.getTabs('primary', 'description', tabs)
 
-    sheetData.isKeeper = game.user.isGM
-    return sheetData
+    return context
   }
 
-  activateListeners (html) {
-    super.activateListeners(html)
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
 
-    html
-      .find('.effect-control')
-      .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.item))
+    switch (partId) {
+      case 'description':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.value,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+      case 'activeEffects':
+        context.effects = CoC7ActiveEffect.prepareActiveEffectCategories(context.document.effects, { status: false })
+        break
+      case 'keeper':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.keeper,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+    }
+    return context
   }
 }

@@ -90,10 +90,14 @@ The available changes are :
     - system.attribs.hp.max
   - Sanity:
     - system.attribs.san.max
-- Skills. Skills are identified by their full names and are case sensitive!
+- Skills. Skills are identified by their full names and are case sensitive or by the CoC ID
   - Charm
-    - system.skills.Charm.value
-    - system.skills.Charm.bonusDice
+    - system.skills.Charm.system.value
+    - system.skills.Charm.system.bonusDice
+    - system.skills.i.skill.charm.system.value
+    - system.skills.i.skill.charm.system.bonusDice
   - Fighting (Brawl)
-    - system.skills.Fighting (Brawl).value
-    - system.skills.Fighting (Brawl).bonusDice
+    - system.skills.Fighting (Brawl).system.value
+    - system.skills.Fighting (Brawl).system.bonusDice
+    - system.skills.i.skill.fighting-brawl.system.value
+    - system.skills.i.skill.fighting-brawl.system.bonusDice

@@ -1,24 +1,30 @@
 /* global game */
-export default function (data, html, options) {
-  let imageReplaced = false
-  let textReplaced = false
-  if (game.settings.get('CoC7', 'overrideGameArtwork')) {
-    if (game.settings.get('CoC7', 'artPauseImage').toLowerCase() === 'null') {
-      html.querySelector('img').remove()
+import { FOLDER_ID } from '../constants.js'
+
+/**
+ * Render Hook
+ * @param {ApplicationV2} application
+ * @param {HTMLElement} element
+ * @param {ApplicationRenderContext} context
+ * @param {ApplicationRenderOptions} options
+ */
+export default function (application, element, context, options) {
+  let imageReplacement = 'systems/' + FOLDER_ID + '/assets/images/timetrap2.webp'
+  let textReplacement = game.i18n.localize('CoC7.PauseName')
+  if (game.settings.get(FOLDER_ID, 'overrideGameArtwork')) {
+    if (game.settings.get(FOLDER_ID, 'artPauseImage').toLowerCase() === 'null') {
+      imageReplacement = ''
+    } else if (game.settings.get(FOLDER_ID, 'artPauseImage') !== '') {
+      imageReplacement = game.settings.get(FOLDER_ID, 'artPauseImage')
     }
-    if (game.settings.get('CoC7', 'artPauseImage') !== '') {
-      html.querySelector('img').setAttribute('src', game.settings.get('CoC7', 'artPauseImage'))
-      imageReplaced = true
-    }
-    if (game.settings.get('CoC7', 'artPauseText') !== '') {
-      html.querySelector('figcaption').innerHTML = game.settings.get('CoC7', 'artPauseText')
-      textReplaced = true
+    if (game.settings.get(FOLDER_ID, 'artPauseText') !== '') {
+      textReplacement = game.settings.get(FOLDER_ID, 'artPauseText')
     }
   }
-  if (!imageReplaced) {
-    html.querySelector('img').setAttribute('src', 'systems/CoC7/assets/images/timetrap2.webp')
+  if (imageReplacement === '') {
+    element.querySelector('img').remove()
+  } else {
+    element.querySelector('img').setAttribute('src', imageReplacement)
   }
-  if (!textReplaced) {
-    html.querySelector('figcaption').innerHTML = game.i18n.localize('CoC7.PauseName')
-  }
+  element.querySelector('figcaption').innerHTML = textReplacement
 }

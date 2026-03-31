@@ -1,1636 +1,728 @@
-/* global $, canvas, Dialog, foundry, game, PIXI, Token, TokenDocument, ui */
-import CoCActor from '../actor/document-class.js'
+/* global canvas CONST foundry fromUuid game PIXI ui */
+import { FOLDER_ID } from '../../constants.js'
+import CoC7ChaseParticipant from '../chase/participant.js'
 import CoC7ChatChaseObstacle from '../../apps/chat-chase-obstacle.js'
-import CoC7Check from '../../apps/check.js'
+import CoC7DicePool from '../../apps/dice-pool.js'
+import CoC7ModelsItemChaseSheet from './chase-sheet.js'
+import CoC7ModelsItemGlobalSystem from './global-system.js'
+import CoC7SystemSocket from '../../apps/system-socket.js'
 import CoC7Utilities from '../../apps/utilities.js'
-import CoC7Item from './document-class.js'
-import { _participant, sortByRoleAndDex } from '../../models/chase/participant.js'
 
-export default class CoC7Chase extends CoC7Item {
-  constructor (data, context) {
-    if (typeof data.img === 'undefined') {
-      data.img = 'systems/CoC7/assets/icons/running-solid.svg'
-    }
-    super(data, context)
-    this.context = context
+export default class CoC7ModelsItemChaseSystem extends CoC7ModelsItemGlobalSystem {
+  /**
+   * Default img
+   * @returns {string}
+   */
+  static get defaultImg () {
+    return 'systems/' + FOLDER_ID + '/assets/icons/running-solid.svg'
   }
 
-  // Handle participants
-  get participants () {
-    const pList = []
-    const preys = this.system.participants
-      .filter(p => !p.chaser)
-      .map(p => {
-        return new _participant(p)
-      })
-    const chasers = this.system.participants
-      .filter(p => p.chaser)
-      .map(p => {
-        return new _participant(p)
-      })
-    this.system.participants.forEach(p => {
-      // p.index = pList.length - 1
-      p.assist = []
-      if (p.chaser) {
-        p.assist = chasers
-          .filter(c => c.uuid !== p.uuid && !c.hasMaxBonusDice)
-          .map(c => {
-            return { uuid: c.uuid, name: c.name }
+  /**
+   * Create Schema
+   * @returns {DataSchema}
+   */
+  static defineSchema () {
+    const fields = foundry.data.fields
+    return {
+      description: new fields.SchemaField({
+        keeper: new fields.HTMLField({ initial: '' })
+      }),
+      locations: new fields.SchemaField({
+        total: new fields.NumberField({ initial: 0 }),
+        list: new fields.ArrayField(
+          new fields.SchemaField({
+            uuid: new fields.StringField({
+              validate: value => {
+                if (!foundry.data.validators.isValidId(value)) {
+                  throw new Error('must be a valid 16-character alphanumeric ID')
+                }
+              }
+            }),
+            name: new fields.StringField({ initial: '' }),
+            obstacleDetails: new fields.SchemaField({
+              barrier: new fields.BooleanField({ initial: false }),
+              hazard: new fields.BooleanField({ initial: false }),
+              name: new fields.StringField({ initial: '' }),
+              checkName: new fields.StringField({ initial: '' }),
+              hasDamage: new fields.BooleanField({ initial: false }),
+              failedCheckDamage: new fields.StringField({ initial: '' }),
+              hasHitPoints: new fields.BooleanField({ initial: false }),
+              HitPoints: new fields.StringField({ initial: '' }),
+              hasActionCost: new fields.BooleanField({ initial: false }),
+              failedActionCost: new fields.StringField({ initial: '' })
+            }),
+            obstacle: new fields.BooleanField({ initial: false }),
+            init: new fields.BooleanField({ initial: false }),
+            participants: new fields.ArrayField(
+              new fields.StringField({
+                validate: value => {
+                  if (!foundry.data.validators.isValidId(value)) {
+                    throw new Error('must be a valid 16-character alphanumeric ID')
+                  }
+                }
+              })
+            ),
+            active: new fields.BooleanField({ initial: false }),
+            coordinates: new fields.SchemaField({
+              x: new fields.NumberField({ }),
+              y: new fields.NumberField({ }),
+              scene: new fields.DocumentUUIDField({ })
+            })
           })
-      } else {
-        p.assist = preys
-          .filter(c => c.uuid !== p.uuid && !c.hasMaxBonusDice)
-          .map(c => {
-            return { uuid: c.uuid, name: c.name }
-          })
-      }
-      const particpant = new _participant(p)
-      // particpant.location = this.getParticipantLocation( particpant.uuid) // Recursivity
-      pList.push(particpant)
-    })
-    return pList
-  }
-
-  get participantsObject () {
-    const participants = this.participants
-    participants.forEach(p => {
-      p.location = this.getParticipantLocation(p.uuid)
-    })
-    return participants
-  }
-
-  get activeParticipantData () {
-    return this.system.participants.find(p => p.active)
-  }
-
-  get activeActor () {
-    const p = this.activeParticipantData
-    if (!p) return undefined
-    if (p.docUuid) {
-      return CoC7Utilities.getActorFromKey(p.docUuid)
+        )
+      }),
+      includeEscaped: new fields.BooleanField({ initial: false }),
+      includeLatecomers: new fields.BooleanField({ initial: false }),
+      showTokenMovement: new fields.BooleanField({ initial: true }),
+      startingRange: new fields.NumberField({ initial: 2 }),
+      startingIndex: new fields.NumberField({ initial: 0 }),
+      started: new fields.BooleanField({ initial: false }),
+      vehicle: new fields.BooleanField({ initial: false }),
+      participants: new fields.ArrayField(
+        new fields.SchemaField({
+          uuid: new fields.StringField({
+            validate: value => {
+              if (!foundry.data.validators.isValidId(value)) {
+                throw new Error('must be a valid 16-character alphanumeric ID')
+              }
+            }
+          }),
+          docUuid: new fields.DocumentUUIDField({ }),
+          initiative: new fields.StringField({ initial: game.i18n.localize('CHARAC.Dexterity') }),
+          dex: new fields.NumberField({ initial: 0 }), // Not actually dex but initiative value
+          chaser: new fields.BooleanField({ initial: false }),
+          name: new fields.StringField({ initial: '' }),
+          mov: new fields.NumberField({ nullable: false, initial: 0 }),
+          speedCheck: new fields.SchemaField({
+            name: new fields.StringField({ initial: game.i18n.localize('CHARAC.Constitution') }),
+            score: new fields.NumberField({ nullable: false, initial: 0 }),
+            checkData: new fields.JSONField({ nullable: true })
+          }),
+          syntheticHp: new fields.NumberField({ initial: 0 }),
+          currentMovementActions: new fields.NumberField({ initial: 0 }),
+          bonusDice: new fields.NumberField({ initial: 0 }),
+          hasAGunReady: new fields.BooleanField({ initial: false }),
+          active: new fields.BooleanField({ initial: false })
+        })
+      )
     }
-    return undefined
   }
 
-  get participantsByAdjustedMov () {
-    const pList = this.actualParticipants.sort(
-      (a, b) => a.adjustedMov - b.adjustedMov
-    )
-    pList.forEach(p => {
-      p.location = this.getParticipantLocation(p.uuid)
-    })
-    return pList
+  /**
+   * Process and get all participants
+   * @returns {object}
+   */
+  async allParticipants () {
+    const participants = await Promise.all(this.participants.map(async (p, offset) => {
+      const participant = new CoC7ChaseParticipant(this.participants, offset)
+      await participant.loadUuids()
+      return participant
+    }))
+    const groups = participants.reduce((c, p) => { c[p.chaser ? 'chaser' : 'prey'].push(p.adjustedMov); return c }, { chaser: [], prey: [] })
+    let maxChaserMov = 0
+    let minChaserMov = 0
+    let maxPreyMov = 0
+    let minPreyMov = 0
+    let minimum = 0
+    if (groups.chaser.length && groups.prey.length) {
+      maxChaserMov = Math.max(...groups.chaser)
+      minChaserMov = Math.min(...groups.chaser)
+      minPreyMov = Math.min(...groups.prey)
+      maxPreyMov = Math.max(...groups.prey)
+      minimum = Math.min(minChaserMov, minPreyMov)
+    }
+    for (const offset in participants) {
+      participants[offset].actions = minimum
+      participants[offset].setFastSlow({ fastestChaser: maxChaserMov, slowestPrey: minPreyMov, includeEscaped: this.includeEscaped, includeLatecomers: this.includeLatecomers })
+    }
+    return {
+      all: participants,
+      maxChaserMov,
+      minChaserMov,
+      maxPreyMov,
+      minPreyMov
+    }
   }
 
-  get participantsByInitiative () {
-    const pList = this.actualParticipants.sort(
-      (a, b) => b.initiative - a.initiative
-    )
-    pList.forEach(p => {
-      p.location = this.getParticipantLocation(p.uuid)
-    })
-    return pList
-  }
-
-  get preys () {
-    return this.participants.filter(p => !p.isChaser && p.isValid) || []
-  }
-
-  get chasers () {
-    return this.participants.filter(p => p.isChaser && p.isValid) || []
-  }
-
+  /**
+   * Do all participants have speed rolls
+   * @returns {boolean}
+   */
   get allHaveValidMov () {
-    return this.participants.every(e => e.hasValidMov)
+    for (const participant of this.participants) {
+      if (isNaN(Number(participant.mov))) {
+        return false
+      }
+    }
+    return true
   }
 
+  /**
+   * Do all participants have speed rolls
+   * @returns {boolean}
+   */
   get allHaveSpeedRoll () {
-    return this.participants.every(p => p.speedCheck?.rolled)
-  }
-
-  getParticipantLocation (participantUuid) {
-    if (!this.system.locations?.list?.length) {
-      return undefined
-    }
-    if (!this.started) return undefined
-    const locations = this.locations
-
-    const location = locations.find(l => {
-      const lp = l.participants?.find(p => participantUuid === p.uuid)
-      return !!lp
-    })
-    if (location) {
-      return location
-    }
-    return undefined
-  }
-
-  getParticipantData (participantUuid) {
-    const participant = this.system.participants.find(
-      p => participantUuid === p.uuid
-    )
-    if (participant) return foundry.utils.duplicate(participant) // TODO : check if we need to duplicate
-    return undefined
-  }
-
-  getParticipant (participantUuid) {
-    const participantData = this.getParticipantData(participantUuid)
-    if (participantData) return new _participant(participantData)
-    return undefined
-  }
-
-  get nextActiveParticipant () {
-    if (!this.started) return undefined
-    return this.participantsByInitiative.find(
-      p => p.data.currentMovementActions > 0
-    )
-  }
-
-  get slowestPrey () {
-    const preys = this.participants
-      .sort((a, b) => a.adjustedMov - b.adjustedMov)
-      ?.filter(p => p.isPrey)
-    if (preys.length > 0) return preys[0]
-    return undefined
-  }
-
-  get fastestChaser () {
-    const chasers = this.participants
-      .sort((a, b) => a.adjustedMov - b.adjustedMov)
-      ?.filter(p => p.isChaser)
-    if (chasers.length > 0) return chasers.slice(-1).pop()
-    return undefined
-  }
-
-  get actualParticipants () {
-    const slowestPrey = this.slowestPrey
-    const fastestChaser = this.fastestChaser
-    let pList = this.participants
-    if (!this.system.includeLatecomers && slowestPrey) {
-      pList = pList.filter(p => {
-        return (
-          p.isPrey || (p.isChaser && p.adjustedMov >= slowestPrey.adjustedMov)
-        )
-      })
-    }
-
-    if (!this.system.includeEscaped && fastestChaser) {
-      pList = pList.filter(p => {
-        return (
-          p.isChaser || (p.isPrey && p.adjustedMov <= fastestChaser.adjustedMov)
-        )
-      })
-    }
-
-    return pList
-  }
-
-  get slowestParticipant () {
-    const pList = this.participantsByAdjustedMov
-    if (pList.length > 0) return pList[0]
-    return undefined
-  }
-
-  async updateParticipants (list, { render = true } = {}) {
-    const participantsData = this.cleanParticipantList(list)
-    return await this.update(
-      { 'system.participants': participantsData },
-      { render }
-    )
-  }
-
-  async updateParticipant (particiantUuid, updateData, { render = true } = {}) {
-    const participants = foundry.utils.duplicate(this.system.participants)
-    const update = foundry.utils.duplicate(updateData)
-    const participantIndex = participants.findIndex(
-      p => particiantUuid === p.uuid
-    )
-    if (participantIndex === -1) return undefined
-    if (update.uuid) delete update.uuid
-    foundry.utils.mergeObject(participants[participantIndex], update, {
-      overwrite: true
-    })
-    await this.updateParticipants(participants, { render })
-  }
-
-  cleanParticipantList (list) {
-    const participantsData = list || foundry.utils.duplicate(this.system.participants)
-    list.forEach(p => {
-      let data
-      if (p.constructor.name === '_participant') {
-        data = p.data
+    for (const participant of this.participants) {
+      if (CoC7DicePool.isValidPool(participant.speedCheck?.checkData?.flags?.[FOLDER_ID]?.load?.dicePool)) {
+        const dicePool = CoC7DicePool.fromObject(participant.speedCheck.checkData.flags[FOLDER_ID].load.dicePool)
+        if (!dicePool.isRolled) {
+          return false
+        }
       } else {
-        data = p
+        return false
       }
-      const index = this.findIndex(participantsData, data.uuid)
-      if (index === -1) {
-        participantsData.push(data)
-        ui.notifications.warn(game.i18n.localize('CoC7.ParticipantDataMissing'))
-      } else {
-        participantsData[index] = data
-      }
-    })
-    return participantsData
+    }
+    return true
   }
 
-  async assistParticipant (
-    assistantUuid,
-    beneficiaryUuid,
-    { useMovementActions = true, render = true } = {}
-  ) {
-    const assistant = this.getParticipant(assistantUuid)
-    const beneficiary = this.getParticipant(beneficiaryUuid)
-    const participantsData = foundry.utils.duplicate(
-      this.system.participants
-    )
-    const assistantIndex = participantsData.findIndex(
-      p => assistantUuid === p.uuid
-    )
-    const beneficiaryIndex = participantsData.findIndex(
-      p => beneficiaryUuid === p.uuid
-    )
-
-    if (!assistant || !beneficiary) {
-      ui.notifications.error(game.i18n.localize('CoC7.ParticipantNotFound'))
-      return undefined
-    }
-
-    if (beneficiary.hasMaxBonusDice) {
-      ui.notifications.error(
-        game.i18n.format('CoC7.ErrorBeneficiaryAtMaxBonus', {
-          name: beneficiary.name
-        })
-      )
-      return undefined
-    }
-
-    if (useMovementActions) {
-      if (assistant.currentMovementActions < 1) {
-        ui.notifications.error(
-          game.i18n.format('CoC7.ParticipantNotEnoughMovement', {
-            assistantUuid,
-            actions: assistant.currentMovementActions
-          })
-        )
-        return undefined
+  /**
+   * If next participant activate it
+   */
+  async activateNextParticipantTurn () {
+    const participantUuid = await this.nextActiveParticipant()
+    if (participantUuid) {
+      await this.activateParticipant(participantUuid)
+    } else {
+      const participants = foundry.utils.duplicate(this.participants)
+      const activeIndex = participants.findIndex(p => p.active)
+      if (activeIndex > -1) {
+        participants[activeIndex].active = false
+        await this.parent.update({ 'system.participants': participants })
       }
-      assistant.alterMovementActions(-1)
-      participantsData[assistantIndex] = foundry.utils.duplicate(assistant.data)
     }
-
-    beneficiary.addBonusDice()
-    participantsData[beneficiaryIndex] = foundry.utils.duplicate(
-      beneficiary.data
-    )
-    await this.update(
-      { 'system.participants': participantsData },
-      { render }
-    )
   }
 
-  async toggleBonusDice (participantUuid, diceNumber, { render = true } = {}) {
-    const participant = this.getParticipant(participantUuid)
-
-    if (!participant) {
-      ui.notifications.error(
-        game.i18n.format('CoC7.ParticipantUuidNotFound', {
-          participantUuid
-        })
-      )
-      return undefined
+  /**
+   * Progress to next round
+   */
+  async progressToNextRound () {
+    const participants = foundry.utils.duplicate(this.participants)
+    const participantsAll = await this.allParticipants()
+    participantsAll.all.sort(CoC7Utilities.sortByInitiative)
+    for (const offset in participants) {
+      const offset2 = participantsAll.all.findIndex(p => p.uuid === participants[offset].uuid)
+      if (offset2 > -1) {
+        participants[offset].currentMovementActions = Math.min(participantsAll.all[offset2].actions, parseInt(participants[offset].currentMovementActions, 10) + participantsAll.all[offset2].actions)
+        participants[offset].active = (offset2 === 0)
+      }
     }
-
-    const participantsData = foundry.utils.duplicate(
-      this.system.participants
-    )
-    const participantIndex = participantsData.findIndex(
-      p => participantUuid === p.uuid
-    )
-    if (participant.bonusDice >= diceNumber) participant.removeBonusDice()
-    else participant.addBonusDice()
-    participantsData[participantIndex] = foundry.utils.duplicate(
-      participant.data
-    )
-    await this.update(
-      { 'system.participants': participantsData },
-      { render }
-    )
+    await this.parent.update({ 'system.participants': participants })
   }
 
-  async cautiousApproach (
-    participantUuid,
-    { useMovementActions = true, render = true } = {}
-  ) {
-    const participant = this.getParticipant(participantUuid)
-
-    if (!participant) {
-      ui.notifications.error(
-        game.i18n.format('CoC7.ParticipantUuidNotFound', {
-          participantUuid
-        })
-      )
+  /**
+   * Set next active participant
+   * @returns {string|undefined}
+   */
+  async nextActiveParticipant () {
+    if (!this.started) {
       return undefined
     }
+    const participants = await this.allParticipants()
+    participants.all.sort(CoC7Utilities.sortByInitiative)
+    const participantUuid = participants.all.find(p => p.currentMovementActions > 0)
+    return participantUuid?.uuid
+  }
 
-    const participantsData = foundry.utils.duplicate(
-      this.system.participants
-    )
-    const participantIndex = participantsData.findIndex(
-      p => participantUuid === p.uuid
-    )
-    if (participant.hasMaxBonusDice) {
-      ui.notifications.error(
-        game.i18n.format('CoC7.ErrorParticipantAtMaxBonus', {
-          participantUuid
-        })
-      )
+  /**
+   * Take a movement action from assistant participant and give a bonus die to beneficiary participant
+   * @param {string} assistantUuid
+   * @param {string} beneficiaryUuid
+   */
+  async assistParticipant (assistantUuid, beneficiaryUuid) {
+    const participants = foundry.utils.duplicate(this.participants)
+    const assistantIndex = participants.findIndex(p => p.uuid === assistantUuid)
+    const beneficiaryIndex = participants.findIndex(p => p.uuid === beneficiaryUuid)
+    if (assistantIndex === -1 || beneficiaryIndex === -1) {
+      ui.notifications.error('CoC7.ParticipantNotFound', { localize: true })
       return
     }
-    if (useMovementActions) {
-      if (participant.currentMovementActions < 1) {
-        ui.notifications.error(
-          game.i18n.format('CoC7.ParticipantNotEnoughMovement', {
-            assistantUuid: participantUuid,
-            actions: participant.currentMovementActions
-          })
-        )
-        return undefined
+    if (participants[beneficiaryIndex].bonusDice >= CoC7DicePool.maxDiceBonus) {
+      /* // FoundryVTT V12 */
+      ui.notifications.error(game.i18n.format('CoC7.ErrorBeneficiaryAtMaxBonus', { name: participants[beneficiaryIndex].name }))
+      return
+    }
+    if (participants[assistantIndex].currentMovementActions < 1) {
+      /* // FoundryVTT V12 */
+      ui.notifications.error(game.i18n.format('CoC7.ParticipantNotEnoughMovement', { assistantUuid, actions: participants[assistantIndex].currentMovementActions }))
+      return
+    }
+    participants[beneficiaryIndex].bonusDice++
+    participants[assistantIndex].currentMovementActions--
+    await this.parent.update({ 'system.participants': participants })
+  }
+
+  /**
+   * Set participant as active for an action
+   * @param {string|undefined} participantUuid
+   */
+  async activateParticipant (participantUuid) {
+    const locations = foundry.utils.duplicate(this.locations.list)
+    const participants = foundry.utils.duplicate(this.participants)
+    const participantIndex = participants.findIndex(p => p.uuid === participantUuid)
+    const activeIndex = participants.findIndex(p => p.active)
+    if (participantIndex > -1 || activeIndex > -1) {
+      if (activeIndex > -1) {
+        participants[activeIndex].active = false
       }
-      participant.alterMovementActions(-1)
-    }
-    participant.addBonusDice()
-    participantsData[participantIndex] = foundry.utils.duplicate(
-      participant.data
-    )
-    await this.update(
-      { 'system.participants': participantsData },
-      { render }
-    )
-  }
-
-  async alterParticipantMovementAction (
-    participantUuid,
-    count,
-    { render = true } = {}
-  ) {
-    const participant = this.getParticipant(participantUuid)
-
-    if (!participant) {
-      ui.notifications.error(
-        game.i18n.format('CoC7.ParticipantUuidNotFound', {
-          participantUuid
-        })
-      )
-      return undefined
-    }
-
-    const participantsData = foundry.utils.duplicate(
-      this.system.participants
-    )
-    const participantIndex = participantsData.findIndex(
-      p => participantUuid === p.uuid
-    )
-
-    participant.alterMovementActions(count)
-
-    participantsData[participantIndex] = foundry.utils.duplicate(
-      participant.data
-    )
-    await this.update(
-      { 'system.participants': participantsData },
-      { render }
-    )
-  }
-
-  async activateNextParticipantTurn ({
-    scrollToLocation = true,
-    activateLocation = true,
-    render = true,
-    html = null
-  } = {}) {
-    const activeParticipant = this.nextActiveParticipant
-    const options = {
-      scrollToLocation,
-      activateLocation,
-      render,
-      html
-    }
-    if (!activeParticipant) return this.activateParticipant(undefined, options)
-    return this.activateParticipant(activeParticipant.uuid, options)
-  }
-
-  async activateParticipant (
-    participantUuid,
-    {
-      scrollToLocation = true,
-      activateLocation = true,
-      render = true,
-      html = null
-    } = {}
-  ) {
-    const dataUpdate = this.getActivateParticipantUpdateData(participantUuid, {
-      scrollToLocation,
-      activeLocation: activateLocation,
-      html
-    })
-    await this.update(dataUpdate, { render })
-  }
-
-  getActivateParticipantUpdateData (
-    participantUuid,
-    { scrollToLocation = true, activateLocation = true, html = null } = {}
-  ) {
-    const pUuid = participantUuid
-    //   ? participantUuid
-    //   : this.participantsByInitiative[0]?.uuid
-    const participantsDataUpdate = {}
-    const participants = this.system.participants
-      ? foundry.utils.duplicate(this.system.participants)
-      : []
-    participants.forEach(p => {
-      delete p.active
-      if (pUuid && pUuid === p.uuid) p.active = true
-    })
-    participantsDataUpdate['system.participants'] = participants
-
-    const participantLocation = this.getParticipantLocation(pUuid)
-    let locationsDataUpdate = null
-    if (participantLocation) {
-      if (activateLocation) {
-        locationsDataUpdate = this.getActivateLocationUpdateData(
-          participantLocation.uuid,
-          { scrollToLocation, html }
-        )
-      } else if (scrollToLocation) {
-        locationsDataUpdate = {}
-        locationsDataUpdate['system.scroll.chaseTrack.from'] =
-          this.chaseTrackCurrentScrollPosition
-        locationsDataUpdate['system.scroll.chaseTrack.to'] =
-          this.getChaseTrackLocationScrollPosition(participantLocation.uuid, {
-            html
-          })
-      }
-    } else {
-      locationsDataUpdate = this.getActivateLocationUpdateData(undefined, {
-        scrollToLocation
-      })
-    }
-
-    if (locationsDataUpdate) {
-      return foundry.utils.mergeObject(
-        participantsDataUpdate,
-        locationsDataUpdate
-      )
-    } else return participantsDataUpdate
-  }
-
-  activeParticipantObstacleCheck (
-    locationUuid,
-    { moveParticipant = true } = {}
-  ) {
-    const card = new CoC7ChatChaseObstacle({
-      chaseUuid: this.uuid,
-      locationUuid,
-      moveParticipant,
-      forward: locationUuid !== this.activeLocation.uuid
-    })
-    card.toMessage()
-
-    // const test = new testCard()
-    // test.initialize({})
-    // test.toMessage()
-  }
-
-  // Handle rounds
-
-  async progressToNextRound ({ render = true } = {}) {
-    const participants = this.system.participants
-      ? foundry.utils.duplicate(this.system.participants)
-      : []
-    participants.forEach(p => {
-      if (p.currentMovementActions < p.movementAction) {
-        p.currentMovementActions += p.movementAction
-        if (p.currentMovementActions > p.movementAction) {
-          p.currentMovementActions = p.movementAction
+      if (participantIndex > -1) {
+        participants[participantIndex].active = true
+        const activeIndex = locations.findIndex(p => p.active)
+        if (activeIndex > -1) {
+          locations[activeIndex].active = false
+        }
+        const locationIndex = locations.findIndex(l => l.participants.includes(participants[participantIndex].uuid))
+        if (locationIndex > -1) {
+          locations[locationIndex].active = true
         }
       }
-    })
-    await this.updateParticipants(participants, { render: false })
-    this.activateNextParticipantTurn({ render })
-  }
-
-  /** @override */
-  async updateRoll (rollString) {
-    if (game.user.isGM) {
-      const roll = CoC7Check.fromRollString(rollString)
-      const participants = this.system.participants
-        ? foundry.utils.duplicate(this.system.participants)
-        : []
-      const index = participants.findIndex(p => p.rollUuid === roll.uuid)
-      if (index >= 0) {
-        participants[index].speedCheck.rollDataString = roll.JSONRollString
-        await this.update({ 'system.participants': participants })
-      }
-    } else {
-      const data = {
-        data: rollString,
-        type: 'invoke',
-        method: 'updateRoll',
-        item: this.uuid
-      }
-      game.socket.emit('system.CoC7', data)
+      await this.parent.update({ 'system.participants': participants, 'system.locations.list': locations })
     }
   }
 
-  // handle locations
-  get locations () {
-    const locations = this.started
-      ? this.system.locations.list
-        ? foundry.utils.duplicate(this.system.locations.list)
-        : []
-      : this.initTrack
-    this.processLocations(locations)
+  /**
+   * Convert one action into a bonus die
+   * @param {string} participantUuid
+   */
+  async cautiousApproach (participantUuid) {
+    const participants = foundry.utils.duplicate(this.participants)
+    const offset = participants.findIndex(p => p.uuid === participantUuid)
+    if (offset === -1) {
+      /* // FoundryVTT V12 */
+      ui.notifications.error(game.i18n.format('CoC7.ParticipantUuidNotFound', { participantUuid }))
+      return
+    }
+    if (participants[offset].bonusDice >= CoC7DicePool.maxDiceBonus) {
+      /* // FoundryVTT V12 */
+      ui.notifications.error(game.i18n.format('CoC7.ErrorBeneficiaryAtMaxBonus', { name: participants[offset].name }))
+      return
+    }
+    if (participants[offset].currentMovementActions < 1) {
+      /* // FoundryVTT V12 */
+      ui.notifications.error(game.i18n.format('CoC7.ParticipantNotEnoughMovement', { assistantUuid: participantUuid, actions: participants[offset].currentMovementActions }))
+      return
+    }
+    participants[offset].bonusDice++
+    participants[offset].currentMovementActions--
+    await this.parent.update({ 'system.participants': participants })
+  }
+
+  /**
+   * Remove a single bonus die?
+   * @param {string} participantUuid
+   * @param {integer} diceNumber
+   */
+  async toggleBonusDice (participantUuid, diceNumber) {
+    const participants = foundry.utils.duplicate(this.participants)
+    const offset = participants.findIndex(p => p.uuid === participantUuid)
+    if (offset === -1) {
+      /* // FoundryVTT V12 */
+      ui.notifications.error(game.i18n.format('CoC7.ParticipantUuidNotFound', { participantUuid }))
+      return
+    }
+    participants[offset].bonusDice--
+    await this.parent.update({ 'system.participants': participants })
+  }
+
+  /**
+   * Trigger Chat Message for selected location
+   * @param {string} locationId
+   */
+  activeParticipantObstacleCheck (locationId) {
+    CoC7ChatChaseObstacle.createMessage({ chaseUuid: this.parent.uuid, locationId, participantId: this.participants.find(p => p.active).uuid, forward: locationId !== this.activeLocation.uuid })
+  }
+
+  /**
+   * Process callback
+   * @param {CoC7Check} check
+   */
+  async updateRoll (check) {
+    if (check.isRolled) {
+      if (this.parent.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)) {
+        switch (check.callbackContext.type) {
+          case 'speedCheck':
+            {
+              const participants = foundry.utils.duplicate(this.participants)
+              const offset = participants.findIndex(l => l.uuid === check.callbackContext.participant)
+              if (offset > -1) {
+                const chatData = await check.getChatData()
+                delete chatData.content
+                for (const offset in chatData.rolls) {
+                  chatData.rolls[offset] = JSON.stringify(chatData.rolls[offset])
+                }
+                participants[offset].speedCheck.checkData = chatData
+                await this.parent.update({ 'system.participants': participants })
+              }
+            }
+            break
+        }
+      } else {
+        CoC7SystemSocket.requestKeeperAction({
+          type: 'callbackCheck',
+          messageId: check.message.id
+        })
+      }
+    }
+  }
+
+  /**
+   * Process and get all locations
+   * @returns {object}
+   */
+  async allLocations () {
+    const locations = foundry.utils.duplicate(this.locations.list)
+    if (locations.length && !this.started && this.startingRange > 0) {
+      locations.unshift(...Array.apply(null, Array(this.startingRange)).map(l => {
+        return {
+          uuid: foundry.utils.randomID(),
+          initialLocation: true,
+          participants: []
+        }
+      }))
+      const participants = await this.allParticipants()
+      for (const participant of participants.all) {
+        if (participant.chaser) {
+          locations[participant.adjustedMov - participants.minChaserMov].participants.push(participant.uuid)
+        } else {
+          locations[participant.adjustedMov - participants.minPreyMov + this.startingRange + this.startingIndex].participants.push(participant.uuid)
+        }
+      }
+    }
     return locations
   }
 
-  getLocationData (locationUuid, { duplicateData = true } = {}) {
-    const locations = duplicateData
-      ? foundry.utils.duplicate(this.locations)
-      : this.locations
-    return locations.find(l => locationUuid === l.uuid)
+  /**
+   * Set dynamic options on location
+   * @param {integer} offset
+   * @returns {object}
+   */
+  #processLocation (offset) {
+    const location = foundry.utils.duplicate(this.locations.list[offset] ?? false)
+    if (location) {
+      location.hasCoordinates = location.coordinates.x && location.coordinates.y
+      location.hasPrevious = offset > 0
+      location.hasNext = offset < this.locations.list.length
+    }
+    return location
   }
 
-  processLocations (locations) {
-    if (!locations?.length) return
-    locations[0].first = true
-
-    for (let index = 0; index < locations.length; index++) {
-      const classes = []
-      const location = locations[index]
-      if (!location.name) classes.push('empty')
-      if (location.active) classes.push('active')
-      if (location.init && !this.started) classes.push('init')
-      location.cssClasses = classes.join(' ')
-    }
-
-    if (locations.length > 1) locations[locations.length - 1].last = true
-
-    locations.forEach(l => {
-      if (l.participants && l.participants.length) {
-        l.participants = l.participants.filter(p => !(p === null))
-        for (let i = 0; i < l.participants.length; i++) {
-          const elem = l.participants[i] // Init track = only uuid, update location list change for uuid
-
-          // ui.notifications.error(`Type : ${typeof elem}`)
-          let p
-          if (typeof elem === 'string' || elem instanceof String) {
-            p = this.system.participants.find(p => elem === p.uuid) // Retrieve participant data from list.
-          } else if (elem?.constructor?.name === '_participant') {
-            p = undefined // participant is already processed.
-            ui.notifications.warn(
-              game.i18n.localize('CoC7.ParticipantAlreadyProcessed')
-            )
-          } else p = undefined
-
-          if (typeof p !== 'undefined') {
-            l.participants[i] = new _participant(p) // replace uuid with _participant
-          } else {
-            // participants.push( null)
-            console.error(
-              'Undefined paticipant while processing participants array'
-            )
-          }
-        }
-        l.participants.sort(sortByRoleAndDex) // TODO : test if sorting works
-      }
-    })
-  }
-
-  get initTrack () {
-    if (
-      !this.system.locations.list ||
-      this.system.locations.list.length === 0
-    ) {
-      return undefined
-    }
-
-    const locations = [] // !!!!!!! locations vs init locations !!!
-
-    const init = this.startingLine
-    let locationsIndexStart, initIndexStart, locationsLength
-    if (init.length <= 0) locationsIndexStart = 0
-    else if (this.system.startingIndex >= init.length) {
-      locationsIndexStart = 0
-    } else locationsIndexStart = init.length - this.system.startingIndex
-
-    if (this.system.startingIndex <= 0) initIndexStart = 0
-    else if (this.system.startingIndex <= init.length) initIndexStart = 0
-    else initIndexStart = this.system.startingIndex - init.length
-
-    if (locationsIndexStart === 0) {
-      locationsLength = this.system.locations.list.length
-    } else {
-      locationsLength =
-        this.system.locations.list.length + locationsIndexStart
-    }
-
-    if (init.length !== 0) {
-      if (this.system.startingIndex < 0) {
-        for (
-          let index = 0;
-          index < Math.abs(this.system.startingIndex);
-          index++
-        ) {
-          init.push({
-            uuid: this.generateNewUuid(),
-            init: true,
-            participants: []
-          })
-        }
-      }
-    }
-
-    const chaseLocations = foundry.utils.duplicate(this.system.locations)
-    for (let index = 0; index < locationsLength; index++) {
-      let location = {}
-      const participants = []
-      if (
-        index >= locationsIndexStart &&
-        index - locationsIndexStart < chaseLocations.list.length
-      ) {
-        location = foundry.utils.duplicate(
-          chaseLocations.list[index - locationsIndexStart]
-        )
-        location.init = false
-        location.participants?.forEach(p => {
-          if (p != null) participants.push(p)
-        })
-      }
-      if (index >= initIndexStart && index - initIndexStart < init.length) {
-        foundry.utils.mergeObject(location, init[index - initIndexStart], {
-          overwrite: false
-        })
-
-        init[index - initIndexStart].participants?.forEach(p => {
-          if (p != null) participants.push(p)
-        })
-
-        location.participants = participants
-      }
-      location.first = false
-      location.end = false
-      locations.push(location)
-    }
-
-    return locations
-  }
-
-  get startingLine () {
-    // Get preys and check for escaped
-    const preys = this.system.includeEscaped
-      ? this.preys
-      : this.preys?.filter(p => !p.data.escaped)
-    // Get chasers
-    const chasers = this.system.includeLatecomers
-      ? this.chasers
-      : this.chasers?.filter(c => !c.data.excluded)
-
-    // Recursivity !! with getParticipantLocation and get participants
-
-    // If no prey or no chasser
-    // if (0 == chasers.length) {
-    //   ui.notifications.warn('No chasers')
-    //   return undefined
-    // }
-    // if (0 == preys.length) {
-    //   ui.notifications.warn('No preys')
-    //   return undefined
-    // }
-
-    // Build starting track
-    const chaseTrack = []
-
-    const chasersMinMov = this.findMinMov(chasers)
-    const chasersMaxMov = this.findMaxMov(chasers)
-    const preysMinMov = this.findMinMov(preys)
-    const preysMaxMov = this.findMaxMov(preys)
-
-    if (chasersMinMov !== -1 && chasersMaxMov !== -1) {
-      // Add chasers to the track.
-      for (let mov = chasersMinMov; mov <= chasersMaxMov; mov++) {
-        // Find all with that mov
-        const location = {
-          uuid: this.generateNewUuid(),
-          init: true,
-          participants: []
-        }
-        const locationParticipantsList = chasers
-          .filter(p => mov === p.adjustedMov)
-          .sort((a, b) => a.dex - b.dex)
-        locationParticipantsList.forEach(p =>
-          location.participants.push(p.uuid)
-        )
-        chaseTrack.push(location)
-      }
-
-      // Add space between chasers and preys.
-      for (let index = 0; index < this.system.startingRange; index++) {
-        chaseTrack.push({
-          uuid: this.generateNewUuid(),
-          init: true,
-          participants: []
-        })
-      }
-    }
-
-    if (preysMinMov !== -1 && preysMaxMov !== -1) {
-      // Add preys to the track.
-      for (let mov = preysMinMov; mov <= preysMaxMov; mov++) {
-        // Find all with that mov
-        const location = {
-          uuid: this.generateNewUuid(),
-          init: true,
-          participants: []
-        }
-        const locationParticipantsList = preys
-          .filter(p => mov === p.adjustedMov)
-          .sort((a, b) => a.dex - b.dex)
-        locationParticipantsList.forEach(p =>
-          location.participants.push(p.uuid)
-        )
-        chaseTrack.push(location)
-      }
-    }
-
-    return chaseTrack
-  }
-
-  async updateLocationsList (list, { render = true } = {}) {
-    // Remove all unnecessary items (cssClass, )
-    const updatedList = this.cleanLocationsList(list)
-    await this.update(
-      { 'system.locations.list': updatedList },
-      { render }
-    )
-  }
-
-  async updateLocation (locationUuid, updateData, { render = true } = {}) {
-    const locations = foundry.utils.duplicate(this.system.locations.list)
-    const update = foundry.utils.duplicate(updateData)
-    const locationIndex = locations.findIndex(l => locationUuid === l.uuid)
-    if (locationIndex === -1) return undefined
-    if (update.uuid) delete update.uuid
-    foundry.utils.mergeObject(locations[locationIndex], update, {
-      overwrite: true
-    })
-    await this.updateLocationsList(locations, { render })
-  }
-
-  cleanLocationsList (list) {
-    const updatedList = foundry.utils.duplicate(list)
-    const partipantsUuidArray = this.system.participants.map(p => p.uuid)
-
-    updatedList.forEach(l => {
-      // delete l.active
-      delete l.cssClasses
-      delete l.first
-      delete l.last
-      delete l.end
-      if (l.participants && l.participants.length) {
-        for (let i = 0; i < l.participants.length; i++) {
-          l.participants = l.participants.filter(p => !(p === null)) // Remove null elements
-          // Replace _Participants by uuid
-          if (l.participants[i].data?.uuid) {
-            l.participants[i] = l.participants[i].data.uuid
-          }
-        }
-
-        // Remove unkown particicpants
-        l.participants = l.participants.filter(uuid =>
-          partipantsUuidArray.includes(uuid)
-        )
-      }
-    })
-
-    return updatedList
-  }
-
-  async insertLocation (
-    insertAtUuid,
-    { shift = 0, locData = {}, render = true } = {}
-  ) {
-    const locations = foundry.utils.duplicate(this.system.locations.list)
-    locations.forEach(l => {
-      delete l.active
-    })
-    const locationIndex = locations.findIndex(l => insertAtUuid === l.uuid)
-    if (locationIndex === -1) {
-      return false
-    }
-    const newLocationIndex = locationIndex + shift
-    if (newLocationIndex > locations.length) return false
-    const newLocation = foundry.utils.duplicate(locData)
-    newLocation.uuid = this.generateNewUuid()
-    newLocation.init = locations[locationIndex].init
-    newLocation.active = true
-    locations.splice(newLocationIndex, 0, newLocation)
-    return await this.updateLocationsList(locations, { render })
-  }
-
-  async removeLocation (uuid, { render = true } = {}) {
-    const locations = foundry.utils.duplicate(this.system.locations.list)
-    const locationIndex = locations.findIndex(l => uuid === l.uuid)
-    locations.splice(locationIndex, 1)
-    locations.forEach(l => {
-      delete l.active
-    })
-    if (locations.length > 0) {
-      let index = locationIndex - 1
-      if (index < 0) index = 0
-      locations[index].active = true
-    }
-    return await this.updateLocationsList(locations, { render })
-  }
-
-  async activateLocation (
-    locationUuid,
-    { scrollToLocation = true, render = true } = {}
-  ) {
-    const updateData = this.getActivateLocationUpdateData(locationUuid, {
-      scrollToLocation
-    })
-    await this.update(updateData, { render })
-  }
-
-  getClearActiveLocationUpdateData ({
-    scrollToLocation = true,
-    html = null
-  } = {}) {
-    const updateData = {}
-    const locations = this.system.locations.list
-      ? foundry.utils.duplicate(this.system.locations.list)
-      : []
-    locations.forEach(l => {
-      delete l.active
-    })
-    updateData['system.locations.list'] = this.cleanLocationsList(locations)
-
-    if (scrollToLocation) {
-      updateData['system.scroll.chaseTrack.from'] = 0
-      updateData['system.scroll.chaseTrack.to'] = -1
-    }
-    return updateData
-  }
-
-  getActivateLocationUpdateData (
-    locationUuid,
-    { scrollToLocation = true, html = null } = {}
-  ) {
-    if (!locationUuid) {
-      return this.getClearActiveLocationUpdateData({
-        scrollToLocation
-      })
-    }
-    const updateData = {}
-    const locations = this.system.locations.list
-      ? foundry.utils.duplicate(this.system.locations.list)
-      : []
-    locations.forEach(l => {
-      delete l.active
-      if (locationUuid === l.uuid) l.active = true
-    })
-    updateData['system.locations.list'] = this.cleanLocationsList(locations)
-    // await this.updateLocationsList(locations, { render: false })
-    if (scrollToLocation) {
-      updateData['system.scroll.chaseTrack.from'] =
-        this.chaseTrackCurrentScrollPosition
-      updateData['system.scroll.chaseTrack.to'] =
-        this.getChaseTrackLocationScrollPosition(locationUuid, { html })
-      // await this.setchaseTrackScroll({
-      //   from: this.chaseTrackCurrentScrollPosition,
-      //   to: this.chaseTrackActiveLocationScrollPosition
-      // })
-    }
-    return updateData
-  }
-
-  // Locations navigation
+  /**
+   * Get new location
+   * @returns {object}
+   */
   get activeLocation () {
-    if (!this.locations) return undefined
-    const location = this.locations.find(l => l.active)
-    if (!location) return undefined
-    if (location.participants?.length) location.hasParticipant = true
-    const actor = this.activeActor
-    if (actor) {
-      const test = actor.find(location.obstacleDetails?.checkName)
-      if (test) {
-        location.activeActorHasSkill = true
-        location.activeActorTest = test
-      }
+    const offset = this.locations.list.findIndex(l => l.active)
+    if (offset === -1) {
+      return undefined
     }
-    return location
+    return this.#processLocation(offset)
   }
 
-  get previousLocation () {
-    if (!this.locations) return undefined
-    const activeIndex = this.locations.findIndex(l => l.active)
-    if (activeIndex === -1) return undefined
-    if (activeIndex === 0) return undefined
-    const location = this.locations[activeIndex - 1]
-    const actor = this.activeActor
-    if (actor) {
-      const test = actor.find(location.obstacleDetails?.checkName)
-      if (test) {
-        location.activeActorHasSkill = true
-        location.activeActorTest = test
-      }
-    }
-    return location
-  }
-
+  /**
+   * Get new location
+   * @returns {object}
+   */
   get nextLocation () {
-    if (!this.locations) return undefined
-    const activeIndex = this.locations.findIndex(l => l.active)
-    if (activeIndex === -1) return undefined
-    if (activeIndex === this.locations.length - 1) return undefined
-    const location = this.locations[activeIndex + 1]
-    const actor = this.activeActor
-    if (actor) {
-      const test = actor.find(location.obstacleDetails?.checkName)
-      if (test) {
-        location.activeActorHasSkill = true
-        location.activeActorTest = test
-      }
+    const offset = this.locations.list.findIndex(l => l.active)
+    if (offset === -1) {
+      return undefined
     }
-    return location
+    return this.#processLocation(offset + 1)
   }
 
-  async locatorDropped (data) {
-    await this.setLocationCoordinates(
-      data.locationUuid,
-      data.x,
-      data.y,
-      data.scene
-    )
-  }
-
-  async setLocationCoordinates (
-    locationUuid,
-    x,
-    y,
-    sceneId,
-    { render = true } = {}
-  ) {
-    const locations = foundry.utils.duplicate(this.system.locations.list)
-    const locationIndex = locations.findIndex(l => locationUuid === l.uuid)
-    locations[locationIndex].coordinates = { x, y, scene: sceneId }
-
-    return await this.updateLocationsList(locations, { render })
-  }
-
-  async clearActiveLocationCoordinates ({ render = true } = {}) {
-    if (this.activeLocation) {
-      return await this.clearLocationCoordinates(this.activeLocation.uuid, {
-        render
-      })
+  /**
+   * Set scene position information for location
+   * @param {object} options
+   * @param {string} options.locationId
+   * @param {integer} options.x
+   * @param {integer} options.y
+   * @param {string} options.sceneUuid
+   */
+  async setLocationCoordinates ({ locationId, x, y, sceneUuid } = {}) {
+    const locations = foundry.utils.duplicate(this.locations.list)
+    const offset = locations.findIndex(l => l.uuid === locationId)
+    if (offset === -1) {
+      return
     }
+    locations[offset].coordinates = { x, y, scene: sceneUuid }
+    await this.parent.update({ 'system.locations.list': locations })
   }
 
-  async clearLocationCoordinates (locationUuid, { render = true } = {}) {
-    const locations = foundry.utils.duplicate(this.system.locations.list)
-    const locationIndex = locations.findIndex(l => locationUuid === l.uuid)
-    delete locations[locationIndex].coordinates
-
-    return await this.updateLocationsList(locations, { render })
+  /**
+   * Clear scene position information for active location
+   */
+  async clearActiveLocationCoordinates () {
+    const locations = foundry.utils.duplicate(this.locations.list)
+    const offset = locations.findIndex(l => l.active)
+    if (offset === -1) {
+      return
+    }
+    locations[offset].coordinates = { x: null, y: null, scene: null }
+    await this.parent.update({ 'system.locations.list': locations })
   }
 
-  // get activeParticipantHaveActiveLocationSkill (){
-  //   if( !this.activeActor) return false
-  //   if( this.activeActor.find( this.activeLocation.obstacleDetails?.checkName)) return true
-  //   return false
-  // }
-
-  // Handle mechanics
+  /**
+   * Start the chase
+   */
   async cutToTheChase () {
     if (!this.allHaveSpeedRoll) {
-      ui.notifications.warn(game.i18n.localize('CoC7.NotAllHaveSpeedRoll'))
+      ui.notifications.warn('CoC7.NotAllHaveSpeedRoll', { localize: true })
       return
     }
-    if (this.actualParticipants?.length < 2) {
-      ui.notifications.warn(game.i18n.localize('CoC7.NeedMin2Participants'))
+    const participants = await this.allParticipants()
+    const hasChaserAndPrey = {
+      chaser: false,
+      prey: false
+    }
+    const movementActions = {}
+    for (const participant of participants.all) {
+      movementActions[participant.uuid] = participant.actions
+      hasChaserAndPrey[participant.chaser ? 'chaser' : 'prey'] = true
+    }
+    participants.all.sort(CoC7Utilities.sortByInitiative)
+    const firstParticipantId = participants.all[0].uuid
+    if (!Object.values(hasChaserAndPrey).reduce((c, b) => c && b, true)) {
+      ui.notifications.warn('CoC7.NeedMin2Participants', { localize: true })
       return
     }
     if (this.allHaveValidMov) {
-      // TODO : Check for speed roll ??
-
-      // Calculate movement actions
-      const participants = this.participants
-      const minMov = this.findMinMov(this.actualParticipants)
-      participants.forEach(p => {
-        // p.data.movementAction = 1 + (p.adjustedMov - minMov)
-        p.calculateMovementActions(minMov)
-        p.currentMovementActions = p.movementAction
-        p.bonusDice = 0
-      })
-      await this.updateParticipants(participants, { render: false })
-      await this.updateLocationsList(this.locations, { render: false })
-      await this.start()
+      const locations = await this.allLocations()
+      const participants = foundry.utils.duplicate(this.participants)
+      for (const offset in participants) {
+        participants[offset].active = participants[offset].uuid === firstParticipantId
+        participants[offset].currentMovementActions = movementActions[participants[offset].uuid]
+      }
+      await this.parent.update({ 'system.started': true, 'system.locations.list': locations, 'system.participants': participants })
+      // Resize and select tab for this sheet
+      for (const instances of foundry.applications.instances) {
+        if (instances[1] instanceof CoC7ModelsItemChaseSheet && instances[1].document.uuid === this.parent.uuid) {
+          const currentWidth = instances[1].position.width
+          const minWidth = CoC7Utilities.remToPx(40)
+          const participantWidth = CoC7Utilities.remToPx(participants.length * 12.25 + (participants.length - 1) * 0.5 + 1 + 1) + 1 // initiative-block each + each gap + padding on tab + 1px
+          const maxWidth = document.body.clientWidth
+          instances[1].render({ tab: { primary: 'setup' }, position: { width: Math.min(maxWidth, Math.max(currentWidth, minWidth, participantWidth)) } })
+        }
+      }
     }
   }
 
+  /**
+   * Stop the chase
+   */
   async restart () {
-    // await this.cleanLocations() //Transferred in updateLocationList
-    const locations = this.locations.filter(l => !l.init)
-    for (let i = 0; i < locations.length; i++) {
-      if (locations[i].participants) locations[i].participants = []
-      if (locations[i].active) delete locations[i].active
+    const locations = foundry.utils.duplicate(this.locations.list)
+    const participants = foundry.utils.duplicate(this.participants)
+    locations.splice(0, locations.length - this.locations.total)
+    for (const offset in locations) {
+      locations[offset].participants = []
+      locations[offset].active = false
     }
-    const participantsData = this.system.participants
-      ? foundry.utils.duplicate(this.system.participants)
-      : []
-    for (let i = 0; i < participantsData.length; i++) {
-      if (participantsData[i].active) delete participantsData[i].active
+    for (const offset in participants) {
+      participants[offset].bonusDice = 0
+      participants[offset].currentMovementActions = 0
+      participants[offset].hasAGunReady = false
+      participants[offset].active = false
     }
-    await this.setchaseTrackScroll(0, 0, { render: false })
-    await this.updateLocationsList(locations, { render: false })
-    await this.updateParticipants(participantsData, { render: false })
-    await this.stop()
+    await this.parent.update({ 'system.started': false, 'system.locations.list': locations, 'system.participants': participants })
+    // Resize and select tab for this sheet
+    for (const instances of foundry.applications.instances) {
+      if (instances[1] instanceof CoC7ModelsItemChaseSheet && instances[1].document.uuid === this.parent.uuid) {
+        instances[1].render({ position: { width: instances[1].options.position.width } })
+      }
+    }
   }
 
-  getLocationShift (locationUuid, { skip = 1 } = {}) {
-    const locations = foundry.utils.duplicate(this.system.locations.list)
-    const originIndex = locations.findIndex(l => locationUuid === l.uuid)
-    const destinationIndex = originIndex + skip
-    if (locations.length === 0) return null
-    if (destinationIndex >= locations.length) {
-      return locations[locations.length - 1]
-    }
-    if (destinationIndex < 0) return locations[0]
-    return locations[destinationIndex] // ERROR MOVE 2 FOR SKIP +1
-  }
-
-  async removeParticipant (participantUuid, { render = true } = {}) {
-    const p = this.getParticipant(participantUuid)
-    await Dialog.confirm({
-      title: game.i18n.localize('CoC7.RemoveParticipant'),
-      content: `<p>${game.i18n.format('CoC7.RemoveParticipantHint', {
-        name: p.name
-      })}</p>`,
-      yes: async () => {
-        const participantsData = foundry.utils.duplicate(
-          this.system.participants
-        )
-        const newParticipantsData = participantsData.filter(
-          p => participantUuid !== p.uuid
-        )
-        const locationsData = foundry.utils.duplicate(
-          this.system.locations.list
-        )
-        locationsData.forEach(l => {
-          if (l.participants && l.participants.length) {
-            l.participants = l.participants.filter(
-              uuid => participantUuid !== uuid
-            )
+  /**
+   * Remove participant from list
+   * @param {string} participantUuid
+   */
+  async removeParticipant (participantUuid) {
+    const participants = foundry.utils.duplicate(this.participants)
+    const offset = participants.findIndex(p => p.uuid === participantUuid)
+    if (offset > -1) {
+      new foundry.applications.api.DialogV2({
+        window: { title: 'CoC7.RemoveParticipant' },
+        content: '<p>' + game.i18n.format('CoC7.RemoveParticipantHint', { name: participants[offset].name }) + '</p>',
+        buttons: [{
+          action: 'cancel',
+          label: 'No',
+          icon: 'fa-solid fa-ban'
+        }, {
+          action: 'ok',
+          label: 'Yes',
+          icon: 'fa-solid fa-check',
+          callback: async () => {
+            const newActive = (participants[offset].active)
+            participants.splice(offset, 1)
+            const locations = foundry.utils.duplicate(this.locations.list)
+            const offset2 = locations.findIndex(l => l.participants.includes(participantUuid))
+            if (offset2 > -1) {
+              const offset3 = locations[offset2].participants.findIndex(p => participantUuid)
+              if (offset2 > -1) {
+                locations[offset2].participants.splice(offset3, 1)
+              }
+            }
+            await this.parent.update({ 'system.participants': participants, 'system.locations.list': locations }).then(async (chase) => {
+              if (newActive) {
+                const participantUuid = await chase.system.nextActiveParticipant()
+                await this.activateParticipant(participantUuid)
+              }
+            })
           }
-        })
-        await this.updateParticipants(newParticipantsData, { render: false })
-        await this.updateLocationsList(locationsData, { render })
-      }
-    })
-  }
-
-  async addParticipant (
-    participant,
-    {
-      render = true,
-      locationUuid = null,
-      recalculateMovementActions = true,
-      update = false
-    } = {}
-  ) {
-    const participantsData = this.system.participants
-      ? foundry.utils.duplicate(this.system.participants)
-      : []
-
-    if (participant.data.chaseUuid) delete participant.data.chaseUuid
-    if (participant.data.locationUuid) delete participant.data.locationUuid
-    if (participant.data.update) delete participant.data.update
-
-    if (!participant.uuid) {
-      let unique = false
-      while (!unique) {
-        participant.data.uuid = foundry.utils.randomID(16)
-        unique =
-          participantsData.filter(p => p.uuid === participant.uuid).length === 0
-      }
-    }
-
-    if (update) {
-      if (participant.currentMovementActions > participant.movementAction) {
-        participant.currentMovementActions = participant.movementAction
-      }
-      const index = participantsData.findIndex(p => p.uuid === participant.uuid)
-      participantsData[index] = participant.data
-    } else participantsData.push(participant.data)
-
-    await this.updateParticipants(participantsData, {
-      render: render && !this.started && !this.recalculateMovementActions
-    })
-
-    if (recalculateMovementActions) {
-      const slowest = this.slowestParticipant?.adjustedMov
-      const participants = this.participants
-      participants.forEach(p => p.calculateMovementActions(slowest))
-      await this.updateParticipants(participants, {
-        render: render && !this.started
-      })
-    }
-
-    if (
-      this.started &&
-      !(participant.data.escaped || participant.data.excluded)
-    ) {
-      const locationsData = this.system.locations.list
-        ? foundry.utils.duplicate(this.system.locations.list)
-        : []
-
-      if (locationsData.length === 0) {
-        ui.notifications.error(
-          game.i18n.localize('CoC7.ErrorEmptyLocationsList')
-        )
-      }
-
-      let locationIndex = locationsData.findIndex(l => locationUuid === l.uuid)
-      if (locationIndex === -1) locationIndex = 0
-      if (!locationsData[locationIndex].participants) {
-        locationsData[locationIndex].participants = []
-      }
-      if (
-        locationsData[locationIndex].participants.findIndex(
-          p => p === participant.uuid
-        ) === -1
-      ) {
-        locationsData[locationIndex].participants.push(participant.uuid)
-      }
-      await this.updateLocationsList(locationsData, { render })
+        }]
+      }).render({ force: true })
     }
   }
 
-  async editParticipant (
-    participantUuid,
-    {
-      useMovementActions = true,
-      scrollToLocation = true,
-      activateLocation = true,
-      activateParticipant = true,
-      render = true
-    } = {}
-  ) {}
+  /**
+   * Add/Edit participant to chase optionally at location
+   * @param {object} participant
+   * @param {object} options
+   * @param {string|null} options.locationId
+   */
+  async addParticipant (participant, { locationId = null } = {}) {
+    const locations = foundry.utils.duplicate(this.locations.list)
+    const participants = foundry.utils.duplicate(this.participants)
+    if (participant.uuid) {
+      const participantIndex = participants.findIndex(p => p.uuid === participant.uuid)
+      if (participantIndex > -1) {
+        foundry.utils.mergeObject(participants[participantIndex], participant)
+      }
+    } else {
+      participant.uuid = foundry.utils.randomID()
+      participants.push(participant)
+      if (locationId) {
+        const locationsIndex = locations.findIndex(l => l.uuid === locationId)
+        locations[locationsIndex].participants.push(participant.uuid)
+      }
+    }
+    await this.parent.update({ 'system.participants': participants, 'system.locations.list': locations })
+  }
 
   /**
    * Move a participant for a number of locations.
-   * @param {string|null} participantUuid     Uuid of participant
-   * @param {*} locationMoved                 Number of locations movred
-   * @returns {number}                        Total number of locations crossed
+   * @param {string} participantId
+   * @param {integer} locationsMoved
+   * @returns {integer}
    */
-  async moveParticipant (
-    participantUuid,
-    locationMoved,
-    {
-      useMovementActions = true,
-      scrollToLocation = true,
-      activateLocation = true,
-      activateParticipant = true,
-      render = true
-    } = {}
-  ) {
-    // const selector = `#item-${this.id} .chase-track`
-    // ui.notifications.info( `moveParticipant : Jquery root: ${$(':root').find(selector).scrollLeft()}`)
-    let modified = false
-    const locations = foundry.utils.duplicate(this.system.locations.list)
-    const originIndex = locations.findIndex(l =>
-      l.participants?.includes(participantUuid)
-    )
-    let destinationIndex = originIndex + locationMoved
-    if (destinationIndex > locations.length - 1) {
-      destinationIndex = locations.length - 1
+  async moveParticipantLocations (participantId, locationsMoved) {
+    const locations = foundry.utils.duplicate(this.locations.list)
+    const offset = locations.findIndex(l => l.participants.includes(participantId))
+    if (offset === -1) {
+      /* // FoundryVTT V12 */
+      ui.notifications.error(game.i18n.format('CoC7.ParticipantUuidNotFound', { participantUuid: participantId }))
+      return
     }
-
-    if (destinationIndex < 0) {
-      destinationIndex = 0
-    }
-
-    const totalMove = destinationIndex - originIndex
-    const participant = this.getParticipant(participantUuid)
-    const participantsData = foundry.utils.duplicate(
-      this.system.participants
-    )
-    const participantIndex = participantsData.findIndex(
-      p => participantUuid === p.uuid
-    )
-
-    if (useMovementActions) {
-      if (!participant) {
-        ui.notifications.error(
-          game.i18n.format('CoC7.ParticipantUuidNotFound', {
-            participantUuid: this.participantUuid
-          })
-        )
-        return undefined
+    const newLocation = Math.min(Math.max(0, offset + locationsMoved), locations.length - 1)
+    const totalMove = Math.abs(newLocation - offset)
+    if (totalMove > 0) {
+      const participants = foundry.utils.duplicate(this.participants)
+      const participantIndex = participants.findIndex(p => p.uuid === participantId)
+      if (participants[participantIndex].currentMovementActions < totalMove) {
+        /* // FoundryVTT V12 */
+        ui.notifications.error(game.i18n.format('CoC7.ParticipantNotEnoughMovement', { assistantUuid: participantId, actions: participants[participantIndex].currentMovementActions }))
+        return
       }
-      if (participant.currentMovementActions < Math.abs(totalMove)) {
-        ui.notifications.error(
-          game.i18n.format('CoC7.ParticipantNotEnoughMovement', {
-            assistantUuid: participantUuid,
-            actions: participant.currentMovementActions
-          })
-        )
-        return undefined
+      const offset2 = locations[offset].participants.findIndex(p => participantId)
+      locations[offset].participants.splice(offset2, 1)
+      locations[newLocation].participants.push(participantId)
+      participants[participantIndex].currentMovementActions -= totalMove
+      if (typeof locations[newLocation].coordinates.x && typeof locations[newLocation].coordinates.y === 'number') {
+        this.moveTokenToLocation(participantId, locations[newLocation].coordinates)
       }
-      participant.alterMovementActions(0 - Math.abs(totalMove))
-      participantsData[participantIndex] = foundry.utils.duplicate(
-        participant.data
-      )
-      await this.update(
-        { 'system.participants': participantsData },
-        { render: false }
-      )
-      modified = true
+      await this.parent.update({ 'system.participants': participants, 'system.locations.list': locations })
     }
-
-    if (totalMove !== 0) {
-      await this.moveParticipantToLocation(
-        participantUuid,
-        locations[destinationIndex].uuid,
-        { render: false }
-      )
-      modified = true
-    }
-
-    if (activateParticipant) {
-      await this.activateParticipant(participantUuid, {
-        scrollToLocation,
-        activateLocation,
-        render: false
-      })
-      modified = true
-    }
-
-    if (activateLocation && !activateParticipant) {
-      await this.activateLocation(locations[destinationIndex].uuid, {
-        scrollToLocation,
-        render: false
-      })
-      modified = true
-    }
-
-    if (modified && render) await this.sheet.render(true)
     return totalMove
   }
 
-  async moveParticipantToLocation (
-    participantUuid,
-    locationUuid,
-    {
-      scrollToLocation = true,
-      activateLocation = true,
-      animate = null,
-      moveToken = true,
-      render = true
-    } = {}
-  ) {
-    const locations = foundry.utils.duplicate(this.system.locations.list)
-
-    // Find destination location.
-    const destination = locations.find(l => locationUuid === l.uuid)
-    if (!destination) {
-      console.error(
-        `Failed to move ${participantUuid}. Location ${locationUuid} unknown`
-      )
-      return
-    }
-
-    // Find origin location
-    const origin = locations.find(l =>
-      l.participants?.includes(participantUuid)
-    )
-
-    if (!origin) {
-      console.error(`Failed to find ${participantUuid} in locations`)
-      return
-    }
-
-    if (!destination.participants) destination.participants = []
-    if (destination.participants.includes(participantUuid)) return // moving particpant to a location he already occupies
-    destination.participants.push(participantUuid)
-    // destination.participants.sort(sortByRoleAndDex)
-
-    const oldParticipantsList = origin.participants.filter(
-      p => participantUuid !== p
-    )
-    origin.participants = oldParticipantsList
-
-    if (moveToken && destination.coordinates) {
-      const participant = this.getParticipant(participantUuid)
-      let particpantDocument = CoC7Utilities.getDocumentFromKey(
-        participant?.data?.docUuid
-      )
-      // Find token
-      if (particpantDocument && !(particpantDocument instanceof TokenDocument || particpantDocument?.object instanceof Token)) {
-        const foundTokens = canvas.scene.tokens.filter(d => d.actorLink && d.actor?.id === particpantDocument.id)
-        if (foundTokens.length === 1) {
-          particpantDocument = foundTokens[0]
+  /**
+   * Move participant to location
+   * @param {string} participantId
+   * @param {string} locationId
+   * @param {object} options
+   * @param {boolean} options.render
+   */
+  async moveParticipantToLocation (participantId, locationId, { render = true } = {}) {
+    const locations = foundry.utils.duplicate(this.locations.list)
+    const oldLocation = locations.findIndex(l => l.participants.includes(participantId))
+    const newLocation = locations.findIndex(l => l.uuid === locationId)
+    if (oldLocation > -1 && newLocation > -1) {
+      const offset = locations[oldLocation].participants.findIndex(p => p === participantId)
+      if (offset > -1) {
+        locations[oldLocation].participants.splice(offset, 1)
+        locations[newLocation].participants.push(participantId)
+        if (typeof locations[newLocation].coordinates.x && typeof locations[newLocation].coordinates.y === 'number') {
+          this.moveTokenToLocation(participantId, locations[newLocation].coordinates)
         }
+        await this.parent.update({ 'system.locations.list': locations }, { render })
       }
-      if (
-        particpantDocument &&
-        !(
-          /* particpantDocument.isToken || */ (
-            particpantDocument instanceof TokenDocument ||
-            particpantDocument?.object instanceof Token
-          )
-        )
-      ) {
-        console.warn('No token associated with this actor')
+    }
+  }
+
+  /**
+   * Move token to location
+   * @param {string} participantId
+   * @param {object} coordinates
+   */
+  async moveTokenToLocation (participantId, coordinates) {
+    const participantIndex = this.participants.findIndex(p => p.uuid === participantId)
+    if (participantIndex > -1) {
+      const doc = await fromUuid(this.participants[participantIndex].docUuid)
+      let token
+      if (doc.token) {
+        token = doc.token
       } else {
-        if (destination.coordinates.scene !== game.scenes.viewed.uuid) {
+        token = doc.getDependentTokens({ scene: canvas.scene }).find(doc => doc.object)
+      }
+      if (token) {
+        if (coordinates.scene !== canvas.scene.uuid) {
           console.warn('Caution the scene is not the active scene')
+          return
         }
-        if (particpantDocument.parent?.uuid !== destination.coordinates.scene) {
-          ui.notifications.error(
-            game.i18n.localize('CoC7.ErrorTokenNotOnScene')
-          )
-        } else {
-          const scene = CoC7Utilities.getDocumentFromKey(
-            destination.coordinates.scene
-          )
-          let x = destination.coordinates.x
-          const y = destination.coordinates.y
-          let targetRect = new PIXI.Rectangle(
-            x,
-            y,
-            particpantDocument.object.width,
-            particpantDocument.object.height
-          ).normalize()
-          const update = []
-          let foundFreeSpace = false
-          while (!foundFreeSpace) {
-            const overlapingToken = scene.tokens.find(t => {
-              if (t.id === particpantDocument.id) return false // You can't overlap with yourself
-              return t.object.bounds.intersects(targetRect)
-            })
-            if (overlapingToken) {
-              x = overlapingToken.object.bounds.right + 1
-              targetRect = new PIXI.Rectangle(
-                x,
-                y,
-                particpantDocument.object.width,
-                particpantDocument.object.height
-              ).normalize()
-            } else foundFreeSpace = true
-          }
-
-          update.push({
-            _id: particpantDocument.id,
-            x,
-            y
+        if (token.parent.uuid !== canvas.scene.uuid) {
+          ui.notifications.error('CoC7.ErrorTokenNotOnScene', { localize: true })
+          return
+        }
+        const targetRect = new PIXI.Rectangle(
+          coordinates.x,
+          coordinates.y,
+          Math.floor(token.object.width),
+          Math.floor(token.object.height)
+        ).normalize()
+        let overlappingToken
+        do {
+          overlappingToken = canvas.scene.tokens.find(t => {
+            if (t.uuid === token.uuid) {
+              return false
+            }
+            return t.object.bounds.overlaps(targetRect)
           })
-
-          // destination.participants?.forEach( pUuid =>{
-          //   const p = this.getParticipant(pUuid)
-          //   const pDoc = CoC7Utilities.getDocumentFromKey( p?.data?.docUuid)
-          //   if( pDoc instanceof TokenDocument && pDoc.object instanceof Token){
-          //     updates = true
-          //     update.push({
-          //       _id: pDoc.id,
-          //       x:x,
-          //       y:y
-          //     })
-          //     if( pDoc.object.width) x += pDoc.object.width
-          //   }
-          // })
-          const showTokenMovement =
-            typeof animate === 'boolean'
-              ? animate
-              : this.system.showTokenMovement
-          await particpantDocument.parent.updateEmbeddedDocuments(
-            'Token',
-            update,
-            { animate: showTokenMovement }
-          )
-        }
+          if (overlappingToken) {
+            targetRect.x = targetRect.right
+          }
+        } while (overlappingToken)
+        await token.parent.updateEmbeddedDocuments(
+          'Token',
+          [{
+            _id: token.id,
+            x: targetRect.x,
+            y: targetRect.y
+          }],
+          { animate: this.showTokenMovement }
+        )
       }
     }
-
-    await this.updateLocationsList(locations, { render })
-  }
-
-  // Handle scrolling
-  async setchaseTrackScroll ({
-    from = undefined,
-    to = -1,
-    render = true
-  } = {}) {
-    await this.update(
-      {
-        'system.scroll.chaseTrack.from':
-          undefined === from ? this.chaseTrackCurrentScrollPosition : from,
-        'system.scroll.chaseTrack.to':
-          undefined === to ? this.chaseTrackCurrentScrollPosition : to
-      },
-      { render }
-    )
-  }
-
-  get chaseTrackCurrentScrollPosition () {
-    const html = this.sheet?._element
-    if (!html) return -1
-    const chaseTrack = html[0].querySelector('.chase-track')
-    if (!chaseTrack) return -1
-    // const selector = `#item-${this.id} .chase-track`
-    // ui.notifications.info( `DATA : Jquery root: ${$(':root').find(selector).scrollLeft()}`)
-    // return $(':root').find(selector).scrollLeft()
-
-    // ui.notifications.info( `DATA : Jquery root: ${$(':root').find('#item-VNhtqxA2wJJnWStT .chase-track').scrollLeft()}.Chase track offset: ${chaseTrack.scrollLeft}, Document offset:${document.querySelector('#item-VNhtqxA2wJJnWStT').querySelector('.chase-track').scrollLeft}`)
-    return chaseTrack.scrollLeft
   }
 
   /**
-   * Return the offset position of the active location
-   * the center of the active location will be centered
-   * in the parent.
+   * Migrate old style data to new
+   * @param {object} source
+   * @returns {object}
    */
-  get chaseTrackActiveLocationScrollPosition () {
-    if (!this.activeLocation) return -1
-    return this.getChaseTrackLocationScrollPosition(this.activeLocation.uuid)
+  static migrateData (source) {
+    // Migrate description to object
+    if (typeof source.description === 'string') {
+      foundry.utils.setProperty(source, 'description.value', source.description)
+    }
+    return super.migrateData(source)
   }
-
-  getChaseTrackLocationScrollPosition (locationUuid, { html = null }) {
-    const htmlElement = html || this.sheet?._element
-    if (!htmlElement || !htmlElement[0]) return -1
-    const chaseTrack = htmlElement[0].querySelector('.chase-track')
-    if (!chaseTrack) return -1
-    const activeLocationElement = chaseTrack.querySelector(
-      `.chase-location[data-uuid="${locationUuid}"]`
-    )
-    if (!activeLocationElement) return -1
-    const leftScroll =
-      activeLocationElement.offsetLeft +
-      activeLocationElement.clientWidth / 2 -
-      chaseTrack.clientWidth / 2
-    return leftScroll < 0 ? 0 : Math.floor(leftScroll)
-  }
-
-  // Should be removed
-  findMinMov (list) {
-    if (!list?.length) return -1
-    return list.reduce((prev, current) =>
-      prev.adjustedMov < current.adjustedMov ? prev : current
-    ).adjustedMov
-  }
-
-  findMaxMov (list) {
-    if (!list?.length) return -1
-    return list.reduce((prev, current) =>
-      prev.adjustedMov > current.adjustedMov ? prev : current
-    ).adjustedMov
-  }
-
-  // Utilities
-  findIndex (list, uuid) {
-    return list.findIndex(p => p.uuid === uuid)
-  }
-
-  get started () {
-    return this.getFlag('CoC7', 'started')
-  }
-
-  async start () {
-    const remString = $(':root').css('font-size')
-    const remSize = Number(remString.replace('px', ''))
-    const pCount = this.actualParticipants.length
-    const width = Math.max((pCount * 11.2 + 3) * remSize, 40 * remSize)
-    this.sheet._tabs[0].active = 'setup'
-    this.sheet.position.width = width
-    await this.setFlag('CoC7', 'started', true)
-    await this.activateNextParticipantTurn()
-  }
-
-  async stop () {
-    return this.unsetFlag('CoC7', 'started')
-  }
-
-  generateNewUuid () {
-    return foundry.utils.randomID(16)
-  }
-
-  getActorSkillsAndCharacteristics (participantUuid) {
-    const participant = this.getParticipant(participantUuid)
-    if (!participant.actor) return undefined
-    const list = []
-    CoCActor.getCharacteristicDefinition().forEach(c =>
-      list.push(
-        `${game.i18n.localize('CoC7.Characteristics')} (${c.shortName})`
-      )
-    )
-    list.push(
-      `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
-        'CoC7.Luck'
-      )})`
-    )
-    list.push(
-      `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
-        'CoC7.SAN'
-      )})`
-    )
-    participant.actor.skills.forEach(s => list.push(s.name))
-    return list
-  }
-
-  get activeActorSkillsAndCharacteristics () {
-    const particicpantData = this.activeParticipantData
-    if (!particicpantData) return undefined
-    return this.getActorSkillsAndCharacteristics(particicpantData.uuid)
-  }
-
-  get allSkillsAndCharacteristics () {
-    const list = []
-    CoCActor.getCharacteristicDefinition().forEach(c =>
-      list.push(
-        `${game.i18n.localize('CoC7.Characteristics')} (${c.shortName})`
-      )
-    )
-    list.push(
-      `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
-        'CoC7.Luck'
-      )})`
-    )
-    list.push(
-      `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
-        'CoC7.SAN'
-      )})`
-    )
-
-    game.CoC7.skillList?.forEach(s => {
-      if (
-        !list.includes(s.name) &&
-        !s.name
-          .toLowerCase()
-          .includes(`(${game.i18n.localize('CoC7.AnySpecName')})`.toLowerCase())
-      ) {
-        list.push(s.name)
-      }
-    }) // TODO: Remove ??
-    this.participants.forEach(p => {
-      if (p.actor) {
-        p.actor.skills.forEach(s => {
-          if (!list.includes(s.name)) list.push(s.name)
-        })
-      }
-    })
-    return list.sort(Intl.Collator().compare)
-  }
-
-  get allSkillsAndCharacteristicsShort () {
-    const list = []
-    CoCActor.getCharacteristicDefinition().forEach(c => list.push(`${c.label}`))
-    list.push(`${game.i18n.localize('CoC7.Luck')}`)
-    list.push(`${game.i18n.localize('CoC7.SAN')}`)
-
-    game.CoC7.skillList?.forEach(s => {
-      if (
-        !list.includes(s.name) &&
-        !s.name
-          .toLowerCase()
-          .includes(`(${game.i18n.localize('CoC7.AnySpecName')})`.toLowerCase())
-      ) {
-        list.push(s.name)
-      }
-    }) // TODO: Remove ??
-    this.participants.forEach(p => {
-      if (p.actor) {
-        p.actor.skills.forEach(s => {
-          if (!list.includes(s.name)) list.push(s.name)
-        })
-      }
-    })
-    return list.sort(Intl.Collator().compare)
-  }
-
-  /**
-   * Clean the data of all parasite participants in locations.
-   * Should never happen
-   */
-  // async cleanLocations () {
-  //   const locations = foundry.utils.duplicate(this.system.locations.list)
-  //   locations.forEach(l => {
-  //     const partipantsUuidArray = this.system.participants.map(p => p.uuid)
-  //     if (l.participants) {
-  //       l.participants = l.participants.filter(uuid =>
-  //         partipantsUuidArray.includes(uuid)
-  //       )
-  //     }
-  //   })
-  //   this.updateLocationsList(locations)
-  // }
 }

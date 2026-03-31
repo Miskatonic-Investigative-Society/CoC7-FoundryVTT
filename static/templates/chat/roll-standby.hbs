@@ -1,0 +1,19 @@
+<div class="flexrow coc7-chat-header">
+  <div class="left-portrait">
+    {{#if displayActorOnCard}}
+      <img class="portrait open-actor" data-actor-uuid="{{actorUuid}}" src="{{actorImg}}" data-tooltip="{{actorName}}" />
+    {{/if}}
+  </div>
+  <div class="card-title">
+    {{name}}
+  </div>
+  <div class="right-portrait">
+    {{#if standbyRightIcon}}
+      <img class="portrait" src="{{standbyRightIcon}}" />
+    {{/if}}
+  </div>
+</div>
+<div class="coc7-card-buttons owner-and-keeper-block flexrow" data-actor-uuid="{{actorUuid}}">
+  <button data-action="rollCheckCard">{{localize 'CoC7.Roll'}}</button>
+</div>
+{{#if (eq @root.foundryGeneration 13)}}<div class="never-expand" data-action="expandRoll"></div>{{/if}}

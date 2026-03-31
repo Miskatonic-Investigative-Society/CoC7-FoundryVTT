@@ -1,7 +1,8 @@
-/* global Actor, CONFIG, foundry, game, ui */
+/* global Actor CONFIG foundry game ui */
+import { FOLDER_ID } from '../constants.js'
 import CoC7ActorImporterRegExp from './actor-importer-regexp.js'
-import CoCActor from '../models/actor/document-class.js'
-import CoC7Item from '../models/item/document-class.js'
+import CoC7ModelsItemSkillSystem from '../models/item/skill-system.js'
+import CoC7ModelsItemSpellSystem from '../models/item/spell-system.js'
 import CoC7Utilities from './utilities.js'
 
 /**
@@ -208,9 +209,9 @@ export default class CoC7ActorImporter {
         do {
           found = this.getRegEx(
             '\\s*[+-]?\\s*(' +
-              this.keys.halfdb +
+              this.keys.halfDb +
               ')\\s*(' +
-              this.keys.fulldb +
+              this.keys.fullDb +
               ')?[-+]?\\s*(' +
               this.parsed.db.replace(/^[-+]/, '') +
               ')?'
@@ -221,7 +222,7 @@ export default class CoC7ActorImporter {
           } else {
             found = this.getRegEx(
               '\\s*[+-]?\\s*(' +
-                this.keys.fulldb +
+                this.keys.fullDb +
                 ')\\s*[-+]?\\s*(' +
                 this.parsed.db.replace(/^[-+]/, '') +
                 ')?'
@@ -261,7 +262,6 @@ export default class CoC7ActorImporter {
         // Set some of the properties
         data.system.properties.shotgun = isShotgun
         data.system.properties.rngd = isRanged || isShotgun
-        data.system.properties.melee = !data.system.properties.rngd
         data.system.properties.ahdb = ahdb
         data.system.properties.addb = addb
         if (typeof this.parsed.attacks === 'undefined') {
@@ -563,9 +563,7 @@ export default class CoC7ActorImporter {
     if (value !== Number(check)) {
       updateData[`system.attribs.${key}.auto`] = false
       updateData[`system.attribs.${key}.value`] = value
-      if (key === 'build') {
-        updateData[`system.attribs.${key}.current`] = value
-      } else {
+      if (key !== 'build') {
         updateData[`system.attribs.${key}.max`] = value
       }
     }
@@ -726,59 +724,73 @@ export default class CoC7ActorImporter {
       }
     }
     // Skills
+    const languages = (pc.languages ?? []).map(i => {
+      const parts = CoC7ModelsItemSkillSystem.getNamePartsSpec(i.name, game.i18n.localize('CoC7.LanguageSpecializationName'))
+      return {
+        name: parts.name,
+        value: i.value
+      }
+    })
+    const foundItems = await CoC7Utilities.guessItems('skill', (pc.skills ?? []).map(i => i.name).concat(languages.map(i => i.name)), { source: this.itemLocations, fallbackAny: true })
     if (typeof pc.skills !== 'undefined') {
       for (const skill of pc.skills) {
-        const existing = await CoC7Utilities.guessItem('skill', skill.name, {
-          source: this.itemLocations
-        })
-        if (typeof existing !== 'undefined') {
-          const cloned = existing.toObject()
-          cloned.system.base = skill.value
-          if (typeof skill.push !== 'undefined') {
-            cloned.system.properties.push = skill.push
-          }
-          items.push(foundry.utils.duplicate(cloned))
+        let cloned
+        if (typeof foundItems[skill.name] !== 'undefined') {
+          const parts = CoC7ModelsItemSkillSystem.guessNameParts(skill.name)
+          cloned = foundry.utils.duplicate(foundItems[skill.name])
+          foundry.utils.setProperty(cloned, 'name', parts.name)
+          foundry.utils.setProperty(cloned, 'system.skillName', parts.skillName)
+          foundry.utils.setProperty(cloned, 'system.specialization', parts.specialization)
         } else {
-          const options = {}
-          if (typeof skill.push !== 'undefined') {
-            options.push = skill.push
-          }
-          items.push(CoCActor.emptySkill(skill.name, skill.value, options))
+          cloned = CoC7ModelsItemSkillSystem.emptyObject({
+            name: skill.name
+          })
         }
+        foundry.utils.setProperty(cloned, 'flags.' + FOLDER_ID + '.cocidFlag.id', 'i.skill.' + CoC7Utilities.toKebabCase(cloned.name))
+        cloned.system.base = skill.value
+        if (typeof skill.push !== 'undefined') {
+          cloned.system.properties.push = skill.push
+        }
+        items.push(cloned)
       }
     }
     // Languages
-    if (typeof pc.languages !== 'undefined') {
-      for (const skill of pc.languages) {
-        const existing = await CoC7Utilities.guessItem('skill', skill.name, {
-          source: this.itemLocations
+    for (const skill of languages) {
+      let cloned
+      if (typeof foundItems[skill.name] !== 'undefined') {
+        const parts = CoC7ModelsItemSkillSystem.guessNameParts(skill.name)
+        cloned = foundry.utils.duplicate(foundItems[skill.name])
+        foundry.utils.setProperty(cloned, 'name', parts.name)
+        foundry.utils.setProperty(cloned, 'system.skillName', parts.skillName)
+        foundry.utils.setProperty(cloned, 'system.specialization', parts.specialization)
+      } else {
+        const parts = CoC7ModelsItemSkillSystem.getNamePartsSpec(skill.name, game.i18n.localize('CoC7.LanguageSpecializationName'))
+        cloned = CoC7ModelsItemSkillSystem.emptyObject({
+          name: parts.name,
+          img: CoC7ModelsItemSkillSystem.iconLanguage
         })
-        if (typeof existing !== 'undefined') {
-          const cloned = existing.toObject()
-          cloned.system.base = skill.value
-          items.push(foundry.utils.duplicate(cloned))
-        } else {
-          items.push(
-            CoCActor.emptySkill(skill.name, skill.value, {
-              img: CoC7Item.iconLanguage,
-              specialization: game.i18n.localize('CoC7.LanguageSpecializationName')
-            })
-          )
-        }
+        foundry.utils.setProperty(cloned, 'flags.' + FOLDER_ID + '.cocidFlag.id', 'i.skill.' + CoC7Utilities.toKebabCase(cloned.name))
       }
+      cloned.system.base = skill.value
+      if (typeof skill.push !== 'undefined') {
+        cloned.system.properties.push = skill.push
+      }
+      items.push(cloned)
     }
     // Spells
     if (typeof pc.spells !== 'undefined') {
+      const foundItems = await CoC7Utilities.guessItems('skill', pc.spells, { source: this.itemLocations })
       for (const name of pc.spells) {
-        const existing = await CoC7Utilities.guessItem('spell', name, {
-          source: this.itemLocations
-        })
-        if (typeof existing !== 'undefined') {
-          const cloned = existing.toObject()
-          items.push(foundry.utils.duplicate(cloned))
+        let cloned
+        if (typeof foundItems[name] !== 'undefined') {
+          cloned = foundry.utils.duplicate(foundItems[name])
         } else {
-          items.push(CoCActor.emptySpell(name))
+          cloned = CoC7ModelsItemSpellSystem.emptyObject({
+            name
+          })
         }
+        foundry.utils.setProperty(cloned, 'flags.' + FOLDER_ID + '.cocidFlag.id', 'i.spell.' + CoC7Utilities.toKebabCase(cloned.name))
+        items.push(cloned)
       }
     }
     return items
@@ -790,10 +802,10 @@ export default class CoC7ActorImporter {
    * @returns {object}
    */
   async weaponSkill (weapon) {
-    let skill = null
+    let skill = {}
     const localizedFirearm = game.i18n.localize('CoC7.FirearmSpecializationName')
     if (this.getRegEx(this.keys.handgun).exec(weapon.name)) {
-      skill = await CoC7Utilities.guessItem('skill', localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameHandgun') + ')', {
+      skill = await CoC7Utilities.guessItems('skill', [localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameHandgun') + ')'], {
         combat: true,
         source: this.itemLocations
       })
@@ -801,17 +813,17 @@ export default class CoC7ActorImporter {
         console.debug(`${weapon.name} uses Handgun skill: `, skill)
       }
     } else if (this.getRegEx(this.keys.rifle).exec(weapon.name)) {
-      skill = await CoC7Utilities.guessItem('skill', localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameRifleShotgun') + ')', {
+      skill = await CoC7Utilities.guessItems('skill', [localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameRifleShotgun') + ')'], {
         combat: true,
         source: this.itemLocations
       })
       if (!skill) {
-        skill = await CoC7Utilities.guessItem('skill', localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameRifle') + ')', {
+        skill = await CoC7Utilities.guessItems('skill', [localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameRifle') + ')'], {
           combat: true,
           source: this.itemLocations
         })
         if (!skill) {
-          skill = await CoC7Utilities.guessItem('skill', localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameShotgun') + ')', {
+          skill = await CoC7Utilities.guessItems('skill', [localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameShotgun') + ')'], {
             combat: true,
             source: this.itemLocations
           })
@@ -821,7 +833,7 @@ export default class CoC7ActorImporter {
         console.debug(`${weapon.name} uses Rifle skill: ${skill}`)
       }
     } else if (this.getRegEx(this.keys.smb).exec(weapon.name)) {
-      skill = await CoC7Utilities.guessItem('skill', localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameSmb') + ')', {
+      skill = await CoC7Utilities.guessItems('skill', [localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameSmb') + ')'], {
         combat: true,
         source: this.itemLocations
       })
@@ -829,7 +841,7 @@ export default class CoC7ActorImporter {
         console.debug(`${weapon.name} uses Submachine Gun skill: ${skill}`)
       }
     } else if (this.getRegEx(this.keys.machineGun).exec(weapon.name)) {
-      skill = await CoC7Utilities.guessItem('skill', localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillnameMachineGun') + ')', {
+      skill = await CoC7Utilities.guessItems('skill', [localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameMachinGun') + ')'], {
         combat: true,
         source: this.itemLocations
       })
@@ -837,7 +849,7 @@ export default class CoC7ActorImporter {
         console.debug(`${weapon.name} uses Machine Gun skill: ${skill}`)
       }
     } else if (this.getRegEx(this.keys.launched).exec(weapon.name)) {
-      skill = await CoC7Utilities.guessItem('skill', localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillnameLaunch') + ')', {
+      skill = await CoC7Utilities.guessItems('skill', [localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillnameLaunch') + ')'], {
         combat: true,
         source: this.itemLocations
       })
@@ -845,8 +857,8 @@ export default class CoC7ActorImporter {
         console.debug(`${weapon.name} uses Launch skill: ${skill}`)
       }
     }
-    if (skill !== null && typeof skill !== 'undefined') {
-      const skillClone = skill.clone({
+    if (Object.keys(skill).length > 0) {
+      const skillClone = Object.values(skill)[0].clone({
         system: {
           value: weapon.system?.skill?.id
         }
@@ -854,7 +866,7 @@ export default class CoC7ActorImporter {
       return skillClone
     }
     const firearms = weapon.system?.properties?.rngd
-    const parts = CoC7Item.getNamePartsSpec(weapon.name, game.i18n.localize(firearms ? 'CoC7.FirearmSpecializationName' : 'CoC7.FightingSpecializationName'))
+    const parts = CoC7ModelsItemSkillSystem.getNamePartsSpec(weapon.name, game.i18n.localize(firearms ? 'CoC7.FirearmSpecializationName' : 'CoC7.FightingSpecializationName'))
     const newSkill = {
       type: 'skill',
       name: parts.name,
@@ -929,7 +941,7 @@ export default class CoC7ActorImporter {
       items: await this.itemsData(character)
     }
 
-    if (typeof inputs.testMode !== 'undefined' && inputs.testMode === true) {
+    if (inputs.testMode === true) {
       return characterData
     }
     const npc = await this.createEntity(characterData, inputs.entity)

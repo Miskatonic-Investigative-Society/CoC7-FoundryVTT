@@ -28,7 +28,7 @@ Haz clic en la pestaña [fa-solid fa-suitcase]Objetos, luego en Crear objeto, as
 
 En la pestaña de Descripción, para establecer la descripción, haz clic en el botón [fa-solid fa-edit] para obtener un editor.
 
-En la pestaña de Detalles, haz clic en el [fa-solid fa-plus] en Secciones de transfondo para agregar cualquier sección que requieras del paso Crear un trasfondo de la creación del investigador. Haz clic en la pestaña [fa-solid fa-atlas]Compendios, luego, bajo el encabezado Objetos, abre el objeto Ejemplos de objetos (CoC7) y arrastra @Compendium[CoC7.items.3elxAwnv7WCUNwng]{Puñetazo} a la configuración.
+En la pestaña de Detalles, haz clic en el [fa-regular fa-plus-circle] en Secciones de transfondo para agregar cualquier sección que requieras del paso Crear un trasfondo de la creación del investigador. Haz clic en la pestaña [fa-solid fa-atlas]Compendios, luego, bajo el encabezado Objetos, abre el objeto Ejemplos de objetos (CoC7) y arrastra @Compendium[CoC7.items.3elxAwnv7WCUNwng]{Puñetazo} a la configuración.
 
 En la pestaña de Características, puedes personalizar cómo se tiran/compran las características del investigador.
 

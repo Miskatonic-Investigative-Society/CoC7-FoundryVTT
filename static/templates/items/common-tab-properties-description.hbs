@@ -1,0 +1,14 @@
+<section class="tab description flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="description">
+  {{#if tabs.description}}
+    <div class="flexrow" style="flex: 1; align-items: stretch;">
+      <div class="properties-list">
+        {{#each _properties}}
+          <div class="property">{{localize this}}</div>
+        {{/each}}
+      </div>
+      <fieldset class="flexcol" style="flex: 1">
+        <prose-mirror name="system.description.value" value="{{document.system.description.value}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedDescriptionValue}}}</prose-mirror>
+      </fieldset>
+    </div>
+  {{/if}}
+</section>

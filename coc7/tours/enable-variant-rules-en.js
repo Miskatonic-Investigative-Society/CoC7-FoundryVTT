@@ -1,7 +1,11 @@
-/* global foundry, game */
-import { CoC7Tour } from '../apps/tour.js'
+/* global foundry game */
+import CoC7Tour from '../apps/tour.js'
 
-export default class EnableVariantRulesEn extends CoC7Tour {
+export default class CoC7EnableVariantRulesEn extends CoC7Tour {
+  /**
+   * Tour configuration
+   * @param {object} config
+   */
   constructor (config) {
     super(foundry.utils.mergeObject({
       title: 'Enable optional/variant rules.',
@@ -41,7 +45,7 @@ export default class EnableVariantRulesEn extends CoC7Tour {
         },
         {
           id: 'save-game-rules',
-          selector: '#rules-settings [name=submit]',
+          selector: '#rules-settings [type=submit]',
           title: 'COC7.Tour.SaveGameRulesTitle',
           content: 'COC7.Tour.SaveGameRulesContent'
         }

@@ -1,37 +1,87 @@
-/* global DragDrop, FormApplication, foundry, game, ui */
-import CoCActor from '../models/actor/document-class.js'
-import CoC7Check from '../apps/check.js'
-import { _participant } from '../models/chase/participant.js'
+/* global CONFIG DragDrop foundry fromUuid game ui */
+import { FOLDER_ID, TARGET_ALLOWED } from '../constants.js'
+import CoC7ChaseParticipant from '../models/chase/participant.js'
+import CoC7DicePool from './dice-pool.js'
+import CoC7RollNormalize from './roll-normalize.js'
 import CoC7Utilities from './utilities.js'
 
-export default class CoC7ChaseParticipantDialog extends FormApplication {
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      title: game.i18n.localize('CoC7.AddActorToChase'),
-      template: 'systems/CoC7/templates/apps/chase-participant.hbs',
-      classes: ['coc7', 'dialog', 'chase-participant-importer'],
-      editable: true,
-      resizable: false,
-      submitOnChange: true,
-      closeOnSubmit: false,
-      width: 300,
-      height: 'auto'
-    })
+export default class CoC7ChaseParticipantDialog extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2) {
+  /**
+   * @inheritdoc
+   */
+  constructor (...args) {
+    const coc7Config = args.pop()
+    super(...args)
+    this.coc7Config = coc7Config
   }
 
-  activateListeners (html) {
-    super.activateListeners(html)
+  static DEFAULT_OPTIONS = {
+    tag: 'form',
+    classes: ['coc7', 'dialog'],
+    window: {
+      contentClasses: [
+        'standard-form'
+      ]
+    },
+    form: {
+      submitOnChange: true,
+      closeOnSubmit: false,
+      handler: CoC7ChaseParticipantDialog.#onSubmit
+    },
+    position: {
+      width: 400
+    }
+  }
+
+  static PARTS = {
+    form: {
+      template: 'systems/' + FOLDER_ID + '/templates/apps/chase-participant.hbs',
+      scrollable: ['']
+    },
+    footer: {
+      template: 'templates/generic/form-footer.hbs'
+    }
+  }
+
+  /**
+   * Get Title
+   * @returns {string}
+   */
+  get title () {
+    return game.i18n.localize(this.coc7Config.isExisting ? 'CoC7.AddActorToChase' : 'CoC7.EditActorOnChase')
+  }
+
+  /**
+   * Generate a default participant from the chase system dataModel
+   * @returns {object}
+   */
+  static get emptyParticipant () {
+    const ClassName = CONFIG.Item.dataModels.chase
+    return new ClassName({ participants: [{}] }).participants[0]
+  }
+
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
 
     /* // FoundryVTT V12 */
-    const participantDragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
-      dropSelector: '.form-container',
-      permissions: { drop: game.user.isGM },
-      callbacks: { drop: this._onDropParticipant.bind(this) }
-    })
-    participantDragDrop.bind(html[0])
+    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+      dropSelector: '.window-content',
+      permissions: {
+        drop: game.user.isGM
+      },
+      callbacks: {
+        drop: this._onDropParticipant.bind(this)
+      }
+    }).bind(this.element)
 
     /* // FoundryVTT V12 */
-    const tokenSelectorDragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
       dragSelector: '.chase-token',
       permissions: {
         dragstart: game.user.isGM
@@ -39,310 +89,286 @@ export default class CoC7ChaseParticipantDialog extends FormApplication {
       callbacks: {
         dragstart: this._onTokenSelectorDragStart.bind(this)
       }
-    })
-    tokenSelectorDragDrop.bind(html[0])
+    }).bind(this.element)
 
-    html.find('.reset-participant').click(async () => {
-      this.object = {}
-      this._actor = null
-      await this.render(true)
-    })
-
-    html.find('.food-chain').click(async () => {
-      this.object.chaser = !this.object.chaser
-      await this.render(true)
-    })
-
-    html.find('[data-action]').click(this._onAction.bind(this))
-
-    // html.find('button').click(this._onButton.bind(this))
-  }
-
-  async _onTokenSelectorDragStart (event) {
-    const data = {
-      type: 'getToken',
-      appId: this.appId,
-      callBack: 'addTokenToChase'
-    }
-    event.dataTransfer.setData('text/plain', JSON.stringify(data))
-  }
-
-  async getData () {
-    if (!this.object.initiative) {
-      const init = CoCActor.getCharacteristicDefinition().find(
-        c => c.key === 'dex'
-      )
-      this.object.initiative = init.label
-      // this.object.initiative = `${game.i18n.localize(
-      //   'CoC7.Characteristics'
-      // )} (${init.shortName})`
-    }
-    if (!this.object.speedCheck) {
-      const speedCheck = CoCActor.getCharacteristicDefinition().find(
-        c => c.key === 'con'
-      )
-      this.object.speedCheck = {
-        name: speedCheck.label
+    this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
+      switch (event.currentTarget.dataset.action) {
+        case 'resetParticipant':
+          this.coc7Config.participant = foundry.utils.duplicate(CoC7ChaseParticipantDialog.emptyParticipant)
+          this.render()
+          break
+        case 'toggleChaser':
+          this.coc7Config.participant.chaser = !this.coc7Config.participant.chaser
+          this.render()
+          break
+        case 'rollSpeedCheck':
+          {
+            let actor = null
+            if (this.coc7Config.participant.docUuid) {
+              actor = await fromUuid(this.coc7Config.participant.docUuid)
+            }
+            const listOptions = await CONFIG.Actor.documentClass.everyField(actor)
+            const value = listOptions.find(row => row.name === this.coc7Config.participant.speedCheck.name)
+            if (value) {
+              const config = {
+                cardTypeFixed: true,
+                cardType: CoC7RollNormalize.CARD_TYPE.NORMAL,
+                chatMessage: false,
+                actor,
+                preventStandby: true
+              }
+              let check
+              if (value.value) {
+                switch (value.type) {
+                  case 'attribs':
+                    config.rollType = CoC7RollNormalize.ROLL_TYPE.ATTRIBUTE
+                    config.attribute = value.key
+                    break
+                  case 'characteristics':
+                    config.rollType = CoC7RollNormalize.ROLL_TYPE.CHARACTERISTIC
+                    config.characteristic = value.key
+                    break
+                  case 'skill':
+                    config.rollType = CoC7RollNormalize.ROLL_TYPE.SKILL
+                    config.itemUuid = value.uuid
+                    break
+                }
+                check = await CoC7RollNormalize.trigger(config)
+              } else {
+                config.rollType = CoC7RollNormalize.ROLL_TYPE.MANUAL
+                config.threshold = this.coc7Config.participant.speedCheck.score
+                config.runRoll = false
+                const modified = await CoC7RollNormalize.trigger(config)
+                modified.flavor = game.i18n.format('CoC7.CheckResult', {
+                  name: value.name,
+                  value: modified.threshold.toString() + (modified.flatThresholdModifier !== 0 ? (modified.flatThresholdModifier > 0 ? '+' : '') + modified.flatThresholdModifier.toString() : ''),
+                  difficulty: CoC7DicePool.difficultyString(modified.difficulty)
+                })
+                check = await CoC7RollNormalize.runRoll(modified)
+              }
+              const chatData = await check.getChatData()
+              delete chatData.content
+              for (const offset in chatData.rolls) {
+                chatData.rolls[offset] = JSON.stringify(chatData.rolls[offset])
+              }
+              this.coc7Config.participant.speedCheck.checkData = chatData
+              this.render()
+            }
+          }
+          break
       }
-      // this.object.speedCheck = {
-      //   name: `${game.i18n.localize('CoC7.Characteristics')} (${
-      //     speedCheck.shortName
-      //   })`
-      // }
-    }
-
-    this.validateParticipant()
-
-    // const speedCheck = this.actor?.find( this.object.speedCheck?.name)
-    // if( speedCheck){
-    //   this.object.speedCheck = speedCheck
-    // }
-
-    const data = await super.getData()
-
-    data.participant = new _participant(this.object)
-    if (data.object.speedCheck.name && this.actor) {
-      const speedCheck = this.actor.find(data.object.speedCheck.name)
-      if (speedCheck) {
-        data.object.speedCheck.score = speedCheck.value.value
-        data.speedCheckReadOnly = true
-      } else if (
-        data.participant.speedCheck.score &&
-        !this.object.speedCheck?.score
-      ) {
-        data.object.speedCheck.score = data.participant.speedCheck.score
-      }
-    }
-
-    if (data.object.initiative && this.actor) {
-      const initiative = this.actor.find(data.object.initiative)
-      if (initiative) {
-        data.object.dex = initiative.value.value
-        data.initReadOnly = true
-      } else data.object.dex = data.participant.initiative
-    }
-
-    data.actor = this.actor
-    data.chase = this.chase
-    data.data = this.data
-
-    data.optionsList = {}
-    if (this.chase) {
-      data.skillsAndCharacteristicsList =
-        this.chase.allSkillsAndCharacteristicsShort
-    }
-
-    if (this.actor) {
-      data.skillsAndCharacteristicsList = []
-      CoCActor.getCharacteristicDefinition().forEach(c =>
-        data.skillsAndCharacteristicsList.push(`${c.label}`)
-      )
-      data.skillsAndCharacteristicsList.push(
-        `${game.i18n.localize('CoC7.Luck')}`
-      )
-      data.skillsAndCharacteristicsList.push(
-        `${game.i18n.localize('CoC7.SAN')}`
-      )
-      this.actor.skills.forEach(s =>
-        data.skillsAndCharacteristicsList.push(s.name)
-      )
-    }
-
-    return data
+    }))
   }
 
-  get chase () {
-    if (!this._chase) {
-      this._chase = CoC7Utilities.SfromUuid(this.object.chaseUuid)
+  /**
+   * Set drag data
+   * @param {DragEvent} event
+   */
+  _onTokenSelectorDragStart (event) {
+    const dragData = {
+      type: 'CoC7GetToken',
+      appId: this.id,
+      callback: 'addTokenToChase'
     }
-    return this._chase
+    event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
   }
 
-  get actor () {
-    if (!this.object.docUuid) return null
-    if (!this._actor) {
-      this._actor = CoC7Utilities.getActorFromKey(this.object.docUuid)
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+
+    switch (partId) {
+      case 'form':
+        context.isExisting = this.coc7Config.isExisting
+        context.actor = null
+        if (this.coc7Config.participant.docUuid) {
+          const actor = await fromUuid(this.coc7Config.participant.docUuid)
+          if (actor) {
+            context.actor = actor
+          }
+        }
+        context.listOptions = await CONFIG.Actor.documentClass.everyField(context.actor)
+        if (this.coc7Config.participant.docUuid) {
+          const value = context.listOptions.find(row => row.name === this.coc7Config.participant.initiative)
+          if (value?.value) {
+            context.initReadOnly = true
+          }
+        }
+        if (this.coc7Config.participant.docUuid) {
+          const value = context.listOptions.find(row => row.name === this.coc7Config.participant.speedCheck.name)
+          if (value?.value) {
+            context.speedCheckReadOnly = true
+          }
+        }
+        context.participant = new CoC7ChaseParticipant([this.coc7Config.participant], 0)
+        context.runSpeedCheck = await context.participant.runSpeedCheck()
+        break
+      case 'footer':
+        context.buttons = [{
+          type: 'submit',
+          action: 'close',
+          label: 'Cancel',
+          icon: 'fa-solid fa-times'
+        }, {
+          type: 'submit',
+          action: 'update',
+          label: (this.coc7Config.isExisting ? 'CoC7.Update' : 'CoC7.Add'),
+          icon: (this.coc7Config.isExisting ? 'fa-solid fa-user-edit' : 'fa-solid fa-user-plus')
+        }]
+        break
     }
-    return this._actor
+    return context
   }
 
-  async _updateObject (event, formData) {
-    foundry.utils.mergeObject(this, formData)
-    await this.render(true)
-  }
-
+  /**
+   * Process dropped Actor
+   * @param {DropEvent} event
+   */
   async _onDropParticipant (event) {
-    const dropString = event.dataTransfer.getData('text/plain')
-    const dropData = JSON.parse(dropString)
-
-    const docUuid = CoC7Utilities.getActorDocumentFromDropData(dropData)
-
-    this.object.docUuid = docUuid
-
-    // If actor is controlled by GM only we assume he is a chaser
-    this.object.chaser = this.actor?.owners?.filter(u => !u.isGM).length === 0
-    if (this.object.speedCheck.rollDataString) {
-      delete this.object.speedCheck.rollDataString
+    const dataList = JSON.parse(event.dataTransfer.getData('text/plain'))
+    if (dataList?.type === 'Actor' && typeof dataList.uuid === 'string') {
+      const document = await fromUuid(dataList.uuid)
+      if (TARGET_ALLOWED.includes((document?.actor ?? document)?.type)) {
+        this.coc7Config.participant = await CoC7ChaseParticipantDialog.createParticipant(await CoC7Utilities.getActorUuid(document))
+        await this.render()
+      }
     }
-
-    await this.render(true)
   }
 
+  /**
+   * If tokens contains one allowed actor replace participant
+   * @param {Array} tokens
+   */
   async addTokenToChase (tokens) {
-    if (tokens.length === 1) {
-      this.object.docUuid = tokens[0].document?.uuid
-      // If actor is controlled by GM only we assume he is a chaser
-      this.object.chaser = this.actor?.owners?.filter(u => !u.isGM).length === 0
-      if (this.object.speedCheck.rollDataString) {
-        delete this.object.speedCheck.rollDataString
-      }
-      await this.render(true)
+    const found = tokens.filter(doc => TARGET_ALLOWED.includes(doc.actor.type))
+    if (found.length === 1) {
+      this.coc7Config.participant = await CoC7ChaseParticipantDialog.createParticipant(await CoC7Utilities.getActorUuid(found[0]))
+      await this.render()
     } else {
       ui.notifications.warn(game.i18n.localize('CoC7.ErrorTokenIncorrect'))
     }
   }
 
-  async _onAction (event) {
-    event.preventDefault()
-
-    const action = event.currentTarget.dataset.action
-    switch (action) {
-      case 'chase-cancel':
-        this.close()
-        break
-      case 'chase-add':
+  /**
+   * Submit the configuration form.
+   * @param {SubmitEvent} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
+   * @returns {Promise<void>}
+   */
+  static async #onSubmit (event, form, formData) {
+    switch (event.submitter?.dataset.action) {
+      case 'update':
         {
-          const participant = new _participant(this.object)
-
-          if (this.chase.started) {
-            if (
-              !(participant.movementAction && participant.movementAction > 0)
-            ) {
-              ui.notifications.warn(
-                game.i18n.localize('CoC7.DoesNotMeetMinimumReqToBeAdded')
-              )
+          const chase = await fromUuid(this.coc7Config.chaseUuid)
+          if (chase) {
+            const participant = new CoC7ChaseParticipant([this.coc7Config.participant], 0)
+            if (participant.adjustedMov < 1) {
+              ui.notifications.warn('CoC7.DoesNotMeetMinimumReqToBeAdded', { localize: true })
               return
             }
-            if (this.data.overrideMovementAction) {
-              const slowest = this.chase.slowestParticipant
-              if (isNaN(participant.adjustedMov)) {
-                participant.mov = slowest.adjustedMov
-              } /** else {
-                participant.data.mov =
-                  slowest.adjustedMov + participant.movementAction - 1
-              } */
-              this.data.recalculationNeeded = false
-            }
+            chase.system.addParticipant(this.coc7Config.participant, {
+              locationId: this.coc7Config.locationId
+            })
           }
-
-          await this.chase.addParticipant(participant, {
-            locationUuid: this.object.locationUuid,
-            recalculateMovementActions: this.data.recalculationNeeded,
-            update: this.object.update
-          })
           this.close()
         }
-        break
-
-      case 'roll-speed-check':
-        {
-          const participant = new _participant(this.object)
-          if (participant.speedCheck.refSet) {
-            const roll = new CoC7Check()
-            participant.data.rolled = true
-            roll.actor = participant.actor.actorKey
-            if (participant.speedCheck.isCharacteristic) {
-              await roll.rollCharacteristic(participant.speedCheck.ref.key)
-              participant.data.speedCheck.rollDataString = roll.JSONRollString
-            } else if (participant.speedCheck.isSkill) {
-              roll.skill = participant.speedCheck.ref
-              await roll.roll()
-              participant.data.speedCheck.rollDataString = roll.JSONRollString
-            } else if (participant.speedCheck.isAttribute) {
-              await roll.rollAttribute(participant.speedCheck.ref.key)
-              participant.data.speedCheck.rollDataString = roll.JSONRollString
-            }
-          } else if (participant.speedCheck.score) {
-            const rollData = {
-              rawValue: participant.speedCheck.score,
-              displayName: participant.speedCheck.name,
-              actorName: participant.name ? participant.name : undefined
-            }
-            if (participant.hasActor) {
-              rollData.actor = participant.actor.actorKey
-            }
-            const roll = CoC7Check.create(rollData)
-            await roll.roll()
-            participant.data.speedCheck.rollDataString = roll.JSONRollString
-            participant.data.rolled = true
-          }
-
-          foundry.utils.mergeObject(this.object, participant.data)
-          this.render(true)
-        }
-
-        break
-
-      default:
-        break
+        return
     }
+    let actor = null
+    if (this.coc7Config.participant.docUuid) {
+      actor = await fromUuid(this.coc7Config.participant.docUuid)
+    }
+    const listOptions = await CONFIG.Actor.documentClass.everyField(actor)
+    const replacements = {}
+    for (const key in formData.object) {
+      if (key === 'participant.speedCheck.name' && this.coc7Config.participant.speedCheck.name !== formData.object[key]) {
+        replacements['participant.speedCheck.score'] = await CoC7ChaseParticipant.getPercentValue(actor, listOptions, formData.object[key])
+      } else if (key === 'participant.initiative' && this.coc7Config.participant.speedCheck.name !== formData.object[key]) {
+        replacements['participant.dex'] = await CoC7ChaseParticipant.getPercentValue(actor, listOptions, formData.object[key])
+      }
+      foundry.utils.setProperty(this.coc7Config, key, formData.object[key])
+    }
+    for (const key in replacements) {
+      foundry.utils.setProperty(this.coc7Config, key, replacements[key])
+    }
+    this.render()
   }
 
-  validateParticipant () {
-    const participant = new _participant(this.object)
-    if (!this.data) this.data = {}
-    this.object.excluded = false
-    this.object.escaped = false
-    this.data.recalculationNeeded = false
-    this.data.participantExcluded = false
-    this.data.movementActionDelta = 0
-
-    if (!this.data.overrideMovementAction) {
-      const slowestPrey = this.chase.slowestPrey
-      const fastestChaser = this.chase.fastestChaser
-      const slowest = this.chase.slowestParticipant
-
-      if (participant.adjustedMov < slowest?.adjustedMov) {
-        this.data.recalculationNeeded = true
-        participant.movementAction = 1
-      } else {
-        this.data.recalculationNeeded = false
-        participant.calculateMovementActions(slowest?.adjustedMov)
-      }
-      if (participant.isChaser) {
-        if (
-          slowestPrey &&
-          !this.chase.system.includeLastCommers &&
-          participant.adjustedMov < slowestPrey.adjustedMov
-        ) {
-          this.object.excluded = true
-          this.data.participantExcluded = true
-          this.data.excludedBecause = game.i18n.localize('CoC7.TooSlow')
-          this.data.recalculationNeeded = false
+  /**
+   * Create empty participant or from actor
+   * @param {string} uuid
+   * @returns {object|false}
+   */
+  static async createParticipant (uuid) {
+    const actor = await fromUuid(uuid)
+    if (TARGET_ALLOWED.includes((actor?.actor ?? actor)?.type)) {
+      return foundry.utils.mergeObject(CoC7ChaseParticipantDialog.emptyParticipant, {
+        docUuid: uuid,
+        name: (actor?.actor ?? actor)?.name ?? '',
+        dex: (actor?.actor ?? actor)?.system.characteristics.dex.value ?? 0,
+        mov: (actor?.actor ?? actor)?.system.attribs.mov.value ?? 0,
+        // If actor is controlled by GM only we assume he is a chaser
+        chaser: (actor?.actor ?? actor)?.owners.length === 0,
+        speedCheck: {
+          score: (actor?.actor ?? actor)?.system.characteristics.con.value ?? 0
         }
-      }
-
-      if (participant.isPrey) {
-        if (
-          fastestChaser &&
-          !this.chase.system.includeEscaped &&
-          participant.adjustedMov > fastestChaser.adjustedMov
-        ) {
-          this.object.escaped = true
-          this.data.participantExcluded = true
-          this.data.excludedBecause = game.i18n.localize('CoC7.TooFast')
-          this.data.recalculationNeeded = false
-        }
-      }
+      }, { inplace: false })
     }
+    return false
   }
 
-  static async create (data) {
-    if (data.dropData) {
-      const docUuid = CoC7Utilities.getActorDocumentFromDropData(data.dropData)
-      if (docUuid) data.docUuid = docUuid
-      delete data.dropData
+  /**
+   * Create popup
+   * @param {object} options
+   * @param {string} options.chaseUuid
+   * @param {string} options.locationId
+   * @param {object} options.dropData
+   * @param {object} options.participant
+   */
+  static async create ({ chaseUuid, locationId, dropData, participant } = {}) {
+    const isExisting = typeof participant !== 'undefined'
+    if (typeof dropData !== 'undefined') {
+      if (typeof dropData.type !== 'string' || typeof dropData.uuid !== 'string') {
+        return
+      }
+      if (!['Actor', 'Token'].includes(dropData.type)) {
+        return
+      }
+      participant = await CoC7ChaseParticipantDialog.createParticipant(dropData.uuid)
+      if (participant === false) {
+        return
+      }
+    } else if (!isExisting) {
+      participant = foundry.utils.duplicate(CoC7ChaseParticipantDialog.emptyParticipant)
     }
-    return new CoC7ChaseParticipantDialog(data).render(true)
+    new CoC7ChaseParticipantDialog({}, {}, {
+      chaseUuid,
+      isExisting,
+      locationId,
+      participant
+    }).render({ force: true })
+  }
+
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<HTMLElement>}
+   */
+  async _renderFrame (options) {
+    const frame = await super._renderFrame(options)
+
+    /* // FoundryV12 polyfill */
+    if (!foundry.utils.isNewerVersion(game.version, 13)) {
+      frame.setAttribute('open', true)
+    }
+
+    return frame
   }
 }

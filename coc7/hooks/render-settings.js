@@ -1,60 +1,68 @@
-/* global CONFIG Dialog foundry game */
-function showDialog () {
-  new Dialog(
-    {
-      title: game.i18n.localize('CoC7.Migrate.TriggerTitle'),
-      content: game.i18n.localize('CoC7.Migrate.TriggerContents'),
-      buttons: {
-        migrate: {
-          icon: '<i class="fas fa-check"></i>',
-          label: game.i18n.localize('CoC7.Migrate.TriggerRestart'),
-          callback: async () => {
-            await game.settings.set('CoC7', 'systemUpdateVersion', 0)
-            window.location.reload()
-          }
-        },
-        close: {
-          icon: '<i class="fas fa-ban"></i>',
-          label: game.i18n.localize('Cancel'),
-          callback: () => {}
-        }
-      },
-      default: 'close'
-    },
-    {}
-  ).render(true)
-}
+/* global foundry fromUuid game */
+import { FOLDER_ID } from '../constants.js'
+import deprecated from '../deprecated.js'
 
-export default function (application, html, data) {
+/**
+ * Render Hook
+ * @param {ApplicationV2} application
+ * @param {HTMLElement} element
+ * @param {ApplicationRenderContext} context
+ * @param {ApplicationRenderOptions} options
+ */
+export default function (application, element, context, options) {
   if (game.user.isGM) {
+    const buttonIcon = document.createElement('i')
+    buttonIcon.classList.add('fa-solid', 'fa-books')
+    const buttonText = document.createTextNode(game.i18n.localize('CoC7.System.Documentation'))
+    const button = document.createElement('button')
+    button.append(buttonIcon)
+    button.append(buttonText)
+    button.addEventListener('click', async () => {
+      (await fromUuid('Compendium.CoC7.system-doc.JournalEntry.' + game.CoC7.Manual))?.sheet.render(true)
+    })
     /* // FoundryVTT V12 */
-    if (foundry.utils.isNewerVersion(game.version, '13')) {
-      {
-        const menuButton = document.createElement('button')
-        menuButton.classList.add('trigger-data-migration', 'fas', 'fa-wrench')
-        menuButton.textContent = game.i18n.localize('CoC7.Migrate.TriggerButton')
-        html.querySelector('section.settings').append(menuButton)
-        html.querySelector('.trigger-data-migration').addEventListener('click', () => showDialog())
-      }
-      {
-        const menuButton = document.createElement('button')
-        menuButton.classList.add('trigger-system-manual', 'fas', 'fa-books')
-        menuButton.textContent = game.i18n.localize('CoC7.System.Documentation')
-        html.querySelector('section.documentation').append(menuButton)
-        html.querySelector('.trigger-system-manual').addEventListener('click', async () => {
-          (await game.packs.get('CoC7.system-doc').getDocument(CONFIG.CoC7.Manual))?.sheet.render(true)
-        })
-      }
+    if (game.release.generation === 12) {
+      element.find('#settings-documentation').append(button)
     } else {
-      html
-        .find('#settings-game')
-        .append('<button class="trigger-data-migration"><i class="fas fa-wrench"></i> ' + game.i18n.localize('CoC7.Migrate.TriggerButton') + '</button>')
-      html.find('#settings-documentation')
-        .append('<button class="trigger-system-manual"><i class="fas fa-books"></i> ' + game.i18n.localize('CoC7.System.Documentation') + '</button>')
-      html.find('.trigger-data-migration').click(() => showDialog())
-      html.find('.trigger-system-manual').click(async () => {
-        (await game.packs.get('CoC7.system-doc').getDocument(CONFIG.CoC7.Manual))?.sheet.render(true)
-      })
+      element.querySelector('section.documentation').append(button)
     }
   }
+  if (game.user.isGM) {
+    const buttonIcon = document.createElement('i')
+    buttonIcon.classList.add('fa-solid', 'fa-wrench')
+    const buttonText = document.createTextNode(game.i18n.localize('CoC7.Migrate.TriggerButton'))
+    const button = document.createElement('button')
+    button.append(buttonIcon)
+    button.append(buttonText)
+    button.addEventListener('click', async () => {
+      new foundry.applications.api.DialogV2({
+        window: { title: 'CoC7.Migrate.TriggerTitle' },
+        position: {
+          width: 500
+        },
+        content: game.i18n.localize('CoC7.Migrate.TriggerContents'),
+        buttons: [{
+          action: 'close',
+          icon: 'fa-solid fa-ban',
+          default: true,
+          label: 'Cancel'
+        }, {
+          action: 'migrate',
+          icon: 'fa-solid fa-check',
+          label: 'CoC7.Migrate.TriggerRestart',
+          callback: async (event, button, dialog) => {
+            await game.settings.set(FOLDER_ID, 'systemUpdateVersion', 0)
+            foundry.utils.debouncedReload()
+          }
+        }]
+      }).render({ force: true })
+    })
+    /* // FoundryVTT V12 */
+    if (game.release.generation === 12) {
+      element.find('#settings-game').append(button)
+    } else {
+      element.querySelector('section.settings').append(button)
+    }
+  }
+  deprecated.customCss(element)
 }

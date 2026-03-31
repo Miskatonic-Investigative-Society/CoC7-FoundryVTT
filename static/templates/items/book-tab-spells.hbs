@@ -1,0 +1,31 @@
+<section class="tab spells flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="spells">
+  {{#if tabs.spells}}
+    <fieldset class="flexcol drop-item" style="flex: 1">
+      <div class="item-list flexcol">
+        {{#if spellListEmpty}}
+          <div class="item flexcol">
+            <label>{{localize 'CoC7.DragSpell'}}</label>
+          </div>
+        {{else}}
+          {{#each spells as |item|}}
+            <div class="item flexrow" data-embedded-id="{{item._id}}">
+              <img class="item-image" src="{{item.img}}" />
+              <div class="summary">{{item.name}}</div>
+              <div class="item-controls">
+                {{#if (and ../isOwner (not (contains item._id ../spellsLearned)))}}
+                  <a class="item-control" data-action="teach-spell"><i class="fa-solid fa-book-open"></i></a>
+                {{/if}}
+                {{#if (or ../isKeeper (contains item._id ../spellsLearned))}}
+                  <a class="item-control" data-action="itemEdit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
+                {{/if}}
+                {{#if ../isKeeper}}
+                  <a class="item-control" data-action="itemDelete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                {{/if}}
+              </div>
+            </div>
+          {{/each}}
+        {{/if}}
+      </div>
+    </fieldset>
+  {{/if}}
+</section>

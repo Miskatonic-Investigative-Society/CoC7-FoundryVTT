@@ -1,36 +1,12 @@
-<form class="flexcol-coc7">
-  <header class="sheet-header flexrow-coc7" style="flex: 0 0 64px;padding-bottom: 2px;">
-    <div class="header-details flexrow-coc7">
-      <h1 class="name" style="height: 48px;">
-        <input name="name" type="text" value="{{content.name}}" readonly />
-      </h1>
-
-      <ul class="summary flexrow-coc7">
-        <li class="flex2">
-          <input type="text" value="{{content.system.specialization}}" readonly />
-        </li>
-        <li class="flex1">
-          <input type="text" value="{{content.system.value}}%" readonly />
-        </li>
-      </ul>
-
+<section class="tab flexcol scrollable active">
+  <div class="flexrow" style="flex: 1; align-items: stretch;">
+    <div class="properties-list">
+      {{#each _properties}}
+        <div class="property">{{localize this}}</div>
+      {{/each}}
     </div>
-    <img class="profile" src="{{content.img}}" data-edit="img" title="{{content.name}}" height="64" width="64" />
-
-  </header>
-  <section class="sheet-body">
-    <div class="flexrow-coc7" style='height: 100%;'>
-      <div class="item-properties">
-        <ol class="properties-list">
-          {{#each content.skillProperties}}
-            <li>{{this}}</li>
-          {{/each}}
-        </ol>
-      </div>
-
-      <div class='item-description'>
-        {{{content.system.description.enrichedValue}}}
-      </div>
-    </div>
-  </section>
-</form>
+    <fieldset class="item-description coc7-formatted-text flexcol" style="flex: 1; margin-right: 8px;">
+      {{{enrichedDescriptionValue}}}
+    </fieldset>
+  </div>
+</section>

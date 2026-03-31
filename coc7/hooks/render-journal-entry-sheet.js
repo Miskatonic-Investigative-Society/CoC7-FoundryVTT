@@ -1,22 +1,31 @@
-export default function (application, html, data) {
-  if ((application.document.getFlag('CoC7', 'css-adventure-entry') ?? false)) {
-    if (!html.classList.contains('coc7-adventure-entry')) {
-      html.classList.add('coc7-adventure-entry')
+import { FOLDER_ID } from '../constants.js'
+import CoCIDEditor from '../apps/coc-id-editor.js'
+
+/**
+ * Render Hook
+ * @param {ApplicationV2} application
+ * @param {HTMLElement} element
+ * @param {ApplicationRenderContext} context
+ * @param {ApplicationRenderOptions} options
+ */
+export default function (application, element, context, options) {
+  CoCIDEditor.addCoCIDSheetHeaderButton(application, element)
+
+  if ((application.document.getFlag(FOLDER_ID, 'css-adventure-entry') ?? false)) {
+    if (!element.classList.contains('coc7-adventure-entry')) {
+      element.classList.add('coc7-adventure-entry')
     }
-    if ((application.document.getFlag('CoC7', 'fixed-adventure-heading') ?? false) && !html.classList.contains('fixed-adventure-heading')) {
-      html.classList.add('fixed-adventure-heading')
-      if (typeof data.pages?.[0]?.id === 'string') {
-        const subheading = application.document.pages.get(data.pages[0].id)?.flags?.CoC7?.['fixed-adventure-subheading'] ?? ''
-        if (subheading === '') {
-          const div = document.createElement('div')
-          div.style.padding = '0.5em'
-          document.querySelector('article.journal-entry-page.text.level1')?.before(div)
-        } else {
+    if ((application.document.getFlag(FOLDER_ID, 'fixed-adventure-heading') ?? false) && !element.classList.contains('fixed-adventure-heading')) {
+      element.classList.add('fixed-adventure-heading')
+      if (typeof application.document.pages?.contents?.[0]?.id === 'string') {
+        const subheading = application.document.pages.get(application.document.pages.contents[0].id)?.flags?.[FOLDER_ID]?.['fixed-adventure-subheading'] ?? ''
+        if (subheading !== '') {
+          element.classList.add('fixed-adventure-subheading')
           const short = subheading.trim().length === 0
           const div = document.createElement('div')
-          div.classList.add('adventure-heading-section', 'flexrow-coc7')
-          div.innerHTML = '<div class="bookmark' + (short ? ' short' : '') + '"><img src="systems/CoC7/assets/art/' + (short ? 'bookmarks.webp' : 'bookmark.webp') + '"></div><div class="adventure-heading"><div class="heading">' + application.title + '</div>' + (short ? '' : '<div class="subheading">' + subheading + '</div>') + '</div>'
-          document.querySelector('article.journal-entry-page.text.level1')?.before(div)
+          div.classList.add('adventure-heading-section', 'flexrow')
+          div.innerHTML = '<div class="bookmark' + (short ? ' short' : '') + '"><img src="systems/' + FOLDER_ID + '/assets/art/' + (short ? 'bookmarks.webp' : 'bookmark.webp') + '"></div><div class="adventure-heading"><div class="heading">' + application.title + '</div>' + (short ? '' : '<div class="subheading">' + subheading + '</div>') + '</div>'
+          element.querySelector('article.journal-entry-page')?.before(div)
         }
       }
     }

@@ -9,8 +9,8 @@ import CoC7Utilities from './utilities.js'
  * "keys.<language>.armorNone" Regular expression to indicate no Armour Bonus e.g. Armor: "armorNone".
  * "keys.<language>.attacksPerRoundNone" Regular expression to indicate no attacks e.g. Attacks Per Round: "attacksPerRoundNone".
  * "keys.<language>.sanLossNone" Regular expression to indicate no sanity loss e.g. SAN loss: "sanLossNone".
- * "keys.<language>.fulldb" Regular expression to indicate damage bonus in attributes and weapon damage e.g. DB: "fulldb" / Weapon 50% (25/10), damage 1D6 + "fulldb".
- * "keys.<language>.halfdb" Regular expression to indicate half damage bonus in weapon damage e.g. Weapon 50% (25/10), damage 1D6 + "halfdb".
+ * "keys.<language>.fullDb" Regular expression to indicate damage bonus in attributes and weapon damage e.g. DB: "fullDb" / Weapon 50% (25/10), damage 1D6 + "fullDb".
+ * "keys.<language>.halfDb" Regular expression to indicate half damage bonus in weapon damage e.g. Weapon 50% (25/10), damage 1D6 + "halfDb".
  * "keys.<language>.sectionCombats" Regular expression to indicate the start of the combat / weapon section of text.
  * "keys.<language>.newCombatHeader" If there is no combat / weapon section, add this section were it probably is, this needs to matched by "keys.<language>.sectionCombats".
  * "keys.<language>.sectionSkills" Regular expression to indicate the start of the skills section of text.
@@ -43,7 +43,7 @@ import CoC7Utilities from './utilities.js'
  * "translations.<language>.lck" Regular expression to match NPC luck attribute, named capturing group <lck>.
  * "translations.<language>.attacksPerRound" Regular expression to match NPC attacks per round, named capturing group <attacksPerRound> if matching "keys.<language>.attacksPerRoundNone" then 0.
  * "translations.<language>.sanLoss" Regular expression to match NPC san loss min/max, named capturing group <sanLoss> if matching "keys.<language>.sanLossNone" then none.
- * "translations.<language>.weapon" Regular expression to match NPC combat section, named capturing group weapon <name>, optional <percentage>, and <damage>. Damage can contain "keys.<language>.fulldb" and "keys.<language>.halfdb".
+ * "translations.<language>.weapon" Regular expression to match NPC combat section, named capturing group weapon <name>, optional <percentage>, and <damage>. Damage can contain "keys.<language>.fullDb" and "keys.<language>.halfDb".
  * "translations.<language>.weaponDodge" Regular expression to match NPC combat section dodge skill, named capturing group <name> and <percentage>.
  * "translations.<language>.skill" Regular expression to match NPC skill section skill name, named capturing group <name> and <percentage>.
  * "translations.<language>.guessStartCombat" Regular expression if there is no combat section find these are likely to be the first weapon name, "keys.<language>.newCombatHeader" is then added before it to get the groups
@@ -63,8 +63,8 @@ const keys = {
     armorNone: 'none',
     attacksPerRoundNone: 'none',
     sanLossNone: 'none',
-    fulldb: '(' + 'Damage Bonus|DB' + ')',
-    halfdb: '(' + '½|half' + ')',
+    fullDb: '(' + 'Damage Bonus|DB' + ')',
+    halfDb: '(' + '½|half' + ')',
     sectionCombats: '\n(?:' + 'combat|fighting attacks' + ')[:\n]',
     newCombatHeader: '\n' + 'Combat' + '\n',
     sectionSkills: '\n(?:' + 'skills' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
@@ -89,8 +89,8 @@ const keys = {
     attacksPerRoundNone: 'none',
     sanLossNone: 'none',
     diceShort: 'w|d',
-    fulldb: '(' + 'Schadensbonus|Sb' + ')',
-    halfdb: '(' + '½|1/2 Schadensbonus|Sb/2' + ')',
+    fullDb: '(' + 'Schadensbonus|Sb' + ')',
+    halfDb: '(' + '½|1/2 Schadensbonus|Sb/2' + ')',
     sectionCombats: '\n(?:' + 'Kampf|Angriff:|ANGRIFFE' + ')[:\n]',
     newCombatHeader: '\n' + 'Kampf' + '\n',
     sectionSkills: '\n(?:' + 'Fertigkeiten' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
@@ -117,8 +117,8 @@ const keys = {
     attacksPerRoundNone: 'brak',
     sanLossNone: 'brak',
     diceShort: 'k|d',
-    fulldb: '(' + 'Modyfikator Obrażeń|MO' + ')',
-    halfdb: '(' + '½|1/2 MO|MO/2' + ')',
+    fullDb: '(' + 'Modyfikator Obrażeń|MO' + ')',
+    halfDb: '(' + '½|1/2 MO|MO/2' + ')',
     sectionCombats: '\n(?:' + 'Walka|Ataki' + ')[:\n]',
     newCombatHeader: '\n' + 'Walka' + '\n',
     sectionSkills: '\n(?:' + 'Umiejętności' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
@@ -144,8 +144,8 @@ const keys = {
     armorNone: '(?:Acune|aucune)',
     attacksPerRoundNone: 'Acune',
     sanLossNone: 'Acune',
-    fulldb: '(' + 'BD|Bonus aux dommages|Impact|Imp' + ')',
-    halfdb: '(' + '½|1/2 Imp|Imp/2' + ')',
+    fullDb: '(' + 'BD|Bonus aux dommages|Impact|Imp' + ')',
+    halfDb: '(' + '½|1/2 Imp|Imp/2' + ')',
     sectionCombats: '\n(?:' + 'Combat|Armes|Attaques' + ')[:\n]',
     newCombatHeader: '\n' + 'Combat' + '\n',
     sectionSkills: '\n(?:' + 'Compétences' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
@@ -171,8 +171,8 @@ const keys = {
     armorNone: 'ninguna',
     attacksPerRoundNone: 'ninguno',
     sanLossNone: 'no',
-    fulldb: '(' + 'BD|bd|bonificación de daño' + ')',
-    halfdb: '(' + '½|medio daño|mitad|daño a la mitad' + ')',
+    fullDb: '(' + 'BD|bd|bonificación de daño' + ')',
+    halfDb: '(' + '½|medio daño|mitad|daño a la mitad' + ')',
     sectionCombats: '\n(?:' + 'Combate|Armas' + ')[:\n]',
     newCombatHeader: '\n' + 'Combate' + '\n',
     sectionSkills: '\n(?:' + 'Habilidades' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
@@ -198,9 +198,9 @@ const keys = {
     armorNone: 'none',
     attacksPerRoundNone: 'none',
     sanLossNone: 'none',
-    fulldb: '(' + 'Damage Bonus|DB|傷害加值' + ')',
+    fullDb: '(' + 'Damage Bonus|DB|傷害加值' + ')',
     /* NEW KEY BELOW - TRANSLATION REQUIRED */
-    halfdb: '(' + '½|half' + ')',
+    halfDb: '(' + '½|half' + ')',
     sectionCombats:
       '\n(?:' + 'combat|fighting attacks|戰鬥技能|戰鬥列表|武器' + ')[:\n]',
     newCombatHeader: '\n' + 'Combat' + '\n',
@@ -228,9 +228,9 @@ const keys = {
     armorNone: 'なし',
     attacksPerRoundNone: 'なし',
     sanLossNone: 'なし',
-    fulldb: '(' + 'Damage Bonus|DB|db|ダメージ(・|･)?ボーナス' + ')',
+    fullDb: '(' + 'Damage Bonus|DB|db|ダメージ(・|･)?ボーナス' + ')',
     /* NEW KEY BELOW - TRANSLATION REQUIRED */
-    halfdb: '(' + '½|half' + ')',
+    halfDb: '(' + '½|half' + ')',
     sectionCombats:
       '\n(?:' + 'combat|fighting attacks|戦闘|武器' + ')[:：\n]',
     newCombatHeader: '\n' + '戦闘' + '\n',
@@ -277,7 +277,7 @@ const translations = {
       ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
     db:
       '(?<![a-z])(?:' +
-      keys.en.fulldb +
+      keys.en.fullDb +
       ')(\\s*:)?\\s+(?<db>[+-]?\\d+(?:d\\d+|D\\d+)?|' +
       keys.en.dbNone +
       ')[,\\s\n]*',
@@ -308,9 +308,9 @@ const translations = {
       ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' +
       'damage' +
       ')?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' +
-      keys.en.fulldb +
+      keys.en.fullDb +
       '|' +
-      keys.en.halfdb +
+      keys.en.halfDb +
       ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
     weaponDodge:
       '(?<name>' +
@@ -361,7 +361,7 @@ const translations = {
       ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
     db:
       '(?<![a-z])(?:' +
-      keys.de.fulldb +
+      keys.de.fullDb +
       ')(\\s*:)?\\s+(?<db>[+-]?\\d+(?:d\\d+|D|W\\d+)?|' +
       keys.de.dbNone +
       ')[,\\s\n]*',
@@ -398,9 +398,9 @@ const translations = {
       ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' +
       'Schaden' +
       ')?\\s+(?<damage>(:?(:?\\d+w|d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' +
-      keys.de.fulldb +
+      keys.de.fullDb +
       '|' +
-      keys.de.halfdb +
+      keys.de.halfDb +
       ')\\s*|\\s*[+-]\\s*(:?\\d+d|w)?\\d+)*)+)\\)?',
     weaponDodge:
       '(?<name>' +
@@ -454,7 +454,7 @@ const translations = {
       ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
     db:
       '(?<![a-z])(?:' +
-      keys.pl.fulldb +
+      keys.pl.fullDb +
       ')(\\s*:)?\\s+(?<db>[+-]?\\d+(?:d\\d+|D|K\\d+)?|' +
       keys.pl.dbNone +
       ')[,\\s\n]*',
@@ -485,9 +485,9 @@ const translations = {
       ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' +
       'obrażenia' +
       ')?\\s+(?<damage>(:?(:?\\d+k|d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' +
-      keys.pl.fulldb +
+      keys.pl.fullDb +
       '|' +
-      keys.pl.halfdb +
+      keys.pl.halfDb +
       ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
     weaponDodge:
       '(?<name>' +
@@ -540,7 +540,7 @@ const translations = {
       ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
     db:
       '(?<![a-z])(?:' +
-      keys.fr.fulldb +
+      keys.fr.fullDb +
       ')(\\s*:)?\\s+(?<db>[+-]?\\d+(?:d\\d+|D\\d+)?|' +
       keys.fr.dbNone +
       ')[,\\s\n]*',
@@ -575,9 +575,9 @@ const translations = {
       ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*(?:' +
       'dommage|dégâts' +
       '))?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' +
-      keys.fr.fulldb +
+      keys.fr.fullDb +
       '|' +
-      keys.fr.halfdb +
+      keys.fr.halfDb +
       ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
     weaponDodge:
       '(?<name>' +
@@ -627,7 +627,7 @@ const translations = {
       ')(\\s*:)?\\s+(?<mp>\\d+|-)[,\\s\n]*',
     db:
       '(?<![a-z])(?:' +
-      keys.es.fulldb +
+      keys.es.fullDb +
       ')(\\s*:)?\\s+(?<db>[+-]?\\d+(?:d\\d+|D\\d+)?|' +
       keys.es.dbNone +
       ')[,\\s\n]*',
@@ -659,9 +659,9 @@ const translations = {
       ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' +
       'daño' +
       ')?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' +
-      keys.es.fulldb +
+      keys.es.fullDb +
       '|' +
-      keys.es.halfdb +
+      keys.es.halfDb +
       ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
     weaponDodge:
       '(?<name>' +
@@ -714,7 +714,7 @@ const translations = {
       ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
     db:
       '(?<![a-z])(?:' +
-      keys['zh-TW'].fulldb +
+      keys['zh-TW'].fullDb +
       ')(\\s*:)?\\s*(?<db>[+-]?\\d+(?:d\\d+|D\\d+)?|' +
       keys['zh-TW'].dbNone +
       ')[,\\s\n]*',
@@ -746,9 +746,9 @@ const translations = {
       ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*(?:' +
       'damage|傷害' +
       '))?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' +
-      keys['zh-TW'].fulldb +
+      keys['zh-TW'].fullDb +
       '|' +
-      keys['zh-TW'].halfdb +
+      keys['zh-TW'].halfDb +
       ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
     weaponDodge:
       '(?<name>' +
@@ -800,7 +800,7 @@ const translations = {
       ')(\\s*[:：])?\\s*(?<mp>\\d+|-)[,、\\s\n]*',
     db:
       '(?<![a-z])(?:' +
-      keys.ja.fulldb +
+      keys.ja.fullDb +
       ')(\\s*[:：])?\\s*(?<db>[+-]?\\s*\\d+(?:d\\d+|D\\d+)?|' +
       keys.ja.dbNone +
       ')[,、\\s\n]*',
@@ -832,9 +832,9 @@ const translations = {
       ']+)(\\**[,、]?\\s+|\\*)(?:\\(|(?<percentage>\\d+)[%％][,、]?(?:\\s*[\\(（]\\d+[\\/／]\\d+[\\)）]\\s*[,、]?)?)?(\\s*(?:' +
       'damage|ダメージ' +
       '))?\\s*(?<damage>(:?\\d+[dD])?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' +
-      keys.ja.fulldb +
+      keys.ja.fullDb +
       '|' +
-      keys.ja.halfdb +
+      keys.ja.halfDb +
       ')\\s*|\\s*[+-]\\s*(:?\\d+[dD])?\\d+)*)\\)?',
     weaponDodge:
       '(?<name>' +

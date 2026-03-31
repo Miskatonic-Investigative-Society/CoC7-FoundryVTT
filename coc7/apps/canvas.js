@@ -1,17 +1,15 @@
-/* global game, ui */
-import CoC7Utilities from './utilities.js'
+/* global foundry game */
 import CoC7Link from './link.js'
 
 export default class CoC7Canvas {
-  static get COC7_TYPES_SUPPORTED () {
-    return ['CoC7Link', 'locator', 'getToken']
-  }
-
-  static async onDropSomething (canvas, data) {
-    if (
-      data.type &&
-      CoC7Canvas.COC7_TYPES_SUPPORTED.includes(data.type)
-    ) {
+  /**
+   * Data dropped on canvas
+   * @param {Canvas} canvas
+   * @param {object} data
+   * @param {DragEvent} event
+   */
+  static async onDropSomething (canvas, data, event) {
+    if (['CoC7Link', 'CoC7GetToken', 'CoC7Locator'].includes(data.type)) {
       const gridSize = canvas.scene.grid.size
       const x = data.x - gridSize / 2
       const y = data.y - gridSize / 2
@@ -34,39 +32,30 @@ export default class CoC7Canvas {
               for (const token of dropTargetTokens) {
                 CoC7Link._onLinkActorClick(token.actor, data)
               }
-            } else {
-              // Apply to everyone ? or only players ? or nobody
             }
-          } else if (dropTargetTokens.length) {
-            CoC7Link.toWhisperMessage(data, dropTargetTokens.filter(t => t.actor.owners.length).map(t => t.actor))
           } else {
-            CoC7Link.toWhisperMessage(data, game.users.players.filter(u => !!u.character).map(u => u.character))
+            const link = await CoC7Link.fromDropData(data)
+            if (dropTargetTokens.length) {
+              link.toWhisperMessage(dropTargetTokens.filter(t => t.actor.owners.length).map(t => t.actor))
+            } else {
+              link.toWhisperMessage(game.users.players.filter(u => !!u.character).map(u => u.character))
+            }
           }
           break
-        case 'getToken':
-          if (typeof data.appId !== 'undefined' && typeof data.callBack === 'string' && typeof ui.windows[data.appId] !== 'undefined' && typeof ui.windows[data.appId][data.callBack] === 'function') {
-            ui.windows[data.appId][data.callBack](dropTargetTokens)
+        case 'CoC7GetToken':
+          if (typeof data.appId === 'string' && typeof data.callback === 'string') {
+            const app = foundry.applications.instances.get(data.appId)
+            if (app && typeof app[data.callback] === 'function') {
+              app[data.callback](dropTargetTokens)
+            }
           }
           break
-
-        // Handles generic canva drop.
-        // dataTransfer must include :
-        // - docUuid : the Uuid of the document to call
-        // - callBack : the name of the function to call in the document.
-        // Used to select location for chase
-        default:
-          if (data.docUuid && data.callBack) {
-            const doc = CoC7Utilities.SfromUuid(data.docUuid)
-            if (
-              doc[data.callBack] &&
-              typeof doc[data.callBack] === 'function'
-            ) {
-              try {
-                data.scene = canvas.scene.uuid
-                doc[data.callBack](data)
-              } catch (error) {
-                console.warn(error.message)
-              }
+        case 'CoC7Locator':
+          if (typeof data.appId === 'string' && typeof data.callback === 'string') {
+            const app = foundry.applications.instances.get(data.appId)
+            if (app && typeof app[data.callback] === 'function') {
+              data.sceneUuid = canvas.scene.uuid
+              app[data.callback](data)
             }
           }
           break

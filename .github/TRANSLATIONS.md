@@ -6,11 +6,11 @@ The following translations have more than 340 untranslated strings [are you able
 
 [cs.json (381 untranslated strings)](./ABANDONED.md#csjson)
 
-[it.json (419 untranslated strings)](./ABANDONED.md#itjson)
+[it.json (417 untranslated strings)](./ABANDONED.md#itjson)
 
-[pt-BR.json (577 untranslated strings)](./ABANDONED.md#pt-brjson)
+[pt-BR.json (571 untranslated strings)](./ABANDONED.md#pt-brjson)
 
-[ru.json (499 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (487 untranslated strings)](./ABANDONED.md#rujson)
 
 [uk.json (382 untranslated strings)](./ABANDONED.md#ukjson)
 

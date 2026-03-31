@@ -1,621 +1,483 @@
-/* global $, FontFace, foundry, game, TextEditor, ui */
-import { COC7 } from '../../constants.js'
-import CoCActor from './document-class.js'
-import CoC7ActorSheet from './global-sheet.js'
+/* global foundry fromUuid game renderTemplate TextEditor */
+import { FOLDER_ID, MONETARY_FORMATS, MONETARY_TYPES } from '../../constants.js'
 import CoC7CreateMythosEncounter from '../../apps/create-mythos-encounter.js'
-import { chatHelper } from '../../chat/helper.js'
+import CoC7ModelsActorGlobalSheet from './global-sheet.js'
+import CoC7SystemSocket from '../../apps/system-socket.js'
+import CoC7Utilities from '../../apps/utilities.js'
 
-export default class CoC7CharacterSheet extends CoC7ActorSheet {
-  _getHeaderButtons () {
-    if (this.constructor.name === 'CoC7CharacterSheet') {
-      if (!this.summarized) this.summarized = false
-      let buttons = super._getHeaderButtons()
-      buttons = [
-        {
-          label: this.summarized
-            ? game.i18n.localize('CoC7.Maximize')
-            : game.i18n.localize('CoC7.Summarize'),
-          class: 'test-extra-icon',
-          icon: this.summarized
-            ? 'fas fa-window-maximize'
-            : 'fas fa-window-minimize',
-          onclick: event => this.toggleSheetMode(event)
-        }/* ,
-        {
-          label: '',
-          class: 'drag-test-thingy',
-          icon: 'game-icon game-icon-d10',
-          ondragstart: () => ui.notifications.info('drag started')
-        } */
-      ].concat(buttons)
-      return buttons
+export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlobalSheet {
+  static DEFAULT_OPTIONS = {
+    classes: ['coc7', 'sheetV2', 'actor', 'character'],
+    position: {
+      width: 687,
+      height: 623
+    },
+    window: {
+      resizable: true
     }
-    return super._getHeaderButtons()
   }
 
-  async toggleSheetMode (event) {
-    this.summarized = !this.summarized
-    let options = foundry.utils.duplicate(CoC7CharacterSheet.defaultOptions)
-    if (this.summarized) {
-      options = foundry.utils.mergeObject(options, {
-        classes: ['coc7', 'actor', 'character', 'summarized'],
-        height: 200,
-        resizable: false,
-        width: 700
-      })
-    }
-    options.token = this.options.token
-    await this.close()
-    await this.render(true, options)
-  }
-
-  async getData () {
-    const sheetData = await super.getData()
-    if (
-      this.isEditable &&
-      typeof this.actor.getFlag('CoC7', 'skillListMode') === 'undefined'
-    ) {
-      await this.actor.setFlag('CoC7', 'skillListMode', false)
-    }
-    if (
-      this.isEditable &&
-      typeof this.actor.getFlag('CoC7', 'skillShowUncommon') === 'undefined'
-    ) {
-      await this.actor.setFlag('CoC7', 'skillShowUncommon', true)
-    }
-    sheetData.skillListModeValue =
-      this.actor.getFlag('CoC7', 'skillListMode') ?? false
-    sheetData.skillShowUncommon =
-      this.actor.getFlag('CoC7', 'skillShowUncommon') ?? true
-    sheetData.showIconsOnly = game.settings.get('CoC7', 'showIconsOnly')
-
-    if (this.actor.occupation) {
-      sheetData.data.system.infos.occupation = this.actor.occupation.name
-      sheetData.data.system.infos.occupationSet = true
-    } else sheetData.data.system.infos.occupationSet = false
-
-    if (this.actor.archetype) {
-      sheetData.data.system.infos.archetype = this.actor.archetype.name
-      sheetData.data.system.infos.archetypeSet = true
-    } else sheetData.data.system.infos.archetypeSet = false
-
-    sheetData.totalExperience = this.actor.experiencePoints
-    sheetData.totalOccupation = this.actor.occupationPointsSpent
-    sheetData.invalidOccupationPoints =
-      Number(this.actor.occupationPointsSpent) !==
-      Number(this.actor.system.development?.occupation)
-    sheetData.totalArchetype = this.actor.archetypePointsSpent
-    sheetData.invalidArchetypePoints =
-      Number(this.actor.archetypePointsSpent) !==
-      Number(this.actor.system.development?.archetype)
-    sheetData.totalExperiencePackage = Number(this.actor.ExperiencePackagePointsSpent)
-    sheetData.invalidExperiencePackagePoints = Number(this.actor.ExperiencePackagePointsSpent) !== Number(this.actor.ExperiencePackagePoints)
-    sheetData.totalPersonal = this.actor.personalPointsSpent
-    sheetData.invalidPersonalPoints =
-      Number(this.actor.personalPointsSpent) !==
-      Number(this.actor.system.development?.personal)
-    sheetData.creditRatingMax = Number(
-      this.actor.occupation?.system.creditRating.max
-    )
-    sheetData.creditRatingMin = Number(
-      this.actor.occupation?.system.creditRating.min
-    )
-    sheetData.invalidCreditRating =
-      this.actor.creditRatingSkill?.system.adjustments?.occupation >
-      sheetData.creditRatingMax ||
-      this.actor.creditRatingSkill?.system.adjustments?.occupation <
-      sheetData.creditRatingMin
-    sheetData.pulpTalentCount = sheetData.itemsByType.talent?.length
-      ? sheetData.itemsByType.talent?.length
-      : 0
-    sheetData.minPulpTalents = this.actor.archetype?.system.talents
-      ? this.actor.archetype?.system.talents
-      : 0
-    sheetData.invalidPulpTalents = sheetData.pulpTalentCount < sheetData.minPulpTalents
-
-    sheetData.hasDevelopmentPhase = this.actor.hasDevelopmentPhase
-
-    sheetData.allowDevelopment = game.settings.get('CoC7', 'developmentEnabled')
-    sheetData.allowCharCreation = game.settings.get('CoC7', 'charCreationEnabled')
-    sheetData.developmentRollForLuck = game.settings.get(
-      'CoC7',
-      'developmentRollForLuck'
-    )
-    sheetData.showDevPannel = sheetData.allowDevelopment || sheetData.allowCharCreation
-
-    sheetData._monetaryFormats = []
-    for (const key in COC7.monetaryFormats) {
-      sheetData._monetaryFormats.push({ key, val: game.i18n.localize(COC7.monetaryFormats[key]) })
-    }
-
-    sheetData.showCurrencySymbol = ['decimalLeft', 'decimalRight', 'integerLeft', 'integerRight'].includes(sheetData.data.system.monetary.format)
-
-    sheetData._monetaryTypes = []
-    for (const key in COC7.monetaryTypes) {
-      if (COC7.monetaryTypes[key].filter.length === 0 || COC7.monetaryTypes[key].filter.includes(sheetData.data.system.monetary.format)) {
-        sheetData._monetaryTypes.push({ key, val: game.i18n.localize(COC7.monetaryTypes[key].name) })
-      }
-    }
-
-    sheetData.manualCredit = this.actor.getActorFlag('manualCredit')
-    if (!sheetData.manualCredit) {
-      sheetData.monetary = {
-        spendingLevel: CoCActor.monetaryFormat(sheetData.data.system.monetary.format, sheetData.data.system.monetary.symbol, this.actor.spendingLevel),
-        assets: CoCActor.monetaryFormat(sheetData.data.system.monetary.format, sheetData.data.system.monetary.symbol, this.actor.assets),
-        cash: CoCActor.monetaryFormat(sheetData.data.system.monetary.format, sheetData.data.system.monetary.symbol, this.actor.cash)
-      }
-    }
-
-    sheetData.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
-
-    sheetData.summarized = this.summarized && !sheetData.permissionLimited
-    sheetData.isSummarized = this.summarized
-    sheetData.skillList = []
-    let previousSpec = ''
-    for (const skill of sheetData.skills) {
-      if (sheetData.skillShowUncommon || !skill.system.properties.rarity) {
-        if (skill.system.properties.special) {
-          if (previousSpec !== skill.system.specialization) {
-            previousSpec = skill.system.specialization
-            sheetData.skillList.push({
-              isSpecialization: true,
-              name: skill.system.specialization
-            })
-          }
-        }
-        sheetData.skillList.push(skill)
-      }
-    }
-    sheetData.skillsByValue = [...sheetData.skills].sort((a, b) => {
-      return b.system.value - a.system.value
-    })
-    sheetData.topSkills = [...sheetData.skillsByValue].slice(0, 14)
-    sheetData.skillsByValue = sheetData.skillsByValue.filter(
-      skill => sheetData.skillShowUncommon || !skill.system.properties.rarity
-    )
-    sheetData.topWeapons = [...sheetData.meleeWpn, ...sheetData.rangeWpn]
-      .sort((a, b) => {
-        return a.system.skill.main?.value - b.system.skill.main?.value
-      })
-      .reverse()
-      .slice(0, 3)
-    sheetData.displayPlayerName = game.settings.get(
-      'CoC7',
-      'displayPlayerNameOnSheet'
-    )
-    if (sheetData.displayPlayerName && !sheetData.data.system.infos.playername) {
-      const user = this.actor.characterUser
-      if (user) {
-        sheetData.data.system.infos.playername = user.name
-      }
-    }
-
-    sheetData.skillListEmpty = sheetData.skills.length === 0
-
-    sheetData.showInventoryItems =
-      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'item') ||
-      !sheetData.data.system.flags.locked
-    sheetData.showInventoryBooks =
-      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'book') ||
-      !sheetData.data.system.flags.locked
-    sheetData.showInventorySpells =
-      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'spell') ||
-      !sheetData.data.system.flags.locked
-    sheetData.showInventoryTalents =
-      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'talent') ||
-      (!sheetData.data.system.flags.locked && game.settings.get('CoC7', 'pulpRuleTalents'))
-    sheetData.showInventoryStatuses =
-      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'status') ||
-      !sheetData.data.system.flags.locked
-    sheetData.showInventoryArmor =
-      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'armor') ||
-      !sheetData.data.system.flags.locked
-
-    sheetData.hasInventory =
-    sheetData.showInventoryItems ||
-      sheetData.showInventoryBooks ||
-      sheetData.showInventorySpells ||
-      sheetData.showInventoryTalents ||
-      sheetData.showInventoryStatuses ||
-      sheetData.showInventoryWeapons ||
-      sheetData.showInventoryArmor
-
-    sheetData.enrichedBackstory = await TextEditor.enrichHTML(
-      sheetData.data.system.backstory,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
-      sheetData.data.system.description.keeper,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    return sheetData
-  }
-
-  _saveScrollPositions (html) {
-    super._saveScrollPositions(html)
-    const selectors = ['.right-panel .tab.development ol']
-    this._scrollPositionsX = selectors.reduce((pos, sel) => {
-      const el = html.find(sel)
-      pos[sel] = Array.from(el).map(el => el.scrollLeft)
-      return pos
-    }, {})
-  }
-
-  _restoreScrollPositions (html) {
-    super._restoreScrollPositions(html)
-    const selectors = ['.right-panel .tab.development ol']
-    const positions = this._scrollPositionsX || {}
-    for (const sel of selectors) {
-      const el = html.find(sel)
-      el.each((i, el) => { el.scrollLeft = positions[sel]?.[i] || 0 })
+  static PARTS = {
+    header: {
+      template: 'systems/' + FOLDER_ID + '/templates/actors/investigator-v2/header.hbs'
+    },
+    tabs: {
+      template: 'templates/generic/tab-navigation.hbs'
+    },
+    body: {
+      template: 'systems/' + FOLDER_ID + '/templates/actors/investigator-v2/body.hbs',
+      scrollable: [
+        'section.tab.development',
+        'section.tab.skills',
+        'section.tab.combat',
+        'section.tab.possession',
+        'section.tab.background',
+        'section.tab.activeEffects',
+        'section.tab.keeper'
+      ]
     }
   }
 
   /**
-   * Extend and override the default options used by the 5e Actor Sheet
-   * @returns {Object}
+   * Initialize configuration options for the Application instance.
+   * @param {Partial<ApplicationConfiguration>} options
+   * @returns {ApplicationConfiguration}
    */
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheetV2', 'actor', 'character'],
-      template: 'systems/CoC7/templates/actors/character/index.html',
-      width: 687,
-      height: 623,
-      resizable: true,
-      dragDrop: [{ dragSelector: '.item', dropSelector: null }],
-      scrollY: ['.right-panel .tab'],
-      tabs: [
-        {
-          navSelector: '.sheet-nav',
-          contentSelector: '.sheet-body',
-          initial: 'skills'
-        }
-      ]
-    })
+  _initializeApplicationOptions (options) {
+    options = super._initializeApplicationOptions(options)
+    if (options.document.isLimitedView) {
+      options.position.width = 500
+      options.position.height = 200
+    }
+    return options
   }
 
-  activateListeners (html) {
-    super.activateListeners(html)
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
 
-    if (this.actor.isOwner) {
-      // MODIF: 0.8.x owner deprecated  => isOwner
-      html
-        .find('.skill-name.rollable.flagged4dev')
-        .click(async event => this._onSkillDev(event))
-      html
-        .find('.reset-occupation')
-        .click(async () => await this.actor.resetOccupation())
-      html
-        .find('.reset-experience-package')
-        .click(async () => await this.actor.resetExperiencePackage())
-      html
-        .find('.reset-archetype')
-        .click(async () => await this.actor.resetArchetype())
-      html.find('.open-item').click(event => this._onItemDetails(event))
-      // html
-      //   .find('[name="data.attribs.hp.value"]')
-      //   .change(async event =>{
-      //     event.preventDefault()
-      //     event.stopPropagation()
-      //     let value = Number( event.currentTarget?.value)
-      //     if( !isNaN(value)) await this.actor.setHp(event)
-      //     else ui.notifications.warn('Error parsing HP value')
-      //   })
-      html.find('.toggle-list-mode').click(event => {
-        this.toggleSkillListMode(event)
-      })
-      html.find('.toggle-uncommon-mode').click(event => {
-        this.toggleSkillUncommonMode(event)
-      })
-      if (game.user.isGM) {
-        html
-          .find('.sanity-loss-type-add')
-          .click(this._onAddSanityLossReason.bind(this))
-        html
-          .find('.sanity-loss-type-delete')
-          .click(this._onDeleteSanityLossReason.bind(this))
-        html
-          .find('.mythosEncountersTotalLoss')
-          .blur(this._onEditSanityLossReason.bind(this))
-        html
-          .find('.toggle-keeper-flags')
-          .click(this._onToggleKeeperFlags.bind(this))
-        html.find('.add-monetary').click(this._onAddMonetary.bind(this))
-        html.find('.remove-monetary').click(this._onRemoveMonetary.bind(this))
+    context.skillListMode = context.document.system.flags.skillListMode
+    context.skillShowUncommon = context.document.system.flags.skillShowUncommon
+
+    const occupation = context.document.occupation
+    if (occupation) {
+      context.document.system.infos.occupation = occupation.name
+      context.occupationSet = true
+    } else {
+      context.occupationSet = false
+    }
+
+    const archetype = context.document.archetype
+    if (archetype) {
+      context.document.system.infos.archetype = archetype.name
+      context.archetypeSet = true
+    } else {
+      context.archetypeSet = false
+    }
+
+    context.totalExperience = context.document.experiencePoints
+    context.totalOccupation = context.document.occupationPointsSpent
+    context.invalidOccupationPoints = context.totalOccupation !== context.document.system.development.occupation
+    context.totalArchetype = context.document.archetypePointsSpent
+    context.invalidArchetypePoints = context.totalArchetype !== context.document.system.development.archetype
+    context.totalExperiencePackage = context.document.experiencePackagePointsSpent
+    context.invalidExperiencePackagePoints = context.totalExperiencePackage !== context.document.system.development.experiencePackage
+    context.totalPersonal = context.document.personalPointsSpent
+    context.invalidPersonalPoints = context.totalPersonal !== context.document.system.development.personal
+    context.creditRatingMax = occupation?.system.creditRating.max
+    context.creditRatingMin = occupation?.system.creditRating.min
+    const creditRatingSkill = context.document.creditRatingSkill
+    context.invalidCreditRating = creditRatingSkill?.system.adjustments?.occupation > context.creditRatingMax || creditRatingSkill?.system.adjustments?.occupation < context.creditRatingMin
+    context.pulpTalentCount = context.itemsByType.talent?.length ?? 0
+    context.minPulpTalents = archetype?.system.talents ?? 0
+    context.invalidPulpTalents = context.pulpTalentCount < context.minPulpTalents
+
+    context.hasDevelopmentPhase = context.document.hasDevelopmentPhase
+
+    context.allowDevelopment = game.settings.get(FOLDER_ID, 'developmentEnabled')
+    context.allowCharCreation = game.settings.get(FOLDER_ID, 'charCreationEnabled')
+    context.developmentRollForLuck = game.settings.get(FOLDER_ID, 'developmentRollForLuck')
+    context.showDevPanel = context.allowDevelopment || context.allowCharCreation
+
+    context._monetaryFormats = []
+    for (const key in MONETARY_FORMATS) {
+      context._monetaryFormats.push({ key, val: game.i18n.localize(MONETARY_FORMATS[key]) })
+    }
+
+    context.showCurrencySymbol = ['decimalLeft', 'decimalRight', 'integerLeft', 'integerRight'].includes(context.document.system.monetary.format)
+
+    context._monetaryTypes = []
+    for (const key in MONETARY_TYPES) {
+      if (MONETARY_TYPES[key].filter.length === 0 || MONETARY_TYPES[key].filter.includes(context.document.system.monetary.format)) {
+        context._monetaryTypes.push({ key, val: game.i18n.localize(MONETARY_TYPES[key].name) })
       }
     }
-  }
 
-  _onAddMonetary () {
-    const values = this.actor.system.monetary.values ? foundry.utils.duplicate(this.actor.system.monetary.values) : []
-    values.push({
-      name: '',
-      min: null,
-      max: null,
-      cashType: 0,
-      cashValue: '',
-      assetsType: 0,
-      assetsValue: '',
-      spendingType: 0,
-      spendingValue: ''
-    })
-    this.actor.update({ 'system.monetary.values': values })
-  }
-
-  _onRemoveMonetary (event) {
-    const a = event.currentTarget
-    const div = a.closest('.item')
-    const values = foundry.utils.duplicate(this.actor.system.monetary.values)
-    values.splice(Number(div.dataset.index), 1)
-    this.actor.update({ 'system.monetary.values': values })
-  }
-
-  _onToggleKeeperFlags (event) {
-    event.preventDefault()
-    switch (event.currentTarget.dataset.flag) {
-      case 'mythosInsanityExperienced':
-        this.actor.setFlag(
-          'CoC7',
-          'mythosInsanityExperienced',
-          !this.actor.mythosInsanityExperienced
-        )
-        break
-      case 'mythosHardened':
-        this.actor.setFlag('CoC7', 'mythosHardened', !this.actor.mythosHardened)
-        break
+    context.manualCredit = context.document.system.flags.manualCredit
+    if (!context.manualCredit) {
+      context.monetary = {
+        spendingLevel: context.document.system.formattedMonetaryValue('spending'),
+        assets: context.document.system.formattedMonetaryValue('assets'),
+        cash: context.document.system.formattedMonetaryValue('cash')
+      }
     }
-  }
 
-  async _onAddSanityLossReason (event) {
-    event.preventDefault()
-    new CoC7CreateMythosEncounter(
+    context.oneBlockBackStory = game.settings.get(FOLDER_ID, 'oneBlockBackstory')
+
+    const skills = (context.itemsByType.skill ?? []).filter(document => (context.skillShowUncommon || !document.system.properties.rarity))
+    context.skillList = []
+    let previousSpec = ''
+    for (const skill of skills) {
+      if (skill.system.properties.special) {
+        const check = skill.system.specialization + (skill.system.properties.own ? 'Y' : 'N')
+        if (previousSpec !== check) {
+          previousSpec = check
+          context.skillList.push({
+            isSpecialization: true,
+            name: skill.system.specialization + (skill.system.properties.own ? ' - ' + game.i18n.localize('CoC7.SkillOwn') : '')
+          })
+        }
+      }
+      context.skillList.push(skill)
+    }
+    context.skillsByValue = [...skills].sort(CoC7Utilities.sortByValueThenNameKey)
+    context.displayPlayerName = game.settings.get(FOLDER_ID, 'displayPlayerNameOnSheet')
+    if (context.displayPlayerName && context.document.system.infos.playername.length === 0) {
+      const user = context.document.userOwner
+      if (user) {
+        context.document.system.infos.playername = user.name
+      }
+    }
+
+    context.skillListEmpty = skills.length === 0
+
+    context.hasInventory = this.hasInventory(context)
+
+    /* // FoundryVTT V12 */
+    context.enrichedBackstory = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      context.document.system.backstory,
       {
-        actor: this.actor,
-        type: event.currentTarget.dataset.type
-      },
-      {}
-    ).render(true)
-  }
-
-  async _onEditSanityLossReason (event) {
-    const input = $(event.currentTarget)
-    const offset = input.closest('.flexrow-coc7').data('offset')
-    if (typeof this.actor.system.sanityLossEvents?.[offset]?.totalLoss !== 'undefined') {
-      const sanityLossEvents = foundry.utils.duplicate(this.actor.system.sanityLossEvents)
-      sanityLossEvents[offset].totalLoss = parseInt(input.val(), 10)
-      this.actor.update({ 'system.sanityLossEvents': sanityLossEvents })
-    }
-  }
-
-  _onDeleteSanityLossReason (event) {
-    event.preventDefault()
-    const offset = $(event.currentTarget)
-      .closest('.flexrow-coc7')
-      .data('offset')
-    const sanityLossEvents = this.actor.system.sanityLossEvents ?? []
-    sanityLossEvents.splice(offset, 1)
-    sanityLossEvents.sort(function (left, right) {
-      return left.type.localeCompare(right.type)
-    })
-    this.actor.update({ 'system.sanityLossEvents': sanityLossEvents })
-  }
-
-  async toggleSkillListMode (event) {
-    await this.actor.setFlag(
-      'CoC7',
-      'skillListMode',
-      !this.actor.getFlag('CoC7', 'skillListMode')
+        async: true,
+        secrets: context.editable
+      }
     )
-    return await this.render(true)
-  }
 
-  async toggleSkillUncommonMode (event) {
-    await this.actor.setFlag(
-      'CoC7',
-      'skillShowUncommon',
-      !this.actor.getFlag('CoC7', 'skillShowUncommon')
+    /* // FoundryVTT V12 */
+    context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      context.document.system.description.keeper,
+      {
+        async: true,
+        secrets: context.editable
+      }
     )
-    return await this.render(true)
-  }
 
-  async _onSkillDev (event) {
-    event.preventDefault()
-    const skillId = event.currentTarget.closest('.item').dataset.itemId
-    await this.actor.developSkill(skillId, event.shiftKey)
-  }
+    context.showPartValues = !game.settings.get(FOLDER_ID, 'hidePartValues')
 
-  _onItemDetails (event) {
-    event.preventDefault()
-    const type = event.currentTarget.dataset.type
-    const item = this.actor[type]
-    if (item) item.sheet.render(true)
-  }
-
-  _updateObject (event, formData) {
-    const system = foundry.utils.expandObject(formData)?.system
-    if (system.monetary?.values) {
-      formData['system.monetary.values'] = Object.values(system.monetary.values || [])
-    }
-    super._updateObject(event, formData)
-  }
-
-  static renderSheet (sheet, html) {
-    if (game.settings.get('CoC7', 'overrideSheetArtwork')) {
-      if (game.settings.get('CoC7', 'artWorkSheetBackground')) {
-        if (
-          game.settings.get('CoC7', 'artWorkSheetBackground').toLowerCase() ===
-          'null'
-        ) {
-          sheet.element.css(
-            '--main-sheet-bg',
-            "url( './assets/images/void.webp')"
-          )
-        } else {
-          sheet.element.css(
-            '--main-sheet-bg',
-            game.settings.get('CoC7', 'artWorkSheetBackground')
-          )
-          // const borderImage = sheet.element.find('form').css('border-image');
-          // sheet.element.find('form').css('border-image', '');
-          if (
-            game.settings.get('CoC7', 'artWorkSheetBackgroundType') !== 'slice'
-          ) {
-            let styleSheet, cssRuleIndex
-            for (let i = 0; i < document.styleSheets.length; i++) {
-              if (document.styleSheets[i].href?.endsWith('coc7g.css')) {
-                styleSheet = document.styleSheets[i]
-                break
-              }
-            }
-
-            if (styleSheet) {
-              for (let i = 0; i < styleSheet.rules.length; i++) {
-                if (
-                  styleSheet.rules[i].selectorText === '.sheetV2.character form'
-                ) {
-                  cssRuleIndex = i
-                  break
-                }
-              }
-            }
-            if (cssRuleIndex) {
-              const CSSStyle = styleSheet.rules[cssRuleIndex].style
-              CSSStyle.removeProperty('border-image')
-              CSSStyle.setProperty(
-                'background',
-                game.settings.get('CoC7', 'artWorkSheetBackground')
-              )
-              switch (game.settings.get('CoC7', 'artWorkSheetBackgroundType')) {
-                case 'auto':
-                  CSSStyle.setProperty('background-size', 'auto')
-                  break
-                case 'contain':
-                  CSSStyle.setProperty('background-size', 'contain')
-                  break
-                case 'cover':
-                  CSSStyle.setProperty('background-size', 'cover')
-                  break
-                default:
-                  CSSStyle.setProperty('background-size', 'auto')
-                  break
-              }
+    if (this.constructor.name === 'CoC7ModelsActorCharacterSheetV2') {
+      let tabs = {}
+      if (context.showDevPanel) {
+        tabs = {
+          ...tabs,
+          ...{
+            development: {
+              icon: '',
+              label: 'CoC7.CharacterDevelopment'
             }
           }
         }
       }
-
-      if (game.settings.get('CoC7', 'artWorkOtherSheetBackground')) {
-        if (
-          game.settings
-            .get('CoC7', 'artWorkOtherSheetBackground')
-            .toLowerCase() === 'null'
-        ) {
-          sheet.element.css(
-            '--other-sheet-bg',
-            "url( './assets/images/void.webp')"
-          )
-        } else {
-          sheet.element.css(
-            '--other-sheet-bg',
-            game.settings.get('CoC7', 'artWorkOtherSheetBackground')
-          )
+      tabs = {
+        ...tabs,
+        ...{
+          skills: {
+            icon: '',
+            label: 'CoC7.Skills'
+          },
+          combat: {
+            icon: '',
+            label: 'CoC7.Combat'
+          },
+          possession: {
+            icon: '',
+            label: 'CoC7.Possessions'
+          },
+          background: {
+            icon: '',
+            label: 'CoC7.Background'
+          }
         }
       }
-
-      if (game.settings.get('CoC7', 'artworkSheetImage')) {
-        if (
-          game.settings.get('CoC7', 'artworkSheetImage').toLowerCase() ===
-          'null'
-        ) {
-          sheet.element.css(
-            '--main-sheet-image',
-            "url( './assets/images/void.webp')"
-          )
-        } else {
-          sheet.element.css(
-            '--main-sheet-image',
-            game.settings.get('CoC7', 'artworkSheetImage')
-          )
+      if (game.user.isGM) {
+        tabs.activeEffects = {
+          cssClass: 'icon-only-tab',
+          icon: 'game-icon game-icon-aura',
+          label: '',
+          tooltip: 'CoC7.Effects'
+        }
+        tabs.keeper = {
+          cssClass: 'icon-only-tab',
+          icon: 'game-icon game-icon-tentacles-skull',
+          tooltip: 'CoC7.GmNotes'
         }
       }
-
-      if (game.settings.get('CoC7', 'artworkFrontColor')) {
-        sheet.element.css(
-          '--main-sheet-front-color',
-          game.settings.get('CoC7', 'artworkFrontColor')
-        )
-      }
-      if (game.settings.get('CoC7', 'artworkBackgroundColor')) {
-        sheet.element.css(
-          '--main-sheet-back-color',
-          game.settings.get('CoC7', 'artworkBackgroundColor')
-        )
-      }
-      if (game.settings.get('CoC7', 'artworkInteractiveColor')) {
-        sheet.element.css(
-          '--main-sheet-interactive-color',
-          game.settings.get('CoC7', 'artworkInteractiveColor')
-        )
-      }
-      if (!game.settings.get('CoC7', 'artworkFixedSkillLength')) {
-        sheet.element.css('--skill-length', 'auto')
-        sheet.element.css('--skill-specialization-length', 'auto')
+      tabs.locked = {
+        cssClass: 'icon-only-tab ' + (this.allowUnlock ? 'unlock-control' : 'unlock-control-disabled'),
+        icon: (context.document.system.flags.locked ? 'fa-solid fa-lock' : 'fa-solid fa-lock-open'),
+        tooltip: (context.document.system.flags.locked ? 'CoC7.UnlockActor' : 'CoC7.LockActor')
       }
 
-      if (game.settings.get('CoC7', 'artworkMainFont')) {
-        const customSheetFont = new FontFace(
-          'customSheetFont',
-          game.settings.get('CoC7', 'artworkMainFont')
-        )
-        customSheetFont
-          .load()
-          .then(function (loadedFace) {
-            document.fonts.add(loadedFace)
-          })
-          .catch(function (error) {
-            ui.notifications.error(error)
-          })
-      }
+      context.tabs = this.getTabs('primary', (context.showDevPanel ? 'development' : 'skills'), tabs)
+    }
 
-      if (game.settings.get('CoC7', 'artworkMainFontBold')) {
-        const customSheetCursiveFont = new FontFace(
-          'customSheetFont',
-          game.settings.get('CoC7', 'artworkMainFontBold'),
-          { weight: 'bold' }
-        )
-        customSheetCursiveFont
-          .load()
-          .then(function (loadedFace) {
-            document.fonts.add(loadedFace)
-          })
-          .catch(function (error) {
-            ui.notifications.error(error)
-          })
+    context.biographySections = []
+    if (context.document.system.biography instanceof Array && context.document.system.biography.length) {
+      for (const biography of context.document.system.biography) {
+        context.biographySections.push({
+          title: biography.title,
+          value: biography.value,
+          /* // FoundryVTT V12 */
+          enriched: await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+            biography.value,
+            {
+              async: true,
+              secrets: context.editable
+            }
+          )
+        })
       }
-
-      if (game.settings.get('CoC7', 'artworkMainFontSize')) {
-        const size = `${game.settings.get('CoC7', 'artworkMainFontSize')}px`
-        if (size !== $(':root').css('font-size')) {
-          $(':root').css('font-size', size)
-        }
+      if (context.biographySections.length) {
+        context.biographySections[0].isFirst = true
+        context.biographySections[context.biographySections.length - 1].isLast = true
       }
     }
 
-    if (typeof sheet.actor?.system.pannel !== 'undefined') {
-      for (const [key, value] of Object.entries(sheet.actor.system.pannel)) {
-        const pannelClass = chatHelper.camelCaseToHyphen(key)
-        const pannel = html.find(`.pannel.${pannelClass}`)
-        if (value.expanded) pannel.addClass('expanded')
-        else pannel.removeClass('expanded')
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
+
+    this.element.querySelectorAll('.open-item').forEach((element) => element.addEventListener('click', this._onItemDetails.bind(this)))
+
+    // Everything below here is only needed if the sheet is editable
+    if (!this.isEditable) return
+    this.element.querySelector('.reset-occupation')?.addEventListener('click', this.document.resetOccupation.bind(this.document))
+    this.element.querySelector('.reset-experience-package')?.addEventListener('click', this.document.resetExperiencePackage.bind(this.document))
+    this.element.querySelector('.reset-archetype')?.addEventListener('click', this.document.resetArchetype.bind(this.document))
+    if (game.user.isGM) {
+      this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', (event) => {
+        switch (event.currentTarget.dataset.action) {
+          case 'sanity-loss-type-add':
+            this._onSanityLossReasonAdd(event)
+            break
+          case 'sanity-loss-type-delete':
+            this._onSanityLossReasonDelete(event)
+            break
+          case 'monetary-add':
+            this._onMonetaryAdd(event)
+            break
+          case 'monetary-remove':
+            this._onMonetaryRemove(event)
+            break
+          case 'bookClear':
+            this._onBookRemove(event)
+        }
+      }))
+    }
+  }
+
+  /**
+   * Add Monetary Row
+   * @param {ClickEvent} event
+   */
+  async _onMonetaryAdd (event) {
+    event.preventDefault()
+    this.scrollToNewLast('div.tiny-monetary')
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    await this.document.update({
+      'system.monetary.values': this.document.system.monetary.values.concat([{}])
+    })
+  }
+
+  /**
+   * Remove Monetary Row
+   * @param {ClickEvent} event
+   */
+  async _onMonetaryRemove (event) {
+    event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    const item = event.currentTarget.closest('.form-group')
+    if (item && typeof item.dataset.index !== 'undefined') {
+      const index = Number(item.dataset.index)
+      const values = foundry.utils.duplicate(this.document.system.monetary.values)
+      values.splice(index, 1)
+      this._onMonetaryReorder(values)
+      await this.document.update({ 'system.monetary.values': values })
+    }
+  }
+
+  /**
+   * Reorder Monetary values by Min and Max
+   * @param {Array} values
+   */
+  _onMonetaryReorder (values) {
+    const maxOffset = values.length - 1
+    if (maxOffset > 0) {
+      values.sort((l, r) => {
+        const lMinimum = parseInt(l.min ?? 0, 10)
+        const rMinimum = parseInt(r.min ?? 0, 10)
+        return lMinimum - rMinimum
+      })
+      for (let offset = 1; offset <= maxOffset; offset++) {
+        values[offset - 1].max = values[offset].min - 1
+      }
+      values[0].min = null
+      values[maxOffset].max = null
+    }
+  }
+
+  /**
+   * Add Sanity Loss Reason Row
+   * @param {ClickEvent} event
+   */
+  async _onSanityLossReasonAdd (event) {
+    event.preventDefault()
+    CoC7CreateMythosEncounter.create({
+      actor: this.actor,
+      type: event.currentTarget.dataset.type
+    })
+  }
+
+  /**
+   * Remove Sanity Loss Reason Row
+   * @param {ClickEvent} event
+   */
+  async _onSanityLossReasonDelete (event) {
+    event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    const group = event.currentTarget.closest('.event[data-index]')
+    if (group && typeof group.dataset.index !== 'undefined') {
+      const sanityLossEvents = foundry.utils.duplicate(this.document.system.sanityLossEvents)
+      sanityLossEvents.splice(Number(group.dataset.index), 1)
+      await this.document.update({ 'system.sanityLossEvents': sanityLossEvents })
+    }
+  }
+
+  /**
+   * Show embedded item sheet
+   * @param {ClickEvent|null} event
+   */
+  _onItemDetails (event) {
+    event.preventDefault()
+    const type = event.currentTarget.dataset.type
+    if (['archetype', 'experiencePackage', 'occupation'].includes(type)) {
+      const item = this.document[type]
+      if (item) {
+        item.sheet.render({ force: true })
       }
     }
+  }
+
+  /**
+   * @inheritdoc
+   * @param {SubmitEvent|null} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
+   * @returns {object}
+   */
+  _processFormData (event, form, formData) {
+    const object = super._processFormData(event, form, formData)
+    if (typeof object.system?.monetary?.values !== 'undefined') {
+      object.system.monetary.values = Object.values(object.system.monetary.values)
+      if (event.target.classList.contains('cash-assets-range')) {
+        this._onMonetaryReorder(object.system.monetary.values)
+      }
+    }
+
+    return object
+  }
+
+  /**
+   * Render HTMLElements for the Application.
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<any>}
+   */
+  async _renderHTML (context, options) {
+    // Limited character sheets view
+    let parts = {}
+    if (context.document.isLimitedView) {
+      for (const part of options.parts) {
+        switch (part) {
+          case 'body':
+            {
+              // body = character-sheet-v3
+              const tempHTML = document.createElement('div')
+              tempHTML.classList.add(part, 'flexcol', 'limited-view')
+              tempHTML.dataset.applicationPart = part
+              /* // FoundryVTT V12 */
+              tempHTML.innerHTML = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/actors/limited.hbs', context)
+              parts[part] = tempHTML
+            }
+            break
+          default:
+            parts[part] = document.createElement('div')
+        }
+      }
+    } else {
+      parts = await super._renderHTML(context, options)
+    }
+
+    return parts
+  }
+
+  /**
+   * Remove Book Row
+   * @param {ClickEvent} event
+   */
+  async _onBookRemove (event) {
+    event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    const item = event.currentTarget.closest('.event')
+    if (item && typeof item.dataset.index !== 'undefined') {
+      const index = Number(item.dataset.index)
+      const books = foundry.utils.duplicate(this.document.system.books)
+      if (books[index]?.id) {
+        const uuid = this.document.items.get(books[index]?.id).uuid
+        books.splice(index, 1)
+        await this.document.update({ 'system.books': books })
+        if (uuid) {
+          CoC7SystemSocket.triggerSocket({
+            type: 'refreshOpenDocumentSheet',
+            uuid
+          })
+        }
+      }
+    }
+  }
+
+  /**
+   * An event that occurs when a drag workflow begins for a draggable item on the sheet.
+   * @param {DragEvent} event
+   * @returns {Promise<void>}
+   */
+  async _onDragStart (event) {
+    const target = event.currentTarget
+    if (target.dataset.itemUuid) {
+      const item = await fromUuid(target.dataset.itemUuid)
+      event.dataTransfer.setData('text/plain', JSON.stringify(item.toDragData()))
+      return
+    }
+    super._onDragStart(event)
   }
 }

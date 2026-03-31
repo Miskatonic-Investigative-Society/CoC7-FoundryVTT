@@ -1,50 +1,56 @@
-<h2>{{localize 'CoC7.Background'}}</h2>
-{{#if oneBlockBackStory}}
-  {{editor enrichedBackstory target="system.backstory" engine="prosemirror" button=true owner=owner editable=editable}}
-{{else}}
-  {{#unless data.system.flags.locked}}
-    <div class='bio-control' style='flex:initial;'>
-      <div class='add-new-section-scroll button'>{{localize 'CoC7.BackgroundNewSection'}}</div>
-    </div>
-  {{/unless}}
-  {{#each biographySections as |section index|}}
-    <div class="section-header bio-section flexrow-coc7" data-index='{{index}}'>
-      {{#if ../data.system.flags.locked}}
-        <h3>{{section.title}}</h3>
-      {{else}}
-        <input class='bio-section-title' type="text" value="{{section.title}}" placeholder="{{localize 'CoC7.BackgroundSectionNameHolder'}}">
-        <div class="header-buttons">
-          {{#unless section.isFirst}}<a class="move-section-up" title="{{localize 'CoC7.BackgroundSectionMoveUp'}}"><i class="fas fa-caret-up"></i></a>{{/unless}}
-          {{#unless section.isLast}}<a class="move-section-down" title="{{localize 'CoC7.BackgroundSectionMoveDown'}}"><i class="fas fa-caret-down"></i></a>{{/unless}}
-          <a class="delete-section" title="{{localize 'CoC7.BackgroundDeleteSection'}}"><i class="fas fa-trash"></i></a>
-        </div>
-      {{/if}}
-    </div>
-    <div>
-      {{editor section.enriched target=(concat "system.biography." index ".value") engine="prosemirror" button=true owner=owner editable=editable}}
-    </div>
-  {{/each}}
-{{/if}}
-{{#if data.system.sanityLossEvents}}
-  <div class="section-header flexrow-coc7">
-    <h3>{{localize 'CoC7.BackgroundEncounters'}}</h3>
-  </div>
-  <div class="bio-section-events">
-    {{#each data.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
-      <div class="flexrow-coc7">
-        <div>{{sanityLossEvent.type}}</div>
-        <div class="bio-section-values">
-          {{#if sanityLossEvent.immunity}}
-            <i class="fas fa-shield-alt" title="{{localize 'CoC7.SanityLossImmunity'}}"></i>
+<section class="tab background scrollable {{tabs.background.cssClass}}" data-group="primary" data-tab="background">
+  <header class="tab-header">
+    <h2 class="tab-heading">{{localize 'CoC7.Background'}}</h2>
+    {{#unless (or oneBlockBackStory document.system.flags.locked)}}
+      <div class="item-controls">
+        <div class="item-control button" data-action="biography-add"><i class="fa-regular fa-plus-circle"></i>{{localize 'CoC7.BackgroundNewSection'}}</div>
+      </div>
+    {{/unless}}
+  </header>
+  {{#if oneBlockBackStory}}
+    <prose-mirror name="system.backstory" value="{{document.system.backstory}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedBackstory}}}</prose-mirror>
+  {{else}}
+    {{#each biographySections as |section index|}}
+      <section class="bio-section" data-index="{{index}}">
+        <header class="section-header">
+          {{#if ../document.system.flags.locked}}
+            <h3 class="section-heading">{{section.title}}</h3>
           {{else}}
-            {{sanityLossEvent.totalLoss}}
+            <input class="title" type="text" name="system.biography.{{index}}.title" value="{{section.title}}" placeholder="{{localize 'CoC7.BackgroundSectionNameHolder'}}">
+            <div class="item-controls">
+              <a class="item-control{{#if section.isFirst}} item-control-disabled{{/if}}" {{#unless section.isFirst}} data-action="biography-move-up" {{/unless}} data-tooltip="CoC7.BackgroundSectionMoveUp"><i class="fa-solid fa-caret-up"></i></a>
+              <a class="item-control{{#if section.isLast}} item-control-disabled{{/if}}" {{#unless section.isLast}} data-action="biography-move-down" {{/unless}} data-tooltip="CoC7.BackgroundSectionMoveDown"><i class="fa-solid fa-caret-down"></i></a>
+              <a class="item-control" data-action="biography-remove" data-tooltip="CoC7.BackgroundDeleteSection"><i class="fa-regular fa-minus-circle"></i></a>
+            </div>
           {{/if}}
-        </div>
-      </div>
-    {{else}}
-      <div class="flexrow-coc7">
-        -
-      </div>
+        </header>
+        <prose-mirror name="system.biography.{{index}}.value" value="{{section.value}}" data-document-uuid="{{document.uuid}}" toggled>{{{section.enriched}}}</prose-mirror>
+      </section>
     {{/each}}
-  </div>
-{{/if}}
+  {{/if}}
+  {{#if document.system.sanityLossEvents}}
+    <section class="bio-section">
+      <header class="section-header">
+        <h3 class="section-heading">{{localize 'CoC7.BackgroundEncounters'}}</h3>
+      </header>
+      <div class="events">
+        {{#each document.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
+          <div class="event">
+            <div class="title">{{sanityLossEvent.type}}</div>
+            <div class="values">
+              {{#if sanityLossEvent.immunity}}
+                <i class="fa-solid fa-shield-alt" data-tooltip="CoC7.SanityLossImmunity"></i>
+              {{else}}
+                {{sanityLossEvent.totalLoss}}
+              {{/if}}
+            </div>
+          </div>
+        {{else}}
+          <div>
+            -
+          </div>
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
+</section>

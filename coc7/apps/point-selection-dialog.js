@@ -1,74 +1,151 @@
-/* global $, Dialog, renderTemplate */
-export class PointSelectDialog extends Dialog {
-  activateListeners (html) {
-    super.activateListeners(html)
+/* global foundry game */
+import { FOLDER_ID } from '../constants.js'
 
-    html
-      .find('.item-name')
-      .click(async event => this._onSelectCharacteristic(event))
-    html.find('button').click(event => this._onButtonClicked(event))
+export default class CoC7PointSelectionDialog extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2) {
+  /**
+   * @inheritdoc
+   */
+  constructor (...args) {
+    const coc7Config = args.pop()
+    super(...args)
+    this.coc7Config = coc7Config
   }
 
-  async _onSelectCharacteristic (event) {
-    const li = event.currentTarget.closest('.item')
-    const itemList = li.closest('.item-list')
-    for (const item of itemList.querySelectorAll('.selectable')) {
-      item.classList.remove('selected')
-      this.data.data.characteristics[item.dataset.key].selected = false
-      this.data.data.characteristics[item.dataset.key].optional = false
+  static DEFAULT_OPTIONS = {
+    tag: 'form',
+    classes: ['coc7', 'dialog'],
+    window: {
+      title: 'CoC7.InvestigatorWizard.OccupationSkillPoints',
+      contentClasses: [
+        'standard-form'
+      ]
+    },
+    form: {
+      closeOnSubmit: false,
+      handler: CoC7PointSelectionDialog.#onSubmit
+    },
+    position: {
+      width: 360
     }
-    $(li).toggleClass('selected')
-    this.data.data.characteristics[li.dataset.key].selected = true
-    const totalPoints = li
-      .closest('#skill-selection-form')
-      .querySelector('.points')
-    totalPoints.innerText =
-      this.data.data.total +
-      this.data.data.characteristics[li.dataset.key].multiplier *
-        this.data.data.characteristics[li.dataset.key].value
-    const button = li
-      .closest('#skill-selection-form')
-      .querySelector('button.validate')
-    button.classList.remove('inactive')
-    this.data.data.resolved = true
-    // const actor = game.actors.get( this.data.data.actorId);
-    // await actor.addSkill( this.data.data.skills[Number(li.dataset.index)], this.data.data.type);
-    // event.currentTarget.style.display = 'none';
-    // if( !this.data.data.added) this.data.data.added = 0;
-    // this.data.data.added++;
-    // const form = event.currentTarget.closest('.point-selector');
-    // const divCount = form.querySelector('.count');
-    // divCount.innerText = this.data.data.added;
-    // if( this.data.data.added >= this.data.data.options) this.close();
-    // return event;
   }
 
-  async _onButtonClicked (event) {
-    event.preventDefault()
-    if (event.currentTarget.classList.contains('inactive')) return
-    super.close()
+  static PARTS = {
+    form: {
+      template: 'systems/' + FOLDER_ID + '/templates/apps/point-select.hbs',
+      scrollable: ['']
+    },
+    footer: {
+      template: 'templates/generic/form-footer.hbs'
+    }
   }
 
-  static async create (data) {
-    const html = await renderTemplate(
-      'systems/CoC7/templates/apps/point-select.hbs',
-      data
-    )
-    return new Promise(resolve => {
-      const dlg = new PointSelectDialog(
-        {
-          title: data.title,
-          content: html,
-          data,
-          buttons: {},
-          close: () => {
-            if (data.resolved) return resolve(data)
-            else return resolve(false)
-          }
-        },
-        { classes: ['coc7', 'dialog', 'char-select'] }
-      )
-      dlg.render(true)
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
+
+    this.element.querySelectorAll('.selectable').forEach((element) => element.addEventListener('click', async (event) => {
+      event.preventDefault()
+      this.coc7Config.selected = event.currentTarget.dataset.key
+      this.render({ force: true })
+    }))
+  }
+
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<HTMLElement>}
+   */
+  async _renderFrame (options) {
+    const frame = await super._renderFrame(options)
+
+    /* // FoundryV12 polyfill */
+    if (!foundry.utils.isNewerVersion(game.version, 13)) {
+      frame.setAttribute('open', true)
+    }
+
+    return frame
+  }
+
+  /**
+   * Submit the configuration form.
+   * @param {SubmitEvent} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
+   * @returns {Promise<void>}
+   */
+  static async #onSubmit (event, form, formData) {
+    this.coc7Config.resolve(this.coc7Config.selected)
+    this.close()
+  }
+
+  /**
+   * Total points
+   * @returns {int}
+   */
+  get total () {
+    const total = this.coc7Config.characteristicOptional.reduce((c, r) => {
+      if (r.key === this.coc7Config.selected) {
+        c += r.total
+      }
+      return c
+    }, this.coc7Config.characteristicFixed.reduce((c, r) => {
+      c += r.total
+      return c
+    }, 0))
+    return total
+  }
+
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+
+    switch (partId) {
+      case 'form':
+        context.characteristicFixed = this.coc7Config.characteristicFixed
+        context.characteristicOptional = this.coc7Config.characteristicOptional
+        context.selected = this.coc7Config.selected
+        context.total = this.total
+        break
+      case 'footer':
+        context.buttons = []
+        context.buttons.push({
+          type: 'submit',
+          action: 'validate',
+          label: 'CoC7.Validate',
+          icon: 'fa-solid fa-check'
+        })
+        break
+    }
+    return context
+  }
+
+  /**
+   * Create popup
+   * @param {object} options
+   * @param {Array} options.characteristicFixed
+   * @param {Array} options.characteristicOptional
+   * @returns {string}
+   */
+  static async create ({ characteristicFixed = [], characteristicOptional = [] } = {}) {
+    const selected = characteristicOptional[0].key
+    return await new Promise(resolve => {
+      new CoC7PointSelectionDialog({}, {}, {
+        characteristicFixed,
+        characteristicOptional,
+        selected,
+        resolve
+      }).render({ force: true })
     })
   }
 }

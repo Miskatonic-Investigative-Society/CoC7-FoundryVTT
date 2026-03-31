@@ -1,30 +1,15 @@
-/* global ActiveEffect, game */
-import { COC7 } from '../constants.js'
+/* global game */
+import { STATUS_EFFECTS } from '../constants.js'
+import deprecated from '../deprecated.js'
 
-export default class CoC7ActiveEffect extends ActiveEffect {
-  apply (actor, change) {
-    if (change.key === 'system.attribs.armor.value') {
-      // Armor can be free text if both are numbers allow calculation
-      if (!isNaN(change.value) && !isNaN(actor.system.attribs.armor.value)) {
-        actor.system.attribs.armor.value = Number(actor.system.attribs.armor.value)
-      }
-    } else if (change.key === 'system.attribs.db.value') {
-      // If db is currently a number allow strings to be applied
-      if (isNaN(change.value) && !isNaN(actor.system.attribs.db.value)) {
-        actor.system.attribs.db.value = String(actor.system.attribs.db.value)
-      }
-    }
-    const changes = super.apply(actor, change)
-    return changes
-  }
-
+export default class CoC7ActiveEffect {
   /**
    * Manage Active Effect instances through the Actor Sheet via effect control buttons.
    * @param {ClickEvent} event
    * @param {Document} owner
    * @returns {Document}
    */
-  static onManageActiveEffect (event, owner) {
+  static #onManageActiveEffect (event, owner) {
     event.preventDefault()
     const button = event.currentTarget
     const li = button.closest('li')
@@ -41,7 +26,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
           }
         ])
       case 'edit':
-        return effect.sheet.render(true)
+        return effect.sheet.render(deprecated.renderForce)
       case 'delete':
         return effect.delete()
       case 'toggle':
@@ -49,20 +34,16 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     }
   }
 
-  _prepareDuration () {
-    const duration = super._prepareDuration()
-    if (duration.type === 'seconds') {
-      if (duration.seconds > 3600) {
-        duration.label = new Date(duration.seconds * 1000).toISOString().slice(11, 19)
-      } else if (duration.seconds > 100) {
-        duration.label = new Date(duration.seconds * 1000).toISOString().slice(14, 19)
-      }
-    }
-    return duration
-  }
-
-  static filterActiveEffects (effect, conditionName) {
-    return effect.statuses.has(conditionName)
+  /**
+   * Add click event listeners
+   * @param {MouseEvent} element
+   * @param {Actor|Item} owner
+   */
+  static _onRender (element, owner) {
+    // Active Effects
+    element.querySelectorAll('.effect-control').forEach((element) => element.addEventListener('click', (event) => {
+      CoC7ActiveEffect.#onManageActiveEffect(event, owner)
+    }))
   }
 
   /**
@@ -71,15 +52,18 @@ export default class CoC7ActiveEffect extends ActiveEffect {
    * @returns {boolean}
    */
   static getStatusKey (effect) {
-    let options = []
-    if (effect.statuses.size > 0) {
-      options = [...effect.statuses.values()]
-    }
-    return options.find(v => Object.prototype.hasOwnProperty.call(COC7.status, v))
+    const keys = Object.keys(STATUS_EFFECTS)
+    return effect.statuses.find(key => keys.includes(key))
   }
 
-  get isStatus () {
-    return typeof CoC7ActiveEffect.getStatusKey(this) === 'string'
+  /**
+   * Find status keys that is for the system
+   * @param {Document} effect
+   * @returns {Array}
+   */
+  static getStatusKeys (effect) {
+    const keys = Object.keys(STATUS_EFFECTS)
+    return effect.statuses.filter(key => keys.includes(key))
   }
 
   /**
@@ -126,7 +110,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     for (const e of effects) {
       if (e.isSuppressed) {
         categories.suppressed.effects.push(e)
-      } else if (e.isStatus) {
+      } else if (CoC7ActiveEffect.getStatusKey(e) && status) {
         categories.status.effects.push(e)
       } else if (e.disabled) {
         categories.inactive.effects.push(e)
@@ -147,7 +131,6 @@ export default class CoC7ActiveEffect extends ActiveEffect {
    * @returns {object}
    */
   static prepareNPCActiveEffectCategories (effects) {
-    let count = 0
     // Define effect header categories
     const categories = {
       active: {
@@ -163,16 +146,12 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     }
     // Iterate over active effects, classifying them into categories
     for (const e of effects) {
-      count += 1
-      // e._getSourceName() // Trigger a lookup for the source name
       if (e.isSuppressed || e.disabled) {
         categories.inactive.effects.push(e)
       } else {
         categories.active.effects.push(e)
       }
     }
-
-    if (count > 0) categories.expended = true
     return categories
   }
 }

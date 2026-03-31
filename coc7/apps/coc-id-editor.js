@@ -1,267 +1,375 @@
-/* global $, CONFIG, FormApplication, foundry, game, TextEditor */
-import { COC7 } from '../constants.js'
+/* global CONFIG foundry game TextEditor ui */
+import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7Utilities from './utilities.js'
 
-export class CoCIDEditor extends FormApplication {
-  static get defaultOptions () {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'dialog', 'coc-id-editor'],
-      template: 'systems/CoC7/templates/apps/coc-id-editor.hbs',
-      width: 900,
-      height: 'auto',
-      title: 'CoC7.CoCIDFlag.title',
-      closeOnSubmit: false,
-      submitOnClose: true,
-      submitOnChange: true
-    })
+export default class CoCIDEditor extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.DocumentSheetV2) {
+  #showLoading
+
+  /**
+   * @inheritdoc
+   * @param {...any} args
+   */
+  constructor (...args) {
+    super(...args)
+    this.#showLoading = true
   }
 
-  async getData () {
-    const sheetData = super.getData()
+  static DEFAULT_OPTIONS = {
+    classes: ['coc7', 'dialog', 'coc-id-editor'],
+    tag: 'form',
+    window: {
+      contentClasses: [
+        'standard-form'
+      ]
+    },
+    form: {
+      handler: CoCIDEditor.#onSubmit,
+      submitOnChange: true
+    },
+    position: {
+      width: 910
+    }
+  }
 
-    sheetData.supportedLanguages = CONFIG.supportedLanguages
+  static PARTS = {
+    header: {
+      template: 'systems/' + FOLDER_ID + '/templates/apps/coc-id-editor.hbs'
+    }
+  }
 
-    this.options.editable = this.object.sheet.isEditable
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
 
-    sheetData.guessCode = game.system.api.cocid.guessId(this.object)
-    sheetData.idPrefix = game.system.api.cocid.getPrefix(this.object)
+    /* // FoundryV12 polyfill */
+    if (!context.document) {
+      context.document = this.document
+      context.editable = this.isEditable
+    }
 
-    sheetData.cocidFlag = this.object.flags?.CoC7?.cocidFlag
+    context.supportedLanguages = CONFIG.supportedLanguages
 
-    sheetData.id = sheetData.cocidFlag?.id || ''
-    sheetData.lang = sheetData.cocidFlag?.lang || game.i18n.lang
-    sheetData.priority = sheetData.cocidFlag?.priority || 0
+    context.guessCode = game.CoC7.cocid.guessId(context.document)
+    context.idPrefix = game.CoC7.cocid.getPrefix(context.document)
 
-    sheetData.eras = []
-    for (const [key, value] of Object.entries(COC7.eras)) {
-      sheetData.eras.push({
+    const cocidFlag = context.document.flags?.[FOLDER_ID]?.cocidFlag ?? {}
+
+    context.id = cocidFlag.id || ''
+    context.lang = cocidFlag.lang || game.i18n.lang
+    context.priority = cocidFlag.priority || 0
+
+    context._eras = []
+    for (const [key, era] of Object.entries(ERAS)) {
+      context._eras.push({
         id: key,
-        name: game.i18n.localize(value),
-        isEnabled: (sheetData.cocidFlag?.eras ?? {})[key] === true
+        name: game.i18n.localize(era.name),
+        isEnabled: (cocidFlag.eras ?? {})[key] === true
       })
     }
-    sheetData.eras.sort(CoC7Utilities.sortByNameKey)
+    context._eras.sort(CoC7Utilities.sortByNameKey)
 
     const CoCIDKeys = Object.assign(foundry.utils.flattenObject(game.i18n._fallback.CoC7?.CoCIDFlag?.keys ?? {}), foundry.utils.flattenObject(game.i18n.translations.CoC7?.CoCIDFlag?.keys ?? {}))
-    const prefix = new RegExp('^' + CoC7Utilities.quoteRegExp(sheetData.idPrefix))
-    sheetData.existingKeys = Object.keys(CoCIDKeys).reduce((obj, k) => {
+    const prefix = new RegExp('^' + CoC7Utilities.quoteRegExp(context.idPrefix))
+    context.existingKeys = Object.keys(CoCIDKeys).reduce((obj, k) => {
       if (k.match(prefix)) {
         obj.push({ k, name: CoCIDKeys[k] })
       }
       return obj
     }, []).sort(CoC7Utilities.sortByNameKey)
 
-    sheetData.isSystemID = (typeof CoCIDKeys[sheetData.id] !== 'undefined')
-    const match = sheetData.id.match(/^([^\\.]+)\.([^\\.]*)\.(.+)/)
-    sheetData._existing = (match && typeof match[3] !== 'undefined' ? match[3] : '')
+    context.isSystemID = (typeof CoCIDKeys[context.id] !== 'undefined')
+    const match = context.id.match(/^([^\\.]+)\.([^\\.]*)\.(.+)/)
+    context._existing = (match && typeof match[3] !== 'undefined' ? match[3] : '')
 
-    if (sheetData.id && sheetData.lang) {
+    context.usedEras = []
+    if (context.id && context.lang) {
       // Find out if there exists a duplicate CoCID
-      const worldDocuments = await game.system.api.cocid.fromCoCIDAll({
-        cocid: sheetData.id,
-        lang: sheetData.lang,
-        scope: 'world'
-      })
       const usedEras = {}
-      const uniqueWorldPriority = {}
-      sheetData.worldDocumentInfo = await Promise.all(worldDocuments.map(async (d) => {
-        if (d.flags.CoC7.cocidFlag.eras) {
-          Object.entries(d.flags.CoC7.cocidFlag.eras).filter(e => e[1]).map(e => {
-            if (!Object.prototype.hasOwnProperty.call(uniqueWorldPriority, d.flags.CoC7.cocidFlag.priority + '/' + e[0])) {
-              uniqueWorldPriority[d.flags.CoC7.cocidFlag.priority + '/' + e[0]] = 0
-            }
-            uniqueWorldPriority[d.flags.CoC7.cocidFlag.priority + '/' + e[0]]++
-            return false
-          })
-        } else {
-          uniqueWorldPriority[d.flags.CoC7.cocidFlag.priority + '/*'] = 1
-        }
-        const eras = (d.flags.CoC7.cocidFlag.eras ? Object.entries(d.flags.CoC7.cocidFlag.eras).filter(e => e[1]).map(e => e[0]).sort() : [])
-        for (const era of eras) {
-          usedEras[era] = COC7.eras[era] ?? '?'
-        }
-        const folders = []
-        let e = d?.folder
-        while (e?.name) {
-          folders.unshift(e?.name)
-          e = e.folder
-        }
-        return {
-          eras: eras.reduce(function (all, current) {
-            all[current] = true
-            return all
-          }, {}),
-          priority: d.flags.CoC7.cocidFlag.priority,
-          lang: d.flags.CoC7.cocidFlag.lang ?? 'en',
-          link: await TextEditor.enrichHTML(d.link, { async: true }),
-          folder: folders.map(n => n.indexOf(' ') > -1 ? '"' + n + '"' : n).join(' &gt; ')
-        }
-      }))
-      if (Object.entries(uniqueWorldPriority).filter(c => c[1] > 1).length > 0) {
-        sheetData.warnDuplicateWorldPriority = true
-      }
-      sheetData.worldDuplicates = worldDocuments.length ?? 0
+      let response = await this.getDocumentsInScope(usedEras, context.id, context.lang, 'world')
+      context.worldDocumentInfo = response.documentInfo
+      context.worldDuplicates = response.duplicates
+      context.warnDuplicateWorldPriority = response.warnDuplicatePriority
+      response = await this.getDocumentsInScope(usedEras, context.id, context.lang, 'compendiums')
+      context.compendiumDocumentInfo = response.documentInfo
+      context.compendiumDuplicates = response.duplicates
+      context.warnDuplicateCompendiumPriority = response.warnDuplicatePriority
+      this.#showLoading = false
 
-      const compendiumDocuments = await game.system.api.cocid.fromCoCIDAll({
-        cocid: sheetData.id,
-        lang: sheetData.lang,
-        scope: 'compendiums'
-      })
-      const uniqueCompendiumPriority = {}
-      sheetData.compendiumDocumentInfo = await Promise.all(compendiumDocuments.map(async (d) => {
-        if (d.flags.CoC7.cocidFlag.eras) {
-          Object.entries(d.flags.CoC7.cocidFlag.eras).filter(e => e[1]).map(e => {
-            if (!Object.prototype.hasOwnProperty.call(uniqueCompendiumPriority, d.flags.CoC7.cocidFlag.priority + '/' + e[0])) {
-              uniqueCompendiumPriority[d.flags.CoC7.cocidFlag.priority + '/' + e[0]] = 0
-            }
-            uniqueCompendiumPriority[d.flags.CoC7.cocidFlag.priority + '/' + e[0]]++
-            return false
-          })
-        } else {
-          uniqueCompendiumPriority[d.flags.CoC7.cocidFlag.priority + '/*'] = 1
-        }
-        const eras = (d.flags.CoC7.cocidFlag.eras ? Object.entries(d.flags.CoC7.cocidFlag.eras).filter(e => e[1]).map(e => e[0]).sort() : [])
-        for (const era of eras) {
-          usedEras[era] = COC7.eras[era] ?? '?'
-        }
-        const folders = []
-        let e = d?.folder
-        while (e?.name) {
-          folders.unshift(e?.name)
-          e = e.folder
-        }
-        folders.unshift(d.compendium.metadata.label)
-        e = d?.compendium.folder
-        while (e?.name) {
-          folders.unshift(e?.name)
-          e = e.folder
-        }
-        return {
-          eras: eras.reduce(function (all, current) {
-            all[current] = true
-            return all
-          }, {}),
-          priority: d.flags.CoC7.cocidFlag.priority,
-          lang: d.flags.CoC7.cocidFlag.lang ?? 'en',
-          link: await TextEditor.enrichHTML(d.link, { async: true }),
-          folder: folders.map(n => n.indexOf(' ') > -1 ? '"' + n + '"' : n).join(' &gt; ')
-        }
-      }))
-      if (Object.entries(uniqueCompendiumPriority).filter(c => c[1] > 1).length > 0) {
-        sheetData.warnDuplicateCompendiumPriority = true
-      }
-      sheetData.compendiumDuplicates = compendiumDocuments.length ?? 0
-      sheetData.usedEras = []
-      for (const [key, value] of Object.entries(usedEras)) {
-        sheetData.usedEras.push({
+      for (const [key, era] of Object.entries(usedEras)) {
+        context.usedEras.push({
           id: key,
-          name: game.i18n.localize(value)
+          icon: era.icon,
+          name: game.i18n.localize(era.name)
         })
       }
-      sheetData.usedEras.sort(CoC7Utilities.sortByNameKey)
+      context.usedEras.sort(CoC7Utilities.sortByNameKey)
+      context.compendiumDocumentInfo = context.compendiumDocumentInfo.reduce((c, o) => {
+        const sortKey = []
+        for (const s of context.usedEras) {
+          sortKey.push(o.eras[s.id] ? 'Y' : 'N')
+        }
+        o.sortKey = sortKey.join('')
+        c.push(o)
+        return c
+      }, []).sort((a, b) => {
+        return (a.sortKey === b.sortKey ? b.priority - a.priority : b.sortKey.compare(a.sortKey))
+      })
     } else {
-      sheetData.compendiumDocumentInfo = []
-      sheetData.worldDocumentInfo = []
-      sheetData.worldDuplicates = 0
-      sheetData.compendiumDuplicates = 0
-      sheetData.warnDuplicateWorldPriority = false
-      sheetData.warnDuplicateCompendiumPriority = false
+      context.compendiumDocumentInfo = []
+      context.worldDocumentInfo = []
+      context.worldDuplicates = 0
+      context.compendiumDuplicates = 0
+      context.warnDuplicateWorldPriority = false
+      context.warnDuplicateCompendiumPriority = false
     }
-    return sheetData
+    return context
   }
 
-  activateListeners (html) {
-    super.activateListeners(html)
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<HTMLElement>}
+   */
+  async _renderFrame (options) {
+    const frame = await super._renderFrame(options)
 
-    html.find('a.copy-to-clipboard').click(function (e) {
-      CoC7Utilities.copyToClipboard($(this).siblings('input').val())
-    })
+    /* // FoundryV12 polyfill */
+    if (!foundry.utils.isNewerVersion(game.version, 13)) {
+      frame.setAttribute('open', true)
+    }
 
-    if (!this.object.sheet.isEditable) return
+    return frame
+  }
 
-    html.find('.toggle-switch').click(this._onClickToggle.bind(this))
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
 
-    html.find('input[name=_existing').change(function (e) {
-      const obj = $(this)
-      const prefix = obj.data('prefix')
-      let value = obj.val()
+    const form = this.element
+
+    form.querySelectorAll('a.copy-to-clipboard').forEach((element) => element.addEventListener('click', (event) => {
+      const text = event.target.closest('.form-value').querySelector('input').value
+      if (text) {
+        game.clipboard.copyPlainText(text).then(() => {
+          /* // FoundryVTT V12 */
+          ui.notifications.info(game.i18n.format('CoC7.WhatCopiedClipboard', { what: text }), { console: false })
+        })
+      }
+    }))
+
+    // Everything below here is only needed if the sheet is editable
+    if (!this.isEditable) return
+
+    form.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', async (event) => {
+      const era = event.currentTarget.dataset.property
+      await game.CoC7.cocid.eraToggle(this.document, era, { isCtrlKey: CoC7Utilities.isCtrlKey(event) })
+    }))
+
+    form.querySelector('input[name=_existing')?.addEventListener('change', (event) => {
+      let value = event.target.value
+      const prefix = event.target.dataset.prefix
       if (value !== '') {
         value = prefix + CoC7Utilities.toKebabCase(value)
       }
-      html.find('input[name=id]').val(value).trigger('change')
+      const element = form.querySelector('input[name=id]')
+      element.value = value
+      const newEvent = new Event('change', { bubbles: true })
+      element.dispatchEvent(newEvent)
     })
 
-    html.find('select[name=known]').change(function (e) {
-      const obj = $(this)
-      html.find('input[name=id]').val(obj.val())
+    form.querySelector('select[name=known]')?.addEventListener('change', (event) => {
+      const value = event.target.value
+      const element = form.querySelector('input[name=id]')
+      element.value = value
+      const newEvent = new Event('change', { bubbles: true })
+      element.dispatchEvent(newEvent)
     })
 
-    html.find('a[data-guess]').click(async function (e) {
-      e.preventDefault()
-      const obj = $(this)
-      const guess = obj.data('guess')
-      html.find('input[name=id]').val(guess).trigger('change')
+    form.querySelector('a[data-guess]')?.addEventListener('click', (event) => {
+      event.preventDefault()
+      const value = event.target.closest('a').dataset.guess
+      if (value) {
+        const element = form.querySelector('input[name=id]')
+        element.value = value
+        const newEvent = new Event('change', { bubbles: true })
+        element.dispatchEvent(newEvent)
+      }
     })
   }
 
-  static async eraToggle (document, propertyId) {
-    if (document.type === 'setup') {
-      // Setups can only have one era to make sure the correct skills are populated via CoC ID
-      const update = {
-        [propertyId]: true
-      }
-      if (typeof document.flags?.CoC7?.cocidFlag?.eras !== 'undefined') {
-        for (const [key] of Object.entries(document.flags.CoC7.cocidFlag.eras)) {
-          if (key !== propertyId) {
-            update['-=' + key] = null
+  /**
+   * Add CoC ID Button to sheet header
+   * @param {ApplicationV2} application
+   * @param {HTMLElement} element
+   */
+  static addCoCIDSheetHeaderButton (application, element) {
+    if (game.user.isGM) {
+      if (!element.querySelector('button.header-control.fa-solid.fa-fingerprint')) {
+        application.options.actions.cocid = {
+          handler: (event, element) => {
+            event.preventDefault()
+            event.stopPropagation()
+            if (event.detail > 1) return // Ignore repeated clicks
+            if (event.button === 2 && (application.document.flags[FOLDER_ID]?.cocidFlag?.id ?? false)) {
+              game.clipboard.copyPlainText(application.document.flags[FOLDER_ID].cocidFlag.id).then(() => {
+                /* // FoundryVTT V12 */
+                ui.notifications.info(game.i18n.format('CoC7.WhatCopiedClipboard', { what: game.i18n.localize('CoC7.CoCIDFlag.key') }), { console: false })
+              })
+            } else {
+              new CoCIDEditor({ document: application.document }, {}).render({ force: true, focus: true })
+            }
+          },
+          buttons: [0, 2]
+        }
+        const copyUuidButton = element.querySelector('button.header-control.fa-solid.fa-passport')
+        if (copyUuidButton) {
+          const button = document.createElement('button')
+          button.type = 'button'
+          button.classList = 'header-control fa-solid fa-fingerprint icon'
+          if (!(application.document.flags[FOLDER_ID]?.cocidFlag?.id ?? false)) {
+            button.classList.add('invalid-coc-id')
           }
+          button.dataset.action = 'cocid'
+          button.dataset.tooltip = 'CoC7.CoCIDFlag.id'
+          copyUuidButton.after(button)
         }
       }
-      await document.update({
-        'flags.CoC7.cocidFlag.eras': update
-      })
-    } else if (typeof document.flags?.CoC7?.cocidFlag?.eras?.[propertyId] === 'undefined') {
-      if (typeof document.flags?.CoC7?.cocidFlag?.eras === 'undefined') {
-        await document.update({
-          'flags.CoC7.cocidFlag.eras': {
-            [propertyId]: true
+    }
+  }
+
+  /**
+   * Add CoC ID Button to sheet header
+   * @deprecated FoundryVTT v12
+   * @param {Application} application
+   * @param {ApplicationHeaderButton} buttons
+   */
+  static addCoCIDSheetHeaderButtonV12 (application, buttons) {
+    if (game.user.isGM) {
+      const sheetCoCID = application.document.flags?.[FOLDER_ID]?.cocidFlag
+      const noId = (typeof sheetCoCID === 'undefined' || typeof sheetCoCID.id === 'undefined' || sheetCoCID.id === '')
+      const CoCIDEditorButton = {
+        class: (noId ? 'invalid-coc-id' : 'valid-coc-id'),
+        label: 'CoC7.CoCIDFlag.id',
+        icon: 'fa-solid fa-fingerprint',
+        onclick: () => {
+          new CoCIDEditor({ document: application.document }, {}).render(true, { focus: true })
+        }
+      }
+      const numberOfButtons = buttons.length
+      buttons.splice(numberOfButtons - 1, 0, CoCIDEditorButton)
+    }
+  }
+
+  /**
+   * Get documents with matching CoC ID in World/Compendiums
+   * @param {object} usedEras
+   * @param {string} cocid
+   * @param {string} lang
+   * @param {string} scope
+   * @returns {object}
+   */
+  async getDocumentsInScope (usedEras, cocid, lang, scope) {
+    const documents = await game.CoC7.cocid.fromCoCIDAll({
+      cocid,
+      lang,
+      scope,
+      showLoading: this.#showLoading
+    })
+    let warnDuplicatePriority = false
+    const duplicates = documents.length ?? 0
+    const uniquePriority = {}
+    const documentInfo = await Promise.all(documents.map(async (d) => {
+      if (d.flags[FOLDER_ID].cocidFlag.eras) {
+        Object.entries(d.flags[FOLDER_ID].cocidFlag.eras).filter(e => e[1]).map(e => {
+          if (typeof uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/' + e[0]] === 'undefined') {
+            uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/' + e[0]] = 0
           }
+          uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/' + e[0]]++
+          return false
         })
       } else {
-        await document.update({
-          [`flags.CoC7.cocidFlag.eras.${propertyId}`]: true
+        uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/*'] = 1
+      }
+      const eras = (d.flags[FOLDER_ID].cocidFlag.eras ? Object.entries(d.flags[FOLDER_ID].cocidFlag.eras).filter(e => e[1]).map(e => e[0]).sort() : [])
+      for (const era of eras) {
+        usedEras[era] = {
+          name: ERAS[era]?.name ?? '?',
+          icon: ERAS[era]?.icon ?? 'fa-solid fa-info-circle'
+        }
+      }
+      const folders = []
+      let e = d?.folder
+      while (e?.name) {
+        folders.unshift(e?.name)
+        e = e.folder
+      }
+      if (d.collection.inCompendium === true) {
+        folders.unshift(d.collection.metadata.label)
+        e = d?.collection.folder
+        while (e?.name) {
+          folders.unshift(e?.name)
+          e = e.folder
+        }
+      }
+      return {
+        eras: eras.reduce(function (all, current) {
+          all[current] = true
+          return all
+        }, {}),
+        priority: parseInt(d.flags[FOLDER_ID].cocidFlag.priority, 10),
+        lang: d.flags[FOLDER_ID].cocidFlag.lang ?? 'en',
+        /* // FoundryVTT V12 */
+        link: await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(d.link, { async: true }),
+        folder: folders.map(n => n.indexOf(' ') > -1 ? '"' + n + '"' : n).join(' &gt; ')
+      }
+    }))
+    if (Object.entries(uniquePriority).filter(c => c[1] > 1).length > 0) {
+      warnDuplicatePriority = true
+    }
+    return { duplicates, uniquePriority, documentInfo, warnDuplicatePriority }
+  }
+
+  /**
+   * Handle form submission
+   * @param {SubmitEvent|null} event
+   * @param {HTMLFormElement} form
+   * @param {FormDataExtended} formData
+   */
+  static async #onSubmit (event, form, formData) {
+    if (!this.isEditable) return
+    const submitData = this._processFormData(event, form, formData)
+    const changes = {
+      ['flags.' + FOLDER_ID + '.cocidFlag.id']: submitData.id || '',
+      ['flags.' + FOLDER_ID + '.cocidFlag.lang']: submitData.lang || game.i18n.lang,
+      ['flags.' + FOLDER_ID + '.cocidFlag.priority']: submitData.priority || 0
+    }
+    if (typeof this.document.sheet.element?.querySelector === 'undefined') {
+      /* // FoundryVTT V12 */
+      const html = this.document.sheet.element.find('header.window-header a.header-button.invalid-coc-id,header.window-header a.header-button.valid-coc-id')
+      if (html) {
+        html.css({
+          color: (changes['flags.' + FOLDER_ID + '.cocidFlag.id'].length ? 'var(--color-text-light-highlight)' : 'var(--color-level-error)')
         })
       }
     } else {
-      await document.update({
-        [`flags.CoC7.cocidFlag.eras.-=${propertyId}`]: null
-      })
+      const html = this.document.sheet.element.querySelector('header.window-header [data-action="cocid"]')
+      if (html) {
+        if (changes['flags.' + FOLDER_ID + '.cocidFlag.id'].length) {
+          html.classList.remove('invalid-coc-id')
+        } else {
+          html.classList.add('invalid-coc-id')
+        }
+      }
     }
-  }
-
-  async _onClickToggle (event) {
-    event.preventDefault()
-    const propertyId = event.currentTarget.dataset.property
-    await CoCIDEditor.eraToggle(this.object, propertyId)
-    const options = foundry.utils.duplicate(this.options)
-    await this.close()
-    await this.render(true, options)
-  }
-
-  async _updateObject (event, formData) {
-    const id = formData.id || ''
-    await this.object.update({
-      'flags.CoC7.cocidFlag.id': id,
-      'flags.CoC7.cocidFlag.lang': formData.lang || game.i18n.lang,
-      'flags.CoC7.cocidFlag.priority': formData.priority || 0,
-      'flags.CoC7.cocidFlag.eras': (this.object.flags?.CoC7?.cocidFlag?.eras ?? {})
-    })
-    const html = $(this.object.sheet.element).find('header.window-header a.header-button.edit-coc-id-warning,header.window-header a.header-button.edit-coc-id-exisiting')
-    if (html.length) {
-      html.css({
-        color: (id ? 'var(--color-text-light-highlight)' : 'red')
-      })
-    }
-    this.render()
+    this.document.update(changes)
   }
 }

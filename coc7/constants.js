@@ -1,31 +1,65 @@
-// Namespace COC7 Configuration Values
-export const COC7 = {}
+export const FOLDER_ID = 'CoC7'
 
-// Custom chatMessage
-// CONFIG.ChatMessage.template = 'systems/CoC7/templates/chat/chat-message.html';
-
-/**
- * The set of Eras used within the system
- * @type {Object}
- */
-COC7.eras = {
-  standard: 'CoC7.Era1920',
-  modern: 'CoC7.EraModern',
-  modernPulp: 'CoC7.EraModernPulp',
-  pulp: 'CoC7.EraPulp',
-  downDarkerTrails: 'CoC7.EraDownDarkerTrails',
-  downDarkerTrailsPulp: 'CoC7.EraDownDarkerTrailsPulp',
-  darkAges: 'CoC7.EraDarkAges',
-  darkAgesPulp: 'CoC7.EraDarkAgesPulp',
-  regency: 'CoC7.EraRegency',
-  regencyPulp: 'CoC7.EraRegencyPulp',
-  reignOfTerror: 'CoC7.EraReignOfTerror',
-  gasLight: 'CoC7.EraGasLight',
-  gasLightPulp: 'CoC7.EraGasLightPulp',
-  invictus: 'CoC7.EraInvictus'
+export const ERAS = {
+  standard: {
+    name: 'CoC7.Era1920',
+    icon: 'game-icon game-icon-mustache'
+  },
+  modern: {
+    name: 'CoC7.EraModern',
+    icon: 'game-icon game-icon-billed-cap'
+  },
+  modernPulp: {
+    name: 'CoC7.EraModernPulp',
+    icon: 'game-icon game-icon-captain-hat-profile'
+  },
+  pulp: {
+    name: 'CoC7.EraPulp',
+    icon: 'game-icon game-icon-fedora'
+  },
+  downDarkerTrails: {
+    name: 'CoC7.EraDownDarkerTrails',
+    icon: 'game-icon game-icon-western-hat'
+  },
+  downDarkerTrailsPulp: {
+    name: 'CoC7.EraDownDarkerTrailsPulp',
+    icon: 'game-icon game-icon-bandit'
+  },
+  darkAges: {
+    name: 'CoC7.EraDarkAges',
+    icon: 'game-icon game-icon-barbute'
+  },
+  darkAgesPulp: {
+    name: 'CoC7.EraDarkAgesPulp',
+    icon: 'game-icon game-icon-heavy-helm'
+  },
+  regency: {
+    name: 'CoC7.EraRegency',
+    icon: 'game-icon game-icon-top-hat'
+  },
+  regencyPulp: {
+    name: 'CoC7.EraRegencyPulp',
+    icon: 'game-icon game-icon-carnival-mask'
+  },
+  reignOfTerror: {
+    name: 'CoC7.EraReignOfTerror',
+    icon: 'game-icon game-icon-guillotine'
+  },
+  gasLight: {
+    name: 'CoC7.EraGasLight',
+    icon: 'game-icon game-icon-old-lantern'
+  },
+  gasLightPulp: {
+    name: 'CoC7.EraGasLightPulp',
+    icon: 'game-icon game-icon-wall-light'
+  },
+  invictus: {
+    name: 'CoC7.EraInvictus',
+    icon: 'game-icon game-icon-centurion-helmet'
+  }
 }
 
-COC7.monetaryFormatKeys = {
+export const MONETARY_FORMAT_KEYS = {
   decimalLeft: 'decimalLeft',
   decimalRight: 'decimalRight',
   integerLeft: 'integerLeft',
@@ -34,7 +68,7 @@ COC7.monetaryFormatKeys = {
   roman: 'roman'
 }
 
-COC7.monetaryFormats = {
+export const MONETARY_FORMATS = {
   decimalLeft: 'CoC7.MonetaryFormatDecimalLeft',
   decimalRight: 'CoC7.MonetaryFormatDecimalRight',
   integerLeft: 'CoC7.MonetaryFormatIntegerLeft',
@@ -43,7 +77,7 @@ COC7.monetaryFormats = {
   roman: 'CoC7.MonetaryFormatRoman'
 }
 
-COC7.monetaryTypeKeys = {
+export const MONETARY_TYPE_KEYS = {
   none: 'none',
   asses: 'asses',
   sestertii: 'sestertii',
@@ -55,7 +89,7 @@ COC7.monetaryTypeKeys = {
   multiplier: 'multiplier'
 }
 
-COC7.monetaryTypes = {
+export const MONETARY_TYPES = {
   none: {
     name: 'CoC7.MonetaryTypeNone',
     filter: []
@@ -94,122 +128,40 @@ COC7.monetaryTypes = {
   }
 }
 
-COC7.characteristics = {
+export const CHARACTERISTICS = {
+  // Chaosium.com Character Sheet PDFs
+  // A Time to Harvest
+  // Call of Cthulhu 7th Edition Quick-Start Rules
+  // Call of Cthulhu: Arkham
+  // Call of Cthulhu: No Time to Scream
+  // Call of Cthulhu: The Order of the Stone
+  // Cthulhu by Gaslight: Investigators' Guide
+  // - STR CON DEX INT SIZ POW APP EDU
+  // Alone Against the Flames
+  // - STR CON SIZ DEX APP INT POW EDU
+  // Alone against the Tide
+  // Masks of Nyarlathotep - 7th Edition
+  // - STR CON SIZ DEX APP EDU INT POW
+  // Berlin - The Wicked City
+  // Doors to Darkness
+  // Reign of Terror
+  // - STR CON SIZ DEX INT APP POW EDU
+  // Dead Light
+  // - STR CON SIZ INT POW DEX APP EDU
+  // Harlem Unbound - Second Edition
+  // - STR DEX POW CON APP EDU SIZ INT
+
   str: 'CoC7.CharacStr',
   con: 'CoC7.CharacCon',
-  siz: 'CoC7.CharacSiz',
   dex: 'CoC7.CharacDex',
-  app: 'CoC7.CharacApp',
   int: 'CoC7.CharacInt',
+  siz: 'CoC7.CharacSiz',
   pow: 'CoC7.CharacPow',
+  app: 'CoC7.CharacApp',
   edu: 'CoC7.CharacEdu'
 }
 
-/**
- * The set of Skills attributes used within the system
- * @type {Object}
- */
-COC7.skillProperties = {
-  noadjustments: 'CoC7.SkillNoAdjustments',
-  noxpgain: 'CoC7.SkillNoXpGain',
-  special: 'CoC7.SkillSpecial',
-  rarity: 'CoC7.SkillRarity',
-  push: 'CoC7.SkillPush',
-  combat: 'CoC7.SkillCombat',
-  fighting: 'CoC7.SkillFighting',
-  firearm: 'CoC7.SkillFirearm',
-  ranged: 'CoC7.SkillRanged',
-  requiresname: 'CoC7.SkillRequiresName',
-  keepbasevalue: 'CoC7.SkillKeepBaseValue',
-  picknameonly: 'CoC7.SkillPickNameOnly',
-  onlyone: 'CoC7.SkillSpecializationIsUnique'
-}
-
-COC7.weaponProperties = {
-  melee: 'CoC7.Weapon.Property.Melee',
-  rngd: 'CoC7.WeaponRngd',
-  mnvr: 'CoC7.WeaponProperyManeuver',
-  thrown: 'CoC7.Weapon.Property.Thrown',
-  shotgun: 'CoC7.Weapon.Property.Shotgun',
-  dbrl: 'CoC7.WeaponDbrl',
-  impl: 'CoC7.WeaponImpl',
-  brst: 'CoC7.WeaponBrst',
-  auto: 'CoC7.WeaponAuto',
-  ahdb: 'CoC7.WeaponAhdb',
-  addb: 'CoC7.WeaponAddb',
-  slnt: 'CoC7.WeaponSlnt',
-  spcl: 'CoC7.WeaponSpcl',
-  mont: 'CoC7.WeaponMont',
-  blst: 'CoC7.WeaponBlst',
-  stun: 'CoC7.WeaponStun',
-  rare: 'CoC7.WeaponRare',
-  burn: 'CoC7.Weapon.Property.Burn'
-}
-
-COC7.spellProperties = {
-  call: 'CoC7.CallSpell',
-  dismiss: 'CoC7.DismissSpell',
-  contact: 'CoC7.ContactSpell',
-  summon: 'CoC7.SummonSpell',
-  bind: 'CoC7.BindSpell',
-  enchantment: 'CoC7.EnchantmentSpell',
-  gate: 'CoC7.GateSpell',
-  combat: 'CoC7.CombatSpell'
-}
-
-COC7.bookType = {
-  mythos: 'CoC7.MythosBook',
-  occult: 'CoC7.OccultBook',
-  other: 'CoC7.Other'
-}
-
-COC7.talentType = {
-  physical: 'CoC7.PhysicalTalent',
-  mental: 'CoC7.MentalTalent',
-  combat: 'CoC7.CombatTalent',
-  miscellaneous: 'CoC7.MiscellaneousTalent',
-  basic: 'CoC7.BasicTalent',
-  insane: 'CoC7.InsaneTalent',
-  other: 'CoC7.OtherTalent'
-}
-
-COC7.statusType = {
-  mania: 'CoC7.Mania',
-  phobia: 'CoC7.Phobia'
-}
-
-COC7.occupationProperties = {
-  classic: 'CoC7.Classic',
-  lovecraftian: 'CoC7.Lovecraftian',
-  modern: 'CoC7.Modern',
-  pulp: 'CoC7.Pulp'
-}
-
-COC7.formula = {}
-
-COC7.formula.actor = {
-  '@STR': 'this.system.characteristics.str.value',
-  '@CON': 'this.system.characteristics.con.value',
-  '@SIZ': 'this.system.characteristics.siz.value',
-  '@DEX': 'this.system.characteristics.dex.value',
-  '@APP': 'this.system.characteristics.app.value',
-  '@INT': 'this.system.characteristics.int.value',
-  '@POW': 'this.system.characteristics.pow.value',
-  '@EDU': 'this.system.characteristics.edu.value'
-}
-
-COC7.formula.actorsheet = {
-  '@STR': 'this.actor.system.characteristics.str.value',
-  '@CON': 'this.actor.system.characteristics.con.value',
-  '@SIZ': 'this.actor.system.characteristics.siz.value',
-  '@DEX': 'this.actor.system.characteristics.dex.value',
-  '@APP': 'this.actor.system.characteristics.app.value',
-  '@INT': 'this.actor.system.characteristics.int.value',
-  '@POW': 'this.actor.system.characteristics.pow.value',
-  '@EDU': 'this.actor.system.characteristics.edu.value'
-}
-
-COC7.status = {
+export const STATUS_EFFECTS = {
   tempoInsane: 'tempoInsane',
   indefInsane: 'indefInsane',
   unconscious: 'unconscious',
@@ -219,21 +171,81 @@ COC7.status = {
   dead: 'dead'
 }
 
-COC7.newBookName = 'CoC7.NewBookName'
-COC7.newSkillName = 'CoC7.NewSkillName'
-COC7.newSpellName = 'CoC7.NewSpellName'
-COC7.newItemName = 'CoC7.NewItemName'
-COC7.newWeaponName = 'CoC7.NewWeaponName'
-
-COC7.creatureFightingSkill = 'CoC7.creatureFightingSkill'
-
-COC7.fightingSpecializationName = 'CoC7.FightingSpecializationName'
-COC7.firearmSpecializationName = 'CoC7.FirearmSpecializationName'
-COC7.rangedSpecializationName = 'CoC7.RangedSpecializationName'
-
-COC7.combatCards = {
-  fightBack: 'CoC7.FightBack',
-  dodge: 'CoC7.Dodge',
-  maneuver: 'CoC7.Maneuver',
-  noResponse: 'CoC7.NoResponse'
+export const FIGHTING_NAMES = {
+  fighting: 'CoC7.FightingSpecializationName',
+  firearm: 'CoC7.FirearmSpecializationName',
+  ranged: 'CoC7.RangedSpecializationName'
 }
+
+export const DICE_POOL_REASONS = {
+  outnumbered: {
+    forBonus: true,
+    forPenalty: false,
+    forMelee: true,
+    forRanged: false,
+    name: 'CoC7.OutNumbered',
+    tooltip: 'CoC7.TitleOutNumbered'
+  },
+  surprised: {
+    forBonus: true,
+    forPenalty: false,
+    forMelee: true,
+    forRanged: false,
+    name: 'CoC7.combatCard.surprised',
+    tooltip: 'CoC7.TitleSurprised'
+  },
+  cover: {
+    forBonus: false,
+    forPenalty: true,
+    forMelee: false,
+    forRanged: true,
+    name: 'CoC7.rangeCombatCard.Cover',
+    tooltip: 'CoC7.rangeCombatCard.CoverTitle'
+  },
+  surprisedRanged: {
+    forBonus: true,
+    forPenalty: false,
+    forMelee: false,
+    forRanged: true,
+    name: 'CoC7.combatCard.surprised',
+    tooltip: 'CoC7.rangeCombatCard.SurprisedTargetTitle'
+  },
+  pointBlankRange: {
+    forBonus: true,
+    forPenalty: false,
+    forMelee: false,
+    forRanged: true,
+    name: 'CoC7.rangeCombatCard.PointBlankRange',
+    tooltip: 'CoC7.rangeCombatCard.PointBlankRangeTitle'
+  },
+  inMelee: {
+    forBonus: false,
+    forPenalty: true,
+    forMelee: false,
+    forRanged: true,
+    name: 'CoC7.rangeCombatCard.InMelee',
+    tooltip: 'CoC7.rangeCombatCard.InMeleeTitle'
+  },
+  fast: {
+    forBonus: false,
+    forPenalty: true,
+    forMelee: false,
+    forRanged: true,
+    name: 'CoC7.rangeCombatCard.FastMovingTarget',
+    tooltip: 'CoC7.rangeCombatCard.FastMovingTargetTitle'
+  }
+}
+
+export const TARGET_ALLOWED = [
+  'character',
+  'creature',
+  'npc',
+  'vehicle'
+]
+
+export const TRADE_ALLOWED = [
+  'character',
+  'creature',
+  'npc',
+  'container'
+]

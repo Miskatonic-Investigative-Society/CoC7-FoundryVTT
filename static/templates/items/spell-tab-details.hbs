@@ -1,60 +1,42 @@
-<div class="details">
-  <div class="type">
-    <label>{{localize "CoC7.SpellType"}}</label>
-    <div class="flexrow-coc7">
-      <input id="bind" type="checkbox" name="system.type.bind" {{checked data.system.type.bind}} />
-      <label class="option" for="system.type.bind">{{localize "CoC7.BindSpell"}}</label>
-      <input id="call" type="checkbox" name="system.type.call" {{checked data.system.type.call}} />
-      <label class="option" for="system.type.call">{{localize "CoC7.CallSpell"}}</label>
-      <input id="combat" type="checkbox" name="system.type.combat" {{checked data.system.type.combat}} />
-      <label class="option" for="system.type.combat">{{localize "CoC7.CombatSpell"}}</label>
-      <input id="contact" type="checkbox" name="system.type.contact" {{checked data.system.type.contact}} />
-      <label class="option" for="system.type.contact">{{localize "CoC7.ContactSpell"}}</label>
-      <input id="dismiss" type="checkbox" name="system.type.dismiss" {{checked data.system.type.dismiss}} />
-      <label class="option" for="system.type.dismiss">{{localize "CoC7.DismissSpell"}}</label>
-      <input id="enchantment" type="checkbox" name="system.type.enchantment" {{checked data.system.type.enchantment}} />
-      <label class="option" for="system.type.enchantment">{{localize "CoC7.EnchantmentSpell"}}</label>
-      <input id="gate" type="checkbox" name="system.type.gate" {{checked data.system.type.gate}} />
-      <label class="option" for="system.type.gate">{{localize "CoC7.GateSpell"}}</label>
-      <input id="summon" type="checkbox" name="system.type.summon" {{checked data.system.type.summon}} />
-      <label class="option" for="system.type.summon">{{localize "CoC7.SummonSpell"}}</label>
-    </div>
-  </div>
-  <div class="cost">
-    <div class="left">
-      <div class="flexrow-coc7">
-        <label>{{localize "CoC7.SanityCost"}}:</label>
-        <input type="text" name="system.costs.sanity" value="{{data.system.costs.sanity}}" />
+<section class="tab details flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="details">
+  {{#if tabs.details}}
+    <fieldset class="flexrow">
+      <legend>{{localize 'CoC7.SpellType'}}</legend>
+      <div class="toggle-row flexrow">
+        <div class="toggle-attributes flexrow" data-set="type">
+          {{#each _types as |row|}}
+            <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+          {{/each}}
+        </div>
       </div>
-      <div class="flexrow-coc7">
-        <label>{{localize "CoC7.PowerCost"}}:</label>
-        <input type="text" name="system.costs.power" value="{{data.system.costs.power}}" />
+    </fieldset>
+    <fieldset class="flexrow">
+      <div class="columns flexrow">
+        <div class="flexrow column-second">
+          <label>{{localize 'CoC7.SanityCost'}}:</label>
+          <input type="text" name="system.costs.sanity" value="{{document.system.costs.sanity}}" />
+        </div>
+        <div class="flexrow column-second">
+          <label>{{localize 'CoC7.HitPointsCost'}}:</label>
+          <input type="text" name="system.costs.hitPoints" value="{{document.system.costs.hitPoints}}" />
+        </div>
+        <div class="flexrow column-second">
+          <label>{{localize 'CoC7.PowerCost'}}:</label>
+          <input type="text" name="system.costs.power" value="{{document.system.costs.power}}" />
+        </div>
+        <div class="flexrow column-second">
+          <label>{{localize 'CoC7.MagicPointsCost'}}:</label>
+          <input type="text" name="system.costs.magicPoints" value="{{document.system.costs.magicPoints}}" />
+        </div>
+        <div class="flexrow column-first">
+          <label style="flex: 0 0 6.6875rem">{{localize 'CoC7.OtherCosts'}}:</label>
+          <input style="flex: 3" type="text" name="system.costs.others" value="{{document.system.costs.others}}" />
+        </div>
       </div>
-    </div>
-    <div class="right">
-      <div class="flexrow-coc7">
-        <label>{{localize "CoC7.HitPointsCost"}}:</label>
-        <input type="text" name="system.costs.hitPoints" value="{{data.system.costs.hitPoints}}" />
-      </div>
-      <div class="flexrow-coc7">
-        <label>{{localize "CoC7.MagicPointsCost"}}:</label>
-        <input type="text" name="system.costs.magicPoints" value="{{data.system.costs.magicPoints}}" />
-      </div>
-    </div>
-  </div>
-  <div class="other">
-    <div class="flexrow-coc7">
-      <label>{{localize "CoC7.OtherCosts"}}:</label>
-      <input type="text" name="system.costs.others" value="{{data.system.costs.others}}" />
-    </div>
-  </div>
-  <div class="combat">
-    {{#if data.system.type.combat}}
-      <label>Combat</label>
-    {{/if}}
-  </div>
-  <div class="flexcol-coc7 names">
-    <label>{{localize "CoC7.AlternativeNames"}}:</label>
-    {{editor enrichedDescriptionAlternativeNames target="system.description.alternativeNames" engine="prosemirror" button=true owner=owner editable=editable}}
-  </div>
-</div>
+    </fieldset>
+    <fieldset class="flexcol" style="flex: 1">
+      <legend>{{localize 'CoC7.AlternativeNames'}}</legend>
+      <prose-mirror name="system.description.alternativeNames" value="{{document.system.description.alternativeNames}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedDescriptionAlternativeNames}}}</prose-mirror>
+    </fieldset>
+  {{/if}}
+</section>

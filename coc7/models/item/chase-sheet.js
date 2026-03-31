@@ -1,875 +1,820 @@
-/* global $, Dialog, DragDrop, FormDataExtended, foundry, game, TextEditor, ui */
-import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
+/* global canvas CONFIG ContextMenu DragDrop foundry fromUuid game TextEditor TokenDocument ui */
+import { FOLDER_ID } from '../../constants.js'
+import CoC7ChaseParticipant from '../chase/participant.js'
 import CoC7ChaseParticipantDialog from '../../apps/chase-participant-dialog.js'
-import { CoC7Chat } from '../../chat.js'
-import { chatHelper } from '../../chat/helper.js'
-import CoC7Check from '../../apps/check.js'
-import { _participant } from '../chase/participant.js'
+import CoC7DicePool from '../../apps/dice-pool.js'
+import CoC7ModelsItemGlobalSheet from './global-sheet.js'
+import CoC7RollNormalize from '../../apps/roll-normalize.js'
+import CoC7Utilities from '../../apps/utilities.js'
 
-export default class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
-  /**
-   * Extend and override the default options used by the Simple Item Sheet
-   * @returns {Object}
-   */
-  static get defaultOptions () {
-    const options = foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheetV2', 'item', 'chase'],
-      template: 'systems/CoC7/templates/items/chase-header.hbs',
+export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet {
+  static DEFAULT_OPTIONS = {
+    classes: ['chase'],
+    position: {
       width: 550,
-      height: 500,
-      resizable: true,
-      tabs: [
-        {
-          navSelector: '.sheet-nav',
-          contentSelector: '.sheet-body',
-          initial: 'participants'
-        }
-      ]
-    })
-
-    return options
-  }
-
-  /* -------------------------------------------- */
-
-  static get type () {
-    return 'coc7ChaseSheet'
-  }
-
-  _getHeaderButtons () {
-    const headerButtons = super._getHeaderButtons()
-    addCoCIDSheetHeaderButton(headerButtons, this)
-    return headerButtons
-  }
-
-  async getData (options = {}) {
-    const sheetData = super.getData(options)
-
-    sheetData.participants = this.item.participantsObject
-    sheetData.participantsByInitiative = this.item.participantsByInitiative
-    sheetData.preys = this.item.preys
-    sheetData.chasers = this.item.chasers
-
-    sheetData.preysMinMov = sheetData.preys.length ? sheetData.preys.reduce((prev, current) => prev.adjustedMov < current.adjustedMov ? prev : current).adjustedMov : -1
-
-    sheetData.preysMaxMov = sheetData.preys.length ? sheetData.preys.reduce((prev, current) => prev.adjustedMov > current.adjustedMov ? prev : current).adjustedMov : -1
-
-    sheetData.chasersMinMov = sheetData.chasers.length ? sheetData.chasers.reduce((prev, current) => prev.adjustedMov < current.adjustedMov ? prev : current).adjustedMov : -1
-
-    sheetData.chasersMaxMov = sheetData.chasers.length ? sheetData.chasers.reduce((prev, current) => prev.adjustedMov > current.adjustedMov ? prev : current).adjustedMov : -1
-
-    sheetData.chasers.forEach(p => {
-      if (p.adjustedMov < sheetData.preysMinMov) {
-        p.tooSlow()
-      } else {
-        p.includeInChase()
-      }
-      p.fastest = p.adjustedMov === sheetData.chasersMaxMov
-      p.slowest = p.adjustedMov === sheetData.chasersMinMov
-    })
-
-    sheetData.preys.forEach(p => {
-      if (p.adjustedMov > sheetData.chasersMaxMov) {
-        p.escaped()
-      } else {
-        p.includeInChase()
-      }
-      p.fastest = p.adjustedMov === sheetData.preysMaxMov
-      p.slowest = p.adjustedMov === sheetData.preysMinMov
-    })
-
-    sheetData.locations = this.item.locations
-    sheetData.allHaveValidMov = this.allHaveValidMov
-    sheetData.activeLocation = this.item.activeLocation
-    if (sheetData.activeLocation) {
-      sheetData.activeLocation.title = sheetData.activeLocation.coordinates
-        ? game.i18n.format('CoC7.LocationCoordinate', {
-          x: sheetData.activeLocation.coordinates.x,
-          y: sheetData.activeLocation.coordinates.y
-        })
-        : game.i18n.localize('CoC7.DragOnCanvas')
+      height: 540
+    },
+    window: {
+      resizable: true
     }
-    sheetData.previousLocation = this.item.previousLocation
-    sheetData.nextLocation = this.item.nextLocation
-    sheetData.started = this.item.started
-
-    sheetData.isKeeper = game.user.isGM
-
-    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
-      sheetData.data.system.description.keeper,
-      {
-        async: true,
-        secrets: sheetData.editable
-      }
-    )
-
-    return sheetData
   }
 
-  // get activeParticipant () {
-  //   if (!this.item.system.participants) return undefined
-  //   const participant = this.item.system.participants.find(p => p.active)
-  //   if (!participant) return undefined
-  //   return new _participant(participant)
-  // }
+  static PARTS = {
+    header: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/chase-header.hbs'
+    },
+    tabs: {
+      template: 'templates/generic/tab-navigation.hbs'
+    },
+    setup: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/chase-setup.hbs',
+      scrollable: ['', '.chase-track']
+    },
+    participants: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/chase-participants.hbs',
+      scrollable: ['']
+    },
+    keeper: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-keeper.hbs',
+      scrollable: ['.editor-content']
+    }
+  }
 
-  // get activeParticipantLocation () {
-  //   if (!this.item.system.participants) return undefined
-  //   const participant = this.item.system.participants.find(p => p.active)
-  // }
+  /**
+   * @inheritdoc
+   * @param {RenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _prepareContext (options) {
+    const context = await super._prepareContext(options)
 
-  /** @override */
-  activateListeners (html) {
-    super.activateListeners(html)
+    const tabs = {
+      setup: {
+        icon: '',
+        label: 'CoC7.ChaseSetup'
+      },
+      participants: {
+        icon: '',
+        label: 'CoC7.ParticipantsList'
+      }
+    }
+    if (game.user.isGM) {
+      tabs.keeper = {
+        cssClass: 'icon-only-tab',
+        icon: 'game-icon game-icon-tentacles-skull',
+        tooltip: 'CoC7.GmNotes'
+      }
+    }
 
-    // html.find('.chase-track').ready(async html => await this._onSheetReady(html))
+    context.tabs = this.getTabs('primary', (this.document.system.started || this.document.system.activeLocation ? 'setup' : 'participants'), tabs)
 
-    // Handle Droprown
-    html
-      .find('.dropdown-element')
-      .on('click', event => this._onDropDownElementSelected(event))
+    context.locations = await context.document.system.allLocations()
+    const participants = await context.document.system.allParticipants()
+    context.participants = participants.all
+    context.participants.sort(CoC7Utilities.sortByInitiative)
+    const lastOffset = context.locations.length - 1
+    for (const offset in context.locations) {
+      if (context.locations[offset].participants.length) {
+        for (const offset2 in context.locations[offset].participants) {
+          const offset3 = context.participants.findIndex(p => p.uuid === context.locations[offset].participants[offset2])
+          context.locations[offset].participants[offset2] = context.participants[offset3]
+          context.participants[offset3].setFirstLast(Number(offset) === 0, Number(offset) === lastOffset)
+        }
+        context.locations[offset].participants.sort(CoC7Utilities.sortByRollInitiative)
+      }
+    }
+    context.isKeeper = game.user.isGM
 
-    html.find('.dropbtn').click(event => {
-      event.preventDefault()
-      event.stopPropagation()
-      const target = event.currentTarget
-      const dropdown = target.closest('.dropdown')
-      const dropdownContent = dropdown.querySelector('.dropdown-content')
-      dropdownContent.classList.toggle('show')
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {string} partId
+   * @param {ApplicationRenderContext} context
+   * @param {HandlebarsRenderOptions} options
+   * @returns {Promise<ApplicationRenderContext>}
+   */
+  async _preparePartContext (partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+
+    switch (partId) {
+      case 'header':
+        context.activeLocation = context.document.system.activeLocation
+        if (context.activeLocation) {
+          context.activeLocation.title = (context.activeLocation.hasCoordinates
+            ? game.i18n.format('CoC7.LocationCoordinate', {
+              x: context.activeLocation.coordinates.x,
+              y: context.activeLocation.coordinates.y
+            })
+            : game.i18n.localize('CoC7.DragOnCanvas'))
+        }
+        context.nextLocation = context.document.system.nextLocation
+        context.listOptions = await CONFIG.Actor.documentClass.everyField()
+        context.activeParticipantHere = context.activeLocation?.participants.includes(context.document.system.participants.find(p => p.active)?.uuid) === true
+        break
+      case 'setup':
+        context.vehiclesEnabled = !!(game.settings.get(FOLDER_ID, 'experimentalFeatures') || game.actors.find(doc => doc.type === 'vehicle'))
+        break
+      case 'participants':
+        break
+      case 'keeper':
+        /* // FoundryVTT V12 */
+        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.description.keeper,
+          {
+            async: true,
+            secrets: context.editable
+          }
+        )
+        break
+    }
+    return context
+  }
+
+  /**
+   * @inheritdoc
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   * @returns {Promise<void>}
+   */
+  async _onRender (context, options) {
+    await super._onRender(context, options)
+
+    this._onTriggeredResize(context, options)
+
+    this.element.querySelectorAll('.open-actor').forEach((element) => {
+      element.addEventListener('dblclick', async event => {
+        const actor = await fromUuid(element.dataset.actorUuid)
+        if (actor) {
+          if (actor instanceof TokenDocument) {
+            actor.actor.sheet.render({ force: true })
+          } else {
+            actor.sheet.render({ force: true })
+          }
+        }
+      })
+      element.classList.add('clickable')
     })
-    html
-      .find('.dropdown')
-      .mouseleave(event =>
-        event.currentTarget
-          .querySelector('.dropdown-content')
-          .classList.remove('show')
-      )
 
-    html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
+    this.element.querySelector('.pin-location')?.addEventListener('contextmenu', this.clearActiveLocationCoordinates.bind(this))
 
-    html
-      .find('.pin-location')
-      .contextmenu(this.clearActiveLocationCoordinates.bind(this))
+    this.element.querySelector('.add-sign')?.addEventListener('click', this._onAddParticipant.bind(this))
 
-    html
-      .find('.participant')
-      .on('dragenter', event => this._onDragEnterParticipant(event))
-    html
-      .find('.participant')
-      .on('dragover', event => this._onDragEnterParticipant(event))
-    html
-      .find('.participant')
-      .on('dragleave', event => this._onDragLeaveParticipant(event))
-    html
-      .find('.participant')
-      .on('drop', event => this._onDragLeaveParticipant(event))
+    this.element.querySelectorAll('[data-action]').forEach((element) => element.addEventListener('click', this._onButtonClick.bind(this)))
 
-    html.find('.p-side').click(this._onChangeSide.bind(this))
-    html.find('.delete-participant').click(this._onDeleteParticipant.bind(this))
-    html.find('.reset-roll').click(this._onResetRoll.bind(this))
-    html.find('.delete-driver').click(this._onDeleteDriver.bind(this))
+    this.element.querySelectorAll('.name-container').forEach((element) => element.addEventListener('click', this._onLocationClick.bind(this)))
 
-    html
-      .find('.new-participant')
-      .on('dragenter', event => this._onDragEnterParticipant(event))
-    html
-      .find('.new-participant')
-      .on('dragover', event => this._onDragEnterParticipant(event))
-    html
-      .find('.new-participant')
-      .on('dragleave', event => this._onDragLeaveParticipant(event))
-    html
-      .find('.new-participant')
-      .on('drop', event => this._onDragLeaveParticipant(event))
+    this.element.querySelectorAll('input').forEach((element) => element.addEventListener('change', this._onElementChange.bind(this)))
+    this.element.querySelectorAll('select').forEach((element) => element.addEventListener('change', this._onElementChange.bind(this)))
 
-    html.find('.add-sign').click(this._onAddParticipant.bind(this))
-
-    html.find('.roll-participant').click(this._onRollParticipant.bind(this))
-
-    html.find('.button').click(this._onButtonClick.bind(this))
-
-    html.find('.name-container').click(this._onLocationClick.bind(this))
-
-    html.find('.obstacle-type').click(this._onObstacleTypeClick.bind(this))
-    // html.find('.obstacle-toggle').click(this._onObstacleToggleClick.bind(this))
-    html.find('.toggle').click(this._onToggle.bind(this))
-    html
-      .find('.participant-control')
-      .click(this._onParticipantControlClicked.bind(this))
-
-    html.find('.chase-control').click(this._onChaseControlClicked.bind(this))
-
-    html
-      .find('.location-control')
-      .click(this._onLocationControlClick.bind(this))
-    // html
-    //   .find('.movement-action .decrease')
-    //   .click(this._onChangeMovementActions.bind(this, -1))
-    // html
-    //   .find('.movement-action .increase')
-    //   .click(this._onChangeMovementActions.bind(this, 1))
-
-    // html
-    // .find('.pin-location')
-    // .on('dragstart', event => this._onPinLocationDragStart(event))
+    this.element.querySelectorAll('.participant-controls .item-control').forEach((element) => element.addEventListener('click', (event) => { this._onParticipantControlClicked(event) }))
 
     /* // FoundryVTT V12 */
-    const pinLocationSelectorDragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
       dragSelector: '.pin-location',
       permissions: {
-        dragstart: this._canPinLocationDragStart.bind(this)
+        dragstart: true
       },
       callbacks: {
         dragstart: this._onPinLocationDragStart.bind(this)
       }
-    })
-    pinLocationSelectorDragDrop.bind(html[0])
+    }).bind(this.element)
 
     /* // FoundryVTT V12 */
-    const participantDragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
-      dropSelector: '.participant',
-      callbacks: { drop: this._onDropParticipant.bind(this) }
-    })
-    participantDragDrop.bind(html[0])
+    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+      dropSelector: 'section.tab.participants',
+      permissions: {
+        drop: true
+      },
+      callbacks: {
+        dragleave: this._onDragLeave.bind(this),
+        dragover: this._onDragOver.bind(this),
+        drop: this._onAddParticipant.bind(this)
+      }
+    }).bind(this.element)
 
-    /* // FoundryVTT V12 */
-    const newParticipantDragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
-      dropSelector: '.new-participant',
-      callbacks: { drop: this._onAddParticipant.bind(this) }
-    })
-    newParticipantDragDrop.bind(html[0])
-
-    if (this.item.started) {
-      html
-        .find('.chase-location .chase-participant')
-        .click(this._onChaseParticipantClick.bind(this))
+    if (context.document.system.started) {
+      this.element.querySelectorAll('.chase-location .chase-participant').forEach((element) => element.addEventListener('click', (event) => { this._onChaseParticipantClick(event) }))
 
       /* // FoundryVTT V12 */
-      const chaseParticipantDragpDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+      new (foundry.applications.ux?.DragDrop ?? DragDrop)({
         dragSelector: '.chase-participant',
         dropSelector: '.chase-location',
         permissions: {
-          dragstart: this._canChaseParticipantDragStart.bind(this),
-          drop: this._canChaseParticipantDragDrop.bind(this)
+          dragstart: game.user.isGM,
+          drop: game.user.isGM
         },
         callbacks: {
-          dragstart: this._onChaseParticipantDragStart.bind(this),
-          drop: this._onChaseParticipantDragDrop.bind(this),
-          dragover: this._onDragEnter.bind(this)
+          dragleave: this._onDragLeave.bind(this),
+          dragstart: this._onDragStartParticipant.bind(this),
+          dragover: this._onDragOver.bind(this),
+          drop: this._onDropParticipant.bind(this)
         }
-      })
-      chaseParticipantDragpDrop.bind(html[0])
+      }).bind(this.element)
 
-      html
-        .find('.chase-location')
-        .on('dragleave', event => this._onDragLeave(event))
+      const groups = context.document.system.participants.reduce((c, p) => { c[p.chaser ? 'chaser' : 'prey'].push({ uuid: p.uuid, name: p.name }); return c }, { chaser: [], prey: [] })
+      for (const group of Object.values(groups)) {
+        for (const offset in group) {
+          const element = this.element.querySelector('[data-uuid="' + group[offset].uuid + '"]')
+          if (element) {
+            const contextOptions = []
+            for (const offset2 in group) {
+              if (offset !== offset2) {
+                contextOptions.push({
+                  name: group[offset2].name,
+                  callback: () => {
+                    context.document.system.assistParticipant(group[offset].uuid, group[offset2].uuid)
+                  }
+                })
+              }
+            }
+            new (foundry.applications.ux?.ContextMenu?.implementation ?? ContextMenu)(element, '.assist-dropdown', contextOptions, { // eslint-disable-line no-new, new-cap
+              jQuery: false,
+              fixed: true,
+              eventName: 'click'
+            })
+          }
+        }
+      }
     }
   }
 
-  /* -------------------------------------------- */
-  /*  Form Submission                             */
-  /* -------------------------------------------- */
-
-  /** @override */
-  _getSubmitData (updateData = {}) {
-    // Create the expanded update data object
-    /* // FoundryVTT V12 */
-    const fd = new (foundry.applications.ux?.FormDataExtended ?? FormDataExtended)(this.form, { editors: this.editors })
-    let data = fd.object
-    if (updateData) {
-      data = foundry.utils.mergeObject(data, updateData)
-    } else {
-      data = foundry.utils.expandObject(data)
+  /**
+   * Location Click
+   * @param {Event} event
+   */
+  async _onLocationClick (event) {
+    const locationId = event.currentTarget.closest('.chase-location').dataset.locationId
+    const locations = foundry.utils.duplicate(this.document.system.locations.list)
+    const oldLocation = locations.findIndex(l => l.active)
+    if (oldLocation > -1) {
+      locations[oldLocation].active = false
     }
-
-    // Check that starting position is not outside of chase range.
-    if (
-      this.item.system.locations?.list?.length &&
-      data.system.startingIndex > this.item.system.locations.list.length
-    ) {
-      data.system.startingIndex = this.item.system.locations.list.length
+    const newLocation = locations.findIndex(l => l.uuid === locationId)
+    if (newLocation > -1) {
+      locations[newLocation].active = true
     }
-
-    if (data.system.participants) {
-      const participants = foundry.utils.duplicate(this.item.system.participants)
-      // Handle participants array
-      for (const [k, v] of Object.entries(data.system.participants)) {
-        const index = participants.findIndex(p => p.uuid === k)
-        if (index === -1) ui.notifications.error('Participant table corrupted')
-        else {
-          const original = participants[index]
-          const cleaned = clean(v)
-          foundry.utils.mergeObject(original, cleaned)
-          participants[index] = original
-        }
-      }
-
-      data.system.participants = participants
-    }
-
-    if (data.locations) {
-      const locations = foundry.utils.duplicate(this.item.system.locations.list)
-      // Handle locations list
-      for (const [key, value] of Object.entries(data.locations)) {
-        const locationIndex = locations.findIndex(l => l.uuid === key)
-        if (locationIndex === -1) {
-          ui.notifications.error('Locations table corrupted')
-        } else {
-          const originalLocation = locations[locationIndex]
-          const cleaned = clean(value)
-          foundry.utils.mergeObject(originalLocation, cleaned)
-          locations[locationIndex] = originalLocation
-        }
-      }
-
-      delete data.locations
-      data.system.locations = { list: locations }
-    }
-    // const participants = data.system?.participants;
-    // if( participants) data.system.participants = Object.values( participants).map( p => clean(p));
-
-    // Return the flattened submission data
-    return foundry.utils.flattenObject(data)
+    await this.document.update({ 'system.locations.list': locations })
   }
 
-  /** @override */
-  // async _onSubmit(...args) {
-  //  await super._onSubmit(...args);
-  // }
-
-  async _updateObject (event, formData) {
-    const target = event.currentTarget
-    const override = target?.dataset?.override === 'true'
-    if (target?.name?.includes('.hp')) {
-      const [, , uuid] = target.name.split('.')
-      const participant = this.item.getParticipant(uuid)
-      if (participant && participant.actor) {
-        if (!isNaN(Number(target.value))) {
-          await participant.actor.setHp(Number(target.value))
+  /**
+   * Input/Select change event
+   * @param {Event} event
+   */
+  async _onElementChange (event) {
+    switch (event.currentTarget.dataset.set) {
+      case 'location-name':
+        {
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.active)
+          if (offset > -1) {
+            locations[offset].name = event.currentTarget.value
+            await this.document.update({ 'system.locations.list': locations })
+          }
         }
-      }
-    }
-    if (override) {
-      const [, type, uuid, subType, data] = target.name.split('.')
-      const index = this.findParticipantIndex(uuid)
-      if (
-        type === 'participants' &&
-        !isNaN(index) &&
-        subType === 'speed-check'
-      ) {
-        if (data === 'name') {
-          // Changing name will remove all other ref !
-          const participants = this.item.system.participants
-            ? foundry.utils.duplicate(this.item.system.participants)
-            : []
-          if (participants[index].speedCheck) {
-            delete participants[index].speedCheck.id
-            delete participants[index].speedCheck.type
-          } else participants[index].speedCheck = {}
-          participants[index].speedCheck.name = target.value
-          await this.item.update({ 'system.participants': participants })
-          return
+        break
+      case 'location-obstacle-name':
+        {
+          const locationId = event.currentTarget.closest('.obstacle').dataset.locationId
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.uuid === locationId)
+          if (offset > -1) {
+            locations[offset].obstacleDetails.name = event.currentTarget.value
+            await this.document.update({ 'system.locations.list': locations })
+          }
         }
-      }
+        break
+      case 'location-obstacle-check-name':
+        {
+          const locationId = event.currentTarget.closest('.obstacle').dataset.locationId
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.uuid === locationId)
+          if (offset > -1) {
+            locations[offset].obstacleDetails.checkName = event.currentTarget.value
+            await this.document.update({ 'system.locations.list': locations })
+          }
+        }
+        break
+      case 'obstacle-fail-damage':
+        {
+          const locationId = event.currentTarget.closest('.obstacle').dataset.locationId
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.uuid === locationId)
+          if (offset > -1) {
+            locations[offset].obstacleDetails.failedCheckDamage = event.currentTarget.value
+            await this.document.update({ 'system.locations.list': locations })
+          }
+        }
+        break
+      case 'obstacle-hp':
+        {
+          const locationId = event.currentTarget.closest('.obstacle').dataset.locationId
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.uuid === locationId)
+          if (offset > -1) {
+            locations[offset].obstacleDetails.HitPoints = event.currentTarget.value
+            await this.document.update({ 'system.locations.list': locations })
+          }
+        }
+        break
+      case 'obstacle-action-cost':
+        {
+          const locationId = event.currentTarget.closest('.obstacle').dataset.locationId
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.uuid === locationId)
+          if (offset > -1) {
+            locations[offset].obstacleDetails.failedActionCost = event.currentTarget.value
+            await this.document.update({ 'system.locations.list': locations })
+          }
+        }
+        break
+      case 'participant.speedCheck.name':
+        {
+          const uuid = event.currentTarget.closest('.participant').dataset.uuid
+          const participants = foundry.utils.duplicate(this.document.system.participants)
+          const offset = participants.findIndex(l => l.uuid === uuid)
+          if (offset > -1) {
+            participants[offset].speedCheck.name = event.currentTarget.value
+            let actor = null
+            if (participants[offset].docUuid) {
+              actor = await fromUuid(participants[offset].docUuid)
+            }
+            const listOptions = await CONFIG.Actor.documentClass.everyField(actor)
+            participants[offset].speedCheck.score = await CoC7ChaseParticipant.getPercentValue(actor, listOptions, participants[offset].speedCheck.name)
+            await this.document.update({ 'system.participants': participants })
+          }
+        }
+        break
+      case 'participant.speedCheck.score':
+        {
+          const uuid = event.currentTarget.closest('.participant').dataset.uuid
+          const participants = foundry.utils.duplicate(this.document.system.participants)
+          const offset = participants.findIndex(l => l.uuid === uuid)
+          if (offset > -1) {
+            participants[offset].speedCheck.score = event.currentTarget.value
+            await this.document.update({ 'system.participants': participants })
+          }
+        }
+        break
+      case 'participant.name':
+        {
+          const uuid = event.currentTarget.closest('.participant').dataset.uuid
+          const participants = foundry.utils.duplicate(this.document.system.participants)
+          const offset = participants.findIndex(l => l.uuid === uuid)
+          if (offset > -1) {
+            participants[offset].name = event.currentTarget.value
+            await this.document.update({ 'system.participants': participants })
+          }
+        }
+        break
+      case 'participant.mov':
+        {
+          const uuid = event.currentTarget.closest('.participant').dataset.uuid
+          const participants = foundry.utils.duplicate(this.document.system.participants)
+          const offset = participants.findIndex(l => l.uuid === uuid)
+          if (offset > -1) {
+            participants[offset].mov = event.currentTarget.value
+            await this.document.update({ 'system.participants': participants })
+          }
+        }
+        break
+      case 'participant.dex':
+        {
+          const uuid = event.currentTarget.closest('.participant').dataset.uuid
+          const participants = foundry.utils.duplicate(this.document.system.participants)
+          const offset = participants.findIndex(l => l.uuid === uuid)
+          if (offset > -1) {
+            participants[offset].dex = event.currentTarget.value
+            await this.document.update({ 'system.participants': participants })
+          }
+        }
+        break
+      case 'participant.hp':
+        {
+          const uuid = event.currentTarget.dataset.actorUuid
+          if (uuid) {
+            const actor = await fromUuid(uuid)
+            if (actor) {
+              await actor.setHp(parseInt(event.currentTarget.value, 10))
+              this.render()
+            }
+          }
+        }
+        break
     }
-    super._updateObject(event, formData)
   }
 
-  static async setScroll (app, html, data) {
-    if (!data.editable) {
+  /**
+   * Button Click
+   * @param {Event} event
+   */
+  async _onChaseParticipantClick (event) {
+    const uuid = event.currentTarget.dataset?.uuid
+    await this.document.system.activateParticipant(uuid)
+  }
+
+  /**
+   * Button Click
+   * @param {Event} event
+   */
+  async _onParticipantControlClicked (event) {
+    if (event.currentTarget.classList.contains('inactive')) {
       return
     }
-    const initialOpening = html[0].classList.contains('window-app')
-    const chaseTrack = html[0].querySelector('.chase-track')
-    if (!chaseTrack) return
-
-    let start = data.data.scroll?.chaseTrack.from
-    let end = data.data.scroll?.chaseTrack.to
-    if (typeof start === 'undefined') {
-      start = 0
+    const participantUuid = event.currentTarget.closest('.initiative-block')?.dataset?.uuid
+    if (!participantUuid) {
+      return
     }
-    if (typeof end === 'undefined') {
-      end = -1
-    }
-
-    if (initialOpening) {
-      const remString = $(':root').css('font-size')
-      const remSize = Number(remString.replace('px', ''))
-      if (app.item.started) {
-        const pCount = app.item.actualParticipants?.length
-        const width = (pCount * 11.2 + 3) * remSize
-        app.activateTab('setup')
-        // app._tabs[0].active = 'setup'
-        app.position.width = Math.max(width, 40 * remSize)
-        // html.css('width', `${width}px`)
-      } else {
-        app.position.width = 45 * remSize
-      }
-      return await app.item.activateNextParticipantTurn({ html }) // html is not rendered, element have size = 0
-      // if (end > 0) {
-      //   start = 0
-      // } else if (start > 0) {
-      //   end = start
-      //   start = 0
-      // }
-    }
-
-    if (start && start !== -1) {
-      chaseTrack.scrollTo({
-        top: 0,
-        left: start,
-        behavior: 'instant'
-      })
-    }
-
-    if (end !== -1) {
-      chaseTrack.scrollTo({
-        top: 0,
-        left: end,
-        behavior: 'smooth'
-      })
-    }
-
-    // await app.item.update({ 'data.trackScrollPosition': elementCenterRelativeLeft })
-  }
-
-  static onClose (app, html) {
-    app.item.update({ 'system.trackScrollPosition': -1 })
-  }
-
-  // async _onSheetReady (html) {
-  //   const track = html.find('.chase-track')
-  //   const element = $(track).find('.active')
-
-  //   const elementleft = element[0].offsetLeft
-  //   const divWidth = track[0].clientWidth
-  //   let elementCenterRelativeLeft = elementleft - divWidth / 2
-  //   if (elementCenterRelativeLeft < 0) elementCenterRelativeLeft = 0
-
-  //   const scrollPosition = this.item.system.trackScrollPosition
-  //   if (!track.length) return
-  //   if (!scrollPosition) return
-  //   const trackElement = track[0]
-  //   trackElement.scrollTo({
-  //     top: 0,
-  //     left: elementCenterRelativeLeft,
-  //     behavior: 'instant'
-  //   })
-
-  //   //TODO : couldd use parent.offsetTop et child.offsetTop to center the active element
-
-  //   // const active = html.find('.name-container.active')
-  //   // if( active){
-  //   //   const element = active[0]
-  //   //   element.scrollIntoView({behavior: "smooth", block: "end", inline: "center"})
-  //   // element.scrollIntoView(false)
-  //   // }
-  //   // })
-  // }
-
-  findParticipantIndex (uuid) {
-    return this.item.system.participants.findIndex(p => p.uuid === uuid)
-  }
-
-  findLocationIndex (uuid) {
-    return this.item.system.locations.list.findIndex(p => p.uuid === uuid)
-  }
-
-  findLocation (uuid) {
-    return this.item.system.locations.list.find(p => p.uuid === uuid)
-  }
-
-  findIndex (list, uuid) {
-    return list.findIndex(p => p.uuid === uuid)
-  }
-
-  async _onDropDownElementSelected (event) {
-    event.preventDefault()
-    event.stopPropagation()
-    const target = event.currentTarget
-    target.closest('.dropdown-content')?.classList.toggle('show')
-    const assistantUuid = target.closest('.initiative-block')?.dataset?.uuid
-    const beneficiaryUuid = target.dataset.beneficiaryUuid
-    await this.item.assistParticipant(assistantUuid, beneficiaryUuid)
-  }
-
-  async _onToggle (event) {
-    const target = event.currentTarget
-    // const locationElement = target.closest('.location.obstacle')
-    // const uuid = locationElement.dataset.uuid
-    // const locations = foundry.utils.duplicate(this.item.system.locations.list)
-    // const locationIndex = this.findIndex(locations, uuid)
-    const toggle = target.getAttribute('toggle')
-    const data = foundry.utils.expandObject({
-      [toggle]: !target.classList.contains('switched-on')
-    })
-    if (data.locations) {
-      const locations = foundry.utils.duplicate(this.item.system.locations.list)
-      for (const [key, value] of Object.entries(data.locations)) {
-        const locationIndex = locations.findIndex(l => l.uuid === key)
-        if (locationIndex === -1) {
-          ui.notifications.error('Locations table corrupted')
-        } else {
-          const originalLocation = locations[locationIndex]
-          const cleaned = clean(value)
-          foundry.utils.mergeObject(originalLocation, cleaned)
-          locations[locationIndex] = originalLocation
-        }
-      }
-      await this.item.updateLocationsList(locations)
-    }
-  }
-
-  // async _onObstacleToggleClick (event) {
-  //   const target = event.currentTarget
-  //   const locationElement = target.closest('.obstacle')
-  //   const uuid = locationElement.dataset.uuid
-  //   const locations = foundry.utils.duplicate(this.item.system.locations.list)
-  //   const locationIndex = this.findIndex(locations, uuid)
-  //   locations[locationIndex].obstacle = !locations[locationIndex].obstacle
-  //   if (!locations[locationIndex].obstacleDetails) {
-  //     locations[locationIndex].obstacleDetails = {
-  //       barrier: true
-  //     }
-  //   }
-  //   await this.item.updateLocationsList(locations)
-  // }
-
-  async _onObstacleTypeClick (event) {
-    const target = event.currentTarget
-    const locationElement = target.closest('.obstacle')
-    const uuid = locationElement.dataset.uuid
-    const locations = foundry.utils.duplicate(this.item.system.locations.list)
-    const locationIndex = this.findIndex(locations, uuid)
-    if (!locations[locationIndex].obstacleDetails) {
-      locations[locationIndex].obstacleDetails = {}
-    }
-    const obstacle = locations[locationIndex].obstacleDetails
-    const type = target.classList.contains('barrier') ? 'barrier' : 'hazard'
-    const active = obstacle[type]
-    obstacle.barrier = false
-    obstacle.hazard = false
-    obstacle[type] = !active
-    locations[locationIndex].obstacle = !active
-    // if (target.classList.contains('barrier')) {
-    //   locations[locationIndex].obstacleDetails.barrier = !locations[
-    //     locationIndex
-    //   ].obstacleDetails.barrier
-    //   locations[locationIndex].obstacleDetails.hazard = !locations[
-    //     locationIndex
-    //   ].obstacleDetails.barrier
-    // } else if (target.classList.contains('hazard')) {
-    //   locations[locationIndex].obstacleDetails.hazard = !locations[
-    //     locationIndex
-    //   ].obstacleDetails.hazard
-    //   locations[locationIndex].obstacleDetails.barrier = !locations[
-    //     locationIndex
-    //   ].obstacleDetails.hazard
-    // }
-    await this.item.updateLocationsList(locations)
-  }
-
-  async _onLocationClick (event) {
-    const target = event.currentTarget
-    const locationElement = target.closest('.chase-location')
-    const lUuid = locationElement.dataset.uuid
-    await this.item.activateLocation(lUuid)
-  }
-
-  async _onLocationControlClick (event) {
-    event.preventDefault()
-    const target = event.currentTarget
-    if (target.classList.contains('inactive')) return
-    const action = target.dataset.action
-    const locationElement = target.closest('.chase-location')
-    const lUuid = locationElement.dataset.uuid
-    switch (action) {
-      case 'remove':
-        await this.item.removeLocation(lUuid)
-        break
-      case 'add-after':
-        await this.item.insertLocation(lUuid, { shift: 1 })
-        break
-
-      case 'add-before':
-        await this.item.insertLocation(lUuid, { shift: 0 })
-        break
-
-      case 'add-participant':
-        CoC7ChaseParticipantDialog.create({
-          chaseUuid: this.item.uuid,
-          locationUuid: lUuid,
-          dropData: {}
-        })
-        break
-
-      default:
-        break
-    }
-    // ui.notifications.info(`Location ${lUuid} Clicked. Action: ${action}`)
-  }
-
-  async _onChaseParticipantClick (event) {
-    const pUuid = event.currentTarget.dataset?.uuid
-    await this.item.activateParticipant(pUuid)
-  }
-
-  async _onParticipantControlClicked (event) {
-    event.preventDefault()
-    const target = event.currentTarget
-    if (target.classList.contains('inactive')) return
-    if (target.classList.contains('dropdown')) return
-    event.stopPropagation()
-
-    const participantUuid = target.closest('.initiative-block')?.dataset?.uuid
-    if (!participantUuid) return
-    switch (target.dataset.action) {
+    switch (event.currentTarget.dataset.action) {
       case 'drawGun':
         await this.toggleParticipantGun(participantUuid)
         break
       case 'decreaseActions':
-        await this._onChangeMovementActions(-1, event)
+        await this._onChangeMovementActions(-1, participantUuid)
         break
       case 'increaseActions':
-        await this._onChangeMovementActions(1, event)
+        await this._onChangeMovementActions(1, participantUuid)
         break
       case 'moveBackward':
-        await this.item.moveParticipant(participantUuid, -1, { render: true })
+        await this.document.system.moveParticipantLocations(participantUuid, -1)
         break
       case 'moveForward':
-        await this.item.moveParticipant(participantUuid, 1, { render: true })
+        await this.document.system.moveParticipantLocations(participantUuid, 1)
         break
       case 'activateParticipant':
-        return await this.item.activateParticipant(participantUuid)
+        await this.document.system.activateParticipant(participantUuid)
+        return
       case 'bonusDice':
         {
-          const diceNumber = target.dataset.count
-          await this.item.toggleBonusDice(participantUuid, diceNumber)
-          this.item.activateNextParticipantTurn()
+          const diceNumber = event.currentTarget.dataset.count
+          await this.document.system.toggleBonusDice(participantUuid, diceNumber)
         }
         break
       case 'cautiousApproach':
-        await this.item.cautiousApproach(participantUuid)
+        await this.document.system.cautiousApproach(participantUuid)
         break
       case 'editParticipant':
-        {
-          const participant = this.item.getParticipant(participantUuid)
-          const location = this.item.getParticipantLocation(participantUuid)
-          participant.data.chaseUuid = this.item.uuid
-          participant.data.locationUuid = location.uuid
-          participant.data.update = true
-          CoC7ChaseParticipantDialog.create(participant.data)
-        }
-        break
+        CoC7ChaseParticipantDialog.create({ chaseUuid: this.document.uuid, participant: this.document.system.participants.find(p => p.uuid === participantUuid) })
+        return
       case 'removeParticipant':
-        await this.item.removeParticipant(participantUuid)
+        await this.document.system.removeParticipant(participantUuid)
         break
     }
-    this.item.activateNextParticipantTurn()
+    this.document.system.activateNextParticipantTurn()
   }
 
-  async _onChaseControlClicked (event) {
-    event.preventDefault()
-    const target = event.currentTarget
-    event.stopPropagation()
-
-    const locationUuid = target.closest('.obstacle')?.dataset?.uuid
-    if (!locationUuid) return
-    switch (target.dataset.action) {
-      case 'obstacle-skill-check':
-        return this.item.activeParticipantObstacleCheck(locationUuid)
+  /**
+   * Change the number of movement actions
+   * @param {integer} count
+   * @param {string} participantUuid
+   */
+  async _onChangeMovementActions (count, participantUuid) {
+    const participants = foundry.utils.duplicate(this.document.system.participants)
+    const offset = participants.findIndex(p => p.uuid === participantUuid)
+    if (offset > -1) {
+      const actions = (await this.document.system.allParticipants()).all.find(p => p.uuid === participantUuid).actions
+      if (actions) {
+        const currentMovementActions = parseInt(participants[offset].currentMovementActions, 10) + count
+        participants[offset].currentMovementActions = Math.min(actions, currentMovementActions)
+        await this.document.update({ 'system.participants': participants })
+      }
     }
   }
 
-  async _onChangeMovementActions (count, event) {
-    event.preventDefault()
-    event.stopPropagation()
-    const target = event.currentTarget
-    const participantUuid = target.closest('.initiative-block')?.dataset?.uuid
-    if (!participantUuid) return
-    const participants = this.item.participants
-    const participant = participants.find(p => participantUuid === p.uuid)
-    if (participant.hasMaxMvtActions && count > 0) return
-    participant.alterMovementActions(count)
-
-    // const sheet = target.closest('.coc7.item.chase')
-    // const chaseTrack = sheet.querySelector('.chase-track')
-    // if (chaseTrack)
-    //   await this.item.update({
-    //     'data.trackScrollPosition': chaseTrack.scrollLeft
-    //   })
-    await this.item.setchaseTrackScroll({ render: false })
-    await this.item.updateParticipants(participants)
-  }
-
+  /**
+   * Button Click
+   * @param {Event} event
+   */
   async _onButtonClick (event) {
-    const target = event.currentTarget
-    const action = target.dataset?.action
-    if (!action) return
-    switch (action) {
+    event.preventDefault()
+    switch (event.currentTarget.dataset.action) {
       case 'init':
-        if (
-          !isNaN(this.item.system.locations.total) &&
-          this.item.system.locations.total > 0
-        ) {
-          const locations = Array.apply(
-            null,
-            Array(this.item.system.locations.total)
-          ).map(function () {
-            return { uuid: foundry.utils.randomID(16) }
+        if (this.document.system.locations.total > 0) {
+          const locations = Array.apply(null, Array(this.document.system.locations.total)).map(l => {
+            return {
+              uuid: foundry.utils.randomID()
+            }
           })
           locations[0].name = 'Start'
-          if (locations.length > 1) locations[locations.length - 1].name = 'End'
-          await this.item.updateLocationsList(locations)
+          if (locations.length > 1) {
+            locations[locations.length - 1].name = 'End'
+          }
+          await this.document.update({ 'system.locations.list': locations })
         }
-
         break
       case 'reset':
-        Dialog.confirm({
-          title: `${game.i18n.localize('CoC7.ConfirmResetChase')}`,
-          content: `<p>${game.i18n.localize('CoC7.ConfirmResetChaseHint')}</p>`,
-          yes: async () => {
-            await this.item.updateLocationsList([])
-            await this.item.stop()
-          }
-        })
+        new foundry.applications.api.DialogV2({
+          window: { title: 'CoC7.ConfirmResetChase' },
+          content: '<p>' + game.i18n.localize('CoC7.ConfirmResetChaseHint') + '</p>',
+          buttons: [{
+            action: 'cancel',
+            label: 'No',
+            icon: 'fa-solid fa-ban'
+          }, {
+            action: 'ok',
+            label: 'Yes',
+            icon: 'fa-solid fa-check',
+            callback: () => {
+              this.document.update({
+                'system.locations.list': [],
+                'system.started': false
+              })
+            }
+          }]
+        }).render({ force: true })
         break
-
       case 'cut2chase':
-        if (this.item.allHaveSpeedRoll) {
-          Dialog.confirm({
-            title: `${game.i18n.localize('CoC7.ConfirmCut2Chase')}`,
-            content: `<p>${game.i18n.localize(
-              'CoC7.ConfirmCut2ChaseHint'
-            )}</p>`,
-            yes: () => this.item.cutToTheChase()
-          })
+        if (this.document.system.allHaveSpeedRoll) {
+          new foundry.applications.api.DialogV2({
+            window: { title: 'CoC7.ConfirmCut2Chase' },
+            content: '<p>' + game.i18n.localize('CoC7.ConfirmCut2ChaseHint') + '</p>',
+            buttons: [{
+              action: 'cancel',
+              label: 'No',
+              icon: 'fa-solid fa-ban'
+            }, {
+              action: 'ok',
+              label: 'Yes',
+              icon: 'fa-solid fa-check',
+              callback: () => {
+                this.document.system.cutToTheChase()
+              }
+            }]
+          }).render({ force: true })
         } else {
-          ui.notifications.warn(game.i18n.localize('CoC7.NotAllHaveSpeedRoll'))
+          ui.notifications.warn('CoC7.NotAllHaveSpeedRoll', { localize: true })
         }
         break
-
+      case 'remove':
+        {
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.active)
+          if (offset > -1) {
+            locations.splice(offset, 1)
+            await this.document.update({ 'system.locations.list': locations })
+          }
+        }
+        break
+      case 'add-after':
+        {
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.active)
+          if (offset > -1) {
+            locations.splice(offset + 1, 0, {
+              uuid: foundry.utils.randomID()
+            })
+            await this.document.update({ 'system.locations.list': locations })
+          }
+        }
+        break
+      case 'add-before':
+        {
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.active)
+          if (offset > -1) {
+            locations.splice(offset, 0, {
+              uuid: foundry.utils.randomID()
+            })
+            await this.document.update({ 'system.locations.list': locations })
+          }
+        }
+        break
+      case 'ping-location':
+        if (canvas.ready) {
+          const coordinates = this.document.system.activeLocation.coordinates
+          if (coordinates.scene === canvas.scene.uuid) {
+            canvas.ping({ x: coordinates.x, y: coordinates.y })
+          }
+        }
+        break
+      case 'obstacle-has-damage':
+        {
+          const locationId = event.currentTarget.closest('.obstacle').dataset.locationId
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.uuid === locationId)
+          if (offset > -1) {
+            locations[offset].obstacleDetails.hasDamage = !locations[offset].obstacleDetails.hasDamage
+            await this.document.update({ 'system.locations.list': locations })
+          }
+        }
+        break
+      case 'obstacle-has-hp':
+        {
+          const locationId = event.currentTarget.closest('.obstacle').dataset.locationId
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.uuid === locationId)
+          if (offset > -1) {
+            locations[offset].obstacleDetails.hasHitPoints = !locations[offset].obstacleDetails.hasHitPoints
+            await this.document.update({ 'system.locations.list': locations })
+          }
+        }
+        break
+      case 'obstacle-has-action-cost':
+        {
+          const locationId = event.currentTarget.closest('.obstacle').dataset.locationId
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.uuid === locationId)
+          if (offset > -1) {
+            locations[offset].obstacleDetails.hasActionCost = !locations[offset].obstacleDetails.hasActionCost
+            await this.document.update({ 'system.locations.list': locations })
+          }
+        }
+        break
+      case 'participantChaser':
+        {
+          const uuid = event.currentTarget.closest('.participant').dataset.uuid
+          const participants = foundry.utils.duplicate(this.document.system.participants)
+          const offset = participants.findIndex(l => l.uuid === uuid)
+          if (offset > -1) {
+            participants[offset].chaser = !participants[offset].chaser
+            await this.document.update({ 'system.participants': participants })
+          }
+        }
+        break
+      case 'deleteParticipant':
+        {
+          const uuid = event.currentTarget.closest('.participant').dataset.uuid
+          const participants = foundry.utils.duplicate(this.document.system.participants)
+          const offset = participants.findIndex(l => l.uuid === uuid)
+          if (offset > -1) {
+            participants.splice(offset, 1)
+            await this.document.update({ 'system.participants': participants })
+          }
+        }
+        break
+      case 'resetRoll':
+        {
+          const uuid = event.currentTarget.closest('.participant').dataset.uuid
+          const participants = foundry.utils.duplicate(this.document.system.participants)
+          const offset = participants.findIndex(l => l.uuid === uuid)
+          if (offset > -1) {
+            participants[offset].speedCheck.checkData = null
+            await this.document.update({ 'system.participants': participants })
+          }
+        }
+        break
+      case 'rollSpeedCheck':
+        {
+          const uuid = event.currentTarget.closest('.participant').dataset.uuid
+          const participants = foundry.utils.duplicate(this.document.system.participants)
+          const offset = participants.findIndex(l => l.uuid === uuid)
+          if (offset > -1) {
+            const participant = new CoC7ChaseParticipant(participants, offset)
+            await participant.loadUuids()
+            const listOptions = participant.listOptions
+            const value = listOptions.find(row => row.name === participant.speedCheck.name)
+            participants[offset].speedCheck.checkData = { rolling: true }
+            await this.document.update({ 'system.participants': participants })
+            if (value) {
+              const config = {
+                cardTypeFixed: true,
+                cardType: CoC7RollNormalize.CARD_TYPE.NORMAL,
+                callbackUuid: this.document.uuid,
+                callbackContext: { type: 'speedCheck', participant: participants[offset].uuid },
+                actor: participant.actor,
+                standby: true,
+                standbyRightIcon: 'systems/' + FOLDER_ID + '/assets/icons/running-solid.svg'
+              }
+              if (value.value) {
+                switch (value.type) {
+                  case 'attribs':
+                    config.rollType = CoC7RollNormalize.ROLL_TYPE.ATTRIBUTE
+                    config.attribute = value.key
+                    break
+                  case 'characteristics':
+                    config.rollType = CoC7RollNormalize.ROLL_TYPE.CHARACTERISTIC
+                    config.characteristic = value.key
+                    break
+                  case 'skill':
+                    config.rollType = CoC7RollNormalize.ROLL_TYPE.SKILL
+                    config.itemUuid = value.uuid
+                    break
+                }
+                CoC7RollNormalize.trigger(config)
+              } else {
+                config.rollType = CoC7RollNormalize.ROLL_TYPE.MANUAL
+                config.threshold = participants[offset].speedCheck.score
+                config.runRoll = false
+                const modified = await CoC7RollNormalize.trigger(config)
+                modified.flavor = game.i18n.format('CoC7.CheckResult', {
+                  name: value.name,
+                  value: modified.threshold.toString() + (modified.flatThresholdModifier !== 0 ? (modified.flatThresholdModifier > 0 ? '+' : '') + modified.flatThresholdModifier.toString() : ''),
+                  difficulty: CoC7DicePool.difficultyString(modified.difficulty)
+                })
+                CoC7RollNormalize.runRoll(modified)
+              }
+            }
+          }
+        }
+        break
       case 'restart':
-        Dialog.confirm({
-          title: `${game.i18n.localize('CoC7.ConfirmRestartChase')}`,
-          content: `<p>${game.i18n.localize(
-            'CoC7.ConfirmRestartChaseHint'
-          )}</p>`,
-          yes: () => this.item.restart()
-        })
+        new foundry.applications.api.DialogV2({
+          window: { title: 'CoC7.ConfirmRestartChase' },
+          content: '<p>' + game.i18n.localize('CoC7.ConfirmRestartChaseHint') + '</p>',
+          buttons: [{
+            action: 'cancel',
+            label: 'No',
+            icon: 'fa-solid fa-ban'
+          }, {
+            action: 'ok',
+            label: 'Yes',
+            icon: 'fa-solid fa-check',
+            callback: () => {
+              this.document.system.restart()
+            }
+          }]
+        }).render({ force: true })
         break
-
+      case 'add-participant':
+        {
+          const location = this.document.system.locations.list.find(l => l.active)
+          if (location) {
+            CoC7ChaseParticipantDialog.create({ chaseUuid: this.document.uuid, locationId: location.uuid })
+          }
+        }
+        break
       case 'nextRound':
-        if (this.item.nextActiveParticipant) {
-          Dialog.confirm({
-            title: `${game.i18n.localize('CoC7.ConfirmNextChaseRound')}`,
-            content: `<p>${game.i18n.localize(
-              'CoC7.ConfirmNextChaseRoundHint'
-            )}</p>`,
-            yes: () => this.item.progressToNextRound()
-          })
-        } else this.item.progressToNextRound()
+        if (await this.document.system.nextActiveParticipant()) {
+          new foundry.applications.api.DialogV2({
+            window: { title: 'CoC7.ConfirmNextChaseRound' },
+            content: '<p>' + game.i18n.localize('CoC7.ConfirmNextChaseRoundHint') + '</p>',
+            buttons: [{
+              action: 'cancel',
+              label: 'No',
+              icon: 'fa-solid fa-ban'
+            }, {
+              action: 'ok',
+              label: 'Yes',
+              icon: 'fa-solid fa-check',
+              callback: () => {
+                this.document.system.progressToNextRound()
+              }
+            }]
+          }).render({ force: true })
+        } else {
+          this.document.system.progressToNextRound()
+        }
         break
-
-      default:
+      case 'obstacle-skill-check':
+        {
+          const locationId = event.currentTarget.closest('.obstacle').dataset.locationId
+          if (locationId) {
+            this.document.system.activeParticipantObstacleCheck(locationId)
+          }
+        }
         break
     }
   }
 
-  _canPinLocationDragStart (selector) {
-    if (game.user.isGM) return true
-    return false
-  }
-
+  /**
+   * Drag Location Locator
+   * @param {DragEvent} event
+   */
   async _onPinLocationDragStart (event) {
-    const a = event.currentTarget
-    const i = a.querySelector('i.icon')
-    const dragIcon = a.querySelector('.pin-image')
-
+    const dragIcon = event.currentTarget.querySelector('.pin-image')
     event.dataTransfer.setDragImage(dragIcon, 0, dragIcon.height)
-
-    const locationElement = a.closest('.chase-location')
-    const data = {}
-
-    data.type = 'locator'
-    data.CoC7Type = 'chase'
-    data.icon = i.dataset.linkIcon
-    data.locationUuid = locationElement.dataset.uuid
-    data.docUuid = this.item.uuid
-    data.callBack = 'locatorDropped'
+    const data = {
+      type: 'CoC7Locator',
+      appId: this.id,
+      callback: 'locatorDropped',
+      locationId: this.document.system.activeLocation.uuid
+    }
     event.dataTransfer.setData('text/plain', JSON.stringify(data))
-
-    // const dragData = { uuid: locationElement.dataset.uuid, chaseUuid: this.item.uuid }
-    // dragEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData))
   }
 
-  _canChaseParticipantDragStart (selector) {
-    if (game.user.isGM) return true
-    return false
+  /**
+   * Drag Location Locator
+   * @param {DragEvent} event
+   */
+  async _onDragStartParticipant (event) {
+    const data = {
+      type: 'CoC7MoveLocation',
+      id: event.currentTarget.dataset.uuid
+    }
+    event.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
-  _canChaseParticipantDragDrop (selector) {
-    if (game.user.isGM) return true
-    return false
-  }
-
-  async _onChaseParticipantDragStart (dragEvent) {
-    const target = dragEvent.currentTarget
-    const dragData = { uuid: target.dataset.uuid, type: 'participant' }
-    dragEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData))
-  }
-
-  async _onChaseParticipantDragDrop (dragEvent) {
-    const dataString = dragEvent.dataTransfer.getData('text/plain')
-    const data = JSON.parse(dataString)
-
-    // ui.notifications.info('Dropped')
-    this._onDragLeave(dragEvent)
-
-    const target = dragEvent.currentTarget
-    const locationUuid = target.dataset.uuid
-
-    if (data.type === 'participant') {
-      const oldLocation = this.findLocation(locationUuid)
-      if (oldLocation) {
-        if (oldLocation.participants?.includes(data.uuid)) return
-      }
-      await this.item.setchaseTrackScroll({ render: false })
-      await this.item.moveParticipantToLocation(data.uuid, locationUuid)
-    } else {
-      CoC7ChaseParticipantDialog.create({
-        chaseUuid: this.item.uuid,
-        locationUuid,
-        dropData: data
-      })
+  /**
+   * Move Participant To Location
+   * @param {Event} event
+   */
+  async _onDropParticipant (event) {
+    const locationId = event.currentTarget.dataset.locationId
+    const dataString = event.dataTransfer.getData('text/plain')
+    const dropData = JSON.parse(dataString)
+    if (dropData?.type === 'CoC7MoveLocation') {
+      this.document.system.moveParticipantToLocation(dropData.id, locationId)
     }
   }
 
-  _onDragOver (dragEvent) {
-    this._onDragEnter(dragEvent)
-  }
-
-  _onDragEnter (dragEvent) {
-    const target = dragEvent.currentTarget
-    target.classList.add('drag-over')
-  }
-
-  _onDragLeave (dragEvent) {
-    const target = dragEvent.currentTarget
-    target.classList?.remove('drag-over')
-  }
-
-  async _onDropParticipant (event) {
-    const target = event.currentTarget
-    const uuid = target.dataset?.uuid
-    const dataString = event.dataTransfer.getData('text/plain')
-    const data = JSON.parse(dataString)
-    await this.alterParticipant(data, uuid)
-  }
-
+  /**
+   * Show Participant Dialog
+   * @param {Event} event
+   */
   async _onAddParticipant (event) {
     event.preventDefault()
-    const data = { chaseUuid: this.item.uuid }
+    const data = { chaseUuid: this.document.uuid }
     if (event.dataTransfer) {
       const dataString = event.dataTransfer.getData('text/plain')
       data.dropData = JSON.parse(dataString)
@@ -877,320 +822,129 @@ export default class CoC7ChaseSheet extends foundry.appv1.sheets.ItemSheet {
     CoC7ChaseParticipantDialog.create(data)
   }
 
-  async _onRollParticipant (event) {
-    const target = event.currentTarget
-    const participantElement = target.closest('.participant')
-    const uuid = participantElement.dataset.uuid
-    const index = this.findParticipantIndex(uuid)
-    const participants = this.item.system.participants
-      ? foundry.utils.duplicate(this.item.system.participants)
-      : []
-
-    const participant = new _participant(participants[index])
-    if (participant.speedCheck.refSet) {
-      const roll = new CoC7Check()
-      roll.parent = this.item.uuid
-      participant.data.rolled = true
-      participant.data.rollUuid = roll.uuid
-      roll.actor = participant.actor.actorKey
-      if (!event.shiftKey && participant.actor.player) {
-        roll.standby = true
-        roll.standbyText = 'CoC7.Chase'
-        roll.standbyRightIcon = 'systems/CoC7/assets/icons/running-solid.svg'
-      }
-
-      if (participant.speedCheck.isCharacteristic) {
-        await roll.rollCharacteristic(participant.speedCheck.ref.key)
-        await roll.toMessage()
-        participant.data.speedCheck.rollDataString = roll.JSONRollString
-      } else if (participant.speedCheck.isSkill) {
-        roll.skill = participant.speedCheck.ref
-        await roll.roll()
-        await roll.toMessage()
-        participant.data.speedCheck.rollDataString = roll.JSONRollString
-      } else if (participant.speedCheck.isAttribute) {
-        await roll.rollAttribute(participant.speedCheck.ref.key)
-        await roll.toMessage()
-        participant.data.speedCheck.rollDataString = roll.JSONRollString
-      }
-    } else if (participant.speedCheck.score) {
-      const rollData = {
-        rawValue: participant.speedCheck.score,
-        displayName: participant.speedCheck.name,
-        actorName: participant.name ? participant.name : undefined
-      }
-      if (participant.hasActor) rollData.actor = participant.actor.actorKey
-      const roll = CoC7Check.create(rollData)
-      roll.parent = this.item.uuid
-      await roll.roll()
-      await roll.toMessage()
-      participant.data.speedCheck.rollDataString = roll.JSONRollString
-      participant.data.rolled = true
-      participant.data.rollUuid = roll.uuid
-    }
-
-    await this.item.update({ 'system.participants': participants })
+  /**
+   * Set class on drag over
+   * @param {DragEvent} event
+   */
+  _onDragOver (event) {
+    event.currentTarget?.classList.add('drag-over')
   }
 
-  _onDragEnterParticipant (event) {
-    const target = event.currentTarget
-    target.classList.add('drag-over')
+  /**
+   * Remove class on drag away
+   * @param {DragEvent} event
+   */
+  _onDragLeave (event) {
+    event.currentTarget?.classList.remove('drag-over')
   }
 
-  _onDragLeaveParticipant (event) {
-    const target = event.currentTarget
-    target.classList.remove('drag-over')
-  }
-
-  async _onChangeSide (event) {
-    // const test = await fromUuid( 'Scene.wh7SLuvIOpcQyb8S.Token.nCdoCyoiudtjrNku');
-    // const itemTest = await fromUuid( 'Item.plIEmNRP6O7PveNv.roll.q2sAzsHt4FsqsdfD');
-
-    const target = event.currentTarget
-    const participant = target.closest('.participant')
-    const uuid = participant.dataset.uuid
-    const index = this.findParticipantIndex(uuid)
-    const participants = this.item.system.participants
-      ? foundry.utils.duplicate(this.item.system.participants)
-      : []
-    participants[index].chaser = !participants[index].chaser
-    await this.item.update({ 'system.participants': participants })
-  }
-
-  async _onDeleteDriver (event) {
-    const target = event.currentTarget
-    const driver = target.closest('.driver')
-    const uuid = driver.dataset.uuid
-    const index = this.findParticipantIndex(uuid)
-    const participants = this.item.system.participants
-      ? foundry.utils.duplicate(this.item.system.participants)
-      : []
-    const participant = participants[index]
-    delete participant.docUuid
-    await this.item.update({ 'system.participants': participants })
-  }
-
-  async _onDeleteParticipant (event) {
-    const target = event.currentTarget
-    const participant = target.closest('.participant')
-    const uuid = participant.dataset.uuid
-    const index = this.findParticipantIndex(uuid)
-    const participants = this.item.system.participants
-      ? foundry.utils.duplicate(this.item.system.participants)
-      : []
-    participants.splice(index, 1)
-    await this.item.update({ 'system.participants': participants })
-  }
-
-  async _onResetRoll (event) {
-    const target = event.currentTarget
-    const participant = target.closest('.participant')
-    const uuid = participant.dataset.uuid
-    const index = this.findParticipantIndex(uuid)
-    const participants = this.item.system.participants
-      ? foundry.utils.duplicate(this.item.system.participants)
-      : []
-    delete participants[index].speedCheck.rollDataString
-    await this.item.update({ 'system.participants': participants })
-  }
-
-  async alterParticipant (data, uuid) {
-    let docUuid, actor
-    if (data.tokenUuid) docUuid = data.tokenUuid
-    else {
-      docUuid =
-        data.sceneId && data.tokenId
-          ? `Scene.${data.sceneId}.Token.${data.tokenId}`
-          : data.actorId || data.actorKey || data.id
-    }
-
-    if (data.type === 'Token') {
-      docUuid = data.uuid
-    } else if (docUuid) {
-      actor = chatHelper.getActorFromKey(docUuid)
-      if (!actor && data.type === 'Item') docUuid = null
-    }
-
-    if (actor && docUuid !== actor.uuid) {
-      docUuid = actor.uuid
-    }
-
-    const participant = {}
-    if (docUuid) participant.docUuid = docUuid
-
-    switch (data.type?.toLowerCase()) {
-      case 'actor':
-        break
-      case 'item':
-        participant.speedCheck = {
-          id: data.data?._id || data.id,
-          type: 'item'
-        }
-        break
-      case 'characteristic':
-        participant.speedCheck = {
-          id: data.name,
-          type: 'characteristic'
-        }
-        break
-      case 'attribute':
-        participant.speedCheck = {
-          id: data.name,
-          type: 'attribute'
-        }
-        break
-
-      default:
-        break
-    }
-
-    // TODO:Check for speed check, if none add speedcheck
-    // speedCheck = {
-    //   id: 'str'
-    //   type: 'characteristic'
-    // }
-    const participants = this.item.system.participants
-      ? foundry.utils.duplicate(this.item.system.participants)
-      : []
-    const index = this.findParticipantIndex(uuid)
-    const oldParticipant = participants[index]
-    if (oldParticipant.mov) delete oldParticipant.mov
-    foundry.utils.mergeObject(oldParticipant, participant)
-    await this.item.update({ 'system.participants': participants })
-  }
-
+  /**
+   * Clear scene position information for active location
+   */
   async clearActiveLocationCoordinates () {
-    await this.item.clearActiveLocationCoordinates()
+    await this.document.system.clearActiveLocationCoordinates()
   }
 
-  async addParticipant (data) {
-    // let prout = chatHelper.getActorFromKey(
-    //   'Scene.wh7SLuvIOpcQyb8S.Token.QyFTiiEZiX9vTfiC'
-    // )
-    // prout = chatHelper.getActorFromKey(
-    //   'Scene.wh7SLuvIOpcQyb8S.Token.ubLzhe57JOTHMIr9'
-    // )
-    // prout = chatHelper.getActorFromKey('Actor.uiY3capSUeLLvSLi')
-    // prout = CoC7Utilities.getDocumentFromKey( 'Scene.wh7SLuvIOpcQyb8S.Token.QyFTiiEZiX9vTfiC.Item.GrOHeLXfeEphsRMZ')
-    // prout = CoC7Utilities.getDocumentFromKey( "Scene.wh7SLuvIOpcQyb8S.Token.YqsNQPDhFCPlSRqJ")
-    // prout = CoC7Utilities.getDocumentFromKey( "Scene.wh7SLuvIOpcQyb8S.Token.YqsNQPDhFCPlSRqJ.Item.8JEnTjJOGFXml4wk")
-
-    // try to find a valid document
-    let docUuid, actor
-    if (data.tokenUuid) docUuid = data.tokenUuid
-    else {
-      docUuid =
-        data.sceneId && data.tokenId
-          ? `Scene.${data.sceneId}.Token.${data.tokenId}`
-          : data.actorId || data.actorKey || data.id
+  /**
+   * Toggle bonus to initiative
+   * @param {string} participantUuid
+   */
+  async toggleParticipantGun (participantUuid) {
+    const participants = foundry.utils.duplicate(this.document.system.participants)
+    const offset = participants.findIndex(p => p.uuid === participantUuid)
+    if (offset > -1) {
+      participants[offset].hasAGunReady = !participants[offset].hasAGunReady
+      await this.document.update({ 'system.participants': participants })
     }
+  }
 
-    if (data.type === 'Token') {
-      docUuid = data.uuid
-    } else if (docUuid) {
-      actor = chatHelper.getActorFromKey(docUuid)
-      if (!actor && data.type === 'Item') docUuid = null
-    }
+  /**
+   * Callback from DropEvent
+   * @param {object} data
+   */
+  async locatorDropped (data) {
+    await this.document.system.setLocationCoordinates({
+      locationId: data.locationId,
+      x: Math.floor(data.x),
+      y: Math.floor(data.y),
+      sceneUuid: data.sceneUuid
+    })
+  }
 
-    if (actor && docUuid !== actor.uuid) {
-      docUuid = actor.uuid
-    }
-
-    const participant = {}
-    if (docUuid) participant.docUuid = docUuid
-
-    switch (data.type?.toLowerCase()) {
-      case 'actor':
-        break
-      case 'item':
-        if (data.id) {
-          const item = game.items.get(data.id)
-          if (item?.data?.type !== 'skill') return
+  /**
+   * Toggle property
+   * @param {SubmitEvent|null} event
+   */
+  async _onClickToggle (event) {
+    const property = event.currentTarget.closest('.toggle-attributes').dataset.set
+    switch (property) {
+      case 'location-obstacle-type':
+        {
+          const locationId = event.currentTarget.closest('.obstacle').dataset.locationId
+          const property = event.currentTarget.dataset.property
+          const locations = foundry.utils.duplicate(this.document.system.locations.list)
+          const offset = locations.findIndex(l => l.uuid === locationId)
+          if (offset === -1) {
+            return
+          }
+          const current = locations[offset].obstacleDetails[property]
+          if (current) {
+            locations[offset].obstacleDetails[property] = false
+            locations[offset].obstacle = false
+          } else {
+            locations[offset].obstacleDetails[property] = true
+            locations[offset].obstacleDetails[(property === 'barrier' ? 'hazard' : 'barrier')] = false
+            locations[offset].obstacle = true
+          }
+          await this.document.update({ 'system.locations.list': locations })
         }
-
-        participant.speedCheck = {
-          id: data.data?._id || data.id,
-          type: 'item'
-        }
         break
-      case 'characteristic':
-        participant.speedCheck = {
-          id: data.name,
-          type: 'characteristic'
-        }
-        break
-      case 'attribute':
-        participant.speedCheck = {
-          id: data.name,
-          type: 'attribute'
-        }
-        break
-
       default:
+        super._onClickToggle(event)
         break
     }
+  }
 
-    // TODO:Check for speed check, if none add speedcheck con non vehicle, drive auto for vehicle
-    // speedCheck = {
-    //   id: 'con'
-    //   type: 'characteristic'
-    // }
+  /**
+   * Scroll selected element into view
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   */
+  async _onFirstRender (context, options) {
+    this._onTriggeredResize(context, options)
+    await super._onFirstRender(context, options)
+    setTimeout(() => {
+      this.element.querySelector('.name-container.active')?.scrollIntoView({ inline: 'center' })
+    }, 50)
+  }
 
-    if (!participant.speedCheck) {
-      if (!this.item.system.vehicle) {
-        participant.speedCheck = {
-          id: 'con',
-          type: 'characteristic',
-          name: game.i18n.localize('CHARAC.Constitution')
-        }
+  /**
+   * Resize triggered
+   * @param {object} context
+   * @param {object} options
+   */
+  _onTriggeredResize (context, options) {
+    if (context.document.system.started) {
+      let currentWidth = 0
+      if (typeof options.position?.width !== 'undefined') {
+        currentWidth = options.position.width
       } else {
-        participant.speedCheck = {
-          type: 'item',
-          name: game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.drive-auto')
-        }
+        currentWidth = Number(context.document.sheet.element.style.width.replace('px', ''))
+      }
+      const minWidth = CoC7Utilities.remToPx(40)
+      const participantWidth = CoC7Utilities.remToPx(context.document.system.participants.length * 12.25 + (context.document.system.participants.length - 1) * 0.5 + 1 + 1) // initiative-block each + each gap + padding on tab
+      const maxWidth = document.body.clientWidth
+      const newWidth = Math.min(maxWidth, Math.max(currentWidth, minWidth, participantWidth))
+      if (typeof options.position?.width !== 'undefined') {
+        options.position.width = newWidth
+      } else if (currentWidth !== newWidth) {
+        context.document.sheet.element.style.width = (newWidth + 1) + 'px'
       }
     }
-    const participants = this.item.system.participants
-      ? foundry.utils.duplicate(this.item.system.participants)
-      : []
-
-    let unique = false
-    while (!unique) {
-      participant.uuid = foundry.utils.randomID(16)
-      unique =
-        participants.filter(p => p.uuid === participant.uuid).length === 0
-    }
-
-    participants.push(participant)
-    await this.item.update({ 'system.participants': participants })
-  }
-
-  async toggleParticipantGun (participantUuid) {
-    const participants = this.item.system.participants
-      ? foundry.utils.duplicate(this.item.system.participants)
-      : []
-    const participant = participants.find(p => participantUuid === p.uuid)
-    if (!participant) return
-    participant.hasAGunReady = !participant.hasAGunReady
-    await this.item.setchaseTrackScroll({ render: false })
-    await this.item.updateParticipants(participants)
-  }
-}
-
-export function clean (obj) {
-  for (const propName in obj) {
-    const tp = foundry.utils.getType(obj[propName])
-    if (tp === 'Object') {
-      obj[propName] = clean(obj[propName])
-    }
-
-    if (tp === 'Object' && !Object.entries(obj[propName]).length) {
-      obj[propName] = null
-    } else if (tp === 'string' && !obj[propName].length) {
-      obj[propName] = null
-    } else if (tp === 'string' && !isNaN(Number(obj[propName]))) {
-      obj[propName] = Number(obj[propName])
+    if (typeof options.position?.width === 'undefined') {
+      setTimeout(() => {
+        this.element.querySelector('.name-container.active')?.scrollIntoView({ inline: 'center' })
+      }, 50)
     }
   }
-  return obj
 }

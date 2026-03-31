@@ -103,7 +103,8 @@ description: 'See - Keeper Rulebook V7 - P159 for details'
 results:
   - type: text
     img: icons/svg/d20-black.svg
-    text: 'See bout of madness table P159 [[/r 1D10]] hours'
+    name: 'Bout of madness'
+    description: 'See bout of madness table P159 [[/r 1D10]] hours'
     range:
       - 1
       - 8

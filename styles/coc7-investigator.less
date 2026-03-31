@@ -1,0 +1,1467 @@
+/* ---------------------------------------- */
+/*  Investigator Sheet                      */
+/* ---------------------------------------- */
+.application.coc7.sheet.investigator {
+  --nav-width: 553px;
+  --nav-height: 87px;
+  container: investigator-window / size;
+  overflow: visible;
+
+  &:not(.minimized) {
+    min-height: 610px;
+    min-width: 762px;
+  }
+
+  /* ---------------------------------------- */
+  /*  Window Chrome                           */
+  /* ---------------------------------------- */
+  header.window-header {
+    background-color: var(--color-window-decoration);
+  }
+
+  /* ---------------------------------------- */
+  /*  The Sheet                               */
+  /* ---------------------------------------- */
+  section.window-content {
+    --window-padding-b: 8px;
+    --window-padding-i: 4px;
+    height: calc(100% - var(--header-height));
+    padding: var(--window-padding-b) var(--window-padding-i);
+    border-radius: 0 0 8px 8px;
+    overflow: visible;
+
+    /* ---------------------------------------- */
+    /*  Tab Controls                            */
+    /* ---------------------------------------- */
+    nav.tabs {
+      .flex-col(@row-gap: 6px; @direction: column-reverse; @align: flex-end);
+      position: absolute;
+      right: 100%;
+      height: 100%;
+      padding: 0 0 20px 0;
+      pointer-events: none;
+      z-index: -5;
+      // Overwrite Foundry defaults
+      border: 0;
+
+      .tab {
+        .flex-row(@justify: center; @align: flex-start);
+        padding-left: 30px;
+        color: #FFF;
+        cursor: pointer;
+        position: relative;
+        right: -16px;
+        background-repeat: no-repeat;
+        pointer-events: auto;
+        transition-duration: 0.1s;
+        transition-timing-function: cubic-bezier(0.2, 0.4, 0.7, 0.8);
+        filter: brightness(65%);
+        width: @76px;
+        flex-basis: var(--tab-width);
+        writing-mode: sideways-lr;
+
+        &::before {
+          content: none;
+          position: absolute;
+          inset: 0;
+          background: var(--tab-color);
+          border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium);
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          width: var(--tab-width);
+          height: @76px;
+          right: 0;
+          bottom: 100%;
+          rotate: -90deg;
+          transform-origin: bottom right;
+          background-size: cover;
+        }
+
+        &.active,
+        &:hover {
+          filter: brightness(100%);
+        }
+
+        &.active {
+          right: -1px;
+
+          span {
+            color: var(--color-active);
+          }
+        }
+
+        &:hover:not(.active) {
+          right: -10px;
+        }
+
+        &.small-ribbon {
+          --tab-width: @48px;
+          // flex-basis: 48px;
+          // width: 67px;
+          margin-left: 30px;
+          padding-left: 20px;
+
+          &~.small-ribbon {
+            margin-left: 0;
+          }
+
+          i {
+            position: relative;
+            font-size: @29px;
+            max-width: @30px;
+            // overflow: hidden;
+            text-shadow: 2px 2px 4px #000000;
+            z-index: 1;
+          }
+        }
+
+        &.keeper {
+          --tab-color: var(--color-sanity);
+
+          &::after {
+            background-image: var(--investigator-sheet-tab-green);
+          }
+        }
+
+        &.development {
+          --tab-color: var(--color-mp);
+
+          &::after {
+            background-image: var(--investigator-sheet-tab-blue);
+            background-size: @100px;
+          }
+
+          i {
+            font-size: @24px;
+          }
+        }
+
+        &.effects {
+          --tab-color: var(--color-luck);
+          margin-bottom: auto;
+
+          &::after {
+            background-image: var(--investigator-sheet-tab-yellow);
+          }
+        }
+
+        &.skills {
+          --tab-color: var(--color-hp);
+          --tab-width: @92px;
+
+          &::after {
+            background-image: var(--investigator-sheet-tab-red);
+          }
+        }
+
+        &.combat {
+          --tab-color: var(--color-mp);
+          --tab-width: @90px;
+
+          &::after {
+            background-image: var(--investigator-sheet-tab-blue);
+          }
+        }
+
+        &.possessions {
+          --tab-color: var(--color-luck);
+          --tab-width: @101px;
+
+          &::after {
+            background-image: var(--investigator-sheet-tab-yellow);
+          }
+        }
+
+        &.background {
+          --tab-color: var(--color-sanity);
+          --tab-width: @108px;
+
+          &::after {
+            background-image: var(--investigator-sheet-tab-green);
+          }
+        }
+
+        span {
+          position: relative;
+          text-transform: uppercase;
+          font-family: var(--investigator-sheet-primary-font);
+          display: block;
+          max-width: 76px;
+          overflow: hidden;
+          text-shadow: 2px 2px 4px #000000;
+          font-size: @19px;
+          line-height: 1;
+          z-index: 1;
+        }
+      }
+    }
+
+    /* ---------------------------------------- */
+    /*  The Sheet For Real                      */
+    /* ---------------------------------------- */
+    div.investigator {
+      --top-padding: 48px;
+      .flex-row();
+      height: 100%;
+      background-image: var(--investigator-sheet-ornament-top);
+      background-position: center top;
+      background-repeat: no-repeat;
+      padding: var(--top-padding) 0 0;
+
+      /* ---------------------------------------- */
+      /*  Personal Details Sidebar                */
+      /* ---------------------------------------- */
+      aside.personal-details {
+        --portrait-scale: 1;
+        .flex-col(@row-gap: 7px);
+        flex: 0 0 315px;
+        padding: 0 10px;
+        height: 100%;
+
+        /* ---------------------------------------- */
+        /*  Name, History, etc                      */
+        /* ---------------------------------------- */
+        .character-details {
+          .flex-col();
+
+          .character-detail {
+            .flex-row(@col-gap: @5px);
+
+            .title {
+              font-family: var(--investigator-sheet-primary-font);
+              font-size: @22px;
+              text-transform: uppercase;
+              line-height: @24px;
+            }
+
+            .detail-value {
+              flex: 1;
+              background: transparent;
+              border: none;
+              font-family: var(--investigator-sheet-secondary-font);
+              font-size: @20px;
+              color: var(--color-labels);
+              height: @24px;
+              line-height: @24px;
+              padding: @2px @3px 0;
+              overflow: hidden;
+
+              &:is(span) {
+                padding-top: @1px;
+              }
+
+              &.detail-age {
+                flex: 0 0 @48px;
+              }
+            }
+
+            a {
+              flex: 0 0 auto;
+              line-height: 1;
+            }
+          }
+        }
+
+        .scroll-container {
+          .flex-col(@row-gap: @7px);
+          overflow: auto;
+        }
+
+        /* ---------------------------------------- */
+        /*  Primary Attributes (STR, CON, etc)      */
+        /* ---------------------------------------- */
+        .primary-attributes {
+          flex-shrink: 0;
+          background: var(--color-tint);
+          border-radius: var(--border-radius-large);
+          overflow: hidden;
+          font-family: var(--investigator-sheet-primary-font);
+
+          &::before,
+          &::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 10px;
+            background-image: var(--investigator-sheet-line-red);
+            background-position: left top;
+            background-repeat: no-repeat;
+          }
+
+          &.show-part-values {
+            .characteristics .char-box .char-box-values {
+              background: var(--color-tint-light);
+
+              .part-detail-value {
+                visibility: visible;
+              }
+            }
+          }
+
+          .characteristics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1.5fr);
+
+            .characteristic-name {
+              font-size: @25px;
+              color: var(--color-labels);
+              margin: 0;
+              border: 0;
+              padding: 0;
+              cursor: pointer;
+              line-height: 1.1;
+            }
+
+            .char-box {
+              text-align: center;
+
+              .char-box-values {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1.3fr 0.7fr;
+                grid-template-areas:
+                  'mainScore halfScore'
+                  'mainScore fifthScore';
+                margin: 0 8px 5px;
+                padding: 0 5px;
+                border-radius: 5px;
+                column-gap: 3px;
+
+                .detail-value {
+                  grid-area: mainScore;
+                  border: 0;
+                  background: transparent;
+                  font-size: @24px;
+                  justify-self: center;
+                  align-self: center;
+                  text-align: center;
+                  outline-offset: 0;
+                }
+
+                .part-detail-value {
+                  font-size: @13px;
+                  justify-self: center;
+                  align-self: center;
+                  font-weight: bold;
+                  visibility: hidden;
+
+                  &.half-score {
+                    grid-area: halfScore;
+                  }
+
+                  &.fifth-score {
+                    grid-area: fifthScore;
+                  }
+                }
+
+                &:hover .part-detail-value {
+                  visibility: visible;
+                }
+
+              }
+            }
+          }
+        }
+
+        /* ---------------------------------------- */
+        /*  Secondary Attributes (HP. MP, etc)      */
+        /* ---------------------------------------- */
+        .secondary-attributes {
+          flex-shrink: 0;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 6px;
+          font-family: var(--investigator-sheet-primary-font);
+
+          .secondary-attribute {
+            --color: var(--color-labels);
+            display: grid;
+            grid-template-rows: @25px @24px @48px;
+            font-family: var(--investigator-sheet-primary-font);
+            background: var(--color-tint);
+            border-radius: var(--border-radius-large);
+
+            &.attr-hp {
+              --color: var(--color-hp);
+            }
+
+            &.attr-mp {
+              --color: var(--color-mp);
+            }
+
+            &.attr-luck {
+              --color: var(--color-luck);
+            }
+
+            &.attr-sanity {
+              --color: var(--color-sanity);
+            }
+
+            .attribute-name {
+              color: var(--color);
+              font-size: @24px;
+              text-align: center;
+              font-weight: bold;
+            }
+
+            input {
+              background: transparent;
+              border: none;
+              text-align: center;
+              font-size: @20px;
+            }
+
+            .attribute-total {
+              height: 100%;
+              background-image: var(--investigator-sheet-tentacles);
+              background-repeat: no-repeat;
+              background-position: bottom;
+              background-color: var(--color);
+              color: #FFF;
+              padding-top: @2px;
+              padding-bottom: @24px;
+              border-radius: 0 0 var(--border-radius-large) var(--border-radius-large);
+
+              &:read-only {
+                cursor: default;
+              }
+
+              &.not-auto {
+                border: 1px groove;
+              }
+            }
+          }
+        }
+
+        /* ---------------------------------------- */
+        /*  Derived Attributes (MOV, DB, etc)       */
+        /* ---------------------------------------- */
+        .derived-attributes {
+          flex-shrink: 0;
+          position: relative;
+          border-radius: var(--border-radius-large);
+          overflow: hidden;
+          font-size: @18px;
+          font-family: var(--investigator-sheet-primary-font);
+          background: var(--color-tint);
+
+          &::before,
+          &::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 5px;
+            background-image: var(--investigator-sheet-line-red);
+            background-position: left top;
+            background-repeat: no-repeat;
+          }
+
+          .derived-attributes-box {
+            font-size: @18px;
+
+            .derived-attribute {
+              padding: @3px;
+              display: inline-flex;
+              column-gap: @3px;
+
+              .derived-attribute-name {
+                flex: auto;
+                color: var(--color-labels);
+                font-weight: bold;
+              }
+
+              .derived-attribute-value {
+                width: @26px;
+                text-align: center;
+              }
+
+              .derived-attribute-edit {
+                background-color: var(--color-tint);
+                border: 0;
+                text-align: center;
+
+                &:focus {
+                  box-shadow: var(--text-shadow-primary);
+                }
+              }
+
+              .derived-attribute-build,
+              .derived-attribute-mov {
+                width: @26px;
+              }
+
+              .derived-attribute-db {
+                width: @38px;
+              }
+
+              .derived-attribute-armor {
+                width: @35px;
+              }
+
+              .derived-attribute-dailysan {
+                width: @24px;
+              }
+            }
+          }
+        }
+      }
+
+      /* ---------------------------------------- */
+      /*  Photo & Conditions                      */
+      /* ---------------------------------------- */
+      .photo-frame {
+        --overlap: 12px;
+        --offset: calc(0px - var(--window-padding-b) - var(--top-padding) - var(--overlap));
+        position: relative;
+        z-index: 1;
+        top: var(--offset);
+        margin-bottom: var(--offset);
+        left: 5px;
+        width: calc(218px * var(--portrait-scale));
+        height: calc(256px * var(--portrait-scale));
+        padding: calc(13px * var(--portrait-scale)) 0 0 calc(16px * var(--portrait-scale));
+        background: var(--investigator-sheet-photo-frame-small);
+        background-size: calc(218px * var(--portrait-scale));
+
+        .photo {
+          position: relative;
+          width: calc(166px * var(--portrait-scale));
+          height: calc(220px * var(--portrait-scale));
+          margin: 0 0 36px; // Total height 256
+          rotate: 2.1deg;
+          background-color: var(--color-tint);
+          object-position: center;
+          object-fit: contain;
+          cursor: pointer;
+
+          .theme-dark & {
+            background: var(--color-tint-dark);
+          }
+        }
+
+        // Highlight all inactive condition icons when hovering over the photo frame
+        &:hover {
+          .conditions {
+            .icon:not(.dead):not(.status-on) {
+              opacity: 0.8;
+            }
+          }
+        }
+
+        .conditions {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: -10px;
+
+          .icon {
+            --icon-color: #FFF;
+            --text-shadow: var(--text-shadow-highlight);
+            .flex-row(@justify: center);
+            position: absolute;
+            transition-timing-function: cubic-bezier(0.2, 0.4, 0.7, 0.8);
+            transition-duration: 0.1s;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            rotate: 2.1deg;
+            color: var(--icon-color);
+            text-shadow: var(--text-shadow);
+            opacity: 0;
+
+            &:hover {
+              scale: 1.2;
+              opacity: 1;
+            }
+
+            &.fallen {
+              top: 12px;
+              left: 22px;
+            }
+
+            &.unconscious {
+              top: 44px;
+              left: 20px;
+            }
+
+            &.injured {
+              top: 165px;
+              left: 14px;
+            }
+
+            &.dying {
+              top: 200px;
+              left: 12px;
+            }
+
+            &.bout-of-madness {
+              right: 40px;
+              top: 16px;
+            }
+
+            &.indefinite-insanity {
+              right: 40px;
+              top: 50px;
+            }
+
+            &.bout-of-madness,
+            &.indefinite-insanity {
+              &.status-on {
+                --icon-color: darkgreen;
+                --text-shadow: green 0px 0px 10px;
+              }
+            }
+
+            // Both dead and dying use the 'dead' class which is inconvenient
+            &.dead {
+              position: absolute;
+              top: calc(80px + var(--overlap));
+              left: 218px;
+
+              &.inactive-status {
+                --icon-color: grey;
+              }
+
+              &.dying-check {
+                opacity: 1;
+                --icon-color: grey;
+
+                &:not(:hover) {
+                  --text-shadow: none;
+                }
+              }
+
+              i {
+                font-size: @64px;
+              }
+            }
+
+            &.status-on {
+              --icon-color: var(--color-labels);
+              --text-shadow: red 0px 0px 10px;
+              opacity: 1;
+            }
+
+            i {
+              .flex-row(@justify: center);
+              width: 28px;
+              height: 28px;
+              font-size: @30px;
+            }
+          }
+        }
+      }
+
+      /* ---------------------------------------- */
+      /*  Portrait frame selection                */
+      /* ---------------------------------------- */
+      .option-box {
+        --portrait-scale: 1;
+
+        .photo-frame {
+          --overlap: 0;
+          --offset: 0;
+          left: @64px;
+        }
+      }
+
+      /* ---------------------------------------- */
+      /*  The Sheet For Real For Real             */
+      /* ---------------------------------------- */
+      .sheet-main {
+        --top-decoration-h: 10px;
+        --bottom-decoration-h: 57px;
+        .flex-col();
+        flex-basis: 100%;
+        height: 100%;
+        position: relative;
+        border-radius: var(--border-radius-large);
+        overflow: hidden;
+        background-color: var(--color-tint);
+
+        &::before,
+        &::after {
+          content: '';
+          display: block;
+          width: 100%;
+          background-repeat: no-repeat;
+          flex-shrink: 0;
+        }
+
+        &::before {
+          height: var(--top-decoration-h);
+          background-image: var(--investigator-sheet-line-green);
+          background-position: left top;
+        }
+
+        &::after {
+          height: var(--bottom-decoration-h);
+          background-image: var(--investigator-sheet-ornament-green);
+          background-position: right bottom;
+        }
+
+        /* ---------------------------------------- */
+        /*  The Sheet For Real For Real For Real    */
+        /* ---------------------------------------- */
+        .sheet-body {
+          height: calc(100% - var(--top-decoration-h) - var(--bottom-decoration-h));
+          font-family: var(--investigator-sheet-secondary-font);
+
+          /* ---------------------------------------- */
+          /*  All Tabs                                */
+          /* ---------------------------------------- */
+          .tab {
+            .flex-col(@row-gap: var(--section-gap));
+            display: none;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 0 8px;
+            overflow: hidden auto;
+
+            &.active {
+              display: flex;
+            }
+
+            .tab-header {
+              display: grid;
+              grid-template-areas: 'itemControlsPre heading itemControlsPost';
+              grid-template-columns: 150px 1fr 150px;
+              column-gap: 5px;
+              border-bottom: 1px dashed rgb(from var(--color-interact) r g b / 0.3);
+
+              // margin-bottom: 20px;
+              .item-controls {
+                --justify: flex-start;
+                flex: 1 1 0;
+                width: 100%;
+                align-self: center;
+                .flex-row(@col-gap: @8px; @justify: var(--justify));
+
+                &:last-child {
+                  --justify: flex-end;
+                  grid-area: itemControlsPost;
+                }
+              }
+
+              h2 {
+                grid-area: heading;
+              }
+            }
+
+            .section-header {
+              .flex-row(@col-gap: @13px);
+              padding: 0 0 @1px;
+              border-bottom: 2px solid var(--color-labels);
+            }
+
+            /* ---------------------------------------- */
+            /*  Keeper Tab Specifics                    */
+            /* ---------------------------------------- */
+            &.keeper {
+              .boxes {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+              }
+
+              .bio-section {
+                .events {
+                  min-height: 65px;
+                  line-height: @24px;
+                }
+              }
+
+              .cash-assets {
+                .flex-col(@row-gap: @3px);
+                font-size: @13px;
+
+                .asset {
+                  .flex-row();
+
+                  input {
+                    &:first-child {
+                      flex: 2;
+                    }
+                  }
+
+                  input[type='number'].cash-assets-range {
+                    flex: 0 0 @35px;
+                  }
+
+                  select.cash-assets-type {
+                    width: auto;
+                    flex: 0 0 auto;
+                  }
+
+                  .item-control {
+                    margin-left: @7px;
+                  }
+                }
+              }
+            }
+
+            /* ---------------------------------------- */
+            /*  Development Tab Specifics               */
+            /* ---------------------------------------- */
+            &.development {
+              .skill-points {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: @2px;
+                text-align: center;
+              }
+
+              .development-points {
+                background-color: var(--investigator-sheet-points-color-development);
+              }
+
+              .occupation-points {
+                background-color: var(--investigator-sheet-points-color-occupation);
+              }
+
+              .archetype-points {
+                background-color: var(--investigator-sheet-points-color-archetype);
+              }
+
+              .experience-points {
+                background-color: var(--investigator-sheet-points-color-experience);
+              }
+
+              .base-points {
+                background-color: var(--investigator-sheet-points-color-base);
+              }
+
+              .skill-development {
+                background-color: var(--investigator-sheet-points-color-experience);
+              }
+
+              .header-section {
+                .flex-row(@col-gap: @5px; @justify: center);
+                padding: @1px @4px;
+                border: 1px dashed black;
+                border-radius: var(--border-radius-small);
+                line-height: @26px;
+                text-align: center;
+                color: #fff;
+                font-family: var(--investigator-sheet-primary-font);
+                font-size: @22px;
+
+                &.warning {
+                  border: 1px solid var(--color-level-error);
+                }
+
+                .points {
+                  .flex-row(@col-gap: @5px);
+                }
+
+                label {
+                  font-family: var(--investigator-sheet-primary-font);
+                  font-size: @19px;
+                }
+
+                input {
+                  width: @32px;
+                  color: #fff;
+                  text-align: center;
+                }
+              }
+
+              ul.skills-list {
+                .flex-col();
+                margin: 0;
+                padding: 0;
+                line-height: @17px;
+
+                li.item {
+                  margin: 0;
+                  display: grid;
+                  grid-template-columns: @16px auto @21px @21px @21px @21px @21px;
+                  align-items: center;
+                  border-bottom: 1px solid var(--color-sheet-front);
+                  color: var(--color-sheet-front);
+
+                  &.pulpCharacter {
+                    grid-template-columns: @30px auto @21px @21px @21px @21px @21px @21px;
+                  }
+
+                  .item-controls {
+                    column-gap: @1px;
+                  }
+
+                  .skill-name {
+                    .flex-row(@col-gap: @5px);
+
+                    &.rollable.flagged4dev {
+                      color: var(--investigator-sheet-points-color-experience);
+                      font-weight: bold;
+                    }
+                  }
+
+                  .adjustment-value {
+                    border-right: 1px solid var(--color-sheet-front);
+                    text-align: right;
+
+                    &.locked {
+                      background-color: var(--color-tint-light);
+
+                      span {
+                        color: var(--color-sheet-front);
+                      }
+                    }
+
+                    &.uneditable {
+                      span {
+                        color: var(--color-sheet-front);
+                      }
+                    }
+
+                    span,
+                    input {
+                      height: @16px;
+                      line-height: @16px;
+                      padding: @1px @3px;
+                      margin: 0;
+                      font-size: @13px;
+                      text-align: right;
+                      color: #fff;
+                      border: 0;
+                      background: none;
+                    }
+                  }
+                }
+              }
+            }
+
+            /* ---------------------------------------- */
+            /*  Effects Tab Specifics                   */
+            /* ---------------------------------------- */
+            &.activeEffects {
+              ul.effects-list {
+                li {
+                  &.items-header {
+                    margin: @2px 0;
+                    padding: @3px;
+                    border: none;
+                    font-weight: bold;
+                    border-bottom: 2px solid var(--color-highlight);
+
+                    .section-heading {
+                      color: var(--color-interact);
+                    }
+                  }
+
+                  &>* {
+                    flex: 1;
+                  }
+
+                  .effect-identifier {
+                    .flex-row(@col-gap: @5px);
+                  }
+
+                  .item-name {
+                    margin: 0;
+                    font-size: @14px;
+                    font-family: var(--investigator-sheet-secondary-font);
+                  }
+
+                  ul.info {
+                    margin: 0;
+                    padding: 0;
+                  }
+
+                  .item-controls {
+                    .flex-row(@justify: flex-end; @col-gap: @10px);
+                    flex: 0 0 @64px;
+                  }
+                }
+              }
+            }
+
+            /* ---------------------------------------- */
+            /*  Skill Tab Specifics                     */
+            /* ---------------------------------------- */
+            &.skills {
+              ul.item-list {
+                --icon-size: @20px;
+                display: block;
+                column-count: 2;
+                column-gap: 15px;
+
+                li {
+                  margin: @1px 0;
+
+                  &.specialization-header {
+                    margin: @3px 0;
+                    font-weight: bold;
+                    list-style: none;
+                  }
+                }
+              }
+            }
+
+            /* ---------------------------------------- */
+            /*  Combat Tab Specifics                    */
+            /* ---------------------------------------- */
+            &.combat {
+              .weapon-list {
+                &:empty {
+                  display: none;
+                }
+
+                ul.item-list {
+                  li.item {
+                    display: grid;
+                    border-bottom: 1px solid;
+                    grid-template-columns: @24px @32px 1fr @168px @44px @44px;
+                    grid-template-rows: @32px 1fr;
+                    grid-template-areas:
+                      'expand image name range weaponControl itemControl'
+                      'details details details details details details';
+                    line-height: 1;
+
+                    .expand-arrow {
+                      .flex-row(@justify: center; );
+                      transition: rotate 0.2s ease-out;
+                      font-size: @18px;
+
+                      i {
+                        &::before {
+                          display: block;
+                          height: @15px;
+                        }
+                      }
+                    }
+
+                    &.expanded {
+                      .expand-arrow {
+                        rotate: 90deg;
+                      }
+                    }
+
+                    &.no-skill-set {
+                      background-color: red;
+                    }
+
+                    .weapon-title {
+                      .flex-row();
+
+                      .combat {
+                        flex: 1;
+                      }
+
+                      .alternative-skill {
+                        flex: 0 0 24px;
+                      }
+                    }
+
+                    .weapon-range {
+                      display: grid;
+                      grid-template-columns: repeat(3, 1fr);
+
+                      .weapon-damage {
+                        text-align: center;
+                      }
+                    }
+
+                    .weapon-controls {
+                      .flex-row(@col-gap: @5px);
+
+                      .tag {
+                        margin: 0;
+                        font-size: @13px;
+                        padding: @2px;
+                        line-height: 1;
+                      }
+
+                      a.reload-weapon {
+                        vertical-align: middle;
+                      }
+
+                      .ammo span.tag {
+                        width: @22px;
+                        text-align: center;
+                      }
+                    }
+                  }
+                }
+              }
+
+              .skill-list {
+                ul.item-list {
+                  --icon-size: @20px;
+                  display: block;
+                  column-count: 2;
+                  column-gap: @15px;
+                  margin: 8px 0;
+
+                  li {
+                    margin: 0 0 @2px;
+                  }
+                }
+              }
+            }
+
+            /* ---------------------------------------- */
+            /*  Gear & Cash Tab Specifics               */
+            /* ---------------------------------------- */
+            &.possessions {
+              --icon-size: @20px;
+
+              .inventory {
+                display: grid;
+                grid-template-columns: 60% 1fr;
+                column-gap: @15px;
+
+                .gear {
+                  .flex-col(@row-gap: var(--section-gap));
+
+                  .items {
+                    .flex-col(@row-gap: @10px);
+                  }
+                }
+
+                .cash {
+                  overflow-x: auto;
+
+                  .cash-row {
+                    .flex-row(@col-gap: @5px);
+
+                    label {
+                      font-weight: 700;
+                      line-height: @22px;
+                    }
+
+                    span {
+                      line-height: 1;
+                    }
+                  }
+
+                  textarea {
+                    width: 100%;
+                    resize: vertical;
+                  }
+                }
+              }
+            }
+
+            /* ---------------------------------------- */
+            /*  Backstory Tab Specifics                 */
+            /* ---------------------------------------- */
+            &.background {
+              .bio-section {
+                .section-header {
+                  .item-controls {
+                    justify-content: flex-end;
+                    flex-basis: @80px;
+                    column-gap: @10px;
+
+                    .item-control {
+                      &:first-child {
+                        line-height: 1;
+                      }
+                    }
+                  }
+                }
+
+                .events {
+                  width: 50%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ---------------------------------------- */
+/*  Responsive Styles                       */
+/* ---------------------------------------- */
+@container investigator-window (height < 711px) {
+  .application.coc7.sheet.investigator {
+    section.window-content {
+      .photo-frame {
+        --portrait-scale: 0.85;
+      }
+    }
+  }
+}
+
+@container investigator-window (height < 611px) {
+  .application.coc7.sheet.investigator {
+    section.window-content {
+      .photo-frame {
+        --portrait-scale: 0.7;
+      }
+    }
+  }
+}
+
+@container body style(--font-size: 7) or style(--font-size: 8) or style(--font-size: 9) or style(--font-size: 10) {
+  .application.coc7.sheet.investigator {
+    section.window-content {
+      div.investigator {
+        --top-padding: @31px;
+        background-image: none;
+
+        aside.personal-details {
+          .photo-frame {
+            .conditions {
+              .icon {
+                &.unconscious {
+                  top: 55px;
+                }
+
+                &.injured {
+                  top: 150px;
+                }
+
+                &.bout-of-madness {
+                  top: 16px;
+                }
+
+                &.indefinite-insanity {
+                  right: 45px;
+                  top: 65px;
+                }
+              }
+            }
+          }
+
+          .character-details {
+            .character-detail {
+              flex-wrap: wrap;
+            }
+          }
+        }
+
+        .sheet-main {
+          .sheet-body {
+            .tab {
+              &.combat {
+                .weapon-list {
+                  ul.item-list {
+                    li.item {
+                      grid-template-columns: @24px @32px 1fr @120px @44px @44px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@container body style(--font-size: 8) or style(--font-size: 9) or style(--font-size: 10) {
+  .application.coc7.sheet.investigator {
+    section.window-content {
+      nav.tabs {
+        .tab {
+          width: @56px;
+
+          &::before {
+            content: '';
+          }
+
+          &::after {
+            content: none;
+          }
+        }
+      }
+
+      div.investigator {
+        aside.personal-details {
+          .photo-frame {
+            .conditions {
+              .icon {
+                &.unconscious {
+                  top: 65px;
+                }
+
+                &.injured {
+                  top: 140px;
+                }
+
+                &.indefinite-insanity {
+                  top: 75px;
+                }
+
+                &.dead {
+                  left: 230px;
+                }
+              }
+            }
+          }
+
+          .primary-attributes {
+            .characteristics {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          }
+
+          .secondary-attributes {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        .sheet-main {
+          .sheet-body {
+            .tab {
+              .tab-header {
+                grid-template-columns: repeat(3, 1fr);
+              }
+
+              &.keeper {
+                .boxes {
+                  grid-template-columns: 100%;
+                }
+              }
+
+              &.skills {
+                ul.item-list {
+                  column-count: 1;
+                }
+              }
+
+              &.combat {
+                .skill-list {
+                  ul.item-list {
+                    column-count: 1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@container body style(--font-size: 9) or style(--font-size: 10) {
+  .application.coc7.sheet.investigator {
+    section.window-content {
+      div.investigator {
+        aside.personal-details {
+          .character-details {
+            row-gap: 5px;
+
+            .character-detail {
+              display: grid;
+              grid-template-columns: 100%;
+              text-align: center;
+
+              .break {
+                height: 5px;
+              }
+
+              .title {
+                border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
+                background: var(--color-tint);
+              }
+
+              .detail-value {
+                text-align: center;
+                border-radius: 0 0 var(--border-radius-large) var(--border-radius-large);
+                background: var(--color-tint);
+              }
+            }
+          }
+        }
+
+        .sheet-main {
+          .sheet-body {
+            .tab {
+              .tab-header {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-areas:
+                  'heading heading'
+                  'itemControlsPre itemControlsPost';
+
+                &:has(.item-controls) {
+                  padding-bottom: 10px;
+                }
+              }
+
+              &.keeper {
+                .cash-assets {
+                  gap: 20px;
+
+                  .asset {
+                    gap: 2px;
+                    flex-wrap: wrap;
+
+                    input:first-child {
+                      flex-basis: 100%;
+                    }
+                  }
+                }
+              }
+
+              &.development {
+                .skill-points {
+                  grid-template-columns: 100%;
+                }
+              }
+
+              &.combat {
+                .weapon-list {
+                  ul.item-list {
+                    li.item {
+                      grid-template-columns: @24px @32px 1fr;
+                      grid-template-areas:
+                        'expand image name weaponControl itemControl'
+                        'range range range range range'
+                        'details details details details details';
+
+                      .weapon-range {
+                        grid-area: range;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@container body style(--font-size: 10) {
+  .application.coc7.sheet.investigator {
+    section.window-content {
+      nav.tabs {
+        .tab {
+          padding-left: 0;
+          align-items: center;
+        }
+      }
+
+      div.investigator {
+        .sheet-main {
+          .sheet-body {
+            .tab {
+              &.possessions {
+                .inventory {
+                  grid-template-columns: 100%;
+                  row-gap: var(--section-gap);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
