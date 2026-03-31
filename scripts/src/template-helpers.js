@@ -1,5 +1,7 @@
 import * as crypto from 'crypto'
 import * as fs from 'fs'
+import * as os from 'os'
+import * as readline from 'readline'
 import { ClassicLevel } from 'classic-level'
 
 export default class TemplateHelpers {
@@ -112,6 +114,95 @@ export default class TemplateHelpers {
     }
     collisions[id] = true
     return id
+  }
+
+  /**
+   * Prompt for FoundryVTT
+   * @returns {Promise<string>}
+   */
+  static inputFoundryVTTPath () {
+    return new Promise(resolve => {
+      console.log('')
+      console.log('Enter the path to the FoundryVTT User Data Path')
+      console.log('')
+      console.log('This can be found in the FoundryVTT Setup page, Configure, User Data Path')
+      console.log('Examples: ' + TemplateHelpers.ansiFormat('C:\\Users\\' + os.userInfo().username + '\\AppData\\Local\\FoundryVTT', { color: 'green' }) + ' (You can use this path style if you are using WSL, it will automatically be converted)')
+      console.log('          ' + TemplateHelpers.ansiFormat('~/Library/Application Support/FoundryVTT', { color: 'green' }))
+      console.log('          ' + TemplateHelpers.ansiFormat('/home/' + os.userInfo().username + '/.local/share/FoundryVTT', { color: 'green' }))
+      console.log('')
+      TemplateHelpers.inputFoundryVTTPathTry().then((value) => {
+        resolve(value)
+      })
+    })
+  }
+
+  /**
+   * Check for valid FoundryVTT User Data Path
+   * @returns {Promise<string>}
+   */
+  static inputFoundryVTTPathTry () {
+    return new Promise(resolve => {
+      TemplateHelpers.inputText({ prompt: 'Path (empty to end)' }).then((value) => {
+        if (value !== '') {
+          value = value.replace(/\\/g, '/')
+          if (os.type() === 'Linux') {
+            const drive = value.match(/^([a-z]):(.+)$/i)
+            if (drive) {
+              // Attempting to use a Windows path in WSL
+              value = '/mnt/' + drive[1].toLowerCase() + drive[2]
+            }
+          }
+          if (!fs.existsSync(value + '/Data/modules') || !fs.existsSync(value + '/Data/systems') || !fs.existsSync(value + '/Data/worlds')) {
+            console.log('')
+            TemplateHelpers.ansiFormat('The path does not contain a FoundryVTT User Data Path', { color: 'red', output: true })
+            TemplateHelpers.inputFoundryVTTPathTry().then((value) => {
+              resolve(value)
+            })
+            return
+          }
+        }
+        resolve(value)
+      })
+    })
+  }
+
+  /**
+   * Get user input
+   * @param {object} options
+   * @param {string} options.prompt
+   * @param {string} options.defaultText
+   * @param {Array|undefined} options.defaultOptions
+   * @returns {Promise<string>}
+   */
+  static inputText ({ prompt = '', defaultText = '', defaultOptions = undefined } = {}) {
+    return new Promise(resolve => {
+      const options = {
+        input: process.stdin,
+        output: process.stdout
+      }
+      if (typeof defaultOptions !== 'undefined') {
+        options.completer = (line) => {
+          const lcl = line.toString().toLowerCase()
+          const found = defaultOptions.filter(t => t.toString().toLowerCase().indexOf(lcl) === 0)
+          return [found, line]
+        }
+        console.log('')
+        console.log(TemplateHelpers.ansiFormat('Suggested Values (tab to auto complete)', { color: 'blue', bold: true }))
+        for (const value of defaultOptions) {
+          console.log(' ' + value)
+        }
+      }
+      const rl = readline.createInterface(options)
+      rl.question(TemplateHelpers.ansiFormat(prompt + (defaultText !== '' ? ' (' + defaultText + ')' : '') + ': ', { color: 'blue', bold: true }), (answer) => {
+        const text = answer.trim()
+        if (text.length === 0) {
+          resolve(defaultText)
+        } else {
+          resolve(text)
+        }
+        rl.close()
+      })
+    })
   }
 
   /**
@@ -353,6 +444,99 @@ export default class TemplateHelpers {
       TemplateHelpers.ansiFormat('Requires Node 20 or higher.\n' + 'You are currently using Node ' + currentNodeVersion + '.\n' + 'Please update your version of Node.', { color: 'red', output: true })
       process.exit(1)
     }
+  }
+
+  /**
+   * Get user selected option
+   * @param {object} options
+   * @param {string} options.prompt
+   * @param {string} options.defaultText
+   * @param {Array|undefined} options.defaultOptions
+   * @returns {Promise<string|false>}
+   */
+  static selectText ({ prompt = '', defaultText = '', defaultOptions = [] } = {}) {
+    return new Promise(resolve => {
+      const options = {
+        input: process.stdin,
+        output: process.stdout
+      }
+
+      let letters = defaultOptions.map(w => w.toString().substring(0, 1).toLowerCase()).join('')
+      letters = letters + letters
+      const optionCount = defaultOptions.length - 1
+      let selectIndex = defaultOptions.findIndex(t => t === defaultText)
+      if (selectIndex === -1) {
+        selectIndex = optionCount
+      }
+
+      let max = 1
+      for (const offset in defaultOptions) {
+        max = Math.max(max, defaultOptions[offset].length)
+      }
+      for (const offset in defaultOptions) {
+        defaultOptions[offset] = ' ' + defaultOptions[offset].padEnd(max) + ' '
+      }
+
+      readline.emitKeypressEvents(options.input)
+      options.input.setRawMode(true)
+      options.input.resume().on('keypress', (value, key) => {
+        if (key) {
+          if (key.name === 'escape' || (key.name === 'c' && key.ctrl)) {
+            options.input.setRawMode(false)
+            options.input.removeListener('keypress', options.input.rawListeners('keypress')[0])
+            resolve(false)
+            return
+          }
+          if (key.name === 'return') {
+            options.input.setRawMode(false)
+            options.input.removeListener('keypress', options.input.rawListeners('keypress')[0])
+            resolve(defaultOptions[selectIndex].trim())
+            return
+          }
+          if (key.name === 'down' && selectIndex < optionCount) {
+            TemplateHelpers.#selectTextDisplay(options.output, defaultOptions[selectIndex], optionCount, selectIndex, false)
+            selectIndex++
+            TemplateHelpers.#selectTextDisplay(options.output, defaultOptions[selectIndex], optionCount, selectIndex, true)
+          } else if (key.name === 'up' && selectIndex > 0) {
+            TemplateHelpers.#selectTextDisplay(options.output, defaultOptions[selectIndex], optionCount, selectIndex, false)
+            selectIndex--
+            TemplateHelpers.#selectTextDisplay(options.output, defaultOptions[selectIndex], optionCount, selectIndex, true)
+          } else {
+            const match = (key.name ?? '').match(/^[a-z]$/)
+            if (match) {
+              const position = letters.indexOf(match, selectIndex + 1)
+              if (position > -1) {
+                TemplateHelpers.#selectTextDisplay(options.output, defaultOptions[selectIndex], optionCount, selectIndex, false)
+                selectIndex = position % (1 + optionCount)
+                TemplateHelpers.#selectTextDisplay(options.output, defaultOptions[selectIndex], optionCount, selectIndex, true)
+              }
+            }
+          }
+        }
+      })
+
+      TemplateHelpers.ansiFormat(prompt + (defaultText !== '' ? ' (' + defaultText + ')' : '') + ': ', { color: 'blue', bold: true, output: true })
+
+      for (const offset in defaultOptions) {
+        const ending = (offset !== optionCount ? '\n' : '')
+        const option = TemplateHelpers.ansiFormat(defaultOptions[offset], { color: (offset === selectIndex.toString() ? 'black' : 'white'), bgColor: (offset === selectIndex.toString() ? 'white' : 'black') })
+        options.output.write(option + ending)
+      }
+    })
+  }
+
+  /**
+   * Replace selected line on screen
+   * @param {stdout} output
+   * @param {string} text
+   * @param {int} optionCount
+   * @param {int} selectIndex
+   * @param {bool} selected
+   */
+  static #selectTextDisplay (output, text, optionCount, selectIndex, selected) {
+    const oldUps = (optionCount - selectIndex) + 1
+    const option = TemplateHelpers.ansiFormat(text, { color: (selected ? 'black' : 'white'), bgColor: (selected ? 'white' : 'black') })
+    output.write('\u001B[' + oldUps + 'A' + option + '\u001B[G\u001B[' + oldUps + 'B')
   }
 
   /**
