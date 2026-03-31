@@ -1,11 +1,11 @@
 /* global $, FontFace, foundry, game, TextEditor, ui */
 import { COC7 } from '../../constants.js'
-import { CoCActor } from '../actor.js'
-import { CoC7ActorSheet } from './base.js'
+import CoCActor from './document-class.js'
+import CoC7ActorSheet from './global-sheet.js'
 import CoC7CreateMythosEncounter from '../../apps/create-mythos-encounter.js'
 import { chatHelper } from '../../chat/helper.js'
 
-export class CoC7CharacterSheet extends CoC7ActorSheet {
+export default class CoC7CharacterSheet extends CoC7ActorSheet {
   _getHeaderButtons () {
     if (this.constructor.name === 'CoC7CharacterSheet') {
       if (!this.summarized) this.summarized = false

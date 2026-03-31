@@ -5,8 +5,8 @@ import CoC7RollNormalize from '../../apps/roll-normalize.js'
 import CoC7Check from '../../apps/check.js'
 import CoC7ContentLinkDialog from '../../apps/content-link-dialog.js'
 import { COC7 } from '../../constants.js'
-import { CoCActor } from '../../actors/actor.js'
-import CoC7Item from '../../models/item/document-class.js'
+import CoCActor from './document-class.js'
+import CoC7Item from '../item/document-class.js'
 import CoC7ChatCombatMelee from '../../apps/chat-combat-melee.js'
 import CoC7ChatCombatRanged from '../../apps/chat-combat-ranged.js'
 import CoC7ConCheck from '../../apps/con-check.js'
@@ -20,7 +20,7 @@ import CoC7Utilities from '../../apps/utilities.js'
 /**
  * Extend the basic ActorSheet with some very simple modifications
  */
-export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
+export default class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
   _getHeaderButtons () {
     const headerButtons = super._getHeaderButtons()
     addCoCIDSheetHeaderButton(headerButtons, this)
@@ -502,7 +502,7 @@ export class CoC7ActorSheet extends foundry.appv1.sheets.ActorSheet {
 
   get tokenKey () {
     ui.notifications.error('DEPRECATED SHOULD NOT HAPPEN!')
-    throw new Error('base.js get tokenKey(): DEPRECATED SHOULD NOT HAPPEN!')
+    throw new Error('global-sheet.js get tokenKey(): DEPRECATED SHOULD NOT HAPPEN!')
     // if( this.token) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`;  //REFACTORING (2)
     // return this.actor.id;
   }

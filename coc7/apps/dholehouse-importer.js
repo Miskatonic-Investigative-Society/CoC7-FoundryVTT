@@ -1,5 +1,5 @@
 /* global Actor, CONFIG, fetch, foundry, game, ui */
-import { CoCActor } from '../actors/actor.js'
+import CoCActor from '../models/actor/document-class.js'
 import CoC7DirectoryPicker from '../apps/directory-picker.js'
 import CoC7Utilities from './utilities.js'
 

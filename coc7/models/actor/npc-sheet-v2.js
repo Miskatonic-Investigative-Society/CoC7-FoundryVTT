@@ -1,5 +1,5 @@
 /* global ChatMessage, CONFIG, foundry, fromUuid, game, renderTemplate Roll TextEditor */
-import { CoC7ActorSheet } from './base.js'
+import CoC7ActorSheet from './global-sheet.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import CoC7Link from '../../apps/link.js'
 import { chatHelper, isCtrlKey } from '../../chat/helper.js'
@@ -10,7 +10,7 @@ import CoC7RollNormalize from '../../apps/roll-normalize.js'
 /**
  * Extend the basic ActorSheet with some very simple modifications
  */
-export class CoC7NPCSheet extends CoC7ActorSheet {
+export default class CoC7NPCSheet extends CoC7ActorSheet {
   /**
    * Prepare data for rendering the Actor sheet
    * The prepared data object contains both the actor data as well as additional sheet options

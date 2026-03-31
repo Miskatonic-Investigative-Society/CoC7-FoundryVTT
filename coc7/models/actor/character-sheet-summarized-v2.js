@@ -1,7 +1,7 @@
 /* global CONFIG foundry game */
-import { CoC7CharacterSheet } from './character.js'
+import CoC7CharacterSheet from './character-sheet-v2.js'
 
-export class CoC7CharacterSheetMinimized extends CoC7CharacterSheet {
+export default class CoC7CharacterSheetMinimized extends CoC7CharacterSheet {
   constructor (options = {}) {
     super(options)
     this.summarized = true

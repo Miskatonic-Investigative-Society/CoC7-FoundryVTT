@@ -1,7 +1,7 @@
 /* global CONFIG foundry game TextEditor */
-import { CoC7CharacterSheet } from './character.js'
+import CoC7CharacterSheet from './character-sheet-v2.js'
 
-export class CoC7CharacterSheetV3 extends CoC7CharacterSheet {
+export default class CoC7CharacterSheetV3 extends CoC7CharacterSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV3', 'actor', 'character'],

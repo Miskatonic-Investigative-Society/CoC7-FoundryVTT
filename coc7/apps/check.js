@@ -2,7 +2,7 @@
 import CoC7DicePool from './dice-pool.js'
 import CoC7Item from '../models/item/document-class.js'
 import { chatHelper, CoC7Roll } from '../chat/helper.js'
-import { CoCActor } from '../actors/actor.js'
+import CoCActor from '../models/actor/document-class.js'
 import CoC7Utilities from './utilities.js'
 
 export default class CoC7Check {

@@ -1,7 +1,7 @@
 /* global foundry, game, TextEditor */
-import { CoC7ActorSheet } from './base.js'
+import CoC7ActorSheet from './global-sheet.js'
 
-export class CoC7VehicleSheet extends CoC7ActorSheet {
+export default class CoC7VehicleSheet extends CoC7ActorSheet {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV2', 'actor', 'item', 'vehicle'],

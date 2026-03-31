@@ -1,7 +1,7 @@
 /* global $, Actor, ChatMessage, CONST, FormApplication, foundry, game, Hooks, renderTemplate, Roll, TextEditor, ui */
 import CoC7AverageRoll from '../apps/average-roll.js'
 import { COC7 } from '../constants.js'
-import { CoCActor } from '../actors/actor.js'
+import CoCActor from '../models/actor/document-class.js'
 import CoC7OccupationSheet from '../models/item/occupation-sheet.js'
 import CoC7Utilities from './utilities.js'
 import { SkillSpecializationSelectDialog } from '../apps/skill-specialization-select-dialog.js'

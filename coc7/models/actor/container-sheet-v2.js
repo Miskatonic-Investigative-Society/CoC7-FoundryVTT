@@ -2,7 +2,7 @@
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import CoC7Utilities from '../../apps/utilities.js'
 
-export class CoC7ContainerSheet extends foundry.appv1.sheets.ActorSheet {
+export default class CoC7ContainerSheet extends foundry.appv1.sheets.ActorSheet {
   /**
    * Extend and override the default options used by the 5e Actor Sheet
    * @returns {Object}

@@ -1,6 +1,6 @@
 /* global Actor, CONFIG, foundry, game, ui */
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
-import { CoCActor } from '../actors/actor.js'
+import CoCActor from '../models/actor/document-class.js'
 import CoC7Item from '../models/item/document-class.js'
 import CoC7Utilities from './utilities.js'
 

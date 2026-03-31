@@ -1,5 +1,4 @@
 /* global $, ChatMessage, game, renderTemplate, ui */
-// import { CoCActor } from '../../actors/actor.js';
 import CoC7Check from '../../apps/check.js'
 
 export class RollCard {

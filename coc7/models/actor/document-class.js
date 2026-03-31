@@ -1,30 +1,30 @@
 /* global Actor, Application, CONFIG, CONST, Dialog, Die, foundry, fromUuid, fromUuidSync, game, Hooks, Roll, TextEditor, Token, ui */
-import CoC7AverageRoll from '../apps/average-roll.js'
-import { COC7 } from '../constants.js'
-import CoC7ActiveEffect from '../apps/active-effect.js'
-import CoC7RollNormalize from '../apps/roll-normalize.js'
-import CoC7Check from '../apps/check.js'
-import CoC7ConCheck from '../apps/con-check.js'
-import { RollDialog } from '../apps/roll-dialog.js'
-import { SkillSelectDialog } from '../apps/skill-selection-dialog.js'
-import { PointSelectDialog } from '../apps/point-selection-dialog.js'
-import CoC7CharacteristicSelectionDialog from '../apps/characteristic-selection-dialog.js'
-import CoC7CharacteristicRollDialog from '../apps/characteristic-roll-dialog.js'
-import { ExperiencePackageDialog } from '../apps/experience-package-dialog.js'
-import { SkillSpecSelectDialog } from '../apps/skill-spec-select-dialog.js'
-import { SkillSpecializationSelectDialog } from '../apps/skill-specialization-select-dialog.js'
-import { SkillValueDialog } from '../apps/skill-value-dialog.js'
-import CoC7ChatCombatMelee from '../apps/chat-combat-melee.js'
-import CoC7ChatCombatRanged from '../apps/chat-combat-ranged.js'
-import { chatHelper } from '../chat/helper.js'
-import CoC7DicePool from '../apps/dice-pool.js'
-import CoC7Item from '../models/item/document-class.js'
-import CoC7Utilities from '../apps/utilities.js'
+import CoC7AverageRoll from '../../apps/average-roll.js'
+import { COC7 } from '../../constants.js'
+import CoC7ActiveEffect from '../../apps/active-effect.js'
+import CoC7RollNormalize from '../../apps/roll-normalize.js'
+import CoC7Check from '../../apps/check.js'
+import CoC7ConCheck from '../../apps/con-check.js'
+import { RollDialog } from '../../apps/roll-dialog.js'
+import { SkillSelectDialog } from '../../apps/skill-selection-dialog.js'
+import { PointSelectDialog } from '../../apps/point-selection-dialog.js'
+import CoC7CharacteristicSelectionDialog from '../../apps/characteristic-selection-dialog.js'
+import CoC7CharacteristicRollDialog from '../../apps/characteristic-roll-dialog.js'
+import { ExperiencePackageDialog } from '../../apps/experience-package-dialog.js'
+import { SkillSpecSelectDialog } from '../../apps/skill-spec-select-dialog.js'
+import { SkillSpecializationSelectDialog } from '../../apps/skill-specialization-select-dialog.js'
+import { SkillValueDialog } from '../../apps/skill-value-dialog.js'
+import CoC7ChatCombatMelee from '../../apps/chat-combat-melee.js'
+import CoC7ChatCombatRanged from '../../apps/chat-combat-ranged.js'
+import { chatHelper } from '../../chat/helper.js'
+import CoC7DicePool from '../../apps/dice-pool.js'
+import CoC7Item from '../item/document-class.js'
+import CoC7Utilities from '../../apps/utilities.js'
 
 /**
  * Extend the base Actor class to implement additional logic specialized for CoC 7th.
  */
-export class CoCActor extends Actor {
+export default class CoCActor extends Actor {
   /** Create derived document classes for specific Item types */
   constructor (data, context) {
     /** @see CONFIG.Actor.documentClasses in module/scripts/configure-documents */

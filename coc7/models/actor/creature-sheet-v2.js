@@ -1,10 +1,10 @@
 /* global foundry */
-import { CoC7NPCSheet } from './npc-sheet.js'
+import CoC7NPCSheet from './npc-sheet-v2.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
  */
-export class CoC7CreatureSheet extends CoC7NPCSheet {
+export default class CoC7CreatureSheet extends CoC7NPCSheet {
   /**
    * Prepare data for rendering the Actor sheet
    * The prepared data object contains both the actor data as well as additional sheet options

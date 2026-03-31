@@ -1,6 +1,6 @@
-import { CoCActor } from '../actor.js'
+import CoCActor from './document-class.js'
 
-export class CoC7Vehicle extends CoCActor {
+export default class CoC7Vehicle extends CoCActor {
   constructor (data, context) {
     if (typeof data.img === 'undefined') {
       data.img = 'systems/CoC7/assets/icons/jeep.svg'
