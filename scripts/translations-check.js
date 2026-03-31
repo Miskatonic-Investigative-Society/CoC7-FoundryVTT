@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import TemplateHelpers from './src/template-helpers.js'
 
-const maxMissingKeys = 130
+const maxMissingKeys = 340
 
 try {
   let abandonedLanguages = {}

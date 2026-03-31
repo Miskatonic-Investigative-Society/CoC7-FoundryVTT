@@ -11,6 +11,8 @@
 
 ## Screenshots.
 
+<!-- If appropriate. -->
+
 ## Support Tested On
 
 <!--- The system currently supports FoundryVTT v12 and FoundryVTT v13. This is not required if only translation JSON and manual MD files are changed -->
@@ -18,12 +20,11 @@
 - [ ] FoundryVTT v12.
 - [ ] FoundryVTT v13.
 
-<!-- If appropriate. -->
-
 ## Types of Changes.
 
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
 
+- [ ] AI was not used in this pull request https://foundryvtt.com/article/ai-policy/
 - [ ] Bug fix (non-breaking change which fixes an issue).
 - [ ] New feature (non-breaking change which adds functionality).
 - [ ] Breaking change (fix or feature that would cause existing functionality to change).
