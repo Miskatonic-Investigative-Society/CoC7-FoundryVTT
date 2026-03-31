@@ -20,9 +20,9 @@
 </div>
 {{#if rollDamage}}
   {{#if targetUuid}}
-    <div class="coc7-chat-content">{{targetName}} {{localize 'CoC7.meleeCombatDamageTakes'}} {{weaponDamage}}{{#if weaponAddFullDB}}{{localize 'CoC7.WeaponAddb'}}{{/if}}{{#if weaponAddHalfDB}}{{localize 'CoC7.WeaponAhdb'}}{{/if}} {{localize 'CoC7.meleeCombatDamageFrom'}} {{itemName}}</div>
+    <div class="coc7-chat-content">{{targetName}} {{localize 'CoC7.meleeCombatDamageTakes'}} {{weaponDamage}}{{#if weaponAddFullDB}}{{localize 'CoC7.WeaponAddDb'}}{{/if}}{{#if weaponAddHalfDB}}{{localize 'CoC7.WeaponAddHalfDb'}}{{/if}} {{localize 'CoC7.meleeCombatDamageFrom'}} {{itemName}}</div>
   {{else}}
-    <div class="coc7-chat-content">{{attackerName}} {{localize 'CoC7.meleeCombatDamageDeals'}} {{weaponDamage}}{{#if weaponAddFullDB}}{{localize 'CoC7.WeaponAddb'}}{{/if}}{{#if weaponAddHalfDB}}{{localize 'CoC7.WeaponAhdb'}}{{/if}} {{localize 'CoC7.meleeCombatDamageWith'}} {{itemName}}</div>
+    <div class="coc7-chat-content">{{attackerName}} {{localize 'CoC7.meleeCombatDamageDeals'}} {{weaponDamage}}{{#if weaponAddFullDB}}{{localize 'CoC7.WeaponAddDb'}}{{/if}}{{#if weaponAddHalfDB}}{{localize 'CoC7.WeaponAddHalfDb'}}{{/if}} {{localize 'CoC7.meleeCombatDamageWith'}} {{itemName}}</div>
   {{/if}}
 {{/if}}
 {{#if (or enrichedItemDescriptionValue hasWeaponSpecial)}}

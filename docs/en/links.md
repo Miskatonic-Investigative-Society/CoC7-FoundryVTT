@@ -15,7 +15,7 @@
 - When a link is created the difficulty/penalty selection windows will open. Hold SHIFT to bypass that comportment.
 - When a link is created, the roll mode will be check. If the roll mode is set to 'blind GM roll' the link will be created as blind.
 - When a link is created with a difficulty and a penalty, the difficulty/penalty windows will not pop.
-- When a link is created without a difficulty or a penalty, the difficulty/penalty windows will pop. Holding SHIFT will fastforward the roll (regular/no penalty).
+- When a link is created without a difficulty or a penalty, the difficulty/penalty windows will pop. Holding SHIFT will fast forward the roll (regular/no penalty).
 
 ## Writing links
 

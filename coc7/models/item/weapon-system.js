@@ -73,20 +73,20 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
       malfunction: new fields.NumberField({ nullable: true, initial: null }),
       blastRadius: new fields.NumberField({ nullable: true, initial: null }),
       properties: new fields.SchemaField({
-        rngd: new fields.BooleanField({ label: 'CoC7.WeaponRngd', initial: false }),
-        mnvr: new fields.BooleanField({ label: 'CoC7.WeaponProperyManeuver', initial: false }),
+        rngd: new fields.BooleanField({ label: 'CoC7.WeaponRanged', initial: false }),
+        mnvr: new fields.BooleanField({ label: 'CoC7.WeaponManeuver', initial: false }),
         thrown: new fields.BooleanField({ label: 'CoC7.Weapon.Property.Thrown', initial: false }),
         shotgun: new fields.BooleanField({ label: 'CoC7.Weapon.Property.Shotgun', initial: false }),
-        dbrl: new fields.BooleanField({ label: 'CoC7.WeaponDbrl', initial: false }),
+        dbrl: new fields.BooleanField({ label: 'CoC7.WeaponDualBarrel', initial: false }),
         impl: new fields.BooleanField({ label: 'CoC7.WeaponImpl', initial: false }),
-        brst: new fields.BooleanField({ label: 'CoC7.WeaponBrst', initial: false }),
+        brst: new fields.BooleanField({ label: 'CoC7.WeaponBurst', initial: false }),
         auto: new fields.BooleanField({ label: 'CoC7.WeaponAuto', initial: false }),
-        ahdb: new fields.BooleanField({ label: 'CoC7.WeaponAhdb', initial: false }),
-        addb: new fields.BooleanField({ label: 'CoC7.WeaponAddb', initial: false }),
-        slnt: new fields.BooleanField({ label: 'CoC7.WeaponSlnt', initial: false }),
-        spcl: new fields.BooleanField({ label: 'CoC7.WeaponSpcl', initial: false }),
+        ahdb: new fields.BooleanField({ label: 'CoC7.WeaponAddHalfDb', initial: false }),
+        addb: new fields.BooleanField({ label: 'CoC7.WeaponAddDb', initial: false }),
+        slnt: new fields.BooleanField({ label: 'CoC7.WeaponSilent', initial: false }),
+        spcl: new fields.BooleanField({ label: 'CoC7.WeaponSpecial', initial: false }),
         mont: new fields.BooleanField({ label: 'CoC7.WeaponMont', initial: false }),
-        blst: new fields.BooleanField({ label: 'CoC7.WeaponBlst', initial: false }),
+        blst: new fields.BooleanField({ label: 'CoC7.WeaponBlast', initial: false }),
         stun: new fields.BooleanField({ label: 'CoC7.WeaponStun', initial: false }),
         rare: new fields.BooleanField({ label: 'CoC7.WeaponRare', initial: false }),
         burn: new fields.BooleanField({ label: 'CoC7.Weapon.Property.Burn', initial: false })
@@ -208,7 +208,7 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
       usesPerRound += ` ${game.i18n.localize('CoC7.WeaponAuto')}`
     }
     if (object.system.properties.brst) {
-      usesPerRound += ` ${game.i18n.localize('CoC7.WeaponBrst')}`
+      usesPerRound += ` ${game.i18n.localize('CoC7.WeaponBurst')}`
       if (object.system.usesPerRound.burst) {
         usesPerRound += `(${object.system.usesPerRound.burst})`
       }

@@ -841,7 +841,7 @@ export default class CoC7ActorImporter {
         console.debug(`${weapon.name} uses Submachine Gun skill: ${skill}`)
       }
     } else if (this.getRegEx(this.keys.machineGun).exec(weapon.name)) {
-      skill = await CoC7Utilities.guessItems('skill', [localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameMachinGun') + ')'], {
+      skill = await CoC7Utilities.guessItems('skill', [localizedFirearm + ' (' + game.i18n.localize('CoC7.SkillNameMachineGun') + ')'], {
         combat: true,
         source: this.itemLocations
       })

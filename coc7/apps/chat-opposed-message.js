@@ -777,7 +777,7 @@ export default class CoC7ChatOpposedMessage {
         data.rollActors[key] = foundry.utils.duplicate(rollActors[key])
         if (isManeuver) {
           for (const roll of data.rollActors[key].rolls) {
-            roll.tags.push(game.i18n.localize('CoC7.WeaponProperyManeuver') + ' (' + game.i18n.localize('CoC7.Build') + ': ' + rollActors[key].build + ')')
+            roll.tags.push(game.i18n.localize('CoC7.WeaponManeuver') + ' (' + game.i18n.localize('CoC7.Build') + ': ' + rollActors[key].build + ')')
           }
         }
       }

@@ -143,7 +143,7 @@ export default class CoC7ConCheck {
       bonusDice: Math.abs(this.#dicePool.poolModifier),
       bonusType: game.i18n.localize(this.#dicePool.poolModifier < 0 ? 'CoC7.DiceModifierPenalty' : 'CoC7.DiceModifierBonus'),
       buttons,
-      customResult: (this.isSuccess ? 'CoC7.Resist' : (this.#stayAlive ? 'CoC7.Dead' : 'CoC7.Unconsious')),
+      customResult: (this.isSuccess ? 'CoC7.Resist' : (this.#stayAlive ? 'CoC7.Dead' : 'CoC7.Unconscious')),
       diceGroups: this.#dicePool.diceGroups,
       displayResultType: game.settings.get(FOLDER_ID, 'displayResultType'),
       displayCheckSuccessLevel: game.settings.get(FOLDER_ID, 'displayCheckSuccessLevel'),

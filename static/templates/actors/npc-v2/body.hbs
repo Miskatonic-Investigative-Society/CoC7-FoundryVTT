@@ -175,7 +175,7 @@
             </div>
           {{else}}
             <a class="item-control{{#if document.system.conditions.prone.value}} status-on{{/if}}" data-tooltip="CoC7.Prone" data-action="condition" data-condition="prone"><i class="game-icon game-icon-falling"></i></a>
-            <a class="item-control{{#if document.system.conditions.unconscious.value}} status-on{{/if}}" data-tooltip="CoC7.Unconsious" data-action="condition" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars"></i></a>
+            <a class="item-control{{#if document.system.conditions.unconscious.value}} status-on{{/if}}" data-tooltip="CoC7.Unconscious" data-action="condition" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars"></i></a>
             <a class="item-control{{#if document.system.conditions.criticalWounds.value}} status-on{{/if}}" data-tooltip="CoC7.CriticalWounds" data-action="condition" data-condition="criticalWounds"><i class="fa-solid fa-user-injured"></i></a>
             <a class="item-control status-off" data-tooltip="CoC7.Dying" data-action="condition" data-condition="dying"><i class="fa-solid fa-heartbeat"></i></a>
             <a class="item-control{{#if document.system.conditions.tempoInsane.value}} status-on{{/if}}" data-tooltip="{{localize 'CoC7.BoutOfMadness'}}{{#if document.getTempoInsaneDurationText}}: {{document.getTempoInsaneDurationText}}{{/if}}" data-action="condition" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></a>
@@ -193,7 +193,7 @@
         <div class="item-controls" style="justify-content: flex-end; flex: 0 0 6.5rem;">
           {{#if (and (not document.system.flags.locked) (not document.system.flags.displayFormula))}}
             <a class="item-control item-controlled-width" data-action="characteristics-roll" data-tooltip="CoC7.NpcRollCharacteristics"><i class="fa-solid fa-dice"></i></a>
-            <a class="item-control item-controlled-width" data-action="characteristics-average" data-tooltip="CoC7.NpcAvarageCharacteristics"><i class="fa-solid fa-balance-scale"></i></a>
+            <a class="item-control item-controlled-width" data-action="characteristics-average" data-tooltip="CoC7.NpcAverageCharacteristics"><i class="fa-solid fa-balance-scale"></i></a>
           {{/if}}
           {{#if document.system.flags.locked}}
             <a class="item-control item-controlled-width" data-action="toggle-flag" data-toggle-flag="locked" data-tooltip="CoC7.UnlockActor"><i class="fa-solid fa-lock"></i></a>

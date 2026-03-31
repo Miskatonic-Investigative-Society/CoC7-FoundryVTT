@@ -939,7 +939,7 @@ export default class CoC7ChatChaseObstacle {
         if (this.#movePlayer) {
           data.finalOutcome = game.i18n.localize('CoC7.MoveToLocation')
         } else {
-          data.finalOutcome = game.i18n.localize('CoC7.DontMoveToLocation')
+          data.finalOutcome = game.i18n.localize('CoC7.NotMovingToLocation')
         }
       }
     }

@@ -76,7 +76,7 @@
                 {{/if}}
 
                 {{#if boutOfMadnessOver}}
-                  <div class="tag">{{localize 'CoC7.BoutOfMadnesslasted'}} {{boutDuration}} {{#if boutRealTime}}{{localize 'CoC7.rounds'}}{{/if}}{{#if boutSummary}}{{localize 'CoC7.hours'}}{{/if}}</div>
+                  <div class="tag">{{localize 'CoC7.BoutOfMadnessLasted'}} {{boutDuration}} {{#if boutRealTime}}{{localize 'CoC7.rounds'}}{{/if}}{{#if boutSummary}}{{localize 'CoC7.hours'}}{{/if}}</div>
 
                   {{#if indefinitelyInsane}}
                     <div class="tag">{{localize 'CoC7.IndefinitelyInsane'}}</div>
@@ -143,7 +143,7 @@
   {{/if}}
   {{#if (and sanCheckFailed (not involuntaryActionPerformed))}}
     <div class="coc7-card-buttons flexrow">
-      <button data-action="involuntaryActionPerformed">{{localize 'CoC7.InvoluntaryActionPerfomed'}}</button>
+      <button data-action="involuntaryActionPerformed">{{localize 'CoC7.PerformInvoluntaryAction'}}</button>
     </div>
   {{/if}}
 

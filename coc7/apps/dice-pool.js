@@ -688,7 +688,7 @@ export default class CoC7DicePool {
                 for (let index = 0, im = output.successLevel - this.#difficulty + 1; index < im; index++) {
                   output.successLevelIcons.icons.push(output.isCritical ? 'medal' : 'star')
                 }
-                output.successLevelIcons.hint = game.i18n.format('CoC7.SuccesLevelHint', {
+                output.successLevelIcons.hint = game.i18n.format('CoC7.SuccessLevelHint', {
                   value: output.successLevel - this.#difficulty + 1
                 })
               } else {

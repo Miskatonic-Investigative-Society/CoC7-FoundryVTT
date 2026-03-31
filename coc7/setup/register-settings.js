@@ -107,8 +107,8 @@ export default function () {
    */
   /** Standby rolls made by GM from player sheet */
   game.settings.register(FOLDER_ID, 'stanbyGMRolls', {
-    name: 'SETTINGS.StanbyGMRolls',
-    hint: 'SETTINGS.StanbyGMRollsHint',
+    name: 'SETTINGS.StandbyGMRolls',
+    hint: 'SETTINGS.StandbyGMRollsHint',
     scope: 'world',
     config: true,
     default: true,
@@ -163,8 +163,8 @@ export default function () {
    */
   /** Trusted players will be allowed to modify chat cards */
   game.settings.register(FOLDER_ID, 'trustedCanModfyChatCard', {
-    name: 'SETTINGS.TrustedCanModfyChatCard',
-    hint: 'SETTINGS.TrustedCanModfyChatCardHint',
+    name: 'SETTINGS.TrustedCanModifyChatCard',
+    hint: 'SETTINGS.TrustedCanModifyChatCardHint',
     scope: 'world',
     config: true,
     default: false,
@@ -240,8 +240,8 @@ export default function () {
     type: Boolean
   })
   game.settings.register(FOLDER_ID, 'distanceTheatreOfTheMind', {
-    name: 'SETTINGS.SceneDistanceNotCalcualtedNoError',
-    hint: 'SETTINGS.SceneDistanceNotCalcualtedNoErrorHint',
+    name: 'SETTINGS.SceneDistanceNotCalculatedNoError',
+    hint: 'SETTINGS.SceneDistanceNotCalculatedNoErrorHint',
     scope: 'world',
     config: true,
     default: false,

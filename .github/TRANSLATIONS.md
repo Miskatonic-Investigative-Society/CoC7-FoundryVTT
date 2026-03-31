@@ -247,16 +247,16 @@ The following translations have more than 340 untranslated strings [are you able
 |[CoC7.Settings.PulpRules.All](#coc7settingspulprulesalljson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.PulpRules.None](#coc7settingspulprulesnonejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.PulpRules.Some](#coc7settingspulprulessomejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.SkillHintFighting](#coc7skillhintfightingjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.SkillHintFirearm](#coc7skillhintfirearmjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SkillHintKeepBaseValue](#coc7skillhintkeepbasevaluejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SkillHintNoXpGain](#coc7skillhintnoxpgainjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SkillHintOwn](#coc7skillhintownjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SkillHintPickNameOnly](#coc7skillhintpicknameonlyjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.SkillHintPush](#coc7skillhintpushjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.SkillHintRanged](#coc7skillhintrangedjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SkillHintRequiresName](#coc7skillhintrequiresnamejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SkillOwn](#coc7skillownjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.SkilllHintFighting](#coc7skilllhintfightingjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.SkilllHintFirearm](#coc7skilllhintfirearmjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.SkilllHintPush](#coc7skilllhintpushjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.SkilllHintRanged](#coc7skilllhintrangedjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.StartRolls](#coc7startrollsjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.ToolTipShort](#coc7tooltipshortjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.WhatCopiedClipboard](#coc7whatcopiedclipboardjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
@@ -725,6 +725,10 @@ The following translations have more than 340 untranslated strings [are you able
 ```  "CoC7.Settings.PulpRules.None": "None",```
 ##### CoC7.Settings.PulpRules.Some
 ```  "CoC7.Settings.PulpRules.Some": "Partial",```
+##### CoC7.SkillHintFighting
+```  "CoC7.SkillHintFighting": "Ctrl + Click to not default specialization name",```
+##### CoC7.SkillHintFirearm
+```  "CoC7.SkillHintFirearm": "Ctrl + Click to not default specialization name",```
 ##### CoC7.SkillHintKeepBaseValue
 ```  "CoC7.SkillHintKeepBaseValue": "If you are replacing this specialization from a list keep this base value (i.e. keep @EDU when picking a language)",```
 ##### CoC7.SkillHintNoXpGain
@@ -733,18 +737,14 @@ The following translations have more than 340 untranslated strings [are you able
 ```  "CoC7.SkillHintOwn": "This specialisation is own",```
 ##### CoC7.SkillHintPickNameOnly
 ```  "CoC7.SkillHintPickNameOnly": "The name for this specialization can be picked from a list",```
+##### CoC7.SkillHintPush
+```  "CoC7.SkillHintPush": "Skill can be pushed",```
+##### CoC7.SkillHintRanged
+```  "CoC7.SkillHintRanged": "Ctrl + Click to not default specialization name",```
 ##### CoC7.SkillHintRequiresName
 ```  "CoC7.SkillHintRequiresName": "The name for this specialization can be set manually",```
 ##### CoC7.SkillOwn
 ```  "CoC7.SkillOwn": "Own",```
-##### CoC7.SkilllHintFighting
-```  "CoC7.SkilllHintFighting": "Ctrl + Click to not default specialization name",```
-##### CoC7.SkilllHintFirearm
-```  "CoC7.SkilllHintFirearm": "Ctrl + Click to not default specialization name",```
-##### CoC7.SkilllHintPush
-```  "CoC7.SkilllHintPush": "Skill can be pushed",```
-##### CoC7.SkilllHintRanged
-```  "CoC7.SkilllHintRanged": "Ctrl + Click to not default specialization name",```
 ##### CoC7.StartRolls
 ```  "CoC7.StartRolls": "Start Rolls",```
 ##### CoC7.ToolTipShort
