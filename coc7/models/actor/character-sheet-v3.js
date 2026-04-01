@@ -1,4 +1,4 @@
-/* global game */
+/* global foundry game */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ModelsActorCharacterSheetV2 from './character-sheet-v2.js'
 
@@ -126,5 +126,18 @@ export default class CoC7ModelsActorCharacterSheetV3 extends CoC7ModelsActorChar
       const objectFit = event.currentTarget.dataset.objectFit
       this.document.setFlag(FOLDER_ID, 'portraitFrame', objectFit)
     }))
+  }
+
+  /**
+   * Make sure tabs are not hidden in detached window
+   * @param {object} position
+   * @returns {object}
+   */
+  _updatePosition (position) {
+    const pos = super._updatePosition(position)
+    if (foundry.utils.isNewerVersion(game.version, 14)) {
+      pos.left = Math.max(pos.left, 87)
+    }
+    return pos
   }
 }
