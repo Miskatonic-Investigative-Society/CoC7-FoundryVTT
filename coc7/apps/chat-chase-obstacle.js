@@ -151,7 +151,7 @@ export default class CoC7ChatChaseObstacle {
    * @returns {boolean}
    */
   get #isArmorFormula () {
-    return (!this.#targetArmor.toString().match(/^\d+$/))
+    return (!this.#targetArmor.toString().match(/^\d+$/) && Roll.validate(this.#targetArmor.toString()))
   }
 
   /**

@@ -31,6 +31,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Move book progress and learned spells list to Actor to allow sharing books without progress
 - Remove custom Context Menu system as Investigator Sheet V3 didn't implement it
 - Fix Setup Item translations breaking biography roll table matching in Investigator Wizard
+- Fix ranged combat multiple targets
 - Move i.skill.fighting-throw, i.skill.firearms-throw, i.skill.ranged-throw to Throw (i.skill.throw)
 - Allow CoC7 journal styles to be turned on and off in the config pages
 - Allow toggling the NPC notes panel

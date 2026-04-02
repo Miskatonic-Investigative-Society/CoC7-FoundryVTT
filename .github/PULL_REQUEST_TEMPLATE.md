@@ -15,10 +15,11 @@
 
 ## Support Tested On
 
-<!--- The system currently supports FoundryVTT v12 and FoundryVTT v13. This is not required if only translation JSON and manual MD files are changed -->
+<!--- The system currently supports FoundryVTT v12, v13, and v14. This is not required if only translation JSON and manual MD files are changed -->
 
 - [ ] FoundryVTT v12.
 - [ ] FoundryVTT v13.
+- [ ] FoundryVTT v14.
 
 ## Types of Changes.
 

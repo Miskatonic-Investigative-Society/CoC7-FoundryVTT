@@ -355,7 +355,10 @@ export default class CoC7ChatDamage {
       if (this.#isArmorFormula) {
         return game.i18n.localize('CoC7.ArmorWillFormula')
       }
-      value = value - parseInt(this.#targetArmor, 10)
+      const armor = parseInt(this.#targetArmor, 10)
+      if (!isNaN(armor)) {
+        value = value - armor
+      }
       if (value <= 0) {
         return game.i18n.localize('CoC7.ArmorAbsorbsDamage')
       }
@@ -368,7 +371,7 @@ export default class CoC7ChatDamage {
    * @returns {boolean}
    */
   get #isArmorFormula () {
-    return (!this.#targetArmor.toString().match(/^\d+$/))
+    return (!this.#targetArmor.toString().match(/^\d+$/) && Roll.validate(this.#targetArmor.toString()))
   }
 
   /**
@@ -581,6 +584,9 @@ export default class CoC7ChatDamage {
             if (typeof damage !== 'string') {
               const targetActor = (await check.target)
               targetActor.dealDamage(damage, { ignoreArmor: true })
+              check.#isDamageInflicted = true
+              check.updateMessage()
+            } else if (damage === game.i18n.localize('CoC7.ArmorAbsorbsDamage')) {
               check.#isDamageInflicted = true
               check.updateMessage()
             } else {

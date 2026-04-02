@@ -220,7 +220,7 @@ export default class CoC7ModelsItemSkillSystem extends CoC7ModelsItemGlobalSyste
       was: 'actor.itemIdentifier',
       until: 15
     })
-    return this.name
+    return this.parent.name
   }
 
   /**
@@ -300,10 +300,10 @@ export default class CoC7ModelsItemSkillSystem extends CoC7ModelsItemGlobalSyste
       return (this.parent.flags[FOLDER_ID]?.cocidFlag?.id === id)
     }
     const check = game.i18n.localize('CoC7.CoCIDFlag.keys.' + id).toLowerCase()
-    if (this.name.toLowerCase() === check) {
+    if (this.parent.name.toLowerCase() === check) {
       return true
     }
-    return (this.system.skillName.toLowerCase() === check)
+    return (this.skillName.toLowerCase() === check)
   }
 
   /**
@@ -380,13 +380,13 @@ export default class CoC7ModelsItemSkillSystem extends CoC7ModelsItemGlobalSyste
     if (this.actor.type === 'character') {
       const delta = parseInt(value) - this.rawValue
       const exp =
-        (this.system.adjustments?.experience
-          ? parseInt(this.system.adjustments.experience)
+        (this.adjustments?.experience
+          ? parseInt(this.adjustments.experience)
           : 0) + delta
-      await this.update({
+      await this.parent.update({
         'system.adjustments.experience': exp > 0 ? exp : 0
       })
-    } else await this.update({ 'system.value': value })
+    } else await this.parent.update({ 'system.value': value })
   }
 
   /**
@@ -402,10 +402,10 @@ export default class CoC7ModelsItemSkillSystem extends CoC7ModelsItemGlobalSyste
     if (this.type !== 'skill') return
     if (this.actor.type === 'character') {
       const exp =
-        (this.system.adjustments?.experience
-          ? parseInt(this.system.adjustments.experience)
+        (this.adjustments?.experience
+          ? parseInt(this.adjustments.experience)
           : 0) + parseInt(x)
-      await this.update({
+      await this.parent.update({
         'system.adjustments.experience': exp > 0 ? exp : 0
       })
     }

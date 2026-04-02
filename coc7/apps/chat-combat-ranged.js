@@ -103,7 +103,7 @@ export default class CoC7ChatCombatRanged {
           unit: canvas.grid.units,
           poolKeys: [],
           poolModifier,
-          baseRange: true,
+          baseRange: false,
           longRange: false,
           extremeRange: false,
           outOfRange: false,
@@ -134,13 +134,15 @@ export default class CoC7ChatCombatRanged {
               if (distanceBetweenTokens.yards <= pbRangeInYd) {
                 targetData.baseRange = false
                 targetData.poolKeys.push('pointBlankRange')
+              } else if (distanceBetweenTokens.yards <= baseRange) {
+                targetData.baseRange = true
               } else if (distanceBetweenTokens.yards <= longRange) {
                 targetData.baseRange = false
                 targetData.longRange = true
               } else if (distanceBetweenTokens.yards <= extremeRange) {
                 targetData.baseRange = false
                 targetData.extremeRange = true
-              } else if (distanceBetweenTokens.yards > baseRange) {
+              } else {
                 targetData.baseRange = false
                 targetData.outOfRange = true
               }
@@ -938,7 +940,7 @@ export default class CoC7ChatCombatRanged {
       }
       // if (this.reload) modifier--
       if (this.#multipleShots && !this.#fullAuto) {
-        poolModifier++
+        poolModifier--
       }
       if (this.#fullAuto) {
         poolModifier -= this.#shots.length
