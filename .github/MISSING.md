@@ -2,27 +2,27 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (340 untranslated strings)](#cnjson)
+[cn.json (342 untranslated strings)](#cnjson)
 
-[de.json (339 untranslated strings)](#dejson)
+[de.json (341 untranslated strings)](#dejson)
 
-[es.json (340 untranslated strings)](#esjson)
+[es.json (342 untranslated strings)](#esjson)
 
-[fr.json (139 untranslated strings)](#frjson)
+[fr.json (141 untranslated strings)](#frjson)
 
-[ja.json (223 untranslated strings)](#jajson)
+[ja.json (225 untranslated strings)](#jajson)
 
-[ko.json (248 untranslated strings)](#kojson)
+[ko.json (250 untranslated strings)](#kojson)
 
-[pl.json (224 untranslated strings)](#pljson)
+[pl.json (226 untranslated strings)](#pljson)
 
-[sv.json (222 untranslated strings)](#svjson)
+[sv.json (224 untranslated strings)](#svjson)
 
-[zh-tw.json (222 untranslated strings)](#zh-twjson)
+[zh-tw.json (224 untranslated strings)](#zh-twjson)
 
 
 ## cn.json
-340 untranslated strings
+342 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -335,6 +335,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyUnknownName": "Unknown",
 "CoC7.RollNamedSkill": "Roll {name} skill",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -366,7 +368,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## de.json
-339 untranslated strings
+341 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -679,6 +681,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyUnknownName": "Unknown",
 "CoC7.RollNamedSkill": "Roll {name} skill",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -709,7 +713,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## es.json
-340 untranslated strings
+342 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -1022,6 +1026,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyUnknownName": "Unknown",
 "CoC7.RollNamedSkill": "Roll {name} skill",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -1053,7 +1059,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## fr.json
-139 untranslated strings
+141 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -1173,6 +1179,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyUnknownName": "Unknown",
 "CoC7.RollNamedSkill": "Roll {name} skill",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -1196,7 +1204,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
 ```
 ## ja.json
-223 untranslated strings
+225 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -1400,6 +1408,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyUnknownName": "Unknown",
 "CoC7.RollNamedSkill": "Roll {name} skill",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -1423,7 +1433,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
 ```
 ## ko.json
-248 untranslated strings
+250 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -1650,6 +1660,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyUnknownName": "Unknown",
 "CoC7.RollNamedSkill": "Roll {name} skill",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -1675,7 +1687,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle": "CCI: Light Toggle"
 ```
 ## pl.json
-224 untranslated strings
+226 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -1880,6 +1892,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyUnknownName": "Unknown",
 "CoC7.RollNamedSkill": "Roll {name} skill",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -1903,7 +1917,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
 ```
 ## sv.json
-222 untranslated strings
+224 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -2106,6 +2120,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyUnknownName": "Unknown",
 "CoC7.RollNamedSkill": "Roll {name} skill",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -2129,7 +2145,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
 ```
 ## zh-tw.json
-222 untranslated strings
+224 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -2332,6 +2348,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollDifficultyUnknownName": "Unknown",
 "CoC7.RollNamedSkill": "Roll {name} skill",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",

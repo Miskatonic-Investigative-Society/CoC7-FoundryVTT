@@ -2,23 +2,23 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The following translations have more than 340 untranslated strings [are you able to help?](./ABANDONED.md)
+The following translations have more than 360 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cs.json (381 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (383 untranslated strings)](./ABANDONED.md#csjson)
 
-[it.json (417 untranslated strings)](./ABANDONED.md#itjson)
+[it.json (419 untranslated strings)](./ABANDONED.md#itjson)
 
-[pt-BR.json (571 untranslated strings)](./ABANDONED.md#pt-brjson)
+[pt-BR.json (573 untranslated strings)](./ABANDONED.md#pt-brjson)
 
-[ru.json (487 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (489 untranslated strings)](./ABANDONED.md#rujson)
 
-[uk.json (382 untranslated strings)](./ABANDONED.md#ukjson)
+[uk.json (384 untranslated strings)](./ABANDONED.md#ukjson)
 
 
 
 |Key|[cn](./MISSING.md#cnjson)|[de](./MISSING.md#dejson)|[es](./MISSING.md#esjson)|[fr](./MISSING.md#frjson)|[ja](./MISSING.md#jajson)|[ko](./MISSING.md#kojson)|[pl](./MISSING.md#pljson)|[sv](./MISSING.md#svjson)|[zh-tw](./MISSING.md#zh-twjson)|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**340**|**339**|**340**|**139**|**223**|**248**|**224**|**222**|**222**|
+|**Remaining**:|**342**|**341**|**342**|**141**|**225**|**250**|**226**|**224**|**224**|
 |[CoC7.AddedEmbeddedItems](#coc7addedembeddeditemsjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.AdditionalPoolModifier](#coc7additionalpoolmodifierjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.AlreadyRested](#coc7alreadyrestedjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
@@ -244,6 +244,8 @@ The following translations have more than 340 untranslated strings [are you able
 |[CoC7.RollDifficultyUnknownName](#coc7rolldifficultyunknownnamejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.RollNamedSkill](#coc7rollnamedskilljson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SelectActor](#coc7selectactorjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Settings.AllowPushFumbles.Hint](#coc7settingsallowpushfumbleshintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Settings.AllowPushFumbles.Name](#coc7settingsallowpushfumblesnamejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.PulpRules.All](#coc7settingspulprulesalljson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.PulpRules.None](#coc7settingspulprulesnonejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.PulpRules.Some](#coc7settingspulprulessomejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
@@ -719,6 +721,10 @@ The following translations have more than 340 untranslated strings [are you able
 ```  "CoC7.RollNamedSkill": "Roll {name} skill",```
 ##### CoC7.SelectActor
 ```  "CoC7.SelectActor": "Select",```
+##### CoC7.Settings.AllowPushFumbles.Hint
+```  "CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",```
+##### CoC7.Settings.AllowPushFumbles.Name
+```  "CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",```
 ##### CoC7.Settings.PulpRules.All
 ```  "CoC7.Settings.PulpRules.All": "All",```
 ##### CoC7.Settings.PulpRules.None

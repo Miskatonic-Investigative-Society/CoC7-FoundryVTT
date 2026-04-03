@@ -2,19 +2,19 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cs.json (381 untranslated strings)](#csjson)
+[cs.json (383 untranslated strings)](#csjson)
 
-[it.json (417 untranslated strings)](#itjson)
+[it.json (419 untranslated strings)](#itjson)
 
-[pt-BR.json (571 untranslated strings)](#pt-brjson)
+[pt-BR.json (573 untranslated strings)](#pt-brjson)
 
-[ru.json (487 untranslated strings)](#rujson)
+[ru.json (489 untranslated strings)](#rujson)
 
-[uk.json (382 untranslated strings)](#ukjson)
+[uk.json (384 untranslated strings)](#ukjson)
 
 
 ## cs.json
-381 untranslated strings
+383 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -354,6 +354,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollNamedSkill": "Roll {name} skill",
 "CoC7.SANSameLossAsMythosGain": "Sanity loss equal to Cthulhu Mythos gain",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -399,7 +401,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## it.json
-417 untranslated strings
+419 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -766,6 +768,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SANLossPass": "pass",
 "CoC7.SANSameLossAsMythosGain": "Sanity loss equal to Cthulhu Mythos gain",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -820,7 +824,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-571 untranslated strings
+573 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -1314,6 +1318,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SANSameLossAsMythosGain": "Sanity loss equal to Cthulhu Mythos gain",
 "CoC7.SanityLossType": "Type",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -1395,7 +1401,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-487 untranslated strings
+489 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -1800,6 +1806,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SANLossPass": "pass",
 "CoC7.SANSameLossAsMythosGain": "Sanity loss equal to Cthulhu Mythos gain",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -1886,7 +1894,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## uk.json
-382 untranslated strings
+384 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -2227,6 +2235,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RollNamedSkill": "Roll {name} skill",
 "CoC7.SANSameLossAsMythosGain": "Sanity loss equal to Cthulhu Mythos gain",
 "CoC7.SelectActor": "Select",
+"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
