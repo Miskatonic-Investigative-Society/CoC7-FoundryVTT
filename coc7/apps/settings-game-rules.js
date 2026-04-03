@@ -110,6 +110,14 @@ const SETTINGS = {
     config: false,
     default: false,
     type: Boolean
+  },
+  allowPushFumbles: {
+    name: 'CoC7.Settings.AllowPushFumbles.Name',
+    hint: 'CoC7.Settings.AllowPushFumbles.Hint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
   }
 }
 

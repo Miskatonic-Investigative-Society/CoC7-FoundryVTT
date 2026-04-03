@@ -523,7 +523,7 @@ export default class CoC7SanCheckCard {
         now: 'roll.poolModifier',
         until: 15
       })
-      sanDataNormalized.poolModifier = sanDataNormalized.modifier
+      sanDataNormalized.poolModifier = sanDataNormalized.modifier ?? 0
       delete sanDataNormalized.modifier
     }
     const chatCard = new CoC7SanCheckCard()
@@ -532,8 +532,10 @@ export default class CoC7SanCheckCard {
     chatCard.#sanMax = sanDataNormalized.sanMax
     chatCard.#sanMin = sanDataNormalized.sanMin
     chatCard.#sanReason = sanDataNormalized.sanReason
-    chatCard.#diceSanPool.poolModifier = sanDataNormalized.poolModifier
-    if (sanDataNormalized.difficulty !== false) {
+    if (typeof sanDataNormalized.poolModifier !== 'undefined') {
+      chatCard.#diceSanPool.poolModifier = sanDataNormalized.poolModifier
+    }
+    if (typeof sanDataNormalized.poolModifier !== 'undefined' && sanDataNormalized.difficulty !== false) {
       chatCard.#diceSanPool.difficulty = sanDataNormalized.difficulty
     }
 

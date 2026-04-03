@@ -411,19 +411,21 @@ export default class CoC7Check {
    * Check if result should flag skill for development (or unflag if the messaged flagged it but didn't dice added)
    */
   async flagForDevelopment () {
-    let value
-    if (this.#dicePool.difficulty !== CoC7DicePool.difficultyLevel.unknown && !!this.item && this.item.system instanceof CoC7ModelsItemSkillSystem && !this.item.system.properties.noxpgain) {
-      if (this.#rollMode !== CONST.DICE_ROLL_MODES.BLIND && !this.#isForced && !this.#appliedDevelopment) {
-        if (this.item.system.flags.developement === false && this.#dicePool.isRolledSuccess) {
-          value = true
+    if (game.settings.get(FOLDER_ID, 'xpEnabled')) {
+      let value
+      if (this.#dicePool.difficulty !== CoC7DicePool.difficultyLevel.unknown && !!this.item && this.item.system instanceof CoC7ModelsItemSkillSystem && !this.item.system.properties.noxpgain) {
+        if (this.#rollMode !== CONST.DICE_ROLL_MODES.BLIND && !this.#isForced && !this.#appliedDevelopment) {
+          if (this.item.system.flags.developement === false && this.#dicePool.isRolledSuccess) {
+            value = true
+          }
+        } else if (this.item.system.flags.developement === true && !this.#dicePool.isRolledSuccess) {
+          value = false
         }
-      } else if (this.item.system.flags.developement === true && !this.#dicePool.isRolledSuccess) {
-        value = false
       }
-    }
-    if (value === true || value === false) {
-      this.#appliedDevelopment = value
-      await CoC7Utilities.messageRollFlagForDevelopment(this.message.id, this.item, value)
+      if (value === true || value === false) {
+        this.#appliedDevelopment = value
+        await CoC7Utilities.messageRollFlagForDevelopment(this.message.id, this.item, value)
+      }
     }
   }
 

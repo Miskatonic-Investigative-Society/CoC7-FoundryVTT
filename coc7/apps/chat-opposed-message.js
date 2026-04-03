@@ -870,15 +870,17 @@ export default class CoC7ChatOpposedMessage {
    * Flag skills for development for the winner that rolled a skill
    */
   async flagForDevelopment () {
-    const templateData = await this.getTemplateData()
-    for (const actorUuid in templateData.rollActors) {
-      if (templateData.rollActors[actorUuid].isWinner) {
-        for (const roll of templateData.rollActors[actorUuid].rolls) {
-          if (roll.isRolledSuccess) {
-            if (templateData.rollActors[actorUuid].skillUuid) {
-              const item = await fromUuid(templateData.rollActors[actorUuid].skillUuid)
-              if (item) {
-                await item.update({ 'system.flags.developement': true })
+    if (game.settings.get(FOLDER_ID, 'xpEnabled')) {
+      const templateData = await this.getTemplateData()
+      for (const actorUuid in templateData.rollActors) {
+        if (templateData.rollActors[actorUuid].isWinner) {
+          for (const roll of templateData.rollActors[actorUuid].rolls) {
+            if (roll.isRolledSuccess) {
+              if (templateData.rollActors[actorUuid].skillUuid) {
+                const item = await fromUuid(templateData.rollActors[actorUuid].skillUuid)
+                if (item) {
+                  await item.update({ 'system.flags.developement': true })
+                }
               }
             }
           }

@@ -794,18 +794,20 @@ export default class CoC7Utilities {
    * @param {boolean} value
    */
   static async messageRollFlagForDevelopment (rollMessageId, item, value) {
-    if (game.modules.get('dice-so-nice')?.active && game.dice3d && game.user.getFlag('dice-so-nice', 'settings')?.enabled && !game.settings.get('dice-so-nice', 'immediatelyDisplayChatMessages')) {
-      const fnToggleFlag = async (messageId) => {
-        if (messageId === rollMessageId) {
-          if (item.system.flags.developement === !value) {
-            await item.update({ 'system.flags.developement': value })
+    if (game.settings.get(FOLDER_ID, 'xpEnabled')) {
+      if (game.modules.get('dice-so-nice')?.active && game.dice3d && game.user.getFlag('dice-so-nice', 'settings')?.enabled && !game.settings.get('dice-so-nice', 'immediatelyDisplayChatMessages')) {
+        const fnToggleFlag = async (messageId) => {
+          if (messageId === rollMessageId) {
+            if (item.system.flags.developement === !value) {
+              await item.update({ 'system.flags.developement': value })
+            }
+            Hooks.off('diceSoNiceRollComplete', fnToggleFlag)
           }
-          Hooks.off('diceSoNiceRollComplete', fnToggleFlag)
         }
+        Hooks.on('diceSoNiceRollComplete', fnToggleFlag)
+      } else {
+        await item.update({ 'system.flags.developement': value })
       }
-      Hooks.on('diceSoNiceRollComplete', fnToggleFlag)
-    } else {
-      await item.update({ 'system.flags.developement': value })
     }
   }
 

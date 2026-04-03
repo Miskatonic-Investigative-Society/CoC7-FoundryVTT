@@ -110,7 +110,6 @@ export default async function (message, html, context) {
         case 'toggleBlock':
           {
             const blocks = html.querySelectorAll('.coc7-chat-toggled')
-            console.log(blocks)
             if (typeof blocks[event.currentTarget.dataset.offset] !== 'undefined') {
               /* // jQuery */
               $(blocks[event.currentTarget.dataset.offset]).slideToggle(200)

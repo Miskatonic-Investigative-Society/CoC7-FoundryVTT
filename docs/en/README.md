@@ -32,6 +32,7 @@ For a full list of changes checkout the [changelog](https://github.com/Miskatoni
 - Move d100 rolls to new dice-pool class so manual dice windows will trigger if set
 - Remove custom CSS options and Override Sheet Artwork button to Game Settings panel with information how to move them to a separate module
 - Add setting to use icons for eras instead of text
+- Add house rule to allow pushing fumbles, after dealing with the fumble consequences why not risk more?
 
 # Chaosium Modules
 - [Call of Cthulhu® - Starter Set](https://foundryvtt.com/packages/cha-coc-fvtt-en-starterset) - Contains three scenarios (Paper Chase, Edge of Darkness, and Dead Man Stomp) and instructions for playing Call of Cthulhu 7th edition.

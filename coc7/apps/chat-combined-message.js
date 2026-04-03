@@ -360,8 +360,8 @@ export default class CoC7ChatCombinedMessage {
           if (check && set) {
             switch (set) {
               case 'cardOpen':
-                {
-                  check.#cardOpen = !check.#cardOpen
+                check.#cardOpen = !check.#cardOpen
+                if (game.settings.get(FOLDER_ID, 'xpEnabled')) {
                   const templateData = await check.getTemplateData()
                   for (const actorUuid in templateData.rollActors) {
                     for (const roll of templateData.rollActors[actorUuid].rolls) {
@@ -373,8 +373,8 @@ export default class CoC7ChatCombinedMessage {
                       }
                     }
                   }
-                  check.updateMessage()
                 }
+                check.updateMessage()
                 break
               default:
                 ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })

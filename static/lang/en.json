@@ -1012,6 +1012,8 @@
   "CoC7.Settings.WorldEra.Hint": "Skills can vary slightly between eras, please select the era for this world so system searches for skills find the correct ones.",
   "CoC7.Settings.ShowWorldEra.Name": "Show World Era in players list",
   "CoC7.Settings.ShowWorldEra.Hint": "",
+  "CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
+  "CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
 
   "CoC7.Settings.DropCoCID.Name": "Use CoC ID on item drops",
   "CoC7.Settings.DropCoCID.Hint": "When dropping items with a CoC ID prompt to store the CoC ID instead of the item",

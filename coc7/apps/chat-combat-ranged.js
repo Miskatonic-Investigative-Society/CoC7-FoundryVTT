@@ -242,13 +242,21 @@ export default class CoC7ChatCombatRanged {
     const item = (await this.item)
     const data = await this.getTemplateData()
     if (this.#fullAuto || this.#multipleShots) {
+      const itemSkill = ((this.#burst || this.#fullAuto) ? item.system.skillAlternative : item.system.skillMain)
+      let anyRolledSuccess = false
       for (const offset in this.#shots) {
         await this.#shots[offset].dicePool.roll()
+        if (this.#shots[offset].dicePool.isRolledSuccess) {
+          anyRolledSuccess = true
+        }
         await item.system.shootAmmunition(this.#shots[offset].bulletsShot + this.#shots[offset].transitBullets)
         if (this.#shots[offset].dicePool.isMalfunction) {
           this.#shots[offset].dicePool.setSuccess(false)
           break
         }
+      }
+      if (anyRolledSuccess) {
+        await CoC7Utilities.messageRollFlagForDevelopment(this.message.id, itemSkill, true)
       }
     } else {
       const activeTarget = data.targets.find(t => t.active)
@@ -270,6 +278,9 @@ export default class CoC7ChatCombatRanged {
           }),
           skillName: itemSkill.name,
           transitBullets: 0
+        }
+        if (shot.dicePool.isRolledSuccess) {
+          await CoC7Utilities.messageRollFlagForDevelopment(this.message.id, itemSkill, true)
         }
         if (shot.dicePool.isMalfunction) {
           shot.dicePool.setSuccess(false)

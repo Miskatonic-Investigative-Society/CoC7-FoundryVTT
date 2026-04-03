@@ -103,6 +103,9 @@
             {{#if buttons.luckExtreme}}
               <button data-action="luck" data-luck-spend="{{buttons.luckExtreme}}">{{localize 'CoC7.IncreaseSuccessLevel'}}: {{localize 'CoC7.ExtremeDifficulty'}} - {{buttons.luckExtreme}} {{localize 'CoC7.Luck'}}.</button>
             {{/if}}
+            {{#if buttons.luckCritical}}
+              <button data-action="luck" data-luck-spend="{{buttons.luckCritical}}">{{localize 'CoC7.IncreaseSuccessLevel'}}: {{localize 'CoC7.CriticalDifficulty'}} - {{buttons.luckCritical}} {{localize 'CoC7.Luck'}}.</button>
+            {{/if}}
             {{#if buttons.addBonus2}}
               <button data-action="bonus" data-quantity="2" data-actor-roll-offset="{{offset}}">{{localize 'CoC7.PoolAddTwoBonus'}}</button>
             {{/if}}

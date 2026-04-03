@@ -591,6 +591,7 @@ export default class CoC7DicePool {
             luckRequiredRegular: 0,
             luckRequiredHard: 0,
             luckRequiredExtreme: 0,
+            luckRequiredCritical: 0,
             resultType: '',
             rollMethod: undefined,
             successLevel: '',
@@ -650,6 +651,10 @@ export default class CoC7DicePool {
           if (typeof populateThresholdRanges[CoC7DicePool.difficultyLevel.extreme] !== 'undefined') {
             output.luckRequiredExtreme = Math.max(0, output.total - populateThresholdRanges[CoC7DicePool.difficultyLevel.extreme][1])
           }
+          if (typeof populateThresholdRanges[CoC7DicePool.difficultyLevel.critical] !== 'undefined') {
+            output.luckRequiredCritical = Math.max(0, output.total - populateThresholdRanges[CoC7DicePool.difficultyLevel.critical][1])
+          }
+
           if (this.#difficulty !== CoC7DicePool.difficultyLevel.unknown) {
             output.successRequired = game.i18n.format('CoC7.SuccessRequired', {
               successRequired: CoC7DicePool.difficultyString(this.#difficulty)
@@ -733,6 +738,15 @@ export default class CoC7DicePool {
    */
   get difficulty () {
     return this.#difficulty
+  }
+
+  /**
+   * Luck required to get critical success
+   * @returns {integer}
+   */
+  get luckRequiredCritical () {
+    const roll = this.diceGroups[this.diceGroups.length - 1]
+    return roll?.luckRequiredCritical ?? 0
   }
 
   /**
@@ -1160,7 +1174,7 @@ export default class CoC7DicePool {
           }
         }
         if (!this.isSuccess) {
-          if (!isSanity && isPushable) {
+          if (!isSanity && isPushable && (!this.isFumble || game.settings.get(FOLDER_ID, 'allowPushFumbles'))) {
             buttons.pushRoll = true
           }
           if (!this.isFumble && !isLuck && !isSanity && !this.isMalfunction) {
@@ -1178,6 +1192,10 @@ export default class CoC7DicePool {
           value = this.luckRequiredExtreme
           if (value > 0 && luckAvailable > value && this.#difficulty <= CoC7DicePool.difficultyLevel.extreme) {
             buttons.luckExtreme = value
+          }
+          value = this.luckRequiredCritical
+          if (value > 0 && luckAvailable > value && this.#difficulty <= CoC7DicePool.difficultyLevel.critical) {
+            buttons.luckCritical = value
           }
         }
       }

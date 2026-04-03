@@ -8,7 +8,6 @@ import deprecated from '../deprecated.js'
 
 export default function () {
   console.log('Call of Cthulhu 7th Edition | Ready')
-  // CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
 
   const instructionsVersion = game.settings.get(FOLDER_ID, 'showInstructions')
   let lang = game.i18n.lang

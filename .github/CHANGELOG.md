@@ -42,6 +42,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Add setting to use icons for eras instead of text
 - Add icon field to game.CoC7.eras defaulting to "fa-solid fa-info-circle"
 - Add Survival (Desert) and Track skills to 1920 Character Example
+- Add house rule to allow pushing fumbles, after dealing with the fumble consequences why not risk more?
 - Update to French localization, thanks to @vonv #1991, #1992, and #1993
 - Update to Japanese localization, thanks to @doumoku #2003
 - Update to Swedish localization, thanks to @Rangertheman #1995

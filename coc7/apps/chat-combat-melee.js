@@ -521,6 +521,8 @@ export default class CoC7ChatCombatMelee {
       isFightBack: (this.#isNoResponse ? false : item?.type === 'weapon'),
       isManeuver: (this.#isNoResponse ? false : item?.type === 'skill' && item?.system?.isDodge !== true),
       isNoResponse: this.#isNoResponse,
+      isRolledSuccess: (this.#dicePool.isRolled ? this.#dicePool.isRolledSuccess : false),
+      isSuccess: (this.#dicePool.isRolled ? this.#dicePool.isSuccess : false),
       itemImg: (this.#isNoResponse ? false : item?.img),
       itemName: (this.#isNoResponse ? game.i18n.localize('CoC7.NoResponse') : (item?.name ?? '...')),
       itemUuid: (this.#isNoResponse ? false : item?.uuid),

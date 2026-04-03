@@ -129,7 +129,7 @@ export default class CoC7ChatDamage {
           check.item = targetData.itemUuid
           check.target = attackerData.attackerUuid
         }
-      } else if (attackerData.successLevel >= CoC7DicePool.successLevel.regular) {
+      } else if (attackerData.isSuccess) {
         checkCritical = true
         check.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
           name: attackerData.attackerName
