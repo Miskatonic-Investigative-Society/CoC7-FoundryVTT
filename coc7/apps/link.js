@@ -123,16 +123,19 @@ export default class CoC7Link {
    * @param {HTMLElement} element
    */
   static onRenderEnricher (element) {
-    element.addEventListener('click', event => {
-      if (event.target?.closest('a.coc7-link')) {
-        CoC7Link._onLinkClick(event)
-      }
-    })
-    element.addEventListener('dragstart', event => {
-      if (event.target?.closest('a.coc7-link')) {
-        CoC7Link._onDragCoC7Link(event)
-      }
-    })
+    if (!element.dataset.hasEvents) {
+      element.dataset.hasEvents = true
+      element.addEventListener('click', event => {
+        if (event.target?.closest('a.coc7-link')) {
+          CoC7Link._onLinkClick(event)
+        }
+      })
+      element.addEventListener('dragstart', event => {
+        if (event.target?.closest('a.coc7-link')) {
+          CoC7Link._onDragCoC7Link(event)
+        }
+      })
+    }
   }
 
   /**
