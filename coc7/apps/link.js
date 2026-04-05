@@ -97,19 +97,41 @@ export default class CoC7Link {
     CONFIG.CoC7Link = {
       documentClass: CoC7Link
     }
-    document.body.addEventListener('click', event => {
+    /* // FoundryVTT V12 */
+    if (game.release.generation === 12) {
+      document.body.addEventListener('click', event => {
+        if (event.target?.closest('a.coc7-link')) {
+          CoC7Link._onLinkClick(event)
+        }
+      })
+      document.body.addEventListener('dragstart', event => {
+        if (event.target?.closest('a.coc7-link')) {
+          CoC7Link._onDragCoC7Link(event)
+        }
+      })
+    }
+    CONFIG.TextEditor.enrichers.push({
+      id: 'coc7-enricher',
+      pattern: new RegExp('@(coc7)\\.' + '(check|effect|item|sanloss)' + '\\[((?:[^\\[\\]]*(?:\\[[^\\[\\]]*[^\\[\\]]*\\])*[^\\[\\]]*)*)\\]' + '(?:{([^}]+)})?', 'gi'),
+      enricher: CoC7Link._createLink,
+      onRender: CoC7Link.onRenderEnricher
+    })
+  }
+
+  /**
+   * Make links clickable
+   * @param {HTMLElement} element
+   */
+  static onRenderEnricher (element) {
+    element.addEventListener('click', event => {
       if (event.target?.closest('a.coc7-link')) {
         CoC7Link._onLinkClick(event)
       }
     })
-    document.body.addEventListener('dragstart', event => {
+    element.addEventListener('dragstart', event => {
       if (event.target?.closest('a.coc7-link')) {
         CoC7Link._onDragCoC7Link(event)
       }
-    })
-    CONFIG.TextEditor.enrichers.push({
-      pattern: new RegExp('@(coc7)\\.' + '(check|effect|item|sanloss)' + '\\[((?:[^\\[\\]]*(?:\\[[^\\[\\]]*[^\\[\\]]*\\])*[^\\[\\]]*)*)\\]' + '(?:{([^}]+)})?', 'gi'),
-      enricher: CoC7Link._createLink
     })
   }
 

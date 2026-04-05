@@ -1,4 +1,4 @@
-/* global foundry game */
+/* global foundry game ui */
 import { FOLDER_ID } from '../constants.js'
 import CoC7RegisterTours from '../setup/register-tours.js'
 import CoC7SystemSocket from '../apps/system-socket.js'
@@ -53,4 +53,8 @@ export default function () {
   CoC7Utilities.updateBoutTableChoices()
   deprecated.ready()
   CoC7Updater.checkForUpdate()
+
+  if (game.modules.get('dice-so-nice')?.version === '5.3.0') {
+    ui.notifications.error('Dice So Nice 5.3.0 is not compatible with the system, please update to 5.3.2', { localize: false, permanent: true, console: false })
+  }
 }
