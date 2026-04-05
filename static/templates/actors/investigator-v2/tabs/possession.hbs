@@ -17,7 +17,7 @@
             <ul class="item-list">
               {{#each itemsByType.item as |item|}}
                 <li class="item flexrow draggable" data-item-uuid="{{item.uuid}}">
-                  <div class="item-image" style="background-image: url({{item.img}})"></div>
+                  <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{system.quantity}} x {{item.name}}</div>
                   <div class="item-controls">
                     <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
@@ -42,7 +42,7 @@
             <ul class="item-list">
               {{#each itemsByType.book as |item|}}
                 <li class="item flexrow draggable" data-item-uuid="{{item.uuid}}">
-                  <div class="item-image" style="background-image: url({{item.img}})"></div>
+                  <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
                     <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
@@ -67,7 +67,7 @@
             <ul class="item-list">
               {{#each itemsByType.spell as |item|}}
                 <li class="item flexrow" data-item-uuid="{{item.uuid}}">
-                  <div class="item-image" style="background-image: url({{item.img}})"></div>
+                  <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
                     <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
@@ -87,7 +87,7 @@
             <ul class="item-list">
               {{#each itemsByType.talent as |item|}}
                 <li class="item flexrow" data-item-uuid="{{item.uuid}}">
-                  <div class="item-image" style="background-image: url({{item.img}})"></div>
+                  <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
                     <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
@@ -111,7 +111,7 @@
             <ul class="item-list">
               {{#each itemsByType.weapon as |item|}}
                 <li class="item flexrow draggable" data-item-uuid="{{item.uuid}}">
-                  <div class="item-image" style="background-image: url({{item.img}})"></div>
+                  <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
                     <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
@@ -136,7 +136,7 @@
             <ul class="item-list">
               {{#each itemsByType.armor as |item|}}
                 <li class="item flexrow draggable" data-item-uuid="{{item.uuid}}">
-                  <div class="item-image" style="background-image: url({{item.img}})"></div>
+                  <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
                     <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
@@ -156,7 +156,7 @@
             <ul class="item-list">
               {{#each itemsByType.status as |item|}}
                 <li class="item flexrow" data-item-uuid="{{item.uuid}}">
-                  <div class="item-image" style="background-image: url({{item.img}})"></div>
+                  <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
                     {{#if ../isKeeper}}
