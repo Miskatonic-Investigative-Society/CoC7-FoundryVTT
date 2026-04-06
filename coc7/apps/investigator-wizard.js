@@ -961,6 +961,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                     name,
                     isOccupation: row.occupationToggle,
                     isArchetype: row.archetypeToggle,
+                    isCthulhuMythos: row.isCthulhuMythos,
                     base,
                     personalPoints: row.personalPoints,
                     occupationPoints: row.occupationPoints,
@@ -1496,17 +1497,24 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_POINTS_SKILLS:
-        form.querySelectorAll('.skill-adjustment').forEach((element) => element.addEventListener('blur', async (event) => {
-          const input = event.currentTarget
-          const adjustment = input.dataset.adjustment
-          const row = input.closest('.points-row')
-          const key = row.dataset.key
-          const index = row.dataset.index
-          if (typeof this.coc7Config.skillItems[key]?.rows[index][adjustment] !== 'undefined') {
-            this.coc7Config.skillItems[key].rows[index][adjustment] = input.value
+        form.querySelectorAll('.skill-adjustment').forEach((element) => {
+          element.addEventListener('blur', async (event) => {
+            const input = event.currentTarget
+            const adjustment = input.dataset.adjustment
+            const row = input.closest('.points-row')
+            const key = row.dataset.key
+            const index = row.dataset.index
+            if (typeof this.coc7Config.skillItems[key]?.rows[index][adjustment] !== 'undefined') {
+              this.coc7Config.skillItems[key].rows[index][adjustment] = input.value
+            }
+            this.render({ force: true })
+          })
+          if (element.readOnly) {
+            element.addEventListener('dblclick', async (event) => {
+              element.readOnly = false
+            })
           }
-          this.render({ force: true })
-        }))
+        })
         break
 
       case context.pages.PAGE_INVESTIGATOR:
@@ -1607,11 +1615,13 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       return
     }
     const isMultiple = (item.system.properties.special && !item.system.properties.own && key !== this.cocidLanguageOwn && (item.system.properties.requiresname || item.system.properties.picknameonly || item.system.skillName === game.i18n.format('CoC7.AnySpecName')))
+    const isCthulhuMythos = item.flags[FOLDER_ID]?.cocidFlag?.id === 'i.skill.cthulhu-mythos' || game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos').toLowerCase() === item.name.toLowerCase()
     const flags = {
       isOccupationDefault,
       inOccupationGroup,
       isArchetypeDefault,
       isCreditRating,
+      isCthulhuMythos,
       occupationToggle,
       archetypeToggle
     }
@@ -1882,37 +1892,39 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         specializationName: this.coc7Config.skillItems[key].item.system.specialization,
         label: this.coc7Config.skillItems[key].item.name
       })
-      if (index > -1) {
-        if (skillData.selected !== '') {
-          this.coc7Config.skillItems[key].rows[index].selected = skillList.find(i => i.id === skillData.selected)
-          this.coc7Config.skillItems[key].rows[index][toggleKey] = true
-        } else if (skillData.name !== '') {
-          this.coc7Config.skillItems[key].rows[index].selected = skillData.name
-          this.coc7Config.skillItems[key].rows[index][toggleKey] = true
+      if (skillData !== false) {
+        if (index > -1) {
+          if (skillData.selected !== '') {
+            this.coc7Config.skillItems[key].rows[index].selected = skillList.find(i => i.id === skillData.selected)
+            this.coc7Config.skillItems[key].rows[index][toggleKey] = true
+          } else if (skillData.name !== '') {
+            this.coc7Config.skillItems[key].rows[index].selected = skillData.name
+            this.coc7Config.skillItems[key].rows[index][toggleKey] = true
+          }
+        } else {
+          let selected = false
+          let newCoCId = false
+          if (skillData.selected !== '') {
+            selected = skillList.find(i => i.id === skillData.selected)
+          } else if (skillData.name !== '') {
+            selected = skillData.name
+            newCoCId = true
+          }
+          this.coc7Config.skillItems[key].rows.push({
+            isOccupationDefault: false,
+            inOccupationGroup: false,
+            isArchetypeDefault: false,
+            isCreditRating: false,
+            occupationToggle: (toggleKey === 'occupationToggle'),
+            archetypeToggle: (toggleKey === 'archetypeToggle'),
+            occupationPoints: '',
+            archetypePoints: '',
+            experiencePoints: '',
+            personalPoints: '',
+            selected,
+            newCoCId
+          })
         }
-      } else {
-        let selected = false
-        let newCoCId = false
-        if (skillData.selected !== '') {
-          selected = skillList.find(i => i.id === skillData.selected)
-        } else if (skillData.name !== '') {
-          selected = skillData.name
-          newCoCId = true
-        }
-        this.coc7Config.skillItems[key].rows.push({
-          isOccupationDefault: false,
-          inOccupationGroup: false,
-          isArchetypeDefault: false,
-          isCreditRating: false,
-          occupationToggle: (toggleKey === 'occupationToggle'),
-          archetypeToggle: (toggleKey === 'archetypeToggle'),
-          occupationPoints: '',
-          archetypePoints: '',
-          experiencePoints: '',
-          personalPoints: '',
-          selected,
-          newCoCId
-        })
       }
       this.render({ force: true })
     }

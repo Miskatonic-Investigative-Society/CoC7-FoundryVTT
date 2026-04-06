@@ -364,19 +364,19 @@ export default class CoC7DholeHouseActorImporter {
     }
     // Normalize Skills, Possessions, and Weapons
     if (typeof dholeHouseCharacterData.Investigator?.Skills?.Skill === 'undefined' || dholeHouseCharacterData.Investigator.Skills.Skill === null) {
-      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Skills.Skill', [])
+      foundry.utils.setProperty(dholeHouseCharacterData, 'Investigator.Skills.Skill', [])
     } else if (!Array.isArray(dholeHouseCharacterData.Investigator.Skills.Skill)) {
-      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Skills.Skill', [dholeHouseCharacterData.Investigator.Skills.Skill])
+      foundry.utils.setProperty(dholeHouseCharacterData, 'Investigator.Skills.Skill', [dholeHouseCharacterData.Investigator.Skills.Skill])
     }
     if (typeof dholeHouseCharacterData.Investigator?.Possessions?.item === 'undefined' || dholeHouseCharacterData.Investigator.Possessions.item === null) {
-      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Possessions.item', [])
+      foundry.utils.setProperty(dholeHouseCharacterData, 'Investigator.Possessions.item', [])
     } else if (!Array.isArray(dholeHouseCharacterData.Investigator.Possessions.item)) {
-      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Possessions.item', [dholeHouseCharacterData.Investigator.Possessions.item])
+      foundry.utils.setProperty(dholeHouseCharacterData, 'Investigator.Possessions.item', [dholeHouseCharacterData.Investigator.Possessions.item])
     }
     if (typeof dholeHouseCharacterData.Investigator?.Weapons?.weapon === 'undefined' || dholeHouseCharacterData.Investigator.Weapons.weapon === null) {
-      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Weapons.weapon', [])
+      foundry.utils.setProperty(dholeHouseCharacterData, 'Investigator.Weapons.weapon', [])
     } else if (!Array.isArray(dholeHouseCharacterData.Investigator.Weapons.weapon)) {
-      foundry.setProperty(dholeHouseCharacterData, 'Investigator.Weapons.weapon', [dholeHouseCharacterData.Investigator.Weapons.weapon])
+      foundry.utils.setProperty(dholeHouseCharacterData, 'Investigator.Weapons.weapon', [dholeHouseCharacterData.Investigator.Weapons.weapon])
     }
     const progressBar = {
       current: 0,

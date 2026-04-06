@@ -189,7 +189,7 @@ export default class CoC7Updater {
         if (documentUpdate.parentUuid !== '') {
           options.parent = await fromUuid(documentUpdate.parentUuid)
         }
-        console.log('Migrating ' + (documentUpdate.updates.length) + ' ' + (documentUpdate.packId === '' ? 'World ' : 'Pack(' + documentUpdate.packId + ') ') + documentUpdate.type + (documentUpdate.parentUuid === '' ? '' : '(' + documentUpdate.parentUuid + ') embedded') + ' document(s)')
+        console.log('Migrating ' + (documentUpdate.updates.length) + ' ' + (documentUpdate.packId === '' ? 'World ' : 'Pack(' + documentUpdate.packId + ') ') + documentUpdate.type + (documentUpdate.parentUuid === '' ? '' : '(' + documentUpdate.parentUuid + ') embedded') + ' document(s)', documentUpdate.updates)
         if (wasLocked) {
           await game.packs.get(documentUpdate.packId).configure({ locked: false })
         }
@@ -265,7 +265,6 @@ export default class CoC7Updater {
     CoC7Updater._migrateItemArtwork({ document, documentUpdates, packId, parentUuid })
     CoC7Updater._migrateItemEmbeddedV10({ document, documentUpdates, packId, parentUuid })
     CoC7Updater._migrateItemSkillName({ document, documentUpdates, packId, parentUuid })
-    CoC7Updater._migrateItemEmbeddedDocuments({ document, documentUpdates, packId, parentUuid })
     CoC7Updater._migrateItemChases({ document, documentUpdates, packId, parentUuid })
 
     for (const offset in document.effects?.contents ?? []) {
@@ -465,13 +464,16 @@ export default class CoC7Updater {
         (document.name === 'Uniki' ? 'Unik' : document.name),
         typeof document.system?.specialization?.group === 'string' ? document.system.specialization.group : (document.system?.specialization ?? '')
       )
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
-        name: parts.name,
-        'system.skillName': parts.skillName,
-        'system.specialization': parts.specialization
-      })
+      if (document.name !== parts.name || document.system.skillName !== parts.skillName || document.system.specialization !== parts.specialization) {
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
+          name: parts.name,
+          'system.skillName': parts.skillName,
+          'system.specialization': parts.specialization
+        })
+      }
     } else if (['archetype', 'occupation', 'setup'].includes(document.type)) {
       const itemDocuments = foundry.utils.duplicate(document.system.itemDocuments)
+      let changed = false
       for (const offset in itemDocuments) {
         if (typeof itemDocuments[offset] === 'string') {
           itemDocuments[offset] = JSON.parse(itemDocuments[offset])
@@ -481,16 +483,22 @@ export default class CoC7Updater {
           (itemDocuments[offset].name === 'Uniki' ? 'Unik' : itemDocuments[offset].name),
           typeof itemDocuments[offset].system?.specialization?.group === 'string' ? itemDocuments[offset].system.specialization.group : (itemDocuments[offset].system?.specialization ?? '')
         )
-        foundry.utils.setProperty(itemDocuments[offset], 'name', parts.name)
-        foundry.utils.setProperty(itemDocuments[offset], 'system.skillName', parts.skillName)
-        foundry.utils.setProperty(itemDocuments[offset], 'system.specialization', parts.specialization)
-        itemDocuments[offset] = JSON.stringify(itemDocuments[offset])
+        if (itemDocuments[offset].name !== parts.name || itemDocuments[offset].system?.skillName !== parts.skillName || itemDocuments[offset].system?.specialization !== parts.specialization) {
+          foundry.utils.setProperty(itemDocuments[offset], 'name', parts.name)
+          foundry.utils.setProperty(itemDocuments[offset], 'system.skillName', parts.skillName)
+          foundry.utils.setProperty(itemDocuments[offset], 'system.specialization', parts.specialization)
+          itemDocuments[offset] = JSON.stringify(itemDocuments[offset])
+          changed = true
+        }
       }
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
-        'system.itemDocuments': itemDocuments
-      })
+      if (changed) {
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
+          'system.itemDocuments': itemDocuments
+        })
+      }
       if (document.type === 'occupation') {
         const groups = foundry.utils.duplicate(document.system.groups)
+        let changed = false
         for (const offset2 in groups) {
           for (const offset in groups[offset2].itemDocuments) {
             if (typeof groups[offset2].itemDocuments[offset] === 'string') {
@@ -501,55 +509,21 @@ export default class CoC7Updater {
               (groups[offset2].itemDocuments[offset].name === 'Uniki' ? 'Unik' : groups[offset2].itemDocuments[offset].name),
               typeof groups[offset2].itemDocuments[offset].system?.specialization?.group === 'string' ? groups[offset2].itemDocuments[offset].system.specialization.group : (groups[offset2].itemDocuments[offset].system?.specialization ?? '')
             )
-            foundry.utils.setProperty(groups[offset2].itemDocuments[offset], 'name', parts.name)
-            foundry.utils.setProperty(groups[offset2].itemDocuments[offset], 'system.skillName', parts.skillName)
-            foundry.utils.setProperty(groups[offset2].itemDocuments[offset], 'system.specialization', parts.specialization)
-            groups[offset2].itemDocuments[offset] = JSON.stringify(groups[offset2].itemDocuments[offset])
+            if (groups[offset2].itemDocuments[offset].name !== parts.name || groups[offset2].itemDocuments[offset].system?.skillName !== parts.skillName || groups[offset2].itemDocuments[offset].system?.specialization !== parts.specialization) {
+              foundry.utils.setProperty(groups[offset2].itemDocuments[offset], 'name', parts.name)
+              foundry.utils.setProperty(groups[offset2].itemDocuments[offset], 'system.skillName', parts.skillName)
+              foundry.utils.setProperty(groups[offset2].itemDocuments[offset], 'system.specialization', parts.specialization)
+              groups[offset2].itemDocuments[offset] = JSON.stringify(groups[offset2].itemDocuments[offset])
+              changed = true
+            }
           }
         }
-        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
-          'system.groups': groups
-        })
+        if (changed) {
+          CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
+            'system.groups': groups
+          })
+        }
       }
-    }
-  }
-
-  /**
-   * Migrate Item Embedded Documents
-   * @param {object} options
-   * @param {object} options.document
-   * @param {object} options.documentUpdates
-   * @param {string} options.packId
-   * @param {string} options.parentUuid
-   */
-  static _migrateItemEmbeddedDocuments ({ document, documentUpdates, packId = '', parentUuid = '' } = {}) {
-    if (['archetype', 'experiencePackage', 'occupation'].includes(document.type)) {
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
-        /* // FoundryVTT V13 */
-        'system.-=skills': null
-      })
-    }
-    if (['book'].includes(document.type)) {
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
-        /* // FoundryVTT V13 */
-        'system.-=spells': null
-      })
-    }
-    if (['setup'].includes(document.type)) {
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
-        /* // FoundryVTT V13 */
-        'system.-=items': null
-      })
-    }
-    if (['experiencePackage', 'occupation'].includes(document.type)) {
-      const groups = foundry.utils.duplicate(document.system.groups)
-      for (const index in groups) {
-        groups[index]['-=skills'] = null
-      }
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
-        /* // FoundryVTT V13 */
-        'system.groups': groups
-      })
     }
   }
 
@@ -830,9 +804,11 @@ export default class CoC7Updater {
           books.push(book)
         }
       }
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, {
-        'system.books': books
-      })
+      if (books.length) {
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, {
+          'system.books': books
+        })
+      }
     }
   }
 

@@ -483,6 +483,44 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
           row['system.skill.alternativ.name'] = 'i.skill.throw'
         }
         foundItem.push(row)
+      } else if (['archetype', 'experiencePackage', 'setup', 'occupation'].includes(item.type)) {
+        const row = {}
+        const found = item.system?.itemKeys?.filter(t => t.match(/^i.skill.(firearms|fighting|ranged)-throw$/)) ?? []
+        if (found.length) {
+          const itemKeys = foundry.utils.duplicate(item.system.itemKeys)
+          let index
+          do {
+            index = itemKeys.findIndex(t => t.match(/^i.skill.(firearms|fighting|ranged)-throw$/))
+            if (index > -1) {
+              itemKeys[index] = 'i.skill.throw'
+            }
+          } while (index > -1)
+          row['system.itemKeys'] = itemKeys
+        }
+        if (['experiencePackage', 'occupation'].includes(item.type)) {
+          const groups = foundry.utils.duplicate(item.system.groups)
+          let changed = false
+          for (const index in groups) {
+            const found = groups[index].itemKeys?.filter(t => t.match(/^i.skill.(firearms|fighting|ranged)-throw$/)) ?? []
+            if (found.length) {
+              let index2
+              do {
+                index2 = groups[index].itemKeys.findIndex(t => t.match(/^i.skill.(firearms|fighting|ranged)-throw$/))
+                if (index2 > -1) {
+                  groups[index].itemKeys[index2] = 'i.skill.throw'
+                  changed = true
+                }
+              } while (index2 > -1)
+            }
+          }
+          if (changed) {
+            row['system.groups'] = groups
+          }
+        }
+        if (Object.keys(row).length) {
+          row._id = item._id
+          foundItem.push(row)
+        }
       }
     }
     for (const scene of game.scenes) {
@@ -598,6 +636,47 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
                 row['system.skill.alternativ.name'] = 'i.skill.throw'
               }
               foundCompendiumItem[pack.collection].push(row)
+            } else if (['archetype', 'experiencePackage', 'setup', 'occupation'].includes(item.type)) {
+              if (typeof foundCompendiumItem[pack.collection] === 'undefined') {
+                foundCompendiumItem[pack.collection] = []
+              }
+              const row = {}
+              const found = item.system?.itemKeys?.filter(t => t.match(/^i.skill.(firearms|fighting|ranged)-throw$/)) ?? []
+              if (found.length) {
+                const itemKeys = foundry.utils.duplicate(item.system.itemKeys)
+                let index
+                do {
+                  index = itemKeys.findIndex(t => t.match(/^i.skill.(firearms|fighting|ranged)-throw$/))
+                  if (index > -1) {
+                    itemKeys[index] = 'i.skill.throw'
+                  }
+                } while (index > -1)
+                row['system.itemKeys'] = itemKeys
+              }
+              if (['experiencePackage', 'occupation'].includes(item.type)) {
+                const groups = foundry.utils.duplicate(item.system.groups)
+                let changed = false
+                for (const index in groups) {
+                  const found = groups[index].itemKeys?.filter(t => t.match(/^i.skill.(firearms|fighting|ranged)-throw$/)) ?? []
+                  if (found.length) {
+                    let index2
+                    do {
+                      index2 = groups[index].itemKeys.findIndex(t => t.match(/^i.skill.(firearms|fighting|ranged)-throw$/))
+                      if (index2 > -1) {
+                        groups[index].itemKeys[index2] = 'i.skill.throw'
+                        changed = true
+                      }
+                    } while (index2 > -1)
+                  }
+                }
+                if (changed) {
+                  row['system.groups'] = groups
+                }
+              }
+              if (Object.keys(row).length) {
+                row._id = item._id
+                foundCompendiumItem[pack.collection].push(row)
+              }
             }
           }
         }
