@@ -128,39 +128,6 @@ export const MONETARY_TYPES = {
   }
 }
 
-export const CHARACTERISTICS = {
-  // Chaosium.com Character Sheet PDFs
-  // A Time to Harvest
-  // Call of Cthulhu 7th Edition Quick-Start Rules
-  // Call of Cthulhu: Arkham
-  // Call of Cthulhu: No Time to Scream
-  // Call of Cthulhu: The Order of the Stone
-  // Cthulhu by Gaslight: Investigators' Guide
-  // - STR CON DEX INT SIZ POW APP EDU
-  // Alone Against the Flames
-  // - STR CON SIZ DEX APP INT POW EDU
-  // Alone against the Tide
-  // Masks of Nyarlathotep - 7th Edition
-  // - STR CON SIZ DEX APP EDU INT POW
-  // Berlin - The Wicked City
-  // Doors to Darkness
-  // Reign of Terror
-  // - STR CON SIZ DEX INT APP POW EDU
-  // Dead Light
-  // - STR CON SIZ INT POW DEX APP EDU
-  // Harlem Unbound - Second Edition
-  // - STR DEX POW CON APP EDU SIZ INT
-
-  str: 'CoC7.CharacStr',
-  con: 'CoC7.CharacCon',
-  dex: 'CoC7.CharacDex',
-  int: 'CoC7.CharacInt',
-  siz: 'CoC7.CharacSiz',
-  pow: 'CoC7.CharacPow',
-  app: 'CoC7.CharacApp',
-  edu: 'CoC7.CharacEdu'
-}
-
 export const STATUS_EFFECTS = {
   tempoInsane: 'tempoInsane',
   indefInsane: 'indefInsane',

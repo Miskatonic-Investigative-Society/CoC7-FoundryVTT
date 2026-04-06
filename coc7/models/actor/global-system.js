@@ -120,6 +120,27 @@ export default class CoC7ModelsActorGlobalSystem extends foundry.abstract.TypeDa
   static defineSchemaCharacteristics () {
     const fields = foundry.data.fields
     return new fields.SchemaField({
+      // Chaosium.com Character Sheet PDFs
+      // A Time to Harvest
+      // Call of Cthulhu 7th Edition Quick-Start Rules
+      // Call of Cthulhu: Arkham
+      // Call of Cthulhu: No Time to Scream
+      // Call of Cthulhu: The Order of the Stone
+      // Cthulhu by Gaslight: Investigators' Guide
+      // - STR CON DEX INT SIZ POW APP EDU
+      // Alone Against the Flames
+      // - STR CON SIZ DEX APP INT POW EDU
+      // Alone against the Tide
+      // Masks of Nyarlathotep - 7th Edition
+      // - STR CON SIZ DEX APP EDU INT POW
+      // Berlin - The Wicked City
+      // Doors to Darkness
+      // Reign of Terror
+      // - STR CON SIZ DEX INT APP POW EDU
+      // Dead Light
+      // - STR CON SIZ INT POW DEX APP EDU
+      // Harlem Unbound - Second Edition
+      // - STR DEX POW CON APP EDU SIZ INT
       str: new fields.SchemaField({
         formula: new fields.StringField({ initial: '' }),
         value: new fields.NumberField({ nullable: true, initial: null })
