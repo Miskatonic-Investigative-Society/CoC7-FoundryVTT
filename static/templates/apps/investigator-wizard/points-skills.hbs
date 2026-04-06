@@ -15,7 +15,7 @@
       <div class="points-row flexrow" data-key="{{skill.key}}" data-index="{{skill.index}}">
         <div class="skill-name">{{skill.name}}</div>
         <div class="adjustment-value" data-tooltip="CoC7.SkillBase">{{skill.base}}</div>
-        <div class="adjustment-value" data-tooltip="CoC7.SkillPersonal"><input type="number" class="skill-adjustment" data-adjustment="personalPoints" value="{{skill.personalPoints}}"></div>
+        <div class="adjustment-value" data-tooltip="CoC7.SkillPersonal"><input type="number" class="skill-adjustment" data-adjustment="personalPoints" value="{{skill.personalPoints}}"{{#if skill.isCthulhuMythos}} readonly{{/if}}></div>
         <div class="adjustment-value" data-tooltip="CoC7.SkillOccupation">
           {{#if skill.isOccupation}}
             <input type="number" class="skill-adjustment" data-adjustment="occupationPoints" value="{{skill.occupationPoints}}">
