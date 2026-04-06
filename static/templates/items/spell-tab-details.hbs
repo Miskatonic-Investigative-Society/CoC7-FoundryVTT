@@ -1,0 +1,42 @@
+<section class="tab details flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="details">
+  {{#if tabs.details}}
+    <fieldset class="flexrow">
+      <legend>{{localize 'CoC7.SpellType'}}</legend>
+      <div class="toggle-row flexrow">
+        <div class="toggle-attributes flexrow" data-set="type">
+          {{#each _types as |row|}}
+            <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+          {{/each}}
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="flexrow">
+      <div class="columns flexrow">
+        <div class="flexrow column-second">
+          <label>{{localize 'CoC7.SanityCost'}}:</label>
+          <input type="text" name="system.costs.sanity" value="{{document.system.costs.sanity}}" />
+        </div>
+        <div class="flexrow column-second">
+          <label>{{localize 'CoC7.HitPointsCost'}}:</label>
+          <input type="text" name="system.costs.hitPoints" value="{{document.system.costs.hitPoints}}" />
+        </div>
+        <div class="flexrow column-second">
+          <label>{{localize 'CoC7.PowerCost'}}:</label>
+          <input type="text" name="system.costs.power" value="{{document.system.costs.power}}" />
+        </div>
+        <div class="flexrow column-second">
+          <label>{{localize 'CoC7.MagicPointsCost'}}:</label>
+          <input type="text" name="system.costs.magicPoints" value="{{document.system.costs.magicPoints}}" />
+        </div>
+        <div class="flexrow column-first">
+          <label style="flex: 0 0 6.6875rem">{{localize 'CoC7.OtherCosts'}}:</label>
+          <input style="flex: 3" type="text" name="system.costs.others" value="{{document.system.costs.others}}" />
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="flexcol" style="flex: 1">
+      <legend>{{localize 'CoC7.AlternativeNames'}}</legend>
+      <prose-mirror name="system.description.alternativeNames" value="{{document.system.description.alternativeNames}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedDescriptionAlternativeNames}}}</prose-mirror>
+    </fieldset>
+  {{/if}}
+</section>

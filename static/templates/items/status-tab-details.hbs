@@ -1,0 +1,18 @@
+<section class="tab details flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="details">
+  {{#if tabs.details}}
+    <fieldset class="flexrow">
+      <legend>{{localize 'CoC7.InsanityType'}}</legend>
+      <div class="toggle-row flexrow">
+        <div class="toggle-attributes flexrow" data-set="type">
+          {{#each _types as |row|}}
+            <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+          {{/each}}
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="flexcol" style="flex: 1">
+      <legend>{{localize 'CoC7.Notes'}}</legend>
+      <prose-mirror name="system.description.notes" value="{{document.system.description.notes}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedDescriptionNotes}}}</prose-mirror>
+    </fieldset>
+  {{/if}}
+</section>

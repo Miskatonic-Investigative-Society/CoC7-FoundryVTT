@@ -1,0 +1,247 @@
+{
+  "id": "CoC7",
+  "title": "Call of Cthulhu 7th Edition",
+  "description": "An implementation of the Call of Cthulhu 7th Edition game system for Foundry Virtual Tabletop.",
+  "version": "8.0.16",
+  "authors": [
+    {
+      "name": "Miskatonic Investigative Society"
+    }
+  ],
+  "compatibility": {
+    "minimum": "12",
+    "verified": "14"
+  },
+  "esmodules": [
+    "system.js"
+  ],
+  "styles": [
+    "lib/game-icons/game-icons.css",
+    "system.css"
+  ],
+  "packFolders": [
+    {
+      "name": "Cthulhuwiki | en",
+      "sorting": "a",
+      "color": "#75844c",
+      "packs": [
+        "en-wiki-phobias-and-manias",
+        "en-wiki-roll-tables",
+        "en-wiki-weapons"
+      ]
+    },
+    {
+      "name": "System Examples | en",
+      "sorting": "a",
+      "color": "#75844c",
+      "packs": [
+        "examples",
+        "items",
+        "roll-requests",
+        "sanity-tables-examples",
+        "skills"
+      ]
+    },
+    {
+      "name": "System Manuals",
+      "sorting": "a",
+      "color": "#75844c",
+      "packs": [
+        "system-doc"
+      ]
+    }
+  ],
+  "packs": [
+    {
+      "label": "Skills",
+      "type": "Item",
+      "name": "skills",
+      "path": "packs/en-skills",
+      "system": "CoC7"
+    },
+    {
+      "label": "Items Examples",
+      "type": "Item",
+      "name": "items",
+      "path": "packs/en-items",
+      "system": "CoC7"
+    },
+    {
+      "label": "Examples",
+      "type": "Actor",
+      "name": "examples",
+      "path": "packs/en-examples",
+      "system": "CoC7"
+    },
+    {
+      "label": "Roll Requests",
+      "type": "JournalEntry",
+      "name": "roll-requests",
+      "path": "packs/roll-requests",
+      "system": "CoC7"
+    },
+    {
+      "label": "Sanity Roll Table",
+      "type": "RollTable",
+      "name": "sanity-tables-examples",
+      "path": "packs/en-sanity-tables-examples",
+      "system": "CoC7"
+    },
+    {
+      "label": "System manuals",
+      "type": "JournalEntry",
+      "name": "system-doc",
+      "path": "packs/system-doc",
+      "system": "CoC7"
+    },
+    {
+      "label": "Phobias and Manias | en",
+      "type": "Item",
+      "name": "en-wiki-phobias-and-manias",
+      "path": "packs/en-wiki-phobias-and-manias",
+      "system": "CoC7"
+    },
+    {
+      "label": "Roll Tables | en",
+      "type": "RollTable",
+      "name": "en-wiki-roll-tables",
+      "path": "packs/en-wiki-roll-tables",
+      "system": "CoC7"
+    },
+    {
+      "label": "Weapons | en",
+      "type": "Item",
+      "name": "en-wiki-weapons",
+      "path": "packs/en-wiki-weapons",
+      "system": "CoC7"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "lang/fr.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "lang/de.json"
+    },
+    {
+      "lang": "ja",
+      "name": "日本語",
+      "path": "lang/ja.json"
+    },
+    {
+      "lang": "cn",
+      "name": "中文",
+      "path": "lang/cn.json"
+    },
+    {
+      "lang": "pl",
+      "name": "Polski",
+      "path": "lang/pl.json"
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
+    },
+    {
+      "lang": "zh-tw",
+      "name": "正體中文",
+      "path": "lang/zh-TW.json"
+    },
+    {
+      "lang": "sv",
+      "name": "Svenska",
+      "path": "lang/sv.json"
+    },
+    {
+      "lang": "cs",
+      "name": "Čeština",
+      "path": "lang/cs.json"
+    },
+    {
+      "lang": "ko",
+      "name": "한국어",
+      "path": "lang/ko.json"
+    },
+    {
+      "lang": "it",
+      "name": "Italiano",
+      "path": "lang/it.json"
+    },
+    {
+      "lang": "ru",
+      "name": "Русский",
+      "path": "lang/ru.json"
+    },
+    {
+      "lang": "uk",
+      "name": "Українська",
+      "path": "lang/uk.json"
+    }
+  ],
+  "socket": true,
+  "grid": {
+    "distance": 5,
+    "units": "ft"
+  },
+  "primaryTokenAttribute": "attribs.hp",
+  "secondaryTokenAttribute": "attribs.san",
+  "url": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT",
+  "manifest": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/latest/download/system.json",
+  "download": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/download/8.1/system.zip",
+  "media": [
+    {
+      "type": "setup",
+      "thumbnail": "systems/CoC7/assets/images/system-thumbnail.jpg"
+    }
+  ],
+  "background": "systems/CoC7/assets/images/system-background.jpg",
+  "documentTypes": {
+    "Actor": {
+      "character": {},
+      "container": {},
+      "creature": {},
+      "npc": {},
+      "vehicle": {}
+    },
+    "Item": {
+      "archetype": {},
+      "armor": {},
+      "book": {},
+      "chase": {},
+      "experiencePackage": {},
+      "item": {},
+      "occupation": {},
+      "setup": {},
+      "skill": {},
+      "spell": {},
+      "status": {},
+      "talent": {},
+      "weapon": {}
+    },
+    "RegionBehavior": {
+      "ChaosiumCanvasInterfaceAmbientLightToggle": {},
+      "ChaosiumCanvasInterfaceDrawingToggle": {},
+      "ChaosiumCanvasInterfaceMapPinToggle": {},
+      "ChaosiumCanvasInterfaceOpenDocument": {},
+      "ChaosiumCanvasInterfacePlaySound": {},
+      "ChaosiumCanvasInterfaceTileToggle": {},
+      "ChaosiumCanvasInterfaceToScene": {},
+      "coc7ClickableEvents": {}
+    }
+  }
+}

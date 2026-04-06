@@ -9,9 +9,45 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 8.1
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Move to FoundryVTT implementations of dataModels, AppV2, and Tooltips
+- Trigger Actor Picker if User interacting with chat message owns multiple Actors
+- If keeper is online check chat message permissions against Actor ownership instead of User permissions and change message owner to prevent user doesn't have permissions error message
+- Move game.system.api.cocid to game.CoC7.cocid
+- Remove noadjustments flag from skills as this performs the same function as noxpgain
+- Remove onlyone flag from skills and add own as a replacement to allow Own Language / Kingdom to show separately on Investigator Sheets
+- Remove melee flag from weapons, most places checked for rngd is false rather than is melee true
+- Implement FOLDER_ID constant in code if system id can be changed in the future
+- Add ping location button to Chase Item
+- Calculating skill base values can now be dependant on other skill values
+- Move Actor/Item document function to dataModel
+- Update build system to allow building to multiple destinations at once
+- Moved Item.value and Item.bonusDice to Skill.system.value and Skill.system.bonusDice
+- Rename and move files to make then easier to find in IDEs, prefix CSS filenames to make then easier to see which CSS is controlled by the system
+- No longer hide __CoC7InternalItem__ Items
+- Move book progress and learned spells list to Actor to allow sharing books without progress
+- Remove custom Context Menu system as Investigator Sheet V3 didn't implement it
+- Fix Setup Item translations breaking biography roll table matching in Investigator Wizard
+- Fix ranged combat multiple targets
+- Move i.skill.fighting-throw, i.skill.firearms-throw, i.skill.ranged-throw to Throw (i.skill.throw)
+- Allow CoC7 journal styles to be turned on and off in the config pages
+- Allow toggling the NPC notes panel
+- Rolling dice allows the Keeper to assign the roll as damage / healing to characteristics, attributes, or skills
+- Move d100 rolls to new dice-pool class so manual dice windows will trigger if set
+- Add eslint JS Doc and cSpell
+- Remove custom CSS options and Override Sheet Artwork button to Game Settings panel with information how to move them to a separate module
+- Add setting to use icons for eras instead of text
+- Add icon field to game.CoC7.eras defaulting to "fa-solid fa-info-circle"
 - Add Survival (Desert) and Track skills to 1920 Character Example
-- Update to French localization, thanks to @vonv #1991 and #1992
+- Add house rule to allow pushing fumbles, after dealing with the fumble consequences why not risk more?
+- Update to French localization, thanks to @vonv #1991, #1992, and #1993
+- Update to Japanese localization, thanks to @doumoku #2003
 - Update to Swedish localization, thanks to @Rangertheman #1995
+- Update to Taiwanese localization, thanks to @zeteticl #2002
+- Reorder Brazilian Portuguese translations to match en.json, thanks to Rasangus #2000
 
 ## 7.24
 

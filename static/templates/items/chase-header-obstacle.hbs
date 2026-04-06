@@ -1,0 +1,56 @@
+<div class="obstacle flexcol" data-location-id="{{thisLocation.uuid}}">
+  {{#if hasThisSide}}
+    <div class="toggle-row flexrow">
+      <div class="toggle-attributes flexrow" data-set="location-obstacle-type">
+        <button class="toggle-switch{{#if thisLocation.obstacleDetails.barrier}} switched-on{{/if}}" data-property="barrier" type="button">{{localize 'CoC7.Barrier'}}</button>
+        <button class="toggle-switch{{#if thisLocation.obstacleDetails.hazard}} switched-on{{/if}}" data-property="hazard" type="button">{{localize 'CoC7.Hazard'}}</button>
+      </div>
+    </div>
+    {{#if thisLocation.obstacle}}
+      <div class="form-group">
+        <input type="text" data-set="location-obstacle-name" value="{{thisLocation.obstacleDetails.name}}" data-tooltip="CoC7.Name" placeholder="{{localize 'CoC7.Name'}}" />
+      </div>
+      <div class="form-group flexrow">
+        <select class="name" data-set="location-obstacle-check-name">
+          {{selectOptions listOptions selected=thisLocation.obstacleDetails.checkName localize=false valueAttr='name' labelAttr='name'}}
+        </select>
+        {{#if (and document.system.started activeParticipantHere)}}
+          <a class="chase-control" data-action="obstacle-skill-check" data-tooltip="CoC7.OpenObstacleResolutionCard">
+            <i class="icon game-icon game-icon-d10"></i>
+          </a>
+        {{/if}}
+      </div>
+      <div class="form-group flexrow">
+        <div class="obstacle-toggles flexrow">
+          <a data-action="obstacle-has-damage" class="toggle-icon{{#if thisLocation.obstacleDetails.hasDamage}} switched-on{{/if}}" data-tooltip="CoC7.DamageOnFail"><i class="game-icon game-icon-broken-bone"></i></a>
+          {{#if thisLocation.obstacleDetails.hasDamage}}
+            <input type="text" data-set="obstacle-fail-damage" value="{{thisLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{localize 'CoC7.Damage'}}" />
+          {{else}}
+            <div></div>
+          {{/if}}
+        </div>
+        {{#if thisLocation.obstacleDetails.barrier}}
+          <div class="obstacle-toggles flexrow">
+            <a data-action="obstacle-has-hp" class="toggle-icon{{#if thisLocation.obstacleDetails.hasHitPoints}} switched-on{{/if}}" data-tooltip="CoC7.ObstacleHasHitPoint"><i class="game-icon game-icon-life-bar"></i></a>
+            {{#if thisLocation.obstacleDetails.hasHitPoints}}
+              <input type="text" data-set="obstacle-hp" value="{{thisLocation.obstacleDetails.HitPoints}}" placeholder="{{localize 'CoC7.HitPoints'}}" />
+            {{else}}
+              <div></div>
+            {{/if}}
+          </div>
+        {{else}}
+          <div class="obstacle-toggles flexrow">
+            <a data-action="obstacle-has-action-cost" class="toggle-icon{{#if thisLocation.obstacleDetails.hasActionCost}} switched-on{{/if}}" data-tooltip="CoC7.ActionCostOnFail"><i class="fa-solid fa-bahai"></i></a>
+            {{#if thisLocation.obstacleDetails.hasActionCost}}
+              <input type="text" data-set="obstacle-action-cost" value="{{thisLocation.obstacleDetails.failedActionCost}}" placeholder="{{localize 'CoC7.ActionCost'}}" />
+            {{else}}
+              <div></div>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
+  {{else}}
+    <div></div>
+  {{/if}}
+</div>

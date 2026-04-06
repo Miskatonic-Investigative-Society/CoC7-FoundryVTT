@@ -1,0 +1,222 @@
+.application.coc7.sheet.investigator-summarized {
+  section.window-content {
+    overflow: hidden;
+
+    input.detail-value.attribute-value {
+      text-align: right;
+    }
+
+    .status {
+      .item-control {
+        color: darkgrey;
+
+        &.status-on {
+          color: var(--color-text-primary);
+
+          &.bout-of-madness,
+          &.indefinite-insanity {
+            color: darkgreen;
+          }
+        }
+      }
+    }
+
+    div.npc .character-details.character-blocks {
+      column-gap: @8px;
+      align-items: flex-start;
+    }
+
+    .characteristics-block {
+      flex: 0.9;
+
+      .primary-attributes {
+        &.show-part-values {
+          .characteristics .char-box .char-box-values .part-detail-value {
+            visibility: visible;
+          }
+        }
+
+        .characteristics {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-rows: repeat(2, 1.5fr);
+
+          .char-box {
+            text-align: center;
+
+            .characteristic-name {
+              font-size: var(--font-size-15);
+              font-family: var(--investigator-sheet-primary-font);
+              text-transform: uppercase;
+              line-height: @17px;
+              margin: 0;
+              border: 0;
+              padding: 0;
+              cursor: pointer;
+            }
+
+            .char-box-values {
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1.3fr 0.7fr;
+              grid-template-areas:
+                'mainScore halfScore'
+                'mainScore fifthScore';
+              margin: 0 4px 5px 0;
+              padding: 0 5px;
+              border-radius: 5px;
+              column-gap: 3px;
+              background: rgba(0, 0, 0, 0.05);
+              font-family: var(--investigator-sheet-secondary-font);
+
+              .detail-value {
+                grid-area: mainScore;
+                border: 0;
+                background: transparent;
+                justify-self: center;
+                align-self: center;
+                text-align: center;
+                outline-offset: 0;
+                font-size: var(--font-size-18);
+                color: var(--color-labels);
+                font-weight: bold;
+              }
+
+              .part-detail-value {
+                font-size: var(--font-size-11);
+                color: var(--color-labels);
+                justify-self: center;
+                align-self: center;
+                font-weight: bold;
+                visibility: hidden;
+
+                &.half-score {
+                  grid-area: halfScore;
+                }
+
+                &.fifth-score {
+                  grid-area: fifthScore;
+                }
+              }
+            }
+          }
+        }
+
+        .character-details .character-detail .detail-value {
+          padding-top: @1px;
+        }
+      }
+    }
+
+    .skills-block {
+      flex: 1;
+      column-count: 2;
+      column-gap: @8px;
+
+      .item {
+        font-size: var(--font-size-12);
+        --icon-size: @14px;
+
+        &.flexrow {
+          display: grid;
+          grid-template-columns: 1rem auto 1.5rem 0.7rem;
+          border-bottom: 1px solid;
+        }
+
+        .item-name {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .item-score {
+          color: var(--color-labels);
+        }
+
+        .item-controls .item-control {
+          height: @17px;
+          line-height: @18px;
+        }
+      }
+
+      &.icons-only {
+        display: grid;
+        column-gap: 4px;
+        row-gap: 4px;
+        grid-template-columns: repeat(10, @21px);
+
+        .item {
+          width: @21px;
+          --icon-size: @21px;
+        }
+      }
+    }
+
+    .other-block {
+      flex: 0.7;
+      height: 100%;
+
+      .weapons-block {
+        flex: 1;
+
+        .item {
+          font-size: var(--font-size-12);
+          --icon-size: @14px;
+
+          &.flexrow {
+            display: grid;
+            grid-template-columns: 1rem auto 1.5rem 2rem;
+            border-bottom: 1px solid;
+          }
+
+          .weapon-name {
+            overflow: hidden;
+
+            &.no-skill-set {
+              background-color: red;
+              color: var(--color-light-2)
+            }
+
+            .name {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .icon {
+              flex: 0 0 auto;
+              margin: 0 @4px;
+            }
+          }
+
+          .item-damage {
+            color: var(--color-labels);
+          }
+
+          .item-controls .item-control {
+            height: @17px;
+            line-height: @18px;
+          }
+        }
+      }
+
+      .character-detail {
+        flex: 0 0 auto;
+      }
+    }
+  }
+}
+
+body.theme-dark .application.coc7.sheet.investigator-summarized,
+.themed.theme-dark.application.coc7.sheet.investigator-summarized {
+  section.window-content div.npc .character-details.character-blocks {
+    .characteristics-block .primary-attributes .characteristics .char-box .characteristic-name {
+      background: var(--color-tint-light);
+    }
+
+    .other-block .weapons-block .item .weapon-name.no-skill-set {
+      background-color: darkred;
+      color: var(--color-text-primary)
+    }
+  }
+}

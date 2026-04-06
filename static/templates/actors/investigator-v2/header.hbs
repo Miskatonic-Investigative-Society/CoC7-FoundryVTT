@@ -1,0 +1,165 @@
+<section class="sheet-header flexrow">
+  <div class="token-extras flexrow">
+    {{#if canDragToken}}
+      <div draggable="true" class="token-drag-handle" data-tooltip="CoC7.ActorIsTokenHint" data-token-uuid="{{tokenUuid}}"><i class="fa-solid fa-user-circle"></i></div>
+    {{/if}}
+    {{#if linkedActor}}
+      <div data-tooltip="CoC7.ActorDataLinked"><i class="fa-solid fa-link"></i></div>
+    {{else}}
+      <div data-tooltip="CoC7.ActorDataNotLinked"><i class="fa-solid fa-unlink"></i></div>
+    {{/if}}
+    {{#if isToken}}
+      <div data-tooltip="CoC7.ActorIsSyntheticActor"><i class="game-icon game-icon-backup"></i></div>
+    {{/if}}
+  </div>
+  <div class="sheet-portrait">
+    <img class="photo" src="{{document.img}}" data-tooltip="{{document.name}}" data-action="editImage" data-edit="img" />
+  </div>
+  <div class="infos flexcol">
+    <div class="row flexrow">
+      <label>{{localize 'CoC7.Name'}} :</label>
+      <input name="name" type="text" value="{{document.name}}" />
+    </div>
+    {{#if displayPlayerName}}
+      <div class="row flexrow">
+        <label>{{localize 'CoC7.PlayerName'}} :</label>
+        <input name="system.infos.playername" type="text" value="{{document.system.infos.playername}}" />
+      </div>
+    {{/if}}
+    {{#if pulpRuleArchetype}}
+      <div class="row flexrow">
+        <label>{{localize 'CoC7.Archetype'}} :</label>
+        {{#if archetypeSet}}
+          <span class="rollable open-item" data-type="archetype">{{document.system.infos.archetype}}</span>
+          {{#unless document.system.flags.locked}}
+            <a class="reset-archetype" data-tooltip="CoC7.ResetArchetype" data-type="archetype"><i class="fa-regular fa-times-circle"></i></a>
+          {{/unless}}
+        {{else}}
+          <input name="system.infos.archetype" type="text" value="{{document.system.infos.archetype}}" />
+        {{/if}}
+      </div>
+    {{/if}}
+    {{#if pulpRuleOrganization}}
+      <div class="row flexrow">
+        <label>{{localize 'CoC7.Organization'}} :</label>
+        <input name="system.infos.organization" type="text" value="{{document.system.infos.organization}}" />
+      </div>
+    {{/if}}
+    <div class="row flexrow">
+      <label>{{localize 'CoC7.Occupation'}} :</label>
+      {{#if occupationSet}}
+        <span class="rollable open-item" data-type="occupation">{{document.system.infos.occupation}}</span>
+        {{#unless document.system.flags.locked}}
+          <a class="reset-occupation" data-tooltip="CoC7.ResetOccupation" data-type="occupation"><i class="fa-regular fa-times-circle"></i></a>
+        {{/unless}}
+      {{else}}
+        <input name="system.infos.occupation" type="text" value="{{document.system.infos.occupation}}" />
+      {{/if}}
+    </div>
+    <div class="row flexrow">
+      <label>{{localize 'CoC7.Age'}} :</label>
+      <input name="system.infos.age" type="text" value="{{document.system.infos.age}}" />
+      <label>{{localize 'CoC7.Sex'}} :</label>
+      <input name="system.infos.sex" type="text" value="{{document.system.infos.sex}}" />
+    </div>
+    <div class="row flexrow">
+      <label>{{localize 'CoC7.Residence'}} :</label>
+      <input name="system.infos.residence" type="text" value="{{document.system.infos.residence}}" />
+    </div>
+    <div class="row flexrow">
+      <label>{{localize 'CoC7.Birthplace'}} :</label>
+      <input name="system.infos.birthplace" type="text" value="{{document.system.infos.birthplace}}" />
+    </div>
+  </div>
+  <div class="characteristics flexcol">
+    <div class="header"></div>
+    <div class="char-boxes">
+      {{#each characteristics as |characteristic key|}}
+        <div class="char-box" data-characteristic="{{key}}" draggable="true">
+          <div class="roll-icon"><i class="game-icon game-icon-d10"></i></div>
+          <div class="characteristic-name rollable" draggable="true" data-tooltip-key="{{key}}">{{localize characteristic.short}}</div>
+          <div class="charac-score">
+            <div class="main-score">
+              <input class="characteristic-score{{#if characteristic.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if characteristic.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{characteristic.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.characteristics.{{key}}.value" value="{{characteristic.sourceValue}}" {{/if}}{{else}} name="system.characteristics.{{key}}.value" value="{{characteristic.value}}" {{/if}} />
+            </div>
+            <div class="half-score">{{calcHard characteristic.value}}</div>
+            <div class="fifth-score">{{calcExtreme characteristic.value}}</div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+    <div class="footer flexrow">
+      {{#if document.system.flags.locked}}
+        <div class="attribute flexrow">
+          <div class="attribute-label">
+            <h2>{{localize 'CoC7.Mov'}}:</h2>
+          </div>
+          <div class="attribute-value">{{attribs.mov.value}}</div>
+        </div>
+        <div class="attribute flexrow">
+          <div class="attribute-label">
+            <h2>{{localize 'CoC7.Build'}}:</h2>
+          </div>
+          <div class="attribute-value">{{attribs.build.value}}</div>
+        </div>
+        <div class="attribute flexrow" data-attrib="db">
+          <div class="attribute-label rollable">
+            <h2>{{localize 'CoC7.DB'}}:</h2>
+          </div>
+          <div class="attribute-value">{{attribs.db.value}}</div>
+        </div>
+        <div class="attribute flexrow">
+          <div class="attribute-label">
+            <h2>{{localize 'CoC7.Armor'}}:</h2>
+          </div>
+          <div class="attribute-value">{{attribs.armor.value}}</div>
+        </div>
+      {{else}}
+        <div class="attribute{{#unless attribs.mov.auto}} manual-override{{/unless}} flexrow" data-attrib="mov">
+          <div class="attribute-label attribute clickable item-control" data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" data-tooltip-class="coc7-wider-tooltip" data-attrib="mov">
+            <h2>{{localize 'CoC7.Mov'}}:</h2>
+          </div>
+          <div class="attribute-value">
+            {{#if attribs.mov.auto}}
+              {{attribs.mov.value}}
+            {{else}}
+              <input type="text" {{#if attribs.mov.activeEffectValue}} data-tooltip="CoC7.ModifiedByActiveEffect" {{/if}} name="system.attribs.mov.value" value="{{attribs.mov.sourceValue}}" />
+            {{/if}}
+          </div>
+        </div>
+        <div class="attribute{{#unless attribs.build.auto}} manual-override{{/unless}} flexrow" data-attrib="build">
+          <div class="attribute-label attribute clickable item-control" data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" data-tooltip-class="coc7-wider-tooltip" data-attrib="build">
+            <h2>{{localize 'CoC7.Build'}}:</h2>
+          </div>
+          <div class="attribute-value">
+            {{#if attribs.build.auto}}
+              {{attribs.build.value}}
+            {{else}}
+              <input type="text" {{#if attribs.build.activeEffectValue}} data-tooltip="CoC7.ModifiedByActiveEffect" {{/if}} name="system.attribs.build.value" value="{{attribs.build.sourceValue}}" />
+            {{/if}}
+          </div>
+        </div>
+        <div class="attribute{{#unless attribs.db.auto}} manual-override{{/unless}} flexrow" data-attrib="db">
+          <div class="attribute-label attribute clickable item-control" data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" data-tooltip-class="coc7-wider-tooltip" data-attrib="db">
+            <h2>{{localize 'CoC7.DB'}}:</h2>
+          </div>
+          <div class="attribute-value">
+            {{#if attribs.db.auto}}
+              {{attribs.db.value}}
+            {{else}}
+              <input type="text" {{#if attribs.db.activeEffectValue}} data-tooltip="CoC7.ModifiedByActiveEffect" {{/if}} name="system.attribs.db.value" value="{{attribs.db.sourceValue}}" />
+            {{/if}}
+          </div>
+        </div>
+        <div class="attribute flexrow">
+          <div class="attribute-label">
+            <h2>{{localize 'CoC7.Armor'}}:</h2>
+          </div>
+          <div class="attribute-value">
+            <input type="text" {{#if attribs.armor.activeEffectValue}} data-tooltip="CoC7.ModifiedByActiveEffect" {{/if}} name="system.attribs.armor.value" value="{{attribs.armor.sourceValue}}" />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</section>

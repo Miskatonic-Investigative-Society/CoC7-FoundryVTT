@@ -1,0 +1,89 @@
+<div class="two-panes-content flexrow">
+  <div class="left-panel flexcol">
+    {{#if showDevPanel}}
+      {{~> 'systems/CoC7/templates/actors/investigator-v2/parts/development.hbs'}}
+    {{else}}
+      {{~> 'systems/CoC7/templates/actors/investigator-v2/parts/vitals.hbs'}}
+    {{/if}}
+  </div>
+  <div class="right-panel flexcol">
+    {{#if showDevPanel}}
+      {{~> 'systems/CoC7/templates/actors/investigator-v2/tabs/development.hbs'}}
+    {{/if}}
+    {{~> 'systems/CoC7/templates/actors/investigator-v2/tabs/skills.hbs'}}
+    {{~> 'systems/CoC7/templates/actors/investigator-v2/tabs/combat.hbs'}}
+    {{~> 'systems/CoC7/templates/actors/investigator-v2/tabs/possession.hbs'}}
+    <section class="tab background scrollable {{tabs.background.cssClass}}" data-group="primary" data-tab="background">
+      {{#if oneBlockBackStory}}
+        <prose-mirror name="system.backstory" value="{{document.system.backstory}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedBackstory}}}</prose-mirror>
+        {{~> 'systems/CoC7/templates/actors/investigator-v2/parts/actor-mythos-encounters.hbs'}}
+      {{else}}
+        {{~> 'systems/CoC7/templates/actors/investigator-v2/tabs/background.hbs'}}
+      {{/if}}
+    </section>
+
+    {{#if isKeeper}}
+      <section class="tab activeEffects scrollable {{tabs.activeEffects.cssClass}}" data-group="primary" data-tab="activeEffects">
+        {{~> 'systems/CoC7/templates/common/active-effects.hbs'}}
+      </section>
+
+      <section class="tab keeper scrollable {{tabs.keeper.cssClass}}" data-group="primary" data-tab="keeper">
+        <prose-mirror name="system.description.keeper" value="{{document.system.description.keeper}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedDescriptionKeeper}}}</prose-mirror>
+        {{#if hasConditions}}
+          <div style="margin: 2px 0;"><a class="clear_conditions button">{{localize 'CoC7.ClearAllConditions'}}</a></div>
+        {{/if}}
+        <div class="flexcol">
+          {{~> 'systems/CoC7/templates/actors/investigator-v2/parts/actor-keeper-mythos-encounters.hbs'}}
+          <div class="monetary-ratings">
+            <header class="section-header">
+              <h3 class="section-heading">{{localize 'CoC7.MonetaryTitle'}}</h3>
+              {{#unless document.system.flags.locked}}
+                <div class="item-controls">
+                  <a class="item-control" data-action="monetary-add"><i class="fa-regular fa-plus-circle"></i></a>
+                </div>
+              {{/unless}}
+            </header>
+            <div class="cash-assets">
+              <div class="asset form-group">
+                <label>{{localize 'CoC7.MonetaryFormatTitle'}}</label>
+                <select name="system.monetary.format">
+                  {{selectOptions _monetaryFormats selected=document.system.monetary.format localize=true valueAttr='key' labelAttr='val'}}
+                </select>
+              </div>
+              {{#if showCurrencySymbol}}
+                <div class="asset form-group">
+                  <label>{{localize 'CoC7.MonetarySymbol'}}</label>
+                  <input type="text" name="system.monetary.symbol" value="{{document.system.monetary.symbol}}">
+                </div>
+              {{/if}}
+              {{#each document.system.monetary.values as |value index|}}
+                <div class="asset form-group" data-index="{{index}}">
+                  <input name="system.monetary.values.{{index}}.name" value="{{localize value.name}}" type="text" placeholder="{{localize 'CoC7.Name'}}">
+                  <input name="system.monetary.values.{{index}}.min" value="{{value.min}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMin'}}">
+                  <input name="system.monetary.values.{{index}}.max" value="{{value.max}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMax'}}" readonly="readonly">
+                  <select name="system.monetary.values.{{index}}.cashType" class="cash-assets-type">
+                    {{selectOptions ../_monetaryTypes selected=value.cashType localize=true valueAttr='key' labelAttr='val'}}
+                  </select>
+                  <input name="system.monetary.values.{{index}}.cashValue" value="{{value.cashValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueCash'}}">
+                  <select name="system.monetary.values.{{index}}.assetsType" class="cash-assets-type">
+                    {{selectOptions ../_monetaryTypes selected=value.assetsType localize=true valueAttr='key' labelAttr='val'}}
+                  </select>
+                  <input name="system.monetary.values.{{index}}.assetsValue" value="{{value.assetsValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueAssets'}}">
+                  <select name="system.monetary.values.{{index}}.spendingType" class="cash-assets-type">
+                    {{selectOptions ../_monetaryTypes selected=value.spendingType localize=true valueAttr='key' labelAttr='val'}}
+                  </select>
+                  <input name="system.monetary.values.{{index}}.spendingValue" value="{{value.spendingValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueSpendingLevel'}}">
+                  {{#unless ../document.system.flags.locked}}
+                    <div class="item-controls">
+                      <a class="item-control" data-action="monetary-remove"><i class="fa-regular fa-minus-circle"></i></a>
+                    </div>
+                  {{/unless}}
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </section>
+    {{/if}}
+  </div>
+</div>

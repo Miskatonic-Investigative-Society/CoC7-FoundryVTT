@@ -1,0 +1,15 @@
+<div class="flexcol" style="gap: 0.375rem;">
+  <div class="item-list flexcol">
+    <label style="flex: 0;white-space: nowrap; text-align: center;">{{localize 'CoC7.SkillTotalOccupation'}}: {{total}}</label>
+    {{#each characteristicOptional as |characteristic|}}
+      <div class="flexrow selectable{{#if (eq ../selected characteristic.key)}} selected{{/if}}" style="justify-content: center;" data-key="{{characteristic.key}}">
+        <label style="flex: 0;white-space: nowrap">{{localize characteristic.label}} ({{characteristic.value}}x{{characteristic.multiplier}}:{{characteristic.total}})</label>
+      </div>
+    {{/each}}
+    {{#each characteristicFixed as |characteristic|}}
+      <div class="flexrow selected" style="justify-content: center;" data-key="{{characteristic.key}}">
+        <label style="flex: 0;white-space: nowrap">{{localize characteristic.label}} ({{characteristic.value}}x{{characteristic.multiplier}}:{{characteristic.total}})</label>
+      </div>
+    {{/each}}
+  </div>
+</div>

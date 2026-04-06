@@ -1,0 +1,696 @@
+@import (reference) "coc7-utilities.less";
+
+/* ---------------------------------------- */
+/*  CoC Global Variables                    */
+/*  We have to apply our variables to an element rather than :root as we reuse a lot of Foundry's variables and they aren't available in our :root due to the layer cascade.
+/* ---------------------------------------- */
+.application.coc7 {
+  /* ---------------------------------------- */
+  /*  Base Colors                         */
+  /*  For Dark Mode we adjust colors dynamically but we can't self referentially set a variable to an adjusted version of itself so instead we base the colors off a base version
+  /* ---------------------------------------- */
+  --color-labels-base: rgb(146 45 46 / 1); // #922D2E
+  --color-hp-base: rgb(146 45 46 / 1); // #922D2E
+  --color-mp-base: rgb(16 19 69 / 1); // #101345
+  --color-luck-base: rgb(121 80 28 / 1); // #79501c
+  --color-sanity-base: rgb(46 75 31 / 1); // #2e4b1f
+  /* ---------------------------------------- */
+  /*  Standard Colors                         */
+  /*  rgb format: rgb(R G B / Alpha)          */
+  /* ---------------------------------------- */
+  --color-green: rgb(35 67 55 / 1); // #234337
+  --color-red: rgb(103 11 11 / 1); // #670B0B
+  --color-warning: rgb(255 100 0 / 1); // #FF6400
+  /* ---------------------------------------- */
+  /*  Interface Colors                        */
+  /*  rgb format: rgb(R G B / Alpha)          */
+  /*  or references to other vars             */
+  /* ---------------------------------------- */
+  --color-text: var(--color-dark-1);
+  --color-active: rgb(255 255 170 / 1);
+  --color-highlight: var(--color-red);
+  --color-interact: var(--color-red);
+  --color-labels: var(--color-labels-base);
+  --color-shadow-highlight: var(--color-warning); // This overwrites a Foundry variable
+  --color-window-decoration: rgb(44 71 29 / 1); // #2c471d
+  --color-tint: rgb(0 0 0 / 0.1);
+  --color-tint-light: rgb(255 255 255 / 0.5);
+  --color-tint-dark: rgb(0 0 0 / 0.6);
+  --color-sheet-front: rgb(43 55 83 / 1); // #2b3753
+
+  --color-hp: var(--color-hp-base);
+  --color-mp: var(--color-mp-base);
+  --color-luck: var(--color-luck-base);
+  --color-sanity: var(--color-sanity-base);
+  /* ---------------------------------------- */
+  /*  Investigator Fonts                      */
+  /* ---------------------------------------- */
+  --investigator-sheet-primary-font: customSheetFont, "Modesto Condensed";
+  --investigator-sheet-secondary-font: customSheetFont, 'Lusitana';
+  /* ---------------------------------------- */
+  /*  Investigator Decoration                 */
+  /* ---------------------------------------- */
+  --investigator-sheet-tab-red: url('./assets/images/sheet-v3/ribbon-red.webp');
+  --investigator-sheet-tab-green: url('./assets/images/sheet-v3/ribbon-green.webp');
+  --investigator-sheet-tab-blue: url('./assets/images/sheet-v3/ribbon-blue.webp');
+  --investigator-sheet-tab-yellow: url('./assets/images/sheet-v3/ribbon-yellow.webp');
+  --investigator-sheet-ornament-green: url('./assets/images/sheet-v3/line-ornament-green.webp');
+  --investigator-sheet-ornament-top: url('./assets/images/sheet-v3/ornament-top.webp');
+  --investigator-sheet-tentacles: url('./assets/images/sheet-v3/tentacles.webp');
+  --investigator-sheet-line-red: url('./assets/images/sheet-v3/line-red.webp');
+  --investigator-sheet-line-green: url('./assets/images/sheet-v3/line-green.webp');
+  --investigator-sheet-photo-frame-small: url('./assets/images/sheet-v3/photo-frame_small.webp');
+  /* ---------------------------------------- */
+  /*  Investigator Misc                       */
+  /* ---------------------------------------- */
+  --investigator-sheet-points-color: #ebd5a0;
+  --investigator-sheet-points-color-development: var(--color-hp); // #922d2e
+  --investigator-sheet-points-color-occupation: var(--color-mp); // #101345
+  --investigator-sheet-points-color-archetype: var(--color-luck); // #79501c
+  --investigator-sheet-points-color-experience: var(--color-sanity); // #2e4b1f;
+  --icon-size: @24px;
+  --section-gap: @20px;
+  /* ---------------------------------------- */
+  /*  Global Misc                             */
+  /* ---------------------------------------- */
+  --background-sheet: url('./assets/art/page-light.webp');
+  --border-radius-tiny: 2px;
+  --border-radius-small: 4px;
+  --border-radius-medium: 6px;
+  --border-radius-large: 8px;
+  --border-radius-huge: 10px;
+  --color-icon-disabled: var(--color-light-4); // This uses a Foundry variable
+  --nav-bg-color: rgb(0 0 0 / 0.05);
+  --profile-img-bg: 0.5;
+  --text-shadow-primary: 0 0 8px var(--color-highlight);
+  --text-shadow-highlight: 0 0 8px var(--color-shadow-highlight); // This uses a Foundry variable
+  --button-size: 2em; // Restating the Foundry variable as Foundry only applies it to a.button not the more general .button
+  --button-text-color: var(--color-dark-1); // Restating the Foundry variable as Foundry only applies it to a.button not the more general .button
+  --button-background-color: var(--color-tint);
+  --button-border-color: var(--color-dark-5);
+  /* ---------------------------------------- */
+  /*  Investigator Sheet V2                   */
+  /* ---------------------------------------- */
+  --main-sheet-bg: url('./assets/images/header.webp');
+  --main-sheet-image: url('./assets/images/tentacles.webp');
+  --hp-background-image: url(./assets/images/hp-background.svg);
+  --san-background-image: url(./assets/images/san-background.svg);
+  --main-sheet-front-color: #2b3753;
+  --main-sheet-interactive-color: #670b0b;
+}
+
+/* ---------------------------------------- */
+/*  Theme Styles                            */
+/* ---------------------------------------- */
+body.theme-light .application.coc7,
+.themed.theme-light.application.coc7 {
+
+  // Light styles are default styles and so variables are defined above
+  input,
+  select,
+  textarea,
+  code-mirror {
+    --input-background-color: var(--color-tint); // This overwrites a Foundry variable
+    --input-border-color: var(--color-dark-6); // This overwrites a Foundry variable (with a Foundry variable)
+    --input-text-color: var(--color-dark-2); // This overwrites a Foundry variable (with a Foundry variable)
+  }
+}
+
+body.theme-dark .application.coc7,
+.themed.theme-dark.application.coc7 {
+  --color-text: var(--color-light-4);
+  --color-highlight: var(--color-light-3);
+  --color-labels: rgb(180 72 73 / 1);
+  --color-green: rgb(37 105 80 / 1); // #256950
+  --color-window-decoration: rgb(39 73 20 / 1); // #274914
+
+  --color-hp: color-mix(in oklab, var(--color-hp-base), white 15%);
+  --color-mp: color-mix(in oklab, var(--color-mp-base), white 50%);
+  --color-luck: color-mix(in oklab, var(--color-luck-base), white 15%);
+  --color-sanity: color-mix(in oklab, var(--color-sanity-base), white 15%);
+
+  --background-sheet: url('./assets/art/page-dark.webp');
+  --nav-bg-color: rgb(255 255 255 / 0.05);
+  --profile-img-bg: 0.1;
+  --color-icon-disabled: var(--color-dark-4); // This uses a Foundry variable
+  --color-interact: var(--color-light-3);
+  --color-tint: rgb(255 255 255 / 0.1);
+  --color-tint-light: var(--color-tint);
+  --color-sheet-front: var(--color-text-primary);
+  --investigator-sheet-photo-frame-small: url('./assets/images/sheet-v3/photo-frame_small-dark.webp');
+  --button-text-color: var(--color-light-1);
+  --button-border-color: var(--color-light-5);
+
+  input,
+  select,
+  textarea,
+  code-mirror {
+    --input-background-color: var(--color-dark-4); // This uses a Foundry variable
+    --input-border-color: transparent;
+    --input-text-color: var(--color-light-3); // This uses a Foundry variable
+  }
+}
+
+/* ---------------------------------------- */
+/*  Global namespaced variables             */
+/* ---------------------------------------- */
+// body.theme-light,
+// .themed.theme-light {
+// }
+
+// body.theme-dark,
+// .themed.theme-dark {
+// }
+
+/* ---------------------------------------- */
+/*  CoC Global Styles                       */
+/* ---------------------------------------- */
+.application.coc7 {
+  background-image: var(--background-sheet); // This is so closing the application doesn't revert to the default background
+  background-position: top left;
+  scale: var(--ui-scale);
+  max-height: calc(100% / var(--ui-scale));
+  max-width: calc(100% / var(--ui-scale));
+
+  /* ---------------------------------------- */
+  /*  Element Overrides                       */
+  /* ---------------------------------------- */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: normal;
+  }
+
+  prose-mirror,
+  .prosemirror {
+    min-height: @100px;
+
+    &.active {
+      min-height: @315px;
+    }
+
+    &.inactive {
+      padding: 0 @8px;
+    }
+
+    &:hover,
+    &:has(:focus) {
+      box-shadow: 0 0 3px var(--color-highlight);
+      border-radius: var(--border-radius-medium);
+    }
+
+    .editor-container {
+      margin: 0 @8px;
+    }
+
+    .editor-content {
+      position: static;
+      padding: 0;
+      margin-bottom: @10px;
+
+      & :last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    button.toggle {
+      top: @5px;
+      right: @5px;
+    }
+  }
+
+  input:not([type=checkbox]):not([type=radio]),
+  textarea {
+    box-shadow: none;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+
+    &:not([readonly]) {
+
+      &:hover,
+      &:focus {
+        outline: 2px solid var(--color-labels);
+        border-color: transparent;
+      }
+    }
+  }
+
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    color: olive;
+
+    &:hover,
+    &:focus {
+      box-shadow: none !important;
+      outline: none !important;
+    }
+  }
+
+  .input-replacement-gap {
+    height: @20px;
+  }
+
+  input:not([type=checkbox]):not([type=radio]),
+  select {
+    flex: 1;
+    height: @22px;
+    margin: 0;
+    padding: 0 @3px;
+  }
+
+  /* ---------------------------------------- */
+  /*  Reusable/Utility Classes                */
+  /* ---------------------------------------- */
+  .scrollable {
+    scrollbar-gutter: auto;
+  }
+
+  .rollable,
+  .clickable {
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-text);
+      text-shadow: 0 0 10px var(--color-interact); // This uses a Foundry variable
+    }
+
+    &>* {
+      cursor: pointer;
+    }
+  }
+
+  .button {
+    .flex-row(@col-gap: @5px);
+    margin: 0;
+    padding: 0 @3px;
+    font-family: var(--investigator-sheet-secondary-font);
+    font-size: @12px;
+    height: var(--button-size);
+    min-height: var(--button-size);
+    border: 1px groove var(--button-border-color);
+    border-radius: var(--border-radius-small);
+    background: var(--button-background-color);
+    color: var(--button-text-color);
+    cursor: var(--cursor-pointer);
+    transition: 0.5s;
+
+    &:hover {
+      text-shadow: var(--text-shadow-primary);
+      color: var(--button-text-color);
+    }
+  }
+
+  .auto-on {
+    line-height: 1;
+    color: green;
+  }
+
+  .auto-off {
+    line-height: 1;
+    color: grey;
+  }
+
+  /* ---------------------------------------- */
+  /*  CoC Application Styles                  */
+  /* ---------------------------------------- */
+  header.window-header {
+    .invalid-coc-id {
+      color: var(--color-level-error); // This uses a Foundry variable
+    }
+  }
+
+  section.window-content {
+    position: relative;
+    background-image: var(--background-sheet);
+    background-position: top left;
+    backdrop-filter: none; // Foundry applies a backdrop filter in dark mode which breaks our UI.
+
+    span.warning {
+      outline: 2px dashed rgb(from var(--color-warning) r g b / 0.3);
+      background-color: rgb(from var(--color-warning) r g b / 0.3);
+      margin: 0 @16px;
+    }
+
+    .sheet-extras {
+      .flex-row(@direction: row-reverse; @col-gap: @5px);
+      position: absolute;
+      top: @2px;
+      right: @5px;
+      font-size: @32px;
+      line-height: @16px;
+      flex-direction: row-reverse;
+
+      .token-drag-handle {
+        cursor: grab;
+      }
+
+      .token-drag-handle:active {
+        cursor: grabbing;
+      }
+
+      .button,
+      .tag {
+        .flex-row(@justify: center);
+        --button-size: @32px;
+        width: var(--button-size);
+        height: var(--button-size);
+        font-size: 1.3rem;
+        background: none;
+      }
+
+      .tag {
+        border: none;
+      }
+    }
+  }
+
+  .tab-heading {
+    flex: 1 0 auto;
+    margin: 10px 0;
+    font-family: var(--investigator-sheet-primary-font);
+    font-size: @32px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--color-interact);
+    text-align: center;
+  }
+
+  .section-heading {
+    flex: 1 0 auto;
+    margin: 0;
+    font-family: var(--investigator-sheet-primary-font);
+    font-size: @22px;
+    text-transform: uppercase;
+  }
+
+  .item-image {
+    flex: 0 0 var(--icon-size);
+    width: var(--icon-size);
+    height: var(--icon-size);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: var(--color-tint);
+    background-size: var(--icon-size);
+    border-radius: 4px;
+  }
+
+  .tag {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0 @3px;
+    font-size: @9px;
+    line-height: @12px;
+    border: 1px solid #999;
+    border-radius: var(--border-radius-small);
+    background: var(--color-tint);
+  }
+
+  .bio-section {
+    .flex-col(@row-gap: @5px);
+
+    .events {
+      .event {
+        .flex-row(@col-gap: @5px);
+
+        .title {
+          flex-grow: 1;
+        }
+
+        .values {
+          flex: 0 0 @32px;
+          text-align: center;
+
+          input {
+            line-height: 1;
+            border: 0;
+            background-color: transparent;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    input[type='text'].title {
+      font-family: var(--investigator-sheet-primary-font);
+      font-size: @18px;
+      height: @24px;
+    }
+  }
+
+  .item-controls {
+    .flex-row(@col-gap: @5px);
+    justify-content: flex-end;
+
+    .item-control-disabled,
+    .item-control {
+      line-height: @14px;
+      height: @14px;
+    }
+
+    .item-control-disabled {
+      opacity: 0.2;
+      pointer-events: none;
+    }
+  }
+
+  .item-list {
+    .item {
+      .item-name.show-detail {
+        cursor: pointer;
+
+        &:hover {
+          text-shadow: var(--text-shadow);
+        }
+      }
+    }
+  }
+
+  ul.item-list {
+    .flex-col(@row-gap: @5px);
+    margin: 0;
+    padding: 0;
+
+    &.show-part-values {
+      li.item {
+        .skill-calc {
+          display: block;
+        }
+      }
+    }
+
+    li {
+      margin: 0;
+
+      &.item {
+        .flex-row(@col-gap: @5px);
+        margin: 0;
+        width: 100%;
+        align-items: center;
+        break-inside: avoid;
+
+        &.specialization {
+          padding-left: @13px;
+        }
+
+        .item-image {
+          border-radius: var(--border-radius-small);
+        }
+
+        .item-name {
+          flex: 1;
+          line-height: 1.2;
+        }
+
+        .item-score {
+          flex: 0 0 @32px;
+          font-weight: 700;
+          color: var(--color-text);
+          line-height: 1;
+          text-align: right;
+        }
+
+        .skill-name {
+          overflow: hidden;
+          text-wrap: nowrap;
+          text-overflow: ellipsis;
+          cursor: pointer;
+          font-weight: normal;
+        }
+
+        .npc-skill-score {
+          flex: 0 0 @32px;
+          text-align: right;
+        }
+
+        &.skill:hover .skill-calc {
+          display: block;
+        }
+
+        .skill-calc {
+          flex: 0 0 @48px;
+          text-align: left;
+          color: var(--color-text);
+          padding-left: @5px;
+          overflow: hidden;
+          display: none;
+          line-height: 1;
+        }
+
+        .skill-icons {
+          .flex-row(@col-gap: @5px);
+
+          div.hidden-icon {
+            height: 0;
+            overflow: hidden;
+          }
+
+          a {
+            .flex-row();
+
+            &.active {
+              color: var(--color-sanity);
+            }
+          }
+
+          i.fa-info-circle {
+            color: var(--color-labels);
+          }
+        }
+
+        .item-controls {
+          .item-control {
+            .flex-row();
+
+            i {
+              height: @14px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* ---------------------------------------- */
+  /*  Replacement for jQuery slide            */
+  /* ---------------------------------------- */
+  .html-element-toggled {
+    transition: height 0.5s;
+    overflow: hidden;
+  }
+
+  .html-element-hidden {
+    height: 0
+  }
+
+  /* ---------------------------------------- */
+  /*  Form Groups and Field                   */
+  /* ---------------------------------------- */
+  .form-group {
+    label {
+      flex: 1;
+      line-height: @20px;
+      font-weight: bold;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .form-fields {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+
+      >* {
+        flex: 1;
+        margin: 0 @3px 0 0;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .flex1 {
+        flex: 1;
+      }
+
+      .flex2 {
+        flex: 2;
+      }
+
+      .flex3 {
+        flex: 3;
+      }
+
+      .flex4 {
+        flex: 4;
+      }
+    }
+  }
+
+  .form-group.stacked {
+    label {
+      flex: 0 0 100%;
+      margin: 0;
+    }
+
+    label.checkbox {
+      flex: auto;
+      text-align: left;
+    }
+  }
+
+  .item-labels {
+    gap: @16px;
+    font-size: var(--font-size-12);
+
+    .item-label {
+      gap: @4px;
+      flex: none;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+  }
+
+  .properties-list {
+    flex: 0 0 @130px;
+    margin: @5px 0 @5px;
+
+    &.item-details {
+      gap: @4px;
+      padding: 0;
+      font-size: var(--font-size-12);
+    }
+
+    .property {
+      border: @2px groove var(--color-fieldset-border);
+      background: rgba(0, 0, 0, 0.05);
+      text-align: center;
+      margin: @3px 0;
+      padding: 0 @2px;
+      border-radius: @8px;
+    }
+  }
+}
+
+/* ---------------------------------------- */
+/*  Responsive Styles                       */
+/* ---------------------------------------- */
+@container body style(--font-size: 8) or style(--font-size: 9) or style(--font-size: 10) {
+  .application.coc7 {
+    .break {
+      flex-basis: 100%;
+    }
+
+    ul.item-list {
+      li.item {
+        .skill-calc {
+          flex-basis: auto;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,511 @@
+.application.coc7.dialog.item.chase {
+  section.window-content {
+    overflow: clip;
+
+    nav.tabs {
+      margin: @4px 0 0;
+    }
+
+    .item-header {
+      padding: 1rem;
+      height: 11rem;
+      align-items: center;
+
+      .item-property {
+        gap: @4px;
+      }
+
+      .sheet-portrait {
+        flex: 0 0 6rem;
+        gap: @4px;
+        margin: 0 auto;
+
+        .profile-img {
+          flex: 0 0 @92px;
+          height: @92px;
+          margin: 0 @2px;
+        }
+      }
+
+      .chase-location {
+        gap: @4px;
+        max-width: 34rem;
+        margin: 0 auto;
+
+        .active-location {
+          .form-group {
+            gap: @4px;
+          }
+
+          .pin-location {
+            &.locationSet {
+              i {
+                color: red;
+              }
+            }
+
+            .pin-image {
+              background: none;
+              border: none;
+              height: 2rem;
+              left: -3rem;
+              position: fixed;
+              top: -3rem;
+              width: 2rem;
+            }
+          }
+
+          .details {
+            gap: @4px;
+
+            .obstacle {
+              gap: @4px;
+              align-self: flex-start;
+
+              .chase-control {
+                flex: 0 0 auto;
+                font-size: 1rem;
+              }
+
+              .toggle-switch {
+                flex: 1
+              }
+
+              .obstacle-toggles {
+                gap: @4px;
+
+                .toggle-icon {
+                  flex: 0 0 auto;
+                  font-size: @19px;
+
+                  &.switched-on {
+                    color: red;
+                    text-shadow: 0 0 8px red;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .item-control,
+      .item-control-disabled {
+        flex: 0 0 auto;
+        font-size: 1rem;
+      }
+
+      .item-control-disabled {
+        opacity: 0.2;
+        pointer-events: none;
+      }
+    }
+
+    .participants-list {
+      gap: @2px;
+
+      .participant {
+        gap: 0.5rem;
+        line-height: 2rem;
+        border: 1px solid #000;
+        padding: @4px;
+
+        .p-icon,
+        .p-control,
+        .p-adjust,
+        .food-chain {
+          flex: 0 0 auto;
+          font-size: 1.5rem;
+          width: 1.5rem;
+          text-align: center;
+        }
+
+        .food-chain {
+          &.prey {
+            color: green;
+          }
+
+          &.chaser {
+            color: red;
+          }
+        }
+
+        .p-adjust,
+        .p-control {
+          flex: 0 0 auto;
+          font-size: var(--font-size-16);
+          width: 1rem;
+          text-align: center;
+        }
+
+        .p-adjust {
+          .fa-up {
+            color: green;
+          }
+
+          .fa-down {
+            color: red;
+          }
+        }
+
+        .p-name {
+          min-width: 5rem;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          flex: 1.2;
+        }
+
+        .right-text {
+          text-align: right;
+          flex: 0 0 @32px;
+        }
+
+        select.name {
+          text-overflow: ellipsis;
+          width: @80px;
+          flex: 0.8;
+        }
+
+        .p-modified-mov {
+          font-size: 2rem;
+          text-align: center;
+          flex: 0 0 2rem;
+
+          &.downgrade {
+            color: red;
+          }
+
+          &.upgrade {
+            color: green;
+          }
+        }
+
+        .inline-roll-request,
+        .inline-roll-data {
+          flex: 0 0 @40px;
+          text-align: center;
+          padding: 0;
+          line-height: @22px;
+        }
+      }
+    }
+
+    .new-participant {
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      margin: 1rem;
+
+      .add-sign {
+        width: 5rem;
+        height: 3rem;
+        align-items: center;
+        justify-content: center;
+        border: 0.25rem groove;
+        border-radius: 0.5rem;
+        font-size: 1.5rem;
+
+        &:hover {
+          cursor: pointer;
+          border: none;
+          box-shadow: 0 0 0.5rem var(--main-sheet-interactive-color);
+          background: rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+
+  section.setup {
+    gap: 0.25rem;
+
+    .chase-init {
+      .form-group {
+        gap: 0.25rem;
+        align-self: center;
+        justify-content: center;
+
+        button,
+        label {
+          flex: 0 0 auto;
+        }
+
+        input {
+          height: var(--button-size);
+          flex: 0 0 3rem;
+          text-align: center;
+        }
+      }
+    }
+
+    .initiative-track {
+      gap: @8px;
+
+      .initiative-block {
+        border: @2px solid transparent;
+        border-radius: @8px;
+        padding: @8px;
+        flex: 0 0 12.25rem;
+
+        &.active {
+          border-color: #ff6400;
+        }
+
+        &.chaser {
+          background-color: rgba(128, 60, 60, 0.1);
+        }
+
+        &.prey {
+          background-color: rgba(60, 128, 60, 0.1);
+        }
+
+        &.no-actions {
+          background-color: rgba(60, 60, 60, 0.1);
+        }
+
+        .header {
+          .name {
+            font-weight: bold;
+            text-overflow: ellipsis;
+          }
+
+          .participant-controls {
+            flex: 0 0 auto;
+          }
+        }
+
+        .participant {
+          align-items: flex-start;
+          display: grid;
+          grid-template-columns: @64px 1fr;
+          gap: 0.5rem;
+
+          .portrait {
+            flex: 0 0 @64px;
+          }
+
+          .infos {
+            justify-content: space-evenly;
+            height: 100%;
+
+            div {
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              gap: @4px;
+
+              input {
+                flex: 0 0 2rem;
+                text-align: center;
+              }
+            }
+          }
+        }
+
+        .movement-action {
+          justify-content: center;
+
+          .deficit {
+            flex: 0 0 auto;
+            color: red;
+            text-shadow: 0 0 8px red;
+          }
+
+          .base {
+            flex: 0 0 auto;
+            color: gray;
+
+            &.available {
+              color: goldenrod;
+            }
+          }
+        }
+
+        .participant-controls {
+          gap: @4px;
+
+          .assist-dropdown {
+            flex: 0 0 auto;
+          }
+
+          .item-control {
+            flex: 0 0 auto;
+
+            &.toggle {
+              color: goldenrod;
+            }
+
+            &.disabled {
+              color: #fff;
+            }
+
+            &.inactive {
+              color: #aaa;
+            }
+          }
+
+          .separator {
+            height: 1rem;
+            border-right: @2px groove #fff;
+            flex: 0;
+          }
+        }
+      }
+    }
+
+    .chase-track {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+      padding: .25rem;
+
+      .chase-location {
+        display: flex;
+        flex: 0 0 auto;
+        flex-direction: column;
+        flex-wrap: nowrap;
+
+        &.drag-over {
+          background: rgba(0, 0, 0, 0.1);
+        }
+
+        .spacer {
+          flex: 0 0 @25px;
+        }
+
+        .people {
+          display: flex;
+          flex: 1;
+          min-height: 2rem;
+          flex-wrap: nowrap;
+          flex-direction: row;
+          justify-content: flex-start;
+          width: 100%;
+          padding: 0 2px;
+
+          .list {
+            justify-content: center;
+
+            .chase-participant {
+              &.can-drag {
+                cursor: grab;
+
+                &:active {
+                  cursor: grabbing;
+                }
+              }
+
+              width: 2rem;
+              max-width: 2rem;
+
+              &.tooFast {
+                opacity: 0.5;
+              }
+
+              &.tooSlow {
+                opacity: 0.5;
+              }
+            }
+          }
+        }
+
+        .obstacle-location {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          flex-wrap: nowrap;
+          flex: 0;
+          width: 100%;
+          align-items: center;
+          color: red;
+          font-size: 1.5rem;
+          height: 2rem;
+        }
+
+        .location-name {
+          display: flex;
+          flex-direction: row;
+          flex: 1;
+          color: var(--main-sheet-front-color);
+          font-size: 0.8rem;
+          font-weight: 700;
+          min-width: 2rem;
+          justify-content: flex-start;
+          width: 100%;
+
+          .spacer {
+            min-width: 1rem;
+            flex: 1;
+          }
+
+          .line {
+            background: #000;
+            display: block;
+            height: @2px;
+            min-width: 1rem;
+            position: relative;
+            top: 1rem;
+            flex: 1;
+          }
+
+          .name-container {
+            border: @2px solid var(--button-background-color);
+            border-radius: 1rem;
+            color: var(--button-text-color);
+            flex: 0 0 auto;
+            font-size: 1rem;
+            height: 2rem;
+            line-height: 1.75rem;
+            padding: 0 @4px;
+            white-space: nowrap;
+
+            &:hover {
+              cursor: pointer;
+            }
+
+            &.empty {
+              background-color: #708090;
+              padding: 0;
+              width: 2rem;
+            }
+
+            &.active {
+              border-color: #ff6400;
+            }
+
+            &.initial-location {
+              background-color: #fff;
+              border-color: #708090;
+
+              &:hover {
+                cursor: auto;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .buttons {
+      gap: @8px;
+
+      button {
+        flex: 0 0 auto;
+      }
+    }
+  }
+
+  section.participants {
+    &.drag-over {
+      background: rgba(0, 0, 0, 0.1);
+
+      .new-participant {
+        .add-sign {
+          border: none;
+          box-shadow: 0 0 0.5rem var(--main-sheet-interactive-color);
+          background: rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+}

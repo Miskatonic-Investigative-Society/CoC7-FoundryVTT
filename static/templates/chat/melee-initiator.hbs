@@ -1,0 +1,113 @@
+<div class="coc7-chat-header flexcol">
+  <div class="flexrow">
+    <div class="left-portrait{{#if displayActorOnCard}} double-portrait{{/if}} flexrow" data-actor-uuid="{{attackerUuid}}">
+      {{#if displayActorOnCard}}
+        <img class="portrait open-actor" data-actor-uuid="{{attackerUuid}}" src="{{attackerImg}}" data-tooltip="{{attackerName}}" />
+      {{/if}}
+      <img class="portrait open-actor" data-actor-uuid="{{attackerUuid}}" src="{{itemImg}}" data-tooltip="{{itemName}}" />
+    </div>
+    <div class="card-title">
+      {{itemName}}
+    </div>
+    <div class="actor-portrait right-portrait">
+      <img class="portrait{{#unless rolled}} change-actor{{/unless}}" data-actor-uuid="{{targetUuid}}" src="{{targetImg}}" data-tooltip="{{targetName}}" />
+    </div>
+  </div>
+  {{#if (or enrichedItemDescriptionValue hasWeaponSpecial)}}
+    <div class="coc7-chat-description flexcol">
+      <div class="coc7-formatted-text">
+        {{{enrichedItemDescriptionValue}}}
+      </div>
+      {{#if hasWeaponSpecial}}
+        <div class="coc7-formatted-text">
+          <div class="coc7-tags">
+            <span class="tag">{{localize 'CoC7.WeaponSpecial'}}</span>
+          </div>
+          {{{enrichedWeaponDescriptionSpecial}}}
+        </div>
+      {{/if}}
+      {{#if rolled}}
+        <div class="coc7-tags">
+          {{#if targetName}}
+            <span class="tag">{{targetName}}</span>
+          {{/if}}
+          {{#if poolBonus}}
+            {{#each poolBonus as |poolModifier|}}
+              {{#if poolModifier.selected}}
+                <span class="tag" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</span>
+              {{/if}}
+            {{/each}}
+          {{/if}}
+          {{#if poolPenalty}}
+            {{#each poolPenalty as |poolModifier|}}
+              {{#if poolModifier.selected}}
+                <span class="tag" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</span>
+              {{/if}}
+            {{/each}}
+          {{/if}}
+          {{#if isAutoSuccess}}
+            <span class="tag" data-tooltip="CoC7.TitleAutoSuccess">{{localize 'CoC7.combatCard.automaticSuccess'}}</span>
+          {{/if}}
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+</div>
+{{#if rolled}}
+  {{~> 'systems/CoC7/templates/chat/parts/roll-no-formula-dice.hbs' actorUuid=actorUuid}}
+{{else}}
+  {{#if (eq @root.foundryGeneration 13)}}<div class="never-expand" data-action="expandRoll"></div>{{/if}}
+  {{#if targetName}}
+    <div class="coc7-target-name">
+      <label>{{localize 'CoC7.Target'}}: {{targetName}}</label>
+    </div>
+  {{/if}}
+  <div class="keeper-only-block coc7-card-buttons flexrow">
+    <button class="{{#if isAutoSuccess}} switched-on{{/if}}" data-action="toggleValue" data-set="isAutoSuccess" data-tooltip="CoC7.TitleAutoSuccess">{{localize 'CoC7.combatCard.automaticSuccess'}}</button>
+  </div>
+  <div class="coc7-chat-content flexcol" data-actor-uuid="{{attackerUuid}}">
+    {{#if poolBonus}}
+      <label>{{localize 'CoC7.BonusDice'}}</label>
+      <div class="coc7-card-buttons coc7-half-buttons flexrow">
+        {{#each poolBonus as |poolModifier|}}
+          <button class="keeper-only-control{{#if poolModifier.selected}} switched-on{{/if}}" data-action="togglePoolKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
+        {{/each}}
+      </div>
+    {{/if}}
+    {{#if poolPenalty}}
+      <label>{{localize 'CoC7.PenaltyDice'}}</label>
+      <div class="coc7-card-buttons coc7-half-buttons flexrow">
+        {{#each poolPenalty as |poolModifier|}}
+          <button class="keeper-only-control{{#if poolModifier.selected}} switched-on{{/if}}" data-action="togglePoolKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+  <div class="coc7-chat-content flexcol" data-actor-uuid="{{attackerUuid}}">
+    <label>{{localize 'CoC7.AdditionalPoolModifier'}}</label>
+    <div class="bonus-penalty-selector">
+      <div class="bonus-penalty-header flexrow">
+        <span>{{localize 'CoC7.PenaltyDice'}}</span>
+        <span>{{localize 'CoC7.BonusDice'}}</span>
+      </div>
+      <div class="bonus-penalty-header flexrow">
+        <span>-2</span>
+        <span>-1</span>
+        <span>0</span>
+        <span>+1</span>
+        <span>+2</span>
+      </div>
+      <input type="range" name="poolModifier" min="-2" max="2" value="{{poolModifier}}" class="slider keeper-only-control">
+    </div>
+    <div class="coc7-tags">
+      {{#each tags}}
+        <span class="tag">{{this}}</span>
+      {{/each}}
+    </div>
+  </div>
+  <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{actorUuid}}">
+    {{#each skills as |skill|}}
+      <button data-action="attackerRoll" data-skill="{{skill.id}}">{{skill.name}}: ({{skill.system.value}}%)</button>
+    {{/each}}
+  </div>
+{{/if}}

@@ -1,0 +1,10 @@
+<section class="flexcol scrollable" style="flex: 1">
+  <div class="list-directory flexcol">
+    {{#each options}}
+      <div class="item flexrow{{#if (eq ../selected this.uuid)}} picked{{/if}}{{#if this.canPing}} can-ping{{/if}}" data-action="actorPicked" data-document-uuid="{{this.uuid}}">
+        <img src="{{this.img}}" width="48" height="48" loading="lazy">
+        <span>{{this.name}}</span>
+      </div>
+    {{/each}}
+  </div>
+</section>

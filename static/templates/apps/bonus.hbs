@@ -1,0 +1,61 @@
+<div class="flexcol">
+  {{#if cardTypes}}
+    <div class="form-group">
+      <label>{{localize 'CoC7.CardType'}}</label>
+      <select name="cardType">
+        {{selectOptions cardTypes selected=options.cardType localize=true}}
+      </select>
+    </div>
+  {{/if}}
+
+  {{#if askValue}}
+    <div class="form-group">
+      <label>{{localize 'CoC7.RollThreshold'}}</label>
+      <input type="number" name="threshold" value="{{options.threshold}}" />
+    </div>
+  {{/if}}
+
+  {{#unless hideDifficulty}}
+    <div class="form-group">
+      <label>{{localize 'CoC7.RollDifficulty'}}</label>
+      <select name="difficulty">
+        {{selectOptions difficultyTypes selected=options.difficulty localize=true valueAttr='key' labelAttr='val'}}
+      </select>
+    </div>
+  {{/unless}}
+
+  {{#if allowFlatDiceModifier}}
+    <div class="form-group">
+      <label>{{localize 'CoC7.FlatDiceModifier'}}</label>
+      <input type="number" name="flatDiceModifier" value="{{options.flatDiceModifier}}" />
+    </div>
+  {{/if}}
+
+  {{#if allowFlatThresholdModifier}}
+    <div class="form-group">
+      <label>{{localize 'CoC7.FlatModifier'}}</label>
+      <input type="number" name="flatThresholdModifier" value="{{options.flatThresholdModifier}}" />
+    </div>
+  {{/if}}
+
+  <div class="form-group bonus-penalty-selector">
+    <label>{{localize 'CoC7.BonusDice'}}</label>
+    <div class="bonus-penalty-box">
+      <div class="flexrow bonus-penalty-labels">
+        <span class="double-penalty"><i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i></span>
+        <span class="penalty"><i class="fa-solid fa-dice-d10"></i></span>
+        <span class="normal-roll"><i class="fa-solid fa-dice-d10"></i></span>
+        <span class="bonus"><i class="fa-solid fa-dice-d10"></i></span>
+        <span class="double-bonus"><i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i></span>
+      </div>
+      <div class="flexrow bonus-penalty-labels">
+        <span class="double-penalty">-2</span>
+        <span class="penalty">-1</span>
+        <span class="normal-roll">0</span>
+        <span class="bonus">+1</span>
+        <span class="double-bonus">+2</span>
+      </div>
+      <input type="range" name="poolModifier" min="-2" max="2" value="{{options.poolModifier}}">
+    </div>
+  </div>
+</div>

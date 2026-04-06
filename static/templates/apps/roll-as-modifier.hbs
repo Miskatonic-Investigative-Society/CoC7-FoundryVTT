@@ -1,0 +1,40 @@
+<div>
+  <div class="flexrow">
+    <label>{{localize 'CoC7.RollAsModifier.Modifier.Title'}}</label>
+    <div class="toggle-row flexrow">
+      <div class="toggle-attributes flexrow">
+        {{#each _modifier as |row|}}
+          <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-set="modifier" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}}>{{localize row.name}}</button>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="flexrow">
+    <label>{{localize 'CoC7.RollAsModifier.Type.Title'}}</label>
+    <div class="toggle-row flexrow">
+      <div class="toggle-attributes flexrow">
+        {{#each _type as |row|}}
+          <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-set="type" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}}>{{localize row.name}}</button>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="flexrow">
+    <label>{{localize 'CoC7.RollAsModifier.ActiveEffect.Title'}}</label>
+    <div class="toggle-row flexrow">
+      <div class="toggle-attributes flexrow">
+        {{#each _activeEffect as |row|}}
+          <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-set="activeEffect" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}}>{{localize row.name}}</button>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="flexrow">
+    <label>{{localize 'CoC7.RollAsModifier.Value'}}</label>
+    <div class="flexrow">
+      <select name="value">
+        {{selectOptions _values selected=value localize=true valueAttr='key' labelAttr='name'}}
+      </select>
+    </div>
+  </div>
+</div>

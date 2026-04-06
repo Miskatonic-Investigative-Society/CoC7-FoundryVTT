@@ -1,0 +1,25 @@
+<section class="standard-form longer-labels scrollable">
+  <fieldset>
+    <legend>{{localize 'CoC7.Settings.CoreRules.Title'}}</legend>
+    {{formGroup fields.developmentRollForLuck value=values.developmentRollForLuck localize=true}}
+    {{formGroup fields.initiativeRule value=values.initiativeRule localize=true}}
+    {{formGroup fields.allowMythosHardened value=values.allowMythosHardened localize=true}}
+  </fieldset>
+  <fieldset>
+    <legend>{{localize 'SETTINGS.PulpRules'}}</legend>
+    {{formGroup fields.pulpRulesSetTo value=values.pulpRulesSetTo localize=true}}
+    {{formGroup fields.pulpRuleDoubleMaxHealth value=values.pulpRuleDoubleMaxHealth localize=true classes='pulpRulesSelect'}}
+    {{formGroup fields.pulpRuleDevelopmentRollLuck value=values.pulpRuleDevelopmentRollLuck localize=true classes='pulpRulesSelect'}}
+    {{formGroup fields.pulpRuleArchetype value=values.pulpRuleArchetype localize=true classes='pulpRulesSelect'}}
+    {{formGroup fields.pulpRuleOrganization value=values.pulpRuleOrganization localize=true classes='pulpRulesSelect'}}
+    {{formGroup fields.pulpRuleTalents value=values.pulpRuleTalents localize=true classes='pulpRulesSelect'}}
+    {{formGroup fields.pulpRuleFasterRecovery value=values.pulpRuleFasterRecovery localize=true classes='pulpRulesSelect'}}
+    {{formGroup fields.pulpRuleIgnoreMajorWounds value=values.pulpRuleIgnoreMajorWounds localize=true classes='pulpRulesSelect'}}
+    {{formGroup fields.pulpRuleIgnoreAgePenalties value=values.pulpRuleIgnoreAgePenalties localize=true classes='pulpRulesSelect'}}
+  </fieldset>
+  <fieldset>
+    <legend>{{localize 'CoC7.Settings.HouseRules.Title'}}</legend>
+    {{formGroup fields.opposedRollTieBreaker value=values.opposedRollTieBreaker localize=true}}
+    {{formGroup fields.allowPushFumbles value=values.allowPushFumbles localize=true}}
+  </fieldset>
+</section>

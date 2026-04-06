@@ -1,0 +1,16 @@
+<div class="panel flexcol">
+  <h1>{{localize 'CoC7.InvestigatorWizard.TitleSelectSetup'}}</h1>
+  <div class="scroll-section">
+    <p>{{localize 'CoC7.InvestigatorWizard.SetupPage'}}</p>
+    <div class="form-group">
+      <label for="coc-setup">{{localize 'CoC7.InvestigatorWizard.SetupSelect'}}:</label>
+      <select name="coc-setup">
+        <option value="">&nbsp;</option>
+        {{selectOptions setupOptions selected=coc7Config.setup valueAttr='key' labelAttr='name'}}
+      </select>
+    </div>
+    {{#if coc7Config.setup}}
+      {{{description}}}
+    {{/if}}
+  </div>
+</div>

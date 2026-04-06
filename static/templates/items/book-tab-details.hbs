@@ -1,0 +1,100 @@
+<section class="tab details drop-skill-item flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="details">
+  <div class="book-details flexrow">
+    <div class="book-type">
+      <fieldset class="flexcol">
+        <legend>{{localize 'CoC7.BookType'}}</legend>
+        <div class="toggle-row flexrow">
+          <div class="toggle-attributes flexrow" data-set="type">
+            {{#each _types as |row|}}
+              <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}}>{{localize row.name}}</button>
+            {{/each}}
+          </div>
+        </div>
+        <div class="flexrow">
+          <label>{{localize 'CoC7.DifficultyLevel'}}:</label>
+          <select name="system.difficultyLevel">
+            {{selectOptions difficultyLevels selected=document.system.difficultyLevel localize=true valueAttr='key' labelAttr='label'}}
+          </select>
+        </div>
+        {{#if document.system.type.mythos}}
+          <div class="flexrow">
+            <label>{{localize 'CoC7.StudyTime'}}:</label>
+            {{#if knownNecessary}}
+              <input type="number" class="known-value-change short" data-known="necessary" value="{{knownNecessary}}" />
+            {{else}}
+              <input type="number" class="short" name="system.study.necessary" value="{{document.system.study.necessary}}" />
+            {{/if}}
+            {{#if knownUnits}}
+              <select class="known-value-change" data-known="units">
+                {{selectOptions studyUnits selected=knownUnits localize=true valueAttr='key' labelAttr='label'}}
+              </select>
+            {{else}}
+              <select name="system.study.units">
+                {{selectOptions studyUnits selected=document.system.study.units localize=true valueAttr='key' labelAttr='label'}}
+              </select>
+            {{/if}}
+          </div>
+        {{/if}}
+        {{#if (or document.system.type.mythos document.system.type.occult)}}
+          <div class="flexrow">
+            <label>{{localize 'CoC7.SANLoss'}}:</label>
+            <input type="text" name="system.sanityLoss" value="{{document.system.sanityLoss}}" />
+          </div>
+        {{/if}}
+      </fieldset>
+    </div>
+    <div class="book-gains">
+      {{#if (or document.system.type.mythos document.system.type.occult)}}
+        <fieldset class=" flexcol">
+          <legend>{{localize 'CoC7.Gains'}}</legend>
+          {{#if document.system.type.mythos}}
+            <div class="flexrow">
+              <label>{{localize 'CoC7.CthulhuMythosInitial'}}:</label>
+              <input type="number" class="short" name="system.gains.cthulhuMythos.initial" value="{{document.system.gains.cthulhuMythos.initial}}" />
+            </div>
+            <div class="flexrow">
+              <label>{{localize 'CoC7.CthulhuMythosFinal'}}:</label>
+              <input type="number" class="short" name="system.gains.cthulhuMythos.final" value="{{document.system.gains.cthulhuMythos.final}}" />
+            </div>
+            <div class="flexrow">
+              <label>{{localize 'CoC7.MythosRating'}}:</label>
+              <input type="number" class="short" name="system.mythosRating" value="{{document.system.mythosRating}}" />
+            </div>
+          {{/if}}
+          {{#if document.system.type.occult}}
+            <div class="flexrow">
+              <label>{{localize 'CoC7.Occult'}}:</label>
+              <input type="number" class="short" name="system.gains.occult" value="{{document.system.gains.occult}}" />
+            </div>
+          {{/if}}
+        </fieldset>
+      {{/if}}
+    </div>
+  </div>
+  {{#if document.system.type.other}}
+    <div class="book-other flexcol">
+      <div class="book-other-header">
+        <div>{{localize 'CoC7.Skill'}}</div>
+        <div>{{localize 'CoC7.Gains'}}</div>
+        <div class="item-controls">
+          <a class="item-control" data-action="add-other-gains"><i class="fa-regular fa-plus-circle"></i></a>
+        </div>
+      </div>
+      {{#each document.system.gains.others as |skill index|}}
+        <div class="book-other-row">
+          <div>
+            <input name="system.gains.others.{{index}}.name" type="text" value="{{skill.name}}">
+          </div>
+          <div>
+            <select name="system.gains.others.{{index}}.value">
+              {{selectOptions ../otherGains selected=skill.value localize=true valueAttr='key' labelAttr='label'}}
+            </select>
+          </div>
+          <div class="item-controls">
+            <a class="item-control" data-action="remove-other-gains" data-index="{{index}}"><i class="fa-solid fa-trash"></i></a>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
+</section>

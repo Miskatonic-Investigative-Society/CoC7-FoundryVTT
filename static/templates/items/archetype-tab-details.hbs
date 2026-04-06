@@ -1,0 +1,44 @@
+<section class="tab details flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="details">
+  {{#if tabs.details}}
+    {{#unless document.isEmbedded}}
+      <fieldset class="flexcol">
+        <div class="form-group flexrow">
+          <label>{{localize 'CoC7.BonusPoints'}}</label>
+          <input type="text" name="system.bonusPoints" value="{{document.system.bonusPoints}}" />
+        </div>
+        <div class="form-group flexrow">
+          <label>{{localize 'CoC7.PulpTalents'}}</label>
+          <input type="text" name="system.talents" value="{{document.system.talents}}" />
+        </div>
+      </fieldset>
+      <fieldset class="flexcol">
+        <legend>{{localize 'CoC7.CoreCharacteristics'}}</legend>
+        <div class="toggle-row flexrow">
+          <div class="toggle-attributes flexrow" {{#unless document.isEmbedded}}data-set="coreCharacteristics" {{/unless}}>
+            {{#each _types as |row|}}
+              <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+            {{/each}}
+          </div>
+        </div>
+        <div class="form-group toggle-row flexrow" style="align-items: baseline;">
+          <div class="toggle-attributes flexrow" data-set="coreCharacteristicsFormula">
+            <button class="toggle-switch{{#if document.system.coreCharacteristicsFormula.enabled}} switched-on{{/if}}" data-property="enabled" type="button">{{localize 'CoC7.UseFormula'}}</button>
+          </div>
+          {{#if document.system.coreCharacteristicsFormula.enabled}}
+            <input type="text" name="system.coreCharacteristicsFormula.value" value="{{document.system.coreCharacteristicsFormula.value}}" placeholder="{{localize 'CoC7.EnterFormula'}}" />
+          {{else}}
+            <div class="input-replacement-gap">&nbsp;</div>
+          {{/if}}
+        </div>
+      </fieldset>
+    {{/unless}}
+    <fieldset class="flexcol">
+      <legend>{{localize 'CoC7.SuggestedOccupations'}}</legend>
+      <prose-mirror name="system.suggestedOccupations" value="{{document.system.suggestedOccupations}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedSuggestedOccupations}}}</prose-mirror>
+    </fieldset>
+    <fieldset class="flexcol">
+      <legend>{{localize 'CoC7.SuggestedTraits'}}</legend>
+      <prose-mirror name="system.suggestedTraits" value="{{document.system.suggestedTraits}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedSuggestedTraits}}}</prose-mirror>
+    </fieldset>
+  {{/if}}
+</section>

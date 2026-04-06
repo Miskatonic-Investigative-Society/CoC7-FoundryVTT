@@ -1,0 +1,65 @@
+<div class="character-details">
+  <div class="character-detail">
+    <div class="title">{{localize 'CoC7.Name'}}</div>
+    <input name="name" class="detail-value" type="text" value="{{document.name}}" /></span>
+  </div>
+  {{#if displayPlayerName}}
+    <div class="character-detail">
+      <div class="title">{{localize 'CoC7.PlayerName'}}</div>
+      <input class="detail-value" name="system.infos.playername" type="text" value="{{document.system.infos.playername}}" />
+    </div>
+  {{/if}}
+  <div class="character-detail">
+    <div class="title">{{localize 'CoC7.Occupation'}}</div>
+    {{#if occupationSet}}
+      <span class="rollable open-item detail-value" data-type="occupation">{{document.system.infos.occupation}}</span>
+      {{#unless document.system.flags.locked}}
+        <a class="reset-occupation" data-tooltip="CoC7.ResetOccupation" data-type="occupation"><i class="fa-regular fa-times-circle"></i></a>
+      {{/unless}}
+    {{else}}
+      <input name="system.infos.occupation" type="text" class="detail-value" value="{{document.system.infos.occupation}}" />
+    {{/if}}
+  </div>
+  <div class="character-detail">
+    <div class="title">{{localize 'CoC7.Sex'}}</div>
+    <input name="system.infos.sex" type="text" class="detail-value" value="{{document.system.infos.sex}}" />
+    <div class="break"></div>
+    <div class="title detail-age">{{localize 'CoC7.Age'}}</div>
+    <input name="system.infos.age" type="text" class="detail-value detail-age" value="{{document.system.infos.age}}" />
+  </div>
+  {{#if pulpRuleArchetype}}
+    <div class="character-detail">
+      <div class="title">{{localize 'CoC7.Archetype'}}</div>
+      {{#if archetypeSet}}
+        <span class="rollable open-item detail-value" data-type="archetype">{{document.system.infos.archetype}}</span>
+        {{#unless document.system.flags.locked}}
+          <a class="reset-archetype" data-tooltip="CoC7.ResetArchetype" data-type="archetype"><i class="fa-regular fa-times-circle"></i></a>
+        {{/unless}}
+      {{else}}
+        <input name="system.infos.archetype" type="text" class="detail-value" value="{{document.system.infos.archetype}}" />
+      {{/if}}
+    </div>
+  {{else if hasExperiencePackage}}
+    <div class="character-detail">
+      <div class="title">{{localize 'CoC7.SheetExperiencePackageName'}}</div>
+      <span class="rollable open-item detail-value" data-type="experiencePackage">{{nameExperiencePackage}}</span>
+      {{#unless document.system.flags.locked}}
+        <a class="reset-experience-package" data-tooltip="CoC7.ClearExperiencePackageName" data-type="experiencePackage"><i class="fa-regular fa-times-circle"></i></a>
+      {{/unless}}
+    </div>
+  {{/if}}
+  {{#if pulpRuleOrganization}}
+    <div class="character-detail">
+      <div class="title">{{localize 'CoC7.Organization'}}</div>
+      <input name="system.infos.organization" type="text" class="detail-value" value="{{document.system.infos.organization}}" />
+    </div>
+  {{/if}}
+  <div class="character-detail">
+    <div class="title">{{localize 'CoC7.Residence'}}</div>
+    <input name="system.infos.residence" type="text" class="detail-value" value="{{document.system.infos.residence}}" />
+  </div>
+  <div class="character-detail">
+    <div class="title">{{localize 'CoC7.Birthplace'}}</div>
+    <input name="system.infos.birthplace" type="text" class="detail-value" value="{{document.system.infos.birthplace}}" />
+  </div>
+</div>

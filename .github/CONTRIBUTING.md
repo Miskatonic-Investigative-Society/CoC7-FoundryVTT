@@ -85,31 +85,19 @@ If `npm install` throws any errors you can try `npm install --legacy-peer-deps` 
 
 Don't mind possible warnings. They are part of any Node project.
 
-To make things easier, edit the `fvtt.config.example.js` file, located at the root of your local repository. The userDataPath key is your User Data Directory from Foundry and can be found on the Configuration tab on the Setup screen.
+Run `npm run init` to let the build system know where your FoundryVTT install is.
 
-Examples:
+Run `npm run compendiums-build` to generate the binary packs as they are not included.
 
-- %localappdata%/FoundryVTT
-- ~/Library/Application Support/FoundryVTT
-- /home/\$USER/.local/share/FoundryVTT
+Run `npm run manuals-build` to generate the binary pack for the system documentation.
 
-Then, rename this file to `fvtt.config.js`
+Run `npm run roll-requests-build` to generate the binary pack that containing the example roll requests.
 
 And with this you can create a system build that will be sent directly to your Foundry folder by `npm run build` or `npm run watch`
-
-If you do not configure this file, all the builds will be built in the build folder, on the root directory.
-
-Run `npm run build-compendiums` to generate the binary packs as they are not included.
 
 Run `npm run build` to perform a one off compile/build.
 
 Now everything is ready for you to make any changes or additions you want.
-
-After rename `fvtt.config.example.js` to `fvtt.config.js` consider run:
-
-`git update-index --assume-unchanged fvtt.config.example.js`
-
-This way Git does not assume the original file has been deleted from the repository.
 
 ## Running automated tests
 In order to run tests and see if you didn't introduce breaking changes, download [secondary repository with e2e Quench tests](https://github.com/Miskatonic-Investigative-Society/coc7-system-tests) and follow setup instructions there.

@@ -1,0 +1,482 @@
+.application.coc7.dialog {
+  background-image: var(--background-sheet);
+  font-family: var(--investigator-sheet-secondary-font);
+
+  &.bonus-selection {
+    .dialog-content.standard-form {
+      .flexcol {
+        font-family: var(--investigator-sheet-primary-font);
+        font-size: 1.8rem;
+        row-gap: 0.5rem;
+
+        label {
+          line-height: 2rem;
+        }
+
+        select,
+        input[type=number],
+        input[type=text] {
+          flex: 2;
+          padding: 0 @8px;
+          height: 2.5rem;
+        }
+
+        select[name=difficulty] {
+          option[value="-1"] {
+            background-color: rgba(55, 0, 55, 0.4);
+          }
+
+          option[value="2"] {
+            background-color: rgba(255, 166, 0, 0.5);
+          }
+
+          option[value="3"] {
+            background-color: rgba(255, 0, 0, 0.4);
+          }
+        }
+      }
+    }
+
+    footer button {
+      font-family: var(--investigator-sheet-primary-font);
+      font-size: 1.8rem;
+    }
+  }
+
+  &.roll-as-modifier {
+    label {
+      font-weight: bold;
+      align-self: flex-start;
+      flex: 0.5;
+      margin: @3px 0;
+    }
+
+    select {
+      height: var(--input-height);
+    }
+  }
+
+  &.coc-id-editor {
+    .scrollable-y {
+      overflow-y: scroll;
+    }
+
+    .flexauto {
+      flex: 0 0 auto;
+
+      a.control.copy-to-clipboard {
+        pointer-events: all;
+      }
+    }
+
+    .flexcol.form-gapped {
+      gap: @8px;
+    }
+
+    .flexrow {
+      &.form-group {
+        label {
+          flex: 1;
+          font-weight: bold;
+        }
+
+        .form-value {
+          flex: 2;
+
+          .control {
+            margin-left: @8px;
+            text-align: right;
+          }
+
+          input.short-number {
+            width: @80px;
+          }
+        }
+      }
+
+      .separator {
+        flex: 0 0 auto;
+        margin: 0 @3px;
+      }
+    }
+
+    span.warning {
+      outline: 2px dashed rgba(255, 100, 0, 0.3);
+      background-color: rgba(255, 100, 0, 0.3);
+      margin: 0 1rem;
+    }
+
+    table {
+      margin: @8px;
+      width: calc(100% - @8px - @8px);
+
+      th,
+      td {
+        padding: @2px @2px
+      }
+
+      tr:first-child {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+  }
+
+  &.active-effect-config {
+    .link-header {
+      gap: @6px;
+      padding: @16px @16px 0;
+    }
+
+    .link-body {
+      margin: @8px @16px;
+      padding: @8px;
+    }
+
+    section {
+      padding: @8px @16px;
+    }
+
+    .link-buttons {
+      gap: @6px;
+      padding: 0 @16px @16px;
+    }
+  }
+
+  &.container {
+    section {
+      padding: @8px @16px;
+      --scroll-margin: 0;
+
+      .tab-group-header {
+        .flex-row();
+        background: rgba(0, 0, 0, 0.15);
+        border: 2px groove #eeede0;
+        padding: @2px @6px;
+        cursor: pointer;
+
+        div {
+          flex: 1;
+
+          &.tab-group-title {
+            flex: 2;
+            font-family: var(--investigator-sheet-primary-font);
+            font-size: @16px;
+            text-align: center;
+          }
+
+          &.item-controls {
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+
+  section.window-content {
+    padding: @16px;
+
+    prose-mirror,
+    .prosemirror {
+      flex: 1;
+    }
+
+    .warning {
+      color: var(--color-warning);
+    }
+
+    .item-header {
+      flex: 0 0 auto;
+      gap: @6px;
+      align-items: flex-start;
+      padding: 0 @5px;
+
+      label {
+        flex: 0 0 auto;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      input[type="text"] {
+        --input-height: @24px;
+        padding: 0 @4px;
+        font-size: var(--font-size-13);
+
+        &.large {
+          font-size: var(--font-size-24);
+          height: @45px;
+        }
+      }
+
+      .item-subheader {
+        gap: @6px;
+        align-items: flex-start;
+      }
+
+      .flexcol.item-property {
+        gap: @3px;
+
+        .flexrow {
+          gap: @3px;
+        }
+
+        .columns-two {
+          gap: @16px;
+
+          .column-row {
+            flex: 1;
+            align-items: center;
+            gap: @4px;
+          }
+        }
+      }
+
+      .toggle-row {
+        label {
+          margin-left: 0;
+        }
+      }
+
+      .profile-img {
+        flex: 0 0 @90px;
+        height: @90px;
+        border: @1px solid var(--color-form-label);
+        border-radius: @2px;
+        background-color: rgba(200, 200, 200, var(--profile-img-bg));
+        cursor: pointer;
+
+        &.small {
+          flex: 0 0 @70px;
+          height: @70px;
+        }
+      }
+    }
+
+    div.item-list {
+      row-gap: @4px;
+      margin: 0;
+      padding: 0;
+
+      .item-header,
+      .item {
+        gap: @8px;
+        padding: @4px @2px @3px;
+        border-bottom: 1px solid var(--color-fieldset-border);
+
+        .detail-value {
+          flex: 0 0 @25px;
+          text-align: right;
+        }
+
+        .detail-value {
+          padding: 0 2px;
+          border: none;
+          background: transparent;
+        }
+
+        .item-controls {
+          flex: 0 0 auto;
+          font-size: @12px;
+        }
+
+        .item-summary {
+          flex: 100%;
+        }
+      }
+
+      .item-header {
+        font-weight: bold;
+      }
+    }
+
+    div.selectable.selected label,
+    div.selectable:hover label {
+      text-shadow: 0 0 0.5rem var(--color-warm-2);
+      cursor: pointer;
+    }
+
+    div.selected label {
+      font-weight: bold;
+    }
+
+    .bonus-penalty-selector {
+      align-items: baseline;
+
+      .bonus-penalty-box {
+        background: linear-gradient(90deg, rgba(177, 0, 0, 0.5) 0%, rgba(162, 0, 0, 0.4) 15%, rgba(193, 0, 0, 0.3) 20%, rgba(181, 73, 73, 0.3) 38%, rgba(150, 130, 130, 0.3) 42%, rgba(145, 145, 145, 0.3) 50%, rgba(161, 180, 160, 0.3) 58%, rgba(45, 187, 37, 0.3) 62%, rgba(5, 156, 7, 0.3) 80%, rgba(4, 127, 14, 0.4) 85%, rgba(2, 200, 20, 0.5) 100%);
+        border: 1px solid var(--color-dark-6);
+        border-radius: 0.5rem;
+        box-shadow: inset 0 0 6px var(--input-background-color);
+        padding: 0 0.5rem;
+        text-shadow: -1px -1px 2px white, 1px 1px 2px white;
+
+        span.double-bonus,
+        span.double-penalty,
+        span.normal-roll,
+        span.bonus,
+        span.penalty {
+          flex: 2;
+          text-align: center;
+
+          i {
+            font-size: 1.3rem;
+            text-shadow: -1px -1px 5px white, 1px 1px 5px white;
+          }
+        }
+
+        span.double-penalty {
+          flex: 1.5;
+          text-align: left;
+        }
+
+        span.double-bonus {
+          flex: 1.5;
+          text-align: right;
+        }
+
+        span.penalty i {
+          color: red;
+        }
+
+        span.double-penalty i {
+          color: darkred;
+        }
+
+        span.double-bonus i {
+          color: darkgreen;
+        }
+
+        span.bonus i {
+          color: green;
+        }
+
+        span.normal-roll i {
+          color: grey;
+        }
+
+        input[type=range] {
+          padding: 0 0.5rem;
+        }
+      }
+    }
+
+    .list-directory {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      .item {
+        cursor: var(--cursor-pointer);
+        padding: 0.5rem;
+        margin: 0;
+        word-break: break-all;
+        overflow: hidden;
+        border-bottom: 1px solid var(--color-dark-6);
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &.picked {
+          color: var(--color-text-selection);
+          background: var(--color-text-selection-bg);
+          font-weight: 600;
+        }
+
+        img {
+          flex: 0 0 48px;
+          object-fit: cover;
+          object-position: 50% 50%;
+          margin-right: 1rem;
+          border: none;
+        }
+      }
+    }
+  }
+
+  .chase-actor-header {
+    gap: @8px;
+    line-height: 2rem;
+
+    .chase-token,
+    .food-chain {
+      flex: 0 0 auto;
+      font-size: 1.5rem;
+      width: 1.5rem;
+    }
+
+    .chase-token {
+      cursor: grab;
+    }
+
+    .food-chain {
+      &.prey {
+        color: green;
+      }
+
+      &.chaser {
+        color: red;
+      }
+    }
+
+    .actor-name {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .item-control {
+      flex: 0 0 auto;
+    }
+  }
+
+  .chase-triple {
+    label {
+      flex: 3
+    }
+
+    .name {
+      flex: 6;
+    }
+
+    .right-text {
+      flex: 1;
+      text-align: right;
+    }
+  }
+
+  .chase-separator {
+    border-bottom: 3px groove;
+  }
+
+  .chase-double {
+    .group-label {
+      gap: 4px;
+      flex: 9;
+
+      .item-control {
+        flex: 0 0 1rem;
+        text-align: center;
+      }
+    }
+
+    .right-text {
+      flex: 1;
+      text-align: right;
+    }
+  }
+
+  .chase-triple,
+  .chase-double {
+    input:read-only {
+      cursor: not-allowed;
+    }
+  }
+}
+
+body.theme-dark .application.coc7.item,
+.themed.theme-dark.application.coc7.item {
+  section.window-content {
+    backdrop-filter: none; // Foundry applies a backdrop filter in dark mode which breaks our UI.
+  }
+}

@@ -1,0 +1,65 @@
+<div class="panel flexcol">
+  <h1>{{localize 'CoC7.InvestigatorWizard.TitleDetails'}}</h1>
+  <div class="scroll-section">
+    <div class="investigator-set flexcol">
+      <div class="form-group">
+        <label for="name">{{localize 'CoC7.Name'}}:</label>
+        <div class="value-set flexrow">
+          <input type="text" class="save-on-blur" name="name" value="{{coc7Config.name}}" required="required">
+        </div>
+      </div>
+      {{#each own as |row key|}}
+        <div class="form-group">
+          <label for="{{key}}" style="align-self: flex-start; line-height: 2;">{{row.name}}:</label>
+          <div class="value-set select-input flexcol">
+            {{#if (gt row.options.length 0)}}
+              <select class="save-on-change" data-key="{{key}}">
+                <option value="">{{row.specialization}}</option>
+                {{selectOptions row.options selected=row.selected localize=false valueAttr='key' labelAttr='name'}}
+              </select>
+            {{/if}}
+            {{#if (eq row.selected '')}}
+              <input type="text" class="save-on-blur" name="{{key}}" value="{{row.value}}" required="required">
+            {{/if}}
+          </div>
+        </div>
+      {{/each}}
+      <div class="form-group">
+        <label for="residence">{{localize 'CoC7.Residence'}}:</label>
+        <div class="value-set flexrow">
+          <input type="text" class="save-on-blur" name="residence" value="{{coc7Config.residence}}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="birthplace">{{localize 'CoC7.Birthplace'}}:</label>
+        <div class="value-set flexrow">
+          <input type="text" class="save-on-blur" name="birthplace" value="{{coc7Config.birthplace}}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="avatar">{{localize 'CoC7.InvestigatorWizard.CharacterAvatarImage'}}:</label>
+        <div class="value-set flexrow">
+          <file-picker name="avatar" type="image" value="{{coc7Config.avatar}}"></file-picker>
+        </div>
+      </div>
+      <div class="form-group">
+        <div></div>
+        <div class="photo flexrow">
+          <img src="{{coc7Config.avatar}}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="token">{{localize 'CoC7.InvestigatorWizard.CharacterTokenImage'}}:</label>
+        <div class="value-set flexrow">
+          <file-picker name="token" type="image" value="{{coc7Config.token}}"></file-picker>
+        </div>
+      </div>
+      <div class="form-group">
+        <div></div>
+        <div class="photo flexrow">
+          <img src="{{coc7Config.token}}" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

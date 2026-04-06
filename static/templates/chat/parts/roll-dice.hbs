@@ -1,0 +1,127 @@
+<div class="roll-header flexrow">
+  <div class="coc7-tags">
+    {{#each tags as |tag|}}
+      <span class="tag">{{tag}}</span>
+    {{/each}}
+  </div>
+  {{#if removable}}
+    <div class="item-controls keeper-only-block">
+      <a class="item-control" data-action="removeRoll" data-actor-uuid="{{actorUuid}}" data-actor-roll-offset="{{offset}}" data-tooltip="CoC7.remove"><i class="fa-regular fa-minus-circle"></i></a>
+    </div>
+  {{/if}}
+</div>
+{{#unless rolled}}
+  <div class="flexrow other-players-only-block" data-actor-uuid="{{actorUuid}}">
+    <div class="coc7-faux-button">{{localize 'CoC7.WaitingOnUser'}}</div>
+  </div>
+  <div class="flexrow owner-and-keeper-block" data-actor-uuid="{{actorUuid}}">
+    {{#if rollable}}
+      <button data-action="rollActor" data-actor-uuid="{{actorUuid}}">{{localize 'CoC7.RollDice'}}</button>
+    {{else}}
+      <div class="coc7-faux-button">-</div>
+    {{/if}}
+  </div>
+  {{#if (eq @root.foundryGeneration 13)}}<div class="never-expand" data-action="expandRoll"></div>{{/if}}
+{{else}}
+  <div class="dice-roll" data-action="expandRoll">
+    <div class="dice-result">
+      {{#if (or @root.displayResultType @root.displayCheckSuccessLevel)}}
+        <div class="dice-formula{{#if isCritical}} critical{{else if isFumble}} fumble{{else if isSuccess}} success{{else}} failure{{/if}}" data-tooltip="{{successLevelIcons.hint}}">
+          {{#if @root.displayResultType}}
+            {{resultType}}
+          {{/if}}
+          {{#if (and @root.displayResultType @root.displayCheckSuccessLevel)}} - {{/if}}
+          {{#if @root.displayCheckSuccessLevel}}
+            {{#if (ne successLevelIcons.hint '')}}
+              <span class="roll-icons">
+                {{#each successLevelIcons.icons as |icon|}}
+                  <i class="fa-solid fa-{{icon}}"></i>
+                {{/each}}
+              </span>
+            {{else}}
+              1D% {{#if bonusDice}}{{bonusDice}} {{bonusType}} {{localize 'CoC7.Dice'}}{{/if}}
+            {{/if}}
+          {{/if}}
+        </div>
+      {{/if}}
+      <div class="dice-tooltip">
+        <div class="wrapper">
+          <div style="font-size: var(--font-size-12);">{{flavor}}</div>
+          <section class="tooltip-part">
+            <div class="dice">
+              <header class="part-header flexrow">
+                {{#if rollMethod.icon}}
+                  <span class="part-method" data-tooltip aria-label="{{localize rollMethod.label}}">
+                    {{{rollMethod.icon}}}
+                  </span>
+                {{/if}}
+                <span class="part-formula">
+                  {{#if (eq 1 decaders.length)}}
+                    1 {{localize 'CoC7.TensDie'}}
+                  {{else}}
+                    {{decaders.length}} {{localize 'CoC7.TensDice'}} ({{bonusType}})
+                  {{/if}}
+                </span>
+                <span class="part-total">{{decader}}</span>
+              </header>
+              <ol class="dice-rolls">
+                {{#each decaders}}
+                  <li class="roll die d10{{#unless this.active}} discarded{{/unless}}">{{this.result}}</li>
+                {{/each}}
+              </ol>
+            </div>
+          </section>
+          <section class="tooltip-part">
+            <div class="dice">
+              <header class="part-header flexrow">
+                {{#if rollMethod.icon}}
+                  <span class="part-method" data-tooltip aria-label="{{localize rollMethod.label}}">
+                    {{{rollMethod.icon}}}
+                  </span>
+                {{/if}}
+                <span class="part-formula">
+                  {{localize 'CoC7.UnitsDie'}}
+                </span>
+                <span class="part-total">{{unit}}</span>
+              </header>
+              <ol class="dice-rolls">
+                <li class="roll die d10">{{unit}}</li>
+              </ol>
+            </div>
+          </section>
+          <div>{{resultType}}{{#if successRequired}}, {{successRequired}}{{/if}}</div>
+          <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{actorUuid}}">
+            {{#if buttons.pushRoll}}
+              <button data-action="push">{{localize 'CoC7.PushSkill'}}</button>
+            {{/if}}
+            {{#if buttons.luckRegular}}
+              <button data-action="luck" data-luck-spend="{{buttons.luckRegular}}">{{localize 'CoC7.SpendLuck' luckNeededValue=buttons.luckRegular}}</button>
+            {{/if}}
+            {{#if buttons.luckHard}}
+              <button data-action="luck" data-luck-spend="{{buttons.luckHard}}">{{localize 'CoC7.IncreaseSuccessLevel'}}: {{localize 'CoC7.HardDifficulty'}} - {{buttons.luckHard}} {{localize 'CoC7.Luck'}}.</button>
+            {{/if}}
+            {{#if buttons.luckExtreme}}
+              <button data-action="luck" data-luck-spend="{{buttons.luckExtreme}}">{{localize 'CoC7.IncreaseSuccessLevel'}}: {{localize 'CoC7.ExtremeDifficulty'}} - {{buttons.luckExtreme}} {{localize 'CoC7.Luck'}}.</button>
+            {{/if}}
+            {{#if buttons.luckCritical}}
+              <button data-action="luck" data-luck-spend="{{buttons.luckCritical}}">{{localize 'CoC7.IncreaseSuccessLevel'}}: {{localize 'CoC7.CriticalDifficulty'}} - {{buttons.luckCritical}} {{localize 'CoC7.Luck'}}.</button>
+            {{/if}}
+            {{#if buttons.addBonus2}}
+              <button data-action="bonus" data-quantity="2" data-actor-roll-offset="{{offset}}">{{localize 'CoC7.PoolAddTwoBonus'}}</button>
+            {{/if}}
+            {{#if buttons.addBonus1}}
+              <button data-action="bonus" data-quantity="1" data-actor-roll-offset="{{offset}}">{{localize 'CoC7.PoolAddOneBonus'}}</button>
+            {{/if}}
+            {{#if buttons.addPenalty1}}
+              <button data-action="bonus" data-quantity="-1" data-actor-roll-offset="{{offset}}">{{localize 'CoC7.PoolAddOnePenalty'}}</button>
+            {{/if}}
+            {{#if buttons.addPenalty2}}
+              <button data-action="bonus" data-quantity="-2" data-actor-roll-offset="{{offset}}">{{localize 'CoC7.PoolAddTwoPenalty'}}</button>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      <h4 class="dice-total{{#if isCritical}} critical{{else if isFumble}} fumble{{else if isRegularFailure}} failure{{else if isExtremeSuccess}} success-extreme{{else if isHardSuccess}} success-hard{{else if isRegularSuccess}} success-regular{{/if}}" data-tooltip="{{resultType}}">{{total}}{{#if isPushed}} {{localize 'CoC7.PushedRoll'}}{{/if}}{{#if luckSpent}} - {{localize 'CoC7.LuckSpentAlt'}} ({{luckSpent}}){{/if}}</h4>
+    </div>
+  </div>
+{{/unless}}

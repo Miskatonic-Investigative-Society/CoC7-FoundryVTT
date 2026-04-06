@@ -1,0 +1,341 @@
+/* ---------------------------------------- */
+/*  HTML Container Setup                    */
+/*  Allows us to refer to style queries on the html element
+/* ---------------------------------------- */
+body {
+  container: body / normal;
+}
+
+#players-active .world-era {
+  gap: 0.5rem;
+
+  i {
+    flex: 0 0 auto;
+  }
+}
+
+.coc7-link {
+  background: var(--content-link-background);
+  border: 1px solid var(--content-link-border-color);
+  border-radius: 2px;
+  color: var(--content-link-text-color);
+  margin: -1px 0;
+  padding: 1px 4px 0;
+  white-space: nowrap;
+  word-break: break-all;
+  display: inline-block;
+
+  >img {
+    display: inline-block;
+    margin-right: 0.2rem;
+    height: 0.7rem;
+  }
+
+  >i {
+    color: var(--content-link-icon-color);
+    font-size: 0.8em;
+    margin-right: 0.25em;
+  }
+}
+
+.coc7-wider-tooltip {
+  max-width: 32rem;
+}
+
+.application.coc7 {
+
+  a.button[disabled],
+  button[disabled] {
+    --button-hover-background-color: var(--color-warm-2);
+    --button-hover-border-color: var(--color-light-3);
+    --button-hover-text-color: var(--color-light-1);
+  }
+
+  .modified-by-active-effect[readonly] {
+    cursor: not-allowed;
+  }
+
+  .toggle-row {
+    margin: @3px 0;
+    align-items: flex-start;
+
+    .toggle-attributes {
+      gap: @3px;
+
+      button {
+        background: var(--button-background-color);
+        color: var(--button-text-color);
+        flex: 0 0 auto;
+        font-size: var(--font-size-12);
+        width: auto;
+
+        &.as-icon {
+          font-size: var(--font-size-16);
+        }
+
+        &.switched-on {
+          background: var(--button-hover-background-color);
+          color: var(--button-hover-text-color);
+          border-color: var(--button-hover-border-color);
+        }
+      }
+    }
+  }
+
+  fieldset {
+    border-radius: @8px;
+    gap: @3px;
+    margin-bottom: @16px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
+    &:not(:has(> legend)) {
+      margin-top: @7px;
+      padding-top: @7px;
+    }
+
+    >.flexrow {
+      gap: @3px;
+    }
+
+    &.skill-group {
+      margin-left: 0;
+    }
+
+    legend {
+      flex: 1;
+    }
+
+    label,
+    legend {
+      font-weight: bold;
+    }
+
+    .columns {
+      gap: @8px;
+
+      .column-first {
+        flex: 0 0 calc(100% - @4px);
+      }
+
+      .column-second {
+        flex: 0 0 calc(50% - @4px);
+      }
+
+      .column-third {
+        flex: 0 0 calc(33% - @4px);
+      }
+
+      input:not([type=checkbox]):not([type=radio]).small {
+        flex: 0 0 @48px;
+      }
+    }
+  }
+
+  section.window-content {
+    div.limited-view {
+      height: 100%;
+
+      img {
+        object-fit: contain;
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+.keeper-only-block {
+  background: #f5eaf5;
+  padding: @4px;
+  border-radius: @4px;
+
+  &.as-whisper-block {
+    background: var(--color-whisper-background);
+    color: var(--color-whisper-border);
+  }
+}
+
+.keeper-only-block,
+.owner-and-keeper-block {
+  &:not(:has(*)) {
+    display: none;
+  }
+
+  background: var(--color-whisper-background);
+  color: var(--color-whisper-border);
+}
+
+.application .standard-form.longer-labels .form-group>label {
+  flex: 4;
+}
+
+.coc7-tooltip-blink {
+  animation: coc7-tooltip-blinker 1s linear infinite;
+}
+
+@keyframes coc7-tooltip-blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+#settings-config .tab[data-category="system"] h4.border {
+  margin-bottom: 0;
+}
+
+#sidebar .combat-sidebar ol.combat-tracker {
+  li.combatant {
+    &.negative-initiative {
+      background: black;
+
+      .token-name .name,
+      div.token-initiative {
+        color: darkred;
+        font-weight: 900;
+        text-shadow: darkred 1px 1px 4px;
+      }
+    }
+
+    div.token-initiative {
+      &.fumble {
+        background-color: black;
+        color: crimson;
+      }
+
+      &.failure {
+        color: red;
+      }
+
+      &.regular-success {
+        color: #cc6600;
+      }
+
+      &.hard-success {
+        color: #cc9900;
+      }
+
+      &.extreme-success {
+        color: #009933;
+      }
+
+      &.critical {
+        color: goldenrod;
+      }
+    }
+  }
+}
+
+.inline-roll-data {
+  flex: 0 0 auto;
+  padding: @2px @4px 0;
+  border: 1px solid #000;
+
+  &.critical {
+    background-color: whitesmoke;
+    color: goldenrod;
+  }
+
+  &.fumble {
+    background-color: black;
+    color: crimson;
+  }
+
+  &.success {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: green;
+  }
+
+  &.failure {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: red;
+  }
+}
+
+.inline-tooltip {
+  gap: @4px;
+
+  .flexrow {
+    gap: @4px;
+
+    .die-result {
+      flex: 0 0 auto;
+      background-image: url(../../icons/svg/d10-grey.svg);
+      background-repeat: no-repeat;
+      background-size: 24px 24px;
+      min-width: 24px;
+      line-height: 24px;
+      font-size: var(--font-size-16);
+      color: #000;
+      font-weight: bold;
+      text-align: center;
+
+      &.discarded {
+        color: inherit;
+        filter: sepia(0.5) contrast(0.75) opacity(0.4);
+      }
+    }
+
+    .dice-total {
+      flex: 0 0 auto;
+      padding: @4px;
+
+      &.critical {
+        background-color: palegreen;
+        color: green;
+      }
+
+      &.fumble {
+        background-color: darkred;
+        color: red;
+      }
+
+      &.failure {
+        background-color: rgba(0, 0, 0, 0.1);
+        color: red;
+      }
+
+      &.success-extreme {
+        background-color: #ccff99;
+        color: #009933;
+      }
+
+      &.success-hard {
+        background-color: #ffff99;
+        color: #cc9900;
+      }
+
+      &.success-regular {
+        background-color: #ffcc99;
+        color: #cc6600;
+      }
+    }
+
+    .dice-formula {
+      flex: 0 0 auto;
+      padding: @4px;
+
+      &.critical {
+        background-color: whitesmoke;
+        color: goldenrod;
+      }
+
+      &.fumble {
+        background-color: black;
+        color: crimson;
+      }
+
+      &.success {
+        background-color: rgba(0, 0, 0, 0.1);
+        color: green;
+      }
+
+      &.failure {
+        background-color: rgba(0, 0, 0, 0.1);
+        color: red;
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<section class="tab prices flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="prices">
+  {{#if tabs.prices}}
+    <fieldset class="flexcol">
+      <legend>{{localize 'CoC7.EraAvailability'}}</legend>
+      <div class="toggle-row flexrow">
+        <div class="toggle-attributes flexrow" data-set="eras">
+          {{#each _eras as |row|}}
+            <button class="toggle-switch{{#if ../useEraIcons}} as-icon{{/if}}{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" type="button"{{#if ../useEraIcons}} data-tooltip="{{row.name}}"{{/if}}>{{#if ../useEraIcons}}<i class="{{row.icon}}"></i>{{else}}{{row.name}}{{/if}}</button>
+          {{/each}}
+        </div>
+      </div>
+      <div class="columns flexrow" style="flex: none">
+        {{#each _eras as |era|}}
+          {{#if era.isEnabled}}
+            <div class="column-second flexrow">
+              <label>{{era.name}}:</label>
+              <input class="small" type="text" name="system.price.{{era.id}}" value="{{era.price}}" placeholder="0" />
+            </div>
+          {{/if}}
+        {{/each}}
+      </div>
+    </fieldset>
+  {{/if}}
+</section>

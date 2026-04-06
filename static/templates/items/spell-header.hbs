@@ -1,0 +1,24 @@
+<div class="flexrow item-header">
+  <div class="flexcol item-property">
+    <div class="flexrow">
+      <input type="text" name="name" value="{{document.name}}" placeholder="{{localize 'CoC7.Name'}}" />
+    </div>
+    {{#if isKeeper}}
+      <div class="flexrow">
+        <label>{{localize 'CoC7.Source'}}:</label>
+        <input type="text" name="system.source" value="{{document.system.source}}" />
+      </div>
+      <div class="flexrow">
+        <label>{{localize 'CoC7.SpellCastingTime'}}:</label>
+        <input type="text" name="system.castingTime" value="{{document.system.castingTime}}" />
+      </div>
+    {{/if}}
+  </div>
+  <div class="spell-casting flexcol">
+    {{#if (and isEmbedded (or isKeeper isOwner))}}
+      <button class="item-control" data-action="castSpell">{{localize 'CoC7.Cast'}}</button>
+      <button class="item-control" data-action="castSpell" data-property="hidden">{{localize 'CoC7.CastHidden'}}</button>
+    {{/if}}
+  </div>
+  <img class="profile-img" src="{{document.img}}" data-action="editImage" data-edit="img" />
+</div>
