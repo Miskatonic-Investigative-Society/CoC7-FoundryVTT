@@ -1,0 +1,509 @@
+.application.coc7.sheet.npc {
+  overflow: visible;
+  font-size: @16px;
+
+  section.window-content {
+    overflow: visible;
+    background-position: top right;
+    font-family: var(--investigator-sheet-secondary-font);
+
+    div.npc {
+      gap: @6px;
+
+      div.editor-content {
+        font-size: var(--font-size-14);
+      }
+
+      section.tab-group-tab.scrollable {
+        flex: 1;
+      }
+
+      .item-controlled-width {
+        flex: 0 0 @20px;
+
+        &.slid-out-notes {
+          display: none;
+        }
+      }
+
+      /* ---------------------------------------- */
+      /*  Name, History, etc                      */
+      /* ---------------------------------------- */
+      .character-details {
+        .flex-row();
+
+        .character-detail {
+          .flex-row(@col-gap: @5px);
+
+          .title {
+            font-family: var(--investigator-sheet-primary-font);
+            font-size: @15px;
+            text-transform: uppercase;
+            line-height: @17px;
+          }
+
+          .detail-value {
+            flex: 1;
+            background: transparent;
+            border: none;
+            font-family: var(--investigator-sheet-secondary-font);
+            font-size: @13px;
+            color: var(--color-labels);
+            height: @17px;
+            line-height: @17px;
+            padding: @2px @3px 0;
+
+            &.name-value {
+              flex: 1.3;
+            }
+
+            &.age-value {
+              flex: 0.7;
+            }
+          }
+
+          .token-extras {
+            .flex-row();
+            flex: 1;
+            flex-direction: row-reverse;
+
+            .token-drag-handle {
+              cursor: grab;
+            }
+
+            .token-drag-handle:active {
+              cursor: grabbing;
+            }
+          }
+        }
+      }
+
+      .conditions {
+        .item-control:not(.status-on) {
+          color: grey;
+        }
+
+        .item-control.status-on {
+          color: red;
+
+          &:has(.game-icon-hanging-spider),
+          &:has(.game-icon-tentacles-skull) {
+            color: green;
+          }
+        }
+      }
+
+      .attribute-details {
+        align-items: flex-start;
+
+        .attribute-detail {
+          gap: @6px;
+
+          .attributes {
+            align-items: flex-start;
+          }
+
+          .attribute-mov {
+            flex: 2;
+          }
+
+          .attribute,
+          .characteristic {
+            transition-property: flex;
+            transition-duration: 0.5s;
+
+            &:focus-within:has(.formula-value) {
+              flex: 1.2;
+            }
+
+            div.attribute-name,
+            div.roll-san,
+            div.characteristic-name {
+              font-family: var(--investigator-sheet-primary-font);
+              font-size: @15px;
+              text-transform: uppercase;
+              line-height: @17px;
+            }
+
+            div.attribute-name,
+            div.roll-san {
+              flex: 0 0 auto;
+            }
+
+            .notes-toggle {
+              flex: 0 0 auto;
+              margin: 0 @2px;
+              font-size: var(--font-size-15);
+              line-height: var(--font-size-15);
+            }
+
+            div.characteristic-name {
+              text-align: center;
+            }
+
+            span {
+              flex: 0 0 auto;
+            }
+
+            select.detail-value,
+            input.detail-value {
+              flex: 1;
+              background: transparent;
+              border: none;
+              font-family: var(--investigator-sheet-secondary-font);
+              font-size: @13px;
+              color: var(--color-labels);
+              height: @17px;
+              line-height: @17px;
+              padding: @2px @3px 0;
+
+              &.attribute-value {
+                text-align: right;
+              }
+
+              &.attribute-max,
+              &.attribute-value {
+                &.was-select {
+                  flex: 3;
+                  text-align: left;
+                }
+              }
+
+              &.characteristic-value {
+                text-align: center;
+
+                &:read-only {
+                  cursor: default;
+                }
+              }
+            }
+
+            select.detail-value {
+              flex: 3;
+              padding: 0;
+            }
+          }
+        }
+
+        div.profile-img {
+          flex: 0 0 @100px;
+          margin: 0 0 0 @16px;
+
+          img[data-action="editImage"] {
+            cursor: pointer;
+          }
+
+          a {
+            font-size: @100px;
+          }
+        }
+      }
+
+      .tab-group-notes {
+        position: absolute;
+        top: 0px;
+        right: -460px;
+        width: 460px;
+        height: calc(100% - 1px);
+        overflow: scroll;
+        background-image: var(--background-sheet);
+        background-position: top right;
+        transform: scaleX(-1);
+        transition: right 0.5s;
+        overflow: hidden;
+
+        &.slide-out-notes {
+          right: 0;
+        }
+
+        &.sliding-out-notes {
+          z-index: -1;
+        }
+
+        .tab-group-header,
+        .tab-group-tab {
+          transform: scaleX(-1);
+        }
+
+        .tab-group-tab {
+          padding: @16px;
+        }
+      }
+
+      .tab-group-header {
+        .flex-row();
+        background: rgba(0, 0, 0, 0.15);
+        border: 2px groove #eeede0;
+        padding: @2px @6px;
+        cursor: pointer;
+
+        div {
+          flex: 1;
+
+          &.tab-group-title {
+            flex: 2;
+            font-family: var(--investigator-sheet-primary-font);
+            font-size: @16px;
+            text-align: center;
+          }
+
+          &.item-controls {
+            justify-content: flex-end;
+          }
+        }
+      }
+
+      .tab-group-tab {
+        .inventory-tab {
+          margin: 0 @4px;
+
+          .tab-group-header {
+            .tab-group-title {
+              font-size: @15px;
+            }
+          }
+        }
+      }
+
+      .detail-value {
+        flex: 1;
+        background: transparent;
+        border: none;
+        font-family: var(--investigator-sheet-secondary-font);
+        font-size: @13px;
+        color: var(--color-labels);
+        height: @17px;
+        line-height: @17px;
+        padding: @2px @3px 0;
+      }
+
+      .item-list,
+      .skill-list {
+        gap: @8px;
+
+        .item {
+          .npc-specialization {
+            color: #a42;
+            font-size: @10px;
+            flex: 0 0 auto;
+            margin-right: @3px;
+          }
+
+          .skill-name {
+            overflow: hidden;
+          }
+
+          .detail-value {
+            flex: 0 0 @25px;
+            text-align: right;
+          }
+
+          .detail-value,
+          .skill-name {
+            padding: 0 2px;
+            border: none;
+            background: transparent;
+          }
+
+          span.pc {
+            flex: 0 0 auto;
+          }
+
+          .item-controls {
+            flex: 0 0 auto;
+            font-size: @12px;
+          }
+
+          input:read-only {
+            cursor: default;
+          }
+        }
+      }
+
+      .item-list {
+        row-gap: @4px;
+        margin-bottom: @8px;
+
+        .item {
+          gap: @8px;
+
+          .coc7-formatted-text {
+            font-size: var(--font-size-14);
+          }
+        }
+      }
+
+      .skill-list {
+        font-size: @15px;
+        padding-top: @4px;
+        row-gap: @2px;
+
+        .item {
+          flex: 0 0 calc(33% - @4px);
+          flex-wrap: wrap;
+        }
+      }
+
+      .inventory-tab .item-name {
+        font-size: var(--font-size-13)
+      }
+
+      div.attacks-per-round {
+        font-family: var(--investigator-sheet-primary-font);
+        font-size: @15px;
+        text-transform: uppercase;
+        line-height: @17px;
+        flex: 0 0 auto;
+      }
+
+      .combat-row {
+        font-size: @15px;
+        border-top: 1px groove #ccc;
+        border-left: 1px groove #ccc;
+        align-items: stretch;
+
+        &:last-of-type {
+          border-bottom: 1px groove #ccc;
+        }
+
+        &.combat-title {
+          font-family: var(--investigator-sheet-primary-font);
+          text-transform: uppercase;
+          line-height: @17px;
+          text-align: center;
+        }
+
+        .combat-value {
+          border-right: 1px groove #ccc;
+          padding: @2px 0;
+          line-height: 1;
+
+          &.skill-name {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: @13px;
+          }
+
+          &.no-skill-set {
+            background-color: red;
+            color: var(--color-light-2)
+          }
+
+          div.weapon-damage {
+            font-size: @11px;
+          }
+
+          div.weapon-controls {
+            flex: 0 0 @40px;
+            column-gap: @2px;
+            margin: 0 @2px;
+
+            span.tag {
+              font-size: @13px;
+            }
+          }
+
+          div.item-controls {
+            flex: 0 0 @24px;
+            font-size: @11px;
+            column-gap: @2px;
+          }
+        }
+
+        .combat-toggle {
+          flex: 0 0 100%;
+
+          .toggle-attributes button {
+            font-size: @10px;
+            padding: @3px;
+          }
+        }
+      }
+
+      .macro-row {
+        font-size: var(--font-size-13);
+
+        .item-controls {
+          flex: 0 0 auto;
+        }
+      }
+
+      ul.effects-list {
+        font-size: var(--font-size-13);
+
+        li {
+          &.items-header {
+            margin: @2px 0;
+            padding: @3px;
+            border: none;
+            font-weight: bold;
+            border-bottom: 2px solid var(--color-highlight);
+
+            .section-heading {
+              font-size: var(--font-size-13);
+              color: var(--color-interact);
+            }
+          }
+
+          &>* {
+            flex: 1;
+          }
+
+          .effect-identifier {
+            .flex-row(@col-gap: @5px);
+          }
+
+          h4 {
+            --font-h4: var(--investigator-sheet-secondary-font);
+            --font-h4-size: var(--font-size-13);
+            margin: 0;
+          }
+
+          .effect-source {
+            flex: 0 0 @130px;
+          }
+
+          .effect-duration {
+            flex: 0 0 @90px;
+          }
+
+          .item-controls {
+            flex: 0 0 @64px;
+          }
+        }
+      }
+    }
+  }
+}
+
+body.theme-dark .application.coc7.sheet.npc,
+.themed.theme-dark.application.coc7.sheet.npc {
+  div.npc {
+    .tab-group-header {
+      background: rgba(128, 128, 128, 0.15);
+      border: 2px groove #121212;
+    }
+
+    .combat-list {
+
+      .combat-row {
+        border-top: 1px groove #121212;
+        border-left: 1px groove #121212;
+
+        &:last-of-type {
+          border-bottom: 1px groove #121212;
+        }
+
+        .combat-value {
+          border-right: 1px groove #121212;
+
+          &.no-skill-set {
+            background-color: darkred;
+            color: var(--color-text-primary)
+          }
+        }
+      }
+    }
+  }
+}

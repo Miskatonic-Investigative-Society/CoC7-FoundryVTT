@@ -1,16 +1,19 @@
+/binary-packs/
+*.todo
+/fvtt.config.json
+/node_modules/
+/package-lock.json
+/temp/
+# Previous file structure
 .husky/_
 .idea/
 .vs/
 .vscode/
 *.log
-*.todo
 build/
 coverage/
 target/
 yarn.lock
 /dist/
 /fvtt.config.js
-/node_modules/
-/package-lock.json
 /packs/
-/temp/

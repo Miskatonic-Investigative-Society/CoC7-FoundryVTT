@@ -1,0 +1,15 @@
+<div class="coc7-group-actor-roll flexrow{{#if isWinner}} won{{else if isTie}} tie{{/if}}{{#if isAttacker}} attacker{{/if}}">
+  <div class="actor-portrait flexcol" data-actor-uuid="{{actorUuid}}">
+    <img class="portrait open-actor" data-actor-uuid="{{actorUuid}}" src="{{portrait}}" data-tooltip="{{actorName}}" />
+    {{#if changeParticipant}}
+      <div class="coc7-card-buttons flexrow">
+        <button class="keeper-only-control" {{#if participantLocked}} disabled="disabled" {{/if}} data-action="participant" data-tooltip="{{#if (eq participant @root.advantageTypes.attacker)}}CoC7.ParticipantAttacker{{else if (eq participant @root.advantageTypes.defender)}}CoC7.ParticipantDefender{{else}}CoC7.ParticipantNone{{/if}}"><i class="{{#if (eq participant @root.advantageTypes.attacker)}}game-icon game-icon-crossed-swords{{else if (eq participant @root.advantageTypes.defender)}}game-icon game-icon-shield{{else}}game-icon game-icon-uncertainty{{/if}}"></i></button>
+      </div>
+    {{/if}}
+  </div>
+  <div class="roll-details">
+    {{#each rolls as |roll offset|}}
+      {{~> 'systems/CoC7/templates/chat/parts/roll-dice.hbs' actorUuid=../actorUuid offset=offset}}
+    {{/each}}
+  </div>
+</div>

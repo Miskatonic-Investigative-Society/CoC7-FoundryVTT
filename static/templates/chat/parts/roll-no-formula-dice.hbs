@@ -1,0 +1,84 @@
+<div class="dice-roll no-dice-formula{{#unless checkRevealed}} keeper-only-block{{/unless}}" data-action="expandRoll">
+  <div class="dice-result">
+    <div class="dice-tooltip">
+      <div class="wrapper">
+        <section class="tooltip-part">
+          <div class="dice">
+            {{#if flavor}}
+              <div style="font-size: var(--font-size-12);">{{flavor}}</div>
+            {{/if}}
+            <header class="part-header flexrow">
+              {{#if diceGroup.rollMethod.icon}}
+                <span class="part-method" data-tooltip aria-label="{{localize diceGroup.rollMethod.label}}">
+                  {{{diceGroup.rollMethod.icon}}}
+                </span>
+              {{/if}}
+              <span class="part-formula">
+                {{#if (eq 1 diceGroup.decaders.length)}}
+                  1 {{localize 'CoC7.TensDie'}}
+                {{else}}
+                  {{diceGroup.decaders.length}} {{localize 'CoC7.TensDice'}} ({{bonusType}})
+                {{/if}}
+              </span>
+              <span class="part-total">{{diceGroup.decader}}</span>
+            </header>
+            <ol class="dice-rolls">
+              {{#each diceGroup.decaders}}
+                <li class="roll die d10{{#unless this.active}} discarded{{/unless}}">{{this.result}}</li>
+              {{/each}}
+            </ol>
+          </div>
+        </section>
+        <section class="tooltip-part">
+          <div class="dice">
+            <header class="part-header flexrow">
+              {{#if diceGroup.rollMethod.icon}}
+                <span class="part-method" data-tooltip aria-label="{{localize diceGroup.rollMethod.label}}">
+                  {{{diceGroup.rollMethod.icon}}}
+                </span>
+              {{/if}}
+              <span class="part-formula">
+                {{localize 'CoC7.UnitsDie'}}
+              </span>
+              <span class="part-total">{{diceGroup.unit}}</span>
+            </header>
+            <ol class="dice-rolls">
+              <li class="roll die d10">{{diceGroup.unit}}</li>
+            </ol>
+          </div>
+        </section>
+
+        <div>{{diceGroup.resultType}}</div>
+
+        <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{actorUuid}}">
+          {{#if buttons.addBonus2}}
+            <button data-action="bonus" data-quantity="2">{{localize 'CoC7.PoolAddTwoBonus'}}</button>
+          {{/if}}
+          {{#if buttons.addBonus1}}
+            <button data-action="bonus" data-quantity="1">{{localize 'CoC7.PoolAddOneBonus'}}</button>
+          {{/if}}
+          {{#if buttons.addPenalty1}}
+            <button data-action="bonus" data-quantity="-1">{{localize 'CoC7.PoolAddOnePenalty'}}</button>
+          {{/if}}
+          {{#if buttons.addPenalty2}}
+            <button data-action="bonus" data-quantity="-2">{{localize 'CoC7.PoolAddTwoPenalty'}}</button>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <h4 class="dice-total{{#if diceGroup.isCritical}} critical{{else if diceGroup.isFumble}} fumble{{else if diceGroup.isRegularFailure}} failure{{else if diceGroup.isExtremeSuccess}} success-extreme{{else if diceGroup.isHardSuccess}} success-hard{{else if diceGroup.isRegularSuccess}} success-regular{{/if}}">{{diceGroup.total}} {{diceGroup.resultType}}{{#if diceGroup.flatDiceModifier}} ({{#if (gt diceGroup.flatDiceModifier 0)}}+{{/if}}{{diceGroup.flatDiceModifier}}){{/if}}</h4>
+    {{#if hasMalfunction}}
+      <h4 class="coc7-malfunction">{{malfunctionTxt}}</h4>
+    {{/if}}
+    {{#if rollDamage}}
+      <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{actorUuid}}">
+        <button data-action="rollMeleeDamage">{{localize 'CoC7.RollDamage'}}</button>
+      </div>
+    {{/if}}
+  </div>
+</div>
+{{#unless checkRevealed}}
+  <div class="card-buttons keeper-only-block with-top-gap flexrow" style="order: 3">
+    <button data-action="revealCheck">{{localize 'CoC7.RevealCheck'}}</button>
+  </div>
+{{/unless}}

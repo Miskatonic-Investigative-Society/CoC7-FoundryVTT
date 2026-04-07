@@ -1,0 +1,60 @@
+{{#if cardOpen}}
+  <div class="keeper-only-block coc7-card-buttons flexrow">
+    <button class="{{#if isCombat}} switched-on{{/if}}" data-action="toggleValue" data-set="isCombat"><i class="game-icon game-icon-crossed-swords"></i> {{localize 'CoC7.OpposedRollCard'}}{{#if isCombat}} ({{localize 'CoC7.AttackManeuver'}}){{/if}}</button>
+  </div>
+{{/if}}
+{{#if isCombat}}
+  {{#if cardOpen}}
+    {{#if canAdvantage}}
+      <div class="keeper-only-block coc7-card-buttons flexrow">
+        <button class="{{#if advantageAttacker}} switched-on{{/if}}" style="flex: 1;" data-action="setValue" data-set="advantage" data-value="{{advantageTypes.attacker}}">{{localize 'CoC7.AdvantageAttacker'}}</button>
+        <button class="{{#if advantageDefender}} switched-on{{/if}}" style="flex: 1;" data-action="setValue" data-set="advantage" data-value="{{advantageTypes.defender}}">{{localize 'CoC7.AdvantageDefender'}}</button>
+      </div>
+      <div class="not-keeper-block coc7-tags">
+        {{#if advantageAttacker}}
+          <span class="tag">{{localize 'CoC7.AdvantageAttacker'}}</span>
+        {{else if advantageDefender}}
+          <span class="tag">{{localize 'CoC7.AdvantageDefender'}}</span>
+        {{/if}}
+      </div>
+    {{/if}}
+  {{else}}
+    <div class="coc7-tags">
+      <span class="tag">{{localize 'CoC7.AttackManeuver'}}</span>
+      {{#if isTie}}
+        <span class="tag">{{localize 'CoC7.Tie'}}</span>
+      {{/if}}
+      {{#if canAdvantage}}
+        {{#if advantageAttacker}}<span class="tag">{{localize 'CoC7.AdvantageAttacker'}}</span>{{/if}}
+        {{#if advantageDefender}}<span class="tag">{{localize 'CoC7.AdvantageDefender'}}</span>{{/if}}
+      {{/if}}
+      {{#if defenderIsDodging}}<span class="tag">{{localize 'CoC7.DefenderDodging'}}</span>{{/if}}
+    </div>
+  {{/if}}
+{{else}}
+  <div class="coc7-tags">
+    {{#if isTie}}<span class="tag">{{localize 'CoC7.Tie'}}</span>{{/if}}
+  </div>
+{{/if}}
+
+{{#each rollActors as |rollActor actorUuid|}}
+  {{~> 'systems/CoC7/templates/chat/parts/roll-container.hbs' changeParticipant=true participantLocked=../isRolling rollActor=rollActor actorUuid=actorUuid isTie=(and (not ../hasWinner) ../isTie) isAttacker=(eq ../advantageTypes.attacker rollActor.participant)}}
+{{/each}}
+
+{{#if resultText}}
+  <div class="coc7-card-result">{{resultText}}</div>
+{{/if}}
+
+{{#if cardOpen}}
+  <div class="keeper-only-block coc7-card-buttons flexrow">
+    {{#if (not allRollsAssigned)}}
+      <button disabled="disabled">{{localize 'CoC7.ErrorOpposedRollsMissingAttackerDefender'}}</button>
+    {{else if (not isRolling)}}
+      <button data-action="rollNoPlayers">{{localize 'CoC7.StartRolls'}}</button>
+    {{else if winnerRollsDamage}}
+      <button data-action="rollDamage">{{localize 'CoC7.RollDamage'}}</button>
+    {{else}}
+      <button data-action="toggleValue" data-set="cardOpen">{{localize 'CoC7.CloseCard'}}</button>
+    {{/if}}
+  </div>
+{{/if}}

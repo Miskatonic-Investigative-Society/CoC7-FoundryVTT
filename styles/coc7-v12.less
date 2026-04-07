@@ -1,0 +1,322 @@
+/* ---------------------------------------- */
+/*  v12 CoC Styles                          */
+/*  to be removed once support is removed   */
+/* ---------------------------------------- */
+body.running-v12 {
+
+  #chat-log,
+  &.theme-light {
+    --content-link-background: #ddd;
+    --content-link-border-color: var(--color-dark-4);
+    --content-link-text-color: var(--color-dark-2);
+    --content-link-icon-color: var(--color-dark-6);
+    --background-sheet: url(./assets/art/page-light.webp) repeat;
+  }
+
+  &.theme-dark {
+    --content-link-background: var(--color-cool-5-90);
+    --content-link-border-color: var(--color-light-6);
+    --content-link-text-color: var(--color-light-2);
+    --content-link-icon-color: var(--color-light-4);
+    --background-sheet: url(./assets/art/page-dark.webp) repeat;
+  }
+
+  .application.coc7,
+  .app.coc7 {
+    header.window-header {
+      .invalid-coc-id {
+        color: var(--color-level-error); // This uses a Foundry variable
+      }
+    }
+
+    &.sheet.investigator {
+      section.window-content {
+        nav.tabs {
+          .tab {
+            writing-mode: vertical-lr;
+
+            &.active {
+              label {
+                color: var(--color-active);
+              }
+            }
+
+            label {
+              position: relative;
+              text-transform: uppercase;
+              font-family: var(--investigator-sheet-primary-font);
+              display: block;
+              max-width: 76px;
+              overflow: hidden;
+              text-shadow: 2px 2px 4px #000000;
+              font-size: @19px;
+              line-height: 1;
+              z-index: 1;
+              rotate: 180deg;
+            }
+
+            i {
+              rotate: 270deg;
+            }
+          }
+        }
+
+        div.investigator {
+          .photo-frame {
+            .photo {
+              border: 0;
+            }
+          }
+        }
+      }
+    }
+
+    &.dialog {
+      &.item {
+        section.window-content {
+          section.tab.flexcol.scrollable {
+            --scroll-margin: 0.25rem;
+            padding-right: 0.5rem !important;
+          }
+
+          nav.tabs {
+            line-height: 1;
+          }
+        }
+
+
+        &.active-effect-config {
+          section.window-content {
+            nav.tabs {
+              line-height: 2;
+            }
+
+            input[type="checkbox"] {
+              flex: 0 0 auto;
+              background-color: transparent;
+            }
+          }
+
+          .tab.changes header,
+          .tab.changes ol {
+            align-items: center;
+            display: grid;
+            gap: 0.25rem;
+            grid-template-columns: 18rem 7rem 7rem 1rem;
+            margin: 0;
+            padding: 2px;
+            position: relative;
+
+            .controls {
+              text-align: right;
+
+              button {
+                background: transparent;
+                border: 0;
+              }
+            }
+
+            li {
+              display: contents;
+            }
+          }
+        }
+      }
+
+      &.coc-id-editor {
+        details {
+          width: 100%;
+        }
+
+        table tbody tr:nth-child(even) {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      text-shadow: none;
+      border: none;
+    }
+
+    h3,
+    h4 {
+      color: var(--color-text-primary);
+    }
+
+    input,
+    select,
+    textarea,
+    code-mirror {
+      background-color: var(--color-tint);
+      border-color: var(--color-dark-6);
+      color: var(--color-dark-2);
+      font-size: inherit;
+    }
+
+    textarea {
+      padding: 0.25rem 0.5rem;
+    }
+
+    a.button>i,
+    button>i {
+      margin: 0;
+    }
+
+    .toggle-row .toggle-attributes button {
+      line-height: 22px;
+
+      &.as-icon i {
+        line-height: 26px;
+      }
+    }
+  }
+
+  ol#chat-log {
+    .coc7-chat-header {
+      align-items: center;
+
+      &.flexcol>* {
+        width: 100%;
+      }
+
+      img {
+        display: block
+      }
+    }
+  }
+
+  .window-app .window-content .compendium-search-filter {
+    line-height: 32px;
+    flex: none;
+    padding-bottom: 3px;
+
+    &.hidden {
+      display: none;
+    }
+
+    .flexrow {
+      align-items: center;
+      margin: 0 0 3px;
+
+      i.fa-regular,
+      i.fa-solid {
+        flex: 0 0 24px;
+        text-align: center;
+      }
+
+      select {
+        margin: 0 3px;
+        background: rgba(255, 255, 245, 0.8);
+      }
+    }
+  }
+
+  #tooltip.coc7-wider-tooltip.text-center {
+    text-align: left;
+  }
+
+  &.theme-dark .application.coc7,
+  .themed.theme-dark.application.coc7 {
+
+    input,
+    select,
+    textarea,
+    code-mirror {
+      background-color: var(--color-dark-4);
+      border-color: transparent;
+      color: var(--color-light-3);
+    }
+  }
+
+  .application.coc7.sheetV2:not(.investigator-summarized):not(.investigator) {
+    section.window-content {
+      .sheet-header {
+        .characteristics {
+          .footer {
+            .attribute {
+              .attribute-label {
+                h2 {
+                  color: var(--color-text-primary);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      nav.tabs {
+        a {
+          padding: 0;
+
+          &.active {
+
+            i.game-icon,
+            label:not(:empty) {
+              background-color: var(--main-sheet-front-color);
+              border-radius: @4px;
+              color: white;
+            }
+
+            i.game-icon {
+              padding: 0 @6px;
+            }
+
+            label:not(:empty) {
+              padding: 0 @8px;
+            }
+          }
+        }
+      }
+
+      .two-panes-content .right-panel .tab.background .bio-section .events {
+        min-height: 70px;
+      }
+    }
+  }
+
+  #sidebar .combat-sidebar #combat-tracker li.combatant {
+    &.negative-initiative {
+      background: black;
+
+      h4,
+      span.initiative {
+        color: darkred;
+        font-weight: 900;
+        text-shadow: darkred 1px 1px 4px;
+      }
+    }
+
+    .token-initiative {
+      &.fumble {
+        background-color: black;
+        color: crimson;
+      }
+
+      &.failure {
+        color: red;
+      }
+
+      &.regular-success {
+        color: #cc6600;
+      }
+
+      &.hard-success {
+        color: #cc9900;
+      }
+
+      &.extreme-success {
+        color: #009933;
+      }
+
+      &.critical {
+        color: goldenrod;
+      }
+    }
+  }
+}

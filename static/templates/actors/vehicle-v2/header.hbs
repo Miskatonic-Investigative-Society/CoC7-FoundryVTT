@@ -1,0 +1,62 @@
+<section class="sheet-header flexrow">
+  <div class="token-extras flexrow">
+    {{#if canDragToken}}
+      <div draggable="true" class="token-drag-handle" data-tooltip="CoC7.ActorIsTokenHint" data-token-uuid="{{tokenUuid}}"><i class="fa-solid fa-user-circle"></i></div>
+    {{/if}}
+    {{#if linkedActor}}
+      <div data-tooltip="CoC7.ActorDataLinked"><i class="fa-solid fa-link"></i></div>
+    {{else}}
+      <div data-tooltip="CoC7.ActorDataNotLinked"><i class="fa-solid fa-unlink"></i></div>
+    {{/if}}
+    {{#if isToken}}
+      <div data-tooltip="CoC7.ActorIsSyntheticActor"><i class="game-icon game-icon-backup"></i></div>
+    {{/if}}
+  </div>
+  <div class="flexrow item-header">
+    <img class="profile-img" src="{{document.img}}" data-action="editImage" data-edit="img" />
+    <div class="profile-details flexcol">
+      <input type="text" name="name" value="{{document.name}}" placeholder="{{localize 'CoC7.Name'}}" />
+      <input type="text" name="system.infos.type" value="{{document.system.infos.type}}" placeholder="{{localize 'CoC7.Type'}}" />
+      <input type="text" name="system.infos.origin" value="{{document.system.infos.origin}}" placeholder="{{localize 'CoC7.Origin'}}" />
+      <div class="flexrow">
+        <label>{{localize 'CoC7.Crew'}}</label>
+        <input type="text" name="system.crew.total" value="{{document.system.crew.total}}" />
+      </div>
+    </div>
+    <div class="profile-details flexcol">
+      <div class="flexrow">
+        <label>{{localize 'CoC7.Movement'}}</label>
+        <div>{{document.system.stats.mov}}</div>
+        <label>{{localize 'CoC7.Build'}}</label>
+        <div class="flexrow">
+          <input type="text" name="system.stats.build.current" value="{{document.system.stats.build.current}}" />
+          <div class="separator">/</div>
+          <div>{{document.system.stats.build.value}}</div>
+        </div>
+      </div>
+      {{#if document.system.stats.armor.localized}}
+        <label>{{localize 'CoC7.ArmourPlating'}}</label>
+        <div class="armor-locations flexrow">
+          {{#each document.system.stats.armor.locations as |location|}}
+            <div>{{location.name}}</div>
+          {{/each}}
+        </div>
+        <div class="armor-locations flexrow">
+          {{#each document.system.stats.armor.locations as |location|}}
+            <div>{{location.value}}</div>
+          {{/each}}
+        </div>
+      {{else}}
+        <div class="flexrow">
+          <label>{{localize "CoC7.Armor"}}</label>
+          <span>{{document.system.stats.armor.value}}</span>
+        </div>
+      {{/if}}
+      <div class="tags">
+        {{#each _properties as |property|}}
+          <span class="tag">{{property}}</span>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,53 @@
+<div class="derived-attributes">
+  <div class="derived-attributes-box">
+    <div class="derived-attribute{{#unless (and document.system.flags.locked document.system.attribs.mov.auto)}} manual-override{{/unless}}">
+      <span class="derived-attribute-name attribute{{#unless document.system.flags.locked}} clickable item-control{{/unless}}" {{#unless document.system.flags.locked}} data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" data-tooltip-class="coc7-wider-tooltip" {{/unless}} data-attrib="mov">{{localize 'CoC7.Mov'}}:</span>
+      {{#if (or document.system.flags.locked document.system.attribs.mov.auto)}}
+        <span class="derived-attribute-value derived-attribute-mov">{{document.system.attribs.mov.value}}</span>
+      {{else}}
+        <input type="text" class="derived-attribute-edit derived-attribute-mov" {{#if attribs.mov.activeEffectValue}} data-tooltip="CoC7.ModifiedByActiveEffect" {{/if}} name="system.attribs.mov.value" value="{{#if attribs.mov.activeEffectValue}}{{attribs.mov.sourceValue}}{{else}}{{attribs.mov.value}}{{/if}}" />
+      {{/if}}
+    </div>
+    <div class="derived-attribute{{#unless (and document.system.flags.locked document.system.attribs.build.auto)}} manual-override{{/unless}}">
+      <span class="derived-attribute-name attribute{{#unless document.system.flags.locked}} clickable item-control{{/unless}}" {{#unless document.system.flags.locked}} data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" data-tooltip-class="coc7-wider-tooltip" {{/unless}} data-attrib="build">{{localize 'CoC7.Build'}}:</span>
+      {{#if (or document.system.flags.locked document.system.attribs.build.auto)}}
+        <span class="derived-attribute-value derived-attribute-build">{{document.system.attribs.build.value}}</span>
+      {{else}}
+        <input type="text" class="derived-attribute-edit derived-attribute-build" {{#if attribs.build.activeEffectValue}} data-tooltip="CoC7.ModifiedByActiveEffect" {{/if}} name="system.attribs.build.value" value="{{#if attribs.build.activeEffectValue}}{{attribs.build.sourceValue}}{{else}}{{attribs.build.value}}{{/if}}" />
+      {{/if}}
+    </div>
+    <div class="derived-attribute attribute{{#unless (and document.system.flags.locked document.system.attribs.db.auto)}} manual-override{{/unless}}" data-attrib="db">
+      <span class="derived-attribute-name attribute{{#if document.system.flags.locked}} attribute-name rollable{{else}} clickable item-control{{/if}}" {{#unless document.system.flags.locked}} data-action="auto-toggle" data-tooltip="CoC7.ToolTipAutoToggle" {{else}} data-tooltip="CoC7.ToolTipDB" {{/unless}} data-tooltip-class="coc7-wider-tooltip" data-attrib="db">{{localize 'CoC7.DB'}}:</span>
+      {{#if (or document.system.flags.locked document.system.attribs.db.auto)}}
+        <span class="derived-attribute-value derived-attribute-db">{{document.system.attribs.db.value}}</span>
+      {{else}}
+        <input type="text" class="derived-attribute-edit derived-attribute-db" {{#if attribs.db.activeEffectValue}} data-tooltip="CoC7.ModifiedByActiveEffect" {{/if}} name="system.attribs.db.value" value="{{#if attribs.db.activeEffectValue}}{{attribs.db.sourceValue}}{{else}}{{attribs.db.value}}{{/if}}" />
+      {{/if}}
+    </div>
+    <div class="derived-attribute">
+      <span class="derived-attribute-name">{{localize 'CoC7.Armor'}}:</span>
+      {{#if document.system.flags.locked}}
+        <span class="derived-attribute-value derived-attribute-armor">{{document.system.attribs.armor.value}}</span>
+      {{else}}
+        <input type="text" class="derived-attribute-edit derived-attribute-armor" {{#if attribs.armor.activeEffectValue}} data-tooltip="CoC7.ModifiedByActiveEffect" {{/if}} name="system.attribs.armor.value" value="{{#if attribs.armor.activeEffectValue}}{{attribs.armor.sourceValue}}{{else}}{{attribs.armor.value}}{{/if}}" />
+      {{/if}}
+    </div>
+    <div class="derived-attribute derived-attribute-dailysan-group">
+      <span class="derived-attribute-name">{{localize 'CoC7.DailyLoss'}}:</span>
+      {{#if document.system.flags.locked}}
+        <span class="derived-attribute-value derived-attribute-dailysan">{{document.system.attribs.san.dailyLoss}}</span>
+      {{else}}
+        <input type="text" class="derived-attribute-edit derived-attribute-dailysan" {{#if attribs.san.activeEffectDailyLoss}} data-tooltip="CoC7.ModifiedByActiveEffect" {{/if}} name="system.attribs.san.dailyLoss" value="{{#if attribs.san.activeEffectDailyLoss}}{{attribs.san.sourceDailyLoss}}{{else}}{{attribs.san.dailyLoss}}{{/if}}" />
+      {{/if}}
+      <div class="separator">/</div>
+      {{#if document.system.flags.locked}}
+        <span class="derived-attribute-value derived-attribute-dailysan">{{document.system.attribs.san.dailyLimit}}</span>
+      {{else}}
+        <input type="text" class="derived-attribute-edit derived-attribute-dailysan" {{#if attribs.san.activeEffectDailyLimit}} data-tooltip="CoC7.ModifiedByActiveEffect" {{/if}} name="system.attribs.san.dailyLimit" value="{{#if attribs.san.activeEffectDailyLimit}}{{attribs.san.sourceDailyLimit}}{{else}}{{attribs.san.dailyLimit}}{{/if}}" />
+      {{/if}}
+      <span class="control">
+        <a class="item-control" data-action="reset-counter" data-tooltip="CoC7.DailySanIconOver" data-counter="system.attribs.san.dailyLoss"><i class="fa-solid fa-undo"></i></a>
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="flexcol" style="gap: 0.375rem;">
+  <p style="background-color: rgba(255, 166, 0, 0.5); outline: 2px dashed rgba(255, 100, 0, 0.3); padding: 0.5rem;"><i class="fa-solid fa-exclamation-triangle"></i> {{localize 'CoC7.CoCIDCompendiumPopulateWarning'}}</p>
+  {{#if (gt coc7Config.packLists.length 0)}}
+    <div class="form-group flexrow">
+      <label style="flex: 1">{{localize 'CoC7.CoCIDCompendiumPopulateDestination'}}:</label>
+      <div style="flex: 2">
+        <select name="pack">
+          {{selectOptions coc7Config.packLists selected=coc7Config.packList}}
+        </select>
+      </div>
+    </div>
+    <div class="form-group toggle-row flexrow">
+      <label style="flex: 1">{{localize 'CoC7.CoCIDCompendiumPopulateTypes'}}</label>
+        <div class="toggle-attributes flexrow">
+        {{#each coc7Config.types as |type|}}
+          <button class="toggle-switch{{#if type.toggle}} switched-on{{/if}}" data-property="{{type.id}}">{{type.label}}</button>
+        {{/each}}
+      </div>
+    </div>
+  {{else}}
+    <div class="form-group flexrow">
+      {{localize 'CoC7.CoCIDCompendiumPopulateMissing'}}
+    </div>
+  {{/if}}
+</div>

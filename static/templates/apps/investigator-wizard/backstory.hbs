@@ -1,0 +1,18 @@
+<div class="panel flexcol">
+  <h1>{{localize 'CoC7.InvestigatorWizard.TitleBackstory'}}</h1>
+  <div class="scroll-section">
+    {{#each backstories as |backstory|}}
+      <h3 class="section-heading">{{localize backstory.name}}</h3>
+      <div class="form-group">
+        <textarea class="backstory-text" data-index="{{backstory.index}}">{{backstory.value}}</textarea>
+      </div>
+      <div class="form-group">
+        <button class="backstory-reset" type="button" data-index="{{backstory.index}}"><i class="fa-solid fa-undo"></i> {{localize 'TABLE.ACTIONS.ResetResults'}}</button>
+        {{#if backstory.rolls}}
+          <button class="backstory-roll" type="button" data-index="{{backstory.index}}" data-key="{{backstory.rolls}}"><i class="fa-solid fa-dice-d20"></i> {{localize 'TABLE.ACTIONS.DrawResult'}}</button>
+        {{/if}}
+      </div>
+      <div class="form-group">&nbsp;</div>
+    {{/each}}
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="primary-attributes{{#if showPartValues}} show-part-values{{/if}}">
+  <div class="characteristics">
+    {{#each characteristics as |characteristic key|}}
+      <div class="char-box attribute characteristic-{{key}}" data-characteristic="{{key}}" draggable="true">
+        <div class="characteristic-name rollable" draggable="true" data-tooltip-key="{{key}}">{{localize characteristic.short}}</div>
+        <div class="char-box-values">
+          <input class="characteristic-score detail-value{{#if characteristic.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if characteristic.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{characteristic.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.characteristics.{{key}}.value" value="{{characteristic.sourceValue}}" {{/if}}{{else}} name="system.characteristics.{{key}}.value" value="{{characteristic.value}}" {{/if}} />
+          <span class="part-detail-value half-score">{{calcHard characteristic.value}}</span>
+          <span class="part-detail-value fifth-score">{{calcExtreme characteristic.value}}</span>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

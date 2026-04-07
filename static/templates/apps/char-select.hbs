@@ -1,0 +1,9 @@
+<div class="flexcol" style="gap: 0.375rem;">
+  <div class="item-list flexcol">
+    {{#each characteristics as |characteristic|}}
+      <div class="flexrow selectable" style="justify-content: center;" data-key="{{characteristic.key}}">
+        <label style="flex: 0;white-space: nowrap">{{localize characteristic.label}} {{#if characteristic.value}}({{characteristic.value}}){{/if}}</label>
+      </div>
+    {{/each}}
+  </div>
+</div>

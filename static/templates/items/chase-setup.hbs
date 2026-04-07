@@ -1,0 +1,141 @@
+<section class="tab setup flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="setup">
+  {{#if tabs.setup}}
+    {{#if locations.length}}
+      {{#if document.system.started}}
+        <div class="initiative-track flexrow">
+          {{#each participants as |participant|}}
+            <div class="initiative-block{{#if participant.chaser}} chaser{{else}} prey{{/if}}{{#if participant.active}} active{{/if}}{{#if (lt participant.currentMovementActions 1)}} no-actions{{/if}}" data-uuid="{{participant.uuid}}">
+              <div class="header flexrow">
+                <div class="name">{{participant.name}}</div>
+                <div class="participant-controls">
+                  <a class="item-control" data-action="removeParticipant" data-tooltip="CoC7.Remove"><i class="fa-solid fa-trash"></i></a>
+                  <a class="item-control" data-action="editParticipant" data-tooltip="CoC7.Edit"><i class="fa-solid fa-user-edit"></i></a>
+                  <a class="item-control" data-action="activateParticipant" data-tooltip="CoC7.MakeActive"><i class="fa-solid fa-map-marker-alt"></i></a>
+                </div>
+              </div>
+              <div class="participant">
+                <div class="portrait">
+                  <img src="{{participant.icon}}" data-tooltip="{{participant.name}}" />
+                </div>
+                <div class="infos flexcol">
+                  <div>{{localize 'CoC7.Chase.InitiativeShort' value=participant.dex}}</div>
+                  <div>{{localize 'CoC7.Chase.AdjustedMovementShort' value=participant.adjustedMov}}</div>
+                  <div class="flexrow">{{localize 'CoC7.HP'}}: <input type="text" data-set="participant.hp" data-actor-uuid="{{participant.docUuid}}" value="{{participant.hp}}" /></div>
+                </div>
+              </div>
+              <div class="movement-action flexrow">
+                {{#each movementActionArray as |actionClass|}}
+                  <i class="fas fa-bahai {{actionClass}}"></i>
+                {{/each}}
+              </div>
+              <div class="participant-controls flexrow">
+                <a class="item-control toggle {{#unless participant.hasAGunReady}} disabled{{/unless}}" data-action="drawGun" data-tooltip="{{#if participant.hasAGunReady}}CoC7.PutGunAway{{else}}CoC7.DrawGun{{/if}}"><i class="game-icon game-icon-revolver"></i></a>
+                <a class="item-control toggle {{#if (lt participant.bonusDice 1)}} disabled{{/if}}" data-action="bonusDice" data-count="1" data-tooltip="{{#if (gt participant.bonusDice 0)}}CoC7.RemoveBonusDie{{else}}CoC7.AddBonusDie{{/if}}"><i class="game-icon game-icon-d10"></i></a>
+                <a class="item-control toggle {{#if (lt participant.bonusDice 2)}} disabled{{/if}}" data-action="bonusDice" data-count="2" data-tooltip="{{#if (gt participant.bonusDice 1)}}CoC7.RemoveBonusDie{{else}}CoC7.AddBonusDie{{/if}}"><i class="game-icon game-icon-d10"></i></a>
+                <div class="separator"></div>
+                <a class="item-control" data-action="decreaseActions" data-tooltip="CoC7.DecreaseMovementAction"><i class="fa-regular fa-minus-square"></i></a>
+                <a class="item-control{{#if participant.hasMaxMvtActions}} inactive{{/if}}" data-action="increaseActions" data-tooltip="CoC7.IncreaseMovementAction"><i class="fa-regular fa-plus-square"></i></a>
+                {{#if (gt participant.currentMovementActions 0)}}
+                  <div class="separator"></div>
+                  <a class="item-control{{#if participant.isFirstLocation}} inactive{{/if}}" data-action="moveBackward" data-tooltip="CoC7.MoveBackward"><i class="fa-solid fa-running fa-flip-horizontal"></i></a>
+                  <a class="item-control{{#if participant.isLastLocation}} inactive{{/if}}" data-action="moveForward" data-tooltip="CoC7.MoveForward"><i class="fa-solid fa-running"></i></a>
+                  {{#if participant.canAssist}}
+                    <a class="assist-dropdown" data-tooltip="CoC7.Assist"><i class="fa-solid fa-hands-helping"></i></a>
+                  {{/if}}
+                  {{#if (lt participant.bonusDice 2)}}
+                    <a class="item-control" data-action="cautiousApproach" data-tooltip="CoC7.CautiousApproach"><i class="fa-solid fa-hourglass-half"></i></a>
+                  {{/if}}
+                {{/if}}
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
+      <div class="chase-track">
+        {{#each locations as |location|}}
+          <div class="chase-location" data-location-id="{{location.uuid}}">
+            <div class="flexrow people">
+              {{#unless @first}}
+                {{#if location.obstacle}}
+                  <div class="spacer"></div>
+                {{/if}}
+              {{/unless}}
+              <div class="list flexrow">
+                {{#each location.participants as |participant|}}
+                  <div class="chase-participant{{#if @root.isKeeper}} can-drag{{/if}}{{#if participant.tooFast}} tooFast{{else if participant.tooSlow}} tooSlow{{/if}}" data-uuid="{{participant.uuid}}">
+                    <img src="{{participant.icon}}" data-tooltip="{{participant.name}}" />
+                  </div>
+                {{/each}}
+              </div>
+            </div>
+            <div class="flexrow">
+              {{#unless @first}}
+                {{#if location.obstacle}}
+                  <div class="obstacle-location" title="{{location.obstacleDetails.name}}">
+                    {{#if location.obstacleDetails.barrier}}
+                      <i class="game-icon game-icon-barrier"></i>
+                    {{else}}
+                      <i class="game-icon game-icon-hazard-sign"></i>
+                    {{/if}}
+                  </div>
+                {{/if}}
+              {{/unless}}
+              <div class="location-name">
+                {{#if @first}}
+                  <div class="spacer"></div>
+                {{else}}
+                  <div class="line"></div>
+                {{/if}}
+                <div class="name-container{{#unless location.name}} empty{{/unless}}{{#if location.active}} active{{/if}}{{#if location.initialLocation}} initial-location{{/if}}">{{location.name}}</div>
+                {{#if @last}}
+                  <div class="spacer"></div>
+                {{else}}
+                  <div class="line"></div>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="chase-init flexcol">
+        <div class="form-group flexrow">
+          <label>{{localize 'CoC7.Locations'}}</label>
+          <input type="text" name="system.locations.total" value="{{document.system.locations.total}}" />
+          <button data-action="init">{{localize 'CoC7.Initialize'}}</button>
+        </div>
+      </div>
+    {{/if}}
+    {{#unless document.system.started}}
+      <div class="toggle-row flexrow">
+        <div class="toggle-attributes flexrow" data-set="">
+          <button class="toggle-switch{{#if document.system.includeEscaped}} switched-on{{/if}}" data-property="includeEscaped" type="button">{{localize 'CoC7.IncludeEscapees'}}</button>
+          <button class="toggle-switch{{#if document.system.includeLatecomers}} switched-on{{/if}}" data-property="includeLatecomers" type="button">{{localize 'CoC7.IncludeLatecomers'}}</button>
+          {{#if vehiclesEnabled}}
+            <button class="toggle-switch{{#if document.system.vehicle}} switched-on{{/if}}" data-property="vehicle" type="button">{{localize 'CoC7.VehicleChase'}}</button>
+          {{/if}}
+          <button class="toggle-switch{{#if document.system.showTokenMovement}} switched-on{{/if}}" data-property="showTokenMovement" data-tooltip="SETTINGS.ChaseShowTokenMovementHint" type="button">{{localize 'SETTINGS.ChaseShowTokenMovement'}}</button>
+        </div>
+      </div>
+      <div class="form-group flexrow">
+        <label>{{localize 'CoC7.StartingRange'}}</label>
+        <input type="text" name="system.startingRange" value="{{document.system.startingRange}}" />
+      </div>
+      <div class="form-group flexrow">
+        <label>{{localize 'CoC7.StartingIndex'}}</label>
+        <input type="text" name="system.startingIndex" value="{{document.system.startingIndex}}" />
+      </div>
+    {{/unless}}
+    {{#if locations.length}}
+      <div class="buttons flexrow">
+        {{#if document.system.started}}
+          <button class="item-control" data-action="nextRound">{{localize 'CoC7.NextRound'}}</button>
+          <button class="item-control" data-action="restart">{{localize 'CoC7.Restart'}}</button>
+        {{else}}
+          <button class="item-control" data-action="reset">{{localize 'CoC7.Reset'}}</button>
+          <button class="item-control" data-action="cut2chase">{{localize 'CoC7.CutToTheChase'}}</button>
+        {{/if}}
+      </div>
+    {{/if}}
+  {{/if}}
+</section>

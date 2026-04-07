@@ -1,0 +1,75 @@
+<section class="tab details flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="details">
+  {{#if tabs.details}}
+    <fieldset class="flexcol">
+      <div class="toggle-row flexrow">
+        <div class="toggle-attributes flexrow" data-set="properties">
+          {{#each _properties as |row|}}
+            <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+          {{/each}}
+        </div>
+      </div>
+      {{#if document.system.properties.cthulhuGain}}
+        <div class="form-group flexrow" style="flex: 0 0 auto;">
+          <label>{{localize 'CoC7.MythosGain'}}</label>
+          <input type="text" name="system.cthulhuGain" value="{{document.system.cthulhuGain}}" placeholder="{{localize 'CoC7.MythosGain'}}" />
+        </div>
+      {{/if}}
+      {{#if document.system.properties.sanityLoss}}
+        <div class="form-group flexrow" style="flex: 0 0 auto;">
+          <label>{{localize 'CoC7.SANLoss'}}</label>
+          <input type="text" name="system.sanityLoss" value="{{document.system.sanityLoss}}" placeholder="{{localize 'CoC7.SANLoss'}}" />
+        </div>
+      {{/if}}
+      {{#if document.system.properties.cthulhuGain}}
+        <div class="form-group toggle-row flexrow" style="flex: 0 0 auto; align-items: baseline;">
+          <label></label>
+          <div class="toggle-attributes flexrow" data-set="" style="justify-content: center;">
+            <button class="toggle-switch{{#if document.system.addSpells}} switched-on{{/if}}" data-property="addSpells" type="button">{{localize 'CoC7.PromptAddSpells'}}</button>
+          </div>
+        </div>
+      {{/if}}
+    </fieldset>
+    <fieldset class="flexcol">
+      <legend>{{localize 'CoC7.ExperiencePackageBackground'}}</legend>
+      <div class="form-group flexrow" style="flex: 0 0 auto;">
+        <label>{{localize 'CoC7.ItemQuantity'}}</label>
+        <input type="text" name="system.backgroundQty" value="{{document.system.backgroundQty}}" placeholder="{{localize 'CoC7.ItemQuantity'}}" />
+      </div>
+      <div class="form-group toggle-row flexrow" style="flex: 0 0 auto; align-items: baseline;">
+        <label></label>
+        <div class="toggle-attributes flexrow" data-set="" style="justify-content: center;">
+          <button class="toggle-switch{{#if document.system.backgroundInjury}} switched-on{{/if}}" data-property="backgroundInjury">{{localize 'CoC7.PromptAddInjuryScar'}}</button>
+        </div>
+      </div>
+      <div class="form-group toggle-row flexrow" style="flex: 0 0 auto; align-items: baseline;">
+        <label></label>
+        <div class="toggle-attributes flexrow" data-set="" style="justify-content: center;">
+          <button class="toggle-switch{{#if document.system.backgroundStatus}} switched-on{{/if}}" data-property="backgroundStatus">{{localize 'CoC7.PromptAddStatus'}}</button>
+        </div>
+      </div>
+      <div class="form-group toggle-row flexrow" style="flex: 0 0 auto; align-items: baseline;">
+        <label></label>
+        <div class="toggle-attributes flexrow" data-set="" style="justify-content: center;">
+          <button class="toggle-switch{{#if document.system.backgroundEncounter}} switched-on{{/if}}" data-property="backgroundEncounter">{{localize 'CoC7.AddSanityLossEncounter'}}</button>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="flexcol">
+      <legend>{{localize 'CoC7.SanityLossImmunities'}}</legend>
+      <div class="flexrow">
+        <label></label>
+        <div class="item-controls">
+          <a class="item-control" data-action="sanity-loss-type-add" data-type="immunity" data-tooltip="CoC7.AddSanityLossImmunity"><i class="fa-regular fa-plus-circle"></i></a>
+        </div>
+      </div>
+      {{#each document.system.immunity as |type index|}}
+        <div class="form-group flexrow sanity-lost-row" data-index="{{index}}">
+          <input type="text" name="system.immunity.{{index}}" value="{{type}}" placeholder="{{localize 'CoC7.SanityLossTypeReason'}}" />
+          <div class="item-controls">
+            <a class="item-control" data-action="sanity-loss-type-delete" data-tooltip="CoC7.DeleteSanityLossImmunity"><i class="fa-solid fa-trash"></i></a>
+          </div>
+        </div>
+      {{/each}}
+    </fieldset>
+  {{/if}}
+</section>

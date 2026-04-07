@@ -1,0 +1,33 @@
+<section class="flexcol scrollable" style="max-height: 20rem">
+  <div class="item-list flexcol">
+    <div class="item-header flexrow">
+      <div style="flex: 1">{{typeName}}</div>
+      <div style="flex: 2">{{localize 'CoC7.CoCIDFlag.key'}}</div>
+      <div class="item-controls">
+        <a class="item-control" data-action="guess-toggle" data-tooltip="CoC7.CoCIDFlag.guess"><i class="fa-solid fa-wand-magic"></i></a>
+      </div>
+    </div>
+    {{#each missingNames as |row|}}
+      <div class="item flexrow" data-name="{{row.name}}">
+        <div style="flex: 1">{{row.name}}</div>
+        <div style="flex: 1">
+          <select class="existing">
+            <option value="">{{localize 'CoC7.CoCIDFlag.new'}}</option>
+            {{selectOptions ../foundKeys selected=row.custom valueAttr="key" labelAttr="name"}}
+          </select>
+        </div>
+        <div class="flexrow" style="flex: 1">
+          {{#if row.key}}
+            {{row.custom}}
+          {{else}}
+            <span style="flex: 0 0 auto; margin-top: 2px;">{{../idPrefix}}</span>
+            <input type="text" style="flex: 1;" value="{{row.suffix}}">
+          {{/if}}
+        </div>
+        <div class="item-controls">
+            <a class="item-control"{{#if row.key}} style="height: 0; overflow: hidden;"{{else}} data-action="guess-id" data-tooltip="CoC7.CoCIDFlag.guess"{{/if}}><i class="fa-solid fa-wand-magic"></i></a>
+        </div>
+      </div>
+    {{/each}}
+  </section>
+</div>

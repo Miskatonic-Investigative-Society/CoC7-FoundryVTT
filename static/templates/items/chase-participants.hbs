@@ -1,0 +1,64 @@
+<section class="tab participants flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="participants">
+  {{#if tabs.participants}}
+    <div class="participants-list flexcol">
+      {{#each participants as |participant|}}
+        <div class="participant flexrow" data-uuid={{participant.uuid}}>
+          <div class="food-chain{{#if participant.chaser}} chaser{{else}} prey{{/if}}" data-action="participantChaser">
+            {{#if participant.chaser}}
+              <a><i class="game-icon game-icon-moon-claws"></i></a>
+            {{else}}
+              <a><i class="fa-solid fa-running"></i></a>
+            {{/if}}
+          </div>
+          <div class="p-icon{{#if participant.isActor}} open-actor{{/if}}" data-actor-uuid="{{participant.docUuid}}">
+            <img src="{{participant.icon}}" />
+          </div>
+          <div class="p-name">
+            {{#if participant.isActor}}
+              {{participant.name}}
+            {{else}}
+              <input type="text" data-set="participant.name" placeholder="{{localize 'CoC7.Name'}}" value="{{participant.name}}" />
+            {{/if}}
+          </div>
+          <input class="right-text" type="text" data-set="participant.dex" placeholder="{{participant.initiative}}" value="{{participant.dex}}" />
+          <input class="right-text" type="text" data-set="participant.mov" placeholder="{{localize 'CoC7.Mov'}}" value="{{participant.mov}}" />
+          <select class="name" data-set="participant.speedCheck.name">
+            {{selectOptions listOptions selected=participant.speedCheck.name localize=false valueAttr='name' labelAttr='name'}}
+          </select>
+          <input class="right-text" type="text"{{#if participant.hasSpeedCheckValue}} readonly{{else}} data-set="participant.speedCheck.score"{{/if}} value="{{participant.speedCheck.score}}" />
+          {{#if participant.rolledSpeedCheck}}
+            <div class="inline-roll-data{{#if participant.speedCheckResult.isCritical}} critical{{else if participant.speedCheckResult.isFumble}} fumble{{else if participant.speedCheckResult.isRegularFailure}} failure{{else if participant.speedCheckResult.isSuccess}} success{{/if}}" data-tooltip="{{participant.speedCheckResult.tooltip}}" data-tooltip-class="coc7-wider-tooltip"><i class="game-icon game-icon-d10"></i> {{participant.speedCheckResult.value}}</div>
+          {{else if participant.rollingSpeedCheck}}
+            <div class="inline-roll-data"><i class="game-icon game-icon-d10"></i> ??</div>
+          {{else if participant.rollableSpeedCheck}}
+            <div class="inline-roll-request">
+              <a class="item-control" data-action="rollSpeedCheck"><i class="game-icon game-icon-d10"></i></a>
+            </div>
+          {{/if}}
+          <div class="p-adjust">
+            {{#if (lt participant.movAdjustment 0)}}
+              <i class="fa-solid fa-down"></i>
+            {{else if (gt participant.movAdjustment 0)}}
+              <i class="fa-solid fa-up"></i>
+            {{else}}
+              <i class="fa-solid fa-equals"></i>
+            {{/if}}
+          </div>
+          <div class="p-modified-mov{{participant.adjustedMovClasses}}">{{participant.adjustedMov}}</div>
+          <div class="p-control">
+            {{#if (or participant.rolledSpeedCheck participant.rollingSpeedCheck)}}
+              <a class="item-control" data-action="resetRoll"><i class="fa-solid fa-undo"></i></a>
+            {{else}}
+              <a class="item-control" data-action="deleteParticipant"><i class="fa-solid fa-times"></i></a>
+            {{/if}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+    <div class="new-participant flexcol">
+      <div class="add-sign flexcol">
+        <i class="fa-regular fa-plus"></i>
+      </div>
+    </div>
+  {{/if}}
+</section>

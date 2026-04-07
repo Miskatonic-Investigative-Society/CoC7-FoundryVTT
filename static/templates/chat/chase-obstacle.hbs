@@ -1,0 +1,283 @@
+<div class="coc7-chat-header flexcol">
+  <div class="flexrow">
+    <div class="left-portrait flexrow" data-actor-uuid="{{actorUuid}}">
+      {{#if displayActorOnCard}}
+        <img class="portrait open-actor" data-actor-uuid="{{actorUuid}}" src="{{actorImg}}" data-tooltip="{{actorName}}" />
+      {{/if}}
+    </div>
+    <div class="card-title">
+      {{#if obstacleDefined}}
+        {{#if obstacle.name}}{{obstacle.name}}{{else}}{{localize 'CoC7.Obstacle'}}{{/if}}
+      {{/if}}
+    </div>
+    <div class="actor-portrait right-portrait">
+      {{#if obstacleDefined}}
+        {{#if obstacle.barrier}}
+          <img src="systems/CoC7/assets/icons/barrier.svg">
+        {{else}}
+          <img src="systems/CoC7/assets/icons/hazard-sign.svg">
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+<div class="player-actions">
+  {{#if obstacleDefined}}
+    <div>{{obstacleDefinedText}}</div>
+    {{#if playerActionDefined}}
+      <div>{{playerIntentions}}</div>
+      {{#if totalCautiousApproach}}
+        <div>{{{cautiousApproachType}}}</div>
+      {{/if}}
+      {{#if checkRolled}}
+        <div class="roll-line">{{obstacle.checkName}}:</div>
+        {{~> 'systems/CoC7/templates/chat/roll-result.hbs' checkRevealed=true cardOpen=false}}
+        {{#if isSuccess}}
+          <div>{{obstaclePassed}}</div>
+        {{else}}
+          <div>{{checkFailed}}</div>
+          {{#if closed}}
+            {{#if (and obstacle.hasDamage (not isSuccess))}}
+              <div class="roll-line">{{damageTaken}}</div>
+            {{/if}}
+            {{#if actionLost}}
+              <div class="roll-line">{{actionLostText}}: {{{failedActionCostRoll}}}</div>
+            {{/if}}
+          {{/if}}
+        {{/if}}
+      {{else}}
+        {{#if tryToBreak}}
+          {{#if obstacleDamageRolled}}
+            <div>{{{obstacleDamage}}}</div>
+          {{else}}
+            <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{actorUuid}}">
+              <button class="item-control" data-action="rollObstacleDamage">{{weaponName}}</button>
+            </div>
+          {{/if}}
+        {{else}}
+          <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{actorUuid}}">
+            <button class="item-control" data-action="rollSkillCheck">{{checkRollRequest}}</button>
+          </div>
+        {{/if}}
+      {{/if}}
+    {{else}}
+      <div>{{localize 'CoC7.AskIntentions'}}</div>
+    {{/if}}
+  {{else}}
+    <div>{{localize 'CoC7.SomethingInTheWay'}}</div>
+  {{/if}}
+
+  {{#if closed}}
+    <div>{{finalOutcome}}</div>
+  {{/if}}
+</div>
+
+<div class="keeper-only-block flexcol">
+  {{#if cardResolved}}
+    {{#unless closed}}
+      {{#if obstacleDefinitionChanged}}
+        <div class="coc7-card-buttons flexrow">
+          <button class="{{#if reflectObstacleChanges}}switched-on{{/if}}" data-action="setValue" data-set="reflectObstacleChanges">{{localize 'CoC7.ReflectObstacleChanges'}}</button>
+        </div>
+      {{/if}}
+      {{#if tryToBreak}}
+        <div class="coc7-card-buttons flexrow">
+          <div style="flex: 3">{{localize 'CoC7.ObstacleDamage'}}: {{{obstacleDamageRoll}}} (<i class="game-icon game-icon-life-bar" data-tooltip="CoC7.HitPoints"></i>{{obstacle.HitPoints}})</div>
+          <div class="flexrow">
+            <input type="text" data-change-set="totalObstacleDamage" value="{{totalObstacleDamage}}" />
+            <a class="item-control{{#if obstacleDestroyed}} switched-on{{/if}} larger-icon" data-action="setValue" data-set="obstacleDestroyed" data-tooltip="CoC7.RemoveObstacle"><i class="game-icon game-icon-wrecking-ball"></i></a>
+          </div>
+        </div>
+      {{/if}}
+      {{#if (and obstacle.hasDamage (not isSuccess))}}
+        <div class="coc7-card-buttons flexrow">
+          <div style="flex: 3">{{localize 'CoC7.DamageInflicted'}}: {{{failedCheckDamageRoll}}}{{#unless ignoreArmor}} - <i class="game-icon game-icon-armor-upgrade"></i>{{targetArmor}}{{/unless}}</div>
+          <input type="text" data-change-set="totalPlayerDamageTaken" value="{{totalPlayerDamageTaken}}" />
+        </div>
+      {{/if}}
+      <div class="coc7-card-buttons flexrow">
+        <div style="flex: 3">{{localize 'CoC7.ActionCost'}}{{#if actionLost}}: {{{failedActionCostRoll}}}{{/if}}</div>
+        <input type="text" data-change-set="totalActionCost" value="{{totalActionCost}}" />
+      </div>
+      <div class="coc7-card-buttons flexrow">
+        <button class="{{#if movePlayer}}switched-on{{/if}}" data-action="setValue" data-set="movePlayer">{{localize 'CoC7.PlayerMovesToLocation'}}</button>
+      </div>
+      <div class="coc7-card-buttons flexrow">
+        <button class="item-control" data-action="validateCard">{{localize 'CoC7.Validate'}}</button>
+      </div>
+    {{/unless}}
+  {{else if obstacleDefined}}
+    {{#if breakOrNegotiateDefined}}
+      {{#if tryToNegotiate}}
+        {{#if playerActionDefined}}
+          {{#if checkRolled}}
+            {{#unless (or isSuccess failedConsequencesRolled)}}
+              {{#if obstacle.hasDamage}}
+                {{!-- Armor relevant only if there's some damage --}}
+                <div class="coc7-card-buttons flexrow">
+                  <div></div>
+                  <button class="keeper-only-control coc7-short-button{{#if ignoreArmor}} switched-on{{/if}}" data-action="setValue" data-set="ignoreArmor">{{#if ignoreArmor}}<i class="game-icon game-icon-armor-downgrade"></i>{{else}}<i class="game-icon game-icon-armor-upgrade"></i>{{/if}}</button>
+                  {{#unless ignoreArmor}}
+                    <label style="flex: 0 0 auto;">{{localize 'CoC7.Armor'}}:</label>
+                    <input type="text" data-change-set="targetArmor" value="{{targetArmor}}" />
+                    {{#if isArmorFormula}}
+                      <button class="keeper-only-control coc7-short-button" data-action="rollArmor"><i class="fa-solid fa-dice"></i></button>
+                    {{/if}}
+                  {{/unless}}
+                </div>
+              {{/if}}
+              <div class="coc7-card-buttons flexrow">
+                <div class="flexrow" style="gap: 0.25rem;">
+                  {{#unless obstacle.isBarrier}}
+                    <a class="item-control{{#if obstacle.hasActionCost}} switched-on{{/if}} larger-icon" data-action="setValue" data-set="obstacle.hasActionCost" data-tooltip="CoC7.ActionCostOnFail"><i class="fas fa-bahai"></i></a>
+                    {{#if obstacle.hasActionCost}}
+                      <input type="text" data-change-set="obstacle.failedActionCost" value="{{obstacle.failedActionCost}}" />
+                    {{/if}}
+                  {{/unless}}
+                </div>
+                <div class="flexrow" style="gap: 0.25rem;">
+                  <a class="item-control{{#if obstacle.hasDamage}} switched-on{{/if}} larger-icon" data-action="setValue" data-set="obstacle.hasDamage" data-tooltip="CoC7.DamageOnFail"><i class="game-icon game-icon-broken-bone"></i></a>
+                  {{#if obstacle.hasDamage}}
+                    <input type="text" data-change-set="obstacle.failedCheckDamage" value="{{obstacle.failedCheckDamage}}" />
+                  {{/if}}
+                </div>
+              </div>
+              {{#if validFailedRolls}}
+                <div class="coc7-card-buttons flexrow">
+                  <button class="item-control" data-action="rollFailConsequences">{{localize 'CoC7.Validate'}}</button>
+                </div>
+              {{/if}}
+            {{/unless}}
+          {{else}}
+            <div>{{localize 'CoC7.WaitForPlayerInput'}}</div>
+          {{/if}}
+        {{else}}
+          <div class="defineSkillCheck">
+            <label>{{localize 'CoC7.AdditionalPoolModifier'}}</label>
+            <div class="flexrow">
+              {{#if hasBonusDice}}
+                <a class="item-control{{#if consumeBonusDice}} switched-on{{/if}} larger-icon" data-action="setValue" data-set="consumeBonusDice" data-tooltip="CoC7.ConsumeBonusDice"><i class="game-icon game-icon-dice-fire"></i></a>
+              {{/if}}
+              <div class="bonus-penalty-selector">
+                <div class="bonus-penalty-header flexrow">
+                  <span>{{localize 'CoC7.PenaltyDice'}}</span>
+                  <span>{{localize 'CoC7.BonusDice'}}</span>
+                </div>
+                <div class="bonus-penalty-header flexrow">
+                  <span>-2</span>
+                  <span>-1</span>
+                  <span>0</span>
+                  <span>+1</span>
+                  <span>+2</span>
+                </div>
+                <input type="range" data-change-set="bonusDice" min="-2" max="2" value="{{poolModifier}}" class="slider keeper-only-control">
+              </div>
+              <a class="item-control larger-icon" data-action="cancelObstacleDefinition" data-tooltip="CoC7.Cancel"><i class="fa-solid fa-undo"></i></a>
+            </div>
+            <div class="coc7-card-buttons flexrow">
+              <select class="name" data-change-set="check-name">
+                {{selectOptions listOptions selected=obstacle.checkName localize=false valueAttr='name' labelAttr='name'}}
+              </select>
+              {{#if existingCheckName}}
+                <div class="coc7-small">{{checkThreshold}}%</div>
+              {{else}}
+                <input type="text" class="coc7-small" data-change-set="checkThreshold" value="{{checkThreshold}}" placeholder="{{localize 'CoC7.Value'}}" data-tooltip="{{localize 'CoC7.SkillSelectBase' name=obstacle.checkName}}" />
+              {{/if}}
+            </div>
+            <div class="coc7-card-buttons flexrow">
+              {{#if canTakeCautiousApproach}}
+                <button class="item-control" data-action="takeCautiousApproach">{{localize 'CoC7.CautiousApproach'}}</button>
+              {{/if}}
+              {{#if validCheck}}
+                <button class="item-control" data-action="requestRoll">{{localize 'CoC7.RequestRoll'}}</button>
+              {{/if}}
+            </div>
+          </div>
+        {{/if}}
+      {{/if}}
+      {{#if tryToBreak}}
+        {{#if playerActionDefined}}
+          {{#unless obstacleDamageRolled}}
+            <div>{{localize 'CoC7.WaitForPlayerInput'}}</div>
+          {{/unless}}
+        {{else}}
+          <div class="definePlayerAction">
+            <div class="coc7-card-buttons flexrow">
+              <div class="larger-icon" data-tooltip="CoC7.ObstacleHasHitPoint"><i class="game-icon game-icon-life-bar"></i></div>
+              <input type="text" data-change-set="obstacle.HitPoints" value="{{obstacle.HitPoints}}" />
+              <a class="item-control larger-icon" data-action="cancelObstacleDefinition" data-tooltip="CoC7.Cancel"><i class="fa-solid fa-undo"></i></a>
+            </div>
+            <div class="coc7-card-buttons flexrow">
+              <div class="larger-icon" data-tooltip="CoC7.ChooseWeapon"><i class="game-icon game-icon-gooey-impact"></i></div>
+              <select class="name" data-change-set="weapon-key">
+                {{selectOptions listWeapons selected=weaponKey localize=false}}
+              </select>
+            </div>
+            {{#if (eq weaponKey 'other')}}
+              <div class="coc7-card-buttons flexrow">
+                <div></div>
+                <div class="flexrow" style="gap: 0.25rem;">
+                  <div class="larger-icon" data-tooltip="CoC7.DamageInflicted"><i class="game-icon game-icon-rolling-dices"></i></div>
+                  <input type="text" data-change-set="weaponOtherDamage" value="{{weaponOtherDamage}}" />
+                </div>
+              </div>
+            {{/if}}
+            {{#if validObstacleDamage}}
+              <div class="coc7-card-buttons flexrow">
+                <button class="item-control" data-action="askRollObstacleDamage">{{localize 'CoC7.AskDamageRoll'}}</button>
+              </div>
+            {{/if}}
+          </div>
+        {{/if}}
+      {{/if}}
+    {{else}}
+      <div class="askPlayerForIntentions">
+        <div class="coc7-card-buttons flexrow">
+          <div>{{localize 'CoC7.WaitForPlayerInput'}}</div>
+          <a class="item-control larger-icon" data-action="cancelObstacleDefinition" data-tooltip="CoC7.Cancel"><i class="fa-solid fa-undo"></i></a>
+        </div>
+        <div class="coc7-card-buttons flexrow">
+          <button class="item-control" data-action="tryToNegotiateObstacle">{{localize 'CoC7.AttemptNegotiateObstacle'}}</button>
+          <button class="item-control" data-action="tryToBreakDownObstacle">{{localize 'CoC7.AttemptBreakDown'}}</button>
+        </div>
+      </div>
+    {{/if}}
+  {{else}}
+    <div class="defineObstacle">
+      <div class="coc7-card-buttons coc7-half-buttons flexrow">
+        <button class="{{#if obstacle.isBarrier}}switched-on{{/if}}" data-action="setValue" data-set="obstacle.barrier">{{localize 'CoC7.Barrier'}}</button>
+        <button class="{{#unless obstacle.isBarrier}}switched-on{{/unless}}" data-action="setValue" data-set="obstacle.hazard">{{localize 'CoC7.Hazard'}}</button>
+      </div>
+      {{#if obstacle.isBarrier}}
+        <div class="coc7-card-buttons flexrow">
+          <button class="{{#if obstacle.hasHitPoints}}switched-on{{/if}}" data-action="setValue" data-set="obstacle.hasHitPoints">{{localize 'CoC7.Breakable'}}</button>
+        </div>
+      {{/if}}
+      <div class="coc7-card-buttons flexrow">
+        <label>{{localize 'CoC7.ObstacleName'}}</label>
+        <input type="text" data-set="obstacle.name" value="{{obstacle.name}}" />
+      </div>
+      <div class="coc7-card-buttons flexrow">
+        <button class="item-control" data-action="defineObstacle">{{localize 'CoC7.Validate'}}</button>
+      </div>
+    </div>
+  {{/if}}
+
+  <div class="coc7-status-list">
+    <div class="coc7-tags">
+      <span class="tag movement-action">
+        {{localize 'CoC7.Actions'}}
+        {{#each movementActionArray as |actionClass|}}
+          <i class="fas fa-bahai {{actionClass}}"></i>
+        {{/each}}
+      </span>
+      {{#each statuses as |status|}}
+        <span class="tag{{#if status.css}} {{status.css}}{{/if}}">{{status.name}}</span>
+      {{/each}}
+    </div>
+  </div>
+</div>
+{{#if (eq @root.foundryGeneration 13)}}
+  <div class="never-expand" data-action="expandRoll"></div>
+{{/if}}

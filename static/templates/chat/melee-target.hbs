@@ -1,0 +1,78 @@
+<div class="coc7-chat-header flexcol">
+  <div class="flexrow">
+    <div class="left-portrait{{#if (and displayActorOnCard itemImg)}} double-portrait{{/if}} flexrow" data-actor-uuid="{{targetUuid}}">
+      {{#if displayActorOnCard}}
+        <img class="portrait open-actor" data-actor-uuid="{{targetUuid}}" src="{{targetImg}}" data-tooltip="{{targetName}}" />
+      {{/if}}
+      {{#if itemImg}}
+        <img class="portrait open-actor" data-actor-uuid="{{targetUuid}}" src="{{itemImg}}" data-tooltip="{{itemName}}" />
+      {{/if}}
+    </div>
+    <div class="card-title">
+      {{itemName}}
+    </div>
+    <div class="actor-portrait right-portrait">
+      <img class="portrait" data-actor-uuid="{{attackerUuid}}" src="{{attackerImg}}" data-tooltip="{{attackerName}}" />
+    </div>
+  </div>
+  {{#if (or itemImg rolled)}}
+    <div class="coc7-chat-description flexcol">
+      {{#if enrichedItemDescriptionValue}}
+        <div class="coc7-formatted-text">
+          {{{enrichedItemDescriptionValue}}}
+        </div>
+      {{/if}}
+      {{#if rolled}}
+        <div class="coc7-tags">
+          {{#if isDodge}}
+            <span class="tag" data-tooltip="{{item.name}}">{{localize 'CoC7.Dodge'}}</span>
+          {{else if isFightBack}}
+            <span class="tag" data-tooltip="{{item.name}}">{{localize 'CoC7.FightBack'}}</span>
+          {{else if isManeuver}}
+            <span class="tag" data-tooltip="{{item.name}}">{{localize 'CoC7.Maneuver'}}</span>
+          {{/if}}
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+</div>
+{{#if rolled}}
+  {{~> 'systems/CoC7/templates/chat/parts/roll-no-formula-dice.hbs' actorUuid=targetUuid}}
+{{else if responded}}
+{{else}}
+  {{#if (eq @root.foundryGeneration 13)}}<div class="never-expand" data-action="expandRoll"></div>{{/if}}
+  <div class="owner-and-keeper-block coc7-card-buttons coc7-half-buttons flexrow" data-actor-uuid="{{targetUuid}}">
+    <button {{#if hasDodge}} data-action="dodge" {{#if isDodge}} class="switched-on" {{/if}}{{else}} disabled="disabled" {{/if}}>{{localize 'CoC7.Dodge'}}</button>
+    <button data-action="setNoResponse" {{#if isNoResponse}} class="switched-on" {{/if}}>{{localize 'CoC7.NoResponse'}}</button>
+    <button data-action="setFightBack" {{#if isFightBack}} class="switched-on" {{/if}}>{{localize 'CoC7.FightBack'}}</button>
+    <button data-action="setManeuvers" {{#if isManeuver}} class="switched-on" {{/if}}>{{localize 'CoC7.Maneuver'}}</button>
+  </div>
+  {{#if itemImg}}
+    <div class="coc7-chat-content flexcol" data-actor-uuid="{{targetUuid}}">
+      <label>{{localize 'CoC7.AdditionalPoolModifier'}}</label>
+      <div class="bonus-penalty-selector">
+        <div class="bonus-penalty-header flexrow">
+          <span>{{localize 'CoC7.PenaltyDice'}}</span>
+          <span>{{localize 'CoC7.BonusDice'}}</span>
+        </div>
+        <div class="bonus-penalty-header flexrow">
+          <span>-2</span>
+          <span>-1</span>
+          <span>0</span>
+          <span>+1</span>
+          <span>+2</span>
+        </div>
+        <input type="range" name="poolModifier" min="-2" max="2" value="{{poolModifier}}" class="slider keeper-only-control">
+      </div>
+    </div>
+  {{/if}}
+  <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{targetUuid}}">
+    {{#if (or isDodge isManeuver)}}
+      <button data-action="targetRoll">{{itemName}} ({{skillValue}}%)</button>
+    {{else if isFightBack}}
+      <button data-action="targetRoll" data-skill-id="{{skillId}}">{{itemName}}: {{skillName}} ({{skillValue}}%)</button>
+    {{else if isNoResponse}}
+      <button data-action="targetRoll">{{localize 'CoC7.NoResponse'}}</button>
+    {{/if}}
+  </div>
+{{/if}}

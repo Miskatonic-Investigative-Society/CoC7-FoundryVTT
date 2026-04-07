@@ -1,0 +1,28 @@
+<div class="panel flexcol">
+  <h1>{{localize 'CoC7.InvestigatorWizard.TitleArchetypeSkills'}}</h1>
+  <div class="scroll-section">
+    <div class="form-group">{{localize 'CoC7.InvestigatorWizard.ArchetypeDefaultSkills' count=max}}</div>
+    <div class="skills flexcol">
+      {{#each skillItems as |skill|}}
+        {{#if (eq skill.group 'default')}}
+          {{> 'systems/CoC7/templates/apps/investigator-wizard/toggle-skill.hbs' skill=skill toggleKey='archetypeToggle'}}
+        {{/if}}
+      {{/each}}
+    </div>
+    <div class="form-group">&nbsp;</div>
+    <div class="form-group">{{localize 'CoC7.InvestigatorWizard.ArchetypeOptionalSkills'}}</div>
+    <div class="skills flexcol">
+      {{#each skillItems as |skill|}}
+        {{#if (eq skill.group 'other')}}
+          {{> 'systems/CoC7/templates/apps/investigator-wizard/toggle-skill.hbs' skill=skill toggleKey='archetypeToggle'}}
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+  <div class="status-block">
+    <div class="form-group status flexrow">
+      <div class="icon">{{#if (eq selected max)}}<i class="fa-solid fa-circle-check"></i>{{else}}<i class="fa-solid fa-circle-xmark"></i>{{/if}}</div>
+      <div>{{localize 'CoC7.InvestigatorWizard.SkillSpendArchetypeCountIncorrect' count=selected max=max}}</div>
+    </div>
+  </div>
+</div>

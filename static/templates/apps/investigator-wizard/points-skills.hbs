@@ -1,0 +1,69 @@
+<div class="panel flexcol">
+  <h1>{{localize 'CoC7.InvestigatorWizard.TitlePointsSkills'}}</h1>
+  <div class="scroll-section">
+    <div class="points-row flexrow">
+      <div class="skill-name">&nbsp;</div>
+      <div class="adjustment-value"><span data-tooltip="CoC7.SkillBase"><i class="fa-solid fa-percent"></i></span></div>
+      <div class="adjustment-value"><span data-tooltip="CoC7.SkillPersonal"><i class="fa-solid fa-percent"></i></span></div>
+      <div class="adjustment-value"><span data-tooltip="CoC7.SkillOccupation"><i class="fa-solid fa-percent"></i></span></div>
+      {{#if (gt archetype.total 0)}}
+        <div class="adjustment-value"><span data-tooltip="CoC7.SkillArchetype"><i class="fa-solid fa-percent"></i></span></div>
+      {{/if}}
+      <div class="adjustment-value"><span data-tooltip="CoC7.Value"><i class="fa-solid fa-percent"></i></span></div>
+    </div>
+    {{#each skills as |skill|}}
+      <div class="points-row flexrow" data-key="{{skill.key}}" data-index="{{skill.index}}">
+        <div class="skill-name">{{skill.name}}</div>
+        <div class="adjustment-value" data-tooltip="CoC7.SkillBase">{{skill.base}}</div>
+        <div class="adjustment-value" data-tooltip="CoC7.SkillPersonal"><input type="number" class="skill-adjustment" data-adjustment="personalPoints" value="{{skill.personalPoints}}"{{#if skill.isCthulhuMythos}} readonly{{/if}}></div>
+        <div class="adjustment-value" data-tooltip="CoC7.SkillOccupation">
+          {{#if skill.isOccupation}}
+            <input type="number" class="skill-adjustment" data-adjustment="occupationPoints" value="{{skill.occupationPoints}}">
+          {{else}}
+            &nbsp;
+          {{/if}}
+        </div>
+        {{#if (gt ../archetype.total 0)}}
+          <div class="adjustment-value" data-tooltip="CoC7.SkillArchetype">
+            {{#if skill.isArchetype}}
+              <input type="number" class="skill-adjustment" data-adjustment="archetypePoints" value="{{skill.archetypePoints}}">
+            {{else}}
+              &nbsp;
+            {{/if}}
+          </div>
+        {{/if}}
+        <div class="adjustment-value" data-tooltip="CoC7.Value">
+          {{skill.totalPoints}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  <div class="status-blocks flexcol">
+    <div class="status-block">
+      <div class="form-group status flexrow">
+        <div class="icon">{{#if (eq personal.count personal.total)}}<i class="fa-solid fa-circle-check"></i>{{else}}<i class="fa-solid fa-circle-xmark"></i>{{/if}}</div>
+        <div>{{localize 'CoC7.InvestigatorWizard.SkillSpendInterestPoints' count=personal.count total=personal.total remaining=personal.remaining}}</div>
+      </div>
+    </div>
+    <div class="status-block">
+      <div class="form-group status flexrow">
+        <div class="icon">{{#if (eq occupation.count occupation.total)}}<i class="fa-solid fa-circle-check"></i>{{else}}<i class="fa-solid fa-circle-xmark"></i>{{/if}}</div>
+        <div>{{localize 'CoC7.InvestigatorWizard.SkillSpendOccupationPoints' count=occupation.count total=occupation.total remaining=occupation.remaining}}</div>
+      </div>
+    </div>
+    {{#if (gt archetype.total 0)}}
+      <div class="status-block">
+        <div class="form-group status flexrow">
+          <div class="icon">{{#if (eq archetype.count archetype.total)}}<i class="fa-solid fa-circle-check"></i>{{else}}<i class="fa-solid fa-circle-xmark"></i>{{/if}}</div>
+          <div>{{localize 'CoC7.InvestigatorWizard.SkillSpendArchetypePoints' count=archetype.count total=archetype.total remaining=archetype.remaining}}</div>
+        </div>
+      </div>
+    {{/if}}
+    <div class="status-block">
+      <div class="form-group status flexrow">
+        <div class="icon">{{#if creditRatingOkay}}<i class="fa-solid fa-circle-check"></i>{{else}}<i class="fa-solid fa-circle-xmark"></i>{{/if}}</div>
+        <div>{{localize 'CoC7.CreditOutOfRange' min=coc7Config.creditRating.min max=coc7Config.creditRating.max}}</div>
+      </div>
+    </div>
+  </div>
+</div>

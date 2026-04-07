@@ -1,0 +1,78 @@
+<section class="tab development scrollable {{tabs.development.cssClass}}" data-group="primary" data-tab="development">
+  <ul class="skills-list">
+    {{#each itemsByType.skill as |skill|}}
+      <li class="item{{#if (or ../pulpRuleArchetype ../hasExperiencePackage)}} pulpCharacter{{/if}}" data-item-uuid="{{skill.uuid}}">
+        <div class="item-controls">
+          {{#unless skill.system.properties.noxpgain}}
+            <div class="item-control{{#if../allowCharCreation}} clickable{{/if}}"{{#if../allowCharCreation}} data-action="toggleSkillFlag" data-flag="occupation"{{/if}} data-tooltip="CoC7.OccupationSkill">
+              {{#if skill.system.flags.occupation}}
+                <i class="fa-solid fa-circle"></i>
+              {{else}}
+                <i class="fa-regular fa-circle"></i>
+              {{/if}}
+            </div>
+            {{#if ../pulpRuleArchetype}}
+              <div class="item-control{{#if../allowCharCreation}} clickable{{/if}}"{{#if../allowCharCreation}} data-action="toggleSkillFlag" data-flag="archetype"{{/if}} data-tooltip="CoC7.ArchetypeSkill">
+                {{#if skill.system.flags.archetype}}
+                  <i class="fa-solid fa-circle"></i>
+                {{else}}
+                  <i class="fa-regular fa-circle"></i>
+                {{/if}}
+              </div>
+            {{else if hasExperiencePackage}}
+              <div class="item-control{{#if../allowCharCreation}} clickable{{/if}}"{{#if../allowCharCreation}} data-action="toggleSkillFlag" data-flag="experiencePackage"{{/if}} data-tooltip="CoC7.ExperiencePackageSkill">
+                {{#if skill.system.flags.experiencePackage}}
+                  <i class="fa-solid fa-circle"></i>
+                {{else}}
+                  <i class="fa-regular fa-circle"></i>
+                {{/if}}
+              </div>
+            {{/if}}
+          {{/unless}}
+        </div>
+
+        <span class="skill-name{{#if skill.system.flags.developement}}{{#if ../allowDevelopment}} rollable{{/if}} flagged4dev{{/if}}" data-name-tooltip="{{skill.name}}" data-value-tooltip="{{skill.system.value}}">{{skill.name}}{{#if (and skill.system.flags.developement ../allowDevelopment)}}<i class="fa-solid fa-circle-check"></i>{{/if}}</span>
+        <div class="adjustment-value uneditable locked" data-tooltip-class="coc7-wider-tooltip" data-tooltip="{{localize 'CoC7.SkillBase'}}: {{skill.system.base}}">
+          <span>{{skill.system.adjustments.base}}</span>
+        </div>
+        <div class="adjustment-value development-points{{#if skill.system.properties.noxpgain}} locked{{/if}}" data-tooltip="CoC7.SkillPersonal">
+          {{#if (and ../allowCharCreation (not skill.system.properties.noxpgain))}}
+            <input type="text" class="skill-adjustment" data-flag="personal" value="{{skill.system.adjustments.personal}}">
+          {{else}}
+            <span>{{skill.system.adjustments.personal}}</span>
+          {{/if}}
+        </div>
+        <div class="adjustment-value occupation-points{{#unless skill.system.flags.occupation}} locked{{/unless}}" data-tooltip="CoC7.SkillOccupation">
+          {{#if (and ../allowCharCreation skill.system.flags.occupation)}}
+            <input type="text" class="skill-adjustment" data-flag="occupation" value="{{skill.system.adjustments.occupation}}">
+          {{else}}
+            <span>{{skill.system.adjustments.occupation}}</span>
+          {{/if}}
+        </div>
+        {{#if ../pulpRuleArchetype}}
+          <div class="adjustment-value archetype-points{{#unless skill.system.flags.archetype}} locked{{/unless}}" data-tooltip="CoC7.SkillArchetype">
+            {{#if (and ../allowCharCreation skill.system.flags.archetype)}}
+              <input type="text" class="skill-adjustment" data-flag="archetype" value="{{skill.system.adjustments.archetype}}">
+            {{else}}
+              <span>{{skill.system.adjustments.archetype}}</span>
+            {{/if}}
+          </div>
+        {{else if ../hasExperiencePackage}}
+          <div class="adjustment-value archetype-points{{#unless skill.system.flags.experiencePackage}} locked{{/unless}}" data-tooltip="CoC7.SkillExperiencePackage">
+            {{#if (and ../allowCharCreation skill.system.flags.experiencePackage)}}
+              <input type="text" class="skill-adjustment" data-flag="experiencePackage" value="{{skill.system.adjustments.experiencePackage}}">
+            {{else}}
+              <span>{{skill.system.adjustments.experiencePackage}}</span>
+            {{/if}}
+          </div>
+        {{/if}}
+        <div class="adjustment-value experience-points" data-tooltip="CoC7.SkillExperience">
+          <input type="text" class="skill-adjustment" data-flag="experience" value="{{skill.system.adjustments.experience}}">
+        </div>
+        <div class="adjustment-value uneditable locked" data-tooltip="CoC7.Value">
+          <span>{{skill.system.value}}</span>
+        </div>
+      </li>
+    {{/each}}
+  </ul>
+</section>

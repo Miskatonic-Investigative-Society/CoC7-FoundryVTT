@@ -1,0 +1,90 @@
+<div class="combat-list">
+  <div class="combat-row combat-title flexrow">
+    <div class="combat-value">{{localize 'CoC7.WeaponName'}}</div>
+    <div class="combat-value">{{localize 'CoC7.WeaponSkill'}}</div>
+    <div class="combat-value">{{localize 'CoC7.WeaponSkillAlt'}}</div>
+    <div class="combat-value">{{localize 'CoC7.WeaponDamage'}}</div>
+  </div>
+  {{#each itemsByType.weapon as |weapon|}}
+    <div class="combat-row item flexrow" data-item-uuid="{{weapon.uuid}}">
+      {{#if ../document.system.flags.locked}}
+        <div class="combat-value weapon-name combat{{#if weapon.system.isSkillSet}} rollable{{else}} item-edit{{/if}}">{{weapon.name}}</div>
+        <div class="combat-value skill-name combat{{#if weapon.system.isSkillSet}} rollable item{{else}} no-skill-set clickable item-edit{{/if}}" data-tooltip="{{#if weapon.system.skillMain}}{{localize 'CoC7.RollNamedSkill' name=weapon.system.skillMain.name}}{{else if weapon.system.isSkillSet}}{{else}}CoC7.SelectSkill{{/if}}" {{#if weapon.system.skillMain}}data-item-uuid="{{weapon.system.skillMain.uuid}}"{{/if}}>{{#if weapon.system.skillMain}}{{weapon.system.skillMain.name}} ({{weapon.system.skillMain.system.value}}%){{else}}{{#if weapon.system.isSkillSet}}-{{else}}{{localize 'CoC7.NoSkill'}}{{/if}}{{/if}}</div>
+        <div class="combat-value skill-name combat{{#if weapon.system.isAlternativeSkillSet}} rollable item{{else}} no-skill-set clickable item-edit{{/if}}" data-tooltip="{{#if weapon.system.skillAlternative}}{{localize 'CoC7.RollNamedSkill' name=weapon.system.skillAlternative.name}}{{else if weapon.system.isAlternativeSkillSet}}{{else}}CoC7.SelectSkill{{/if}}" {{#if weapon.system.skillAlternative}}data-item-uuid="{{weapon.system.skillAlternative.uuid}}"{{/if}}>{{#if weapon.system.skillAlternative}}{{weapon.system.skillAlternative.name}} ({{weapon.system.skillAlternative.system.value}}%){{else}}{{#if weapon.system.isAlternativeSkillSet}}-{{else}}{{localize 'CoC7.NoSkill'}}{{/if}}{{/if}}</div>
+        <div class="combat-value flexrow">
+          {{#if weapon.system.properties.rngd}}
+            {{#if weapon.system.properties.shotgun}}
+              {{#each weapon.system.range as |range key|}}
+                <div class="weapon-damage">
+                  <div class="item-control clickable" data-action="weapon-damage" data-range="{{key}}" data-tooltip="{{localize 'CoC7.RollDamageRange' range=range.value}}"><i class="fa-solid fa-dice-d20"></i> {{range.damage}}</div>
+                </div>
+              {{/each}}
+            {{else}}
+              <div class="weapon-damage">
+                <div class="item-control clickable" data-action="weapon-damage" data-tooltip="{{localize 'CoC7.RollDamageRange' range=weapon.system.range.normal.value}}"><i class="fa-solid fa-dice-d20"></i> {{weapon.system.range.normal.damage}}</div>
+              </div>
+            {{/if}}
+            <div class="weapon-controls flexrow">
+              <div class="ammo">
+                <span class="tag">{{weapon.system.ammo}}</span>
+              </div>
+              <div class="control">
+                <a class="reload-weapon" data-tooltip="CoC7.Reload"><i class="game-icon game-icon-chaingun"></i></a>
+              </div>
+            </div>
+          {{else}}
+            <div class="weapon-damage">
+              <div class="item-control clickable" data-action="weapon-damage" data-tooltip="CoC7.Weapon.Property.Melee"><i class="fa-solid fa-dice-d20"></i> {{weapon.system.range.normal.damage}}</div>
+            </div>
+          {{/if}}
+          <div class="coc7-tags">
+            {{#if weapon.system.properties.addb}}<span class="tag">{{localize 'CoC7.WeaponAddDb'}}</span>{{/if}}
+            {{#if weapon.system.properties.ahdb}}<span class="tag">{{localize 'CoC7.WeaponAddHalfDb'}}</span>{{/if}}
+          </div>
+        </div>
+      {{else}}
+        <div class="combat-value"><input class="weapon-edit" type="text" data-field="name" value="{{weapon.name}}"></div>
+        <div class="combat-value">
+          <select class="weapon-edit {{#unless weapon.system.isSkillSet}}no-skill-set{{/unless}}" data-field="main">
+            {{#unless weapon.system.isSkillSet}}
+              <option></option>
+            {{/unless}}
+            {{selectOptions ../weaponSkillGroups selected=weapon.system.skill.main.id localize=true valueAttr='id' labelAttr='name'}}
+          </select>
+        </div>
+        <div class="combat-value">
+          {{#if weapon.system.usesAlternateSkill}}
+            <select class="weapon-edit {{#unless weapon.system.isAlternativeSkillSet}}no-skill-set{{/unless}}" data-field="alternativ">
+              {{#unless weapon.system.isAlternativeSkillSet}}
+                <option></option>
+              {{/unless}}
+              {{selectOptions ../weaponSkillGroups selected=weapon.system.skill.alternativ.id localize=true valueAttr='id' labelAttr='name'}}
+            </select>
+          {{/if}}
+        </div>
+        <div class="combat-value flexrow">
+          <div class="flexrow">
+            {{#if weapon.system.properties.shotgun}}
+              {{#each weapon.system.range as |range key|}}
+                <input class="weapon-edit" type="text" data-field="{{key}}" value="{{range.damage}}">
+              {{/each}}
+            {{else}}
+              <input class="weapon-edit" type="text" data-field="normal" value="{{weapon.system.range.normal.damage}}">
+            {{/if}}
+          </div>
+          <div class="item-controls">
+            <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditWeapon"><i class="fa-solid fa-edit"></i></a>
+            <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteWeapon"><i class="fa-solid fa-trash"></i></a>
+          </div>
+        </div>
+        <div class="combat-toggle toggle-row flexrow">
+          <div class="toggle-attributes flexrow" data-set="properties">
+            {{#each ../_properties as |row|}}
+              <button class="toggle-switch{{#if (lookup weapon.system.properties row.id)}} switched-on{{/if}}" data-apply-to="item" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+            {{/each}}
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  {{/each}}
+</div>

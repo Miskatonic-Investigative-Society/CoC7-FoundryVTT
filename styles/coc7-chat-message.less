@@ -1,0 +1,505 @@
+.chat-message {
+  .message-content {
+    padding: 2px 0; // Makes space for coc7-links borders
+
+    .open-actor.clickable,
+    .change-actor.clickable {
+      cursor: pointer;
+    }
+
+    .coc7-chat-toggled {
+      display: none;
+    }
+
+    .coc7-upgrade-success {
+      color: darkolivegreen;
+    }
+
+    .coc7-upgrade-failed {
+      color: darkred;
+    }
+
+    .coc7-rest-block {
+      margin-bottom: @8px;
+    }
+
+    .coc7-keep-width-hidden {
+      height: 0px;
+      display: inline-block;
+      overflow: hidden;
+    }
+
+    .coc7-chat-header {
+      border-bottom: 2px groove #fff;
+      border-top: 2px groove #fff;
+      padding: 3px 0;
+
+      .left-portrait,
+      .right-portrait {
+        flex: 0 0 32px;
+
+        &.double-portrait {
+          flex: 0 0 72px;
+        }
+
+        img {
+          max-width: 32px;
+        }
+      }
+
+      .card-title {
+        flex: 1;
+        font-size: 20px;
+        font-weight: bolder;
+        text-align: center;
+      }
+    }
+
+    .coc7-chat-content,
+    .coc7-chat-description,
+    .coc7-target-name {
+      margin: @6px 0;
+    }
+
+    .coc7-chat-content,
+    .coc7-target-name {
+      label {
+        font-weight: bold;
+        margin: @4px 0
+      }
+    }
+
+    .bonus-penalty-selector {
+      margin: @6px @12px 0;
+      opacity: 0.6;
+      font-size: var(--font-size-12);
+
+      .bonus-penalty-header {
+        span {
+          text-align: center;
+
+          &:first-child {
+            text-align: left;
+          }
+
+          &:last-child {
+            text-align: right;
+          }
+
+          &:last-child,
+          &:first-child {
+            flex: 0.5
+          }
+        }
+      }
+
+      input[type=range] {
+        height: @20px;
+      }
+    }
+
+    .coc7-card-buttons {
+      padding: @5px;
+      gap: @4px;
+
+      &.coc7-half-buttons {
+        justify-content: space-around;
+
+        button {
+          min-width: calc(50% - @8px);
+          max-width: calc(50% - @8px);
+        }
+      }
+
+      button {
+        width: calc(100% - @16px);
+        font-size: var(--font-size-13);
+        min-width: calc(100% - @16px);
+        height: auto;
+        min-height: calc(var(--button-size) / 1.5);
+
+        &:disabled {
+          cursor: not-allowed;
+          opacity: 0.7;
+        }
+
+        &.switched-on {
+          color: var(--color-text-primary);
+          // background: var(--button-hover-background-color);
+          border-color: var(--color-level-error-border);
+          box-shadow: 0 0 @4px var(--color-level-error-border);
+
+          &[data-action="toggleValue"][data-set="isCombat"] i {
+            color: red;
+          }
+        }
+
+        &.coc7-disabled {
+          cursor: not-allowed;
+          background: darkred;
+          color: white;
+        }
+
+        &.coc7-short-button {
+          flex: 0 0 auto;
+          min-width: auto;
+          width: auto;
+        }
+      }
+
+      select,
+      input {
+        height: calc(2rem / 1.5);
+      }
+
+      .coc7-small {
+        flex: 0 0 2.5rem;
+        text-align: center;
+      }
+    }
+
+    .item-controls,
+    .coc7-card-buttons {
+
+      &.keeper-only-block,
+      &.owner-and-keeper-block {
+        margin-bottom: @5px;
+      }
+    }
+
+    .item-controls {
+      a.not-allowed {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+    }
+
+    div.larger-icon {
+      flex: 0 0 auto;
+
+      i {
+        font-size: 1.1rem;
+      }
+    }
+
+    a.larger-icon i {
+      font-size: 1.1rem;
+    }
+
+    a.switched-on i {
+      color: red;
+      text-shadow: 0 0 8px red;
+    }
+
+    .coc7-tags {
+      .tag {
+        white-space: nowrap;
+        display: inline-block;
+        margin: 0 3px 3px 0;
+        padding: 2px 3px;
+        border: 1px solid var(--color-dark-5);
+        border-radius: 3px;
+        background: rgba(0, 0, 0, 0.05);
+        font-size: var(--font-size-11);
+
+        &.important {
+          color: darkred;
+        }
+
+        &.movement-action {
+          justify-content: center;
+
+          .deficit {
+            flex: 0 0 auto;
+            color: red;
+            text-shadow: 0 0 8px red;
+          }
+
+          .base {
+            flex: 0 0 auto;
+            color: gray;
+
+            &.available {
+              color: goldenrod;
+            }
+          }
+        }
+      }
+    }
+
+    .coc7-card-result {
+      margin: 0 0 @5px;
+      line-height: var(--input-height);
+      text-align: center;
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--color-dark-5);
+      border-radius: 3px;
+      box-shadow: 0 0 2px #FFF inset;
+      word-break: break-all;
+    }
+
+    .coc7-formatted-text.overflowing {
+      max-height: @40px;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+      cursor: pointer;
+
+      * {
+        pointer-events: none;
+      }
+    }
+
+    .dice-roll {
+      &.no-dice-formula {
+        padding-top: @6px;
+      }
+
+      .dice-formula {
+        &.failure {
+          color: red;
+
+          .roll-icons {
+            color: crimson;
+          }
+        }
+
+        &.success {
+          color: green;
+
+          .roll-icons {
+            color: goldenrod;
+          }
+        }
+
+        &.critical {
+          background-color: whitesmoke;
+          color: goldenrod;
+        }
+
+        &.fumble {
+          background-color: black;
+          color: crimson;
+        }
+      }
+
+      .dice-total {
+        &.failure {
+          color: red;
+        }
+
+        &.success-regular {
+          background-color: #ffcc99;
+          color: #cc6600;
+        }
+
+        &.success-hard {
+          background-color: #ffff99;
+          color: #cc9900;
+        }
+
+        &.success-extreme {
+          background-color: #ccff99;
+          color: #009933;
+        }
+
+        &.critical {
+          background-color: palegreen;
+          color: green;
+        }
+
+        &.fumble {
+          background-color: darkred;
+          color: red;
+        }
+      }
+    }
+
+    .coc7-malfunction {
+      color: red;
+      margin: 0;
+      font-weight: normal;
+      font-size: var(--font-size-15);
+      padding: 5px 0;
+      text-align: center;
+    }
+
+    .coc7-group-actor-roll {
+      gap: 8px;
+      align-items: flex-start;
+      border: 2px solid transparent;
+      padding: 2px;
+
+      &.won {
+        border: 2px groove #daa520;
+      }
+
+      &.tie {
+        border: 2px solid red;
+      }
+
+      &:not(:last-child) {
+        margin: 0 0 8px;
+      }
+
+      div.actor-portrait {
+        flex: 0 0 36px;
+        max-width: 36px;
+        gap: 4px;
+
+        .coc7-card-buttons {
+          padding: 0;
+
+          button {
+            height: calc(var(--button-size) / 1.5);
+            min-height: calc(var(--button-size) / 1.5);
+          }
+        }
+      }
+
+      .roll-header {
+        gap: 0.5rem;
+        align-items: flex-start;
+
+        &:not(:first-child) {
+          margin-top: 0.25rem;
+          padding-top: 0.25rem;
+          border-top: 1px solid #000;
+        }
+
+        .item-controls {
+          flex: 0 0 auto;
+        }
+      }
+    }
+
+    .with-top-gap {
+      margin-top: @6px;
+    }
+
+    .ranged-targets-portraits {
+      padding: @8px 0 0;
+
+      &:not(:has(*)) {
+        padding: 0;
+      }
+
+      img {
+        flex: 0 0 @24px;
+        max-width: @24px;
+        border: 1px solid #ccc;
+        opacity: 0.5;
+
+        &.active {
+          border: 1px solid #000;
+          opacity: 1;
+        }
+      }
+    }
+
+    .ranged-targets-option {
+      &:not(.active) {
+        display: none;
+      }
+    }
+
+    .ranged-damage,
+    .ranged-results,
+    .ranged-shots {
+      border-top: 2px groove #fff;
+      margin-top: @3px;
+      padding-top: @5px;
+    }
+  }
+
+  .coc7-book-gains {
+    margin-top: @8px;
+    gap: 0;
+
+    .coc7-book-gains-header,
+    .coc7-book-gains-row {
+      display: grid;
+      grid-template-columns: 40% auto;
+      gap: @8px;
+      padding: @4px;
+
+      .item-controls {
+        text-align: center;
+      }
+    }
+
+    .coc7-book-gains-header {
+      font-family: var(--investigator-sheet-primary-font);
+      text-transform: uppercase;
+      font-weight: bold;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: @8px @8px 0 0;
+    }
+
+    .coc7-book-gains-row:nth-child(odd) {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .coc7-book-gains-row:nth-child(even) {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .coc7-book-gains-row:last-child {
+      border-radius: 0 0 @8px @8px;
+    }
+
+    &:not(:has(.coc7-book-gains-row)) {
+      .coc7-book-gains-header {
+        border-radius: @8px;
+      }
+    }
+  }
+
+  .coc7-important {
+    color: darkred;
+    text-align: center;
+    font-size: var(--font-size-18);
+    font-weight: bold;
+    padding: @4px;
+  }
+
+  .coc7-status-list {
+    padding-top: @5px;
+    border-top: 2px groove #fff;
+  }
+
+  a.item-control {
+    flex: 0 0 auto;
+  }
+}
+
+.coc7-dropdown-content {
+  position: absolute;
+  right: 10px;
+  gap: 0.4rem;
+  padding: 0.4rem;
+}
+
+div.coc7-button-area {
+  padding: 0 0.5rem;
+  border: 1px solid transparent;
+}
+
+div.coc7-faux-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  min-height: calc(2rem / 1.5);
+  gap: 0.25rem;
+  padding: 0 0.5rem;
+  background: rgba(0 0 0 / 10%);
+  border: 1px solid var(--color-dark-5);
+  border-radius: 4px;
+  color: var(--color-dark-1);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-14);
+  line-height: normal;
+  text-decoration: none;
+}

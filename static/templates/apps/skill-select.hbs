@@ -1,0 +1,13 @@
+<div class="flexcol scrollable" style="gap: 0.375rem;">
+  <div class="item-list flexcol">
+    <label style="flex: 0;white-space: nowrap">{{localize 'CoC7.Chosen'}}: {{selectedCount}}/{{optionsCount}}</label>
+    {{#each skills as |skill|}}
+      <div class="flexrow">
+        <label style="white-space: nowrap">{{skill.name}} ({{skill.system.base}}%)</label>
+        <div class="item-controls" style="flex: 0 0 auto;">
+          {{#unless (lookup ../selected skill.id)}}<a class="item-control" data-action="skill-select" data-id="{{skill.id}}"><i class="fa-regular fa-plus-circle"></i></a>{{/unless}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

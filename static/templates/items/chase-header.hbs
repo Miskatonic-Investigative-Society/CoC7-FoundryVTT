@@ -1,0 +1,36 @@
+<div class="flexrow item-header">
+  <div class="flexrow item-property">
+    {{#unless document.system.started}}
+      <div class="sheet-portrait flexcol">
+        <img class="profile-img" src="{{document.img}}" data-action="editImage" data-edit="img" />
+        <input type="text" name="name" value="{{document.name}}" placeholder="{{localize 'CoC7.Name'}}" />
+      </div>
+    {{/unless}}
+    {{#if activeLocation}}
+      <div class="chase-location flexrow">
+        <a class="item-control" data-action="add-before" data-tooltip="CoC7.InsertLocation"><i class="fa-regular fa-plus-circle"></i></a>
+        <div class="active-location flexcol">
+          <div class="form-group flexrow">
+            <a class="item-control pin-location{{#if activeLocation.hasCoordinates}} locationSet{{/if}}" draggable="true" data-tooltip="{{activeLocation.title}}">
+              <img class="pin-image" src="systems/CoC7/assets/icons/red-pin.svg" />
+              <i class="game-icon game-icon-pin"></i>
+            </a>
+            <a class="{{#if activeLocation.hasCoordinates}}item-control{{else}}item-control-disabled{{/if}}" data-action="ping-location" data-tooltip="CoC7.LocationPing"><i class="fa-solid fa-bullseye-arrow"></i></a>
+            <input class="location-name" type="text" data-set="location-name" value="{{activeLocation.name}}" placeholder="{{localize 'CoC7.Name'}}" />
+            <a class="{{#if document.system.started}}item-control{{else}}item-control-disabled{{/if}}" data-action="add-participant" data-tooltip="CoC7.AddParticipant"><i class="fa-regular fa-user-plus"></i></a>
+            {{#if activeLocation.hasParticipant}}
+              <a class="item-control-disabled" data-tooltip="CoC7.LocationNotEmpty"><i class="fa-regular fa-minus-circle"></i></a>
+            {{else}}
+              <a class="item-control" data-action="remove" data-tooltip="CoC7.RemoveLocation"><i class="fa-regular fa-minus-circle"></i></a>
+            {{/if}}
+          </div>
+          <div class="details flexrow">
+            {{> 'systems/CoC7/templates/items/chase-header-obstacle.hbs' thisLocation=activeLocation hasThisSide=activeLocation.hasPrevious}}
+            {{> 'systems/CoC7/templates/items/chase-header-obstacle.hbs' thisLocation=nextLocation hasThisSide=nextLocation.hasNext}}
+          </div>
+        </div>
+        <a class="item-control" data-action="add-after" data-tooltip="CoC7.InsertLocation"><i class="fa-regular fa-plus-circle"></i></a>
+      </div>
+    {{/if}}
+  </div>
+</div>

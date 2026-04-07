@@ -1,0 +1,204 @@
+.application.coc7.dialog.investigator-wizard {
+  .outer-panel {
+    flex: 1;
+
+    .panel {
+      flex-basis: 0%;
+      flex-grow: 1;
+      min-height: 5rem;
+
+      .era-change {
+        display: none;
+        flex: 1 0 0;
+      }
+
+      i.fa-solid.fa-circle-xmark {
+        color: red;
+      }
+
+      .status-blocks {
+        gap: @4px;
+      }
+
+      .status-block {
+        flex: 0 0 auto;
+
+        .status {
+          border: 1px solid #000;
+          padding: @4px;
+
+          .icon {
+            flex: 0 0 auto;
+            margin-right: 2px;
+          }
+        }
+      }
+
+      .scroll-section {
+        overflow-y: scroll;
+        flex: 1 0 0;
+        gap: @8px;
+
+        textarea.backstory-text {
+          margin: @4px 0;
+          min-height: 6rem;
+        }
+
+        .section-heading {
+          flex: 0 0 auto;
+          border-bottom: 1px dashed rgb(from var(--color-interact) r g b / 0.3);
+          text-transform: none;
+        }
+
+        .skills {
+          gap: @2px;
+
+          .toggle {
+            padding: @2px @4px;
+
+            &:hover {
+              background-color: var(--color-tint);
+            }
+
+            .icon {
+              flex: 0 0 auto;
+              margin-right: 2px;
+            }
+          }
+        }
+
+        .investigator-set {
+          gap: @4px;
+
+          div.photo {
+            flex: 0 0 @100px;
+            border: 1px solid rgb(from var(--color-interact) r g b / 0.3);
+            background-color: var(--color-tint);
+          }
+
+          div.value-set {
+            flex: 2;
+
+            &.select-input {
+              gap: @4px;
+
+              select {
+                height: var(--input-height);
+                min-height: var(--input-height);
+              }
+            }
+
+            input {
+              height: var(--input-height);
+            }
+          }
+        }
+
+        .points-row {
+          border-bottom: 1px solid var(--button-border-color);
+          padding: @4px;
+          gap: @4px;
+
+          &:last-of-type {
+            margin-bottom: @4px;
+          }
+
+          div {
+            line-height: 1;
+          }
+
+          .adjustment-value {
+            flex: 0 0 2.5rem;
+            text-align: center;
+
+            input {
+              text-align: center;
+
+              &:read-only {
+                cursor: default;
+              }
+            }
+          }
+        }
+
+        label {
+          flex: 0.9;
+        }
+
+        .occupation-group {
+          gap: @8px;
+
+          .occupation-skills {
+            gap: @8px;
+          }
+        }
+
+        .quick-fire-values {
+          flex: 1;
+          gap: @4px;
+
+          input {
+            text-align: center;
+          }
+        }
+
+        .place-characteristics {
+          gap: @8px;
+          justify-content: center;
+          margin: 0 3.4rem;
+
+          label {
+            flex-grow: 1;
+            font-weight: bold;
+            text-align: center;
+          }
+
+          div.not-draggable,
+          input.not-draggable,
+          input.draggable {
+            flex: 0 0 5rem;
+            width: 5rem;
+            cursor: initial;
+            text-align: center;
+          }
+
+          input.not-draggable,
+          input.draggable {
+            border: 1px solid #000;
+            background-color: var(--color-tint);
+
+            &[draggable] {
+              cursor: move;
+            }
+          }
+
+          div.item-controls {
+            flex: 0 0 3rem;
+            justify-content: center;
+          }
+
+          div.draggable.characteristic {
+            border: 1px solid #000;
+            background-color: var(--color-tint);
+            flex: 0 0 2rem;
+            margin: 0 @8px;
+
+            div {
+              text-align: center;
+              line-height: @20px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .form-footer {
+    button.no-button {
+      height: 0;
+      min-height: 0;
+      border: 0;
+      margin: 1px;
+    }
+  }
+}

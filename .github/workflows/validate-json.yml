@@ -4,7 +4,7 @@ on:
     branches:
       - develop
     paths:
-      - 'lang/*.json'
+      - 'static/lang/*.json'
 jobs:
   verify-json-validation:
     runs-on: ubuntu-latest
@@ -13,5 +13,5 @@ jobs:
       - name: Validate JSON
         uses: docker://orrosenblatt/validate-json-action:latest
         env:
-          INPUT_SCHEMA: ./lang/en.json
-          INPUT_JSONS: ./lang/cn.json,./lang/cs.json,./lang/de.json,./lang/es.json,./lang/fr.json,./lang/it.json,./lang/ja.json,./lang/ko.json,./lang/pl.json,./lang/pt-BR.json,./lang/ru.json,./lang/sv.json,./lang/uk.json,./lang/zh-TW.json
+          INPUT_SCHEMA: ./static/lang/en.json
+          INPUT_JSONS: ./static/lang/cn.json,./static/lang/cs.json,./static/lang/de.json,./static/lang/es.json,./static/lang/fr.json,./static/lang/it.json,./static/lang/ja.json,./static/lang/ko.json,./static/lang/pl.json,./static/lang/pt-BR.json,./static/lang/ru.json,./static/lang/sv.json,./static/lang/uk.json,./static/lang/zh-TW.json

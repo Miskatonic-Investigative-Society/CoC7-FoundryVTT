@@ -1,0 +1,57 @@
+<div class="flexcol" style="gap: 0.375rem;">
+  {{#unless isExisting}}
+    <div>{{localize 'CoC7.ParticipantDropHint'}}</div>
+  {{/unless}}
+  <div class="chase-actor-header flexrow">
+    {{#if actor}}
+      <img class="photo chase-token" src="{{actor.img}}" /></a>
+    {{else}}
+      <a class="photo chase-token" draggable="true"><i class="fa-solid fa-circle-question"></i></a>
+    {{/if}}
+    {{#if participant.chaser}}
+      <a class="item-control food-chain chaser" data-action="toggleChaser"><i class="game-icon game-icon-moon-claws"></i></a>
+    {{else}}
+      <a class="item-control food-chain prey" data-action="toggleChaser"><i class="fa-solid fa-running"></i></a>
+    {{/if}}
+    {{#if actor}}
+      <div class="actor-name">{{actor.name}}</div>
+    {{else}}
+      <div class="actor-name"><input type="text" name="participant.name" value="{{participant.name}}" placeholder="{{localize 'CoC7.Name'}}"></div>
+    {{/if}}
+    <a class="item-control" data-action="resetParticipant"><i class="fa-regular fa-minus-circle"></i></a>
+  </div>
+  <div class="form-group chase-triple">
+    <label>{{localize 'CoC7.Initiative'}}</label>
+    <select class="name" name="participant.initiative">
+      {{selectOptions listOptions selected=participant.initiative localize=false valueAttr='name' labelAttr='name'}}
+    </select>
+    <input class="right-text" type="text"{{#if initReadOnly}} readonly{{else}} name="participant.dex"{{/if}} value="{{participant.dex}}" />
+  </div>
+  <div class="form-group chase-triple">
+    <label>{{localize 'CoC7.SpeedCheck'}}</label>
+    <select class="name" name="participant.speedCheck.name">
+      {{selectOptions listOptions selected=participant.speedCheck.name localize=false valueAttr='name' labelAttr='name'}}
+    </select>
+    <input class="right-text" type="text"{{#if speedCheckReadOnly}} readonly{{else}} name="participant.speedCheck.score"{{/if}} value="{{participant.speedCheck.score}}" />
+  </div>
+  <div class="form-group chase-triple">
+    <label>{{localize 'CoC7.Movement'}}</label>
+    <div class="name"></div>
+    <input class="right-text" type="text" name="participant.mov" value="{{participant.mov}}" />
+  </div>
+
+  <div class="chase-separator"></div>
+
+  <div class="form-group chase-double">
+    <div class="group-label flexrow">
+      <label>{{localize 'CoC7.AdjustedMovement'}}</label>
+      {{#if participant.rolledSpeedCheck}}
+        <div class="inline-roll-data{{#if runSpeedCheck.isCritical}} critical{{else if runSpeedCheck.isFumble}} fumble{{else if runSpeedCheck.isRegularFailure}} failure{{else if runSpeedCheck.isSuccess}} success{{/if}}" data-tooltip="{{runSpeedCheck.tooltip}}" data-tooltip-class="coc7-wider-tooltip"><i class="game-icon game-icon-d10"></i> {{runSpeedCheck.value}}</div>
+      {{/if}}
+      {{#if participant.rollableSpeedCheck}}
+        <a class="item-control" data-action="rollSpeedCheck"><i class="game-icon game-icon-d10"></i></a>
+      {{/if}}
+    </div>
+    <input class="right-text" type="text" value="{{participant.adjustedMov}}" readonly />
+  </div>
+</div>

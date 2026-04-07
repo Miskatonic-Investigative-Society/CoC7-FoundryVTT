@@ -1,0 +1,50 @@
+<ul class="item-list effects-list">
+  {{#each effects as |category sid|}}
+    {{#unless category.hidden}}
+      <li class="item items-header" data-effect-type="{{category.type}}">
+        <h3 class="section-heading effect-name">{{localize category.label}}</h3>
+        <div class="effect-source">{{localize 'CoC7.Source'}}</div>
+        <div class="effect-duration">{{localize 'CoC7.Duration'}}</div>
+        <div class="item-controls effect-controls">
+          {{#if @root.editable}}
+            <a class="item-control effect-control" data-action="create" data-tooltip="CoC7.Create">
+              <i class="fa-regular fa-plus-circle"></i> {{localize 'CoC7.Add'}}
+            </a>
+          {{/if}}
+        </div>
+      </li>
+      {{#if category.info}}
+        <li>
+          <ul class="info">
+            {{#each category.info}}
+              <li class="notification info">{{this}}</li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/if}}
+      {{#each category.effects as |effect|}}
+        <li class="item effect" data-effect-id="{{effect.id}}">
+          <div class="effect-identifier">
+            <div class="item-image" style="background-image: url('{{effect.img}}')"></div>
+            <h4 class="item-name effect-name">{{effect.name}}</h4>
+          </div>
+          <div class="effect-source">{{effect.sourceName}}</div>
+          <div class="effect-duration">{{effect.duration.label}}</div>
+          <div class="item-controls effect-controls">
+            {{#if @root.editable}}
+              <a class="item-control effect-control" data-action="toggle" data-tooltip="{{#if effect.disabled}}CoC7.Enable{{else}}CoC7.Disable{{/if}}">
+                <i class="fa-solid{{#if effect.disabled}} fa-check{{else}} fa-times{{/if}}"></i>
+              </a>
+              <a class="item-control effect-control" data-action="edit" data-tooltip="CoC7.Edit">
+                <i class="fa-solid fa-edit"></i>
+              </a>
+              <a class="item-control effect-control" data-action="delete" data-tooltip="CoC7.Delete">
+                <i class="fa-solid fa-trash"></i>
+              </a>
+            {{/if}}
+          </div>
+        </li>
+      {{/each}}
+    {{/unless}}
+  {{/each}}
+</ul>

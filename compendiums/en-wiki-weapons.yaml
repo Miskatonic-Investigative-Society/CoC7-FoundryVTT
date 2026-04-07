@@ -64,7 +64,7 @@ system:
     normal:
       damage: '1D3+1'
   properties:
-    melee: true
+    rngd: false
     addb: true
 flags:
   CoC7:
@@ -107,7 +107,7 @@ system:
     normal:
       damage: '1D6'
   properties:
-    melee: true
+    rngd: false
     burn: true
 flags:
   CoC7:
@@ -128,7 +128,7 @@ system:
     normal:
       damage: '1D8'
   properties:
-    melee: true
+    rngd: false
     addb: true
 flags:
   CoC7:
@@ -149,7 +149,7 @@ system:
     normal:
       damage: '1D8'
   properties:
-    melee: true
+    rngd: false
     addb: true
 flags:
   CoC7:
@@ -170,7 +170,7 @@ system:
     normal:
       damage: '1D6'
   properties:
-    melee: true
+    rngd: false
     addb: true
 flags:
   CoC7:
@@ -217,7 +217,7 @@ system:
     normal:
       damage: '1D6'
   properties:
-    melee: true
+    rngd: false
     addb: true
 flags:
   CoC7:
@@ -238,7 +238,7 @@ system:
     normal:
       damage: '1D6+1'
   properties:
-    melee: true
+    rngd: false
     addb: true
 flags:
   CoC7:
@@ -259,7 +259,7 @@ system:
     normal:
       damage: '1D8'
   properties:
-    melee: true
+    rngd: false
     addb: true
 flags:
   CoC7:
@@ -280,7 +280,7 @@ system:
     normal:
       damage: '1D4+2'
   properties:
-    melee: true
+    rngd: false
     addb: true
 flags:
   CoC7:
@@ -301,7 +301,7 @@ system:
     normal:
       damage: '1D4'
   properties:
-    melee: true
+    rngd: false
     addb: true
 flags:
   CoC7:
@@ -322,7 +322,7 @@ system:
     normal:
       damage: '1D8'
   properties:
-    melee: true
+    rngd: false
     addb: true
 flags:
   CoC7:
@@ -338,7 +338,7 @@ folder: 2r5xD2GY15lSTtEm
 system:
   skill:
     main:
-      name: 'i.skill.fighting-throw'
+      name: 'i.skill.throw'
   range:
     normal:
       value: '@STR/5'
@@ -360,7 +360,7 @@ folder: 2r5xD2GY15lSTtEm
 system:
   skill:
     main:
-      name: 'i.skill.fighting-throw'
+      name: 'i.skill.throw'
   range:
     normal:
       value: '@STR/5'
@@ -390,7 +390,7 @@ system:
     normal:
       damage: '1D8+1'
   properties:
-    melee: true
+    rngd: false
 flags:
   CoC7:
     cocidFlag:
@@ -405,7 +405,7 @@ folder: 2r5xD2GY15lSTtEm
 system:
   skill:
     main:
-      name: 'i.skill.fighting-throw'
+      name: 'i.skill.throw'
   range:
     normal:
       value: '@STR/5'

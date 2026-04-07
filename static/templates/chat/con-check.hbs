@@ -1,0 +1,10 @@
+<div>
+  {{#if isRolled}}
+    {{~> 'systems/CoC7/templates/chat/roll-result.hbs' checkRevealed=true}}
+  {{else}}
+    <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{actorUuid}}">
+      <button data-action="rollConCheck">{{localize 'CoC7.ConstitutionCheck'}} ({{actorCon}}%)</button>
+    </div>
+  {{/if}}
+</div>
+{{#if (eq @root.foundryGeneration 13)}}<div class="never-expand" data-action="expandRoll"></div>{{/if}}

@@ -1,0 +1,241 @@
+<div class="flexcol">
+  <div class="link-header flexcol">
+    <div class="form-group">
+      <label>{{localize 'CoC7.Type'}}:</label>
+      <div class="form-fields">
+        <select name="check">
+          {{selectOptions checkType selected=link.check valueAttr='key' labelAttr='label'}}
+        </select>
+      </div>
+    </div>
+    {{#if (eq link.check checkTypes.CHECK)}}
+      <div class="form-group">
+        <label>{{localize 'CoC7.Check'}}:</label>
+        <div class="form-fields">
+          <select name="subtype">
+            {{selectOptions linkType selected=link.subtype valueAttr='key' labelAttr='label'}}
+          </select>
+        </div>
+      </div>
+      {{#if (eq link.subtype linkTypes.CHARACTERISTIC)}}
+        <div class="form-group">
+          <label>{{localize 'CoC7.Characteristic'}}:</label>
+          <div class="form-fields">
+            <select name="characteristicName">
+              {{selectOptions characteristicType selected=other.characteristicName valueAttr='key' labelAttr='label'}}
+            </select>
+          </div>
+        </div>
+      {{else if (eq link.subtype linkTypes.ATTRIBUTE)}}
+        <div class="form-group">
+          <label>{{localize 'CoC7.Attribute'}}:</label>
+          <div class="form-fields">
+            <select name="attributeName">
+              {{selectOptions attributeType selected=other.attributeName valueAttr='key' labelAttr='label'}}
+            </select>
+          </div>
+        </div>
+      {{else if (eq link.subtype linkTypes.SKILL)}}
+        <div class="form-group">
+          <label>{{localize 'CoC7.Name'}}:</label>
+          <div class="form-fields">
+            <input type="text" name="skillName" value="{{other.skillName}}" required="required" />
+          </div>
+        </div>
+      {{/if}}
+    {{else if (eq link.check checkTypes.ITEM)}}
+      <div class="form-group">
+        <label>{{localize 'CoC7.Name'}}:</label>
+        <div class="form-fields">
+          <input type="text" name="itemName" value="{{other.itemName}}" required="required" />
+        </div>
+      </div>
+    {{else if (eq link.check checkTypes.SANLOSS)}}
+      <div class="form-group">
+        <label>{{localize 'CoC7.MinSanloss'}}:</label>
+        <div class="form-fields">
+          <input type="text" name="sanMin" value="{{link.sanMin}}" required="required" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CoC7.MaxSanloss'}}:</label>
+        <div class="form-fields">
+          <input type="text" name="sanMax" value="{{link.sanMax}}" required="required" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CoC7.SanityLossTypeReason'}}:</label>
+        <div class="form-fields">
+          <input type="text" name="sanReason" value="{{link.sanReason}}" />
+        </div>
+      </div>
+    {{else if (eq link.check checkTypes.EFFECT)}}
+      <div class="form-group">
+        <label>{{localize 'CoC7.Name'}}:</label>
+        <div class="form-fields">
+          <input type="text" name="object.name" value="{{link.object.name}}" required="required" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CoC7.Icon'}}:</label>
+        <div class="form-fields">
+          <file-picker name="object.img" type="image" value="{{link.object.img}}"></file-picker>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CoC7.Label'}}:</label>
+        <div class="form-fields">
+          <input type="text" name="label" value="{{link.label}}" />
+        </div>
+      </div>
+    {{/if}}
+  </div>
+  {{#if (eq link.check checkTypes.EFFECT)}}
+    <nav class="sheet-tabs tabs" aria-role="{{localize 'SHEETS.FormNavLabel'}}">
+      {{#each tabs as |tab|}}
+        <a class="{{tab.cssClass}}" data-action="tab" data-group="{{tab.group}}" data-tab="{{tab.id}}">
+          <i class="{{tab.icon}}"></i>
+          <label>{{localize tab.label}}</label>
+        </a>
+      {{/each}}
+    </nav>
+    <section class="tab flexcol {{#if (eq 'details' tabsPrimary)}} active{{/if}}" data-group="primary" data-tab="details" data-application-part="details">
+      {{formGroup fields.tint value=link.object.tint rootId=rootId placeholder="#ffffff"}}
+      {{formGroup fields.description value=link.object.description rootId=rootId}}
+      {{formGroup fields.disabled value=link.object.disabled rootId=rootId}}
+      {{formGroup fields.statuses value=link.object.statuses options=statuses rootId=rootId classes="statuses"}}
+    </section>
+    <section class="tab flexcol {{#if (eq 'duration' tabsPrimary)}} active{{/if}}" data-group="primary" data-tab="duration" data-application-part="duration">
+      <fieldset>
+        {{formGroup fields.duration.fields.seconds value=link.object.duration.seconds rootId=rootId}}
+        {{formGroup fields.duration.fields.startTime value=link.object.duration.startTime rootId=rootId}}
+      </fieldset>
+      <fieldset>
+        <div class="form-group">
+          <label>{{localize "EFFECT.DurationTurns"}}</label>
+          <div class="form-fields">
+            <label for="{{rootId}}-duration.rounds">{{fields.duration.fields.rounds.label}}</label>
+            {{formInput fields.duration.fields.rounds value=link.object.duration.rounds id=(concat rootId "-duration.rounds")}}
+            <label for="{{rootId}}-duration.turns">{{fields.duration.fields.turns.label}}</label>
+            {{formInput fields.duration.fields.turns value=link.object.duration.turns id=(concat rootId "-duration.turns")}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label>{{localize "EFFECT.StartTurns"}}</label>
+          <div class="form-fields">
+            <label for="{{rootId}}-duration.startRound">{{fields.duration.fields.startRound.label}}</label>
+            {{formInput fields.duration.fields.startRound value=link.object.duration.startRound id=(concat rootId "-duration.startRound")}}
+            <label for="{{rootId}}-duration.startTurn">{{fields.duration.fields.startTurn.label}}</label>
+            {{formInput fields.duration.fields.startTurn value=link.object.duration.startTurn id=(concat rootId "-duration.startTurn")}}
+          </div>
+        </div>
+      </fieldset>
+    </section>
+    <section class="tab flexcol changes{{#if (eq 'effects' tabsPrimary)}} active{{/if}}" data-group="primary" data-tab="effects" data-application-part="effects">
+      <header>
+        <div class="key">{{localize "EFFECT.ChangeKey"}}</div>
+        <div class="mode">{{localize "EFFECT.ChangeMode"}}</div>
+        <div class="value">{{localize "EFFECT.ChangeValue"}}</div>
+        {{#unless noPriority}}
+          <div class="priority">{{localize "EFFECT.ChangePriority"}}</div>
+        {{/unless}}
+        <div class="controls">
+          <button type="button" class="inline-control icon fa-regular fa-square-plus" data-action="addChange"></button>
+        </div>
+      </header>
+      <ol class="scrollable" data-changes>
+        {{#each link.object.changes as |change i|}}
+          {{#with ../fields.changes.element.fields as |changeFields|}}
+            <li data-index="{{i}}">
+              <div class="key">
+                {{formInput changeFields.key name=(concat "changes." i ".key") value=change.key}}
+              </div>
+              <div class="mode">
+                {{formInput changeFields.mode name=(concat "changes." i ".mode") value=change.mode choices=@root.modes}}
+              </div>
+              <div class="value">
+                {{formInput changeFields.value name=(concat "changes." i ".value") value=change.value}}
+              </div>
+              {{#unless ../../noPriority}}
+                <div class="priority">
+                  {{formInput changeFields.priority name=(concat "changes." i ".priority") value=change.priority placeholder=(lookup ../../priorities change.mode)}}
+                </div>
+              {{/unless}}
+              <div class="controls">
+                <button type="button" class="inline-control icon fa-solid fa-trash" data-action="deleteChange"></button>
+              </div>
+            </li>
+          {{/with}}
+        {{/each}}
+      </ol>
+    </section>
+  {{else}}
+    <fieldset class="link-body flexcol">
+      <div class="toggle-row flexrow">
+        <div class="toggle-attributes flexrow">
+          {{#each modifiers as |row|}}
+            <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}}>{{localize row.name}}</button>
+          {{/each}}
+        </div>
+      </div>
+      {{#if other.difficulty}}
+        <div class="form-group">
+          <label>{{localize 'CoC7.Check'}}:</label>
+          <div class="form-fields">
+            <select name="difficulty">
+              {{selectOptions rollDifficulties selected=link.difficulty localize=true valueAttr='key' labelAttr='label'}}
+            </select>
+          </div>
+        </div>
+      {{/if}}
+      {{#if other.poolModifier}}
+        <div class="form-group bonus-penalty-selector">
+          <label>{{localize 'CoC7.BonusDice'}}</label>
+          <div class="form-fields">
+            <div class="bonus-penalty-box" style="padding: 0.5rem">
+              <div class="flexrow bonus-penalty-labels">
+                <span class="double-penalty"><i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i></span>
+                <span class="penalty"><i class="fa-solid fa-dice-d10"></i></span>
+                <span class="normal-roll"><i class="fa-solid fa-dice-d10"></i></span>
+                <span class="bonus"><i class="fa-solid fa-dice-d10"></i></span>
+                <span class="double-bonus"><i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i></span>
+              </div>
+              <div class="flexrow bonus-penalty-labels">
+                <span class="double-penalty">-2</span>
+                <span class="penalty">-1</span>
+                <span class="normal-roll">0</span>
+                <span class="bonus">+1</span>
+                <span class="double-bonus">+2</span>
+              </div>
+              <input type="range" name="poolModifier" min="-2" max="2" value="{{link.poolModifier}}" style="height: 0.5rem">
+            </div>
+          </div>
+        </div>
+      {{/if}}
+      {{#if other.label}}
+        <div class="form-group">
+          <label>{{localize 'CoC7.Label'}}:</label>
+          <div class="form-fields">
+            <input type="text" name="label" value="{{link.label}}" required="required" />
+          </div>
+        </div>
+      {{/if}}
+      {{#if other.icon}}
+        <div class="form-group">
+          <label>{{localize 'CoC7.Icon'}}:</label>
+          <div class="form-fields">
+            <input type="text" name="icon" value="{{link.icon}}" />
+          </div>
+        </div>
+      {{/if}}
+    </fieldset>
+  {{/if}}
+  <div class="link-buttons flexcol">
+    <button class="submit-button" type="submit" data-action="clipboard"><i class="fa-solid fa-clipboard"></i>{{localize 'CoC7.CopyToClipboard'}}</button>
+    <button class="submit-button" type="submit" data-action="whisper-selected"><i class="fa-regular fa-object-group"></i>{{localize 'CoC7.WhisperToSelection'}}</button>
+    {{#if actorNames}}
+      <button class="submit-button" type="submit" data-action="whisper-owner"><i class="fa-solid fa-user"></i>{{localize 'CoC7.WhisperTo'}}: {{actorNames}}</button>
+    {{/if}}
+    <button class="submit-button" type="submit" data-action="chat"><i class="fa-solid fa-comments"></i>{{localize 'CoC7.SendToChat'}}</button>
+  </div>
+</div>

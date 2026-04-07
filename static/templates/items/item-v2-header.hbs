@@ -1,0 +1,22 @@
+<div class="flexrow item-header">
+  <div class="flexcol item-property">
+    <div class="flexrow">
+      <input class="large" type="text" name="name" value="{{document.name}}" placeholder="{{localize 'CoC7.Name'}}" />
+    </div>
+    <div class="flexrow">
+      <div class="flexrow">
+        <label>{{localize 'CoC7.ItemQuantity'}}</label>
+        <input class="small" type="text" name="system.quantity" value="{{document.system.quantity}}" />
+      </div>
+      <div class="flexrow">
+        <label>{{localize 'CoC7.ItemWeight'}}</label>
+        <input class="small" type="text" name="system.weight" value="{{document.system.weight}}" />
+      </div>
+      <div class="flexrow">
+        <label>{{localize 'CoC7.ItemPrice'}}</label>
+        <input type="text" {{#unless document.isEmbedded}}class="text-only" {{/unless}} value="{{lookup document.system.price worldEra}}" placeholder="0" readonly="readonly" />
+      </div>
+    </div>
+  </div>
+  <img class="profile-img small" src="{{document.img}}" data-action="editImage" data-edit="img" />
+</div>

@@ -1,0 +1,16 @@
+<div class="photo-frame">
+  <img class="photo{{#unless document.system.flags.locked}} portrait-frame{{/unless}}" src="{{document.img}}" data-tooltip="{{document.name}}" {{#if document.system.flags.locked}} data-action="editImage" data-edit="img" {{/if}} style="filter: saturate({{imgSaturation}});{{#if portraitFrame}}object-fit: {{portraitFrame}}{{/if}}" />
+  <div class="conditions">
+    <div class="item-control icon fallen{{#if document.system.conditions.prone.value}} status-on{{/if}}" data-tooltip="CoC7.Prone" data-action="condition" data-condition="prone"><i class="game-icon game-icon-falling"></i></div>
+    <div class="item-control icon unconscious{{#if document.system.conditions.unconscious.value}} status-on{{/if}}" data-tooltip="CoC7.Unconscious" data-action="condition" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars"></i></div>
+    <div class="item-control icon injured{{#if document.system.conditions.criticalWounds.value}} status-on{{/if}}" data-tooltip="CoC7.CriticalWounds" data-action="condition" data-condition="criticalWounds"><i class="game-icon game-icon-arm-sling"></i></div>
+    <div class="item-control icon dying{{#if document.system.conditions.dying.value}} status-on{{/if}}" data-tooltip="CoC7.Dying" data-action="condition" data-condition="dying"><i class="game-icon game-icon-heart-beats"></i></div>
+    <div class="item-control icon bout-of-madness{{#if document.system.conditions.tempoInsane.value}} status-on{{/if}}" data-tooltip="{{localize 'CoC7.BoutOfMadness'}}{{#if document.getTempoInsaneDurationText}}: {{document.getTempoInsaneDurationText}}{{/if}}" data-action="condition" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></div>
+    <div class="item-control icon indefinite-insanity{{#if document.system.conditions.indefInsane.value}} status-on{{/if}}" data-tooltip="{{#if document.system.conditions.indefInsane.value}}CoC7.UnderlyingInsanity{{else}}CoC7.IndefiniteInsanity{{/if}}" data-action="condition" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></div>
+    {{#if document.system.conditions.dead.value}}
+      <div class="item-control icon dead status-on" data-tooltip="CoC7.Dead" data-action="condition" data-condition="dead"><i class="game-icon game-icon-tombstone"></i></div>
+    {{else}}
+      <div class="icon dead{{#if document.system.conditions.dying.value}} item-control dying-check{{else}} inactive-status{{/if}}" data-action="dying-check" data-tooltip="{{#if document.system.conditions.dying.value}}CoC7.DyingCheck{{/if}}"><i class="game-icon game-icon-d10"></i></div>
+    {{/if}}
+  </div>
+</div>
