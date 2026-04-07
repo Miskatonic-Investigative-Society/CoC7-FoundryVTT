@@ -39,6 +39,7 @@ For a full list of changes checkout the [changelog](https://github.com/Miskatoni
 - [Call of Cthulhu® - Quick-Start Rules](https://foundryvtt.com/packages/cha-coc-fvtt-en-quickstart) - Contains The Haunting scenario and a beginner guide to FoundryVTT and Call of Cthulhu 7th edition.
 - [Call of Cthulhu® - FoundryVTT - Investigator Wizard](https://foundryvtt.com/packages/call-of-cthulhu-foundryvtt-investigator-wizard) - Released with permission from Chaosium contains archetypes, occupations, setups, and skills for use with the Investigator Creation Wizard.
 - [Call of Cthulhu® - Core Content](https://foundryvtt.com/packages/cha-coc-fvtt-en-keeperitems) - The Core Content package contains everything you need to play Call of Cthulhu on Foundry including lethal weapons, forbidden tomes, arcane spells, eldritch horrors, and more!
+- [Call of Cthulhu® - No Time To Scream](https://foundryvtt.com/packages/cha-coc-fvtt-en-notimetoscream) - No Time to Scream contains three short-play scenarios for Call of Cthulhu. Each scenario is perfect for a single evening of mystery and horror, and are designed to be played in around two hours. Each scenario includes four pre-generated investigators, along with full-color maps and handouts.
 
 # Overview sections below
 
