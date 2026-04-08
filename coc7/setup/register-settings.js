@@ -631,16 +631,5 @@ export default function () {
     }
   })
 
-  // Attempt to fix bad setting
-  if (game.settings.get(FOLDER_ID, 'InvestigatorWizardChooseValues') !== true && game.settings.get(FOLDER_ID, 'InvestigatorWizardChooseValues') !== false) {
-    game.settings.set(FOLDER_ID, 'InvestigatorWizardChooseValues', game.settings.get(FOLDER_ID, 'InvestigatorWizardChooseValues')[0] ?? false)
-  }
-  // Migrate Bout Of Madness Tables from ID to UUID
-  if (game.settings.get(FOLDER_ID, 'boutOfMadnessSummaryTable') !== 'none' && game.settings.get(FOLDER_ID, 'boutOfMadnessSummaryTable').indexOf('.') === -1) {
-    game.settings.set(FOLDER_ID, 'boutOfMadnessSummaryTable', 'RollTable.' + game.settings.get(FOLDER_ID, 'boutOfMadnessSummaryTable'))
-  }
-  if (game.settings.get(FOLDER_ID, 'boutOfMadnessRealTimeTable') !== 'none' && game.settings.get(FOLDER_ID, 'boutOfMadnessRealTimeTable').indexOf('.') === -1) {
-    game.settings.set(FOLDER_ID, 'boutOfMadnessRealTimeTable', 'RollTable.' + game.settings.get(FOLDER_ID, 'boutOfMadnessRealTimeTable'))
-  }
   CONFIG.debug.hooks = !!game.settings.get(FOLDER_ID, 'debugmode')
 }

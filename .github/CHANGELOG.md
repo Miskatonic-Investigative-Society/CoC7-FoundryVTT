@@ -10,6 +10,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Fix NPC weapon damage from sheet with only normal range
+- Fix unable to update incorrect world settings until world is ready
 
 ## Version 8.1
 
