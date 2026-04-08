@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix NPC weapon damage from sheet with only normal range
+
 ## Version 8.1
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
