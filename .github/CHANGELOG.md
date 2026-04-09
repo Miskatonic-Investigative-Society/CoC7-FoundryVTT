@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix NPC weapon damage from sheet with only normal range
+- Fix unable to update incorrect world settings until world is ready
+- Fix weapon FoundryVTT dataModel errors for non numbers in malfunction and ammo
+
 ## Version 8.1
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

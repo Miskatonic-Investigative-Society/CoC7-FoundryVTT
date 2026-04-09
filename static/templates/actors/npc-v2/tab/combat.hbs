@@ -15,13 +15,15 @@
           {{#if weapon.system.properties.rngd}}
             {{#if weapon.system.properties.shotgun}}
               {{#each weapon.system.range as |range key|}}
-                <div class="weapon-damage">
-                  <div class="item-control clickable" data-action="weapon-damage" data-range="{{key}}" data-tooltip="{{localize 'CoC7.RollDamageRange' range=range.value}}"><i class="fa-solid fa-dice-d20"></i> {{range.damage}}</div>
-                </div>
+                {{#if range.value}}
+                  <div class="weapon-damage">
+                    <div class="item-control clickable" data-action="weapon-damage" data-range="{{key}}" data-tooltip="{{localize 'CoC7.RollDamageRange' range=range.value}}"><i class="fa-solid fa-dice-d20"></i> {{range.damage}}</div>
+                  </div>
+                {{/if}}
               {{/each}}
             {{else}}
               <div class="weapon-damage">
-                <div class="item-control clickable" data-action="weapon-damage" data-tooltip="{{localize 'CoC7.RollDamageRange' range=weapon.system.range.normal.value}}"><i class="fa-solid fa-dice-d20"></i> {{weapon.system.range.normal.damage}}</div>
+                <div class="item-control clickable" data-action="weapon-damage" data-range="normal" data-tooltip="{{localize 'CoC7.RollDamageRange' range=weapon.system.range.normal.value}}"><i class="fa-solid fa-dice-d20"></i> {{weapon.system.range.normal.damage}}</div>
               </div>
             {{/if}}
             <div class="weapon-controls flexrow">
@@ -34,7 +36,7 @@
             </div>
           {{else}}
             <div class="weapon-damage">
-              <div class="item-control clickable" data-action="weapon-damage" data-tooltip="CoC7.Weapon.Property.Melee"><i class="fa-solid fa-dice-d20"></i> {{weapon.system.range.normal.damage}}</div>
+              <div class="item-control clickable" data-action="weapon-damage" data-range="normal" data-tooltip="CoC7.Weapon.Property.Melee"><i class="fa-solid fa-dice-d20"></i> {{weapon.system.range.normal.damage}}</div>
             </div>
           {{/if}}
           <div class="coc7-tags">

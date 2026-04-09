@@ -479,9 +479,12 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
    * @returns {object}
    */
   static migrateData (source) {
-    // Empty string becomes 0
-    if (source.malfunction === '') {
+    // If not a number set malfunction to null
+    if (source.malfunction === '' || (typeof source.malfunction === 'string' && isNaN(source.malfunction))) {
       foundry.utils.setProperty(source, 'malfunction', null)
+    }
+    if (source.ammo === '' || (typeof source.ammo === 'string' && isNaN(source.ammo))) {
+      foundry.utils.setProperty(source, 'ammo', 0)
     }
     // Migrate description to object
     if (typeof source.description === 'string') {
