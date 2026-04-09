@@ -227,7 +227,7 @@
   "CoC7.RollDifficultyImpossible": "Omöjlig",
   "CoC7.RollDifficultyImpossibleTitle": "Omöjlig svårighetsgrad",
   "CoC7.RollResult.LuckSpendText": "{luckAmount} turpoäng använda, {successLevel} framgång",
-  "CoC7.RollDice": "Slål !",
+  "CoC7.RollDice": "Slå!",
   "CoC7.CreateLink": "Skapa länk",
   "CoC7.SuccesLevelHint": "{value} nivå(er) av framgång",
   "CoC7.FailureLevelHint": "Misslyckades med {value} nivå(er)",
