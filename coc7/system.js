@@ -14,6 +14,7 @@ import CoC7DrawNote from './hooks/draw-note.js'
 import CoC7DropActorSheetData from './hooks/drop-actor-sheet-data.js'
 import CoC7DropCanvasData from './hooks/drop-canvas-data.js'
 import CoC7GetChatMessageContextOptions from './hooks/get-chat-message-context-options.js'
+import CoC7GetProseMirrorMenuDropDowns from './hooks/get-prose-mirror-menu-drop-downs.js'
 import CoC7GetSceneControlButtons from './hooks/get-scene-control-buttons.js'
 import CoC7HotbarDrop from './hooks/hotbar-drop.js'
 import CoC7Init from './hooks/init.js'
@@ -62,6 +63,7 @@ Hooks.on('drawNote', CoC7DrawNote)
 Hooks.on('dropActorSheetData', CoC7DropActorSheetData)
 Hooks.on('dropCanvasData', CoC7DropCanvasData)
 Hooks.on('getChatMessageContextOptions', CoC7GetChatMessageContextOptions)
+Hooks.on('getProseMirrorMenuDropDowns', CoC7GetProseMirrorMenuDropDowns)
 Hooks.on('getSceneControlButtons', CoC7GetSceneControlButtons)
 Hooks.on('hotbarDrop', CoC7HotbarDrop)
 Hooks.on('preCreateChatMessage', CoC7PreCreateChatMessage)

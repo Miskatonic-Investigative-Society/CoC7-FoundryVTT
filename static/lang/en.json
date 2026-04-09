@@ -1620,5 +1620,6 @@
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerRegionUuids.Title": "Trigger This Region",
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerRegionUuids.Hint": "",
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Title": "With A Button Click",
-  "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Hint": ""
+  "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Hint": "",
+  "CoC7.EDITOR.DropCap": "Paragraph Drop Cap"
 }
