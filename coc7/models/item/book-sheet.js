@@ -68,7 +68,7 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
         label: 'CoC7.Details'
       }
     }
-    if ((context.document.system.type.mythos || context.document.system.type.occult) && (game.user.isGM || context.document.initialReading)) {
+    if ((context.document.system.type.mythos || context.document.system.type.occult) && (game.user.isGM || (knownBook?.initialReading ?? false))) {
       tabs.spells = {
         icon: '',
         label: 'CoC7.Spells'

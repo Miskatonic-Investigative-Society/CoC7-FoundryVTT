@@ -438,7 +438,7 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
    */
   async updateRoll (check) {
     if (check.isSuccess) {
-      if (this.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)) {
+      if (this.parent.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)) {
         switch (check.callbackContext) {
           case 'attemptInitialReading':
             await this.grantInitialReading()
