@@ -82,7 +82,7 @@
         <div class="combat-toggle toggle-row flexrow">
           <div class="toggle-attributes flexrow" data-set="properties">
             {{#each ../_properties as |row|}}
-              <button class="toggle-switch{{#if (lookup weapon.system.properties row.id)}} switched-on{{/if}}" data-apply-to="item" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+              <button class="toggle-switch{{#if (eq row.id 'melee')}}{{#if (not weapon.system.properties.rngd)}} switched-on{{/if}}{{else if (lookup weapon.system.properties row.id)}} switched-on{{/if}}" data-apply-to="item" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
             {{/each}}
           </div>
         </div>

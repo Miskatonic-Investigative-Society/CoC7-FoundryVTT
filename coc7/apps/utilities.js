@@ -712,12 +712,18 @@ export default class CoC7Utilities {
       let existing = []
       switch (source.substring(o, o + 1)) {
         case 'i':
+          existing = game.items.filter(doc => doc.type === type && checkList.includes(doc.flags?.[FOLDER_ID]?.cocidFlag?.id.toLocaleLowerCase()))
+          for (const item of existing) {
+            if (typeof foundItems[item.flags[FOLDER_ID].cocidFlag.id] === 'undefined') {
+              foundItems[item.flags[FOLDER_ID].cocidFlag.id] = item
+            }
+          }
           existing = game.items.filter(doc => doc.type === type && checkList.includes(doc.name.toLocaleLowerCase()))
           for (const item of existing) {
             const name = item.name.toLocaleLowerCase()
             if (typeof foundItems[name] === 'undefined') {
               foundItems[name] = item
-            } else if (typeof foundItems[name].flags?.CoC7?.cocidFlag?.id === 'undefined' && typeof item.flags?.CoC7?.cocidFlag?.id === 'string') {
+            } else if (typeof foundItems[name].flags?.[FOLDER_ID]?.cocidFlag?.id === 'undefined' && typeof item.flags?.[FOLDER_ID]?.cocidFlag?.id === 'string') {
               foundItems[name] = item
             }
           }
@@ -728,12 +734,18 @@ export default class CoC7Utilities {
           for (const pack of game.packs) {
             if (pack.metadata.type === 'Item' && ['wworld', 'ssystem', 'mmodule'].includes(source[o] + pack.metadata.packageType)) { // cspell:disable-line
               const documents = await pack.getDocuments()
+              existing = documents.filter(doc => doc.type === type && checkList.includes(doc.flags?.[FOLDER_ID]?.cocidFlag?.id.toLocaleLowerCase()))
+              for (const item of existing) {
+                if (typeof foundItems[item.flags[FOLDER_ID].cocidFlag.id] === 'undefined') {
+                  foundItems[item.flags[FOLDER_ID].cocidFlag.id] = item
+                }
+              }
               existing = documents.filter(doc => doc.type === type && checkList.includes(doc.name.toLocaleLowerCase()))
               for (const item of existing) {
                 const name = item.name.toLocaleLowerCase()
                 if (typeof foundItems[name] === 'undefined') {
                   foundItems[name] = item
-                } else if (typeof foundItems[name].flags?.CoC7?.cocidFlag?.id === 'undefined' && typeof item.flags?.CoC7?.cocidFlag?.id === 'string') {
+                } else if (typeof foundItems[name].flags?.[FOLDER_ID]?.cocidFlag?.id === 'undefined' && typeof item.flags?.[FOLDER_ID]?.cocidFlag?.id === 'string') {
                   foundItems[name] = item
                 }
               }
@@ -743,14 +755,14 @@ export default class CoC7Utilities {
       }
     }
     const cocids = Object.keys(foundItems).reduce((c, d) => {
-      if (typeof foundItems[d].flags?.CoC7?.cocidFlag?.id === 'string') {
-        c[foundItems[d].flags.CoC7.cocidFlag.id] = d
+      if (typeof foundItems[d].flags?.[FOLDER_ID]?.cocidFlag?.id === 'string') {
+        c[foundItems[d].flags[FOLDER_ID].cocidFlag.id] = d
       }
       return c
     }, {})
     const found = await game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: game.CoC7.cocid.makeGroupRegEx(Object.keys(cocids)), type: 'i', showLoading: true })
     for (const item of found) {
-      const cocid = item.flags.CoC7.cocidFlag.id
+      const cocid = item.flags[FOLDER_ID].cocidFlag.id
       const key = cocids[cocid]
       foundItems[key] = item
     }
