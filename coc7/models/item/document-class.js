@@ -540,6 +540,9 @@ export default class CoC7ModelsItemDocumentClass extends Item {
         }
       )
     }
+    if (object.type === 'weapon' && object.system.properties.rngd === false) {
+      output.properties.push(game.i18n.localize('CoC7.Weapon.Property.Melee'))
+    }
     for (const key in object.system.properties) {
       if (object.system.properties[key]) {
         output.properties.push(game.i18n.localize(CONFIG.Item.dataModels[object.type].defineSchema().properties.getField(key).label))

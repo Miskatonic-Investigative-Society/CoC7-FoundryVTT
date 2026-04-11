@@ -240,7 +240,9 @@ export default class CoC7ActorImporter {
           type: 'weapon',
           system: {
             skill: {
-              id: lastPercent
+              main: {
+                id: lastPercent
+              }
             },
             properties: {},
             range: {
@@ -594,20 +596,20 @@ export default class CoC7ActorImporter {
     const updateData = {}
     let value = 0
     if (typeof characterData.actor.attribs.hp?.value !== 'undefined') {
-      this.disableAttribAuto('hp', characterData.actor.attribs.hp.value, npc.hpMax, updateData)
+      this.disableAttribAuto('hp', characterData.actor.attribs.hp.value, npc.system.attribs.hp.max, updateData)
     }
     if (typeof characterData.actor.attribs.mp?.value !== 'undefined') {
-      this.disableAttribAuto('mp', characterData.actor.attribs.mp.value, npc.mpMax, updateData)
+      this.disableAttribAuto('mp', characterData.actor.attribs.mp.value, npc.system.attribs.mp.max, updateData)
     }
     if (typeof characterData.actor.attribs.mov?.value !== 'undefined') {
-      this.disableAttribAuto('mov', characterData.actor.attribs.mov.value, npc.mov, updateData)
+      this.disableAttribAuto('mov', characterData.actor.attribs.mov.value, npc.system.attribs.mov.value, updateData)
     }
     if (typeof characterData.actor.attribs.build?.value !== 'undefined') {
-      this.disableAttribAuto('build', characterData.actor.attribs.build.value, npc.build, updateData)
+      this.disableAttribAuto('build', characterData.actor.attribs.build.value, npc.system.attribs.build.value, updateData)
     }
     if (typeof characterData.actor.attribs.db?.value !== 'undefined') {
       value = String(characterData.actor.attribs.db.value).replace(/^\+\s*/, '')
-      if (value !== String(npc.db)) {
+      if (value !== String(npc.system.attribs.db.value)) {
         updateData['system.attribs.db.auto'] = false
         updateData['system.attribs.db.value'] = value
       }
@@ -617,27 +619,6 @@ export default class CoC7ActorImporter {
         console.debug('updateData:', updateData)
       }
       await npc.update(updateData)
-    }
-    const updateItemData = []
-    let lastWeaponSkill = null
-    for (const pair of this.weaponSkills) {
-      if (pair[0] !== false) {
-        lastWeaponSkill = npc.items.filter(doc => doc.name === pair[0].name && doc.type === 'skill' && Number(doc.system.value) === Number(pair[0].system.value))
-      }
-      const weapon = npc.items.filter(doc => doc.name === pair[1].name && doc.type === 'weapon' && doc.system.range.normal.damage === pair[1].system.range.normal.damage)
-      if (lastWeaponSkill[0] && weapon[0]) {
-        updateItemData.push({
-          _id: weapon[0].id,
-          'system.skill.main.id': lastWeaponSkill[0].id,
-          'system.skill.main.name': lastWeaponSkill[0].name
-        })
-      }
-    }
-    if (updateItemData.length > 0) {
-      if (CONFIG.debug.CoC7Importer) {
-        console.debug('updateItemData:', updateItemData)
-      }
-      await npc.updateEmbeddedDocuments('Item', updateItemData)
     }
     return npc
   }
@@ -709,18 +690,33 @@ export default class CoC7ActorImporter {
    */
   async itemsData (pc) {
     const items = []
-    this.weaponSkills = []
-    // Weapon skills
+    // Weapon Skills
+    const weaponSkills = []
     if (typeof pc.attacks !== 'undefined') {
+      const foundWeapons = await CoC7Utilities.guessItems('weapon', (pc.attacks ?? []).map(i => i.name), { source: this.itemLocations, fallbackAny: true })
+      let lastSkillName = ''
       for (const attack of pc.attacks) {
-        let skill = false
-        if (attack.system?.skill?.id !== true) {
-          skill = await this.weaponSkill(attack)
-          items.push(skill)
+        if (typeof foundWeapons[attack.name] !== 'undefined') {
+          if (foundWeapons[attack.name].system?.skill?.alternativ.name) {
+            weaponSkills.push({ name: foundWeapons[attack.name].system?.skill?.alternativ.name, value: 0 })
+          }
+          if (foundWeapons[attack.name].system?.skill?.main.name) {
+            weaponSkills.push({ name: foundWeapons[attack.name].system?.skill?.main.name, value: attack.system?.skill?.main?.id })
+          }
+          items.push(foundry.utils.duplicate(foundWeapons[attack.name]))
+        } else {
+          if (attack.system?.skill?.main?.id !== true) {
+            const skill = await this.weaponSkill(attack)
+            lastSkillName = skill.name
+            attack.system.skill.main.id = null
+            attack.system.skill.main.name = lastSkillName
+            items.push(skill)
+          } else {
+            attack.system.skill.main.id = null
+            attack.system.skill.main.name = lastSkillName
+          }
+          items.push(attack)
         }
-        attack.system.skill.id = null
-        items.push(attack)
-        this.weaponSkills.push([foundry.utils.duplicate(skill), attack])
       }
     }
     // Skills
@@ -731,7 +727,7 @@ export default class CoC7ActorImporter {
         value: i.value
       }
     })
-    const foundItems = await CoC7Utilities.guessItems('skill', (pc.skills ?? []).map(i => i.name).concat(languages.map(i => i.name)), { source: this.itemLocations, fallbackAny: true })
+    const foundItems = await CoC7Utilities.guessItems('skill', weaponSkills.map(i => i.name).concat((pc.skills ?? []).map(i => i.name).concat(languages.map(i => i.name))), { source: this.itemLocations, fallbackAny: true })
     if (typeof pc.skills !== 'undefined') {
       for (const skill of pc.skills) {
         let cloned
@@ -747,9 +743,10 @@ export default class CoC7ActorImporter {
           })
         }
         foundry.utils.setProperty(cloned, 'flags.' + FOLDER_ID + '.cocidFlag.id', 'i.skill.' + CoC7Utilities.toKebabCase(cloned.name))
-        cloned.system.base = skill.value
+        foundry.utils.setProperty(cloned, 'system.base', skill.value)
+        foundry.utils.setProperty(cloned, 'system.adjustments.base', skill.value)
         if (typeof skill.push !== 'undefined') {
-          cloned.system.properties.push = skill.push
+          foundry.utils.setProperty(cloned, 'system.properties.push', skill.push)
         }
         items.push(cloned)
       }
@@ -777,9 +774,21 @@ export default class CoC7ActorImporter {
       }
       items.push(cloned)
     }
+    // Weapon Skills
+    for (const skill of weaponSkills) {
+      if (typeof foundItems[skill.name] !== 'undefined') {
+        const exists = items.find(doc => doc.name === skill.name || doc.flags?.[FOLDER_ID]?.cocidFlag?.id === skill.name)
+        if (!exists) {
+          const cloned = foundry.utils.duplicate(foundItems[skill.name])
+          foundry.utils.setProperty(cloned, 'system.base', skill.value)
+          foundry.utils.setProperty(cloned, 'system.adjustments.base', skill.value)
+          items.push(cloned)
+        }
+      }
+    }
     // Spells
     if (typeof pc.spells !== 'undefined') {
-      const foundItems = await CoC7Utilities.guessItems('skill', pc.spells, { source: this.itemLocations })
+      const foundItems = await CoC7Utilities.guessItems('spell', pc.spells, { source: this.itemLocations })
       for (const name of pc.spells) {
         let cloned
         if (typeof foundItems[name] !== 'undefined') {
@@ -860,7 +869,10 @@ export default class CoC7ActorImporter {
     if (Object.keys(skill).length > 0) {
       const skillClone = Object.values(skill)[0].clone({
         system: {
-          value: weapon.system?.skill?.id
+          base: weapon.system?.skill?.main?.id,
+          adjustments: {
+            base: weapon.system?.skill?.main?.id
+          }
         }
       })
       return skillClone
@@ -879,8 +891,8 @@ export default class CoC7ActorImporter {
           firearm: firearms,
           combat: true
         },
-        base: weapon.system?.skill?.id,
-        value: weapon.system?.skill?.id
+        base: weapon.system?.skill?.main?.id,
+        value: weapon.system?.skill?.main?.id
       }
     }
     if (CONFIG.debug.CoC7Importer) {
