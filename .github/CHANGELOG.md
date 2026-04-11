@@ -9,6 +9,21 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 8.3
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix actor importer not looking for spells in the world and compendiums
+- Fix books initial reading error and spell tab for players
+- Fix NPC combat section melee tag toggle
+- Fix melee tag not showing up in weapon summaries
+- Update actor importer weapon / weapon skill detection and creation
+- Update to Swedish localization, thanks to @Rangertheman #2014
+
+## Version 8.2
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Fix NPC weapon damage from sheet with only normal range
 - Fix unable to update incorrect world settings until world is ready
 - Fix weapon FoundryVTT dataModel errors for non numbers in malfunction and ammo
