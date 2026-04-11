@@ -1621,5 +1621,15 @@
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerRegionUuids.Hint": "",
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Title": "With A Button Click",
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Hint": "",
-  "CoC7.EDITOR.DropCap": "Paragraph Drop Cap"
+  "CoC7.EDITOR.Title": "CoC7",
+  "CoC7.EDITOR.Paragraph.Title": "Paragraph Formatting",
+  "CoC7.EDITOR.Paragraph.DropCap": "Paragraph Drop Cap",
+  "CoC7.EDITOR.Paragraph.Indent": "Paragraph Indent",
+  "CoC7.EDITOR.Image.Title": "Image Formatting",
+  "CoC7.EDITOR.Image.RightHalfImage": "Right Half Image",
+  "CoC7.EDITOR.Template.Title": "Template",
+  "CoC7.EDITOR.Template.KeeperInformationFull": "Keeper Information (Full)",
+  "CoC7.EDITOR.Template.KeeperInformationRight": "Keeper Information (Right)",
+  "CoC7.EDITOR.Template.TwoColumns": "Two Columns",
+  "CoC7.EDITOR.Template.KeeperNotes": "Keeper Notes"
 }
