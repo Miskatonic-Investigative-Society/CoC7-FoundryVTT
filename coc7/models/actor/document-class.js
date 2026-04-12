@@ -551,7 +551,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       }
       let processed = []
       if (typeof itemByType.skill !== 'undefined') {
-        await this.prepareEmbeddedSkills(itemByType.skill, updateDocument, updateEmbeddedDocuments)
+        processed = processed.concat(await this.prepareEmbeddedSkills(itemByType.skill, updateDocument, updateEmbeddedDocuments))
         // Create the skills in case they are needed for weapons
         processed = processed.concat(await super.createEmbeddedDocuments('Item', itemByType.skill, operation))
       }
@@ -593,6 +593,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     const existingCoCIds = this.items.filter(d => d.type === 'skill').reduce((c, d) => { if (d.flags[FOLDER_ID]?.cocidFlag?.id) { c[d.flags[FOLDER_ID].cocidFlag.id] = { _id: d._id, flags: d.system.flags } } return c }, {})
     const existingNames = this.items.filter(d => d.type === 'skill').reduce((c, d) => { c[d.name] = { _id: d._id, flags: d.system.flags }; return c }, {})
     let removable = []
+    const processed = []
     const skillFlags = ['archetype', 'experiencePackage', 'occupation']
     for (const offset in skills) {
       const skill = skills[offset]
@@ -677,6 +678,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
             changes._id = existing._id
             updateEmbeddedDocuments.push(changes)
           }
+          processed.push(this.items.get(existing._id))
           removable.push(offset)
         }
       }
@@ -687,6 +689,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     }
     const parsedValues = this.parsedValues()
     await CoC7Utilities.setMultipleSkillBases(parsedValues, skills)
+    return processed
   }
 
   /**
@@ -2685,25 +2688,27 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       }
     }
     const uuidData = foundry.utils.parseUuid(itemIdentifier)
-    let itemId = ''
-    if (uuidData.documentType === 'Item') {
-      itemId = uuidData.documentId
-    } else {
-      const index = uuidData.embedded.findIndex(t => t === 'Item')
-      if (index > -1 && typeof uuidData.embedded[index + 1] === 'string') {
-        itemId = uuidData.embedded[index + 1]
+    if (uuidData) {
+      let itemId = ''
+      if (uuidData.documentType === 'Item') {
+        itemId = uuidData.documentId
+      } else {
+        const index = uuidData.embedded.findIndex(t => t === 'Item')
+        if (index > -1 && typeof uuidData.embedded[index + 1] === 'string') {
+          itemId = uuidData.embedded[index + 1]
+        }
       }
-    }
-    if (itemId !== '') {
-      let item = this.items.get(itemId)
-      if (!item) {
-        const newItem = await fromUuid(itemIdentifier)
-        item = await this.getItemAdding(newItem)
+      if (itemId !== '') {
+        let item = this.items.get(itemId)
+        if (!item) {
+          const newItem = await fromUuid(itemIdentifier)
+          item = await this.getItemAdding(newItem)
+        }
+        if (item) {
+          return item
+        }
+        throw new Error(game.i18n.format('CoC7.ErrorNotFound', { missing: itemId }))
       }
-      if (item) {
-        return item
-      }
-      throw new Error(game.i18n.format('CoC7.ErrorNotFound', { missing: itemId }))
     }
 
     // Attempt to load for actor by name
