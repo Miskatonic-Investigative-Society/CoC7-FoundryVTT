@@ -97,7 +97,7 @@ export default class CoC7ModelsItemSkillSystem extends CoC7ModelsItemGlobalSyste
       }
     }
 
-    const match = skillName.match(/^(.+)\s*\(([^)]+)\)$/)
+    const match = skillName.match(/^([^(]+)\s*\((.+)\)$/)
     if (match) {
       output.system.skillName = match[2].trim()
       output.system.properties.special = true

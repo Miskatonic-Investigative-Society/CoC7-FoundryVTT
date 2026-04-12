@@ -771,7 +771,7 @@ export default class CoC7Utilities {
       const missing = checkList.filter(k => !keys.includes(k))
       const fallback = {}
       for (const name of missing) {
-        const match = name.match(/^(.+ \()(?!any).+(\))$/)
+        const match = name.match(/^([^(]+\s*\()(?!any).+(\))$/)
         if (match) {
           fallback[name] = match[1] + 'any' + match[2]
         }
