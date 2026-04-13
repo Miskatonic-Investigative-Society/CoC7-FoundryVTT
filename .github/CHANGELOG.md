@@ -9,6 +9,20 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 8.4
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Fix missing deprecated function for skills / makeGroupRegEx
+- Fix specialized skills with brackets in the specialization name
+- Allow embedded skill sheets to adjust the actors value
+- Fix actor importer importing a weapon with a name that matches a skill name
+- Fix chase Item not updating after completing a roll and owner buttons not being clickable by players
+- Move house rules into separate menu and allow characteristic reordering
+- If hp or san is edited in Token Hud apply conditions - does not work in FoundryVTT v12
+
 ## Version 8.3
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
