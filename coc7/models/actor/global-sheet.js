@@ -75,7 +75,9 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
 
     if (context.document.system.schema.getField('characteristics')) {
       context.characteristics = {}
-      for (const [key, value] of context.document.system.schema.getField('characteristics').entries()) {
+      const characteristicsOrder = game.settings.get(FOLDER_ID, 'characteristicsOrder')
+      for (const key of characteristicsOrder) {
+        const value = context.document.system.schema.getField('characteristics').getField(key)
         context.characteristics[key] = {
           key,
           short: value.label,

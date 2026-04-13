@@ -12,7 +12,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
     classes: ['chase'],
     position: {
       width: 550,
-      height: 540
+      height: 580
     },
     window: {
       resizable: true

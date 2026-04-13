@@ -136,8 +136,8 @@ export default function () {
     }
   })
 
-  if (game.version === '14.359') {
-    // Hide deprecated warnings with first stable v14 release
+  if (['14.359', '14.360'].includes(game.version)) {
+    // Hide deprecated warnings with first two stable v14 releases
     CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
   }
 }

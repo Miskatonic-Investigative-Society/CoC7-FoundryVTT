@@ -14,7 +14,7 @@
         {{else}}
           <input type="text" name="system.skillName" value="{{document.system.skillName}}" placeholder="{{localize 'CoC7.Name'}}" style="flex: 2" />
         {{/if}}
-        {{#if hasNonCharacterOwner}}
+        {{#if document.isEmbedded}}
           <label>{{localize 'CoC7.Value'}}</label>
           <input type="text" name="system.value" value="{{document.system.value}}" />
         {{else}}

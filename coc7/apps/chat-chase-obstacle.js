@@ -476,7 +476,7 @@ export default class CoC7ChatChaseObstacle {
               }
 
               if (check.#totalObstacleDamage > 0 && check.#obstacle.hasHitPoints) {
-                obstacleUpdates.obstacleDetails.HitPoints = Math.max(0, parseInt(obstacleUpdates.obstacleDetails.HitPoints, 10) - check.#totalObstacleDamage)
+                obstacleUpdates.obstacleDetails.HitPoints = Math.max(0, parseInt(check.#obstacle.HitPoints, 10) - check.#totalObstacleDamage)
               }
 
               if (check.#totalPlayerDamageTaken > 0) {
@@ -498,7 +498,10 @@ export default class CoC7ChatChaseObstacle {
               }
 
               if (check.#movePlayer) {
-                chase.system.moveParticipantToLocation(participant.uuid, check.#locationId, { render: false })
+                const locations = foundry.utils.duplicate(chase.system.locations.list)
+                const currentLocation = locations.findIndex(l => l.participants.includes(participant.uuid))
+                const locationId = (typeof locations[currentLocation + 1] === 'undefined' ? check.#locationId : locations[currentLocation + 1].uuid)
+                await chase.system.moveParticipantToLocation(participant.uuid, locationId, { render: false })
               }
 
               const changes = {
@@ -521,10 +524,11 @@ export default class CoC7ChatChaseObstacle {
                 }
               }
               if (Object.keys(changes.system).length) {
-                chase.update(changes, { render: false })
+                await chase.update(changes, { render: false })
               }
               check.#closed = true
-              await chase.system.activateNextParticipantTurn() // Render will be done there !
+              await chase.system.activateNextParticipantTurn()
+              chase.sheet.render()
               check.updateMessage()
             }
           } else {
@@ -660,17 +664,15 @@ export default class CoC7ChatChaseObstacle {
    * @param {false|Array} allowed
    */
   static async _onRenderMessage (message, html, context, allowed) {
-    if (game.user.isGM) {
-      html.querySelectorAll('[data-action]').forEach((element) => {
-        element.addEventListener('click', event => CoC7ChatChaseObstacle._onClickEvent(event, message))
-      })
-      html.querySelectorAll('[data-change-set]').forEach((element) => {
-        element.addEventListener('change', event => CoC7ChatChaseObstacle._onChangeEvent(event, message))
-      })
-      html.querySelectorAll('input[type=range]').forEach((element) => {
-        element.addEventListener('change', event => CoC7ChatChaseObstacle._onChangeEvent(event, message))
-      })
-    }
+    html.querySelectorAll('[data-action]').forEach((element) => {
+      element.addEventListener('click', event => CoC7ChatChaseObstacle._onClickEvent(event, message))
+    })
+    html.querySelectorAll('[data-change-set]').forEach((element) => {
+      element.addEventListener('change', event => CoC7ChatChaseObstacle._onChangeEvent(event, message))
+    })
+    html.querySelectorAll('input[type=range]').forEach((element) => {
+      element.addEventListener('change', event => CoC7ChatChaseObstacle._onChangeEvent(event, message))
+    })
   }
 
   /**

@@ -1,4 +1,4 @@
-# System documentation for version 8.1
+# System documentation for version 8.4
 
 This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
 
@@ -18,6 +18,9 @@ This documentation can be reopened under [fa-solid fa-cogs]Game Settings -> Help
 
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
 
+- Allow reordering of Characteristics in house rules settings
+
+### Changes in version 8.1
 - Move to FoundryVTT implementations of dataModels, AppV2, and Tooltips
 - Trigger Actor Picker if User interacting with chat message owns multiple Actors
 - If keeper is online check chat message permissions against Actor ownership instead of User permissions and change message owner to prevent user doesn't have permissions error message
