@@ -2,19 +2,19 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cs.json (383 untranslated strings)](#csjson)
+[cs.json (387 untranslated strings)](#csjson)
 
-[it.json (419 untranslated strings)](#itjson)
+[it.json (423 untranslated strings)](#itjson)
 
-[pt-BR.json (573 untranslated strings)](#pt-brjson)
+[pt-BR.json (577 untranslated strings)](#pt-brjson)
 
-[ru.json (489 untranslated strings)](#rujson)
+[ru.json (493 untranslated strings)](#rujson)
 
-[uk.json (384 untranslated strings)](#ukjson)
+[uk.json (388 untranslated strings)](#ukjson)
 
 
 ## cs.json
-383 untranslated strings
+387 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -356,6 +356,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SelectActor": "Select",
 "CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
 "CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
+"CoC7.Settings.CharacteristicsOrder.Hint": "There are many minor changes to the characteristics order. Drag these into the order for this world.",
+"CoC7.Settings.CharacteristicsOrder.Name": "Characteristics Order",
+"CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
+"CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -401,7 +405,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## it.json
-419 untranslated strings
+423 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -770,6 +774,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SelectActor": "Select",
 "CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
 "CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
+"CoC7.Settings.CharacteristicsOrder.Hint": "There are many minor changes to the characteristics order. Drag these into the order for this world.",
+"CoC7.Settings.CharacteristicsOrder.Name": "Characteristics Order",
+"CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
+"CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -824,7 +832,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-573 untranslated strings
+577 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -1320,6 +1328,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SelectActor": "Select",
 "CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
 "CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
+"CoC7.Settings.CharacteristicsOrder.Hint": "There are many minor changes to the characteristics order. Drag these into the order for this world.",
+"CoC7.Settings.CharacteristicsOrder.Name": "Characteristics Order",
+"CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
+"CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -1401,7 +1413,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-489 untranslated strings
+493 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -1808,6 +1820,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SelectActor": "Select",
 "CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
 "CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
+"CoC7.Settings.CharacteristicsOrder.Hint": "There are many minor changes to the characteristics order. Drag these into the order for this world.",
+"CoC7.Settings.CharacteristicsOrder.Name": "Characteristics Order",
+"CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
+"CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
@@ -1894,7 +1910,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## uk.json
-384 untranslated strings
+388 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -2237,6 +2253,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SelectActor": "Select",
 "CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
 "CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
+"CoC7.Settings.CharacteristicsOrder.Hint": "There are many minor changes to the characteristics order. Drag these into the order for this world.",
+"CoC7.Settings.CharacteristicsOrder.Name": "Characteristics Order",
+"CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
+"CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
