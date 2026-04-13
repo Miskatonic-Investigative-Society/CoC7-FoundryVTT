@@ -129,6 +129,10 @@ export default class CoC7ModelsItemSkillSheet extends CoC7ModelsItemGlobalSheet 
     const specialization = (typeof object.system.specialization === 'undefined' ? this.document.system.specialization : object.system.specialization)
     const parts = CoC7ModelsItemSkillSystem.getNamePartsSpec(skillName, specialization)
     object.name = parts.name
+    if (this.document.isEmbedded && typeof formData.object['system.value'] !== 'undefined' && formData.object['system.value'] !== '' && !isNaN(Number(formData.object['system.value'])) && formData.object['system.value'] !== this.document.system.value) {
+      // If Embedded and system.value is a number set as an experience adjustment
+      foundry.utils.setProperty(object, 'system.adjustments.experience', this.document.system.adjustments.experience + Number(formData.object['system.value']) - this.document.system.value)
+    }
     return object
   }
 }

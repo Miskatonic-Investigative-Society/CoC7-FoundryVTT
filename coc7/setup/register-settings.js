@@ -1,6 +1,7 @@
 /* global CONFIG CONST foundry game ui */
 import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7SettingsGameRules from '../apps/settings-game-rules.js'
+import CoC7SettingsHouseRules from '../apps/settings-house-rules.js'
 import CoC7Utilities from '../apps/utilities.js'
 import deprecated from '../deprecated.js'
 
@@ -14,6 +15,16 @@ export default function () {
     restricted: true
   })
   CoC7SettingsGameRules.registerSettings()
+
+  game.settings.registerMenu(FOLDER_ID, 'houseRules', {
+    name: 'CoC7.Settings.HouseRules.Title',
+    label: 'CoC7.Settings.HouseRules.Label',
+    hint: 'CoC7.Settings.HouseRules.Hint',
+    icon: 'fa-solid fa-dial',
+    type: CoC7SettingsHouseRules,
+    restricted: true
+  })
+  CoC7SettingsHouseRules.registerSettings()
 
   game.settings.register(FOLDER_ID, 'dholeUploadDirectory', {
     name: 'CoC7.Settings.DholeUpload.Directory.Name',

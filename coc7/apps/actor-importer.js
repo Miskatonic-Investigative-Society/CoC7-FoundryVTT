@@ -879,6 +879,21 @@ export default class CoC7ActorImporter {
     }
     const firearms = weapon.system?.properties?.rngd
     const parts = CoC7ModelsItemSkillSystem.getNamePartsSpec(weapon.name, game.i18n.localize(firearms ? 'CoC7.FirearmSpecializationName' : 'CoC7.FightingSpecializationName'))
+    skill = await CoC7Utilities.guessItems('skill', [parts.name], {
+      combat: true,
+      source: this.itemLocations
+    })
+    if (Object.keys(skill).length > 0) {
+      const skillClone = Object.values(skill)[0].clone({
+        system: {
+          base: weapon.system?.skill?.main?.id,
+          adjustments: {
+            base: weapon.system?.skill?.main?.id
+          }
+        }
+      })
+      return skillClone
+    }
     const newSkill = {
       type: 'skill',
       name: parts.name,

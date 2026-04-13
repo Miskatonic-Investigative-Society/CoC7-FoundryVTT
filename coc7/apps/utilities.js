@@ -463,7 +463,7 @@ export default class CoC7Utilities {
    * @returns {Array}
    */
   static async getEmbeddedItems (document, source) {
-    const eras = Object.entries(document.flags[FOLDER_ID]?.cocidFlag?.eras ?? {}).filter(e => e[1]).map(e => e[0])
+    const eras = Object.entries(document.flags?.[FOLDER_ID]?.cocidFlag?.eras ?? {}).filter(e => e[1]).map(e => e[0])
     const worldEra = game.settings.get(FOLDER_ID, 'worldEra')
     const era = (eras.length === 0 || eras.includes(worldEra) ? worldEra : eras[0])
     const items = foundry.utils.getProperty(document, source).itemDocuments.map(d => typeof d === 'string' ? JSON.parse(d) : d).concat(await game.CoC7.cocid.expandItemArray({ itemList: foundry.utils.getProperty(document, source).itemKeys, era, showLoading: true }))
@@ -771,7 +771,7 @@ export default class CoC7Utilities {
       const missing = checkList.filter(k => !keys.includes(k))
       const fallback = {}
       for (const name of missing) {
-        const match = name.match(/^(.+ \()(?!any).+(\))$/)
+        const match = name.match(/^([^(]+\s*\()(?!any).+(\))$/)
         if (match) {
           fallback[name] = match[1] + 'any' + match[2]
         }

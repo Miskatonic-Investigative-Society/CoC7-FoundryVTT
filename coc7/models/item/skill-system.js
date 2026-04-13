@@ -97,7 +97,7 @@ export default class CoC7ModelsItemSkillSystem extends CoC7ModelsItemGlobalSyste
       }
     }
 
-    const match = skillName.match(/^(.+)\s*\(([^)]+)\)$/)
+    const match = skillName.match(/^([^(]+)\s*\((.+)\)$/)
     if (match) {
       output.system.skillName = match[2].trim()
       output.system.properties.special = true
@@ -177,15 +177,15 @@ export default class CoC7ModelsItemSkillSystem extends CoC7ModelsItemGlobalSyste
       }
     }
     // If value is a field and adjustments.base is not then initialize base and set experience to value difference
-    if (typeof source.value !== 'undefined' && typeof source.adjustments.base === 'undefined') {
+    if (typeof source.value !== 'undefined' && typeof source.adjustments?.base === 'undefined') {
       // If base is a number copy it to adjustments base
       if ((source.base ?? '').toString().match(/^\d+$/)) {
         foundry.utils.setProperty(source, 'adjustments.base', Number(source.base))
       }
       // If value is not null alter experience to get that value
       if (source.value !== null && source.value !== -1) {
-        const total = Object.values(source.adjustments).reduce((c, i) => { c = c + parseInt(i, 10); return c }, 0)
-        foundry.utils.setProperty(source, 'adjustments.experience', Number(source.value) - total + Number(source.adjustments.experience ?? 0))
+        const total = Object.values(source.adjustments ?? {}).reduce((c, i) => { c = c + parseInt(i, 10); return c }, 0)
+        foundry.utils.setProperty(source, 'adjustments.experience', Number(source.value) - total + Number(source.adjustments?.experience ?? 0))
       }
     }
     // Migrate description to object
