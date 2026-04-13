@@ -168,8 +168,20 @@ body {
   color: var(--color-whisper-border);
 }
 
-.application .standard-form.longer-labels .form-group>label {
-  flex: 4;
+.application .standard-form.longer-labels .form-group {
+  &>label {
+    flex: 4;
+  }
+
+  .drop-location {
+    flex: 0 0 100%;
+    gap: @8px;
+    .characteristic {
+      border: 1px solid #000;
+      padding: @4px;
+      text-align: center;
+    }
+  }
 }
 
 .coc7-tooltip-blink {
