@@ -1430,7 +1430,7 @@
   "CoC7.ChaosiumCanvasInterface.PlaySound.Button.Hint": "觸發此行為的按鍵",
   "CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Title": "選擇播放列表",
   "CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Hint": "",
-  "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Title": "選擇播放清單音軌",
+  "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Title": "選擇播放清單聲軌",
   "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Hint": "",
   "CoC7.ChaosiumCanvasInterface.PlaySound.Action.Title": "動作",
   "CoC7.ChaosiumCanvasInterface.PlaySound.Action.Hint": "決定播放、停止或切換播放狀態",
