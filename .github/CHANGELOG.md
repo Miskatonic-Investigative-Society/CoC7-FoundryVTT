@@ -9,6 +9,11 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Update to Simplified Chinese localization, thanks to @LiangHao-cloud #2030
+- Update to Taiwanese localization, thanks to @zeteticl #2029
+
 ## Version 8.4
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
