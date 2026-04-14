@@ -299,6 +299,19 @@ class DeprecatedWarningCoCID {
     })
     return game.CoC7.cocid.guessId(document)
   }
+
+  /**
+   * @inheritdoc
+   * @deprecated Temporary forward
+   */
+  static makeGroupRegEx (document) {
+    deprecated.warningLogger({
+      was: 'game.system.api.cocid.makeGroupRegEx',
+      now: 'game.CoC7.cocid.makeGroupRegEx',
+      until: 15
+    })
+    return game.CoC7.cocid.makeGroupRegEx(document)
+  }
 }
 
 class DeprecatedWarningCoC7DamageCard {

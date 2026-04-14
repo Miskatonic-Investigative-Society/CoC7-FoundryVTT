@@ -17,6 +17,7 @@ import CoC7GetChatMessageContextOptions from './hooks/get-chat-message-context-o
 import CoC7GetSceneControlButtons from './hooks/get-scene-control-buttons.js'
 import CoC7HotbarDrop from './hooks/hotbar-drop.js'
 import CoC7Init from './hooks/init.js'
+import CoC7ModifyTokenAttribute from './hooks/modify-token-attribute.js'
 import CoC7PopOutLoaded from './hooks/pop-out-loaded.js'
 import CoC7PreCreateChatMessage from './hooks/pre-create-chat-message.js'
 import CoC7PreUpdateChatMessage from './hooks/pre-update-chat-message.js'
@@ -64,6 +65,7 @@ Hooks.on('dropCanvasData', CoC7DropCanvasData)
 Hooks.on('getChatMessageContextOptions', CoC7GetChatMessageContextOptions)
 Hooks.on('getSceneControlButtons', CoC7GetSceneControlButtons)
 Hooks.on('hotbarDrop', CoC7HotbarDrop)
+Hooks.on('modifyTokenAttribute', CoC7ModifyTokenAttribute)
 Hooks.on('preCreateChatMessage', CoC7PreCreateChatMessage)
 Hooks.on('preUpdateChatMessage', CoC7PreUpdateChatMessage)
 Hooks.on('preUpdateItem', CoC7PreUpdateItem)

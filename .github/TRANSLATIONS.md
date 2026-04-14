@@ -4,21 +4,21 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations have more than 360 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cs.json (383 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (387 untranslated strings)](./ABANDONED.md#csjson)
 
-[it.json (419 untranslated strings)](./ABANDONED.md#itjson)
+[it.json (423 untranslated strings)](./ABANDONED.md#itjson)
 
-[pt-BR.json (573 untranslated strings)](./ABANDONED.md#pt-brjson)
+[pt-BR.json (577 untranslated strings)](./ABANDONED.md#pt-brjson)
 
-[ru.json (489 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (493 untranslated strings)](./ABANDONED.md#rujson)
 
-[uk.json (384 untranslated strings)](./ABANDONED.md#ukjson)
+[uk.json (388 untranslated strings)](./ABANDONED.md#ukjson)
 
 
 
 |Key|[cn](./MISSING.md#cnjson)|[de](./MISSING.md#dejson)|[es](./MISSING.md#esjson)|[fr](./MISSING.md#frjson)|[ja](./MISSING.md#jajson)|[ko](./MISSING.md#kojson)|[pl](./MISSING.md#pljson)|[sv](./MISSING.md#svjson)|[zh-tw](./MISSING.md#zh-twjson)|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**342**|**341**|**342**|**141**|**225**|**250**|**226**|**224**|**224**|
+|**Remaining**:|**346**|**345**|**346**|**145**|**229**|**254**|**230**|**228**|**228**|
 |[CoC7.AddedEmbeddedItems](#coc7addedembeddeditemsjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.AdditionalPoolModifier](#coc7additionalpoolmodifierjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.AlreadyRested](#coc7alreadyrestedjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
@@ -246,6 +246,10 @@ The following translations have more than 360 untranslated strings [are you able
 |[CoC7.SelectActor](#coc7selectactorjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.AllowPushFumbles.Hint](#coc7settingsallowpushfumbleshintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.AllowPushFumbles.Name](#coc7settingsallowpushfumblesnamejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Settings.CharacteristicsOrder.Hint](#coc7settingscharacteristicsorderhintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Settings.CharacteristicsOrder.Name](#coc7settingscharacteristicsordernamejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Settings.HouseRules.Hint](#coc7settingshouseruleshintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Settings.HouseRules.Label](#coc7settingshouseruleslabeljson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.PulpRules.All](#coc7settingspulprulesalljson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.PulpRules.None](#coc7settingspulprulesnonejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.PulpRules.Some](#coc7settingspulprulessomejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
@@ -725,6 +729,14 @@ The following translations have more than 360 untranslated strings [are you able
 ```  "CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",```
 ##### CoC7.Settings.AllowPushFumbles.Name
 ```  "CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",```
+##### CoC7.Settings.CharacteristicsOrder.Hint
+```  "CoC7.Settings.CharacteristicsOrder.Hint": "There are many minor changes to the characteristics order. Drag these into the order for this world.",```
+##### CoC7.Settings.CharacteristicsOrder.Name
+```  "CoC7.Settings.CharacteristicsOrder.Name": "Characteristics Order",```
+##### CoC7.Settings.HouseRules.Hint
+```  "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",```
+##### CoC7.Settings.HouseRules.Label
+```  "CoC7.Settings.HouseRules.Label": "Configure House Rules",```
 ##### CoC7.Settings.PulpRules.All
 ```  "CoC7.Settings.PulpRules.All": "All",```
 ##### CoC7.Settings.PulpRules.None

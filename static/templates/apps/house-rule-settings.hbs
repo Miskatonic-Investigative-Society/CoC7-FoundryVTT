@@ -1,0 +1,19 @@
+<section class="standard-form longer-labels scrollable">
+  <fieldset>
+    <legend>{{localize 'CoC7.Settings.HouseRules.Title'}}</legend>
+    {{formGroup fields.opposedRollTieBreaker value=values.opposedRollTieBreaker localize=true}}
+    {{formGroup fields.allowPushFumbles value=values.allowPushFumbles localize=true}}
+    <div class="form-group">
+      <label>{{localize 'CoC7.Settings.CharacteristicsOrder.Name'}}</label>
+      <p class="hint">{{localize 'CoC7.Settings.CharacteristicsOrder.Hint'}}</p>
+      <input type="text" style="flex: 0 0 100%" name="characteristicsOrder" value="{{characteristicsOrder}}">
+      <div class="drop-location flexrow">
+        {{#each values.characteristicsOrder as |characteristic|}}
+          <div draggable="true" class="characteristic" data-characteristic-value="{{characteristic.value}}">
+            <div>{{localize characteristic.name}}</div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </fieldset>
+</section>
