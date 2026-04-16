@@ -1,34 +1,8 @@
-body.theme-light .application.coc7-adventure-entry,
-.themed.theme-light.application.coc7-adventure-entry {
-  --background-sheet: url(./assets/art/page-light.webp) repeat;
-}
-
-body.theme-dark .application.coc7-adventure-entry,
-.themed.theme-dark.application.coc7-adventure-entry {
-  --background-sheet: url(./assets/art/page-dark.webp) repeat;
-}
-
-body.theme-dark .application.coc7-adventure-entry,
-body.theme-dark .application.coc7 prose-mirror,
-body.theme-dark .application.coc7 div.editor.prosemirror,
-.themed.theme-dark.application.coc7-adventure-entry,
-.themed.theme-dark.application.coc7 prose-mirror,
-.themed.theme-dark.application.coc7 div.editor.prosemirror {
-  div.keeper-information {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-}
-
 body.running-v12 {
   &.theme-dark {
     .window-app.coc7-adventure-entry.sheet {
       .window-content {
         color: var(--color-text-light-highlight);
-      }
-
-      div.journal-entry-pages div.keeper-information,
-      div.journal-page-content div.keeper-information {
-        background-color: rgba(255, 255, 255, 0.1);
       }
     }
 
@@ -203,6 +177,7 @@ body.running-v12 {
 /* Restart */
 body {
   --coc7-adventure-colour: #75844c;
+  --coc7-adventure-keeper-information-bg-colour: rgba(0, 0, 0, 0.1);
   --coc7-adventure-example-colour: rgb(102, 77, 42);
   --coc7-adventure-keeper-notes-colour: rgba(79, 39, 1, 0.1);
   --coc7-adventure-keeper-notes-dark: rgba(79, 39, 1, 0.2);
@@ -210,6 +185,29 @@ body {
   --coc7-adventure-keeper-foundryvtt-dark: rgba(254, 134, 32, 0.2);
   --coc7-adventure-keeper-read-aloud-colour: rgba(127, 127, 127, 0.1);
   --coc7-adventure-keeper-read-aloud-dark: rgba(127, 127, 127, 0.2);
+}
+
+body.theme-light .application.coc7-adventure-entry,
+.themed.theme-light.application.coc7-adventure-entry {
+  --background-sheet: url(./assets/art/page-light.webp) repeat;
+}
+
+body.theme-dark .application.coc7-adventure-entry,
+.themed.theme-dark.application.coc7-adventure-entry {
+  --background-sheet: url(./assets/art/page-dark.webp) repeat;
+}
+
+body.theme-dark .coc7-formatted-text,
+.themed.theme-dark .coc7-formatted-text,
+body.theme-dark .coc7-adventure-entry.sheet .journal-entry-pages > div.scrollable,
+.themed.theme-dark .coc7-adventure-entry.sheet .journal-entry-pages > div.scrollable,
+body.theme-dark .coc7-adventure-entry.sheet .journal-entry-pages.scrollable,
+.themed.theme-dark .coc7-adventure-entry.sheet .journal-entry-pages.scrollable,
+body.theme-dark .coc7-adventure-entry.sheet .editor-content.ProseMirror,
+.themed.theme-dark .coc7-adventure-entry.sheet .editor-content.ProseMirror {
+  --coc7-adventure-colour: #69994b;
+  --coc7-adventure-keeper-information-bg-colour: rgba(255, 255, 255, 0.1);
+  --coc7-adventure-keeper-notes-colour: rgba(60, 170, 60, 0.1);
 }
 
 .coc7-adventure-entry.sheet {
@@ -301,7 +299,6 @@ body {
   h1,
   h2 {
     text-transform: uppercase;
-    border-bottom: 1px solid var(--color-warm-3);
   }
 
   blockquote {
@@ -466,11 +463,15 @@ body {
       &.default:before {
         content: "Read aloud or paraphrase the following to the players";
       }
+
+      h4 {
+        color: var(--color-text-primary);
+      }
     }
   }
 
   div.keeper-information {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--coc7-adventure-keeper-information-bg-colour);
     padding: @10px;
     border-radius: @20px;
     margin-top: @10px;
