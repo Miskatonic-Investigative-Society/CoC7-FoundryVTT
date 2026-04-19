@@ -616,12 +616,6 @@ export default class CoC7Check {
     }
   }
 
-  // async results () {
-  //   return [
-  //     XXXX
-  //   ]
-  // }
-
   /**
    * Roll is a Attribute check
    * @param {string} attribute
@@ -766,6 +760,50 @@ export default class CoC7Check {
         this.runCallback()
       }
     }
+  }
+
+  /**
+   * Return an array of results
+   * XXXX WIP
+   * Array of
+   *  - {string} messageType
+   *  - {string} actorUuid Which actor is this for
+   *  - {string} type
+   *  - {string} key
+   *  - {string} threshold
+   *  - {boolean} isRolled
+   *  - {boolean} isCritical
+   *  - {boolean} isExtremeSuccess
+   *  - {boolean} isHardSuccess
+   *  - {boolean} isRegularSuccess
+   *  - {boolean} isRegularFailure
+   *  - {boolean} isFumble
+   *  - {boolean} isSuccess If this roll considered a success (roll, malfunction, automatic success)
+   *  - {boolean} isPushed
+   * @returns {Array}
+   */
+  async publicResults () {
+    const data = await this.getTemplateData()
+    return [
+      {
+        messageType: this.message.flags[FOLDER_ID].load.as,
+        actorUuid: data.actorUuid,
+        type: this.#type,
+        key: this.#key,
+        threshold: this.#dicePool.threshold,
+        luckSpent: this.#dicePool.luckSpent,
+        poolModifier: this.#dicePool.poolModifier,
+        isRolled: this.#dicePool.isRolled,
+        isCritical: data.diceGroups[0]?.isCritical,
+        isExtremeSuccess: data.diceGroups[0]?.isExtremeSuccess,
+        isFumble: data.diceGroups[0]?.isFumble,
+        isHardSuccess: data.diceGroups[0]?.isHardSuccess,
+        isRegularFailure: data.diceGroups[0]?.isRegularFailure,
+        isRegularSuccess: data.diceGroups[0]?.isRegularSuccess,
+        isSuccess: data.diceGroups[0]?.isSuccess,
+        isPushed: this.#dicePool.isPushed
+      }
+    ]
   }
 
   /**

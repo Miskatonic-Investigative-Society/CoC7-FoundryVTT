@@ -710,6 +710,15 @@ export default class CoC7ChatCombatMelee {
   }
 
   /**
+   * Return an array of results
+   * XXXX WIP
+   * @returns {Array}
+   */
+  async publicResults () {
+    return []
+  }
+
+  /**
    * Migrate older html
    * @param {object} options
    * @param {integer} options.offset

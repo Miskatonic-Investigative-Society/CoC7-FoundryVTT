@@ -340,9 +340,11 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
           }
           break
         case 'characteristics-average':
+          this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
           this.document.averageCharacteristicsValue()
           break
         case 'characteristics-roll':
+          this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
           this.document.rollCharacteristicsValue()
           break
         case 'condition':
@@ -376,6 +378,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
           this._onWeaponDamage(event)
           break
         case 'notes-toggle':
+          this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
           this.document.update({ 'system.attribs.armor.notes': !this.document.system.attribs.armor.notes })
           break
       }
@@ -699,6 +702,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
    */
   _onConditionToggle (event) {
     event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     if (game.user.isGM || game.settings.get(FOLDER_ID, 'statusPlayerEditable')) {
       if (event.currentTarget.dataset.condition) {
         this.document.toggleCondition(event.currentTarget.dataset.condition)
@@ -734,6 +738,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
    */
   async _onAttributeAutoToggleClicked (event) {
     event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const flagName = event.currentTarget.closest('[data-attrib]').dataset.attrib
     this.document.update({ ['system.attribs.' + flagName + '.auto']: !this.document.system.attribs[flagName].auto })
   }
@@ -744,6 +749,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
    */
   async _onClickToggle (event) {
     event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const property = event.currentTarget.closest('.toggle-attributes').dataset.set
     const key = event.currentTarget.dataset.property
     const itemUuid = event.currentTarget.closest('.item').dataset.itemUuid
@@ -761,6 +767,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
    */
   async _onFlagClicked (event) {
     event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const flagName = event.currentTarget.dataset.toggleFlag
     this.document.update({ ['system.flags.' + flagName]: !this.document.system.flags[flagName] })
   }
@@ -921,6 +928,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
    */
   async _onItemAdd (event) {
     event.stopPropagation()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     let document
     switch (event.currentTarget.dataset.type) {
       case 'armor':
@@ -952,6 +960,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
    * @param {SubmitEvent|null} event
    */
   async _onItemDelete (event) {
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const itemUuid = event.target.closest('.item').dataset.itemUuid
     fromUuid(itemUuid).then(item => {
       item.delete()
@@ -1304,6 +1313,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
   changeTab (tab, group, options) {
     if (tab === 'locked' && group === 'primary') {
       if (this.allowUnlock) {
+        this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
         this.document.update({ 'system.flags.locked': !this.document.system.flags.locked })
       }
       return

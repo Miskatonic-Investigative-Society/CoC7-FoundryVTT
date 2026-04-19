@@ -453,7 +453,7 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
       const index = Number(item.dataset.index)
       const books = foundry.utils.duplicate(this.document.system.books)
       if (books[index]?.id) {
-        const uuid = this.document.items.get(books[index]?.id).uuid
+        const uuid = this.document.items.get(books[index]?.id)?.uuid
         books.splice(index, 1)
         await this.document.update({ 'system.books': books })
         if (uuid) {

@@ -767,6 +767,15 @@ export default class CoC7ChatCombinedMessage {
   }
 
   /**
+   * Return an array of results
+   * XXXX WIP
+   * @returns {Array}
+   */
+  async publicResults () {
+    return []
+  }
+
+  /**
    * Migrate older html from roll
    * @param {object} options
    * @param {integer} options.offset
