@@ -11,6 +11,9 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
     form: {
       handler: CoC7ModelsItemGlobalSheet.#onSubmit,
       submitOnChange: true
+    },
+    window: {
+      resizable: true
     }
   }
 
