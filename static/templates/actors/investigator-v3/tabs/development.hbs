@@ -95,32 +95,30 @@
     {{#each itemsByType.skill as |skill|}}
       <li class="item{{#if (or ../pulpRuleArchetype ../hasExperiencePackage)}} pulpCharacter{{/if}}" data-item-uuid="{{skill.uuid}}">
         <div class="item-controls">
-          {{#unless skill.system.properties.noxpgain}}
-            <div class="item-control{{#if../allowCharCreation}} clickable{{/if}}"{{#if../allowCharCreation}} data-action="toggleSkillFlag" data-flag="occupation"{{/if}} data-tooltip="CoC7.OccupationSkill">
-              {{#if skill.system.flags.occupation}}
+          <div class="item-control{{#if../allowCharCreation}} clickable{{/if}}"{{#if../allowCharCreation}} data-action="toggleSkillFlag" data-flag="occupation"{{/if}} data-tooltip="CoC7.OccupationSkill">
+            {{#if skill.system.flags.occupation}}
+              <i class="fa-solid fa-circle"></i>
+            {{else}}
+              <i class="fa-regular fa-circle"></i>
+            {{/if}}
+          </div>
+          {{#if ../pulpRuleArchetype}}
+            <div class="item-control{{#if../allowCharCreation}} clickable{{/if}}"{{#if../allowCharCreation}} data-action="toggleSkillFlag" data-flag="archetype"{{/if}} data-tooltip="CoC7.ArchetypeSkill">
+              {{#if skill.system.flags.archetype}}
                 <i class="fa-solid fa-circle"></i>
               {{else}}
                 <i class="fa-regular fa-circle"></i>
               {{/if}}
             </div>
-            {{#if ../pulpRuleArchetype}}
-              <div class="item-control{{#if../allowCharCreation}} clickable{{/if}}"{{#if../allowCharCreation}} data-action="toggleSkillFlag" data-flag="archetype"{{/if}} data-tooltip="CoC7.ArchetypeSkill">
-                {{#if skill.system.flags.archetype}}
-                  <i class="fa-solid fa-circle"></i>
-                {{else}}
-                  <i class="fa-regular fa-circle"></i>
-                {{/if}}
-              </div>
-            {{else if hasExperiencePackage}}
-              <div class="item-control{{#if../allowCharCreation}} clickable{{/if}}"{{#if../allowCharCreation}} data-action="toggleSkillFlag" data-flag="experiencePackage"{{/if}} data-tooltip="CoC7.ExperiencePackageSkill">
-                {{#if skill.system.flags.experiencePackage}}
-                  <i class="fa-solid fa-circle"></i>
-                {{else}}
-                  <i class="fa-regular fa-circle"></i>
-                {{/if}}
-              </div>
-            {{/if}}
-          {{/unless}}
+          {{else if hasExperiencePackage}}
+            <div class="item-control{{#if../allowCharCreation}} clickable{{/if}}"{{#if../allowCharCreation}} data-action="toggleSkillFlag" data-flag="experiencePackage"{{/if}} data-tooltip="CoC7.ExperiencePackageSkill">
+              {{#if skill.system.flags.experiencePackage}}
+                <i class="fa-solid fa-circle"></i>
+              {{else}}
+                <i class="fa-regular fa-circle"></i>
+              {{/if}}
+            </div>
+          {{/if}}
         </div>
 
         <span class="skill-name{{#if skill.system.flags.developement}}{{#if ../allowDevelopment}} rollable{{/if}} flagged4dev{{/if}}" data-name-tooltip="{{skill.name}}" data-value-tooltip="{{skill.system.value}}">{{skill.name}}{{#if (and skill.system.flags.developement ../allowDevelopment)}}<i class="fa-solid fa-circle-check"></i>{{/if}}</span>
