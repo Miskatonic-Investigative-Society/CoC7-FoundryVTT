@@ -867,6 +867,15 @@ export default class CoC7ChatOpposedMessage {
   }
 
   /**
+   * Return an array of results
+   * XXXX WIP
+   * @returns {Array}
+   */
+  async publicResults () {
+    return []
+  }
+
+  /**
    * Flag skills for development for the winner that rolled a skill
    */
   async flagForDevelopment () {

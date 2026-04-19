@@ -9,7 +9,8 @@ import CoC7ChatCombatRanged from './chat-combat-ranged.js'
 export default class CoC7MessageResults {
   /**
    * Get CoC7DicePool from a message for third party to easily see results
-   * @param {Document} message
+   * Hooks - createChatMessage and updateChatMessage
+   * @param {Document|string} message
    * @returns {object}
    */
   static async loadMessage (message) {
@@ -36,8 +37,7 @@ export default class CoC7MessageResults {
           break
       }
       if (typeof check !== 'undefined') {
-        // XXXX need global format
-        return await check.results()
+        return await check.publicResults()
       }
       throw new Error('Not a dice pool message')
     }
