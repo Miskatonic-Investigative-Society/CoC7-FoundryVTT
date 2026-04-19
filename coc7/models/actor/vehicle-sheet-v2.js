@@ -131,6 +131,7 @@ export default class CoC7ModelsActorVehicleSheetV2 extends CoC7ModelsActorGlobal
    * Add armor location
    */
   async _onAddArmor () {
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const locations = foundry.utils.duplicate(this.document.system.stats.armor.locations || [])
     locations.push({})
     await this.document.update({ 'system.stats.armor.locations': locations })
@@ -141,6 +142,7 @@ export default class CoC7ModelsActorVehicleSheetV2 extends CoC7ModelsActorGlobal
    * @param {ClickEvent|null} event
    */
   async _onRemoveArmor (event) {
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const offset = event.currentTarget.dataset.offset
     if (typeof offset !== 'undefined') {
       const locations = foundry.utils.duplicate(this.document.system.stats.armor.locations || [])
@@ -155,6 +157,7 @@ export default class CoC7ModelsActorVehicleSheetV2 extends CoC7ModelsActorGlobal
    */
   async _onClickToggle (event) {
     event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const property = event.currentTarget.closest('.toggle-attributes').dataset.set
     const key = event.currentTarget.dataset.property
     if (property && key) {

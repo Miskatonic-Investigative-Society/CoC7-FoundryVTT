@@ -76,6 +76,7 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
    */
   async _onClickToggle (event) {
     event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const property = event.currentTarget.closest('.toggle-attributes').dataset.set
     const key = event.currentTarget.dataset.property
     this.document.system.toggleProperty(property, key, { isCtrlKey: CoC7Utilities.isCtrlKey(event) })
@@ -88,6 +89,7 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
    */
   async _onItemDeleteEvent (event, source) {
     event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const li = event.currentTarget.closest('.item')
     let index = -1
     let collectionName
@@ -120,6 +122,7 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
   async _onItemDropEvent (event, source, allowedTypes) {
     event.preventDefault()
     event.stopPropagation()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
 
     const droppedItems = (await CoC7Utilities.getDataFromDropEvent(event, 'Item')).filter(doc => allowedTypes.includes(doc.type))
 
