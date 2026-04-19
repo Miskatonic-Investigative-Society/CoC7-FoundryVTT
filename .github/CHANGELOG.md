@@ -9,9 +9,17 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 8.5
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
-- Update to Simplified Chinese localization, thanks to @LiangHao-cloud #2030
+- Set Item sheets to be resizable
+- Fix Keeper removing book progress from a deleted book
+- Restore being able to toggle archetype, experience package, and occupation toggles on development tabs
+- Trigger save on ProseMirror input on more sheet button clicks
+- Update to Simplified Chinese localization, thanks to @LiangHao-cloud #2030 and #2032
 - Update to Taiwanese localization, thanks to @zeteticl #2029
 
 ## Version 8.4

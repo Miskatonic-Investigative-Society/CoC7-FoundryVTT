@@ -791,6 +791,7 @@ export default class CoC7Check {
         type: this.#type,
         key: this.#key,
         threshold: this.#dicePool.threshold,
+        total: data.diceGroups[0]?.total,
         luckSpent: this.#dicePool.luckSpent,
         poolModifier: this.#dicePool.poolModifier,
         isRolled: this.#dicePool.isRolled,
