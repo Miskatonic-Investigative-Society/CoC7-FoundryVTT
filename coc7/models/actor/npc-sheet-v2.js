@@ -186,6 +186,7 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
    * Add new movement type
    */
   _onMovementAdd () {
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const movement = this.actor.system.special.movement ? foundry.utils.duplicate(this.actor.system.special.movement) : []
     movement.push({
       value: '',
@@ -199,6 +200,7 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
    * @param {ClickEvent} event
    */
   _onMovementRemove (event) {
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const a = event.currentTarget
     if (typeof a.dataset.index !== 'undefined') {
       const movement = foundry.utils.duplicate(this.actor.system.special.movement)
@@ -212,6 +214,7 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
    * @param {ClickEvent} event
    */
   _onMacroRemove (event) {
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const a = event.currentTarget
     if (typeof a.dataset.index !== 'undefined') {
       const macros = foundry.utils.duplicate(this.actor.system.special.macros)

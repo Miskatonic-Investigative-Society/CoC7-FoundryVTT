@@ -36,12 +36,13 @@ export default class CoC7ActiveEffect {
 
   /**
    * Add click event listeners
-   * @param {MouseEvent} element
+   * @param {HTMLElement} element
    * @param {Actor|Item} owner
    */
   static _onRender (element, owner) {
     // Active Effects
-    element.querySelectorAll('.effect-control').forEach((element) => element.addEventListener('click', (event) => {
+    element.querySelectorAll('.effect-control').forEach((element2) => element2.addEventListener('click', (event) => {
+      element.dispatchEvent(new Event('change')) // Submit any unsaved changes
       CoC7ActiveEffect.#onManageActiveEffect(event, owner)
     }))
   }
