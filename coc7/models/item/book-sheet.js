@@ -241,6 +241,9 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
         case 'attemptInitialReading':
           this.document.system.attemptInitialReading()
           break
+        case 'attemptReference':
+          this.document.system.attemptReference()
+          break
         case 'itemEdit':
           {
             const embeddedId = event.currentTarget.closest('.item').dataset.embeddedId

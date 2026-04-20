@@ -28,10 +28,15 @@
         <div class="flexrow">
           <label>{{localize 'CoC7.FullStudies'}}:</label>
           <label>{{fullStudies}}</label>
-          {{#if studyCompleted}}
+          {{#if (and studyCompleted (not exhausted))}}
             <a class="item-control" data-action="redo-full-study" data-tooltip="CoC7.RedoFullStudy"><i class="fa-solid fa-redo"></i></a>
           {{/if}}
         </div>
+        {{#if (gt document.system.mythosRating 0)}}
+          <div class="flexrow">
+            <button class="item-control" data-action="attemptReference">{{localize 'CoC7.ReferenceTome'}}</button>
+          </div>
+        {{/if}}
       {{else if (and isEmbedded (or isKeeper isOwner))}}
         <button class="item-control" data-action="attemptInitialReading">{{localize 'CoC7.InitialReading'}}</button>
       {{/if}}

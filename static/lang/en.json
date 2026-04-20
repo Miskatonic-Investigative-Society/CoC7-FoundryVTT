@@ -781,6 +781,8 @@
   "CoC7.GainsForReading": "Skill gains for reading <i>{book}</i>.",
   "CoC7.InitialReading": "Initial Reading",
   "CoC7.InitialReadingNeeded": "{actor} needs to perform an Initial Reading on <i>{book}</i> to be able to advance through Full Study progress.",
+  "CoC7.ReferenceTome": "Reference Tome",
+  "CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
   "CoC7.LearnSpellAttempt": "Attempt to learn spell {spell}, from <i>{book}</i>.",
   "CoC7.MarkedForDevelopment": "Marked for development",
   "CoC7.Mythos": "Mythos",
