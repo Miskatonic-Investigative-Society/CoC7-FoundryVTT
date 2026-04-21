@@ -250,7 +250,7 @@ export default class CoC7ConCheck {
     if (this.#callbackUuid) {
       const document = await fromUuid(this.#callbackUuid)
       if (document && typeof document.system.updateRoll === 'function') {
-        document.system.updateRoll(this)
+        await document.system.updateRoll(this)
       }
     }
   }

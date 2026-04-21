@@ -458,7 +458,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
         await this.document.system.removeParticipant(participantUuid)
         break
     }
-    this.document.system.activateNextParticipantTurn()
+    await this.document.system.activateNextParticipantTurn()
   }
 
   /**
@@ -750,7 +750,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
             }]
           }).render({ force: true })
         } else {
-          this.document.system.progressToNextRound()
+          await this.document.system.progressToNextRound()
         }
         break
       case 'obstacle-skill-check':
@@ -801,7 +801,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
     const dataString = event.dataTransfer.getData('text/plain')
     const dropData = JSON.parse(dataString)
     if (dropData?.type === 'CoC7MoveLocation') {
-      this.document.system.moveParticipantToLocation(dropData.id, locationId)
+      await this.document.system.moveParticipantToLocation(dropData.id, locationId)
     }
   }
 
