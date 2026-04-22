@@ -291,8 +291,16 @@ export default class CoC7ChatCombinedMessage {
           const luckSpend = event.currentTarget?.dataset?.luckSpend
           if (luckSpend) {
             const check = await CoC7ChatCombinedMessage.loadFromMessage(message)
-            if (await check.addLuck(parseInt(luckSpend, 10))) {
-              check.updateMessage()
+            if (check) {
+              const actorUuid = Object.keys(check.#actorRolls)[0] ?? ''
+              if (actorUuid && !check.#actorRolls[actorUuid].dicePool.isPushed) {
+                const actor = await fromUuid(actorUuid)
+                if (actor) {
+                  if (await check.#actorRolls[actorUuid].dicePool.addLuck(actor, parseInt(luckSpend, 10))) {
+                    check.updateMessage()
+                  }
+                }
+              }
             }
           } else {
             ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
@@ -577,28 +585,6 @@ export default class CoC7ChatCombinedMessage {
       return true
     }
     ui.notifications.warn('CoC7.Errors.UnparsableActor', { localize: true })
-    return false
-  }
-
-  /**
-   * Add luck to existing pool
-   * @param {integer} luckSpend
-   * @returns {boolean}
-   */
-  async addLuck (luckSpend) {
-    const actorUuid = Object.keys(this.#actorRolls)[0] ?? ''
-    if (actorUuid && !this.#actorRolls[actorUuid].dicePool.isPushed) {
-      const actor = await fromUuid(actorUuid)
-      if (actor) {
-        const newLuck = parseInt(actor?.system.attribs.lck.value ?? 0, 10) - parseInt(luckSpend, 10)
-        if (newLuck >= 0) {
-          if (await actor.spendLuck(luckSpend) !== false) {
-            this.#actorRolls[actorUuid].dicePool.luckSpent = this.#actorRolls[actorUuid].dicePool.luckSpent + parseInt(luckSpend, 10)
-            return true
-          }
-        }
-      }
-    }
     return false
   }
 

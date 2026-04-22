@@ -172,27 +172,6 @@ export default class CoC7ChatChaseObstacle {
   }
 
   /**
-   * Add luck to existing pool
-   * @param {integer} luckSpend
-   * @returns {boolean}
-   */
-  async addLuck (luckSpend) {
-    const chase = (await this.chase)
-    const allParticipants = (await chase.system.allParticipants()).all
-    const participant = allParticipants.find(l => l.uuid === this.#participantId)
-    if (participant) {
-      const newLuck = parseInt(participant.actor?.system.attribs.lck.value ?? 0, 10) - parseInt(luckSpend, 10)
-      if (newLuck >= 0) {
-        if (await participant.actor.spendLuck(luckSpend) !== false) {
-          this.#dicePool.luckSpent = this.#dicePool.luckSpent + parseInt(luckSpend, 10)
-          return true
-        }
-      }
-    }
-    return false
-  }
-
-  /**
    * Click Event
    * @param {ClickEvent} event
    * @param {Document} message
@@ -430,8 +409,15 @@ export default class CoC7ChatChaseObstacle {
           const luckSpend = event.currentTarget?.dataset?.luckSpend
           if (luckSpend) {
             const check = await CoC7ChatChaseObstacle.loadFromMessage(message)
-            if (await check.addLuck(parseInt(luckSpend, 10))) {
-              check.updateMessage()
+            if (check) {
+              const chase = (await check.chase)
+              const allParticipants = (await chase.system.allParticipants()).all
+              const participant = allParticipants.find(l => l.uuid === check.#participantId)
+              if (participant) {
+                if (await check.#dicePool.addLuck(participant.actor, parseInt(luckSpend, 10))) {
+                  check.updateMessage()
+                }
+              }
             }
           } else {
             ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
