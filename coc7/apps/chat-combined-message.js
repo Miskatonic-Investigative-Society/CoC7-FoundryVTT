@@ -754,11 +754,27 @@ export default class CoC7ChatCombinedMessage {
 
   /**
    * Return an array of results
-   * XXXX WIP
    * @returns {Array}
    */
   async publicResults () {
-    return []
+    const results = []
+    for (const actorUuid in this.#actorRolls) {
+      for (const roll of this.#actorRolls[actorUuid].rolls) {
+        this.#actorRolls[actorUuid].dicePool.difficulty = roll.difficulty
+        this.#actorRolls[actorUuid].dicePool.flatDiceModifier = roll.flatDiceModifier
+        this.#actorRolls[actorUuid].dicePool.flatThresholdModifier = roll.flatThresholdModifier
+        this.#actorRolls[actorUuid].dicePool.poolModifier = roll.poolModifier
+        this.#actorRolls[actorUuid].dicePool.threshold = roll.threshold
+        results.push({
+          messageType: this.message.flags[FOLDER_ID].load.as,
+          actorUuid,
+          type: 'item',
+          key: roll.key,
+          ...this.#actorRolls[actorUuid].dicePool.publicResults()
+        })
+      }
+    }
+    return results
   }
 
   /**
