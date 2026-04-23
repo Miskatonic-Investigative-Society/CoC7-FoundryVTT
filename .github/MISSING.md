@@ -2,33 +2,37 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (4 untranslated strings)](#cnjson)
+[cn.json (6 untranslated strings)](#cnjson)
 
-[de.json (345 untranslated strings)](#dejson)
+[de.json (347 untranslated strings)](#dejson)
 
-[es.json (346 untranslated strings)](#esjson)
+[es.json (348 untranslated strings)](#esjson)
 
-[fr.json (145 untranslated strings)](#frjson)
+[fr.json (147 untranslated strings)](#frjson)
 
-[ja.json (229 untranslated strings)](#jajson)
+[ja.json (231 untranslated strings)](#jajson)
 
-[ko.json (254 untranslated strings)](#kojson)
+[ko.json (256 untranslated strings)](#kojson)
 
-[pl.json (230 untranslated strings)](#pljson)
+[pl.json (232 untranslated strings)](#pljson)
 
-[sv.json (228 untranslated strings)](#svjson)
+[sv.json (230 untranslated strings)](#svjson)
+
+[zh-tw.json (2 untranslated strings)](#zh-twjson)
 
 
 ## cn.json
-4 untranslated strings
+6 untranslated strings
 ```
+"CoC7.ReferenceTome": "Reference Tome",
+"CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
 "CoC7.Settings.CharacteristicsOrder.Hint": "There are many minor changes to the characteristics order. Drag these into the order for this world.",
 "CoC7.Settings.CharacteristicsOrder.Name": "Characteristics Order",
 "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
 "CoC7.Settings.HouseRules.Label": "Configure House Rules"
 ```
 ## de.json
-345 untranslated strings
+347 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -315,6 +319,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.PoolAddTwoBonus": "Add two bonus dice",
 "CoC7.PoolAddTwoPenalty": "Add two penalty dice",
 "CoC7.PortraitOptions": "Portrait Options",
+"CoC7.ReferenceTome": "Reference Tome",
+"CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
 "CoC7.RequestRoll": "Request roll",
 "CoC7.RollAsModifier.ActiveEffect.Grouped": "Modify Active Effect",
 "CoC7.RollAsModifier.ActiveEffect.GroupedName": "Grouped Temporary Modifications",
@@ -377,7 +383,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## es.json
-346 untranslated strings
+348 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -664,6 +670,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.PoolAddTwoBonus": "Add two bonus dice",
 "CoC7.PoolAddTwoPenalty": "Add two penalty dice",
 "CoC7.PortraitOptions": "Portrait Options",
+"CoC7.ReferenceTome": "Reference Tome",
+"CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
 "CoC7.RequestRoll": "Request roll",
 "CoC7.RollAsModifier.ActiveEffect.Grouped": "Modify Active Effect",
 "CoC7.RollAsModifier.ActiveEffect.GroupedName": "Grouped Temporary Modifications",
@@ -727,7 +735,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## fr.json
-145 untranslated strings
+147 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -821,6 +829,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.PoolAddTwoBonus": "Add two bonus dice",
 "CoC7.PoolAddTwoPenalty": "Add two penalty dice",
 "CoC7.PortraitOptions": "Portrait Options",
+"CoC7.ReferenceTome": "Reference Tome",
+"CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
 "CoC7.RequestRoll": "Request roll",
 "CoC7.RollAsModifier.ActiveEffect.Grouped": "Modify Active Effect",
 "CoC7.RollAsModifier.ActiveEffect.GroupedName": "Grouped Temporary Modifications",
@@ -876,7 +886,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
 ```
 ## ja.json
-229 untranslated strings
+231 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -1054,6 +1064,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.PoolAddTwoBonus": "Add two bonus dice",
 "CoC7.PoolAddTwoPenalty": "Add two penalty dice",
 "CoC7.PortraitOptions": "Portrait Options",
+"CoC7.ReferenceTome": "Reference Tome",
+"CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
 "CoC7.RequestRoll": "Request roll",
 "CoC7.RollAsModifier.ActiveEffect.Grouped": "Modify Active Effect",
 "CoC7.RollAsModifier.ActiveEffect.GroupedName": "Grouped Temporary Modifications",
@@ -1109,7 +1121,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
 ```
 ## ko.json
-254 untranslated strings
+256 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -1310,6 +1322,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.PoolAddTwoBonus": "Add two bonus dice",
 "CoC7.PoolAddTwoPenalty": "Add two penalty dice",
 "CoC7.PortraitOptions": "Portrait Options",
+"CoC7.ReferenceTome": "Reference Tome",
+"CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
 "CoC7.RequestRoll": "Request roll",
 "CoC7.RollAsModifier.ActiveEffect.Grouped": "Modify Active Effect",
 "CoC7.RollAsModifier.ActiveEffect.GroupedName": "Grouped Temporary Modifications",
@@ -1367,7 +1381,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle": "CCI: Light Toggle"
 ```
 ## pl.json
-230 untranslated strings
+232 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -1546,6 +1560,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.PoolAddTwoBonus": "Add two bonus dice",
 "CoC7.PoolAddTwoPenalty": "Add two penalty dice",
 "CoC7.PortraitOptions": "Portrait Options",
+"CoC7.ReferenceTome": "Reference Tome",
+"CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
 "CoC7.RequestRoll": "Request roll",
 "CoC7.RollAsModifier.ActiveEffect.Grouped": "Modify Active Effect",
 "CoC7.RollAsModifier.ActiveEffect.GroupedName": "Grouped Temporary Modifications",
@@ -1601,7 +1617,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
 ```
 ## sv.json
-228 untranslated strings
+230 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -1778,6 +1794,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.PoolAddTwoBonus": "Add two bonus dice",
 "CoC7.PoolAddTwoPenalty": "Add two penalty dice",
 "CoC7.PortraitOptions": "Portrait Options",
+"CoC7.ReferenceTome": "Reference Tome",
+"CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
 "CoC7.RequestRoll": "Request roll",
 "CoC7.RollAsModifier.ActiveEffect.Grouped": "Modify Active Effect",
 "CoC7.RollAsModifier.ActiveEffect.GroupedName": "Grouped Temporary Modifications",
@@ -1831,4 +1849,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.rangeCombatCard.LongRangeShort": "Long",
 "SETTINGS.UseIconForEras": "Use icons for eras",
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
+```
+## zh-tw.json
+2 untranslated strings
+```
+"CoC7.ReferenceTome": "Reference Tome",
+"CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}"
 ```
