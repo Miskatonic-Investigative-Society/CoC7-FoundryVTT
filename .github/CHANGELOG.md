@@ -9,6 +9,11 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add luck and bonus/penalty to melee combat messages
+- Add reference tome button to allow a tomb to be referenced after an initial reading
+- Alternate row colours on Investigator development tab
+- Fix rolling characteristics on Investigator V2 sheet
+
 ## Version 8.5
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
