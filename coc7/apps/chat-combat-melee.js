@@ -13,6 +13,7 @@ export default class CoC7ChatCombatMelee {
   #asyncItem
   #attackerMessageId
   #checkRevealed
+  #damageMessageId
   #dicePool
   #isAutoSuccess
   #isNoResponse
@@ -20,6 +21,7 @@ export default class CoC7ChatCombatMelee {
   #poolModifier
   #poolKeys
   #responded
+  #targetMessageId
 
   /**
    * Constructor
@@ -67,23 +69,27 @@ export default class CoC7ChatCombatMelee {
   /**
    * Create melee initiator message
    * @param {object} options
-   * @param {string|null} options.attackerMessageId
+   * @param {CoC7ChatCombatMelee|null} options.attackerCheck
    * @param {string|null} options.attackerUuid
    * @param {string} options.itemUuid
    * @param {integer} options.participant
    * @param {string|null} options.targetUuid
    */
-  static async createMessage ({ attackerMessageId, attackerUuid, itemUuid, participant = CoC7ChatCombatMelee.participant.initiator, targetUuid } = {}) {
+  static async createMessage ({ attackerCheck, attackerUuid, itemUuid, participant = CoC7ChatCombatMelee.participant.initiator, targetUuid } = {}) {
     if (attackerUuid) {
       const check = new CoC7ChatCombatMelee()
-      check.#attackerMessageId = attackerMessageId
+      check.#attackerMessageId = attackerCheck?.message.id
       check.attacker = attackerUuid
       check.item = itemUuid
       check.#participant = participant
       check.target = targetUuid
       await check.#setInitialPoolModifier(check.attacker)
       const chatData = await check.getChatData()
-      await ChatMessage.create(chatData)
+      const targetMessage = await ChatMessage.create(chatData)
+      if (targetMessage && attackerCheck) {
+        attackerCheck.#targetMessageId = targetMessage.id
+        attackerCheck.updateMessage()
+      }
       return
     }
     ui.notifications.warn('CoC7.Errors.UnparsableRoll', { localize: true })
@@ -99,13 +105,15 @@ export default class CoC7ChatCombatMelee {
       // 'attackerMessageId' - for target only
       'attackerUuid',
       'checkRevealed',
+      // 'damageMessageId'
       'isAutoSuccess',
       'isNoResponse',
-      // 'itemUuid' - response can be selected
+      // 'itemUuid' - no response can be selected
       'participant',
       'poolKeys',
       'poolModifier',
       'responded'
+      // 'targetMessageId'
     ]
     if (message.id && message.flags[FOLDER_ID]?.load?.as === 'CoC7ChatCombatMelee' && keys.every(k => typeof message.flags[FOLDER_ID]?.load?.[k] !== 'undefined') && CoC7DicePool.isValidPool(message.flags[FOLDER_ID]?.load?.dicePool)) {
       const check = new CoC7ChatCombatMelee()
@@ -114,6 +122,7 @@ export default class CoC7ChatCombatMelee {
       check.#attackerMessageId = load.attackerMessageId
       check.attacker = load.attackerUuid
       check.#checkRevealed = load.checkRevealed
+      check.#damageMessageId = load.damageMessageId
       check.#dicePool = CoC7DicePool.fromObject(load.dicePool)
       check.#isAutoSuccess = load.isAutoSuccess
       check.#isNoResponse = load.isNoResponse
@@ -123,6 +132,7 @@ export default class CoC7ChatCombatMelee {
       check.#poolModifier = load.poolModifier
       check.#responded = load.responded
       check.target = load.targetUuid
+      check.#targetMessageId = load.targetMessageId
       return check
     }
     ui.notifications.warn('CoC7.Errors.UnableToLoadMessage', { localize: true })
@@ -191,7 +201,7 @@ export default class CoC7ChatCombatMelee {
             if (target) {
               if (!check.#isAutoSuccess) {
                 CoC7Utilities.messageUpdatedThen(message.id, () => {
-                  CoC7ChatCombatMelee.createMessage({ attackerMessageId: message.id, attackerUuid: attacker.uuid, targetUuid: target.uuid, participant: CoC7ChatCombatMelee.participant.target })
+                  CoC7ChatCombatMelee.createMessage({ attackerCheck: check, attackerUuid: attacker.uuid, targetUuid: target.uuid, participant: CoC7ChatCombatMelee.participant.target })
                 })
               } else {
                 CoC7Utilities.messageUpdatedWithRollThen(message.id, () => {
@@ -204,6 +214,25 @@ export default class CoC7ChatCombatMelee {
               })
             }
             check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
+          }
+        }
+        break
+      case 'bonus':
+        {
+          const quantity = event.currentTarget.dataset.quantity
+          if (quantity) {
+            const check = await CoC7ChatCombatMelee.loadFromMessage(message)
+            try {
+              if (await check.#dicePool.addDiceToPool(quantity)) {
+                check.updateMessage()
+              } else {
+                ui.notifications.warn('CoC7.Errors.UnparsableActor', { localize: true })
+              }
+            } catch (err) {
+              ui.notifications.warn(err.message)
+            }
           } else {
             ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
           }
@@ -224,6 +253,24 @@ export default class CoC7ChatCombatMelee {
             }
           } else {
             ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
+      case 'luck':
+        {
+          const luckSpend = event.currentTarget?.dataset?.luckSpend
+          if (luckSpend) {
+            const check = await CoC7ChatCombatMelee.loadFromMessage(message)
+            if (check) {
+              const actor = await fromUuid(check.message.flags[FOLDER_ID].load.actorUuid)
+              if (actor) {
+                if (await check.#dicePool.addLuck(actor, parseInt(luckSpend, 10))) {
+                  check.updateMessage()
+                }
+              }
+            }
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
           }
         }
         break
@@ -483,6 +530,22 @@ export default class CoC7ChatCombatMelee {
   }
 
   /**
+   * Get damage message id
+   * @returns {string}
+   */
+  get damageMessageId () {
+    return this.#damageMessageId
+  }
+
+  /**
+   * Set damage message id
+   * @param {string} value
+   */
+  set damageMessageId (value) {
+    this.#damageMessageId = value
+  }
+
+  /**
    * Create Message Data object
    * @returns {object}
    */
@@ -498,6 +561,7 @@ export default class CoC7ChatCombatMelee {
       attackerUuid: CoC7Utilities.getActorUuid(attacker),
       bonusDice: Math.abs(this.#dicePool.poolModifier),
       bonusType: game.i18n.localize(this.#dicePool.poolModifier < 0 ? 'CoC7.DiceModifierPenalty' : 'CoC7.DiceModifierBonus'),
+      buttons: {},
       checkRevealed: this.#checkRevealed,
       diceGroup,
       displayActorOnCard: (attacker ? game.settings.get(FOLDER_ID, 'displayActorOnCard') : false),
@@ -599,14 +663,17 @@ export default class CoC7ChatCombatMelee {
         }
       )
     }
+    let actor
     switch (this.#participant) {
       case CoC7ChatCombatMelee.participant.initiator:
         data.template = 'systems/' + FOLDER_ID + '/templates/chat/melee-initiator.hbs'
         data.actorUuid = data.attackerUuid
+        actor = attacker
         break
       case CoC7ChatCombatMelee.participant.target:
         data.template = 'systems/' + FOLDER_ID + '/templates/chat/melee-target.hbs'
         data.actorUuid = data.targetUuid
+        actor = target
         if (!data.rolled) {
           if (target?.items.find(doc => doc.system.isDodge)) {
             data.hasDodge = true
@@ -623,6 +690,9 @@ export default class CoC7ChatCombatMelee {
           }
         }
         break
+    }
+    if (actor) {
+      data.buttons = this.#dicePool.availableButtons({ luckAvailable: actor?.system.attribs.lck.value ?? 0, isPushable: false, key: 'item' })
     }
     return data
   }
@@ -644,6 +714,7 @@ export default class CoC7ChatCombatMelee {
             attackerUuid: data.attackerUuid,
             cardOpen: true,
             checkRevealed: this.#checkRevealed,
+            damageMessageId: this.#damageMessageId,
             finalPoolModifier: data.finalPoolModifier,
             isAutoSuccess: this.#isAutoSuccess,
             isNoResponse: this.#isNoResponse,
@@ -652,7 +723,8 @@ export default class CoC7ChatCombatMelee {
             poolKeys: this.#poolKeys,
             poolModifier: this.#poolModifier,
             responded: this.#responded,
-            targetUuid: data.targetUuid
+            targetUuid: data.targetUuid,
+            targetMessageId: this.#targetMessageId
           }
         }
       },
@@ -704,6 +776,18 @@ export default class CoC7ChatCombatMelee {
         })
       } else {
         await this.message.update(diff)
+        if (typeof this.message.flags[FOLDER_ID].load.damageMessageId === 'string') {
+          const damageMessage = game.messages.get(this.message.flags[FOLDER_ID].load.damageMessageId)
+          if (damageMessage && damageMessage.rolls.length === 0) {
+            const check = await CoC7ChatDamage.loadFromMessage(damageMessage)
+            if (check) {
+              check.updateFromCombatMelee({
+                attacker: this.message.flags[FOLDER_ID].load.attackerMessageId ?? this.message.id,
+                target: this.message.flags[FOLDER_ID].load.targetMessageId ?? this.message.id
+              })
+            }
+          }
+        }
         Hooks.call('messageUpdatedCoC7', this.message.id)
       }
     }
@@ -711,11 +795,19 @@ export default class CoC7ChatCombatMelee {
 
   /**
    * Return an array of results
-   * XXXX WIP
    * @returns {Array}
    */
   async publicResults () {
-    return []
+    const data = await this.getTemplateData()
+    return [
+      {
+        messageType: this.message.flags[FOLDER_ID].load.as,
+        actorUuid: data.actorUuid,
+        type: 'item',
+        key: data.itemUuid,
+        ...this.#dicePool.publicResults()
+      }
+    ]
   }
 
   /**

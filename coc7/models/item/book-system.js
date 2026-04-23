@@ -135,6 +135,29 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
   }
 
   /**
+   * Use tome as a Mythos Reference
+   */
+  async attemptReference () {
+    const roll = await new Roll('1D4').roll()
+    const config = {
+      cardType: CoC7RollNormalize.CARD_TYPE.NORMAL,
+      cardTypeFixed: true,
+      chatMessage: false,
+      threshold: this.mythosRating
+    }
+    const check = await CoC7RollNormalize.trigger(config)
+    if (check) {
+      check.flavor = game.i18n.format('CoC7.ReferenceTomeFlavor', {
+        book: this.parent.name,
+        hours: roll.total,
+        flavor: check.flavor
+      })
+      check.message = { rolls: [roll] }
+      check.toMessage()
+    }
+  }
+
+  /**
    * Modify study progress
    * @param {integer} modify
    */
@@ -154,7 +177,16 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
     if (modify < 0) {
       await this.parent.actor?.system.updateBook(this.parent, { progress: Math.max(0, parseInt(knownBook.progress, 10) + parseInt(modify, 10)) })
     } else if (modify > 0) {
-      await this.parent.actor?.system.updateBook(this.parent, { progress: Math.min(parseInt(knownBook.necessary, 10), parseInt(knownBook.progress, 10) + parseInt(modify, 10)) })
+      const necessary = parseInt(knownBook.necessary, 10)
+      const currentProgress = parseInt(knownBook.progress, 10)
+      if (currentProgress < necessary) {
+        const progress = Math.min(necessary, currentProgress + parseInt(modify, 10))
+        await this.parent.actor?.system.updateBook(this.parent, { progress })
+        if (await this.checkExhaustion() && progress === necessary) {
+          /* // FoundryVTT V12 */
+          ui.notifications.warn(game.i18n.format('CoC7.BookHasNothingMoreToTeach', { actor: this.parent.actor.name, book: this.parent.name }))
+        }
+      }
     }
   }
 
@@ -169,8 +201,6 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
       if (mythosRating > 0) {
         const cthulhuMythosSkill = this.parent.actor.cthulhuMythosSkill
         if (cthulhuMythosSkill && cthulhuMythosSkill.system.value >= mythosRating) {
-          /* // FoundryVTT V12 */
-          ui.notifications.warn(game.i18n.format('CoC7.BookHasNothingMoreToTeach', { actor: this.parent.actor.name, book: this.parent.name }))
           return true
         }
       }

@@ -41,122 +41,164 @@ export default class CoC7ChatDamage {
    * @param {string} options.attacker   Message ID
    * @param {string} options.target     Message ID
    * @param {string} options.targetUuid Actor UUID
+   * @returns {object}
    */
-  static async createFromCombatMelee ({ attacker, target = '', targetUuid = '' }) {
+  async #updateFromCombatMelee ({ attacker, target, targetUuid }) {
     const messageAttacker = game.messages.get(attacker)
     if (messageAttacker?.flags?.[FOLDER_ID]?.load?.as === 'CoC7ChatCombatMelee') {
-      const check = new CoC7ChatDamage()
-      const attackerData = await (await CoC7ChatCombatMelee.loadFromMessage(messageAttacker)).getTemplateData()
+      this.#isCritical = false
+      this.#isImpale = false
+      this.#rollDamage = false
+      const attackerMessage = await CoC7ChatCombatMelee.loadFromMessage(messageAttacker)
+      let targetMessage
+      const attackerData = await attackerMessage.getTemplateData()
       const messageTarget = (target === '' ? false : game.messages.get(target))
       let targetData
       if (messageTarget?.flags?.[FOLDER_ID]?.load?.as === 'CoC7ChatCombatMelee') {
-        targetData = await (await CoC7ChatCombatMelee.loadFromMessage(messageTarget)).getTemplateData()
+        targetMessage = await CoC7ChatCombatMelee.loadFromMessage(messageTarget)
+        targetData = await targetMessage.getTemplateData()
       }
       let checkCritical = false
       if (targetData?.isNoResponse) {
-        check.attacker = attackerData.attackerUuid
-        check.item = attackerData.itemUuid
-        check.target = attackerData.targetUuid
+        this.attacker = attackerData.attackerUuid
+        this.item = attackerData.itemUuid
+        this.target = attackerData.targetUuid
         if (attackerData.successLevel >= CoC7DicePool.successLevel.regular) {
           checkCritical = true
-          check.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
+          this.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
             name: attackerData.attackerName
           })
-          check.#rollDamage = true
+          this.#rollDamage = true
         } else {
-          check.#resultText = game.i18n.format('CoC7.InitiatorMissed', {
+          this.#resultText = game.i18n.format('CoC7.InitiatorMissed', {
             name: attackerData.attackerName
           })
         }
       } else if (targetData?.isDodge) {
         if (attackerData.successLevel < CoC7DicePool.successLevel.regular && targetData.successLevel < CoC7DicePool.successLevel.regular) {
-          check.#resultText = game.i18n.localize('CoC7.NoWinner')
+          this.#resultText = game.i18n.localize('CoC7.NoWinner')
         } else if (attackerData.successLevel > targetData.successLevel) {
           checkCritical = true
-          check.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
+          this.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
             name: attackerData.attackerName
           })
-          check.attacker = attackerData.attackerUuid
-          check.item = attackerData.itemUuid
-          check.target = attackerData.targetUuid
-          check.#rollDamage = true
+          this.attacker = attackerData.attackerUuid
+          this.item = attackerData.itemUuid
+          this.target = attackerData.targetUuid
+          this.#rollDamage = true
         } else {
-          check.#resultText = game.i18n.format('CoC7.DodgeSuccess', {
+          this.#resultText = game.i18n.format('CoC7.DodgeSuccess', {
             name: attackerData.targetName
           })
-          check.attacker = attackerData.targetUuid
-          check.item = targetData.itemUuid
-          check.target = attackerData.attackerUuid
+          this.attacker = attackerData.targetUuid
+          this.item = targetData.itemUuid
+          this.target = attackerData.attackerUuid
         }
       } else if (targetData?.isFightBack) {
         if (attackerData.successLevel < CoC7DicePool.successLevel.regular && targetData.successLevel < CoC7DicePool.successLevel.regular) {
-          check.#resultText = game.i18n.localize('CoC7.NoWinner')
+          this.#resultText = game.i18n.localize('CoC7.NoWinner')
         } else if (attackerData.successLevel >= targetData.successLevel) {
           checkCritical = true
-          check.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
+          this.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
             name: attackerData.attackerName
           })
-          check.attacker = attackerData.attackerUuid
-          check.item = attackerData.itemUuid
-          check.target = attackerData.targetUuid
-          check.#rollDamage = true
+          this.attacker = attackerData.attackerUuid
+          this.item = attackerData.itemUuid
+          this.target = attackerData.targetUuid
+          this.#rollDamage = true
         } else {
-          check.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
+          this.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
             name: attackerData.targetName
           })
-          check.attacker = attackerData.targetUuid
-          check.item = targetData.itemUuid
-          check.target = attackerData.attackerUuid
-          check.#rollDamage = true
+          this.attacker = attackerData.targetUuid
+          this.item = targetData.itemUuid
+          this.target = attackerData.attackerUuid
+          this.#rollDamage = true
         }
       } else if (targetData?.isManeuver) {
         if (attackerData.successLevel < CoC7DicePool.successLevel.regular && targetData.successLevel < CoC7DicePool.successLevel.regular) {
-          check.#resultText = game.i18n.localize('CoC7.NoWinner')
+          this.#resultText = game.i18n.localize('CoC7.NoWinner')
         } else if (attackerData.successLevel >= targetData.successLevel) {
           checkCritical = true
-          check.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
+          this.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
             name: attackerData.attackerName
           })
-          check.attacker = attackerData.attackerUuid
-          check.item = attackerData.itemUuid
-          check.target = attackerData.targetUuid
-          check.#rollDamage = true
+          this.attacker = attackerData.attackerUuid
+          this.item = attackerData.itemUuid
+          this.target = attackerData.targetUuid
+          this.#rollDamage = true
         } else {
-          check.#resultText = game.i18n.format('CoC7.ManeuverSuccess', {
+          this.#resultText = game.i18n.format('CoC7.ManeuverSuccess', {
             name: attackerData.targetName
           })
-          check.attacker = attackerData.targetUuid
-          check.item = targetData.itemUuid
-          check.target = attackerData.attackerUuid
+          this.attacker = attackerData.targetUuid
+          this.item = targetData.itemUuid
+          this.target = attackerData.attackerUuid
         }
       } else if (attackerData.isSuccess) {
         checkCritical = true
-        check.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
+        this.#resultText = game.i18n.format('CoC7.WinnerRollDamage', {
           name: attackerData.attackerName
         })
-        check.attacker = attackerData.attackerUuid
-        check.item = attackerData.itemUuid
-        check.target = targetUuid
-        check.#rollDamage = true
+        this.attacker = attackerData.attackerUuid
+        this.item = attackerData.itemUuid
+        this.target = targetUuid
+        this.#rollDamage = true
       } else {
-        check.#resultText = game.i18n.format('CoC7.InitiatorMissed', {
+        this.#resultText = game.i18n.format('CoC7.InitiatorMissed', {
           name: attackerData.attackerName
         })
-        check.attacker = attackerData.attackerUuid
-        check.item = attackerData.itemUuid
+        this.attacker = attackerData.attackerUuid
+        this.item = attackerData.itemUuid
       }
       if (checkCritical && attackerData.successLevel >= CoC7DicePool.successLevel.extreme) {
-        check.#isCritical = true
+        this.#isCritical = true
         const item = (await this.item)
         if (item?.system?.properties.impl ?? false) {
-          check.#isImpale = true
+          this.#isImpale = true
         }
       }
+      return { attackerMessage, targetMessage }
+    }
+    return {}
+  }
+
+  /**
+   * Create damage message from two combat melee messages
+   * @param {object} options
+   * @param {string} options.attacker   Message ID
+   * @param {string} options.target     Message ID
+   * @param {string} options.targetUuid Actor UUID
+   */
+  static async createFromCombatMelee ({ attacker, target = '', targetUuid = '' }) {
+    const check = new CoC7ChatDamage()
+    const setup = await check.#updateFromCombatMelee({ attacker, target, targetUuid })
+    if (typeof setup.attackerMessage !== 'undefined') {
       const targetActor = (await check.target)
       check.#targetArmor = (targetActor ? (targetActor.isToken ? targetActor.token.actor : targetActor)?.system.attribs.armor.value ?? '0' : '0')
       const chatData = await check.getChatData()
-      await ChatMessage.create(chatData)
+      const damageMessage = await ChatMessage.create(chatData)
+      if (damageMessage) {
+        setup.attackerMessage.damageMessageId = damageMessage.id
+        setup.attackerMessage.updateMessage()
+        if (setup.targetMessage) {
+          setup.targetMessage.damageMessageId = damageMessage.id
+          setup.targetMessage.updateMessage()
+        }
+      }
     }
+  }
+
+  /**
+   * Update damage message from two combat melee messages
+   * @param {object} options
+   * @param {string} options.attacker   Message ID
+   * @param {string} options.target     Message ID
+   * @param {string} options.targetUuid Actor UUID
+   */
+  async updateFromCombatMelee ({ attacker, target = '', targetUuid = '' }) {
+    await this.#updateFromCombatMelee({ attacker, target, targetUuid })
+    this.updateMessage()
   }
 
   /**

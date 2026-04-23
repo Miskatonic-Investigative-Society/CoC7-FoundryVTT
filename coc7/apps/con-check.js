@@ -95,23 +95,6 @@ export default class CoC7ConCheck {
   }
 
   /**
-   * Add luck to existing pool
-   * @param {integer} luckSpend
-   * @returns {boolean}
-   */
-  async addLuck (luckSpend) {
-    const actor = (await this.actor)
-    const newLuck = parseInt(actor.system.attribs.lck.value ?? 0, 10) - parseInt(luckSpend, 10)
-    if (newLuck >= 0) {
-      if (await actor.spendLuck(luckSpend) !== false) {
-        this.#dicePool.luckSpent = this.#dicePool.luckSpent + parseInt(luckSpend, 10)
-        return true
-      }
-    }
-    return false
-  }
-
-  /**
    * Create Chat Message object
    * @returns {object}
    */
@@ -250,7 +233,7 @@ export default class CoC7ConCheck {
     if (this.#callbackUuid) {
       const document = await fromUuid(this.#callbackUuid)
       if (document && typeof document.system.updateRoll === 'function') {
-        document.system.updateRoll(this)
+        await document.system.updateRoll(this)
       }
     }
   }
@@ -336,8 +319,13 @@ export default class CoC7ConCheck {
           const luckSpend = event.currentTarget?.dataset?.luckSpend
           if (luckSpend) {
             const check = await CoC7ConCheck.loadFromMessage(message)
-            if (await check.addLuck(parseInt(luckSpend, 10))) {
-              check.updateMessage()
+            if (check) {
+              const actor = (await check.actor)
+              if (actor) {
+                if (await check.#dicePool.addLuck(actor, parseInt(luckSpend, 10))) {
+                  check.updateMessage()
+                }
+              }
             }
           } else {
             ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })

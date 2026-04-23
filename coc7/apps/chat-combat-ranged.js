@@ -1099,11 +1099,20 @@ export default class CoC7ChatCombatRanged {
 
   /**
    * Return an array of results
-   * XXXX WIP
    * @returns {Array}
    */
   async publicResults () {
-    return []
+    const results = []
+    for (const shot of this.#shots) {
+      results.push({
+        messageType: this.message.flags[FOLDER_ID].load.as,
+        actorUuid: this.message.flags[FOLDER_ID].load.actorUuid,
+        type: 'item',
+        key: this.message.flags[FOLDER_ID].load.itemUuid,
+        ...shot.dicePool.publicResults()
+      })
+    }
+    return results
   }
 
   /**

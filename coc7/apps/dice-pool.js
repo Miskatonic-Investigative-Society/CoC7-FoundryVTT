@@ -1098,6 +1098,25 @@ export default class CoC7DicePool {
   }
 
   /**
+   * Remove luck from actor and add to pool
+   * @param {Document} actor
+   * @param {integer} luckSpend
+   * @returns {boolean}
+   */
+  async addLuck (actor, luckSpend) {
+    if (actor && !this.isPushed) {
+      const newLuck = parseInt(actor?.system.attribs.lck.value ?? 0, 10) - parseInt(luckSpend, 10)
+      if (newLuck >= 0) {
+        if (await actor.spendLuck(luckSpend) !== false) {
+          this.luckSpent = this.luckSpent + parseInt(luckSpend, 10)
+          return true
+        }
+      }
+    }
+    return false
+  }
+
+  /**
    * Prevent Rolls being added to ChatData so DsN wont trigger
    * @param {boolean} value
    */
@@ -1442,6 +1461,29 @@ export default class CoC7DicePool {
       setSuccess: this.#setSuccess,
       suppressRollData: this.#suppressRollData,
       threshold: this.#threshold
+    }
+  }
+
+  /**
+   * Public Results
+   * @returns {object}
+   */
+  publicResults () {
+    const diceGroups = this.diceGroups
+    return {
+      threshold: this.threshold,
+      total: diceGroups[0]?.total,
+      luckSpent: this.luckSpent,
+      poolModifier: this.poolModifier,
+      isRolled: this.isRolled,
+      isCritical: diceGroups[0]?.isCritical,
+      isExtremeSuccess: diceGroups[0]?.isExtremeSuccess,
+      isFumble: diceGroups[0]?.isFumble,
+      isHardSuccess: diceGroups[0]?.isHardSuccess,
+      isRegularFailure: diceGroups[0]?.isRegularFailure,
+      isRegularSuccess: diceGroups[0]?.isRegularSuccess,
+      isSuccess: diceGroups[0]?.isSuccess,
+      isPushed: this.isPushed
     }
   }
 }
