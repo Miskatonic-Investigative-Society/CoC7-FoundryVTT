@@ -12,6 +12,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Add luck and bonus/penalty to melee combat messages
 - Add reference tome button to allow a tomb to be referenced after an initial reading
 - Alternate row colours on Investigator development tab
+- Fix books without CoC ID being treated as the first book without a CoC ID for learning and progress
 - Fix rolling characteristics on Investigator V2 sheet
 
 ## Version 8.5
