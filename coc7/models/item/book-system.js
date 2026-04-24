@@ -201,6 +201,10 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
       if (mythosRating > 0) {
         const cthulhuMythosSkill = this.parent.actor.cthulhuMythosSkill
         if (cthulhuMythosSkill && cthulhuMythosSkill.system.value >= mythosRating) {
+          if (knownBook.progress > 0 && knownBook.progress < knownBook.necessary) {
+            // You've started, so you'll finish
+            return false
+          }
           return true
         }
       }
