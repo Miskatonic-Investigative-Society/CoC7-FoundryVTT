@@ -324,7 +324,7 @@ export default class CoC7ModelsActorGlobalSystem extends foundry.abstract.TypeDa
    * @returns {object}
    */
   getBook (document) {
-    return this.books.find(field => field.id === document.id || field.cocid === (document.flags[FOLDER_ID]?.cocidFlag?.id ?? ''))
+    return this.books.find(field => field.id === document.id || (document.flags[FOLDER_ID]?.cocidFlag?.id.length ? field.cocid === document.flags[FOLDER_ID].cocidFlag.id : false))
   }
 
   /**
@@ -334,7 +334,7 @@ export default class CoC7ModelsActorGlobalSystem extends foundry.abstract.TypeDa
    */
   async updateBook (document, updates) {
     const books = foundry.utils.duplicate(this.books)
-    let offset = books.findIndex(field => field.id === document.id || field.cocid === (document.flags[FOLDER_ID]?.cocidFlag?.id ?? ''))
+    let offset = books.findIndex(field => field.id === document.id || (document.flags[FOLDER_ID]?.cocidFlag?.id.length ? field.cocid === document.flags[FOLDER_ID].cocidFlag.id : false))
     if (offset === -1) {
       const book = foundry.utils.mergeObject({
         id: document.id,
