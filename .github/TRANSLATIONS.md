@@ -4,26 +4,28 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations have more than 360 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cs.json (389 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (391 untranslated strings)](./ABANDONED.md#csjson)
 
-[it.json (425 untranslated strings)](./ABANDONED.md#itjson)
+[it.json (427 untranslated strings)](./ABANDONED.md#itjson)
 
-[pt-BR.json (579 untranslated strings)](./ABANDONED.md#pt-brjson)
+[pt-BR.json (581 untranslated strings)](./ABANDONED.md#pt-brjson)
 
-[ru.json (495 untranslated strings)](./ABANDONED.md#rujson)
+[ru.json (497 untranslated strings)](./ABANDONED.md#rujson)
 
-[uk.json (390 untranslated strings)](./ABANDONED.md#ukjson)
+[uk.json (392 untranslated strings)](./ABANDONED.md#ukjson)
 
 
 
 |Key|[cn](./MISSING.md#cnjson)|[de](./MISSING.md#dejson)|[es](./MISSING.md#esjson)|[fr](./MISSING.md#frjson)|[ja](./MISSING.md#jajson)|[ko](./MISSING.md#kojson)|[pl](./MISSING.md#pljson)|[sv](./MISSING.md#svjson)|[zh-tw](./MISSING.md#zh-twjson)|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**6**|**347**|**348**|**147**|**231**|**256**|**232**|**230**|**2**|
+|**Remaining**:|**8**|**349**|**350**|**149**|**233**|**258**|**234**|**232**|**4**|
 |[CoC7.AddedEmbeddedItems](#coc7addedembeddeditemsjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
 |[CoC7.AdditionalPoolModifier](#coc7additionalpoolmodifierjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
 |[CoC7.AlreadyRested](#coc7alreadyrestedjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
 |[CoC7.ArmorWillFormula](#coc7armorwillformulajson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.BookAlterProgress](#coc7bookalterprogressjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.BookProgressSummary](#coc7bookprogresssummaryjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
+|[CoC7.BookProgressValue](#coc7bookprogressvaluejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.ChaosiumCanvasInterface.Actions.Hide](#coc7chaosiumcanvasinterfaceactionshidejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ChaosiumCanvasInterface.Actions.Show](#coc7chaosiumcanvasinterfaceactionsshowjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
 |[CoC7.ChaosiumCanvasInterface.Actions.Toggle](#coc7chaosiumcanvasinterfaceactionstogglejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
@@ -285,8 +287,12 @@ The following translations have more than 360 untranslated strings [are you able
 ```  "CoC7.AlreadyRested": "Already rested",```
 ##### CoC7.ArmorWillFormula
 ```  "CoC7.ArmorWillFormula": "Armor value needs rolled",```
+##### CoC7.BookAlterProgress
+```  "CoC7.BookAlterProgress": "Study progress quantity",```
 ##### CoC7.BookProgressSummary
 ```  "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",```
+##### CoC7.BookProgressValue
+```  "CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",```
 ##### CoC7.ChaosiumCanvasInterface.Actions.Hide
 ```  "CoC7.ChaosiumCanvasInterface.Actions.Hide": "Hide",```
 ##### CoC7.ChaosiumCanvasInterface.Actions.Show
