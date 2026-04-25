@@ -25,14 +25,14 @@
           <label>{{localize 'CoC7.InitialReading'}}</label>
           <label><i class="fa-solid fa-check"></i></label>
         </div>
-        <div class="flexrow">
-          <label>{{localize 'CoC7.FullStudies'}}:</label>
-          <label>{{fullStudies}}</label>
-          {{#if (and studyCompleted (not exhausted))}}
-            <a class="item-control" data-action="redo-full-study" data-tooltip="CoC7.RedoFullStudy"><i class="fa-solid fa-redo"></i></a>
-          {{/if}}
-        </div>
-        {{#if (gt document.system.mythosRating 0)}}
+        {{#if mythos}}
+          <div class="flexrow">
+            <label>{{localize 'CoC7.FullStudies'}}:</label>
+            <label>{{fullStudies}}</label>
+            {{#if studyCompleted}}
+              <a class="item-control" data-action="redo-full-study" data-tooltip="CoC7.RedoFullStudy"><i class="fa-solid fa-redo"></i></a>
+            {{/if}}
+          </div>
           <div class="flexrow">
             <button class="item-control" data-action="attemptReference">{{localize 'CoC7.ReferenceTome'}}</button>
           </div>
@@ -45,12 +45,12 @@
   </div>
   <div class="spell-progress flexrow">
     {{#if (and mythos (or isKeeper initialReading) isEmbedded)}}
-      {{#if (and isKeeper (not exhausted))}}
-        <a class="item-control" data-action="decrease-progress"><i class="fa-regular fa-minus-circle"></i></a>
+      {{#if isKeeper}}
+        <a class="{{#if (lt progress necessary)}}item-control{{else}}item-control-disabled{{/if}}" data-action="decrease-progress"><i class="fa-regular fa-minus-circle"></i></a>
       {{/if}}
-      <progress name="system.study.progress" value="{{progress}}" max="{{necessary}}" {{#unless exhausted}} data-label="{{localize 'CoC7.Progress'}}: {{progress}} / {{necessary}} {{localize units}}"{{/unless}}></progress>
-      {{#if (and isKeeper (not exhausted))}}
-        <a class="item-control" data-action="increase-progress"><i class="fa-regular fa-plus-circle"></i></a>
+      <progress name="system.study.progress" value="{{progress}}" max="{{necessary}}" data-label="{{localize 'CoC7.Progress'}}: {{progress}} / {{necessary}} {{localize units}}"></progress>
+      {{#if isKeeper}}
+        <a class="{{#if (lt progress necessary)}}item-control{{else}}item-control-disabled{{/if}}" data-action="increase-progress"><i class="fa-regular fa-plus-circle"></i></a>
       {{/if}}
     {{else}}
       &nbsp;

@@ -182,30 +182,8 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
       if (currentProgress < necessary) {
         const progress = Math.min(necessary, currentProgress + parseInt(modify, 10))
         await this.parent.actor?.system.updateBook(this.parent, { progress })
-        if (await this.checkExhaustion() && progress === necessary) {
-          /* // FoundryVTT V12 */
-          ui.notifications.warn(game.i18n.format('CoC7.BookHasNothingMoreToTeach', { actor: this.parent.actor.name, book: this.parent.name }))
-        }
       }
     }
-  }
-
-  /**
-   * Check if book can still reward Cthulhu Mythos improvements
-   * @returns {boolean}
-   */
-  async checkExhaustion () {
-    const knownBook = this.parent.actor?.system.getBook(this.parent)
-    if (knownBook?.initialReading === true) {
-      const mythosRating = this.mythosRating
-      if (mythosRating > 0) {
-        const cthulhuMythosSkill = this.parent.actor.cthulhuMythosSkill
-        if (cthulhuMythosSkill && cthulhuMythosSkill.system.value >= mythosRating) {
-          return true
-        }
-      }
-    }
-    return false
   }
 
   /**
