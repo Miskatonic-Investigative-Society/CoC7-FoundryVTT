@@ -10,7 +10,7 @@ export default class CoC7MessageResults {
   /**
    * Get CoC7DicePool from a message for third party to easily see results
    * @param {Document|string} message
-   * @returns {object}
+   * @returns {Array}
    * Array of
    *  - {string} actorUuid Which actor is this for
    *  - {string} type
@@ -25,7 +25,7 @@ export default class CoC7MessageResults {
    *  - {boolean} isFumble
    *  - {boolean} isSuccess If this roll considered a success (roll, malfunction, automatic success)
    *  - {boolean} isPushed
-  */
+   */
   static async loadMessage (message) {
     if (typeof message === 'string') {
       message = game.messages.get(message)

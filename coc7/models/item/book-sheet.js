@@ -380,6 +380,7 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
    * Get value to alter progress by
    * @param {ClickEvent} event
    * @param {boolean} increase
+   * @returns {integer}
    */
   async alterProgressBy (event, increase) {
     let alter = 1
