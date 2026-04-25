@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Replace StandardJS with ESLint, thanks to @zeedif #1863
+
 ## Version 8.6
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
