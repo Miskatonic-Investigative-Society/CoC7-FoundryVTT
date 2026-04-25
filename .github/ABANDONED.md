@@ -2,26 +2,28 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cs.json (389 untranslated strings)](#csjson)
+[cs.json (391 untranslated strings)](#csjson)
 
-[it.json (425 untranslated strings)](#itjson)
+[it.json (427 untranslated strings)](#itjson)
 
-[pt-BR.json (579 untranslated strings)](#pt-brjson)
+[pt-BR.json (581 untranslated strings)](#pt-brjson)
 
-[ru.json (495 untranslated strings)](#rujson)
+[ru.json (497 untranslated strings)](#rujson)
 
-[uk.json (390 untranslated strings)](#ukjson)
+[uk.json (392 untranslated strings)](#ukjson)
 
 
 ## cs.json
-389 untranslated strings
+391 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.AlternativeNames": "Alternative names",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.ChaosiumCanvasInterface.Actions.Hide": "Hide",
 "CoC7.ChaosiumCanvasInterface.Actions.Show": "Show",
 "CoC7.ChaosiumCanvasInterface.Actions.Toggle": "Toggle",
@@ -407,7 +409,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## it.json
-425 untranslated strings
+427 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -427,7 +429,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.AlternativeNames": "Alternative names",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.ChaosiumCanvasInterface.Actions.Hide": "Hide",
 "CoC7.ChaosiumCanvasInterface.Actions.Show": "Show",
@@ -836,7 +840,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-579 untranslated strings
+581 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -856,7 +860,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.AlternativeNames": "Alternative names",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.ChaosiumCanvasInterface.Actions.Hide": "Hide",
 "CoC7.ChaosiumCanvasInterface.Actions.Show": "Show",
@@ -1419,7 +1425,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-495 untranslated strings
+497 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -1439,7 +1445,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.AlternativeNames": "Alternative names",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.CardResolved": "Card resolved",
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.ChaosiumCanvasInterface.Actions.Hide": "Hide",
@@ -1918,14 +1926,16 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## uk.json
-390 untranslated strings
+392 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.AlternativeNames": "Alternative names",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.ChaosiumCanvasInterface.Actions.Hide": "Hide",
 "CoC7.ChaosiumCanvasInterface.Actions.Show": "Show",
 "CoC7.ChaosiumCanvasInterface.Actions.Toggle": "Toggle",
