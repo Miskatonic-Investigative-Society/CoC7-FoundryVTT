@@ -26,5 +26,5 @@ export default function (application, element, context, options) {
   } else {
     element.querySelector('img').setAttribute('src', imageReplacement)
   }
-  element.querySelector('figcaption').innerHTML = textReplacement
+  element.querySelector('figcaption').textContent = textReplacement
 }
