@@ -2,28 +2,30 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (6 untranslated strings)](#cnjson)
+[cn.json (8 untranslated strings)](#cnjson)
 
-[de.json (347 untranslated strings)](#dejson)
+[de.json (349 untranslated strings)](#dejson)
 
-[es.json (348 untranslated strings)](#esjson)
+[es.json (350 untranslated strings)](#esjson)
 
-[fr.json (147 untranslated strings)](#frjson)
+[fr.json (149 untranslated strings)](#frjson)
 
-[ja.json (231 untranslated strings)](#jajson)
+[ja.json (233 untranslated strings)](#jajson)
 
-[ko.json (256 untranslated strings)](#kojson)
+[ko.json (258 untranslated strings)](#kojson)
 
-[pl.json (232 untranslated strings)](#pljson)
+[pl.json (234 untranslated strings)](#pljson)
 
-[sv.json (230 untranslated strings)](#svjson)
+[sv.json (232 untranslated strings)](#svjson)
 
-[zh-tw.json (2 untranslated strings)](#zh-twjson)
+[zh-tw.json (4 untranslated strings)](#zh-twjson)
 
 
 ## cn.json
-6 untranslated strings
+8 untranslated strings
 ```
+"CoC7.BookAlterProgress": "Study progress quantity",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.ReferenceTome": "Reference Tome",
 "CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
 "CoC7.Settings.CharacteristicsOrder.Hint": "There are many minor changes to the characteristics order. Drag these into the order for this world.",
@@ -32,13 +34,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.HouseRules.Label": "Configure House Rules"
 ```
 ## de.json
-347 untranslated strings
+349 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.ChaosiumCanvasInterface.Actions.Hide": "Hide",
 "CoC7.ChaosiumCanvasInterface.Actions.Show": "Show",
 "CoC7.ChaosiumCanvasInterface.Actions.Toggle": "Toggle",
@@ -383,13 +387,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## es.json
-348 untranslated strings
+350 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.ChaosiumCanvasInterface.Actions.Hide": "Hide",
 "CoC7.ChaosiumCanvasInterface.Actions.Show": "Show",
 "CoC7.ChaosiumCanvasInterface.Actions.Toggle": "Toggle",
@@ -735,13 +741,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## fr.json
-147 untranslated strings
+149 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint": "Should this show, hide, or toggle the tile and documents",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title": "Action",
 "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerButton.Hint": "If Mouse Button is Both, and this button is used trigger the following region",
@@ -886,13 +894,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
 ```
 ## ja.json
-231 untranslated strings
+233 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.ChooseWeapon": "Choose Weapon",
 "CoC7.CoC7ModelsActorCharacterSheetSummarizedV2": "CoC7 Investigator Sheet Summarized v2",
 "CoC7.CoC7ModelsActorCharacterSheetSummarizedV3": "CoC7 Investigator Sheet Summarized v3",
@@ -1121,13 +1131,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
 ```
 ## ko.json
-256 untranslated strings
+258 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.ChaosiumCanvasInterface.Actions.Hide": "Hide",
 "CoC7.ChaosiumCanvasInterface.Actions.Show": "Show",
 "CoC7.ChaosiumCanvasInterface.Actions.Toggle": "Toggle",
@@ -1381,13 +1393,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle": "CCI: Light Toggle"
 ```
 ## pl.json
-232 untranslated strings
+234 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.ChaosiumCanvasInterface.OpenDocument.Tile.Hint": "Select Tile that must be visible",
 "CoC7.ChaosiumCanvasInterface.OpenDocument.Tile.Title": "Select Tile",
 "CoC7.ChooseWeapon": "Choose Weapon",
@@ -1617,13 +1631,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
 ```
 ## sv.json
-230 untranslated strings
+232 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.ChooseWeapon": "Choose Weapon",
 "CoC7.CoC7ModelsActorCharacterSheetSummarizedV2": "CoC7 Investigator Sheet Summarized v2",
 "CoC7.CoC7ModelsActorCharacterSheetSummarizedV3": "CoC7 Investigator Sheet Summarized v3",
@@ -1851,8 +1867,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
 ```
 ## zh-tw.json
-2 untranslated strings
+4 untranslated strings
 ```
+"CoC7.BookAlterProgress": "Study progress quantity",
+"CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.ReferenceTome": "Reference Tome",
 "CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}"
 ```
