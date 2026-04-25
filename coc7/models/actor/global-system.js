@@ -357,22 +357,23 @@ export default class CoC7ModelsActorGlobalSystem extends foundry.abstract.TypeDa
       books[offset].fullStudies++
       // Grant Full Study
       if (document.system.type.mythos && document.system.mythosRating > 0) {
-        if ((await document.system.checkExhaustion()) === false) {
-          const cthulhuMythosSkill = this.parent.cthulhuMythosSkill
-          if (cthulhuMythosSkill) {
-            const mythosIncrease = Math.min(document.system.mythosRating, cthulhuMythosSkill.system.value + document.system.gains.cthulhuMythos.final) - cthulhuMythosSkill.system.value
-            if (mythosIncrease > 0) {
-              const developments = [{
-                name: cthulhuMythosSkill.name,
-                gain: mythosIncrease
-              },
-              {
-                name: document.system.language,
-                gain: 'development'
-              }]
-              await document.system.grantSkillDevelopment(developments)
-              await document.system.rollSanityLoss()
-            }
+        const cthulhuMythosSkill = this.parent.cthulhuMythosSkill
+        if (cthulhuMythosSkill) {
+          let mythosIncrease = document.system.gains.cthulhuMythos.initial
+          if (cthulhuMythosSkill.system.value < document.system.mythosRating) {
+            mythosIncrease = document.system.gains.cthulhuMythos.final
+          }
+          if (mythosIncrease > 0) {
+            const developments = [{
+              name: cthulhuMythosSkill.name,
+              gain: mythosIncrease
+            },
+            {
+              name: document.system.language,
+              gain: 'development'
+            }]
+            await document.system.grantSkillDevelopment(developments)
+            await document.system.rollSanityLoss()
           }
         }
       }

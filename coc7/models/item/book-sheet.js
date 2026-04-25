@@ -111,7 +111,6 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
           context.units = knownBook.units
           context.studyCompleted = knownBook.progress === knownBook.necessary
           context.mythos = context.document.system.type.mythos
-          context.exhausted = (await context.document.system.checkExhaustion()) !== false
         }
         break
       case 'description':
@@ -279,12 +278,18 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
           }
           break
         case 'increase-progress':
-          await this.document.system.alterProgress(1)
-          this.render()
+          {
+            const alter = await this.alterProgressBy(event, true)
+            await this.document.system.alterProgress(alter)
+            this.render()
+          }
           break
         case 'decrease-progress':
-          await this.document.system.alterProgress(-1)
-          this.render()
+          {
+            const alter = await this.alterProgressBy(event, false)
+            await this.document.system.alterProgress(alter)
+            this.render()
+          }
           break
         case 'redo-full-study':
           await this.document.system.redoFullStudy()
@@ -369,5 +374,46 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
       others.splice(parseInt(index, 10), 1)
       await this.document.update({ 'system.gains.others': others })
     }
+  }
+
+  /**
+   * Get value to alter progress by
+   * @param {ClickEvent} event
+   * @param {boolean} increase
+   */
+  async alterProgressBy (event, increase) {
+    let alter = 1
+    const knownBook = this.document.actor?.system.getBook(this.document)
+    /* // FoundryVTT V12 */
+    if (game.release.generation > 12 && knownBook && event.shiftKey) {
+      const max = Number(increase ? knownBook.necessary - knownBook.progress : knownBook.progress)
+      if (max > 1) {
+        alter = await new Promise((resolve, reject) => {
+          foundry.applications.api.DialogV2.prompt({
+            window: { title: 'CoC7.BookAlterProgress' },
+            form: { closeOnSubmit: false },
+            content: '<div class="flexrow"><label>' + game.i18n.format('CoC7.BookProgressValue', { max }) + ':</label><input type="number" value="" style="flex: 0 0 3rem" min="1" max="' + max + '" step="1" autofocus required name="alter">',
+            ok: {
+              label: 'CoC7.Validate',
+              icon: 'fa-solid fa-check',
+              callback: (event, button, dialog) => {
+                if (!button.form.elements.alter.validity.valid) {
+                  button.form.reportValidity()
+                  return
+                }
+                return button.form.elements.alter.valueAsNumber
+              }
+            },
+            submit: (result, dialog) => {
+              if (!isNaN(result)) {
+                dialog.close()
+                resolve(result)
+              }
+            }
+          })
+        })
+      }
+    }
+    return (increase ? alter : -alter)
   }
 }

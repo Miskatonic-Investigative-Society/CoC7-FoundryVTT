@@ -768,7 +768,8 @@
   "CoC7.SpellSuccessfullyLearned": "Spell '{spell}' was learned successfully!",
   "CoC7.SpellAlreadyLearned": "Spell named ('{spell}') was already learned.",
 
-  "CoC7.BookHasNothingMoreToTeach": "{book} has nothing more to teach. Cthulhu Mythos skill of {actor} is greater than this Mythos Rating.",
+  "CoC7.BookAlterProgress": "Study progress quantity",
+  "CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
   "CoC7.BookType": "Book Type",
   "CoC7.Content": "Content",
   "CoC7.CthulhuMythosFinal": "Mythos Final",

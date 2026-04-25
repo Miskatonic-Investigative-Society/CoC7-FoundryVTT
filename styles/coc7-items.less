@@ -32,10 +32,17 @@
       padding: @4px @16px;
       gap: @8px;
 
-      a.item-control {
+      a.item-control,
+      a.item-control-disabled {
         margin-top: @2px;
         flex: 0 0 auto;
       }
+
+      a.item-control-disabled {
+        opacity: 0.2;
+        pointer-events: none;
+      }
+
 
       progress {
         background: none;
