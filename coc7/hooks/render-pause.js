@@ -26,5 +26,5 @@ export default function (application, html, data) {
   } else {
     html.find('img').attr('src', imageReplacement)
   }
-  html.find('figcaption').html(textReplacement)
+  html.find('figcaption').text(textReplacement)
 }
