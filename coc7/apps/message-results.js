@@ -9,9 +9,22 @@ import CoC7ChatCombatRanged from './chat-combat-ranged.js'
 export default class CoC7MessageResults {
   /**
    * Get CoC7DicePool from a message for third party to easily see results
-   * Hooks - createChatMessage and updateChatMessage
    * @param {Document|string} message
-   * @returns {object}
+   * @returns {Array}
+   * Array of
+   *  - {string} actorUuid Which actor is this for
+   *  - {string} type
+   *  - {string} key
+   *  - {string} threshold
+   *  - {boolean} isRolled
+   *  - {boolean} isCritical
+   *  - {boolean} isExtremeSuccess
+   *  - {boolean} isHardSuccess
+   *  - {boolean} isRegularSuccess
+   *  - {boolean} isRegularFailure
+   *  - {boolean} isFumble
+   *  - {boolean} isSuccess If this roll considered a success (roll, malfunction, automatic success)
+   *  - {boolean} isPushed
    */
   static async loadMessage (message) {
     if (typeof message === 'string') {

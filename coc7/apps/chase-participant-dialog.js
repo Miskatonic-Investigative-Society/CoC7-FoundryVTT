@@ -273,7 +273,7 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
               ui.notifications.warn('CoC7.DoesNotMeetMinimumReqToBeAdded', { localize: true })
               return
             }
-            chase.system.addParticipant(this.coc7Config.participant, {
+            await chase.system.addParticipant(this.coc7Config.participant, {
               locationId: this.coc7Config.locationId
             })
           }

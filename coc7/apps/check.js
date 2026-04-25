@@ -389,25 +389,6 @@ export default class CoC7Check {
   }
 
   /**
-   * Add luck to existing pool
-   * @param {integer} luckSpend
-   * @returns {boolean}
-   */
-  async addLuck (luckSpend) {
-    if (!this.#dicePool.isPushed) {
-      const actor = (await this.#asyncActor)
-      const newLuck = parseInt(actor?.system.attribs.lck.value ?? 0, 10) - parseInt(luckSpend, 10)
-      if (newLuck >= 0) {
-        if (await actor.spendLuck(luckSpend) !== false) {
-          this.#dicePool.luckSpent = this.#dicePool.luckSpent + parseInt(luckSpend, 10)
-          return true
-        }
-      }
-    }
-    return false
-  }
-
-  /**
    * Check if result should flag skill for development (or unflag if the messaged flagged it but didn't dice added)
    */
   async flagForDevelopment () {
@@ -764,22 +745,6 @@ export default class CoC7Check {
 
   /**
    * Return an array of results
-   * XXXX WIP
-   * Array of
-   *  - {string} messageType
-   *  - {string} actorUuid Which actor is this for
-   *  - {string} type
-   *  - {string} key
-   *  - {string} threshold
-   *  - {boolean} isRolled
-   *  - {boolean} isCritical
-   *  - {boolean} isExtremeSuccess
-   *  - {boolean} isHardSuccess
-   *  - {boolean} isRegularSuccess
-   *  - {boolean} isRegularFailure
-   *  - {boolean} isFumble
-   *  - {boolean} isSuccess If this roll considered a success (roll, malfunction, automatic success)
-   *  - {boolean} isPushed
    * @returns {Array}
    */
   async publicResults () {
@@ -790,19 +755,7 @@ export default class CoC7Check {
         actorUuid: data.actorUuid,
         type: this.#type,
         key: this.#key,
-        threshold: this.#dicePool.threshold,
-        total: data.diceGroups[0]?.total,
-        luckSpent: this.#dicePool.luckSpent,
-        poolModifier: this.#dicePool.poolModifier,
-        isRolled: this.#dicePool.isRolled,
-        isCritical: data.diceGroups[0]?.isCritical,
-        isExtremeSuccess: data.diceGroups[0]?.isExtremeSuccess,
-        isFumble: data.diceGroups[0]?.isFumble,
-        isHardSuccess: data.diceGroups[0]?.isHardSuccess,
-        isRegularFailure: data.diceGroups[0]?.isRegularFailure,
-        isRegularSuccess: data.diceGroups[0]?.isRegularSuccess,
-        isSuccess: data.diceGroups[0]?.isSuccess,
-        isPushed: this.#dicePool.isPushed
+        ...this.#dicePool.publicResults()
       }
     ]
   }
@@ -814,7 +767,7 @@ export default class CoC7Check {
     if (this.#callbackUuid) {
       const document = await fromUuid(this.#callbackUuid)
       if (document && typeof document.system.updateRoll === 'function') {
-        document.system.updateRoll(this)
+        await document.system.updateRoll(this)
       }
     }
   }
@@ -888,8 +841,13 @@ export default class CoC7Check {
           const luckSpend = event.currentTarget?.dataset?.luckSpend
           if (luckSpend) {
             const check = await CoC7Check.loadFromMessage(message)
-            if (await check.addLuck(parseInt(luckSpend, 10))) {
-              check.updateMessage()
+            if (check) {
+              const actor = (await check.#asyncActor)
+              if (actor) {
+                if (await check.#dicePool.addLuck(actor, parseInt(luckSpend, 10))) {
+                  check.updateMessage()
+                }
+              }
             }
           } else {
             ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })

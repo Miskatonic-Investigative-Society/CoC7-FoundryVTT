@@ -868,11 +868,21 @@ export default class CoC7ChatOpposedMessage {
 
   /**
    * Return an array of results
-   * XXXX WIP
    * @returns {Array}
    */
   async publicResults () {
-    return []
+    const results = []
+    for (const actorUuid in this.#actorRolls) {
+      const roll = this.#actorRolls[actorUuid]
+      results.push({
+        messageType: this.message.flags[FOLDER_ID].load.as,
+        actorUuid,
+        type: 'item',
+        key: roll.skillUuid,
+        ...this.#actorRolls[actorUuid].dicePool.publicResults()
+      })
+    }
+    return results
   }
 
   /**

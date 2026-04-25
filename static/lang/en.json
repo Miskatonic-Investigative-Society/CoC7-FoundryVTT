@@ -768,7 +768,8 @@
   "CoC7.SpellSuccessfullyLearned": "Spell '{spell}' was learned successfully!",
   "CoC7.SpellAlreadyLearned": "Spell named ('{spell}') was already learned.",
 
-  "CoC7.BookHasNothingMoreToTeach": "{book} has nothing more to teach. Cthulhu Mythos skill of {actor} is greater than this Mythos Rating.",
+  "CoC7.BookAlterProgress": "Study progress quantity",
+  "CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
   "CoC7.BookType": "Book Type",
   "CoC7.Content": "Content",
   "CoC7.CthulhuMythosFinal": "Mythos Final",
@@ -781,6 +782,8 @@
   "CoC7.GainsForReading": "Skill gains for reading <i>{book}</i>.",
   "CoC7.InitialReading": "Initial Reading",
   "CoC7.InitialReadingNeeded": "{actor} needs to perform an Initial Reading on <i>{book}</i> to be able to advance through Full Study progress.",
+  "CoC7.ReferenceTome": "Reference Tome",
+  "CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
   "CoC7.LearnSpellAttempt": "Attempt to learn spell {spell}, from <i>{book}</i>.",
   "CoC7.MarkedForDevelopment": "Marked for development",
   "CoC7.Mythos": "Mythos",

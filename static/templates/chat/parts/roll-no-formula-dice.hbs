@@ -51,6 +51,18 @@
         <div>{{diceGroup.resultType}}</div>
 
         <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{actorUuid}}">
+          {{#if buttons.luckRegular}}
+            <button data-action="luck" data-luck-spend="{{buttons.luckRegular}}">{{localize 'CoC7.SpendLuck' luckNeededValue=buttons.luckRegular}}</button>
+          {{/if}}
+          {{#if buttons.luckHard}}
+            <button data-action="luck" data-luck-spend="{{buttons.luckHard}}">{{localize 'CoC7.IncreaseSuccessLevel'}}: {{localize 'CoC7.HardDifficulty'}} - {{buttons.luckHard}} {{localize 'CoC7.Luck'}}.</button>
+          {{/if}}
+          {{#if buttons.luckExtreme}}
+            <button data-action="luck" data-luck-spend="{{buttons.luckExtreme}}">{{localize 'CoC7.IncreaseSuccessLevel'}}: {{localize 'CoC7.ExtremeDifficulty'}} - {{buttons.luckExtreme}} {{localize 'CoC7.Luck'}}.</button>
+          {{/if}}
+          {{#if buttons.luckCritical}}
+            <button data-action="luck" data-luck-spend="{{buttons.luckCritical}}">{{localize 'CoC7.IncreaseSuccessLevel'}}: {{localize 'CoC7.CriticalDifficulty'}} - {{buttons.luckCritical}} {{localize 'CoC7.Luck'}}.</button>
+          {{/if}}
           {{#if buttons.addBonus2}}
             <button data-action="bonus" data-quantity="2">{{localize 'CoC7.PoolAddTwoBonus'}}</button>
           {{/if}}
