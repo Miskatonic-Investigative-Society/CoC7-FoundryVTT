@@ -626,7 +626,7 @@ export default class CoC7ModelsItemChaseSystem extends CoC7ModelsItemGlobalSyste
       locations[offset].participants.splice(offset2, 1)
       locations[newLocation].participants.push(participantId)
       participants[participantIndex].currentMovementActions -= totalMove
-      if (typeof locations[newLocation].coordinates.x && typeof locations[newLocation].coordinates.y === 'number') {
+      if (typeof locations[newLocation].coordinates.x === 'number' && typeof locations[newLocation].coordinates.y === 'number') {
         await this.moveTokenToLocation(participantId, locations[newLocation].coordinates)
       }
       await this.parent.update({ 'system.participants': participants, 'system.locations.list': locations })
@@ -650,7 +650,7 @@ export default class CoC7ModelsItemChaseSystem extends CoC7ModelsItemGlobalSyste
       if (offset > -1) {
         locations[oldLocation].participants.splice(offset, 1)
         locations[newLocation].participants.push(participantId)
-        if (typeof locations[newLocation].coordinates.x && typeof locations[newLocation].coordinates.y === 'number') {
+        if (typeof locations[newLocation].coordinates.x === 'number' && typeof locations[newLocation].coordinates.y === 'number') {
           await this.moveTokenToLocation(participantId, locations[newLocation].coordinates)
         }
         await this.parent.update({ 'system.locations.list': locations }, { render })

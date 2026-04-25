@@ -45,15 +45,15 @@ export default function () {
     /* // FoundryVTT V12 */
     choices: foundry.utils.isNewerVersion(game.version, 13)
       ? () => Object.entries(ERAS).reduce((c, e) => {
-          c.push({
-            value: e[0],
-            label: game.i18n.localize(e[1].name)
-          })
-          return c
-        }, []).sort(CoC7Utilities.sortByLabelKey).reduce((c, e) => {
-          c[e.value] = e.label
-          return c
-        }, {})
+        c.push({
+          value: e[0],
+          label: game.i18n.localize(e[1].name)
+        })
+        return c
+      }, []).sort(CoC7Utilities.sortByLabelKey).reduce((c, e) => {
+        c[e.value] = e.label
+        return c
+      }, {})
       : Object.entries(ERAS).reduce((c, e) => {
         c[e[0]] = e[1].name
         return c

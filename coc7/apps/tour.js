@@ -1,4 +1,4 @@
-/* global foundry game MutationObserver Tour ui */
+/* global foundry game Tour ui */
 /* // FoundryVTT V12 */
 export default class CoC7Tour extends (foundry.nue?.Tour ?? Tour) {
   /**

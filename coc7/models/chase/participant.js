@@ -42,7 +42,7 @@ export default class CoC7ChaseParticipant {
 
   /**
    * Get the actor
-   * @throws Error if not loaded
+   * @throws {Error} if not loaded
    * @returns {Document|null}
    */
   get actor () {
@@ -54,7 +54,7 @@ export default class CoC7ChaseParticipant {
 
   /**
    * Is this an Actor that can be in a chase
-   * @throws Error if not loaded
+   * @throws {Error} if not loaded
    * @returns {boolean}
    */
   get isActor () {
@@ -66,7 +66,7 @@ export default class CoC7ChaseParticipant {
 
   /**
    * Get actor icon or default icon
-   * @throws Error if not loaded
+   * @throws {Error} if not loaded
    * @returns {string}
    */
   get icon () {
@@ -391,7 +391,7 @@ export default class CoC7ChaseParticipant {
   /**
    * Get the actor weapons
    * @param {string} otherDamage
-   * @throws Error if not loaded
+   * @throws {Error} if not loaded
    * @returns {object}
    */
   actorWeapons (otherDamage) {

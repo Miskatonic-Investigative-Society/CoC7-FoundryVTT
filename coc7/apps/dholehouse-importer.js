@@ -1,4 +1,4 @@
-/* global Actor CONFIG fetch foundry game ui */
+/* global Actor CONFIG foundry game ui */
 // cSpell:words injurues malf subskill skillname
 import { FOLDER_ID } from '../constants.js'
 import CoC7ModelsItemSkillSystem from '../models/item/skill-system.js'
