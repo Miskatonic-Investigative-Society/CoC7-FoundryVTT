@@ -1,4 +1,4 @@
-/* global DOMParser foundry game */
+/* global foundry game */
 
 export default class CoC7DelayedTooltip {
   /**

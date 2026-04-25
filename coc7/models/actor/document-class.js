@@ -58,7 +58,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
    * Not required
    * @deprecated No replacement
    */
-  get characteristics () {
+  get characteristics () { // eslint-disable-line getter-return
     deprecated.noLongerAvailable({ was: 'Actor.initialize' })
   }
 
@@ -3443,8 +3443,8 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
   /**
    * Development Phase
    * @param {bool} fastForward
-   * @param {bool} isDeprecated @deprecated
-   * @returns {object} @deprecated
+   * @param {bool} isDeprecated \@deprecated
+   * @returns {object} \@deprecated
    */
   async developmentPhase (fastForward = false, isDeprecated = false) {
     this.onlyRunOncePerSession = true

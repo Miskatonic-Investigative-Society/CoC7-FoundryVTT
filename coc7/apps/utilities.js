@@ -1,4 +1,4 @@
-/* global Actor canvas ChatMessage CONFIG CONST Folder foundry fromUuid fromUuidSync game getComputedStyle Hooks Macro Ray Roll Token TokenDocument ui */
+/* global Actor canvas ChatMessage CONFIG CONST Folder foundry fromUuid fromUuidSync game Hooks Macro Ray Roll Token TokenDocument ui */
 import { FOLDER_ID, STATUS_EFFECTS, TARGET_ALLOWED, TRADE_ALLOWED } from '../constants.js'
 import CoC7ActorPickerDialog from './actor-picker-dialog.js'
 import CoC7DicePool from './dice-pool.js'

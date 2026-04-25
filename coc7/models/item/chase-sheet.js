@@ -226,7 +226,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
                 })
               }
             }
-            new (foundry.applications.ux?.ContextMenu?.implementation ?? ContextMenu)(element, '.assist-dropdown', contextOptions, { // eslint-disable-line no-new, new-cap
+            new (foundry.applications.ux?.ContextMenu?.implementation ?? ContextMenu)(element, '.assist-dropdown', contextOptions, {
               jQuery: false,
               fixed: true,
               eventName: 'click'

@@ -277,7 +277,7 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
 
   /**
    * Receives an Array of skills and handles all the logic to develop them
-   * @param {Array} developments @see grantInitialReading
+   * @param {Array} developments \@see grantInitialReading
    * @returns {Promise<Document|void>} create ChatMessage
    */
   async grantSkillDevelopment (developments) {
