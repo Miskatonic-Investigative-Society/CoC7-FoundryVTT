@@ -1765,7 +1765,7 @@
 "CoC7.RollDifficultyUnknownName": "Okänd",
 "CoC7.RollNamedSkill": "Slå färdighet: {name}",
 "CoC7.SelectActor": "Välj",
-"CoC7.Settings.AllowPushFumbles.Hint": "If a roll is pushable and the result was a fumble after dealing with the fumble consequences, allow the roll to be pushed.",
+"CoC7.Settings.AllowPushFumbles.Hint": "Om ett slag kan pressas och resultatet var ett fummel efter att de konsekvenserna har hanterats, tillåt att även det slaget kan pressas.",
 "CoC7.Settings.AllowPushFumbles.Name": "Tillåt att fummel kan pressas",
 "CoC7.Settings.CharacteristicsOrder.Hint": "Det har skett många mindre ändringar i ordningen på grundegenskaperna. Dra dessa till den ordning som gäller för denna värld.",
 "CoC7.Settings.CharacteristicsOrder.Name": "Ordning på grundegenskaperna",
