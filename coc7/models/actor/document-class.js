@@ -3832,6 +3832,12 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
               }
               source.name = game.i18n.localize(effect[0].name)
               source.statuses = [effect[0].id]
+              if (game.settings.get(FOLDER_ID, 'enableStatusIcons')) {
+                /* // FoundryVTT V13 */
+                if (typeof CONST.ACTIVE_EFFECT_SHOW_ICON?.ALWAYS !== 'undefined') {
+                  source.showIcon = CONST.ACTIVE_EFFECT_SHOW_ICON.ALWAYS
+                }
+              }
               createEmbeddedDocuments.push(foundry.utils.mergeObject(source, custom))
             } else {
               updates[`system.conditions.${conditionName}.value`] = true

@@ -1276,9 +1276,7 @@ export default class CoC7Utilities {
           return model.document.actor
         }
       } else if (model instanceof TokenDocument) {
-        if (model.actorLink === true) {
-          return model.actor
-        }
+        return model.actor
       }
       return model
     }
