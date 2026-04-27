@@ -226,6 +226,13 @@ export default class CoC7ChatCombatMelee {
             const check = await CoC7ChatCombatMelee.loadFromMessage(message)
             try {
               if (await check.#dicePool.addDiceToPool(quantity)) {
+                Hooks.once('updateChatMessage', (document, changed, options, userId) => {
+                  if (game.user.id === userId && changed._id === message.id) {
+                    if (typeof check.message.flags[FOLDER_ID].load.damageMessageId === 'undefined' && typeof check.message.flags[FOLDER_ID].load.targetUuid !== 'string' && check.#dicePool.isSuccess) {
+                      CoC7ChatDamage.createFromCombatMelee({ attacker: check.message.id })
+                    }
+                  }
+                })
                 check.updateMessage()
               } else {
                 ui.notifications.warn('CoC7.Errors.UnparsableActor', { localize: true })
@@ -265,6 +272,13 @@ export default class CoC7ChatCombatMelee {
               const actor = await fromUuid(check.message.flags[FOLDER_ID].load.actorUuid)
               if (actor) {
                 if (await check.#dicePool.addLuck(actor, parseInt(luckSpend, 10))) {
+                  Hooks.once('updateChatMessage', (document, changed, options, userId) => {
+                    if (game.user.id === userId && changed._id === message.id) {
+                      if (typeof check.message.flags[FOLDER_ID].load.damageMessageId === 'undefined' && typeof check.message.flags[FOLDER_ID].load.targetUuid !== 'string' && check.#dicePool.isSuccess) {
+                        CoC7ChatDamage.createFromCombatMelee({ attacker: check.message.id })
+                      }
+                    }
+                  })
                   check.updateMessage()
                 }
               }

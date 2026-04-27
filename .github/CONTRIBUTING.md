@@ -55,7 +55,7 @@ If you are a new Git user, probably you will have to set it up with the followin
 
 `git config --global user.email "YOUR_EMAIL"`
 
-#### Node.js (14+)
+#### Node.js (22+)
 
 Grab an installer for any operating system from here: https://nodejs.org/en/download/
 
