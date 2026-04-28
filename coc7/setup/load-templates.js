@@ -1,4 +1,4 @@
-/* global foundry loadTemplates */
+/* global foundry loadTemplates Roll */
 import { FOLDER_ID } from '../constants.js'
 
 export default async function () {
@@ -54,7 +54,8 @@ export default async function () {
     'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/tabs/keeper.hbs',
     'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/parts/biography.hbs',
     'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/tabs/portrait-config.hbs',
-    'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/tabs/active-effects.hbs'
+    'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/tabs/active-effects.hbs',
+    Roll.CHAT_TEMPLATE
   ]
   /* // FoundryVTT V12 */
   return (foundry.applications.handlebars?.loadTemplates ?? loadTemplates)(templatePaths)

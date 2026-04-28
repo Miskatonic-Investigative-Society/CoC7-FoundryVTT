@@ -216,3 +216,54 @@ export const TRADE_ALLOWED = [
   'npc',
   'container'
 ]
+
+export const SPELL_COST_TYPE_KEYS = {
+  additionalCasterPromptAdd: {
+    name: 'CoC7.Spell.Cost.AdditionalCasterPromptAdd',
+    group: 'CoC7.Spell.Group.AdditionalCasters'
+  },
+  additionalCasterCost: {
+    name: 'CoC7.Spell.Cost.AdditionalCasterCost',
+    group: 'CoC7.Spell.Group.AdditionalCasters'
+  },
+  additionalCasterPromptRequireNumber: {
+    name: 'CoC7.Spell.Cost.AdditionalCasterPromptRequireNumber',
+    group: 'CoC7.Spell.Group.AdditionalCasters'
+  },
+  additionalInformation: {
+    name: 'CoC7.Spell.Cost.AdditionalInformation',
+    group: 'CoC7.Spell.Group.CasterCosts'
+  },
+  castingTime: {
+    name: 'CoC7.Spell.Cost.CastingTime',
+    group: 'CoC7.Spell.Group.CastingTime'
+  },
+  casterCost: {
+    name: 'CoC7.Spell.Cost.CasterCost',
+    group: 'CoC7.Spell.Group.CasterCosts'
+  },
+  promptRequireNumber: {
+    name: 'CoC7.Spell.Cost.PromptRequireNumber',
+    group: 'CoC7.Spell.Group.Prompt'
+  },
+  promptShowText: {
+    name: 'CoC7.Spell.Cost.PromptShowText',
+    group: 'CoC7.Spell.Group.Prompt'
+  },
+  promptShowVariable: {
+    name: 'CoC7.Spell.Cost.PromptShowVariable',
+    group: 'CoC7.Spell.Group.Prompt'
+  },
+  promptToggleButton: {
+    name: 'CoC7.Spell.Cost.PromptToggleButton',
+    group: 'CoC7.Spell.Group.Prompt'
+  },
+  setVariable: {
+    name: 'CoC7.Spell.Cost.SetVariable',
+    group: 'CoC7.Spell.Group.System'
+  },
+  triggerPrompt: {
+    name: 'CoC7.Spell.Cost.TriggerPrompt',
+    group: 'CoC7.Spell.Group.Prompt'
+  }
+}

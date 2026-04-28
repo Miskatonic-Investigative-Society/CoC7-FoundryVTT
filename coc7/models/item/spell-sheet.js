@@ -1,12 +1,13 @@
-/* global foundry game Item TextEditor */
-import { FOLDER_ID } from '../../constants.js'
+/* global CONFIG DragDrop foundry game Item TextEditor */
+import { FOLDER_ID, SPELL_COST_TYPE_KEYS } from '../../constants.js'
 import CoC7ModelsItemGlobalSheet from './global-sheet.js'
+import CoC7Utilities from '../../apps/utilities.js'
 
 export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet {
   static DEFAULT_OPTIONS = {
     position: {
-      width: 525,
-      height: 480
+      width: 550,
+      height: 550
     }
   }
 
@@ -26,7 +27,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
       scrollable: ['']
     },
     keeper: {
-      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-keeper.hbs',
+      template: 'systems/' + FOLDER_ID + '/templates/items/spell-tab-keeper.hbs',
       scrollable: ['']
     }
   }
@@ -82,6 +83,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
           context.isEmbedded = context.document.isEmbedded
           context.isOwner = context.document?.actor?.isOwner
         }
+        context.automatedCast = context.document.system.costList.length > 0
         break
       case 'description':
         context._types = []
@@ -111,6 +113,8 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
             secrets: context.editable
           }
         )
+        context._costListTypes = Object.entries(SPELL_COST_TYPE_KEYS).reduce((c, e) => { c.push({ key: e[0], name: game.i18n.localize(e[1].name), group: game.i18n.localize(e[1].group) }); return c }, []).sort(CoC7Utilities.sortByNameKey)
+        context._costListCosts = CONFIG.Item.dataModels.spell.availableCosts()
         break
       case 'keeper':
         /* // FoundryVTT V12 */
@@ -143,7 +147,90 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
             this.document.system.cast(hidden)
           }
           break
+        case 'cost-list-add':
+          event.preventDefault()
+          this.scrollToNewLast('div.cost-list-section')
+          this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+          this.document.update({
+            'system.costList': this.document.system.costList.concat([{}])
+          })
+          break
+        case 'cost-list-before':
+          {
+            event.preventDefault()
+            this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+            const item = event.currentTarget.closest('.spell-cost-list')
+            if (item && typeof item.dataset.index !== 'undefined') {
+              const index = Number(item.dataset.index)
+              const costList = foundry.utils.duplicate(this.document.system.costList)
+              costList.splice(index, 0, [{}])
+              this.document.update({ 'system.costList': costList })
+            }
+          }
+          break
+        case 'cost-list-remove':
+          {
+            event.preventDefault()
+            this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+            const item = event.currentTarget.closest('.spell-cost-list')
+            if (item && typeof item.dataset.index !== 'undefined') {
+              const index = Number(item.dataset.index)
+              const costList = foundry.utils.duplicate(this.document.system.costList)
+              costList.splice(index, 1)
+              this.document.update({ 'system.costList': costList })
+            }
+          }
+          break
       }
     }))
+    this.element.querySelectorAll('.spell-cost-block').forEach((element) => element.addEventListener('dragstart', (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+    }))
+    this.element.querySelectorAll('.item-controls-column').forEach((element) => element.addEventListener('dragstart', (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+    }))
+    const dragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+      dragSelector: '.spell-cost-list',
+      dropSelector: '.spell-cost-list',
+      permissions: {
+        dragstart: true,
+        drop: true
+      },
+      callbacks: {
+        dragstart: this._onDragStart.bind(this),
+        drop: this._onDragDrop.bind(this)
+      }
+    })
+    dragDrop.bind(this.element)
+  }
+
+  /**
+   * Set drag data
+   * @param {DragEvent} event
+   */
+  _onDragStart (event) {
+    const data = {
+      type: 'CoC7SpellCostList',
+      index: Number(event.currentTarget.dataset.index)
+    }
+    event.dataTransfer.setData('text/plain', JSON.stringify(data))
+  }
+
+  /**
+   * Process dropped characteristic values or skill Items
+   * @param {DropEvent} event
+   */
+  _onDragDrop (event) {
+    const indexDrop = Number(event.currentTarget.dataset.index)
+    const dataString = event.dataTransfer.getData('text/plain')
+    const dropData = JSON.parse(dataString)
+    if (dropData.type === 'CoC7SpellCostList' && dropData.index !== indexDrop) {
+      const costList = this.document.system.costList
+      const dragged = costList.splice(dropData.index, 1)
+      costList.splice(indexDrop, 0, ...dragged)
+      this.document.update({ 'system.costList': costList })
+    }
   }
 }

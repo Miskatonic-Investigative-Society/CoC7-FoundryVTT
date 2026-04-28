@@ -218,6 +218,52 @@
             border-radius: @8px;
           }
         }
+
+      }
+
+      .spell-cost-lists {
+        .spell-cost-list {
+          margin-bottom: @8px;
+          gap: @2px;
+
+          .item-controls {
+            height: 5rem;
+
+            &.allow-drag {
+              cursor: grab;
+            }
+          }
+
+          .item-controls-column {
+            flex-direction: column;
+            gap: @8px;
+            justify-content: center;
+          }
+
+          .spell-cost-block {
+            gap: @4px;
+            padding: @4px;
+            border: 1px solid #000;
+            border-radius: @8px;
+
+            .spell-cost-row {
+              gap: @4px;
+              min-height: @22px;
+
+              label {
+                flex: 0 0 auto;
+              }
+
+              input::placeholder {
+                opacity: 0.7;
+              }
+
+              .spell-cost-if {
+                flex: 0.3;
+              }
+            }
+          }
+        }
       }
     }
 
