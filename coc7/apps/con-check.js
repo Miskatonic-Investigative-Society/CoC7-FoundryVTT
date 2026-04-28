@@ -1,5 +1,5 @@
-/* global ChatMessage CONST foundry fromUuid game renderTemplate ui */
-import { FOLDER_ID, STATUS_EFFECTS } from '../constants.js'
+/* global ChatMessage foundry fromUuid game renderTemplate ui */
+import { FOLDER_ID, CHAT_MESSAGE_MODE, STATUS_EFFECTS } from '../constants.js'
 import CoC7DicePool from './dice-pool.js'
 import CoC7SystemSocket from './system-socket.js'
 import CoC7Utilities from './utilities.js'
@@ -100,7 +100,7 @@ export default class CoC7ConCheck {
    */
   async getChatData () {
     const actor = (await this.actor)
-    const isBlind = (typeof this.message?.blind === 'undefined' ? (CONST.DICE_ROLL_MODES.BLIND === game.settings.get('core', 'rollMode')) : this.message.blind)
+    const isBlind = (typeof this.message?.blind === 'undefined' ? (CHAT_MESSAGE_MODE.BLIND === (game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode'))) : this.message.blind)
     const buttons = {}
     foundry.utils.mergeObject(buttons, this.#dicePool.availableButtons({ luckAvailable: actor?.system.attribs.lck.value ?? 0, isPushable: false, key: 'con' }))
     buttons.addBonus2 = false
@@ -157,7 +157,7 @@ export default class CoC7ConCheck {
       content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/con-check.hbs', data)
     }
     if (typeof this.message?.whisper === 'undefined') {
-      if ([CONST.DICE_ROLL_MODES.PRIVATE].includes(game.settings.get('core', 'rollMode'))) {
+      if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode'))) {
         chatData.whisper = ChatMessage.getWhisperRecipients('GM')
       }
       chatData.speaker = ChatMessage.getSpeaker({ actor })

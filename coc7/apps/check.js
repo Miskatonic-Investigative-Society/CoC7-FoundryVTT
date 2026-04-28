@@ -1,5 +1,5 @@
-/* global ChatMessage CONST foundry fromUuid game renderTemplate ui */
-import { FOLDER_ID } from '../constants.js'
+/* global ChatMessage foundry fromUuid game renderTemplate ui */
+import { FOLDER_ID, CHAT_MESSAGE_MODE } from '../constants.js'
 import CoC7DicePool from './dice-pool.js'
 import CoC7ModelsItemSkillSystem from '../models/item/skill-system.js'
 import CoC7SystemSocket from './system-socket.js'
@@ -52,7 +52,7 @@ export default class CoC7Check {
     this.#isStandby = false
     // this.#key = undefined
     // this.message = undefined
-    this.#rollMode = game.settings.get('core', 'rollMode')
+    this.#rollMode = game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode')
     this.#standbyRightIcon = ''
     // this.#type = undefined
   }
@@ -186,7 +186,7 @@ export default class CoC7Check {
    * @returns {bool}
    */
   get blind () {
-    return this.#rollMode === CONST.DICE_ROLL_MODES.BLIND
+    return this.#rollMode === CHAT_MESSAGE_MODE.BLIND
   }
 
   /**
@@ -195,9 +195,9 @@ export default class CoC7Check {
    */
   set blind (value) {
     if (value === true) {
-      this.#rollMode = CONST.DICE_ROLL_MODES.BLIND
-    } else if (value === false && this.#rollMode === CONST.DICE_ROLL_MODES.BLIND) {
-      this.#rollMode = CONST.DICE_ROLL_MODES.PUBLIC
+      this.#rollMode = CHAT_MESSAGE_MODE.BLIND
+    } else if (value === false && this.#rollMode === CHAT_MESSAGE_MODE.BLIND) {
+      this.#rollMode = CHAT_MESSAGE_MODE.PUBLIC
     } else if (value !== false) {
       this.#rollMode = value
     }
@@ -395,7 +395,7 @@ export default class CoC7Check {
     if (game.settings.get(FOLDER_ID, 'xpEnabled')) {
       let value
       if (this.#dicePool.difficulty !== CoC7DicePool.difficultyLevel.unknown && !!this.item && this.item.system instanceof CoC7ModelsItemSkillSystem && !this.item.system.properties.noxpgain) {
-        if (this.#rollMode !== CONST.DICE_ROLL_MODES.BLIND) {
+        if (this.#rollMode !== CHAT_MESSAGE_MODE.BLIND) {
           if (!this.#isForced && !this.#appliedDevelopment) {
             if (this.item.system.flags.developement === false && this.#dicePool.isRolledSuccess) {
               value = true
@@ -427,7 +427,7 @@ export default class CoC7Check {
           throw new Error('No Dice')
         case 1:
           foundry.utils.mergeObject(buttons, this.#dicePool.availableButtons({ luckAvailable: actor?.system.attribs.lck.value ?? 0, isPushable: this.#allowPush, key: this.#key }))
-          if (this.#rollMode === CONST.DICE_ROLL_MODES.BLIND) {
+          if (this.#rollMode === CHAT_MESSAGE_MODE.BLIND) {
             if (this.#dicePool.difficulty !== CoC7DicePool.difficultyLevel.unknown) {
               buttons.revealCheck = true
             }
@@ -492,7 +492,7 @@ export default class CoC7Check {
       flatThresholdModifier: this.#dicePool.flatThresholdModifier,
       isForced: this.#isForced,
       foundryGeneration: game.release.generation,
-      isBlind: this.#rollMode === CONST.DICE_ROLL_MODES.BLIND,
+      isBlind: this.#rollMode === CHAT_MESSAGE_MODE.BLIND,
       isUnknownDifficulty: this.#dicePool.difficulty === CoC7DicePool.difficultyLevel.unknown,
       luckSpent: this.#dicePool.luckSpent,
       name: this.name,
@@ -558,7 +558,7 @@ export default class CoC7Check {
       foundry.utils.setProperty(chatData, 'flags.core.initiativeRoll', true)
     }
 
-    if (game.user.isGM && this.#rollMode === CONST.DICE_ROLL_MODES.SELF) {
+    if (game.user.isGM && this.#rollMode === CHAT_MESSAGE_MODE.SELF) {
       chatData.user = game.user.id
       chatData.flavor = `[${actor.name}] ${chatData.flavor}`
       switch (game.settings.get(FOLDER_ID, 'selfRollWhisperTarget')) {
@@ -582,9 +582,9 @@ export default class CoC7Check {
     if (game.user.isGM && this.#isStandby) {
       chatData.blind = false
       chatData.whisper = []
-    } else if ([CONST.DICE_ROLL_MODES.PRIVATE].includes(this.#rollMode)) {
+    } else if ([CHAT_MESSAGE_MODE.GM].includes(this.#rollMode)) {
       chatData.whisper = ChatMessage.getWhisperRecipients('GM').map(d => d.id)
-    } else if (CONST.DICE_ROLL_MODES.BLIND === this.#rollMode) {
+    } else if (CHAT_MESSAGE_MODE.BLIND === this.#rollMode) {
       chatData.blind = true
     }
     return chatData
@@ -867,7 +867,7 @@ export default class CoC7Check {
       case 'revealCheck':
         {
           const check = await CoC7Check.loadFromMessage(message)
-          check.#rollMode = CONST.DICE_ROLL_MODES.PUBLIC
+          check.#rollMode = CHAT_MESSAGE_MODE.PUBLIC
           check.updateMessage()
         }
         break
@@ -1129,13 +1129,13 @@ export default class CoC7Check {
         update['flags.' + FOLDER_ID + '.-=uuid'] = null
       }
       if (message.blind) {
-        update['flags.' + FOLDER_ID + '.load.rollMode'] = CONST.DICE_ROLL_MODES.BLIND
+        update['flags.' + FOLDER_ID + '.load.rollMode'] = CHAT_MESSAGE_MODE.BLIND
       } else if (message.whisper.length === 1 && message.whisper[0] === game.user.id) {
-        update['flags.' + FOLDER_ID + '.load.rollMode'] = CONST.DICE_ROLL_MODES.SELF
+        update['flags.' + FOLDER_ID + '.load.rollMode'] = CHAT_MESSAGE_MODE.SELF
       } else if (message.whisper.length > 0 && message.whisper.every(k => game.users.get(k)?.isGM)) {
-        update['flags.' + FOLDER_ID + '.load.rollMode'] = CONST.DICE_ROLL_MODES.PRIVATE
+        update['flags.' + FOLDER_ID + '.load.rollMode'] = CHAT_MESSAGE_MODE.GM
       } else {
-        update['flags.' + FOLDER_ID + '.load.rollMode'] = CONST.DICE_ROLL_MODES.PUBLIC
+        update['flags.' + FOLDER_ID + '.load.rollMode'] = CHAT_MESSAGE_MODE.PUBLIC
       }
       if (contents.dataset.pushedRoll === 'true') {
         for (let next = parseInt(offset, 10) + 1, nextMax = game.messages.contents.length; next < nextMax; next++) {

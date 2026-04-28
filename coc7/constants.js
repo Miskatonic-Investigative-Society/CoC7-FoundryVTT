@@ -1,3 +1,4 @@
+/* global CONFIG */
 export const FOLDER_ID = 'CoC7'
 
 export const ERAS = {
@@ -202,6 +203,9 @@ export const DICE_POOL_REASONS = {
     tooltip: 'CoC7.rangeCombatCard.FastMovingTargetTitle'
   }
 }
+
+/* // FoundryVTT V13 */
+export const CHAT_MESSAGE_MODE = Object.keys(CONFIG.ChatMessage.modes ?? CONFIG.Dice.rollModes).reduce((c, k) => { c[k.replace(/roll$/, '').toUpperCase()] = k; return c }, {})
 
 export const TARGET_ALLOWED = [
   'character',
