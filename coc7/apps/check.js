@@ -395,12 +395,14 @@ export default class CoC7Check {
     if (game.settings.get(FOLDER_ID, 'xpEnabled')) {
       let value
       if (this.#dicePool.difficulty !== CoC7DicePool.difficultyLevel.unknown && !!this.item && this.item.system instanceof CoC7ModelsItemSkillSystem && !this.item.system.properties.noxpgain) {
-        if (this.#rollMode !== CONST.DICE_ROLL_MODES.BLIND && !this.#isForced && !this.#appliedDevelopment) {
-          if (this.item.system.flags.developement === false && this.#dicePool.isRolledSuccess) {
-            value = true
+        if (this.#rollMode !== CONST.DICE_ROLL_MODES.BLIND) {
+          if (!this.#isForced && !this.#appliedDevelopment) {
+            if (this.item.system.flags.developement === false && this.#dicePool.isRolledSuccess) {
+              value = true
+            }
+          } else if (this.item.system.flags.developement === true && !this.#dicePool.isRolledSuccess) {
+            value = false
           }
-        } else if (this.item.system.flags.developement === true && !this.#dicePool.isRolledSuccess) {
-          value = false
         }
       }
       if (value === true || value === false) {
