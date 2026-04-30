@@ -1,5 +1,5 @@
-/* global ChatMessage CONST foundry game Item renderTemplate ui */
-import { FOLDER_ID } from '../../constants.js'
+/* global ChatMessage foundry game Item renderTemplate ui */
+import { FOLDER_ID, CHAT_MESSAGE_MODE } from '../../constants.js'
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 
 export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSystem {
@@ -160,7 +160,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
       content: html
     }
     if (privateRoll) {
-      chatData = ChatMessage.applyRollMode(chatData, CONST.DICE_ROLL_MODES.PRIVATE)
+      chatData = ChatMessage.applyRollMode(chatData, CHAT_MESSAGE_MODE.GM)
     }
     await ChatMessage.create(chatData)
   }

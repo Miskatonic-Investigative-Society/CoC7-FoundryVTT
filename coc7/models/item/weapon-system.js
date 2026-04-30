@@ -486,6 +486,9 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
     if (source.ammo === '' || (typeof source.ammo === 'string' && isNaN(source.ammo))) {
       foundry.utils.setProperty(source, 'ammo', 0)
     }
+    if (source.bullets === '' || (typeof source.bullets === 'string' && isNaN(source.bullets))) {
+      foundry.utils.setProperty(source, 'bullets', null)
+    }
     // Migrate description to object
     if (typeof source.description === 'string') {
       foundry.utils.setProperty(source, 'description.value', source.description)

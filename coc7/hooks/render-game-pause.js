@@ -1,4 +1,4 @@
-/* global game */
+/* global foundry game */
 import { FOLDER_ID } from '../constants.js'
 
 /**
@@ -26,5 +26,5 @@ export default function (application, element, context, options) {
   } else {
     element.querySelector('img').setAttribute('src', imageReplacement)
   }
-  element.querySelector('figcaption').innerHTML = textReplacement
+  element.querySelector('figcaption').innerHTML = foundry.utils.cleanHTML(textReplacement)
 }

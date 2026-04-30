@@ -58,7 +58,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
    * Not required
    * @deprecated No replacement
    */
-  get characteristics () {
+  get characteristics () { // eslint-disable-line getter-return
     deprecated.noLongerAvailable({ was: 'Actor.initialize' })
   }
 
@@ -3443,8 +3443,8 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
   /**
    * Development Phase
    * @param {bool} fastForward
-   * @param {bool} isDeprecated @deprecated
-   * @returns {object} @deprecated
+   * @param {bool} isDeprecated \@deprecated
+   * @returns {object} \@deprecated
    */
   async developmentPhase (fastForward = false, isDeprecated = false) {
     this.onlyRunOncePerSession = true
@@ -3832,6 +3832,12 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
               }
               source.name = game.i18n.localize(effect[0].name)
               source.statuses = [effect[0].id]
+              if (game.settings.get(FOLDER_ID, 'enableStatusIcons')) {
+                /* // FoundryVTT V13 */
+                if (typeof CONST.ACTIVE_EFFECT_SHOW_ICON?.ALWAYS !== 'undefined') {
+                  source.showIcon = CONST.ACTIVE_EFFECT_SHOW_ICON.ALWAYS
+                }
+              }
               createEmbeddedDocuments.push(foundry.utils.mergeObject(source, custom))
             } else {
               updates[`system.conditions.${conditionName}.value`] = true

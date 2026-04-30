@@ -232,19 +232,19 @@ export default class WebpackConfig {
     /** Set optimization options for production only */
     const optimization = (this.#config.buildMode === 'production')
       ? {
-          minimize: true,
-          minimizer: [
-            new TerserPlugin({
-              terserOptions: {
-                mangle: false
-              }
-            }),
-            new CssMinimizerPlugin()
-          ],
-          splitChunks: {
-            chunks: 'all'
-          }
+        minimize: true,
+        minimizer: [
+          new TerserPlugin({
+            terserOptions: {
+              mangle: false
+            }
+          }),
+          new CssMinimizerPlugin()
+        ],
+        splitChunks: {
+          chunks: 'all'
         }
+      }
       : undefined
 
     /**

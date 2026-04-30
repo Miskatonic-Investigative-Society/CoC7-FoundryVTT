@@ -319,7 +319,7 @@ class DeprecatedWarningCoC7DamageCard {
    * @inheritdoc
    * @deprecated No replacement
    */
-  static get defaultOptions () {
+  static get defaultOptions () { // eslint-disable-line getter-return
     deprecated.noLongerAvailable({ was: 'game.CoC7.cards.CoC7DamageCard.defaultOptions()' })
   }
 

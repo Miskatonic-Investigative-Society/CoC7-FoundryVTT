@@ -6,7 +6,6 @@
     "build": "webpack --mode production",
     "compendiums-build": "node scripts/compendiums-build.js",
     "eslint": "eslint coc7/ scripts/",
-    "format": "standard --fix",
     "game-icons-build": "node scripts/game-icons-build.js",
     "init": "node scripts/init.js",
     "manuals-build": "node scripts/manuals-build.js",
@@ -28,20 +27,20 @@
   "homepage": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT#readme",
   "type": "module",
   "devDependencies": {
-    "@vusion/webfonts-generator": "^0.8.0",
+    "@stylistic/eslint-plugin": "^5.10.0",
     "classic-level": "^3.0.0",
     "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^7.0.0",
     "css-minimizer-webpack-plugin": "^8.0.0",
     "decompress": "^4.0.0",
-    "eslint-plugin-jsdoc": "^51.0.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsdoc": "^62.0.0",
     "less-loader": "^12.0.0",
     "mini-css-extract-plugin": "^2.0.0",
     "node-fetch": "^3.0.0",
     "remarkable": "^2.0.0",
-    "standard": "^17.0.0",
     "thread-loader": "^4.0.0",
-    "webpack-cli": "^6.0.0",
+    "webpack-cli": "^7.0.0",
     "webpackbar": "^7.0.0"
   }
 }

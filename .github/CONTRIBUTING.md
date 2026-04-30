@@ -55,7 +55,7 @@ If you are a new Git user, probably you will have to set it up with the followin
 
 `git config --global user.email "YOUR_EMAIL"`
 
-#### Node.js (14+)
+#### Node.js (22+)
 
 Grab an installer for any operating system from here: https://nodejs.org/en/download/
 
@@ -106,11 +106,41 @@ In order to run tests and see if you didn't introduce breaking changes, download
 
 The project structure is made as follows:
 
-...
+- `coc7/`: The source code for the system
+  - `apps/`: Core system logic
+  - `hooks/`: Hook functions
+  - `manual/`: Source for doc/ Markdown and in game Journal
+  - `models/`: Data Models, Document classes, and Sheets
+    - `active-effect/`: Active Effects
+    - `actor/`: Actor
+    - `chases/`: Chase specific class
+    - `fields/`: Custom schema fields
+    - `item/`: Item
+  - `setup/`: Core system setup
+  - `tours/`: Built in tours
+- `compendiums/`: YAML compendium data
+- `docs/`: Compiled manual viewable on GitHub
+- `scripts/`: Build scripts, run these via npm run commands configured in packages.json
+- `static/`: Static files
+  - `assets/`: Images for system
+  - `lang/`: Localization files
+  - `lib/`: Third party libraries
+  - `templates/`: Handlebars JS template files
+- `styles/`: Stylesheets
 
 While testing your changes within Foundry VTT, prefer run: `npm run watch`
 
 This way, Webpack and other dependencies will know whenever you make any relevant code changes and will run the build process only when necessary.
+
+### Manual (coc7/manual/)
+The in game Journal and Markdown in the docs/ folder are generated from the files in coc7/manual/ and are processed differently.
+
+| Reason                                        | Pattern                                         | Example                                                              | In game Journal                                                   | Markdown                                 |
+| --------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------| ---------------------------------------- |
+| [Font Awesome](https://fontawesome.com/) Icon | ```/\[fa[^ ]+ fa-[^\]]+\]/```                   | ```[fa-solid fa-users]```                                            | ```<em class="fa-solid fa-users">&nbsp;</em>```                   |                                          |
+| [Game Icons](https://game-icons.net/) Icon    | ```/\[game-icon game-icon-[[^\]]+\]/```         | ```[game-icon game-icon-tentacle-strike]```                          | ```<em class="game-icon game-icon-tentacle-strike">&nbsp;</em>``` |                                          |
+| Prevent automatic in game link                | ```/@@coc7\./```                                | ```@@coc7.sanloss[sanMax:1D6,sanMin:1]```                            | ```<span>@</span>coc7.sanloss[sanMax:1D6,sanMin:1]```             | ```@coc7.sanloss[sanMax:1D6,sanMin:1]``` |
+| In game link                                  | ```/@Compendium\[[^\]]+\.[^\\.]+\]{([^}]+)}/``` | ```@Compendium[CoC7.examples.JuI2aWDSEuQNKeUI]{Example Character}``` | ```<a class="content-link" ...>Example Character</a>```           | ```[_Example Character_]```              |
 
 ### Your First Code Contribution
 
@@ -122,8 +152,6 @@ Unsure where to begin contributing? You can start by looking through these `begi
 
 Install [Visual Studio Code](https://code.visualstudio.com/download).
 
-Install extension [standard.vscode-standard](https://marketplace.visualstudio.com/items?itemName=standard.vscode-standard).
+Install extension [dbaeumer.vscode-eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)/
 
-Configure the extension Tick `Standard: Auto Fix On Save`
-
-Before committing your code run `npm run format`
+Before committing your code run `npm run eslint`

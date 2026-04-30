@@ -3,7 +3,7 @@ import * as path from 'path'
 import decompress from 'decompress'
 import fetch from 'node-fetch'
 import TemplateHelpers from './src/template-helpers.js'
-import webfontsGenerator from '@vusion/webfonts-generator'
+import webfontsGenerator from '@vusion/webfonts-generator' // eslint-disable-line import/no-unresolved
 
 // npm run game-icons-build -- --help
 

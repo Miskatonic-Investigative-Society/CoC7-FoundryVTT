@@ -1,4 +1,4 @@
-/* global CONFIG FileReader foundry game Hooks ui */
+/* global CONFIG foundry game Hooks ui */
 // cSpell:words iwms wmis
 import { FOLDER_ID } from '../constants.js'
 import CoC7ActorImporter from './actor-importer.js'
@@ -233,8 +233,7 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
         this.coc7Config.convert6E = formData.object['coc-convert-6E']
         this.coc7Config.source = formData.object.source
         if (this.coc7Config.importType === 'dholehouse' && typeof this.coc7Config.characterJSON?.Investigator?.PersonalDetails !== 'undefined') {
-          const app = document.getElementById('actor-importer-dialog')
-          app.style.display = 'none'
+          form.style.display = 'none'
           const character = await CoC7DholeHouseActorImporter.createNPCFromDholeHouse(this.coc7Config.characterJSON, { source: this.coc7Config.source })
           if (character !== false) {
             if (CONFIG.debug.CoC7Importer) {
@@ -248,7 +247,7 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
             await character.sheet.render({ force: true })
             this.close()
           } else {
-            app.style.display = ''
+            form.style.display = ''
           }
         } else if (this.coc7Config.characterData !== '') {
           this.close()

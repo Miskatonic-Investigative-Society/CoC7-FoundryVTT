@@ -1,4 +1,4 @@
-/* global game */
+/* global game ProseMirror */
 import { FOLDER_ID } from '../constants.js'
 
 /**
@@ -26,5 +26,6 @@ export default function (application, html, data) {
   } else {
     html.find('img').attr('src', imageReplacement)
   }
-  html.find('figcaption').html(textReplacement)
+  const node = ProseMirror.dom.parseString(textReplacement)
+  html.find('figcaption').html(ProseMirror.dom.serializeString(node))
 }
