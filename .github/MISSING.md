@@ -16,8 +16,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 [pl.json (234 untranslated strings)](#pljson)
 
-[sv.json (1 untranslated strings)](#svjson)
-
 [zh-tw.json (4 untranslated strings)](#zh-twjson)
 
 
@@ -1629,11 +1627,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.rangeCombatCard.LongRangeShort": "Long",
 "SETTINGS.UseIconForEras": "Use icons for eras",
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space."
-```
-## sv.json
-1 untranslated strings
-```
-"CoC7.AddedEmbeddedItems": "Added {names}"
 ```
 ## zh-tw.json
 4 untranslated strings
