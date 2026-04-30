@@ -12,6 +12,7 @@ import CoC7ConCheck from '../apps/con-check.js'
 import CoC7SanCheckCard from '../apps/san-check-card.js'
 import CoC7Utilities from './utilities.js'
 import CoCIDBatch from './coc-id-batch.js'
+import deprecated from '../deprecated.js'
 
 export default class CoC7Updater {
   /**
@@ -126,31 +127,37 @@ export default class CoC7Updater {
   static async updateDocuments () {
     const documentUpdates = []
 
+    console.log('PREPARE game.actors')
     // Migrate World Actors
     for (const document of game.actors.contents) {
       CoC7Updater.migrateActorData({ document, documentUpdates, packId: '', parentUuid: '' })
     }
 
+    console.log('PREPARE game.items')
     // Migrate World Items
     for (const document of game.items.contents) {
       CoC7Updater.migrateItemData({ document, documentUpdates, packId: '', parentUuid: '' })
     }
 
+    console.log('PREPARE game.macros')
     // Migrate World Macro
     for (const document of game.macros.contents) {
       CoC7Updater.migrateMacroData({ document, documentUpdates, packId: '', parentUuid: '' })
     }
 
+    console.log('PREPARE game.tables')
     // Migrate World Tables
     for (const document of game.tables.contents) {
       CoC7Updater.migrateTableData({ document, documentUpdates, packId: '', parentUuid: '' })
     }
 
+    console.log('PREPARE game.scenes')
     // Migrate World Scenes [Token] Actors
     for (const document of game.scenes.contents) {
       CoC7Updater.migrateSceneData({ document, documentUpdates, packId: '', parentUuid: '' })
     }
 
+    console.log('PREPARE game.packs')
     // Migrate World and Module Compendium Packs
     for (const pack of game.packs) {
       if (pack.metadata.packageName !== FOLDER_ID) {
@@ -199,6 +206,7 @@ export default class CoC7Updater {
         }
       }
     }
+    console.log('PREPARE processed')
   }
 
   /**
@@ -877,7 +885,20 @@ export default class CoC7Updater {
   static async migrateChatMessages () {
     const updates = []
     const deleteIds = []
+
+    let progressBar = {
+      current: 0,
+      max: game.messages.contents.length + 1 // Will always call pct = 1 after progress to prevent rounding issues
+    }
+    /* // FoundryVTT V12 */
+    if (foundry.utils.isNewerVersion(game.version, 13)) {
+      progressBar.bar = ui.notifications.info('DOCUMENT.ChatMessages', { localize: true, progress: true, console: false })
+    } else {
+      progressBar.bar = deprecated.displayProgressBar(game.i18n.localize('DOCUMENT.ChatMessages'))
+    }
     for (const offset in game.messages.contents) {
+      progressBar.bar.update({ pct: progressBar.current / progressBar.max })
+      progressBar.current++
       const message = game.messages.contents[offset]
       if (deleteIds.includes(message.id)) {
         // Merged into other message so delete
@@ -955,6 +976,7 @@ export default class CoC7Updater {
         }
       }
     }
+    progressBar.bar.remove()
     if (updates.length) {
       ChatMessage.updateDocuments(updates)
       if (deleteIds.length) {

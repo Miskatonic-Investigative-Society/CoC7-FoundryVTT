@@ -1,5 +1,5 @@
-/* global CONFIG CONST fromUuid game TokenDocument ui */
-import { FOLDER_ID } from '../constants.js'
+/* global CONFIG fromUuid game TokenDocument ui */
+import { FOLDER_ID, CHAT_MESSAGE_MODE } from '../constants.js'
 import CoC7ChatCombinedMessage from './chat-combined-message.js'
 import CoC7ChatOpposedMessage from './chat-opposed-message.js'
 import CoC7Check from './check.js'
@@ -102,7 +102,7 @@ export default class CoC7RollNormalize {
       flatThresholdModifier: options.flatThresholdModifier ?? 0,
       hasPlayerOwner: options.actor?.hasPlayerOwner ?? false,
       isAltKey: options.event?.altKey === true,
-      isBlind: options.isBlind ?? (game.settings.get('core', 'rollMode') === CONST.DICE_ROLL_MODES.BLIND),
+      isBlind: options.isBlind ?? (game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode') === CHAT_MESSAGE_MODE.BLIND),
       isCombat: options.event?.currentTarget?.classList?.contains('combat') ?? false,
       isCtrlKey: options.isCtrlKey ?? CoC7Utilities.isCtrlKey(options.event ?? false),
       isShiftKey: options.isShiftKey === true || options.fastForward === true || options.event?.shiftKey === true,

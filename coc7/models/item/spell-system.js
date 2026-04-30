@@ -1,5 +1,5 @@
-/* global ChatMessage CONFIG CONST foundry game Item renderTemplate Roll ui */
-import { FOLDER_ID, SPELL_COST_TYPE_KEYS } from '../../constants.js'
+/* global ChatMessage CONFIG foundry game Item renderTemplate Roll ui */
+import { FOLDER_ID, CHAT_MESSAGE_MODE, SPELL_COST_TYPE_KEYS } from '../../constants.js'
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 import CoC7SpellVariablesDialog from '../../apps/spell-variables-dialog.js'
 import CoC7Utilities from '../../apps/utilities.js'
@@ -403,7 +403,12 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
       rolls
     }
     if (privateRoll) {
-      chatData = ChatMessage.applyRollMode(chatData, CONST.DICE_ROLL_MODES.PRIVATE)
+      /* // FoundryVTT V13 */
+      if (game.release.generation < 14) {
+        chatData = ChatMessage.applyRollMode(chatData, CHAT_MESSAGE_MODE.GM)
+      } else {
+        chatData = ChatMessage.applyMode(chatData, CHAT_MESSAGE_MODE.GM)
+      }
     }
     await ChatMessage.create(chatData)
   }

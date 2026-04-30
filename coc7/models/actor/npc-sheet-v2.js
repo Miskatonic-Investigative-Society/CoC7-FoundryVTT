@@ -1,5 +1,5 @@
-/* global ChatMessage CONFIG CONST foundry fromUuid game renderTemplate Roll TextEditor ui */
-import { FOLDER_ID } from '../../constants.js'
+/* global ChatMessage CONFIG foundry fromUuid game renderTemplate Roll TextEditor ui */
+import { FOLDER_ID, CHAT_MESSAGE_MODE } from '../../constants.js'
 import CoC7DicePool from '../../apps/dice-pool.js'
 import CoC7Link from '../../apps/link.js'
 import CoC7ModelsActorGlobalSheet from './global-sheet.js'
@@ -270,7 +270,7 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
         sanReason: this.document.system.infos.type?.length ? this.document.system.infos.type : this.document.name,
         difficulty,
         poolModifier,
-        blind: game.settings.get('core', 'rollMode') === CONST.DICE_ROLL_MODES.BLIND
+        blind: (game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode')) === CHAT_MESSAGE_MODE.BLIND
       })
       link.toChatMessage()
     } else {
