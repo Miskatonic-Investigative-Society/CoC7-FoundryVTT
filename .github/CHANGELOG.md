@@ -11,11 +11,18 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+## Version 8.7
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Fix blind checks unflagging existing skill development flag
 - Fix Combat Melee luck/bonus/penalty adding a damage message on a success change where no target
 - Fix get Actor from TokenDocument for unlinked Tokens
 - Fix FoundryVTT v14 Status Effects being removed and showing icon for Status Effects
 - Replace StandardJS with ESLint, thanks to @zeedif #1863
-- Update to Swedish localization, thanks to @Rangertheman #2053
+- Update to Swedish localization, thanks to @Rangertheman #2053 and #2057
 
 ## Version 8.6
 
