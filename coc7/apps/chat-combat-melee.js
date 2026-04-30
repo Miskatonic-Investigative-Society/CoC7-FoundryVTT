@@ -1,5 +1,5 @@
-/* global ChatMessage CONST foundry fromUuid game Hooks renderTemplate TextEditor TokenDocument ui */
-import { FOLDER_ID, DICE_POOL_REASONS } from '../constants.js'
+/* global ChatMessage foundry fromUuid game Hooks renderTemplate TextEditor TokenDocument ui */
+import { FOLDER_ID, CHAT_MESSAGE_MODE, DICE_POOL_REASONS } from '../constants.js'
 import CoC7ActorPickerDialog from './actor-picker-dialog.js'
 import CoC7ChatDropdown from './chat-dropdown.js'
 import CoC7ChatDamage from './chat-damage.js'
@@ -747,10 +747,19 @@ export default class CoC7ChatCombatMelee {
       content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(data.template, data)
     }
     if (typeof this.message?.whisper === 'undefined') {
-      if ([CONST.DICE_ROLL_MODES.PRIVATE].includes(game.settings.get('core', 'rollMode'))) {
-        chatData.whisper = ChatMessage.getWhisperRecipients('GM')
-      } else if (CONST.DICE_ROLL_MODES.BLIND === game.settings.get('core', 'rollMode')) {
-        chatData.blind = true
+      /* // FoundryVTT V13 */
+      if (game.release.generation < 14) {
+        if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'rollMode'))) {
+          chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+        } else if (CHAT_MESSAGE_MODE.BLIND === game.settings.get('core', 'rollMode')) {
+          chatData.blind = true
+        }
+      } else {
+        if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'messageMode'))) {
+          chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+        } else if (CHAT_MESSAGE_MODE.BLIND === game.settings.get('core', 'messageMode')) {
+          chatData.blind = true
+        }
       }
     }
     return chatData

@@ -984,7 +984,12 @@ export default class CoC7ChatChaseObstacle {
       /* // FoundryVTT V12 */
       content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/chase-obstacle.hbs', data)
     }
-    chatData = ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
+    /* // FoundryVTT V13 */
+    if (game.release.generation < 14) {
+      chatData = ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
+    } else {
+      chatData = ChatMessage.applyMode(chatData, game.settings.get('core', 'messageMode'))
+    }
     return chatData
   }
 
