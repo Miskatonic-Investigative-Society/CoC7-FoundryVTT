@@ -245,15 +245,19 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         })
       }
     }
+    console.log('BATCHED Items')
     if (items.length) {
       await Item.updateDocuments(items)
     }
+    console.log('BATCHED Actors.Items')
     for (const actorUuid of Object.keys(actors)) {
       await Item.updateDocuments(actors[actorUuid], { parent: await fromUuid(actorUuid) })
     }
+    console.log('BATCHED Token.Items')
     for (const actorUuid of Object.keys(tokenActors)) {
       await Item.updateDocuments(tokenActors[actorUuid], { parent: await fromUuid(actorUuid) })
     }
+    console.log('BATCHED pack.Items')
     for (const pack in foundCompendiumItem) {
       const wasLocked = game.packs.get(pack).locked
       if (wasLocked) {
@@ -264,6 +268,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         await game.packs.get(pack).configure({ locked: true })
       }
     }
+    console.log('BATCHED pack.Actor.Items')
     for (const pack in foundCompendiumActor) {
       const wasLocked = game.packs.get(pack).locked
       if (wasLocked) {
@@ -276,6 +281,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         await game.packs.get(pack).configure({ locked: true })
       }
     }
+    console.log('BATCHED processed')
     await CoCIDBatch.migrateThrowSkill()
   }
 
@@ -290,6 +296,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
    * @param {object} options.foundKeys
    */
   static async populateItemKeys ({ itemType, idType, idPrefix, updateList, missingNames, foundKeys } = {}) {
+    console.log('BATCH game.actors')
     for (const actor of game.actors.contents) {
       if (actor.items) {
         for (const item of actor.items) {
@@ -311,6 +318,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         }
       }
     }
+    console.log('BATCH game.items')
     for (const item of game.items.contents) {
       if (item.type === itemType) {
         if (!item.flags[FOLDER_ID]?.cocidFlag?.id?.startsWith(idPrefix)) {
@@ -327,6 +335,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         }
       }
     }
+    console.log('BATCH game.scenes')
     for (const scene of game.scenes) {
       for (const token of scene.tokens ?? []) {
         if (!token.actorLink) {
@@ -350,6 +359,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         }
       }
     }
+    console.log('BATCH game.packs')
     for (const pack of game.packs) {
       if (['world', 'module'].includes(pack.metadata.packageType)) {
         if (pack.metadata.type === 'Actor') {
@@ -414,6 +424,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         }
       }
     }
+    console.log('BATCH processed')
   }
 
   /**
@@ -425,6 +436,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
     const foundCompendiumItem = {}
     const foundItem = []
     const foundToken = {}
+    console.log('THROW actors')
     for (const actor of game.actors.contents) {
       if (actor.items) {
         for (const item of actor.items) {
@@ -460,6 +472,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         }
       }
     }
+    console.log('THROW items')
     for (const item of game.items.contents) {
       if (item.type === 'skill' && item.flags[FOLDER_ID]?.cocidFlag?.id?.match(/^i.skill.(firearms|fighting|ranged)-throw$/) && item.system.properties?.special && (item.system.properties?.fighting || item.system.properties?.firearm || item.system.properties?.ranged)) {
         foundItem.push({
@@ -523,6 +536,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         }
       }
     }
+    console.log('THROW scenes')
     for (const scene of game.scenes) {
       for (const token of scene.tokens ?? []) {
         if (!token.actorLink) {
@@ -560,6 +574,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         }
       }
     }
+    console.log('THROW packs')
     for (const pack of game.packs) {
       if (['world', 'module'].includes(pack.metadata.packageType)) {
         if (pack.metadata.type === 'Actor') {
@@ -702,15 +717,19 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         }).render({ force: true })
       })
       if (migrate) {
+        console.log('THROWN Item')
         if (foundItem.length) {
           await Item.updateDocuments(foundItem)
         }
+        console.log('THROWN Actor.Item')
         for (const actorUuid of Object.keys(foundActor)) {
           await Item.updateDocuments(foundActor[actorUuid], { parent: await fromUuid(actorUuid) })
         }
+        console.log('THROWN Token.Item')
         for (const actorUuid of Object.keys(foundToken)) {
           await Item.updateDocuments(foundToken[actorUuid], { parent: await fromUuid(actorUuid) })
         }
+        console.log('THROWN pack.Item')
         for (const pack in foundCompendiumItem) {
           const wasLocked = game.packs.get(pack).locked
           if (wasLocked) {
@@ -721,6 +740,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
             await game.packs.get(pack).configure({ locked: true })
           }
         }
+        console.log('THROWN pack.Actor.Item')
         for (const pack in foundCompendiumActor) {
           const wasLocked = game.packs.get(pack).locked
           if (wasLocked) {
@@ -735,6 +755,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         }
       }
     }
+    console.log('THROWN processed')
   }
 
   /**
