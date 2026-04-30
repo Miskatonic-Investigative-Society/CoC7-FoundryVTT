@@ -1790,5 +1790,6 @@
 "CoC7.rangeCombatCard.ExtremeRangeShort": "Extrem",
 "CoC7.rangeCombatCard.LongRangeShort": "Lång",
 "SETTINGS.UseIconForEras": "Använd ikoner för tidsepoker",
-"SETTINGS.UseIconForErasHint": "Visa ikoner för tidsepok-växlingar för att spara utrymme."
+"SETTINGS.UseIconForErasHint": "Visa ikoner för tidsepok-växlingar för att spara utrymme.",
+"CoC7.AddedEmbeddedItems": "Lade till {names}"
 }
