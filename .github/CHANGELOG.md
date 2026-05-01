@@ -11,6 +11,10 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+- Fix Setup Items breaking for NPC and Creatures
+- Fix Dhole House importer defaulting skill values
+- Fix updater skip broken tokens when checking for throw skills
+
 ## Version 8.7
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
