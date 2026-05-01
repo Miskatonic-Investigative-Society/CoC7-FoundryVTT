@@ -765,26 +765,28 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       updateDocument['system.attribs.mp.value'] = updateDocument['system.attribs.mp.max']
       updateDocument['system.development.personal'] = updateDocument['system.characteristics.int.value'] * 2
     }
-    if (game.settings.get(FOLDER_ID, 'oneBlockBackstory')) {
-      updateDocument['system.backstory'] = data.system.backstory
-    } else {
-      const bioSections = foundry.utils.duplicate(this.system.biography)
-      let changed = false
-      for (const sectionName of data.system.bioSections) {
-        const title = game.i18n.localize(sectionName)
-        if (!this.system.biography?.find(o => title === o.title) && sectionName) {
-          bioSections.push({
-            title,
-            value: null
-          })
-          changed = true
+    if (this.type === 'character') {
+      if (game.settings.get(FOLDER_ID, 'oneBlockBackstory')) {
+        updateDocument['system.backstory'] = data.system.backstory
+      } else {
+        const bioSections = foundry.utils.duplicate(this.system.biography)
+        let changed = false
+        for (const sectionName of data.system.bioSections) {
+          const title = game.i18n.localize(sectionName)
+          if (!this.system.biography?.find(o => title === o.title) && sectionName) {
+            bioSections.push({
+              title,
+              value: null
+            })
+            changed = true
+          }
+        }
+        if (changed) {
+          updateDocument['system.biography'] = bioSections
         }
       }
-      if (changed) {
-        updateDocument['system.biography'] = bioSections
-      }
+      updateDocument['system.monetary'] = foundry.utils.mergeObject(this.system.monetary, foundry.utils.duplicate(data.system.monetary))
     }
-    updateDocument['system.monetary'] = foundry.utils.mergeObject(this.system.monetary, foundry.utils.duplicate(data.system.monetary))
     for (const item of await CoC7Utilities.getEmbeddedItems(data, 'system')) {
       if (typeof itemByType[item.type] === 'undefined') {
         itemByType[item.type] = []
