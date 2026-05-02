@@ -158,6 +158,10 @@ const sources = {
         file: 'item_skill.md'
       },
       {
+        name: 'Item Type: Spell',
+        file: 'item_spell.md'
+      },
+      {
         name: 'Links',
         file: 'links.md'
       },
