@@ -1,4 +1,4 @@
-/* global ChatMessage CONFIG foundry fromUuid game ui */
+/* global ChatMessage CONFIG foundry fromUuid game Roll ui */
 // cSpell:words Uniki Unik
 import { FOLDER_ID } from '../constants.js'
 import CoC7ChatChaseObstacle from './chat-chase-obstacle.js'
@@ -274,6 +274,7 @@ export default class CoC7Updater {
     CoC7Updater._migrateItemEmbeddedV10({ document, documentUpdates, packId, parentUuid })
     CoC7Updater._migrateItemSkillName({ document, documentUpdates, packId, parentUuid })
     CoC7Updater._migrateItemChases({ document, documentUpdates, packId, parentUuid })
+    CoC7Updater._migrateItemSpells({ document, documentUpdates, packId, parentUuid })
 
     for (const offset in document.effects?.contents ?? []) {
       const image = String(document.effects.contents[offset].img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
@@ -640,6 +641,65 @@ export default class CoC7Updater {
         CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
           'system.participants': participants
         })
+      }
+    }
+  }
+
+  /**
+   * Migrate Item Embedded Documents
+   * @param {object} options
+   * @param {object} options.document
+   * @param {object} options.documentUpdates
+   * @param {string} options.packId
+   * @param {string} options.parentUuid
+   */
+  static _migrateItemSpells ({ document, documentUpdates, packId = '', parentUuid = '' } = {}) {
+    if (document.type === 'spell') {
+      if (document.system.costList.length === 0) {
+        const costs = {
+          hp: document.system.costs.hitPoints.toString().trim(),
+          mp: document.system.costs.magicPoints.toString().trim(),
+          san: document.system.costs.sanity.toString().trim(),
+          pow: document.system.costs.power.toString().trim()
+        }
+        let okay = true
+        for (const key in costs) {
+          if (costs[key].match(/^0*$/)) {
+            delete costs[key]
+          } else {
+            if (!Roll.validate(costs[key])) {
+              okay = false
+              break
+            }
+          }
+        }
+        if (okay) {
+          const costList = []
+          for (const key in costs) {
+            costList.push({
+              config: { modify: key, value: costs[key] },
+              if: '',
+              type: 'casterCost'
+            })
+          }
+          if (document.system.costs.others.toString().length) {
+            costList.push({
+              config: { prompt: document.system.costs.others },
+              if: '',
+              type: 'otherCost'
+            })
+          }
+          if (costList.length > 0) {
+            CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
+              'system.costList': costList,
+              'system.costs.hitPoints': '',
+              'system.costs.magicPoints': '',
+              'system.costs.sanity': '',
+              'system.costs.power': '',
+              'system.costs.others': ''
+            })
+          }
+        }
       }
     }
   }

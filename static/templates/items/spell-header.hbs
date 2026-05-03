@@ -15,9 +15,16 @@
     {{/if}}
   </div>
   <div class="spell-casting flexcol">
-    {{#if (and isEmbedded (or isKeeper isOwner))}}
-      <button class="item-control" data-action="castSpell">{{localize 'CoC7.Cast'}}</button>
-      <button class="item-control" data-action="castSpell" data-property="hidden">{{localize 'CoC7.CastHidden'}}</button>
+    {{#if automatedCast}}
+      {{#if (and isEmbedded (or isKeeper isOwner))}}
+        <button class="item-control" data-action="castSpell">{{localize 'CoC7.Cast'}}</button>
+        <button class="item-control" data-action="castSpell" data-property="hidden">{{localize 'CoC7.CastHidden'}}</button>
+      {{else isKeeper}}
+        <button class="item-control" data-action="castSpell" data-property="hidden">{{localize 'CoC7.CastTesting'}}</button>
+      {{/if}}
+    {{else if (and isEmbedded (or isKeeper isOwner))}}
+      <button class="item-control" data-action="castSpell">{{localize 'CoC7.MessageCast'}}</button>
+      <button class="item-control" data-action="castSpell" data-property="hidden">{{localize 'CoC7.MessageCastHidden'}}</button>
     {{/if}}
   </div>
   <img class="profile-img" src="{{document.img}}" data-action="editImage" data-edit="img" />

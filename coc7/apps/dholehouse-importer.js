@@ -181,6 +181,7 @@ export default class CoC7DholeHouseActorImporter {
         if (cloned.system.properties?.picknameonly ?? false) {
           foundry.utils.setProperty(cloned, 'system.properties.picknameonly', false)
         }
+        foundry.utils.setProperty(cloned, 'system.base', parseInt(skill.value ?? 0, 10))
       } else {
         cloned = CoC7ModelsItemSkillSystem.emptyObject({
           name: skill.name
@@ -201,7 +202,7 @@ export default class CoC7DholeHouseActorImporter {
         foundry.utils.setProperty(cloned, 'system.skillName', 'None')
         foundry.utils.setProperty(cloned, 'flags.' + FOLDER_ID + '.cocidFlag.id', 'i.skill.' + CoC7Utilities.toKebabCase(cloned.name))
       }
-      foundry.utils.setProperty(cloned, 'system.adjustments.base', parseInt(skill.value ?? 0, 10))
+      foundry.utils.setProperty(cloned, 'system.base', parseInt(skill.value ?? 0, 10))
       foundry.utils.setProperty(cloned, 'system.flags.occupation', (skill.occupation === true || skill.occupation === 'true'))
       if (skill.isOwn) {
         foundry.utils.setProperty(cloned, 'system.properties.own', true)

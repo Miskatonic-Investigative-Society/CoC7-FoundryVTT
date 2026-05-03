@@ -23,7 +23,7 @@ And have some common structure so on all of them:
 - [Item Type: Occupation](item_occupation.md)
 - [Item Type: Setup](item_setup.md)
 - [Item Type: Skill](item_skill.md)
-- Item Type: Spell
+- [Item Type: Spell](item_spell.md)
 - Item Type: Status
 - Item Type: Talent
 - Item Type: Weapon

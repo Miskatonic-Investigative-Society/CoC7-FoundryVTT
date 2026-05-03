@@ -338,7 +338,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
     console.log('BATCH game.scenes')
     for (const scene of game.scenes) {
       for (const token of scene.tokens ?? []) {
-        if (!token.actorLink) {
+        if (!token.actorLink && typeof token.actor?.uuid === 'string') {
           for (const item of token.delta?.items ?? []) {
             if (item.type === itemType) {
               if (!item.flags[FOLDER_ID]?.cocidFlag?.id?.startsWith(idPrefix)) {
@@ -539,7 +539,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
     console.log('THROW scenes')
     for (const scene of game.scenes) {
       for (const token of scene.tokens ?? []) {
-        if (!token.actorLink) {
+        if (!token.actorLink && typeof token.actor?.uuid === 'string') {
           for (const item of token.delta?.items ?? []) {
             if (item.type === 'skill' && item.flags[FOLDER_ID]?.cocidFlag?.id?.match(/^i.skill.(firearms|fighting|ranged)-throw$/) && item.system.properties?.special && (item.system.properties?.fighting || item.system.properties?.firearm || item.system.properties?.ranged)) {
               if (typeof foundToken[token.actor.uuid] === 'undefined') {
