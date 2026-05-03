@@ -125,6 +125,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
             secrets: context.editable
           }
         )
+        context.showLegacySpellCosts = game.settings.get(FOLDER_ID, 'sheetLegacySpellCosts') || Object.keys(context.document.system.costs).find(k => context.document.system.costs[k].toString().trim() !== '')
         break
     }
     return context

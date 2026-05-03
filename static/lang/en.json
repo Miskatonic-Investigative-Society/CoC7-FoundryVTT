@@ -806,6 +806,8 @@
   "CoC7.Spell.Costs.VariablePlaceholder": "@variable",
   "CoC7.Spell.Costs.Value": "Value",
 
+  "CoC7.Spell.Legacy.Label": "Legacy spell costs",
+  "CoC7.Spell.Legacy.Hint": "Please use the costs on the details tab which support the more interactive costs required by many spells and can be automatically removed from an Actor.",
   "CoC7.Spell.ErrorPromptNotShown": "You have not prompted for all use input",
   "CoC7.Spell.ErrorUnableToFindAdditionalCasters": "You need to set up additional casters before assigning costs",
 
@@ -1209,6 +1211,8 @@
   "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
   "SETTINGS.SceneDistanceNotCalculatedNoError": "Don't show error for ranged distance",
   "SETTINGS.SceneDistanceNotCalculatedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
+  "CoC7.SETTINGS.LegacySpellCosts": "Always show legacy spell costs system",
+  "CoC7.SETTINGS.LegacySpellCostsHint": "Show the legacy spell cost entries even if they are empty",
 
   "CoC7.getTheExample": "Copy Example",
   "CoC7.Copied": "Copied the Example Text to Clipboard",
