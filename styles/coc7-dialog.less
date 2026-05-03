@@ -172,6 +172,45 @@
     }
   }
 
+  &.spell-variables {
+    .standard-form.scrollable>.form-group {
+      &:first-child {
+        margin-top: 0;
+      }
+
+      button {
+        --button-size: @20px;
+      }
+
+      .toggle-attributes {
+        flex: 6;
+        padding-top: 1px;
+
+        button.toggle-switch {
+          width: 100%;
+        }
+      }
+
+      input[type="number"] {
+        flex: 0 0 3rem;
+      }
+
+      ol.casters {
+        margin: 0;
+        padding-left: @8px;
+        flex: 0 0 100%;
+
+        li {
+          gap: @4px;
+
+          label {
+            flex: 0 0 auto;
+          }
+        }
+      }
+    }
+  }
+
   section.window-content {
     padding: @16px;
 

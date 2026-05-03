@@ -238,3 +238,73 @@ flags:
       id: i.talent.example-talent
       lang: en
       priority: 0
+---
+_id: 4Rrff1sAoWh7NFkL
+name: Test Spell
+type: spell
+img: systems/CoC7/assets/icons/pentagram-rose.svg
+system:
+  castingTime: 10 - 15 minutes
+  costList:
+    - type: promptToggleButton
+      if: ''
+      config: '{"prompt":"The target is awake","variable":"@awake"}'
+    - type: promptRequireNumber
+      if: ''
+      config: '{"prompt":"Number of magic points you are spending","variable":"@castermp"}'
+    - type: additionalCasterPromptAdd
+      if: ''
+      config: '{"prompt":"Others that know the spell","variable":"@casters","step":"1","min":"0"}'
+    - type: additionalCasterPromptRequireNumber
+      if: ''
+      config: '{"prompt":"Magic points","variable":"@castermp"}'
+    - type: additionalCasterPromptAdd
+      if: ''
+      config: '{"prompt":"Other casters","variable":"@others","step":"1","min":"0"}'
+    - type: additionalCasterCost
+      if: ''
+      config: '{"modify":"mp","value":"1"}'
+    - type: triggerPrompt
+      if: ''
+    - type: casterCost
+      if: ''
+      config: '{"modify":"mp","value":"@castermp"}'
+    - type: casterCost
+      if: ''
+      config: '{"modify":"san","value":"1D3 - 1"}'
+    - type: casterCost
+      if: '@awake'
+      config: '{"modify":"pow","value":"1"}'
+    - type: castingTime
+      if: '!@awake'
+      config: '{"value":"10 minutes"}'
+    - type: castingTime
+      if: '@awake'
+      config: '{"value":"15 minutes"}'
+    - type: setVariable
+      if: ''
+      config: '{"variable":"@totalMp","value":"@others.length + @casters.castermp + @castermp"}'
+    - type: setVariable
+      if: ''
+      config: '{"variable":"@minutes","value":"@totalMp / 6"}'
+    - type: additionalInformation
+      if: ''
+      config: '{"prompt":"Nightmare duration: @minutes minutes"}'
+  description:
+    value: "<p>Force another human to have a nightmare.</p><p>The caster adds a number of magic points and suffers [[/r 1D3 - 1]] Sanity Points. If the target of the nightmares is currently awake the caster must spend 1 POW and casting takes an additional five minutes.</p><p>Additional casters that know the spell can also add a number of magic points anyone else present can add one magic point.</p><p>The nightmare starts with the target taking a test they have not studied for and will be extended by one minutes for every six magic points expended.</p><p></p>"
+  source: FoundryVTT CoC7
+  type:
+    bind: false
+    call: false
+    combat: false
+    contact: true
+    dismiss: false
+    enchantment: false
+    gate: false
+    summon: false
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.spell.test-spell
+      lang: en
+      priority: 0

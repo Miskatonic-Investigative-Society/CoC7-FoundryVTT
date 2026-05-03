@@ -1,0 +1,45 @@
+<section class="standard-form longer-labels scrollable">
+  {{#each variables as |variable indexOuter|}}
+    {{#if (eq variable.type 'additionalCasterPromptAdd')}}
+      <div class="form-group" data-index="{{indexOuter}}">
+        <label>{{variable.label}}</label>
+        <div class="item-controls">
+          <a class="{{#if (gt variable.step 0)}}item-control{{else}}item-control-disabled{{/if}}" data-action="casters-group-add" data-tooltip="CoC7.Spell.Costs.AddCasters"><i class="fa-regular fa-plus-circle"></i></a>
+          <a class="{{#if (gt variable.contents.length variable.min)}}item-control{{else}}item-control-disabled{{/if}}" data-action="casters-group-remove" data-tooltip="CoC7.Spell.Costs.DeleteCasters"><i class="fa-regular fa-minus-circle"></i></a>
+        </div>
+        <ol class="casters">
+          {{#each variable.contents as |content index|}}
+            <li class="flexrow">
+              <input type="text" name="{{variable.key}}.{{index}}.name" value="{{content.name}}" placeholder="{{localize 'CoC7.Name'}}" />
+              {{#each variable.numbers as |number|}}
+                <label>{{number.label}}</label>
+                <input type="text" name="{{variable.key}}.{{index}}.{{number.key}}" value="{{lookup content.numbers number.key}}">
+              {{/each}}
+            </li>
+          {{/each}}
+        </ol>
+      </div>
+     {{else if (eq variable.type 'information')}}
+      <div class="form-group">
+        <label>{{variable.label}}</label>
+      </div>
+    {{else if (eq variable.type 'show')}}
+      <div class="form-group">
+        <label>{{variable.label}}</label>
+        <input type="text" value="{{variable.value}}" readonly="readonly">
+      </div>
+    {{else if (eq variable.type 'toggle')}}
+      <div class="toggle-row form-group">
+        <label>{{localize 'CoC7.Spell.Cost.Toggle'}}</label>
+        <div class="toggle-attributes flexrow">
+          <button class="toggle-switch{{#if variable.value}} switched-on{{/if}}" data-action="toggle" data-index="{{indexOuter}}" type="button">{{variable.label}}</button>
+        </div>
+      </div>
+    {{else}}
+      <div class="form-group">
+        <label>{{variable.label}}</label>
+        <input type="text" name="{{variable.key}}" value="{{variable.value}}">
+      </div>
+    {{/if}}
+  {{/each}}
+</section>

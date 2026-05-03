@@ -372,6 +372,14 @@ export default function () {
     default: false,
     type: Boolean
   })
+  game.settings.register(FOLDER_ID, 'sheetLegacySpellCosts', {
+    name: 'CoC7.SETTINGS.LegacySpellCosts',
+    hint: 'CoC7.SETTINGS.LegacySpellCostsHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
   /*
   The following settings are obsolete a CSS module will give move specific controls and allow disabling when debugging errors
   */
