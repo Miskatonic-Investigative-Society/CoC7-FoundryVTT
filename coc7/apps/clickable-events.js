@@ -99,8 +99,9 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
         for (const region of canvas.scene.regions.contents) {
           /* // FoundryVTT V12 */
           const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination)) {
-            region.behaviors.filter(b => !b.disabled).map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleLeftClickEvent === 'function') { await b.system._handleLeftClickEvent() } })
+          const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+          if (behaviors) {
+            behaviors.map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleLeftClickEvent === 'function') { await b.system._handleLeftClickEvent() } })
           }
         }
       }
@@ -114,8 +115,9 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
         for (const region of canvas.scene.regions.contents) {
           /* // FoundryVTT V12 */
           const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination)) {
-            region.behaviors.filter(b => !b.disabled).map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleRightClickEvent === 'function') { await b.system._handleRightClickEvent() } })
+          const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+          if (behaviors) {
+            behaviors.map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleRightClickEvent === 'function') { await b.system._handleRightClickEvent() } })
           }
         }
       }
@@ -132,8 +134,9 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
         for (const region of canvas.scene.regions.contents) {
           /* // FoundryVTT V12 */
           const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination)) {
-            setPointer = await region.behaviors.filter(b => !b.disabled).reduce(async (c, b) => {
+          const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+          if (behaviors) {
+            setPointer = await behaviors.reduce(async (c, b) => {
               const r = await b.system._handleMouseOverEvent()
               if (r !== false && r !== true) {
                 console.error(b.uuid + ' did not return a boolean')
