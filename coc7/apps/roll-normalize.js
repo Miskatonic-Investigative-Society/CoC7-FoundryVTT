@@ -144,7 +144,7 @@ export default class CoC7RollNormalize {
             config.displayName = item.name
           }
           if (config.poolModifier === 0) {
-            config.poolModifier = item.system.bonusDice
+            config.poolModifier = item.system.bonusDice ?? 0
           }
           okay = true
         } else if (item.type === 'weapon') {
@@ -154,7 +154,7 @@ export default class CoC7RollNormalize {
             config.displayName = item.name
           }
           if (config.poolModifier === 0) {
-            config.poolModifier = item.system.bonusDice
+            config.poolModifier = item.system.bonusDice ?? 0
           }
           okay = true
         } else {
@@ -174,7 +174,7 @@ export default class CoC7RollNormalize {
           }
         }
         if (config.poolModifier === 0) {
-          config.poolModifier = options.actor.system.attribs[config.key].bonusDice
+          config.poolModifier = options.actor.system.attribs[config.key].bonusDice ?? 0
         }
         okay = true
       } else if (typeof options.characteristic !== 'undefined' && typeof options.actor.system.characteristics[options.characteristic] !== 'undefined') {
@@ -187,7 +187,7 @@ export default class CoC7RollNormalize {
           }
         }
         if (config.poolModifier === 0) {
-          config.poolModifier = options.actor.system.characteristics[config.key].bonusDice
+          config.poolModifier = options.actor.system.characteristics[config.key].bonusDice ?? 0
         }
         okay = true
       }
