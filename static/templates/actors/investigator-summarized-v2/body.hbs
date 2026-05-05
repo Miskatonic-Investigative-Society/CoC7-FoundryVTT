@@ -1,7 +1,7 @@
 <div class="npc flexcol">
   <div class="character-details flexrow">
     <div class="character-detail attribute" data-attrib="lck">
-      <div class="title attribute-label rollable">{{localize 'CoC7.Luck'}}</div>
+      <div class="title attribute-name attribute-label rollable">{{localize 'CoC7.Luck'}}</div>
       <input class="detail-value attribute-value{{#if attribs.lck.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.lck.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{attribs.lck.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.lck.value" value="{{attribs.lck.sourceValue}}" data-tooltip-key="lck" {{/if}}{{else}} name="system.attribs.lck.value" value="{{attribs.lck.value}}" {{/if}} />
       <div class="separator">/</div>
       <input class="detail-value attribute-max" type="text" value="99" readonly />
@@ -27,7 +27,7 @@
     </div>
 
     <div class="character-detail attribute" data-attrib="san">
-      <div class="title attribute-label rollable">{{localize 'CoC7.Sanity'}}</div>
+      <div class="title attribute-name attribute-label rollable">{{localize 'CoC7.Sanity'}}</div>
       <input class="detail-value attribute-value{{#if attribs.san.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.san.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{attribs.san.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.san.value" value="{{attribs.san.sourceValue}}" {{/if}}{{else}} name="system.attribs.san.value" value="{{attribs.san.value}}" {{/if}} />
       <div class="separator">/</div>
       <input class="detail-value attribute-max{{#if (and (not document.system.flags.locked) (not document.system.attribs.san.auto))}} not-auto{{/if}}{{#if attribs.san.activeEffectMax}} modified-by-active-effect{{/if}}" type="text" {{#if attribs.san.activeEffectMax}}{{#if @root.document.system.flags.locked}} value="{{attribs.san.max}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.attribs.san.max" value="{{attribs.san.sourceMax}}" {{/if}}{{else}} name="system.attribs.san.max" value="{{attribs.san.max}}" {{/if}}{{#if (or document.system.flags.locked document.system.attribs.san.auto)}} readonly{{/if}} />
