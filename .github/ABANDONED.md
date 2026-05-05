@@ -2,23 +2,23 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cs.json (432 untranslated strings)](#csjson)
+[cs.json (449 untranslated strings)](#csjson)
 
-[de.json (390 untranslated strings)](#dejson)
+[de.json (407 untranslated strings)](#dejson)
 
-[es.json (391 untranslated strings)](#esjson)
+[es.json (408 untranslated strings)](#esjson)
 
-[it.json (468 untranslated strings)](#itjson)
+[it.json (485 untranslated strings)](#itjson)
 
-[pt-BR.json (622 untranslated strings)](#pt-brjson)
+[pt-BR.json (639 untranslated strings)](#pt-brjson)
 
-[ru.json (538 untranslated strings)](#rujson)
+[ru.json (555 untranslated strings)](#rujson)
 
-[uk.json (433 untranslated strings)](#ukjson)
+[uk.json (450 untranslated strings)](#ukjson)
 
 
 ## cs.json
-432 untranslated strings
+449 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -105,6 +105,22 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Title": "Select Playlist",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Hint": "",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Title": "Select Playlist Sound",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title": "Investigator Image Tile",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint": "when the investigator is not set show this image",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title": "Placeholder image",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title": "Investigator Name Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title": "Investigator Occupation Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint": "Should this show, hide, or toggle the tile and documents",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title": "Action",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Button.Hint": "Which button should trigger this behavior",
@@ -450,11 +466,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: Map Pin Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument": "CCI: Open Document",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlaySound": "CCI: Play Sound",
+"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceTileToggle": "CCI: Tile Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## de.json
-390 untranslated strings
+407 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -540,6 +557,22 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Title": "Select Playlist",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Hint": "",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Title": "Select Playlist Sound",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title": "Investigator Image Tile",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint": "when the investigator is not set show this image",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title": "Placeholder image",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title": "Investigator Name Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title": "Investigator Occupation Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint": "Should this show, hide, or toggle the tile and documents",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title": "Action",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Button.Hint": "Which button should trigger this behavior",
@@ -844,11 +877,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: Map Pin Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument": "CCI: Open Document",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlaySound": "CCI: Play Sound",
+"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceTileToggle": "CCI: Tile Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## es.json
-391 untranslated strings
+408 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -934,6 +968,22 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Title": "Select Playlist",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Hint": "",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Title": "Select Playlist Sound",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title": "Investigator Image Tile",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint": "when the investigator is not set show this image",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title": "Placeholder image",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title": "Investigator Name Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title": "Investigator Occupation Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint": "Should this show, hide, or toggle the tile and documents",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title": "Action",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Button.Hint": "Which button should trigger this behavior",
@@ -1239,11 +1289,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: Map Pin Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument": "CCI: Open Document",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlaySound": "CCI: Play Sound",
+"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceTileToggle": "CCI: Tile Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## it.json
-468 untranslated strings
+485 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -1344,6 +1395,22 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Title": "Select Playlist",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Hint": "",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Title": "Select Playlist Sound",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title": "Investigator Image Tile",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint": "when the investigator is not set show this image",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title": "Placeholder image",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title": "Investigator Name Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title": "Investigator Occupation Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint": "Should this show, hide, or toggle the tile and documents",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title": "Action",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Button.Hint": "Which button should trigger this behavior",
@@ -1710,12 +1777,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: Map Pin Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument": "CCI: Open Document",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlaySound": "CCI: Play Sound",
+"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceTileToggle": "CCI: Tile Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene",
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-622 untranslated strings
+639 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -1816,6 +1884,22 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Title": "Select Playlist",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Hint": "",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Title": "Select Playlist Sound",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title": "Investigator Image Tile",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint": "when the investigator is not set show this image",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title": "Placeholder image",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title": "Investigator Name Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title": "Investigator Occupation Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint": "Should this show, hide, or toggle the tile and documents",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title": "Action",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Button.Hint": "Which button should trigger this behavior",
@@ -2336,12 +2420,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: Map Pin Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument": "CCI: Open Document",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlaySound": "CCI: Play Sound",
+"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceTileToggle": "CCI: Tile Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene",
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-538 untranslated strings
+555 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -2443,6 +2528,22 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Title": "Select Playlist",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Hint": "",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Title": "Select Playlist Sound",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title": "Investigator Image Tile",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint": "when the investigator is not set show this image",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title": "Placeholder image",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title": "Investigator Name Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title": "Investigator Occupation Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint": "Should this show, hide, or toggle the tile and documents",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title": "Action",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Button.Hint": "Which button should trigger this behavior",
@@ -2878,12 +2979,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: Map Pin Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument": "CCI: Open Document",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlaySound": "CCI: Play Sound",
+"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceTileToggle": "CCI: Tile Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene",
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## uk.json
-433 untranslated strings
+450 untranslated strings
 ```
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
@@ -2970,6 +3072,22 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.PlaySound.Playlist.Title": "Select Playlist",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Hint": "",
 "CoC7.ChaosiumCanvasInterface.PlaySound.Sound.Title": "Select Playlist Sound",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",
+"CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title": "Investigator Image Tile",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint": "when the investigator is not set show this image",
+"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title": "Placeholder image",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title": "Investigator Name Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint": "",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title": "Investigator Occupation Drawing",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint": "when the investigator is not set show this text",
+"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
+"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint": "Should this show, hide, or toggle the tile and documents",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title": "Action",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Button.Hint": "Which button should trigger this behavior",
@@ -3316,6 +3434,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: Map Pin Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument": "CCI: Open Document",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlaySound": "CCI: Play Sound",
+"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceTileToggle": "CCI: Tile Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
