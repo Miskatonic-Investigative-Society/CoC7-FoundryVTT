@@ -11,6 +11,12 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+## Version 8.9
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
 - Fix Chase Item Speed Check for Extreme Successes not just Critical success
 - Fix Sanity and Luck rolls on Investigator Summarized sheets
 - Update to French localization, thanks to @vonv #2068
