@@ -11,6 +11,7 @@ const config = [
     files: ['**/*.js'],
     languageOptions: {
       globals: {
+        Canvas: 'writable',
         ...globals.browser,
         ...globals.node
       }

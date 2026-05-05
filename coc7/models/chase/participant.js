@@ -150,7 +150,7 @@ export default class CoC7ChaseParticipant {
   get movAdjustment () {
     if (CoC7DicePool.isValidPool(this.#participant.speedCheck?.checkData?.flags?.[FOLDER_ID].load?.dicePool)) {
       const dicePool = CoC7DicePool.fromObject(this.#participant.speedCheck.checkData.flags[FOLDER_ID].load.dicePool)
-      if (dicePool.isCritical) {
+      if (dicePool.isCritical || dicePool.isExtremeSuccess) {
         return 1
       } else if (!dicePool.isSuccess) {
         return -1
