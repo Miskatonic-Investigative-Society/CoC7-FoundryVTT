@@ -238,6 +238,7 @@
       "ChaosiumCanvasInterfaceDrawingToggle": {},
       "ChaosiumCanvasInterfaceMapPinToggle": {},
       "ChaosiumCanvasInterfaceOpenDocument": {},
+      "ChaosiumCanvasInterfacePlayer": {},
       "ChaosiumCanvasInterfacePlaySound": {},
       "ChaosiumCanvasInterfaceTileToggle": {},
       "ChaosiumCanvasInterfaceToScene": {},

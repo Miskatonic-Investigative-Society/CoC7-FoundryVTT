@@ -3,6 +3,7 @@ import ChaosiumCanvasInterfaceAmbientLightToggle from './chaosium-canvas-interfa
 import ChaosiumCanvasInterfaceDrawingToggle from './chaosium-canvas-interface-drawing-toggle.js'
 import ChaosiumCanvasInterfaceMapPinToggle from './chaosium-canvas-interface-map-pin-toggle.js'
 import ChaosiumCanvasInterfaceOpenDocument from './chaosium-canvas-interface-open-document.js'
+import ChaosiumCanvasInterfacePlayer from './chaosium-canvas-interface-player.js'
 import ChaosiumCanvasInterfacePlaySound from './chaosium-canvas-interface-play-sound.js'
 import ChaosiumCanvasInterfaceToScene from './chaosium-canvas-interface-to-scene.js'
 import ChaosiumCanvasInterfaceTileToggle from './chaosium-canvas-interface-tile-toggle.js'
@@ -52,6 +53,7 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
       ChaosiumCanvasInterfaceDrawingToggle,
       ChaosiumCanvasInterfaceMapPinToggle,
       ChaosiumCanvasInterfaceOpenDocument,
+      ChaosiumCanvasInterfacePlayer,
       ChaosiumCanvasInterfacePlaySound,
       ChaosiumCanvasInterfaceToScene,
       ChaosiumCanvasInterfaceTileToggle
