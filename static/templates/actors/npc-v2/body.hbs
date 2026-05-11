@@ -1,4 +1,4 @@
-<div class="npc flexcol">
+<div class="npc flexcol scrollable">
   <div class="character-details flexrow">
     <div class="character-detail">
       <div class="title">{{localize 'CoC7.Name'}}</div>
@@ -35,7 +35,7 @@
             <div class="item-controlled-width" data-tooltip="CoC7.NpcCharacteristicsValues"><i class="fa-solid fa-user-edit"></i></div>
           {{/if}}
         {{/unless}}
-        <div class="item-controlled-width slide-out-notes clickable{{#if document.system.flags.panelNotes}} slid-out-notes{{/if}}" style="text-align: center"><i class="fa-solid fa-note-sticky"></i></div>
+        <div class="item-controlled-width slide-out-notes clickable{{#if document.system.flags.panelNotes}} slid-out-notes{{/if}}" style="text-align: center" data-tooltip="CoC7.Notes"><i class="fa-solid fa-note-sticky"></i></div>
       </div>
     </div>
   </div>
@@ -271,11 +271,13 @@
       </div>
     </div>
   {{/if}}
-  <div class="tab-group tab-group-notes flexcol{{#unless document.system.flags.panelNotes}} sliding-out-notes slide-out-notes{{/unless}}" data-panel="Notes" data-slide-under="on">
+  <div class="tab-group tab-group-notes flexcol{{#if document.system.flags.panelNotes}} visible-notes{{else}} sliding-out-notes slide-out-notes{{/if}}" data-panel="Notes" data-slide-under="on">
     <div class="tab-group-header">
+      <i class="fa-sharp fa-thin fa-left-from-line" style="height:0; overflow: hidden;"></i>
       <div class="tab-group-title">{{localize 'CoC7.Notes'}}</div>
+      <i class="fa-sharp fa-thin fa-left-from-line"></i>
     </div>
-    <section class="tab-group-tab scrollable">
+    <section class="coc7-formatted-text tab-group-tab scrollable">
       <prose-mirror name="system.biography.personalDescription.value" value="{{document.system.biography.personalDescription.value}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedBiographyPersonalDescription}}}</prose-mirror>
     </section>
   </div>

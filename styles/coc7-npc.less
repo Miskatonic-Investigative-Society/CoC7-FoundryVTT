@@ -3,7 +3,9 @@
   font-size: @16px;
 
   section.window-content {
-    overflow: visible;
+    &:has(.tab-group-notes.visible-notes) {
+      overflow: visible;
+    }
     background-position: top right;
     font-family: var(--investigator-sheet-secondary-font);
 

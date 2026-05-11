@@ -217,11 +217,13 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
         const fn = () => {
           if (button.classList.contains('slid-out-notes')) {
             outer.classList.remove('sliding-out-notes')
+          } else {
+            outer.classList.remove('visible-notes')
           }
           element.removeEventListener('transitionend', fn)
         }
         outer.addEventListener('transitionend', fn)
-        outer.classList.add('sliding-out-notes')
+        outer.classList.add('sliding-out-notes', 'visible-notes')
         if (button.classList.contains('slid-out-notes')) {
           button.classList.remove('slid-out-notes')
           outer.classList.add('slide-out-notes')
