@@ -13,9 +13,10 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 - Add scroll bar to NPC sheet
 - Damage card Inflict Damage button will now pick targets over selection
-- If weapon Item has no maximum ammunition on NPC sheet show edit button instead of reload
 - Fix reload tooltip to use &lt;br&gt; instead of \n
 - Fix console error if uses per round has no normal / max
+- If weapon Item has no maximum ammunition on NPC sheet show edit button instead of reload
+- Prevent CCI detection errors on scenes with scene levels
 - Update Active Effect tab to separate on Actor and on Item Active Effects, create tooltip to decode common changes
 - Update to French localization, thanks to @vonv #2078
 - Update to Simplified Chinese localization, thanks to @LiangHao-cloud #2079
