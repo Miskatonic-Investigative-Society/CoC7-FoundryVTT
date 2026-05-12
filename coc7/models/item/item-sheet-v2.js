@@ -99,7 +99,7 @@ export default class CoC7ModelsItemItemSheetV2 extends CoC7ModelsItemGlobalSheet
         )
         break
       case 'activeEffects':
-        context.effects = CoC7ActiveEffect.prepareActiveEffectCategories(context.document.effects, { status: false })
+        context.effects = await CoC7ActiveEffect.prepareActiveEffectCategories(context.document, { status: false })
         break
       case 'prices':
         context._eras = []

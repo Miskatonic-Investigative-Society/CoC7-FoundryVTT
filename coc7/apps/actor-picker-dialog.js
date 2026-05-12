@@ -123,15 +123,21 @@ export default class CoC7ActorPickerDialog extends foundry.applications.api.Hand
    * @param {boolean} options.allowNoActor
    * @param {string|null} options.notAutomaticUuid
    * @param {string|null} options.selected
+   * @param {boolean} options.preferTargeted
    * @returns {string}
    */
-  static async create ({ allowNoActor = false, notAutomaticUuid = null, selected = null } = {}) {
+  static async create ({ allowNoActor = false, notAutomaticUuid = null, selected = null, preferTargeted = false } = {}) {
     let found = []
-    if (game.user.isGM && canvas.ready && canvas.tokens.controlled.length > 0) {
-      found = canvas.tokens.controlled.map(t => t.document)
+    if (preferTargeted && game.user.targets.size > 0) {
+      found = [...game.user.targets.map(doc => doc.document)]
     }
-    if (found.length === 1 && (found[0].uuid === notAutomaticUuid || found[0].actor?.uuid === notAutomaticUuid)) {
-      found = []
+    if (found.length === 0) {
+      if (game.user.isGM && canvas.ready && canvas.tokens.controlled.length > 0) {
+        found = canvas.tokens.controlled.map(t => t.document)
+      }
+      if (found.length === 1 && (found[0].uuid === notAutomaticUuid || found[0].actor?.uuid === notAutomaticUuid)) {
+        found = []
+      }
     }
     if (found.length === 0) {
       if (canvas.ready) {
