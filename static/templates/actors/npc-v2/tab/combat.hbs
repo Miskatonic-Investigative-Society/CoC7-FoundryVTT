@@ -31,7 +31,11 @@
                 <span class="tag">{{weapon.system.ammo}}</span>
               </div>
               <div class="control">
-                <a class="reload-weapon" data-tooltip="CoC7.Reload"><i class="game-icon game-icon-chaingun"></i></a>
+                {{#if (eq null weapon.system.bullets)}}
+                  <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditWeapon" style=""><i class="fa-solid fa-edit"></i></a>
+                {{else}}
+                  <a class="reload-weapon" data-tooltip="CoC7.Reload"><i class="game-icon game-icon-chaingun"></i></a>
+                {{/if}}
               </div>
             </div>
           {{else}}

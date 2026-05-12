@@ -353,7 +353,7 @@
   "CoC7.ItemWeight": "Weight",
   "CoC7.ItemDetails": "Details",
   "CoC7.Description": "Description",
-  "CoC7.Reload": "Left/Right click : add/remove 1 bullet\nShift + Left/Right click : Reload/Empty",
+  "CoC7.Reload": "Left/Right click : add/remove 1 bullet<br>Shift + Left/Right click : Reload/Empty",
   "CoC7.WeaponRange": "Range",
   "CoC7.WeaponDamage": "Damage",
   "CoC7.Weapon.BlastRadius": "Blast radius",
