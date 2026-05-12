@@ -67,7 +67,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
       context.hasInventory = this.hasInventory(context)
     }
 
-    context.effects = context.document.type === 'character' ? CoC7ActiveEffect.prepareActiveEffectCategories(context.document.effects) : CoC7ActiveEffect.prepareNPCActiveEffectCategories(context.document.effects)
+    context.effects = context.document.type === 'character' ? await CoC7ActiveEffect.prepareActiveEffectCategories(context.document) : await CoC7ActiveEffect.prepareNPCActiveEffectCategories(context.document)
 
     context.allowUnlock = this.allowUnlock
 

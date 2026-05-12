@@ -23,13 +23,13 @@
         </li>
       {{/if}}
       {{#each category.effects as |effect|}}
-        <li class="item effect" data-effect-id="{{effect.id}}">
-          <div class="effect-identifier">
+        <li class="item effect" data-effect-uuid="{{effect.uuid}}">
+          <div class="effect-identifier" data-tooltip="{{effect.readable}}">
             <div class="item-image" style="background-image: url('{{effect.img}}')"></div>
             <h4 class="item-name effect-name">{{effect.name}}</h4>
           </div>
-          <div class="effect-source">{{effect.sourceName}}</div>
-          <div class="effect-duration">{{effect.duration.label}}</div>
+          <div class="effect-source">{{{effect.source}}}</div>
+          <div class="effect-duration">{{effect.duration}}</div>
           <div class="item-controls effect-controls">
             {{#if @root.editable}}
               <a class="item-control effect-control" data-action="toggle" data-tooltip="{{#if effect.disabled}}CoC7.Enable{{else}}CoC7.Disable{{/if}}">
