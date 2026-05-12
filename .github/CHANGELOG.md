@@ -18,6 +18,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - If weapon Item has no maximum ammunition on NPC sheet show edit button instead of reload
 - Prevent CCI detection errors on scenes with scene levels
 - Update Active Effect tab to separate on Actor and on Item Active Effects, create tooltip to decode common changes
+- Add Spanish localization for optional rules tour, thanks to @zeedif #2085
 - Update to French localization, thanks to @vonv #2078
 - Update to Simplified Chinese localization, thanks to @LiangHao-cloud #2079
 
