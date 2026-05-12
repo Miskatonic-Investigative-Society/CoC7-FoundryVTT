@@ -1,4 +1,4 @@
-/* global ChatMessage CONFIG foundry fromUuid game ui */
+/* global ChatMessage CONFIG foundry fromUuid game Roll ui */
 // cSpell:words Uniki Unik
 import { FOLDER_ID } from '../constants.js'
 import CoC7ChatChaseObstacle from './chat-chase-obstacle.js'
@@ -12,6 +12,7 @@ import CoC7ConCheck from '../apps/con-check.js'
 import CoC7SanCheckCard from '../apps/san-check-card.js'
 import CoC7Utilities from './utilities.js'
 import CoCIDBatch from './coc-id-batch.js'
+import deprecated from '../deprecated.js'
 
 export default class CoC7Updater {
   /**
@@ -126,31 +127,37 @@ export default class CoC7Updater {
   static async updateDocuments () {
     const documentUpdates = []
 
+    console.log('PREPARE game.actors')
     // Migrate World Actors
     for (const document of game.actors.contents) {
       CoC7Updater.migrateActorData({ document, documentUpdates, packId: '', parentUuid: '' })
     }
 
+    console.log('PREPARE game.items')
     // Migrate World Items
     for (const document of game.items.contents) {
       CoC7Updater.migrateItemData({ document, documentUpdates, packId: '', parentUuid: '' })
     }
 
+    console.log('PREPARE game.macros')
     // Migrate World Macro
     for (const document of game.macros.contents) {
       CoC7Updater.migrateMacroData({ document, documentUpdates, packId: '', parentUuid: '' })
     }
 
+    console.log('PREPARE game.tables')
     // Migrate World Tables
     for (const document of game.tables.contents) {
       CoC7Updater.migrateTableData({ document, documentUpdates, packId: '', parentUuid: '' })
     }
 
+    console.log('PREPARE game.scenes')
     // Migrate World Scenes [Token] Actors
     for (const document of game.scenes.contents) {
       CoC7Updater.migrateSceneData({ document, documentUpdates, packId: '', parentUuid: '' })
     }
 
+    console.log('PREPARE game.packs')
     // Migrate World and Module Compendium Packs
     for (const pack of game.packs) {
       if (pack.metadata.packageName !== FOLDER_ID) {
@@ -199,6 +206,7 @@ export default class CoC7Updater {
         }
       }
     }
+    console.log('PREPARE processed')
   }
 
   /**
@@ -266,6 +274,7 @@ export default class CoC7Updater {
     CoC7Updater._migrateItemEmbeddedV10({ document, documentUpdates, packId, parentUuid })
     CoC7Updater._migrateItemSkillName({ document, documentUpdates, packId, parentUuid })
     CoC7Updater._migrateItemChases({ document, documentUpdates, packId, parentUuid })
+    CoC7Updater._migrateItemSpells({ document, documentUpdates, packId, parentUuid })
 
     for (const offset in document.effects?.contents ?? []) {
       const image = String(document.effects.contents[offset].img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
@@ -637,6 +646,65 @@ export default class CoC7Updater {
   }
 
   /**
+   * Migrate Item Embedded Documents
+   * @param {object} options
+   * @param {object} options.document
+   * @param {object} options.documentUpdates
+   * @param {string} options.packId
+   * @param {string} options.parentUuid
+   */
+  static _migrateItemSpells ({ document, documentUpdates, packId = '', parentUuid = '' } = {}) {
+    if (document.type === 'spell') {
+      if (document.system.costList.length === 0) {
+        const costs = {
+          hp: document.system.costs.hitPoints.toString().trim(),
+          mp: document.system.costs.magicPoints.toString().trim(),
+          san: document.system.costs.sanity.toString().trim(),
+          pow: document.system.costs.power.toString().trim()
+        }
+        let okay = true
+        for (const key in costs) {
+          if (costs[key].match(/^0*$/)) {
+            delete costs[key]
+          } else {
+            if (!Roll.validate(costs[key])) {
+              okay = false
+              break
+            }
+          }
+        }
+        if (okay) {
+          const costList = []
+          for (const key in costs) {
+            costList.push({
+              config: { modify: key, value: costs[key] },
+              if: '',
+              type: 'casterCost'
+            })
+          }
+          if (document.system.costs.others.toString().length) {
+            costList.push({
+              config: { prompt: document.system.costs.others },
+              if: '',
+              type: 'otherCost'
+            })
+          }
+          if (costList.length > 0) {
+            CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
+              'system.costList': costList,
+              'system.costs.hitPoints': '',
+              'system.costs.magicPoints': '',
+              'system.costs.sanity': '',
+              'system.costs.power': '',
+              'system.costs.others': ''
+            })
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * Migrate Actor artwork to assets
    * @param {object} options
    * @param {object} options.document
@@ -877,7 +945,20 @@ export default class CoC7Updater {
   static async migrateChatMessages () {
     const updates = []
     const deleteIds = []
+
+    let progressBar = {
+      current: 0,
+      max: game.messages.contents.length + 1 // Will always call pct = 1 after progress to prevent rounding issues
+    }
+    /* // FoundryVTT V12 */
+    if (foundry.utils.isNewerVersion(game.version, 13)) {
+      progressBar.bar = ui.notifications.info('DOCUMENT.ChatMessages', { localize: true, progress: true, console: false })
+    } else {
+      progressBar.bar = deprecated.displayProgressBar(game.i18n.localize('DOCUMENT.ChatMessages'))
+    }
     for (const offset in game.messages.contents) {
+      progressBar.bar.update({ pct: progressBar.current / progressBar.max })
+      progressBar.current++
       const message = game.messages.contents[offset]
       if (deleteIds.includes(message.id)) {
         // Merged into other message so delete
@@ -955,6 +1036,7 @@ export default class CoC7Updater {
         }
       }
     }
+    progressBar.bar.remove()
     if (updates.length) {
       ChatMessage.updateDocuments(updates)
       if (deleteIds.length) {

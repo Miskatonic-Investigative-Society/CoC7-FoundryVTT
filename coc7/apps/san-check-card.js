@@ -1,5 +1,5 @@
-/* global ChatMessage CONST foundry fromUuid game renderTemplate Roll TokenDocument ui */
-import { FOLDER_ID, STATUS_EFFECTS } from '../constants.js'
+/* global ChatMessage foundry fromUuid game renderTemplate Roll TokenDocument ui */
+import { FOLDER_ID, CHAT_MESSAGE_MODE, STATUS_EFFECTS } from '../constants.js'
 import CoC7DicePool from './dice-pool.js'
 import CoC7SystemSocket from './system-socket.js'
 import CoC7Utilities from './utilities.js'
@@ -724,9 +724,9 @@ export default class CoC7SanCheckCard {
       content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(CoC7SanCheckCard.template, data)
     }
     if (typeof this.message?.whisper === 'undefined') {
-      if ([CONST.DICE_ROLL_MODES.PRIVATE].includes(game.settings.get('core', 'rollMode'))) {
+      if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode'))) {
         chatData.whisper = ChatMessage.getWhisperRecipients('GM')
-      } else if (CONST.DICE_ROLL_MODES.BLIND === game.settings.get('core', 'rollMode')) {
+      } else if (CHAT_MESSAGE_MODE.BLIND === (game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode'))) {
         chatData.blind = true
       }
     }

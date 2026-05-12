@@ -11,7 +11,40 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+## Version 8.9
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Fix Chase Item Speed Check for Extreme Successes not just Critical success
+- Fix Sanity and Luck rolls on Investigator Summarized sheets
+- Update to French localization, thanks to @vonv #2068
+- Update to Simplified Chinese localization, thanks to @LiangHao-cloud #2070
+
+## Version 8.8
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Fix Setup Items breaking for NPC and Creatures
+- Fix Dhole House importer defaulting skill values
+- Fix updater to skip broken tokens when checking for throw skills
+- Spell automation to support spells that have costs that are not only number/rolls
+
+## Version 8.7
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Fix blind checks unflagging existing skill development flag
+- Fix Combat Melee luck/bonus/penalty adding a damage message on a success change where no target
+- Fix get Actor from TokenDocument for unlinked Tokens
+- Fix FoundryVTT v14 Status Effects being removed and showing icon for Status Effects
 - Replace StandardJS with ESLint, thanks to @zeedif #1863
+- Update to Swedish localization, thanks to @Rangertheman #2053 and #2057
 
 ## Version 8.6
 

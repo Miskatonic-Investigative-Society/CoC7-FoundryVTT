@@ -416,10 +416,21 @@
     margin-top: @8px;
     gap: 0;
 
+    .coc7-spell-gains-header,
+    .coc7-spell-gains-row {
+      display: flex;
+    }
+
     .coc7-book-gains-header,
     .coc7-book-gains-row {
       display: grid;
       grid-template-columns: 40% auto;
+    }
+
+    .coc7-spell-gains-header,
+    .coc7-spell-gains-row,
+    .coc7-book-gains-header,
+    .coc7-book-gains-row {
       gap: @8px;
       padding: @4px;
 
@@ -428,23 +439,30 @@
       }
     }
 
+    .coc7-spell-gains-header,
     .coc7-book-gains-header {
       font-family: var(--investigator-sheet-primary-font);
-      text-transform: uppercase;
       font-weight: bold;
       text-align: center;
       background-color: rgba(0, 0, 0, 0.2);
       border-radius: @8px @8px 0 0;
     }
 
+    .coc7-book-gains-header {
+      text-transform: uppercase;
+    }
+
+    .coc7-spell-gains-row:nth-child(odd),
     .coc7-book-gains-row:nth-child(odd) {
       background-color: rgba(0, 0, 0, 0.1);
     }
 
+    .coc7-spell-gains-row:nth-child(even),
     .coc7-book-gains-row:nth-child(even) {
       background-color: rgba(0, 0, 0, 0.05);
     }
 
+    .coc7-spell-gains-row:last-child,
     .coc7-book-gains-row:last-child {
       border-radius: 0 0 @8px @8px;
     }

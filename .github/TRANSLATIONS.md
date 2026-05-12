@@ -4,279 +4,341 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations have more than 360 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cs.json (391 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (449 untranslated strings)](./ABANDONED.md#csjson)
 
-[it.json (427 untranslated strings)](./ABANDONED.md#itjson)
+[de.json (407 untranslated strings)](./ABANDONED.md#dejson)
 
-[pt-BR.json (581 untranslated strings)](./ABANDONED.md#pt-brjson)
+[es.json (408 untranslated strings)](./ABANDONED.md#esjson)
 
-[ru.json (497 untranslated strings)](./ABANDONED.md#rujson)
+[it.json (485 untranslated strings)](./ABANDONED.md#itjson)
 
-[uk.json (392 untranslated strings)](./ABANDONED.md#ukjson)
+[pt-BR.json (639 untranslated strings)](./ABANDONED.md#pt-brjson)
+
+[ru.json (555 untranslated strings)](./ABANDONED.md#rujson)
+
+[uk.json (450 untranslated strings)](./ABANDONED.md#ukjson)
 
 
 
-|Key|[cn](./MISSING.md#cnjson)|[de](./MISSING.md#dejson)|[es](./MISSING.md#esjson)|[fr](./MISSING.md#frjson)|[ja](./MISSING.md#jajson)|[ko](./MISSING.md#kojson)|[pl](./MISSING.md#pljson)|[sv](./MISSING.md#svjson)|[zh-tw](./MISSING.md#zh-twjson)|
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**8**|**349**|**350**|**149**|**233**|**258**|**234**|**232**|**4**|
-|[CoC7.AddedEmbeddedItems](#coc7addedembeddeditemsjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.AdditionalPoolModifier](#coc7additionalpoolmodifierjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.AlreadyRested](#coc7alreadyrestedjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ArmorWillFormula](#coc7armorwillformulajson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.BookAlterProgress](#coc7bookalterprogressjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.BookProgressSummary](#coc7bookprogresssummaryjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.BookProgressValue](#coc7bookprogressvaluejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ChaosiumCanvasInterface.Actions.Hide](#coc7chaosiumcanvasinterfaceactionshidejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.Actions.Show](#coc7chaosiumcanvasinterfaceactionsshowjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.Actions.Toggle](#coc7chaosiumcanvasinterfaceactionstogglejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Hint](#coc7chaosiumcanvasinterfaceambientlighttoggleactionhintjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Off](#coc7chaosiumcanvasinterfaceambientlighttoggleactionoffjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.On](#coc7chaosiumcanvasinterfaceambientlighttoggleactiononjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Title](#coc7chaosiumcanvasinterfaceambientlighttoggleactiontitlejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Button.Hint](#coc7chaosiumcanvasinterfaceambientlighttogglebuttonhintjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Button.Title](#coc7chaosiumcanvasinterfaceambientlighttogglebuttontitlejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Light.Hint](#coc7chaosiumcanvasinterfaceambientlighttogglelighthintjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Light.Title](#coc7chaosiumcanvasinterfaceambientlighttogglelighttitlejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.Action.Hint](#coc7chaosiumcanvasinterfacedrawingtoggleactionhintjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.DrawingToggle.Action.Title](#coc7chaosiumcanvasinterfacedrawingtoggleactiontitlejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Action.Hint](#coc7chaosiumcanvasinterfacemappintoggleactionhintjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Action.Title](#coc7chaosiumcanvasinterfacemappintoggleactiontitlejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.OpenDocument.Tile.Hint](#coc7chaosiumcanvasinterfaceopendocumenttilehintjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.OpenDocument.Tile.Title](#coc7chaosiumcanvasinterfaceopendocumenttiletitlejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Hint](#coc7chaosiumcanvasinterfaceplaysoundactionhintjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Play](#coc7chaosiumcanvasinterfaceplaysoundactionplayjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Stop](#coc7chaosiumcanvasinterfaceplaysoundactionstopjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Title](#coc7chaosiumcanvasinterfaceplaysoundactiontitlejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint](#coc7chaosiumcanvasinterfacetiletoggleactionhintjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title](#coc7chaosiumcanvasinterfacetiletoggleactiontitlejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.ChooseWeapon](#coc7chooseweaponjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsActorCharacterSheetSummarizedV2](#coc7coc7modelsactorcharactersheetsummarizedv2json)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsActorCharacterSheetSummarizedV3](#coc7coc7modelsactorcharactersheetsummarizedv3json)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsActorCharacterSheetV2](#coc7coc7modelsactorcharactersheetv2json)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsActorCharacterSheetV3](#coc7coc7modelsactorcharactersheetv3json)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsActorContainerSheetV2](#coc7coc7modelsactorcontainersheetv2json)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsActorCreatureSheetV2](#coc7coc7modelsactorcreaturesheetv2json)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsActorNPCSheetV2](#coc7coc7modelsactornpcsheetv2json)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsActorVehicleSheetV2](#coc7coc7modelsactorvehiclesheetv2json)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemArchetypeSheet](#coc7coc7modelsitemarchetypesheetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemArmorSheet](#coc7coc7modelsitemarmorsheetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemBookSheet](#coc7coc7modelsitembooksheetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemChaseSheet](#coc7coc7modelsitemchasesheetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemExperiencePackageSheet](#coc7coc7modelsitemexperiencepackagesheetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemItemSheetV2](#coc7coc7modelsitemitemsheetv2json)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemSetupSheet](#coc7coc7modelsitemsetupsheetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemSkillSheet](#coc7coc7modelsitemskillsheetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemSpellSheet](#coc7coc7modelsitemspellsheetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemStatusSheet](#coc7coc7modelsitemstatussheetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemTalentSheet](#coc7coc7modelsitemtalentsheetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoC7ModelsItemWeaponSheet](#coc7coc7modelsitemweaponsheetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDBatch.ThrowSkillChange](#coc7cocidbatchthrowskillchangejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDCompendiumPopulateMissing](#coc7cocidcompendiumpopulatemissingjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.info](#coc7cocidflaginfojson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.accounting](#coc7cocidflagkeysiskillaccountingjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.animal-handling](#coc7cocidflagkeysiskillanimal-handlingjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.anthropology](#coc7cocidflagkeysiskillanthropologyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.appraise](#coc7cocidflagkeysiskillappraisejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.archaeology](#coc7cocidflagkeysiskillarchaeologyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.art-craft-acting](#coc7cocidflagkeysiskillart-craft-actingjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.art-craft-any](#coc7cocidflagkeysiskillart-craft-anyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.art-craft-fine-art](#coc7cocidflagkeysiskillart-craft-fine-artjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.art-craft-forgery](#coc7cocidflagkeysiskillart-craft-forgeryjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.art-craft-photography](#coc7cocidflagkeysiskillart-craft-photographyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.charm](#coc7cocidflagkeysiskillcharmjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.civics](#coc7cocidflagkeysiskillcivicsjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.climb](#coc7cocidflagkeysiskillclimbjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.computer-use](#coc7cocidflagkeysiskillcomputer-usejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.demolitions](#coc7cocidflagkeysiskilldemolitionsjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.disguise](#coc7cocidflagkeysiskilldisguisejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.diving](#coc7cocidflagkeysiskilldivingjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.drive-carriage](#coc7cocidflagkeysiskilldrive-carriagejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.drive-horse-oxen](#coc7cocidflagkeysiskilldrive-horse-oxenjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.drive-wagon-coach](#coc7cocidflagkeysiskilldrive-wagon-coachjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.electrical-repair](#coc7cocidflagkeysiskillelectrical-repairjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.electronics](#coc7cocidflagkeysiskillelectronicsjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.empire](#coc7cocidflagkeysiskillempirejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.fast-talk](#coc7cocidflagkeysiskillfast-talkjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.fighting-any](#coc7cocidflagkeysiskillfighting-anyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.fighting-axe](#coc7cocidflagkeysiskillfighting-axejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.fighting-brawl](#coc7cocidflagkeysiskillfighting-brawljson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.fighting-chainsaw](#coc7cocidflagkeysiskillfighting-chainsawjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.fighting-flail](#coc7cocidflagkeysiskillfighting-flailjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.fighting-garrote](#coc7cocidflagkeysiskillfighting-garrotejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.fighting-spear](#coc7cocidflagkeysiskillfighting-spearjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.fighting-sword](#coc7cocidflagkeysiskillfighting-swordjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.fighting-whip](#coc7cocidflagkeysiskillfighting-whipjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.firearms-any](#coc7cocidflagkeysiskillfirearms-anyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.firearms-artillery](#coc7cocidflagkeysiskillfirearms-artilleryjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.firearms-bow](#coc7cocidflagkeysiskillfirearms-bowjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.firearms-flamethrower](#coc7cocidflagkeysiskillfirearms-flamethrowerjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.firearms-handgun](#coc7cocidflagkeysiskillfirearms-handgunjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.firearms-heavy-weapons](#coc7cocidflagkeysiskillfirearms-heavy-weaponsjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.firearms-machine-gun](#coc7cocidflagkeysiskillfirearms-machine-gunjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.firearms-rifle-shotgun](#coc7cocidflagkeysiskillfirearms-rifle-shotgunjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.firearms-submachine-gun](#coc7cocidflagkeysiskillfirearms-submachine-gunjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.first-aid](#coc7cocidflagkeysiskillfirst-aidjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.gambling](#coc7cocidflagkeysiskillgamblingjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.history](#coc7cocidflagkeysiskillhistoryjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.hypnosis](#coc7cocidflagkeysiskillhypnosisjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.intimidate](#coc7cocidflagkeysiskillintimidatejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.jump](#coc7cocidflagkeysiskilljumpjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.language-any](#coc7cocidflagkeysiskilllanguage-anyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.language-czech](#coc7cocidflagkeysiskilllanguage-czechjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.language-dutch](#coc7cocidflagkeysiskilllanguage-dutchjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.language-english](#coc7cocidflagkeysiskilllanguage-englishjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.language-german](#coc7cocidflagkeysiskilllanguage-germanjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.language-own](#coc7cocidflagkeysiskilllanguage-ownjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.language-polish](#coc7cocidflagkeysiskilllanguage-polishjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.language-russian](#coc7cocidflagkeysiskilllanguage-russianjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.language-swahili](#coc7cocidflagkeysiskilllanguage-swahilijson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.language-yoruba](#coc7cocidflagkeysiskilllanguage-yorubajson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.language-zulu](#coc7cocidflagkeysiskilllanguage-zulujson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.law](#coc7cocidflagkeysiskilllawjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.library-use](#coc7cocidflagkeysiskilllibrary-usejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.listen](#coc7cocidflagkeysiskilllistenjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.locksmith](#coc7cocidflagkeysiskilllocksmithjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.lore-any](#coc7cocidflagkeysiskilllore-anyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.mechanical-repair](#coc7cocidflagkeysiskillmechanical-repairjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.medicine](#coc7cocidflagkeysiskillmedicinejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.natural-world](#coc7cocidflagkeysiskillnatural-worldjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.navigate](#coc7cocidflagkeysiskillnavigatejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.occult](#coc7cocidflagkeysiskilloccultjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.operate-heavy-machinery](#coc7cocidflagkeysiskilloperate-heavy-machineryjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.persuade](#coc7cocidflagkeysiskillpersuadejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.pilot-any](#coc7cocidflagkeysiskillpilot-anyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.psychoanalysis](#coc7cocidflagkeysiskillpsychoanalysisjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.psychology](#coc7cocidflagkeysiskillpsychologyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.read-lips](#coc7cocidflagkeysiskillread-lipsjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.ride](#coc7cocidflagkeysiskillridejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.rope-use](#coc7cocidflagkeysiskillrope-usejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-any](#coc7cocidflagkeysiskillscience-anyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-astronomy](#coc7cocidflagkeysiskillscience-astronomyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-biology](#coc7cocidflagkeysiskillscience-biologyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-botany](#coc7cocidflagkeysiskillscience-botanyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-chemistry](#coc7cocidflagkeysiskillscience-chemistryjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-cryptography](#coc7cocidflagkeysiskillscience-cryptographyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-engineering](#coc7cocidflagkeysiskillscience-engineeringjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-forensics](#coc7cocidflagkeysiskillscience-forensicsjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-geology](#coc7cocidflagkeysiskillscience-geologyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-mathematics](#coc7cocidflagkeysiskillscience-mathematicsjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-meteorology](#coc7cocidflagkeysiskillscience-meteorologyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-pharmacy](#coc7cocidflagkeysiskillscience-pharmacyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-physics](#coc7cocidflagkeysiskillscience-physicsjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.science-zoology](#coc7cocidflagkeysiskillscience-zoologyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.sleight-of-hand](#coc7cocidflagkeysiskillsleight-of-handjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.spot-hidden](#coc7cocidflagkeysiskillspot-hiddenjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.stealth](#coc7cocidflagkeysiskillstealthjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.survival-any](#coc7cocidflagkeysiskillsurvival-anyjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.swim](#coc7cocidflagkeysiskillswimjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.throw](#coc7cocidflagkeysiskillthrowjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.track](#coc7cocidflagkeysiskilltrackjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.keys.i.skill.trap](#coc7cocidflagkeysiskilltrapjson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.CoCIDFlag.loading](#coc7cocidflagloadingjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Config.AdventureCSS](#coc7configadventurecssjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Config.AdventureChangeHint](#coc7configadventurechangehintjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Config.AdventureSubheading](#coc7configadventuresubheadingjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Config.FixedHeadingCSS](#coc7configfixedheadingcssjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.DefenderDodging](#coc7defenderdodgingjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.DeleteBookProgress](#coc7deletebookprogressjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.DistanceUnitFeet](#coc7distanceunitfeetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.DistanceUnitMetre](#coc7distanceunitmetrejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.DistanceUnitYard](#coc7distanceunityardjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.EditActorOnChase](#coc7editactoronchasejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ErrorOpposedRollsMissingAttackerDefender](#coc7erroropposedrollsmissingattackerdefenderjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ErrorUnknownDistanceUnit](#coc7errorunknowndistanceunitjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.IncorrectAttribute](#coc7errorsincorrectattributejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.IncorrectPoolModifier](#coc7errorsincorrectpoolmodifierjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnableToCalculateBaseValue](#coc7errorsunabletocalculatebasevaluejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnableToLoadMessage](#coc7errorsunabletoloadmessagejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnableToMigrateMessages](#coc7errorsunabletomigratemessagesjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnknownAttribute](#coc7errorsunknownattributejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnknownCharacteristic](#coc7errorsunknowncharacteristicjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnknownItem](#coc7errorsunknownitemjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnknownSkill](#coc7errorsunknownskilljson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnknownWeapon](#coc7errorsunknownweaponjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnparsableActor](#coc7errorsunparsableactorjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnparsableDice](#coc7errorsunparsabledicejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnparsableMessage](#coc7errorsunparsablemessagejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnparsableModification](#coc7errorsunparsablemodificationjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnparsablePoolModifier](#coc7errorsunparsablepoolmodifierjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnparsableRoll](#coc7errorsunparsablerolljson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Errors.UnparsableThreshold](#coc7errorsunparsablethresholdjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.InitiativeRoll](#coc7initiativerolljson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.LocationPing](#coc7locationpingjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.MapNoteNoBackground](#coc7mapnotenobackgroundjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ModifiedByActiveEffect](#coc7modifiedbyactiveeffectjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.MonetarySectionMoveDown](#coc7monetarysectionmovedownjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.MonetarySectionMoveUp](#coc7monetarysectionmoveupjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.NewArmorName](#coc7newarmornamejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.NoTarget](#coc7notargetjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.NoTargetTitle](#coc7notargettitlejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ParticipantAttacker](#coc7participantattackerjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ParticipantDefender](#coc7participantdefenderjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ParticipantNone](#coc7participantnonejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholderjson)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[CoC7.PoolAddOneBonus](#coc7pooladdonebonusjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.PoolAddOnePenalty](#coc7pooladdonepenaltyjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.PoolAddTwoBonus](#coc7pooladdtwobonusjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.PoolAddTwoPenalty](#coc7pooladdtwopenaltyjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.PortraitOptions](#coc7portraitoptionsjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ReferenceTome](#coc7referencetomejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.ReferenceTomeFlavor](#coc7referencetomeflavorjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.RequestRoll](#coc7requestrolljson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.ActiveEffect.Grouped](#coc7rollasmodifieractiveeffectgroupedjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.ActiveEffect.GroupedName](#coc7rollasmodifieractiveeffectgroupednamejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.ActiveEffect.Individual](#coc7rollasmodifieractiveeffectindividualjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.ActiveEffect.IndividualName](#coc7rollasmodifieractiveeffectindividualnamejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.ActiveEffect.None](#coc7rollasmodifieractiveeffectnonejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.ActiveEffect.Title](#coc7rollasmodifieractiveeffecttitlejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Button](#coc7rollasmodifierbuttonjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Modifier.DamageName](#coc7rollasmodifiermodifierdamagenamejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Modifier.DamageNumber](#coc7rollasmodifiermodifierdamagenumberjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Modifier.DamagedName](#coc7rollasmodifiermodifierdamagednamejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Modifier.HealName](#coc7rollasmodifiermodifierhealnamejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Modifier.HealNumber](#coc7rollasmodifiermodifierhealnumberjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Modifier.HealedName](#coc7rollasmodifiermodifierhealednamejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Modifier.None](#coc7rollasmodifiermodifiernonejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Modifier.Title](#coc7rollasmodifiermodifiertitlejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Title](#coc7rollasmodifiertitlejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Type.Attribute](#coc7rollasmodifiertypeattributejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Type.Characteristic](#coc7rollasmodifiertypecharacteristicjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Type.Skill](#coc7rollasmodifiertypeskilljson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Type.Title](#coc7rollasmodifiertypetitlejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollAsModifier.Value](#coc7rollasmodifiervaluejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollDamageRange](#coc7rolldamagerangejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollDifficultyUnknownName](#coc7rolldifficultyunknownnamejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.RollNamedSkill](#coc7rollnamedskilljson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.SelectActor](#coc7selectactorjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Settings.AllowPushFumbles.Hint](#coc7settingsallowpushfumbleshintjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Settings.AllowPushFumbles.Name](#coc7settingsallowpushfumblesnamejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Settings.CharacteristicsOrder.Hint](#coc7settingscharacteristicsorderhintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Settings.CharacteristicsOrder.Name](#coc7settingscharacteristicsordernamejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Settings.HouseRules.Hint](#coc7settingshouseruleshintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Settings.HouseRules.Label](#coc7settingshouseruleslabeljson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Settings.PulpRules.All](#coc7settingspulprulesalljson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Settings.PulpRules.None](#coc7settingspulprulesnonejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.Settings.PulpRules.Some](#coc7settingspulprulessomejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.SkillHintFighting](#coc7skillhintfightingjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.SkillHintFirearm](#coc7skillhintfirearmjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.SkillHintKeepBaseValue](#coc7skillhintkeepbasevaluejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.SkillHintNoXpGain](#coc7skillhintnoxpgainjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.SkillHintOwn](#coc7skillhintownjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.SkillHintPickNameOnly](#coc7skillhintpicknameonlyjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.SkillHintPush](#coc7skillhintpushjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.SkillHintRanged](#coc7skillhintrangedjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.SkillHintRequiresName](#coc7skillhintrequiresnamejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.SkillOwn](#coc7skillownjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.StartRolls](#coc7startrollsjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.ToolTipShort](#coc7tooltipshortjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.WhatCopiedClipboard](#coc7whatcopiedclipboardjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.rangeCombatCard.BaseRangeShort](#coc7rangecombatcardbaserangeshortjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.rangeCombatCard.ExtremeRangeShort](#coc7rangecombatcardextremerangeshortjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[CoC7.rangeCombatCard.LongRangeShort](#coc7rangecombatcardlongrangeshortjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[SETTINGS.DefaultDifficulty](#settingsdefaultdifficultyjson)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
-|[SETTINGS.UseIconForEras](#settingsuseiconforerasjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[SETTINGS.UseIconForErasHint](#settingsuseiconforerashintjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|
-|[TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle](#typesregionbehaviorchaosiumcanvasinterfaceambientlighttogglejson)|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|Key|[cn](./MISSING.md#cnjson)|[fr](./MISSING.md#frjson)|[ja](./MISSING.md#jajson)|[ko](./MISSING.md#kojson)|[pl](./MISSING.md#pljson)|[sv](./MISSING.md#svjson)|[zh-tw](./MISSING.md#zh-twjson)|
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|**Remaining**:|**17**|**34**|**291**|**316**|**292**|**58**|**62**|
+|[CoC7.AddedEmbeddedItems](#coc7addedembeddeditemsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.AdditionalPoolModifier](#coc7additionalpoolmodifierjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.AlreadyRested](#coc7alreadyrestedjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ArmorWillFormula](#coc7armorwillformulajson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.BookAlterProgress](#coc7bookalterprogressjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.BookProgressSummary](#coc7bookprogresssummaryjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.BookProgressValue](#coc7bookprogressvaluejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CastTesting](#coc7casttestingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Actions.Hide](#coc7chaosiumcanvasinterfaceactionshidejson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.Actions.Show](#coc7chaosiumcanvasinterfaceactionsshowjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.Actions.Toggle](#coc7chaosiumcanvasinterfaceactionstogglejson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Hint](#coc7chaosiumcanvasinterfaceambientlighttoggleactionhintjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Off](#coc7chaosiumcanvasinterfaceambientlighttoggleactionoffjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.On](#coc7chaosiumcanvasinterfaceambientlighttoggleactiononjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Action.Title](#coc7chaosiumcanvasinterfaceambientlighttoggleactiontitlejson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Button.Hint](#coc7chaosiumcanvasinterfaceambientlighttogglebuttonhintjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Button.Title](#coc7chaosiumcanvasinterfaceambientlighttogglebuttontitlejson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Light.Hint](#coc7chaosiumcanvasinterfaceambientlighttogglelighthintjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.AmbientLightToggle.Light.Title](#coc7chaosiumcanvasinterfaceambientlighttogglelighttitlejson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.Action.Hint](#coc7chaosiumcanvasinterfacedrawingtoggleactionhintjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.DrawingToggle.Action.Title](#coc7chaosiumcanvasinterfacedrawingtoggleactiontitlejson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Action.Hint](#coc7chaosiumcanvasinterfacemappintoggleactionhintjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.MapPinToggle.Action.Title](#coc7chaosiumcanvasinterfacemappintoggleactiontitlejson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.OpenDocument.Tile.Hint](#coc7chaosiumcanvasinterfaceopendocumenttilehintjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.OpenDocument.Tile.Title](#coc7chaosiumcanvasinterfaceopendocumenttiletitlejson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Hint](#coc7chaosiumcanvasinterfaceplaysoundactionhintjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Play](#coc7chaosiumcanvasinterfaceplaysoundactionplayjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Stop](#coc7chaosiumcanvasinterfaceplaysoundactionstopjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.PlaySound.Action.Title](#coc7chaosiumcanvasinterfaceplaysoundactiontitlejson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.Player.Button.Hint](#coc7chaosiumcanvasinterfaceplayerbuttonhintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.Button.Title](#coc7chaosiumcanvasinterfaceplayerbuttontitlejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint](#coc7chaosiumcanvasinterfaceplayerimagedrophintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title](#coc7chaosiumcanvasinterfaceplayerimagedroptitlejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint](#coc7chaosiumcanvasinterfaceplayerimageplaceholderhintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title](#coc7chaosiumcanvasinterfaceplayerimageplaceholdertitlejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint](#coc7chaosiumcanvasinterfaceplayernamedrophintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title](#coc7chaosiumcanvasinterfaceplayernamedroptitlejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint](#coc7chaosiumcanvasinterfaceplayernameplaceholderhintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title](#coc7chaosiumcanvasinterfaceplayernameplaceholdertitlejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint](#coc7chaosiumcanvasinterfaceplayeroccupationdrophintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title](#coc7chaosiumcanvasinterfaceplayeroccupationdroptitlejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint](#coc7chaosiumcanvasinterfaceplayeroccupationplaceholderhintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title](#coc7chaosiumcanvasinterfaceplayeroccupationplaceholdertitlejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint](#coc7chaosiumcanvasinterfaceplayerotherregionshintjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title](#coc7chaosiumcanvasinterfaceplayerotherregionstitlejson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint](#coc7chaosiumcanvasinterfacetiletoggleactionhintjson)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title](#coc7chaosiumcanvasinterfacetiletoggleactiontitlejson)|&#9989;|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.ChooseWeapon](#coc7chooseweaponjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsActorCharacterSheetSummarizedV2](#coc7coc7modelsactorcharactersheetsummarizedv2json)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsActorCharacterSheetSummarizedV3](#coc7coc7modelsactorcharactersheetsummarizedv3json)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsActorCharacterSheetV2](#coc7coc7modelsactorcharactersheetv2json)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsActorCharacterSheetV3](#coc7coc7modelsactorcharactersheetv3json)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsActorContainerSheetV2](#coc7coc7modelsactorcontainersheetv2json)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsActorCreatureSheetV2](#coc7coc7modelsactorcreaturesheetv2json)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsActorNPCSheetV2](#coc7coc7modelsactornpcsheetv2json)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsActorVehicleSheetV2](#coc7coc7modelsactorvehiclesheetv2json)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemArchetypeSheet](#coc7coc7modelsitemarchetypesheetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemArmorSheet](#coc7coc7modelsitemarmorsheetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemBookSheet](#coc7coc7modelsitembooksheetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemChaseSheet](#coc7coc7modelsitemchasesheetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemExperiencePackageSheet](#coc7coc7modelsitemexperiencepackagesheetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemItemSheetV2](#coc7coc7modelsitemitemsheetv2json)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemSetupSheet](#coc7coc7modelsitemsetupsheetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemSkillSheet](#coc7coc7modelsitemskillsheetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemSpellSheet](#coc7coc7modelsitemspellsheetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemStatusSheet](#coc7coc7modelsitemstatussheetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemTalentSheet](#coc7coc7modelsitemtalentsheetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoC7ModelsItemWeaponSheet](#coc7coc7modelsitemweaponsheetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDBatch.ThrowSkillChange](#coc7cocidbatchthrowskillchangejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDCompendiumPopulateMissing](#coc7cocidcompendiumpopulatemissingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.info](#coc7cocidflaginfojson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.accounting](#coc7cocidflagkeysiskillaccountingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.animal-handling](#coc7cocidflagkeysiskillanimal-handlingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.anthropology](#coc7cocidflagkeysiskillanthropologyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.appraise](#coc7cocidflagkeysiskillappraisejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.archaeology](#coc7cocidflagkeysiskillarchaeologyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.art-craft-acting](#coc7cocidflagkeysiskillart-craft-actingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.art-craft-any](#coc7cocidflagkeysiskillart-craft-anyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.art-craft-fine-art](#coc7cocidflagkeysiskillart-craft-fine-artjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.art-craft-forgery](#coc7cocidflagkeysiskillart-craft-forgeryjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.art-craft-photography](#coc7cocidflagkeysiskillart-craft-photographyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.charm](#coc7cocidflagkeysiskillcharmjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.civics](#coc7cocidflagkeysiskillcivicsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.climb](#coc7cocidflagkeysiskillclimbjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.computer-use](#coc7cocidflagkeysiskillcomputer-usejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.demolitions](#coc7cocidflagkeysiskilldemolitionsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.disguise](#coc7cocidflagkeysiskilldisguisejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.diving](#coc7cocidflagkeysiskilldivingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.drive-carriage](#coc7cocidflagkeysiskilldrive-carriagejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.drive-horse-oxen](#coc7cocidflagkeysiskilldrive-horse-oxenjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.drive-wagon-coach](#coc7cocidflagkeysiskilldrive-wagon-coachjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.electrical-repair](#coc7cocidflagkeysiskillelectrical-repairjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.electronics](#coc7cocidflagkeysiskillelectronicsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.empire](#coc7cocidflagkeysiskillempirejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.fast-talk](#coc7cocidflagkeysiskillfast-talkjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.fighting-any](#coc7cocidflagkeysiskillfighting-anyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.fighting-axe](#coc7cocidflagkeysiskillfighting-axejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.fighting-brawl](#coc7cocidflagkeysiskillfighting-brawljson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.fighting-chainsaw](#coc7cocidflagkeysiskillfighting-chainsawjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.fighting-flail](#coc7cocidflagkeysiskillfighting-flailjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.fighting-garrote](#coc7cocidflagkeysiskillfighting-garrotejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.fighting-spear](#coc7cocidflagkeysiskillfighting-spearjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.fighting-sword](#coc7cocidflagkeysiskillfighting-swordjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.fighting-whip](#coc7cocidflagkeysiskillfighting-whipjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.firearms-any](#coc7cocidflagkeysiskillfirearms-anyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.firearms-artillery](#coc7cocidflagkeysiskillfirearms-artilleryjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.firearms-bow](#coc7cocidflagkeysiskillfirearms-bowjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.firearms-flamethrower](#coc7cocidflagkeysiskillfirearms-flamethrowerjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.firearms-handgun](#coc7cocidflagkeysiskillfirearms-handgunjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.firearms-heavy-weapons](#coc7cocidflagkeysiskillfirearms-heavy-weaponsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.firearms-machine-gun](#coc7cocidflagkeysiskillfirearms-machine-gunjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.firearms-rifle-shotgun](#coc7cocidflagkeysiskillfirearms-rifle-shotgunjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.firearms-submachine-gun](#coc7cocidflagkeysiskillfirearms-submachine-gunjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.first-aid](#coc7cocidflagkeysiskillfirst-aidjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.gambling](#coc7cocidflagkeysiskillgamblingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.history](#coc7cocidflagkeysiskillhistoryjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.hypnosis](#coc7cocidflagkeysiskillhypnosisjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.intimidate](#coc7cocidflagkeysiskillintimidatejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.jump](#coc7cocidflagkeysiskilljumpjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.language-any](#coc7cocidflagkeysiskilllanguage-anyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.language-czech](#coc7cocidflagkeysiskilllanguage-czechjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.language-dutch](#coc7cocidflagkeysiskilllanguage-dutchjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.language-english](#coc7cocidflagkeysiskilllanguage-englishjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.language-german](#coc7cocidflagkeysiskilllanguage-germanjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.language-own](#coc7cocidflagkeysiskilllanguage-ownjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.language-polish](#coc7cocidflagkeysiskilllanguage-polishjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.language-russian](#coc7cocidflagkeysiskilllanguage-russianjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.language-swahili](#coc7cocidflagkeysiskilllanguage-swahilijson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.language-yoruba](#coc7cocidflagkeysiskilllanguage-yorubajson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.language-zulu](#coc7cocidflagkeysiskilllanguage-zulujson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.law](#coc7cocidflagkeysiskilllawjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.library-use](#coc7cocidflagkeysiskilllibrary-usejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.listen](#coc7cocidflagkeysiskilllistenjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.locksmith](#coc7cocidflagkeysiskilllocksmithjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.lore-any](#coc7cocidflagkeysiskilllore-anyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.mechanical-repair](#coc7cocidflagkeysiskillmechanical-repairjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.medicine](#coc7cocidflagkeysiskillmedicinejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.natural-world](#coc7cocidflagkeysiskillnatural-worldjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.navigate](#coc7cocidflagkeysiskillnavigatejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.occult](#coc7cocidflagkeysiskilloccultjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.operate-heavy-machinery](#coc7cocidflagkeysiskilloperate-heavy-machineryjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.persuade](#coc7cocidflagkeysiskillpersuadejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.pilot-any](#coc7cocidflagkeysiskillpilot-anyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.psychoanalysis](#coc7cocidflagkeysiskillpsychoanalysisjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.psychology](#coc7cocidflagkeysiskillpsychologyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.read-lips](#coc7cocidflagkeysiskillread-lipsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.ride](#coc7cocidflagkeysiskillridejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.rope-use](#coc7cocidflagkeysiskillrope-usejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-any](#coc7cocidflagkeysiskillscience-anyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-astronomy](#coc7cocidflagkeysiskillscience-astronomyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-biology](#coc7cocidflagkeysiskillscience-biologyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-botany](#coc7cocidflagkeysiskillscience-botanyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-chemistry](#coc7cocidflagkeysiskillscience-chemistryjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-cryptography](#coc7cocidflagkeysiskillscience-cryptographyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-engineering](#coc7cocidflagkeysiskillscience-engineeringjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-forensics](#coc7cocidflagkeysiskillscience-forensicsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-geology](#coc7cocidflagkeysiskillscience-geologyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-mathematics](#coc7cocidflagkeysiskillscience-mathematicsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-meteorology](#coc7cocidflagkeysiskillscience-meteorologyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-pharmacy](#coc7cocidflagkeysiskillscience-pharmacyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-physics](#coc7cocidflagkeysiskillscience-physicsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.science-zoology](#coc7cocidflagkeysiskillscience-zoologyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.sleight-of-hand](#coc7cocidflagkeysiskillsleight-of-handjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.spot-hidden](#coc7cocidflagkeysiskillspot-hiddenjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.stealth](#coc7cocidflagkeysiskillstealthjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.survival-any](#coc7cocidflagkeysiskillsurvival-anyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.swim](#coc7cocidflagkeysiskillswimjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.throw](#coc7cocidflagkeysiskillthrowjson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.track](#coc7cocidflagkeysiskilltrackjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.keys.i.skill.trap](#coc7cocidflagkeysiskilltrapjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.CoCIDFlag.loading](#coc7cocidflagloadingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Config.AdventureCSS](#coc7configadventurecssjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Config.AdventureChangeHint](#coc7configadventurechangehintjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Config.AdventureSubheading](#coc7configadventuresubheadingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Config.FixedHeadingCSS](#coc7configfixedheadingcssjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.DefenderDodging](#coc7defenderdodgingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.DeleteBookProgress](#coc7deletebookprogressjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.DistanceUnitFeet](#coc7distanceunitfeetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.DistanceUnitMetre](#coc7distanceunitmetrejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.DistanceUnitYard](#coc7distanceunityardjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.EditActorOnChase](#coc7editactoronchasejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ErrorOpposedRollsMissingAttackerDefender](#coc7erroropposedrollsmissingattackerdefenderjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ErrorUnknownDistanceUnit](#coc7errorunknowndistanceunitjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.IncorrectAttribute](#coc7errorsincorrectattributejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.IncorrectPoolModifier](#coc7errorsincorrectpoolmodifierjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnableToCalculateBaseValue](#coc7errorsunabletocalculatebasevaluejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnableToLoadMessage](#coc7errorsunabletoloadmessagejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnableToMigrateMessages](#coc7errorsunabletomigratemessagesjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnknownAttribute](#coc7errorsunknownattributejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnknownCharacteristic](#coc7errorsunknowncharacteristicjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnknownItem](#coc7errorsunknownitemjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnknownSkill](#coc7errorsunknownskilljson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnknownWeapon](#coc7errorsunknownweaponjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnparsableActor](#coc7errorsunparsableactorjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnparsableDice](#coc7errorsunparsabledicejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnparsableMessage](#coc7errorsunparsablemessagejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnparsableModification](#coc7errorsunparsablemodificationjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnparsablePoolModifier](#coc7errorsunparsablepoolmodifierjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnparsableRoll](#coc7errorsunparsablerolljson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Errors.UnparsableThreshold](#coc7errorsunparsablethresholdjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.InitiativeRoll](#coc7initiativerolljson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.LocationPing](#coc7locationpingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.MapNoteNoBackground](#coc7mapnotenobackgroundjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.MessageCast](#coc7messagecastjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MessageCastHidden](#coc7messagecasthiddenjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.ModifiedByActiveEffect](#coc7modifiedbyactiveeffectjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.MonetarySectionMoveDown](#coc7monetarysectionmovedownjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.MonetarySectionMoveUp](#coc7monetarysectionmoveupjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.NewArmorName](#coc7newarmornamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.NoTarget](#coc7notargetjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.NoTargetTitle](#coc7notargettitlejson)|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ParticipantAttacker](#coc7participantattackerjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ParticipantDefender](#coc7participantdefenderjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ParticipantNone](#coc7participantnonejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholderjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.PoolAddOneBonus](#coc7pooladdonebonusjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.PoolAddOnePenalty](#coc7pooladdonepenaltyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.PoolAddTwoBonus](#coc7pooladdtwobonusjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.PoolAddTwoPenalty](#coc7pooladdtwopenaltyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.PortraitOptions](#coc7portraitoptionsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ReferenceTome](#coc7referencetomejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.ReferenceTomeFlavor](#coc7referencetomeflavorjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.RequestRoll](#coc7requestrolljson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.ActiveEffect.Grouped](#coc7rollasmodifieractiveeffectgroupedjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.ActiveEffect.GroupedName](#coc7rollasmodifieractiveeffectgroupednamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.ActiveEffect.Individual](#coc7rollasmodifieractiveeffectindividualjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.ActiveEffect.IndividualName](#coc7rollasmodifieractiveeffectindividualnamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.ActiveEffect.None](#coc7rollasmodifieractiveeffectnonejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.ActiveEffect.Title](#coc7rollasmodifieractiveeffecttitlejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Button](#coc7rollasmodifierbuttonjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Modifier.DamageName](#coc7rollasmodifiermodifierdamagenamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Modifier.DamageNumber](#coc7rollasmodifiermodifierdamagenumberjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Modifier.DamagedName](#coc7rollasmodifiermodifierdamagednamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Modifier.HealName](#coc7rollasmodifiermodifierhealnamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Modifier.HealNumber](#coc7rollasmodifiermodifierhealnumberjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Modifier.HealedName](#coc7rollasmodifiermodifierhealednamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Modifier.None](#coc7rollasmodifiermodifiernonejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Modifier.Title](#coc7rollasmodifiermodifiertitlejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Title](#coc7rollasmodifiertitlejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Type.Attribute](#coc7rollasmodifiertypeattributejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Type.Characteristic](#coc7rollasmodifiertypecharacteristicjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Type.Skill](#coc7rollasmodifiertypeskilljson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Type.Title](#coc7rollasmodifiertypetitlejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollAsModifier.Value](#coc7rollasmodifiervaluejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollDamageRange](#coc7rolldamagerangejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollDifficultyUnknownName](#coc7rolldifficultyunknownnamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.RollNamedSkill](#coc7rollnamedskilljson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SETTINGS.LegacySpellCosts](#coc7settingslegacyspellcostsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.SETTINGS.LegacySpellCostsHint](#coc7settingslegacyspellcostshintjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.SelectActor](#coc7selectactorjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Settings.AllowPushFumbles.Hint](#coc7settingsallowpushfumbleshintjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Settings.AllowPushFumbles.Name](#coc7settingsallowpushfumblesnamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Settings.CharacteristicsOrder.Hint](#coc7settingscharacteristicsorderhintjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Settings.CharacteristicsOrder.Name](#coc7settingscharacteristicsordernamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Settings.HouseRules.Hint](#coc7settingshouseruleshintjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Settings.HouseRules.Label](#coc7settingshouseruleslabeljson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Settings.PulpRules.All](#coc7settingspulprulesalljson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Settings.PulpRules.None](#coc7settingspulprulesnonejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Settings.PulpRules.Some](#coc7settingspulprulessomejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SkillHintFighting](#coc7skillhintfightingjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SkillHintFirearm](#coc7skillhintfirearmjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SkillHintKeepBaseValue](#coc7skillhintkeepbasevaluejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SkillHintNoXpGain](#coc7skillhintnoxpgainjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SkillHintOwn](#coc7skillhintownjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SkillHintPickNameOnly](#coc7skillhintpicknameonlyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SkillHintPush](#coc7skillhintpushjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SkillHintRanged](#coc7skillhintrangedjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SkillHintRequiresName](#coc7skillhintrequiresnamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.SkillOwn](#coc7skillownjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.Spell.Cost.AdditionalCasterCost](#coc7spellcostadditionalcastercostjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.AdditionalCasterPromptAdd](#coc7spellcostadditionalcasterpromptaddjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.AdditionalCasterPromptRequireNumber](#coc7spellcostadditionalcasterpromptrequirenumberjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.AdditionalInformation](#coc7spellcostadditionalinformationjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.CasterCost](#coc7spellcostcastercostjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.CastingTime](#coc7spellcostcastingtimejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.PromptRequireNumber](#coc7spellcostpromptrequirenumberjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.PromptShowText](#coc7spellcostpromptshowtextjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.PromptShowVariable](#coc7spellcostpromptshowvariablejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.PromptToggleButton](#coc7spellcostprompttogglebuttonjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.SetVariable](#coc7spellcostsetvariablejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.Toggle](#coc7spellcosttogglejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Cost.TriggerPrompt](#coc7spellcosttriggerpromptjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.AddCasters](#coc7spellcostsaddcastersjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.AddSectionBefore](#coc7spellcostsaddsectionbeforejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.DeleteCasters](#coc7spellcostsdeletecastersjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.DeleteSection](#coc7spellcostsdeletesectionjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.GroupSize](#coc7spellcostsgroupsizejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.If](#coc7spellcostsifjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.Minimum](#coc7spellcostsminimumjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.Modify](#coc7spellcostsmodifyjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.PromptName](#coc7spellcostspromptnamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.Text](#coc7spellcoststextjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.Value](#coc7spellcostsvaluejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.VariableName](#coc7spellcostsvariablenamejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Costs.VariablePlaceholder](#coc7spellcostsvariableplaceholderjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.ErrorPromptNotShown](#coc7spellerrorpromptnotshownjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.ErrorUnableToFindAdditionalCasters](#coc7spellerrorunabletofindadditionalcastersjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Group.AdditionalCasters](#coc7spellgroupadditionalcastersjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Group.CasterCosts](#coc7spellgroupcastercostsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Group.CastingTime](#coc7spellgroupcastingtimejson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Group.Prompt](#coc7spellgrouppromptjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Group.System](#coc7spellgroupsystemjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Legacy.Hint](#coc7spelllegacyhintjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Spell.Legacy.Label](#coc7spelllegacylabeljson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.SpellCosts](#coc7spellcostsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.StartRolls](#coc7startrollsjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.ToolTipShort](#coc7tooltipshortjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.WhatCopiedClipboard](#coc7whatcopiedclipboardjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.rangeCombatCard.BaseRangeShort](#coc7rangecombatcardbaserangeshortjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.rangeCombatCard.ExtremeRangeShort](#coc7rangecombatcardextremerangeshortjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[CoC7.rangeCombatCard.LongRangeShort](#coc7rangecombatcardlongrangeshortjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[SETTINGS.DefaultDifficulty](#settingsdefaultdifficultyjson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.UseIconForEras](#settingsuseiconforerasjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[SETTINGS.UseIconForErasHint](#settingsuseiconforerashintjson)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#9989;|
+|[TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle](#typesregionbehaviorchaosiumcanvasinterfaceambientlighttogglejson)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer](#typesregionbehaviorchaosiumcanvasinterfaceplayerjson)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 
 
 ##### CoC7.AddedEmbeddedItems
@@ -293,6 +355,8 @@ The following translations have more than 360 untranslated strings [are you able
 ```  "CoC7.BookProgressSummary": "{fullStudies} ({currentPercent}%)",```
 ##### CoC7.BookProgressValue
 ```  "CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",```
+##### CoC7.CastTesting
+```  "CoC7.CastTesting": "Test Cast",```
 ##### CoC7.ChaosiumCanvasInterface.Actions.Hide
 ```  "CoC7.ChaosiumCanvasInterface.Actions.Hide": "Hide",```
 ##### CoC7.ChaosiumCanvasInterface.Actions.Show
@@ -335,6 +399,38 @@ The following translations have more than 360 untranslated strings [are you able
 ```  "CoC7.ChaosiumCanvasInterface.PlaySound.Action.Stop": "Stop",```
 ##### CoC7.ChaosiumCanvasInterface.PlaySound.Action.Title
 ```  "CoC7.ChaosiumCanvasInterface.PlaySound.Action.Title": "Action",```
+##### CoC7.ChaosiumCanvasInterface.Player.Button.Hint
+```  "CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",```
+##### CoC7.ChaosiumCanvasInterface.Player.Button.Title
+```  "CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",```
+##### CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint
+```  "CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",```
+##### CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title
+```  "CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title": "Investigator Image Tile",```
+##### CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint
+```  "CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint": "when the investigator is not set show this image",```
+##### CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title
+```  "CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title": "Placeholder image",```
+##### CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint
+```  "CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint": "",```
+##### CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title
+```  "CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title": "Investigator Name Drawing",```
+##### CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint
+```  "CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint": "when the investigator is not set show this text",```
+##### CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title
+```  "CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title": "Placeholder text",```
+##### CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint
+```  "CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint": "",```
+##### CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title
+```  "CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title": "Investigator Occupation Drawing",```
+##### CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint
+```  "CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint": "when the investigator is not set show this text",```
+##### CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title
+```  "CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",```
+##### CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint
+```  "CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",```
+##### CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title
+```  "CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",```
 ##### CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint
 ```  "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint": "Should this show, hide, or toggle the tile and documents",```
 ##### CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title
@@ -651,6 +747,10 @@ The following translations have more than 360 untranslated strings [are you able
 ```  "CoC7.LocationPing": "Ping Location",```
 ##### CoC7.MapNoteNoBackground
 ```  "CoC7.MapNoteNoBackground": "Hide Background",```
+##### CoC7.MessageCast
+```  "CoC7.MessageCast": "To Chat",```
+##### CoC7.MessageCastHidden
+```  "CoC7.MessageCastHidden": "To Chat Hidden",```
 ##### CoC7.ModifiedByActiveEffect
 ```  "CoC7.ModifiedByActiveEffect": "This is modified by an Active Effect and can not be edited directly",```
 ##### CoC7.MonetarySectionMoveDown
@@ -735,6 +835,10 @@ The following translations have more than 360 untranslated strings [are you able
 ```  "CoC7.RollDifficultyUnknownName": "Unknown",```
 ##### CoC7.RollNamedSkill
 ```  "CoC7.RollNamedSkill": "Roll {name} skill",```
+##### CoC7.SETTINGS.LegacySpellCosts
+```  "CoC7.SETTINGS.LegacySpellCosts": "Always show legacy spell costs system",```
+##### CoC7.SETTINGS.LegacySpellCostsHint
+```  "CoC7.SETTINGS.LegacySpellCostsHint": "Show the legacy spell cost entries even if they are empty",```
 ##### CoC7.SelectActor
 ```  "CoC7.SelectActor": "Select",```
 ##### CoC7.Settings.AllowPushFumbles.Hint
@@ -775,6 +879,78 @@ The following translations have more than 360 untranslated strings [are you able
 ```  "CoC7.SkillHintRequiresName": "The name for this specialization can be set manually",```
 ##### CoC7.SkillOwn
 ```  "CoC7.SkillOwn": "Own",```
+##### CoC7.Spell.Cost.AdditionalCasterCost
+```  "CoC7.Spell.Cost.AdditionalCasterCost": "Additional caster cost",```
+##### CoC7.Spell.Cost.AdditionalCasterPromptAdd
+```  "CoC7.Spell.Cost.AdditionalCasterPromptAdd": "Additional caster prompt: Add",```
+##### CoC7.Spell.Cost.AdditionalCasterPromptRequireNumber
+```  "CoC7.Spell.Cost.AdditionalCasterPromptRequireNumber": "Additional caster prompt: Enter number",```
+##### CoC7.Spell.Cost.AdditionalInformation
+```  "CoC7.Spell.Cost.AdditionalInformation": "Additional information",```
+##### CoC7.Spell.Cost.CasterCost
+```  "CoC7.Spell.Cost.CasterCost": "Caster cost",```
+##### CoC7.Spell.Cost.CastingTime
+```  "CoC7.Spell.Cost.CastingTime": "Casting time",```
+##### CoC7.Spell.Cost.PromptRequireNumber
+```  "CoC7.Spell.Cost.PromptRequireNumber": "Prompt: Enter number",```
+##### CoC7.Spell.Cost.PromptShowText
+```  "CoC7.Spell.Cost.PromptShowText": "Prompt: Show text",```
+##### CoC7.Spell.Cost.PromptShowVariable
+```  "CoC7.Spell.Cost.PromptShowVariable": "Prompt: Show variable",```
+##### CoC7.Spell.Cost.PromptToggleButton
+```  "CoC7.Spell.Cost.PromptToggleButton": "Prompt: Toggle button",```
+##### CoC7.Spell.Cost.SetVariable
+```  "CoC7.Spell.Cost.SetVariable": "Set variable",```
+##### CoC7.Spell.Cost.Toggle
+```  "CoC7.Spell.Cost.Toggle": "Toggle",```
+##### CoC7.Spell.Cost.TriggerPrompt
+```  "CoC7.Spell.Cost.TriggerPrompt": "Show dialog prompt",```
+##### CoC7.Spell.Costs.AddCasters
+```  "CoC7.Spell.Costs.AddCasters": "Add group of casters",```
+##### CoC7.Spell.Costs.AddSectionBefore
+```  "CoC7.Spell.Costs.AddSectionBefore": "Add section before",```
+##### CoC7.Spell.Costs.DeleteCasters
+```  "CoC7.Spell.Costs.DeleteCasters": "Remove group of casters",```
+##### CoC7.Spell.Costs.DeleteSection
+```  "CoC7.Spell.Costs.DeleteSection": "Delete section",```
+##### CoC7.Spell.Costs.GroupSize
+```  "CoC7.Spell.Costs.GroupSize": "Group size",```
+##### CoC7.Spell.Costs.If
+```  "CoC7.Spell.Costs.If": "If",```
+##### CoC7.Spell.Costs.Minimum
+```  "CoC7.Spell.Costs.Minimum": "Minimum",```
+##### CoC7.Spell.Costs.Modify
+```  "CoC7.Spell.Costs.Modify": "Modify",```
+##### CoC7.Spell.Costs.PromptName
+```  "CoC7.Spell.Costs.PromptName": "Prompt",```
+##### CoC7.Spell.Costs.Text
+```  "CoC7.Spell.Costs.Text": "Text",```
+##### CoC7.Spell.Costs.Value
+```  "CoC7.Spell.Costs.Value": "Value",```
+##### CoC7.Spell.Costs.VariableName
+```  "CoC7.Spell.Costs.VariableName": "Number name",```
+##### CoC7.Spell.Costs.VariablePlaceholder
+```  "CoC7.Spell.Costs.VariablePlaceholder": "@variable",```
+##### CoC7.Spell.ErrorPromptNotShown
+```  "CoC7.Spell.ErrorPromptNotShown": "You have not prompted for all use input",```
+##### CoC7.Spell.ErrorUnableToFindAdditionalCasters
+```  "CoC7.Spell.ErrorUnableToFindAdditionalCasters": "You need to set up additional casters before assigning costs",```
+##### CoC7.Spell.Group.AdditionalCasters
+```  "CoC7.Spell.Group.AdditionalCasters": "Additional Casters",```
+##### CoC7.Spell.Group.CasterCosts
+```  "CoC7.Spell.Group.CasterCosts": "Caster Costs",```
+##### CoC7.Spell.Group.CastingTime
+```  "CoC7.Spell.Group.CastingTime": "Casting time",```
+##### CoC7.Spell.Group.Prompt
+```  "CoC7.Spell.Group.Prompt": "Prompt",```
+##### CoC7.Spell.Group.System
+```  "CoC7.Spell.Group.System": "System",```
+##### CoC7.Spell.Legacy.Hint
+```  "CoC7.Spell.Legacy.Hint": "Please use the costs on the details tab which support the more interactive costs required by many spells and can be automatically removed from an Actor.",```
+##### CoC7.Spell.Legacy.Label
+```  "CoC7.Spell.Legacy.Label": "Legacy spell costs",```
+##### CoC7.SpellCosts
+```  "CoC7.SpellCosts": "Spell Costs",```
 ##### CoC7.StartRolls
 ```  "CoC7.StartRolls": "Start Rolls",```
 ##### CoC7.ToolTipShort
@@ -795,3 +971,5 @@ The following translations have more than 360 untranslated strings [are you able
 ```  "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space.",```
 ##### TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle
 ```  "TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle": "CCI: Light Toggle",```
+##### TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer
+```  "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player",```

@@ -1,4 +1,4 @@
-# System documentation for version 8.4
+# System documentation for version 8.8
 
 This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
 
@@ -18,9 +18,10 @@ This documentation can be reopened under [fa-solid fa-cogs]Game Settings -> Help
 
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
 
-- Allow reordering of Characteristics in house rules settings
+- [Spells](item_spell.md) can once again automatically deduct costs from the caster. The old costs will be available, if the updater can not convert it, in the Keeper tab. The new system allows for more interactive casting an example can be found in the Items Examples compendium @UUID[Compendium.CoC7.items.Item.4Rrff1sAoWh7NFkL]{Test Spell}
 
-### Changes in version 8.1
+### Changes in version 8.1 -  8.7
+- Allow reordering of Characteristics in house rules settings
 - Move to FoundryVTT implementations of dataModels, AppV2, and Tooltips
 - Trigger Actor Picker if User interacting with chat message owns multiple Actors
 - If keeper is online check chat message permissions against Actor ownership instead of User permissions and change message owner to prevent user doesn't have permissions error message
@@ -79,7 +80,7 @@ Foundry VTT is based in actors and items. This module includes a number of syste
 - [Item Type: Occupation](item_occupation.md)
 - [Item Type: Setup](item_setup.md)
 - [Item Type: Skill](item_skill.md) (TODO)
-- Item Type: Spell (TODO)
+- [Item Type: Spell](item_spell.md)
 - Item Type: Status (TODO)
 - Item Type: Talent (TODO)
 - Item Type: Weapon (TODO)

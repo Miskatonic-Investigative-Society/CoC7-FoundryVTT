@@ -3,6 +3,7 @@ import ChaosiumCanvasInterfaceAmbientLightToggle from './chaosium-canvas-interfa
 import ChaosiumCanvasInterfaceDrawingToggle from './chaosium-canvas-interface-drawing-toggle.js'
 import ChaosiumCanvasInterfaceMapPinToggle from './chaosium-canvas-interface-map-pin-toggle.js'
 import ChaosiumCanvasInterfaceOpenDocument from './chaosium-canvas-interface-open-document.js'
+import ChaosiumCanvasInterfacePlayer from './chaosium-canvas-interface-player.js'
 import ChaosiumCanvasInterfacePlaySound from './chaosium-canvas-interface-play-sound.js'
 import ChaosiumCanvasInterfaceToScene from './chaosium-canvas-interface-to-scene.js'
 import ChaosiumCanvasInterfaceTileToggle from './chaosium-canvas-interface-tile-toggle.js'
@@ -52,6 +53,7 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
       ChaosiumCanvasInterfaceDrawingToggle,
       ChaosiumCanvasInterfaceMapPinToggle,
       ChaosiumCanvasInterfaceOpenDocument,
+      ChaosiumCanvasInterfacePlayer,
       ChaosiumCanvasInterfacePlaySound,
       ChaosiumCanvasInterfaceToScene,
       ChaosiumCanvasInterfaceTileToggle
@@ -99,8 +101,9 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
         for (const region of canvas.scene.regions.contents) {
           /* // FoundryVTT V12 */
           const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination)) {
-            region.behaviors.filter(b => !b.disabled).map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleLeftClickEvent === 'function') { await b.system._handleLeftClickEvent() } })
+          const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+          if (behaviors) {
+            behaviors.map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleLeftClickEvent === 'function') { await b.system._handleLeftClickEvent() } })
           }
         }
       }
@@ -114,8 +117,9 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
         for (const region of canvas.scene.regions.contents) {
           /* // FoundryVTT V12 */
           const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination)) {
-            region.behaviors.filter(b => !b.disabled).map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleRightClickEvent === 'function') { await b.system._handleRightClickEvent() } })
+          const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+          if (behaviors) {
+            behaviors.map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleRightClickEvent === 'function') { await b.system._handleRightClickEvent() } })
           }
         }
       }
@@ -132,8 +136,9 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
         for (const region of canvas.scene.regions.contents) {
           /* // FoundryVTT V12 */
           const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-          if (region.behaviors.filter(b => !b.disabled).find(b => b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination)) {
-            setPointer = await region.behaviors.filter(b => !b.disabled).reduce(async (c, b) => {
+          const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+          if (behaviors) {
+            setPointer = await behaviors.reduce(async (c, b) => {
               const r = await b.system._handleMouseOverEvent()
               if (r !== false && r !== true) {
                 console.error(b.uuid + ' did not return a boolean')
