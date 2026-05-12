@@ -1,6 +1,7 @@
 /* global game */
 import { FOLDER_ID } from '../constants.js'
 import CoC7EnableVariantRulesEn from '../tours/enable-variant-rules-en.js'
+import CoC7EnableVariantRulesEs from '../tours/enable-variant-rules-es.js'
 import CoC7EnableVariantRulesFr from '../tours/enable-variant-rules-fr.js'
 
 export default function () {
@@ -8,6 +9,9 @@ export default function () {
   const tours = {
     en: {
       'enable-variant-rules': CoC7EnableVariantRulesEn
+    },
+    es: {
+      'enable-variant-rules': CoC7EnableVariantRulesEs
     },
     fr: {
       'enable-variant-rules': CoC7EnableVariantRulesFr
