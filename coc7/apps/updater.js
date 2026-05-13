@@ -686,7 +686,7 @@ export default class CoC7Updater {
             costList.push({
               config: { prompt: document.system.costs.others },
               if: '',
-              type: 'otherCost'
+              type: 'additionalInformation'
             })
           }
           if (costList.length > 0) {

@@ -18,7 +18,7 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
   static PARTS = {
     body: {
       template: 'systems/' + FOLDER_ID + '/templates/actors/npc-v2/body.hbs',
-      scrollable: ['section.tab-group-tab']
+      scrollable: ['', 'section.tab-group-tab']
     }
   }
 

@@ -11,6 +11,20 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+- Add scroll bar to NPC sheet
+- Damage card Inflict Damage button will now pick targets over selection
+- Fix reload tooltip to use &lt;br&gt; instead of \n
+- Fix console error if uses per round has no normal / max
+- If weapon Item has no maximum ammunition on NPC sheet show edit button instead of reload
+- Prevent CCI detection errors on scenes with scene levels
+- Update Active Effect tab to separate on Actor and on Item Active Effects, create tooltip to decode common changes
+- Add Spanish localization for optional rules tour, thanks to @zeedif #2085
+- Update to French localization, thanks to @vonv #2078
+- Update to Simplified Chinese localization, thanks to @LiangHao-cloud #2079
+
+GitHub
+- Simplified Chinese README.md translation, thanks to @Adoraee #2080
+
 ## Version 8.9
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

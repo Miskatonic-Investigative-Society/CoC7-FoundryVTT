@@ -1568,8 +1568,8 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             if (table.length === 1) {
               const tableResults = await table[0].roll()
               for (const tableResult of tableResults.results) {
-                if (tableResult.type === CONST.TABLE_RESULT_TYPES.TEXT) {
-                  /* // FoundryVTT V12 */
+                /* // FoundryVTT V12 */
+                if (tableResult.type === CONST.TABLE_RESULT_TYPES.TEXT || (tableResult.type === CONST.TABLE_RESULT_TYPES.DOCUMENT && typeof tableResult.type.documentUuid === 'undefined')) {
                   this.coc7Config.bioSections[index].value = (this.coc7Config.bioSections[index].value + '\n' + (tableResult.description ?? tableResult.text).trim()).trim()
                 }
               }

@@ -67,7 +67,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
       context.hasInventory = this.hasInventory(context)
     }
 
-    context.effects = context.document.type === 'character' ? CoC7ActiveEffect.prepareActiveEffectCategories(context.document.effects) : CoC7ActiveEffect.prepareNPCActiveEffectCategories(context.document.effects)
+    context.effects = context.document.type === 'character' ? await CoC7ActiveEffect.prepareActiveEffectCategories(context.document) : await CoC7ActiveEffect.prepareNPCActiveEffectCategories(context.document)
 
     context.allowUnlock = this.allowUnlock
 
@@ -217,11 +217,13 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
         const fn = () => {
           if (button.classList.contains('slid-out-notes')) {
             outer.classList.remove('sliding-out-notes')
+          } else {
+            outer.classList.remove('visible-notes')
           }
           element.removeEventListener('transitionend', fn)
         }
         outer.addEventListener('transitionend', fn)
-        outer.classList.add('sliding-out-notes')
+        outer.classList.add('sliding-out-notes', 'visible-notes')
         if (button.classList.contains('slid-out-notes')) {
           button.classList.remove('slid-out-notes')
           outer.classList.add('slide-out-notes')

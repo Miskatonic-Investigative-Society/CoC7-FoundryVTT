@@ -119,7 +119,7 @@ export default class CoC7ModelsItemStatusSheet extends CoC7ModelsItemGlobalSheet
         )
         break
       case 'activeEffects':
-        context.effects = CoC7ActiveEffect.prepareActiveEffectCategories(context.document.effects, { status: false })
+        context.effects = await CoC7ActiveEffect.prepareActiveEffectCategories(context.document, { status: false })
         break
       case 'keeper':
         /* // FoundryVTT V12 */

@@ -608,7 +608,7 @@ export default class CoC7ChatDamage {
           if (check) {
             const damage = await check.#inflictDamageText()
             if (typeof damage !== 'string') {
-              const actorUuid = await CoC7ActorPickerDialog.create()
+              const actorUuid = await CoC7ActorPickerDialog.create({ preferTargeted: true })
               const actor = await CoC7Utilities.getActorFromUuid(actorUuid)
               if (actor) {
                 const damageTaken = await actor.dealDamage(damage)

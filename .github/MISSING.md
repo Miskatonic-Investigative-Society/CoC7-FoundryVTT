@@ -2,8 +2,6 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (17 untranslated strings)](#cnjson)
-
 [fr.json (34 untranslated strings)](#frjson)
 
 [ja.json (291 untranslated strings)](#jajson)
@@ -17,27 +15,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 [zh-tw.json (62 untranslated strings)](#zh-twjson)
 
 
-## cn.json
-17 untranslated strings
-```
-"CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",
-"CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",
-"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",
-"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title": "Investigator Image Tile",
-"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint": "when the investigator is not set show this image",
-"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title": "Placeholder image",
-"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint": "",
-"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title": "Investigator Name Drawing",
-"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint": "when the investigator is not set show this text",
-"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title": "Placeholder text",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint": "",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title": "Investigator Occupation Drawing",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint": "when the investigator is not set show this text",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
-"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
-"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
-"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player"
-```
 ## fr.json
 34 untranslated strings
 ```
