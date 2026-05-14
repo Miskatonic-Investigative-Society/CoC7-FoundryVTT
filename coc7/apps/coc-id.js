@@ -591,19 +591,27 @@ export default class CoCID {
    * @returns {Array}
    */
   static async #onlyDocuments (candidates, progressBar) {
+    const tasks = []
     for (const offset in candidates) {
-      if (progressBar !== false) {
-        // await new Promise(resolve => setTimeout(resolve, 1000))
-        progressBar.bar.update({ pct: progressBar.current / progressBar.max })
-        progressBar.current++
-      }
       if (!(candidates[offset] instanceof foundry.abstract.DataModel)) {
-        candidates[offset] = await fromUuid(candidates[offset].uuid)
+        tasks.push(fromUuid(candidates[offset].uuid).then((doc) => {
+          candidates[offset] = doc
+          if (progressBar !== false) {
+            progressBar.current++
+            progressBar.bar.update({ pct: progressBar.current / progressBar.max })
+          }
+        }))
+      } else if (progressBar !== false) {
+        progressBar.current++
+        progressBar.bar.update({ pct: progressBar.current / progressBar.max })
       }
     }
-    if (progressBar !== false) {
-      // await new Promise(resolve => setTimeout(resolve, 1000))
-      progressBar.bar.remove()
+    try {
+      await Promise.all(tasks)
+    } finally {
+      if (progressBar !== false) {
+        progressBar.bar.remove()
+      }
     }
     return candidates
   }

@@ -45,8 +45,10 @@ export default class CoCIDSkillCache {
     }
     return new Promise((resolve, reject) => {
       game.CoC7.cocid.fromCoCIDBest({ cocid, type: 'i' }).then((items) => {
-        if (typeof this.#cache === 'undefined') {
-          // If not already cached add it when doing a full cache
+        if (typeof this.#list === 'undefined') {
+          // Cache not yet populated (cold or in-flight). Wait for the full
+          // refresh — it will include this item — rather than writing into
+          // an undefined this.#list.
           this.getList().then((items) => {
             resolve()
           })

@@ -32,7 +32,6 @@ export default function () {
   }
 
   CoC7RegisterTours()
-  game.CoC7.skillNames.refreshList()
   game.socket.on('system.' + FOLDER_ID, async data => {
     CoC7SystemSocket.callSocket(data)
   })
