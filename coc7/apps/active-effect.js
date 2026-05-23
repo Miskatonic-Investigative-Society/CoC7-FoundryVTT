@@ -95,7 +95,7 @@ export default class CoC7ActiveEffect {
           unit = '%'
           /* // FoundryVTT V13 */
           if (game.release.generation < 14 && effect.parent instanceof Actor) {
-            name = effect.parent.system.skills[key].name
+            name = effect.parent.system.skills[key]?.name ?? key.replace(/>>/g, '.')
           } else if (typeof effect.actor?.system.skills[key] !== 'undefined') {
             name = effect.actor.system.skills[key].name
           } else {
