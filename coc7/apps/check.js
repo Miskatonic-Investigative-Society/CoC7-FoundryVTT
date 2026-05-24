@@ -710,10 +710,10 @@ export default class CoC7Check {
   async #setThreshold (useAlternativeSkill = false) {
     let threshold
     if (this.#type === CoC7Check.type.attribute && this.#key && typeof this.#asyncActor !== 'undefined') {
-      this.#allowPush = false
+      this.#allowPush = true
       threshold = parseInt((await this.#asyncActor)?.system?.attribs?.[this.#key]?.value, 10)
     } else if (this.#type === CoC7Check.type.characteristic && this.#key && typeof this.#asyncActor !== 'undefined') {
-      this.#allowPush = false
+      this.#allowPush = true
       if (this.#cardType === CoC7RollNormalize.CARD_TYPE.IDEA_CHECK) {
         threshold = parseInt((await this.#asyncActor)?.system?.config?.idea?.value, 10)
       } else if (this.#cardType === CoC7RollNormalize.CARD_TYPE.KNOW_CHECK) {
