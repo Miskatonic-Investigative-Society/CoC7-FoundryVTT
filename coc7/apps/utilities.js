@@ -250,8 +250,6 @@ export default class CoC7Utilities {
     const contents = []
     for (const actor of actors) {
       if (TARGET_ALLOWED.includes(actor.type)) {
-        const nameQuickHealer = game.i18n.localize('CoC7.quickHealer')
-        const quickHealer = !!actor.items.find(doc => doc.type === 'talent' && doc.name === nameQuickHealer)
         const isCriticalWounds = !game.settings.get(FOLDER_ID, 'pulpRuleIgnoreMajorWounds') && actor.hasConditionStatus(STATUS_EFFECTS.criticalWounds)
         const dailySanityLoss = actor.system.attribs.san.dailyLoss
         const currentSanityLimit = actor.system.attribs.san.dailyLimit
@@ -269,11 +267,7 @@ export default class CoC7Utilities {
           if (isCriticalWounds === true) {
             rows.push('<li class="coc7-upgrade-failed">' + game.i18n.localize('CoC7.hasCriticalWounds') + '</li>')
           } else {
-            let healAmount = (game.settings.get(FOLDER_ID, 'pulpRuleFasterRecovery') ? 2 : 1)
-            if (quickHealer === true) {
-              healAmount++
-            }
-            healAmount = Math.min(healAmount, hpMax - hpValue)
+            const healAmount = Math.min(actor.system.config.naturalHealing, hpMax - hpValue)
             if (healAmount === 1) {
               rows.push('<li class="coc7-upgrade-success">' + game.i18n.localize('CoC7.healthRecovered') + '</li>')
             } else {

@@ -1,4 +1,4 @@
-/* global CONFIG foundry */
+/* global CONFIG foundry game */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ModelsActorDocumentClass from './document-class.js'
 import CoC7StringField from '../fields/string-field.js'
@@ -240,6 +240,18 @@ export default class CoC7ModelsActorGlobalSystem extends foundry.abstract.TypeDa
   static defineSchemaConfig () {
     const fields = foundry.data.fields
     return new fields.SchemaField({
+      /* // FoundryVTT V13 */
+      // add these with persisted = false
+      // luckRecovery: new fields.StringField({ initial: '' }),
+      // naturalHealing: new fields.NumberField({ nullable: false, initial: 1 }).
+      // idea: new fields.SchemaField({
+      //   bonusDice: new fields.NumberField({ initial: 0 }),
+      //   value: new fields.NumberField({ nullable: false, initial: 0 })
+      // }).
+      // know: new fields.SchemaField({
+      //   bonusDice: new fields.NumberField({ initial: 0 }),
+      //   value: new fields.NumberField({ nullable: false, initial: 0 })
+      // })
     })
   }
 
@@ -281,6 +293,7 @@ export default class CoC7ModelsActorGlobalSystem extends foundry.abstract.TypeDa
         value: this.characteristics.int.value,
         bonusDice: this.characteristics.int.bonusDice ?? 0
       }
+      this.config.naturalHealing = (game.settings.get(FOLDER_ID, 'pulpRuleFasterRecovery') ? 2 : 1)
     }
   }
 
