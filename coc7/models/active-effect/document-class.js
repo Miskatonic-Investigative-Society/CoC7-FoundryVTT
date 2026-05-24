@@ -11,6 +11,17 @@ export default class CoC7ModelsActiveEffectDocumentClass extends ActiveEffect {
       const match = change.key.match(/^(system.skills.i)\.(skill)\.(.+)$/)
       change.key = match[1] + '>>' + match[2] + '>>' + match[3]
     }
+    // Multiple skills e.g. i.skills.language-*
+    const match = change.key.match(/^(system\.skills\.)(i>>skill>>[^.]+)\*(\..+)$/)
+    if (match) {
+      const keys = Object.keys(actor.system.skills).filter(k => k.startsWith(match[2]))
+      let changes = {}
+      for (const key of keys) {
+        change.key = match[1] + key + match [3]
+        changes = Object.assign(changes, super.apply(actor, change))
+      }
+      return changes
+    }
     const changes = super.apply(actor, change)
     return changes
   }
@@ -26,6 +37,17 @@ export default class CoC7ModelsActiveEffectDocumentClass extends ActiveEffect {
     if (change.key.startsWith('system.skills.i.skill.')) {
       const match = change.key.match(/^(system.skills.i)\.(skill)\.(.+)$/)
       change.key = match[1] + '>>' + match[2] + '>>' + match[3]
+    }
+    // Multiple skills e.g. i.skills.language-*
+    const match = change.key.match(/^(system\.skills\.)(i>>skill>>[^.]+)\*(\..+)$/)
+    if (match) {
+      const keys = Object.keys(targetDoc.system.skills).filter(k => k.startsWith(match[2]))
+      let changes = {}
+      for (const key of keys) {
+        change.key = match[1] + key + match [3]
+        changes = Object.assign(changes, super.applyChange(targetDoc, change, options))
+      }
+      return changes
     }
     const changes = super.applyChange(targetDoc, change, options)
     return changes
