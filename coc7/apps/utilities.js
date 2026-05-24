@@ -1,5 +1,5 @@
 /* global Actor canvas ChatMessage CONFIG CONST Folder foundry fromUuid fromUuidSync game Hooks Macro Ray Roll Token TokenDocument ui */
-import { FOLDER_ID, STATUS_EFFECTS, TARGET_ALLOWED, TRADE_ALLOWED } from '../constants.js'
+import { FOLDER_ID, DICE_POOL_REASONS, STATUS_EFFECTS, TARGET_ALLOWED, TRADE_ALLOWED } from '../constants.js'
 import CoC7ActorPickerDialog from './actor-picker-dialog.js'
 import CoC7DicePool from './dice-pool.js'
 import CoC7Link from './link.js'
@@ -1504,5 +1504,24 @@ export default class CoC7Utilities {
       return 'Actor.' + oldStyle.actor
     }
     return 'Actor.xxxxxxxxxxxxxxxx'
+  }
+
+  /**
+   * Get list of pool modifier options
+   * @param {object} options
+   * @param {boolean} options.forMelee
+   * @param {boolean} options.forRanged
+   * @returns {object}
+   */
+  static dicePoolReasons ({ forMelee = false, forRanged = false } = {}) {
+    const output = {}
+    for (const key in DICE_POOL_REASONS) {
+      if ((forMelee && DICE_POOL_REASONS[key].forMelee) || (forRanged && DICE_POOL_REASONS[key].forRanged)) {
+        if (DICE_POOL_REASONS[key].active === true || (typeof DICE_POOL_REASONS[key].active === 'function') && DICE_POOL_REASONS[key].active()) {
+          output[key] = DICE_POOL_REASONS[key]
+        }
+      }
+    }
+    return output
   }
 }
