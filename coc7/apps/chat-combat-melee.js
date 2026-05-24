@@ -572,6 +572,7 @@ export default class CoC7ChatCombatMelee {
       actorUuid: '',
       attackerImg: (attacker ? (attacker.isToken ? attacker.token.texture.src : attacker.img) : ''),
       attackerName: (attacker ? (attacker.isToken ? attacker.token.name : attacker.name) : ''),
+      attackerTalent: [],
       attackerUuid: CoC7Utilities.getActorUuid(attacker),
       bonusDice: Math.abs(this.#dicePool.poolModifier),
       bonusType: game.i18n.localize(this.#dicePool.poolModifier < 0 ? 'CoC7.DiceModifierPenalty' : 'CoC7.DiceModifierBonus'),
@@ -620,28 +621,37 @@ export default class CoC7ChatCombatMelee {
       ],
       targetImg: (target ? (target.isToken ? target.token.texture.src : (target instanceof TokenDocument ? target.texture.src : target.img)) : ''),
       targetName: (target ? (target.isToken ? target.token.name : target.name) : ''),
+      targetTalent: [],
       targetUuid: CoC7Utilities.getActorUuid(target),
       template: ''
     }
-    for (const key in DICE_POOL_REASONS) {
-      if (DICE_POOL_REASONS[key].forMelee) {
-        const type = (DICE_POOL_REASONS[key].forBonus ? 'poolBonus' : (DICE_POOL_REASONS[key].forPenalty ? 'poolPenalty' : ''))
-        if (type) {
-          const row = {
-            key,
-            name: game.i18n.localize(DICE_POOL_REASONS[key].name),
-            selected: this.#poolKeys.includes(key),
-            tooltip: game.i18n.localize(DICE_POOL_REASONS[key].tooltip)
-          }
-          if (row.selected) {
-            if (type === 'poolBonus') {
-              data.finalPoolModifier++
-            } else {
-              data.finalPoolModifier--
-            }
-          }
-          data[type].push(row)
+    const dicePoolReasons = CoC7Utilities.dicePoolReasons({ forMelee: true })
+    const attackerKeys = Object.keys(dicePoolReasons).filter(k => dicePoolReasons[k].ifAttacker)
+    const attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable)))
+    const attackerPoolDisabled = attackerTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
+    data.attackerTalent = await Promise.all(attackerTalents.map(async (doc) => await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(doc.link, { async: true }) ))
+    const targetKeys = Object.keys(dicePoolReasons).filter(k => dicePoolReasons[k].ifDefender)
+    const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)))
+    const targetPoolDisabled = targetTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
+    data.targetTalent = await Promise.all(targetTalents.map(async (doc) => await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(doc.link, { async: true }) ))
+    for (const key in dicePoolReasons) {
+      const type = (dicePoolReasons[key].forBonus ? 'poolBonus' : (dicePoolReasons[key].forPenalty ? 'poolPenalty' : ''))
+      if (type) {
+        const row = {
+          key,
+          disabled: ((dicePoolReasons[key].ifAttacker === true && attackerPoolDisabled.includes(key)) || (dicePoolReasons[key].ifDefender === true && targetPoolDisabled.includes(key))),
+          name: game.i18n.localize(dicePoolReasons[key].name),
+          selected: this.#poolKeys.includes(key),
+          tooltip: game.i18n.localize(dicePoolReasons[key].tooltip)
         }
+        if (row.selected) {
+          if (type === 'poolBonus') {
+            data.finalPoolModifier++
+          } else {
+            data.finalPoolModifier--
+          }
+        }
+        data[type].push(row)
       }
     }
     if (data.hasMalfunction) {

@@ -98,12 +98,17 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
       oldOnClickLeft.call(this, event)
       if (canvas.activeLayer instanceof polyfillTokenLayer) {
         const destination = canvas.activeLayer.toLocal(event)
+        /* // FoundryVTT V13 */
+        const level = canvas.level?.id
         for (const region of canvas.scene.regions.contents) {
-          /* // FoundryVTT V12 */
-          const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-          const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
-          if (behaviors) {
-            behaviors.map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleLeftClickEvent === 'function') { await b.system._handleLeftClickEvent() } })
+          /* // FoundryVTT V13 */
+          if (typeof level === 'undefined' || region.levels.size === 0 || region.levels.has(level)) {
+            /* // FoundryVTT V12 */
+            const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
+            const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+            if (behaviors) {
+              behaviors.map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleLeftClickEvent === 'function') { await b.system._handleLeftClickEvent() } })
+            }
           }
         }
       }
@@ -114,12 +119,17 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
       oldOnClickRight.call(this, event)
       if (canvas.activeLayer instanceof polyfillTokenLayer) {
         const destination = canvas.activeLayer.toLocal(event)
+        /* // FoundryVTT V13 */
+        const level = canvas.level?.id
         for (const region of canvas.scene.regions.contents) {
-          /* // FoundryVTT V12 */
-          const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-          const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
-          if (behaviors) {
-            behaviors.map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleRightClickEvent === 'function') { await b.system._handleRightClickEvent() } })
+          /* // FoundryVTT V13 */
+          if (typeof level === 'undefined' || region.levels.size === 0 || region.levels.has(level)) {
+            /* // FoundryVTT V12 */
+            const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
+            const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+            if (behaviors) {
+              behaviors.map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleRightClickEvent === 'function') { await b.system._handleRightClickEvent() } })
+            }
           }
         }
       }
@@ -131,21 +141,26 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
         if (!pointer) {
           return
         }
+        /* // FoundryVTT V13 */
+        const level = canvas.level?.id
         const destination = canvas.activeLayer.toLocal(event)
         let setPointer = false
         for (const region of canvas.scene.regions.contents) {
-          /* // FoundryVTT V12 */
-          const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-          const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
-          if (behaviors) {
-            setPointer = await behaviors.reduce(async (c, b) => {
-              const r = await b.system._handleMouseOverEvent()
-              if (r !== false && r !== true) {
-                console.error(b.uuid + ' did not return a boolean')
-              }
-              c = c || r
-              return c
-            }, false)
+          /* // FoundryVTT V13 */
+          if (typeof level === 'undefined' || region.levels.size === 0 || region.levels.has(level)) {
+            /* // FoundryVTT V12 */
+            const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
+            const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+            if (behaviors) {
+              setPointer = await behaviors.reduce(async (c, b) => {
+                const r = await b.system._handleMouseOverEvent()
+                if (r !== false && r !== true) {
+                  console.error(b.uuid + ' did not return a boolean')
+                }
+                c = c || r
+                return c
+              }, false)
+            }
           }
         }
         if (setPointer) {

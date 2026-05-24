@@ -33,6 +33,7 @@ export default class CoC7ModelsActorCharacterSystem extends CoC7ModelsActorGloba
         skillListMode: new fields.BooleanField({ initial: false }),
         skillShowUncommon: new fields.BooleanField({ initial: true })
       }),
+      config: CoC7ModelsActorCharacterSystem.defineSchemaConfig(),
       monetary: new fields.SchemaField({
         format: new fields.StringField({
           choices: Object.keys(MONETARY_FORMAT_KEYS),

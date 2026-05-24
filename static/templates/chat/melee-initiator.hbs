@@ -70,7 +70,7 @@
       <label>{{localize 'CoC7.BonusDice'}}</label>
       <div class="coc7-card-buttons coc7-half-buttons flexrow">
         {{#each poolBonus as |poolModifier|}}
-          <button class="keeper-only-control{{#if poolModifier.selected}} switched-on{{/if}}" data-action="togglePoolKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
+          <button class="keeper-only-control{{#if poolModifier.selected}} switched-on{{/if}}{{#if poolModifier.disabled}} talent-off{{/if}}" data-action="togglePoolKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
         {{/each}}
       </div>
     {{/if}}
@@ -78,8 +78,28 @@
       <label>{{localize 'CoC7.PenaltyDice'}}</label>
       <div class="coc7-card-buttons coc7-half-buttons flexrow">
         {{#each poolPenalty as |poolModifier|}}
-          <button class="keeper-only-control{{#if poolModifier.selected}} switched-on{{/if}}" data-action="togglePoolKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
+          <button class="keeper-only-control{{#if poolModifier.selected}} switched-on{{/if}}{{#if poolModifier.disabled}} talent-off{{/if}}" data-action="togglePoolKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
         {{/each}}
+      </div>
+    {{/if}}
+    {{#if attackerTalent}}
+      <div class="keeper-only-block flexcol">
+        <label>{{localize 'CoC7.TalentsAttacker'}}</label>
+        <div class="coc7-card-buttons">
+          {{#each attackerTalent as |link|}}
+            {{{link}}}
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+    {{#if targetTalent}}
+      <div class="keeper-only-block flexcol">
+        <label>{{localize 'CoC7.TalentsTarget'}}</label>
+        <div class="coc7-card-buttons">
+          {{#each targetTalent as |link|}}
+            {{{link}}}
+          {{/each}}
+        </div>
       </div>
     {{/if}}
   </div>

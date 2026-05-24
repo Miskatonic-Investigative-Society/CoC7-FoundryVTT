@@ -10,6 +10,9 @@ if (typeof foundry.appv1 === 'undefined') {
     }
   }
 }
+if (CONFIG.ActiveEffect?.legacyTransferral === true) {
+  CONFIG.ActiveEffect.legacyTransferral = false
+}
 // Translations TOKEN.MOVEMENT.ACTIONS.* in static/lang/*.json
 if (typeof CONFIG.Token.movement === 'undefined') {
   CONFIG.Token.movement = {

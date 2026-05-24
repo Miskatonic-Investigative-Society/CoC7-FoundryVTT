@@ -11,6 +11,34 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+## Version 8.10
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Add Active Effects to Talent Item
+- Add idea and know rolls to Investigator v3 sheet
+- Add optional Down Darker Trails Shooting with off-hand
+- Add scroll bar to NPC sheet
+- Allow attribute and characteristic checks to be pushed
+- Damage card Inflict Damage button will now pick targets over selection
+- Fix console error if uses per round has no normal / max
+- Fix player user picking target on multiple target ranged attacks
+- Fix reload tooltip to use &lt;br&gt; instead of \n
+- Fix scene note background removal for FoundryVTT v14
+- If weapon Item has no maximum ammunition on NPC sheet show edit button instead of reload
+- Prevent CCI detection errors on scenes with scene levels
+- Update Active Effect tab to separate on Actor and on Item Active Effects, create tooltip to decode common changes, allow wildcard cocid matching
+- Update ranged combat card to split small/normal/big size loop to separate small and big buttons for future talent automation
+- Add Spanish localization for optional rules tour, thanks to @zeedif #2085
+- Update to French localization, thanks to @vonv #2078
+- Update to Simplified Chinese localization, thanks to @LiangHao-cloud #2079
+- Update to Swedish localization, thanks to @Rangertheman #2087
+
+GitHub
+- Simplified Chinese README.md translation, thanks to @Adoraee #2080
+
 ## Version 8.9
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

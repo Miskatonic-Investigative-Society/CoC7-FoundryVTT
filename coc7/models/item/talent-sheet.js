@@ -1,5 +1,6 @@
 /* global foundry game TextEditor */
 import { FOLDER_ID } from '../../constants.js'
+import CoC7ActiveEffect from '../../apps/active-effect.js'
 import CoC7ModelsItemGlobalSheet from './global-sheet.js'
 
 export default class CoC7ModelsItemTalentSheet extends CoC7ModelsItemGlobalSheet {
@@ -25,6 +26,10 @@ export default class CoC7ModelsItemTalentSheet extends CoC7ModelsItemGlobalSheet
       template: 'systems/' + FOLDER_ID + '/templates/items/talent-tab-details.hbs',
       scrollable: ['']
     },
+    activeEffects: {
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-active-effects.hbs',
+      scrollable: ['']
+    },
     keeper: {
       template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-keeper.hbs',
       scrollable: ['']
@@ -47,6 +52,11 @@ export default class CoC7ModelsItemTalentSheet extends CoC7ModelsItemGlobalSheet
       details: {
         icon: '',
         label: 'CoC7.Details'
+      },
+      activeEffects: {
+        cssClass: 'icon-only-tab',
+        icon: 'game-icon game-icon-aura',
+        tooltip: 'CoC7.Effects'
       }
     }
     if (game.user.isGM) {
@@ -58,6 +68,8 @@ export default class CoC7ModelsItemTalentSheet extends CoC7ModelsItemGlobalSheet
     }
 
     context.tabs = this.getTabs('primary', 'description', tabs)
+
+    context.effects = await CoC7ActiveEffect.prepareActiveEffectCategories(context.document, { status: false })
 
     return context
   }

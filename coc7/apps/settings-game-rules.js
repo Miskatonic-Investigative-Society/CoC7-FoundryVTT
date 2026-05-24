@@ -39,6 +39,14 @@ const SETTINGS = {
     default: false,
     type: Boolean
   },
+  ddtRuleShootingWithOffHand: {
+    name: 'CoC7.Settings.DDTRules.ShootingWithOffHand.Name',
+    hint: 'CoC7.Settings.DDTRules.ShootingWithOffHand.Hint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
+  },
   pulpRuleDoubleMaxHealth: {
     name: 'CoC7.Settings.PulpRules.DoubleMaxHealth.Name',
     hint: 'CoC7.Settings.PulpRules.DoubleMaxHealth.Hint',
@@ -307,6 +315,10 @@ export default class CoC7SettingsGameRules extends foundry.applications.api.Hand
    */
   static async #onSubmit (event, form, formData) {
     const submitData = foundry.utils.expandObject(formData.object)
+    let rebootRequired = false
+    if (typeof submitData.pulpRuleFasterRecovery === 'boolean' && submitData.pulpRuleFasterRecovery !== game.settings.get(FOLDER_ID, 'pulpRuleFasterRecovery')) {
+      rebootRequired = true
+    }
     const pulpRules = {
       true: false,
       false: false
@@ -320,5 +332,10 @@ export default class CoC7SettingsGameRules extends foundry.applications.api.Hand
       }
     }
     game.settings.set(FOLDER_ID, 'pulpRules', pulpRules.true && !pulpRules.false)
+    if (rebootRequired) {
+      foundry.applications.settings.SettingsConfig.reloadConfirm({
+        world: true
+      })
+    }
   }
 }

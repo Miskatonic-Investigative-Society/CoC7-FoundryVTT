@@ -67,7 +67,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
       context.hasInventory = this.hasInventory(context)
     }
 
-    context.effects = context.document.type === 'character' ? CoC7ActiveEffect.prepareActiveEffectCategories(context.document.effects) : CoC7ActiveEffect.prepareNPCActiveEffectCategories(context.document.effects)
+    context.effects = context.document.type === 'character' ? await CoC7ActiveEffect.prepareActiveEffectCategories(context.document) : await CoC7ActiveEffect.prepareNPCActiveEffectCategories(context.document)
 
     context.allowUnlock = this.allowUnlock
 
@@ -217,11 +217,13 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
         const fn = () => {
           if (button.classList.contains('slid-out-notes')) {
             outer.classList.remove('sliding-out-notes')
+          } else {
+            outer.classList.remove('visible-notes')
           }
           element.removeEventListener('transitionend', fn)
         }
         outer.addEventListener('transitionend', fn)
-        outer.classList.add('sliding-out-notes')
+        outer.classList.add('sliding-out-notes', 'visible-notes')
         if (button.classList.contains('slid-out-notes')) {
           button.classList.remove('slid-out-notes')
           outer.classList.add('slide-out-notes')
@@ -518,7 +520,25 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
   toolTipCharacteristicEnter (element) {
     let toolTip = ''
     let basicToolTip = ''
-    if (typeof this.document.system.characteristics[element.dataset.tooltipKey] !== 'undefined') {
+    if (element.dataset.tooltipKey === 'know') {
+      const data = {
+        skill: game.i18n.localize('CoC7.KnowCheck') + ' (' + game.i18n.localize(CONFIG.Actor.dataModels.character.schema.getField('characteristics').getField('edu').label) + ')',
+        regular: this.document.system.characteristics.edu.value,
+        hard: Math.floor(this.document.system.characteristics.edu.value / 2),
+        extreme: Math.floor(this.document.system.characteristics.edu.value / 5)
+      }
+      toolTip = toolTip + game.i18n.format('CoC7.ToolTipBasic', data)
+      basicToolTip = game.i18n.format('CoC7.ToolTipShort', data)
+    } else if (element.dataset.tooltipKey === 'idea') {
+      const data = {
+        skill: game.i18n.localize('CoC7.IdeaCheck') + ' (' + game.i18n.localize(CONFIG.Actor.dataModels.character.schema.getField('characteristics').getField('int').label) + ')',
+        regular: this.document.system.characteristics.int.value,
+        hard: Math.floor(this.document.system.characteristics.int.value / 2),
+        extreme: Math.floor(this.document.system.characteristics.int.value / 5)
+      }
+      toolTip = toolTip + game.i18n.format('CoC7.ToolTipBasic', data)
+      basicToolTip = game.i18n.format('CoC7.ToolTipShort', data)
+    } else if (typeof this.document.system.characteristics[element.dataset.tooltipKey] !== 'undefined') {
       const data = {
         skill: game.i18n.localize(CONFIG.Actor.dataModels.character.schema.getField('characteristics').getField(element.dataset.tooltipKey).hint),
         regular: this.document.system.characteristics[element.dataset.tooltipKey].value,

@@ -2,45 +2,47 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (17 untranslated strings)](#cnjson)
+[cn.json (18 untranslated strings)](#cnjson)
 
-[fr.json (34 untranslated strings)](#frjson)
+[fr.json (52 untranslated strings)](#frjson)
 
-[ja.json (291 untranslated strings)](#jajson)
+[ja.json (309 untranslated strings)](#jajson)
 
-[ko.json (316 untranslated strings)](#kojson)
+[ko.json (334 untranslated strings)](#kojson)
 
-[pl.json (292 untranslated strings)](#pljson)
+[pl.json (310 untranslated strings)](#pljson)
 
-[sv.json (58 untranslated strings)](#svjson)
+[sv.json (18 untranslated strings)](#svjson)
 
-[zh-tw.json (62 untranslated strings)](#zh-twjson)
+[zh-tw.json (80 untranslated strings)](#zh-twjson)
 
 
 ## cn.json
-17 untranslated strings
+18 untranslated strings
 ```
-"CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",
-"CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",
-"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",
-"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title": "Investigator Image Tile",
-"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint": "when the investigator is not set show this image",
-"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title": "Placeholder image",
-"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint": "",
-"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title": "Investigator Name Drawing",
-"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint": "when the investigator is not set show this text",
-"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title": "Placeholder text",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint": "",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title": "Investigator Occupation Drawing",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint": "when the investigator is not set show this text",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
-"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
-"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
-"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player"
+"CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
+"CoC7.CheckRollResult": "{name} ({value}%) - {difficulty} difficulty",
+"CoC7.Idea": "Idea",
+"CoC7.IdeaCheck": "Idea Roll",
+"CoC7.Know": "Know",
+"CoC7.KnowCheck": "Know Roll",
+"CoC7.ManualTalents": "Manual Talents",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Hint": "Shooting with off-hand adds a penalty die.",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Name": "Shooting with Off-Hand",
+"CoC7.TalentsAttacker": "Attacker Talents",
+"CoC7.TalentsTarget": "Target Talents",
+"CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
+"CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
+"CoC7.rangeCombatCard.BigTargetTooltip": "1 bonus die. Target is build 4 or larger",
+"CoC7.rangeCombatCard.ReloadingFirearm": "Reloading a shot",
+"CoC7.rangeCombatCard.ReloadingFirearmTooltip": "1 penalty die. Reloading one shot and firing in the same round",
+"CoC7.rangeCombatCard.ShootingWithOffHand": "Off-hand",
+"SETTINGS.DownDarkerTrailsRules": "Down Darker Trails Rules"
 ```
 ## fr.json
-34 untranslated strings
+52 untranslated strings
 ```
+"CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
 "CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",
 "CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",
 "CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",
@@ -61,6 +63,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title": "Action",
 "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerButton.Hint": "If Mouse Button is Both, and this button is used trigger the following region",
 "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerButton.Title": "Trigger Region Button",
+"CoC7.CheckRollResult": "{name} ({value}%) - {difficulty} difficulty",
 "CoC7.CoCIDFlag.keys.i.skill.drive-carriage": "Drive Carriage",
 "CoC7.CoCIDFlag.keys.i.skill.drive-horse-oxen": "Drive Horse / Oxen",
 "CoC7.CoCIDFlag.keys.i.skill.language-czech": "Language (Czech)",
@@ -73,12 +76,29 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.keys.i.skill.language-yoruba": "Language (Yoruba)",
 "CoC7.CoCIDFlag.keys.i.skill.language-zulu": "Language (Zulu)",
 "CoC7.CoCIDFlag.keys.i.skill.throw": "Throw",
+"CoC7.Idea": "Idea",
+"CoC7.IdeaCheck": "Idea Roll",
+"CoC7.Know": "Know",
+"CoC7.KnowCheck": "Know Roll",
+"CoC7.ManualTalents": "Manual Talents",
 "CoC7.NoTargetTitle": "Do you want to proceed without a target?",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Hint": "Shooting with off-hand adds a penalty die.",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Name": "Shooting with Off-Hand",
+"CoC7.TalentsAttacker": "Attacker Talents",
+"CoC7.TalentsTarget": "Target Talents",
+"CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
+"CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
+"CoC7.rangeCombatCard.BigTargetTooltip": "1 bonus die. Target is build 4 or larger",
+"CoC7.rangeCombatCard.ReloadingFirearm": "Reloading a shot",
+"CoC7.rangeCombatCard.ReloadingFirearmTooltip": "1 penalty die. Reloading one shot and firing in the same round",
+"CoC7.rangeCombatCard.ShootingWithOffHand": "Off-hand",
+"SETTINGS.DownDarkerTrailsRules": "Down Darker Trails Rules",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player"
 ```
 ## ja.json
-291 untranslated strings
+309 untranslated strings
 ```
+"CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
@@ -103,6 +123,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
 "CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
 "CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
+"CoC7.CheckRollResult": "{name} ({value}%) - {difficulty} difficulty",
 "CoC7.ChooseWeapon": "Choose Weapon",
 "CoC7.CoC7ModelsActorCharacterSheetSummarizedV2": "CoC7 Investigator Sheet Summarized v2",
 "CoC7.CoC7ModelsActorCharacterSheetSummarizedV3": "CoC7 Investigator Sheet Summarized v3",
@@ -256,8 +277,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Errors.UnparsablePoolModifier": "No dice added or removed from the pool",
 "CoC7.Errors.UnparsableRoll": "Unable to work out what you are rolling",
 "CoC7.Errors.UnparsableThreshold": "Roll threshold has not been set",
+"CoC7.Idea": "Idea",
+"CoC7.IdeaCheck": "Idea Roll",
 "CoC7.InitiativeRoll": "Initiative roll",
+"CoC7.Know": "Know",
+"CoC7.KnowCheck": "Know Roll",
 "CoC7.LocationPing": "Ping Location",
+"CoC7.ManualTalents": "Manual Talents",
 "CoC7.MapNoteNoBackground": "Hide Background",
 "CoC7.MessageCast": "To Chat",
 "CoC7.MessageCastHidden": "To Chat Hidden",
@@ -310,6 +336,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.CharacteristicsOrder.Hint": "There are many minor changes to the characteristics order. Drag these into the order for this world.",
 "CoC7.Settings.CharacteristicsOrder.Name": "Characteristics Order",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Hint": "Shooting with off-hand adds a penalty die.",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Name": "Shooting with Off-Hand",
 "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
 "CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
@@ -362,18 +390,28 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Spell.Legacy.Label": "Legacy spell costs",
 "CoC7.SpellCosts": "Spell Costs",
 "CoC7.StartRolls": "Start Rolls",
+"CoC7.TalentsAttacker": "Attacker Talents",
+"CoC7.TalentsTarget": "Target Talents",
+"CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
 "CoC7.ToolTipShort": "<label>{skill} {regular}% ({hard}/{extreme})</label>",
 "CoC7.WhatCopiedClipboard": ""{what}" copied to clipboard.",
+"CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
 "CoC7.rangeCombatCard.BaseRangeShort": "Base",
+"CoC7.rangeCombatCard.BigTargetTooltip": "1 bonus die. Target is build 4 or larger",
 "CoC7.rangeCombatCard.ExtremeRangeShort": "Xtrm",
 "CoC7.rangeCombatCard.LongRangeShort": "Long",
+"CoC7.rangeCombatCard.ReloadingFirearm": "Reloading a shot",
+"CoC7.rangeCombatCard.ReloadingFirearmTooltip": "1 penalty die. Reloading one shot and firing in the same round",
+"CoC7.rangeCombatCard.ShootingWithOffHand": "Off-hand",
+"SETTINGS.DownDarkerTrailsRules": "Down Darker Trails Rules",
 "SETTINGS.UseIconForEras": "Use icons for eras",
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space.",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player"
 ```
 ## ko.json
-316 untranslated strings
+334 untranslated strings
 ```
+"CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
@@ -421,6 +459,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Hint": "Should this show, hide, or toggle the tile and documents",
 "CoC7.ChaosiumCanvasInterface.TileToggle.Action.Title": "Action",
+"CoC7.CheckRollResult": "{name} ({value}%) - {difficulty} difficulty",
 "CoC7.ChooseWeapon": "Choose Weapon",
 "CoC7.CoC7ModelsActorCharacterSheetSummarizedV2": "CoC7 Investigator Sheet Summarized v2",
 "CoC7.CoC7ModelsActorCharacterSheetSummarizedV3": "CoC7 Investigator Sheet Summarized v3",
@@ -574,8 +613,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Errors.UnparsablePoolModifier": "No dice added or removed from the pool",
 "CoC7.Errors.UnparsableRoll": "Unable to work out what you are rolling",
 "CoC7.Errors.UnparsableThreshold": "Roll threshold has not been set",
+"CoC7.Idea": "Idea",
+"CoC7.IdeaCheck": "Idea Roll",
 "CoC7.InitiativeRoll": "Initiative roll",
+"CoC7.Know": "Know",
+"CoC7.KnowCheck": "Know Roll",
 "CoC7.LocationPing": "Ping Location",
+"CoC7.ManualTalents": "Manual Talents",
 "CoC7.MapNoteNoBackground": "Hide Background",
 "CoC7.MessageCast": "To Chat",
 "CoC7.MessageCastHidden": "To Chat Hidden",
@@ -628,6 +672,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.CharacteristicsOrder.Hint": "There are many minor changes to the characteristics order. Drag these into the order for this world.",
 "CoC7.Settings.CharacteristicsOrder.Name": "Characteristics Order",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Hint": "Shooting with off-hand adds a penalty die.",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Name": "Shooting with Off-Hand",
 "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
 "CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
@@ -680,20 +726,30 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Spell.Legacy.Label": "Legacy spell costs",
 "CoC7.SpellCosts": "Spell Costs",
 "CoC7.StartRolls": "Start Rolls",
+"CoC7.TalentsAttacker": "Attacker Talents",
+"CoC7.TalentsTarget": "Target Talents",
+"CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
 "CoC7.ToolTipShort": "<label>{skill} {regular}% ({hard}/{extreme})</label>",
 "CoC7.WhatCopiedClipboard": ""{what}" copied to clipboard.",
+"CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
 "CoC7.rangeCombatCard.BaseRangeShort": "Base",
+"CoC7.rangeCombatCard.BigTargetTooltip": "1 bonus die. Target is build 4 or larger",
 "CoC7.rangeCombatCard.ExtremeRangeShort": "Xtrm",
 "CoC7.rangeCombatCard.LongRangeShort": "Long",
+"CoC7.rangeCombatCard.ReloadingFirearm": "Reloading a shot",
+"CoC7.rangeCombatCard.ReloadingFirearmTooltip": "1 penalty die. Reloading one shot and firing in the same round",
+"CoC7.rangeCombatCard.ShootingWithOffHand": "Off-hand",
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
+"SETTINGS.DownDarkerTrailsRules": "Down Darker Trails Rules",
 "SETTINGS.UseIconForEras": "Use icons for eras",
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space.",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle": "CCI: Light Toggle",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player"
 ```
 ## pl.json
-292 untranslated strings
+310 untranslated strings
 ```
+"CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
 "CoC7.AddedEmbeddedItems": "Added {names}",
 "CoC7.AdditionalPoolModifier": "Additional Dice",
 "CoC7.AlreadyRested": "Already rested",
@@ -720,6 +776,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
 "CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
 "CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
+"CoC7.CheckRollResult": "{name} ({value}%) - {difficulty} difficulty",
 "CoC7.ChooseWeapon": "Choose Weapon",
 "CoC7.CoC7ModelsActorCharacterSheetSummarizedV2": "CoC7 Investigator Sheet Summarized v2",
 "CoC7.CoC7ModelsActorCharacterSheetSummarizedV3": "CoC7 Investigator Sheet Summarized v3",
@@ -873,8 +930,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Errors.UnparsablePoolModifier": "No dice added or removed from the pool",
 "CoC7.Errors.UnparsableRoll": "Unable to work out what you are rolling",
 "CoC7.Errors.UnparsableThreshold": "Roll threshold has not been set",
+"CoC7.Idea": "Idea",
+"CoC7.IdeaCheck": "Idea Roll",
 "CoC7.InitiativeRoll": "Initiative roll",
+"CoC7.Know": "Know",
+"CoC7.KnowCheck": "Know Roll",
 "CoC7.LocationPing": "Ping Location",
+"CoC7.ManualTalents": "Manual Talents",
 "CoC7.MapNoteNoBackground": "Hide Background",
 "CoC7.MessageCast": "To Chat",
 "CoC7.MessageCastHidden": "To Chat Hidden",
@@ -926,6 +988,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.AllowPushFumbles.Name": "Allow fumbles to be pushed",
 "CoC7.Settings.CharacteristicsOrder.Hint": "There are many minor changes to the characteristics order. Drag these into the order for this world.",
 "CoC7.Settings.CharacteristicsOrder.Name": "Characteristics Order",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Hint": "Shooting with off-hand adds a penalty die.",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Name": "Shooting with Off-Hand",
 "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
 "CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
@@ -978,80 +1042,50 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Spell.Legacy.Label": "Legacy spell costs",
 "CoC7.SpellCosts": "Spell Costs",
 "CoC7.StartRolls": "Start Rolls",
+"CoC7.TalentsAttacker": "Attacker Talents",
+"CoC7.TalentsTarget": "Target Talents",
+"CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
 "CoC7.ToolTipShort": "<label>{skill} {regular}% ({hard}/{extreme})</label>",
 "CoC7.WhatCopiedClipboard": ""{what}" copied to clipboard.",
+"CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
 "CoC7.rangeCombatCard.BaseRangeShort": "Base",
+"CoC7.rangeCombatCard.BigTargetTooltip": "1 bonus die. Target is build 4 or larger",
 "CoC7.rangeCombatCard.ExtremeRangeShort": "Xtrm",
 "CoC7.rangeCombatCard.LongRangeShort": "Long",
+"CoC7.rangeCombatCard.ReloadingFirearm": "Reloading a shot",
+"CoC7.rangeCombatCard.ReloadingFirearmTooltip": "1 penalty die. Reloading one shot and firing in the same round",
+"CoC7.rangeCombatCard.ShootingWithOffHand": "Off-hand",
+"SETTINGS.DownDarkerTrailsRules": "Down Darker Trails Rules",
 "SETTINGS.UseIconForEras": "Use icons for eras",
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space.",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player"
 ```
 ## sv.json
-58 untranslated strings
+18 untranslated strings
 ```
-"CoC7.CastTesting": "Test Cast",
-"CoC7.ChaosiumCanvasInterface.Player.Button.Hint": "Which button should trigger clearing the actor",
-"CoC7.ChaosiumCanvasInterface.Player.Button.Title": "Mouse Button",
-"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Hint": "",
-"CoC7.ChaosiumCanvasInterface.Player.ImageDrop.Title": "Investigator Image Tile",
-"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Hint": "when the investigator is not set show this image",
-"CoC7.ChaosiumCanvasInterface.Player.ImagePlaceholder.Title": "Placeholder image",
-"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Hint": "",
-"CoC7.ChaosiumCanvasInterface.Player.NameDrop.Title": "Investigator Name Drawing",
-"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Hint": "when the investigator is not set show this text",
-"CoC7.ChaosiumCanvasInterface.Player.NamePlaceholder.Title": "Placeholder text",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Hint": "",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationDrop.Title": "Investigator Occupation Drawing",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Hint": "when the investigator is not set show this text",
-"CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
-"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
-"CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
-"CoC7.MessageCast": "To Chat",
-"CoC7.MessageCastHidden": "To Chat Hidden",
-"CoC7.SETTINGS.LegacySpellCosts": "Always show legacy spell costs system",
-"CoC7.SETTINGS.LegacySpellCostsHint": "Show the legacy spell cost entries even if they are empty",
-"CoC7.Spell.Cost.AdditionalCasterCost": "Additional caster cost",
-"CoC7.Spell.Cost.AdditionalCasterPromptAdd": "Additional caster prompt: Add",
-"CoC7.Spell.Cost.AdditionalCasterPromptRequireNumber": "Additional caster prompt: Enter number",
-"CoC7.Spell.Cost.AdditionalInformation": "Additional information",
-"CoC7.Spell.Cost.CasterCost": "Caster cost",
-"CoC7.Spell.Cost.CastingTime": "Casting time",
-"CoC7.Spell.Cost.PromptRequireNumber": "Prompt: Enter number",
-"CoC7.Spell.Cost.PromptShowText": "Prompt: Show text",
-"CoC7.Spell.Cost.PromptShowVariable": "Prompt: Show variable",
-"CoC7.Spell.Cost.PromptToggleButton": "Prompt: Toggle button",
-"CoC7.Spell.Cost.SetVariable": "Set variable",
-"CoC7.Spell.Cost.Toggle": "Toggle",
-"CoC7.Spell.Cost.TriggerPrompt": "Show dialog prompt",
-"CoC7.Spell.Costs.AddCasters": "Add group of casters",
-"CoC7.Spell.Costs.AddSectionBefore": "Add section before",
-"CoC7.Spell.Costs.DeleteCasters": "Remove group of casters",
-"CoC7.Spell.Costs.DeleteSection": "Delete section",
-"CoC7.Spell.Costs.GroupSize": "Group size",
-"CoC7.Spell.Costs.If": "If",
-"CoC7.Spell.Costs.Minimum": "Minimum",
-"CoC7.Spell.Costs.Modify": "Modify",
-"CoC7.Spell.Costs.PromptName": "Prompt",
-"CoC7.Spell.Costs.Text": "Text",
-"CoC7.Spell.Costs.Value": "Value",
-"CoC7.Spell.Costs.VariableName": "Number name",
-"CoC7.Spell.Costs.VariablePlaceholder": "@variable",
-"CoC7.Spell.ErrorPromptNotShown": "You have not prompted for all use input",
-"CoC7.Spell.ErrorUnableToFindAdditionalCasters": "You need to set up additional casters before assigning costs",
-"CoC7.Spell.Group.AdditionalCasters": "Additional Casters",
-"CoC7.Spell.Group.CasterCosts": "Caster Costs",
-"CoC7.Spell.Group.CastingTime": "Casting time",
-"CoC7.Spell.Group.Prompt": "Prompt",
-"CoC7.Spell.Group.System": "System",
-"CoC7.Spell.Legacy.Hint": "Please use the costs on the details tab which support the more interactive costs required by many spells and can be automatically removed from an Actor.",
-"CoC7.Spell.Legacy.Label": "Legacy spell costs",
-"CoC7.SpellCosts": "Spell Costs",
-"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player"
+"CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
+"CoC7.CheckRollResult": "{name} ({value}%) - {difficulty} difficulty",
+"CoC7.Idea": "Idea",
+"CoC7.IdeaCheck": "Idea Roll",
+"CoC7.Know": "Know",
+"CoC7.KnowCheck": "Know Roll",
+"CoC7.ManualTalents": "Manual Talents",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Hint": "Shooting with off-hand adds a penalty die.",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Name": "Shooting with Off-Hand",
+"CoC7.TalentsAttacker": "Attacker Talents",
+"CoC7.TalentsTarget": "Target Talents",
+"CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
+"CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
+"CoC7.rangeCombatCard.BigTargetTooltip": "1 bonus die. Target is build 4 or larger",
+"CoC7.rangeCombatCard.ReloadingFirearm": "Reloading a shot",
+"CoC7.rangeCombatCard.ReloadingFirearmTooltip": "1 penalty die. Reloading one shot and firing in the same round",
+"CoC7.rangeCombatCard.ShootingWithOffHand": "Off-hand",
+"SETTINGS.DownDarkerTrailsRules": "Down Darker Trails Rules"
 ```
 ## zh-tw.json
-62 untranslated strings
+80 untranslated strings
 ```
+"CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
 "CoC7.BookAlterProgress": "Study progress quantity",
 "CoC7.BookProgressValue": "Number to alter progress by (1 - {max})",
 "CoC7.CastTesting": "Test Cast",
@@ -1071,12 +1105,20 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ChaosiumCanvasInterface.Player.OccupationPlaceholder.Title": "Placeholder text",
 "CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Hint": "If this player region is repeated on other scenes set the regions here",
 "CoC7.ChaosiumCanvasInterface.Player.OtherRegions.Title": "Other Player Region",
+"CoC7.CheckRollResult": "{name} ({value}%) - {difficulty} difficulty",
+"CoC7.Idea": "Idea",
+"CoC7.IdeaCheck": "Idea Roll",
+"CoC7.Know": "Know",
+"CoC7.KnowCheck": "Know Roll",
+"CoC7.ManualTalents": "Manual Talents",
 "CoC7.MessageCast": "To Chat",
 "CoC7.MessageCastHidden": "To Chat Hidden",
 "CoC7.ReferenceTome": "Reference Tome",
 "CoC7.ReferenceTomeFlavor": "Reference {book} for {hours} hours {flavor}",
 "CoC7.SETTINGS.LegacySpellCosts": "Always show legacy spell costs system",
 "CoC7.SETTINGS.LegacySpellCostsHint": "Show the legacy spell cost entries even if they are empty",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Hint": "Shooting with off-hand adds a penalty die.",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Name": "Shooting with Off-Hand",
 "CoC7.Spell.Cost.AdditionalCasterCost": "Additional caster cost",
 "CoC7.Spell.Cost.AdditionalCasterPromptAdd": "Additional caster prompt: Add",
 "CoC7.Spell.Cost.AdditionalCasterPromptRequireNumber": "Additional caster prompt: Enter number",
@@ -1113,5 +1155,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Spell.Legacy.Hint": "Please use the costs on the details tab which support the more interactive costs required by many spells and can be automatically removed from an Actor.",
 "CoC7.Spell.Legacy.Label": "Legacy spell costs",
 "CoC7.SpellCosts": "Spell Costs",
+"CoC7.TalentsAttacker": "Attacker Talents",
+"CoC7.TalentsTarget": "Target Talents",
+"CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
+"CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
+"CoC7.rangeCombatCard.BigTargetTooltip": "1 bonus die. Target is build 4 or larger",
+"CoC7.rangeCombatCard.ReloadingFirearm": "Reloading a shot",
+"CoC7.rangeCombatCard.ReloadingFirearmTooltip": "1 penalty die. Reloading one shot and firing in the same round",
+"CoC7.rangeCombatCard.ShootingWithOffHand": "Off-hand",
+"SETTINGS.DownDarkerTrailsRules": "Down Darker Trails Rules",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player"
 ```

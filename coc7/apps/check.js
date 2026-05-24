@@ -2,6 +2,7 @@
 import { FOLDER_ID, CHAT_MESSAGE_MODE } from '../constants.js'
 import CoC7DicePool from './dice-pool.js'
 import CoC7ModelsItemSkillSystem from '../models/item/skill-system.js'
+import CoC7RollNormalize from './roll-normalize.js'
 import CoC7SystemSocket from './system-socket.js'
 import CoC7Utilities from './utilities.js'
 
@@ -12,6 +13,7 @@ export default class CoC7Check {
   #callbackContext
   #callbackUuid
   #cardOpen
+  #cardType
   #customFlavor
   #dicePool
   #isCombat
@@ -34,6 +36,7 @@ export default class CoC7Check {
     // this.#callbackContext = undefined
     // this.#callbackUuid = undefined
     this.#cardOpen = true
+    this.#cardType = CoC7RollNormalize.CARD_TYPE.NORMAL
     this.#customFlavor = false
     this.#dicePool = CoC7DicePool.newPool({
       difficulty: CoC7DicePool.difficultyLevel[game.settings.get(FOLDER_ID, 'defaultCheckDifficulty')],
@@ -84,6 +87,7 @@ export default class CoC7Check {
       // 'callbackContext' - not always set
       // 'callbackUuid' - not always set
       'cardOpen',
+      // 'cardType' - New field
       'customFlavor',
       'dicePool',
       'isCombat',
@@ -106,6 +110,9 @@ export default class CoC7Check {
       check.#callbackContext = load.callbackContext
       check.#callbackUuid = load.callbackUuid
       check.#cardOpen = load.cardOpen
+      if (typeof load.cardType !== 'undefined') {
+        check.#cardType = load.cardType
+      }
       check.#customFlavor = load.customFlavor
       check.#dicePool = CoC7DicePool.fromObject(load.dicePool)
       check.#isCombat = load.isCombat
@@ -288,6 +295,19 @@ export default class CoC7Check {
       return this.#customFlavor
     }
     let flavor = ''
+    if (this.#cardType === CoC7RollNormalize.CARD_TYPE.IDEA_CHECK) {
+      return game.i18n.format('CoC7.CheckRollResult', {
+        name: game.i18n.localize('CoC7.IdeaCheck'),
+        value: this.#dicePool.thresholdString,
+        difficulty: CoC7DicePool.difficultyString(this.#dicePool.difficulty)
+      })
+    } else if (this.#cardType === CoC7RollNormalize.CARD_TYPE.KNOW_CHECK) {
+      return game.i18n.format('CoC7.CheckRollResult', {
+        name: game.i18n.localize('CoC7.KnowCheck'),
+        value: this.#dicePool.thresholdString,
+        difficulty: CoC7DicePool.difficultyString(this.#dicePool.difficulty)
+      })
+    }
     switch (this.#type) {
       case CoC7Check.type.attribute:
       case CoC7Check.type.characteristic:
@@ -314,6 +334,22 @@ export default class CoC7Check {
         break
     }
     return flavor
+  }
+
+  /**
+   * Set card type
+   * @param {string} value
+   */
+  set cardType (value) {
+    this.#cardType = value
+  }
+
+  /**
+   * Get card type
+   * @returns {string}
+   */
+  get cardType () {
+    return this.#cardType
   }
 
   /**
@@ -532,6 +568,7 @@ export default class CoC7Check {
             allowPush: this.#allowPush,
             appliedDevelopment: this.#appliedDevelopment,
             cardOpen: this.#cardOpen,
+            cardType: this.#cardType,
             callbackContext: this.#callbackContext,
             callbackUuid: this.#callbackUuid,
             customFlavor: this.#customFlavor,
@@ -673,11 +710,17 @@ export default class CoC7Check {
   async #setThreshold (useAlternativeSkill = false) {
     let threshold
     if (this.#type === CoC7Check.type.attribute && this.#key && typeof this.#asyncActor !== 'undefined') {
-      this.#allowPush = false
+      this.#allowPush = true
       threshold = parseInt((await this.#asyncActor)?.system?.attribs?.[this.#key]?.value, 10)
     } else if (this.#type === CoC7Check.type.characteristic && this.#key && typeof this.#asyncActor !== 'undefined') {
-      this.#allowPush = false
-      threshold = parseInt((await this.#asyncActor)?.system?.characteristics?.[this.#key]?.value, 10)
+      this.#allowPush = true
+      if (this.#cardType === CoC7RollNormalize.CARD_TYPE.IDEA_CHECK) {
+        threshold = parseInt((await this.#asyncActor)?.system?.config?.idea?.value, 10)
+      } else if (this.#cardType === CoC7RollNormalize.CARD_TYPE.KNOW_CHECK) {
+        threshold = parseInt((await this.#asyncActor)?.system?.config?.know?.value, 10)
+      } else {
+        threshold = parseInt((await this.#asyncActor)?.system?.characteristics?.[this.#key]?.value, 10)
+      }
     } else if (this.#type === CoC7Check.type.skill && this.#key) {
       if (!this.item) {
         this.item = await fromUuid(this.#key)

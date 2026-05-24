@@ -406,7 +406,7 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
    * @returns {boolean}
    */
   get multipleShots () {
-    const value = this.usesPerRound.max.toString()
+    const value = (this.usesPerRound.max ?? '').toString()
     const roll = new Roll(value)
     if (value !== '' && roll.isDeterministic) {
       return roll.evaluateSync().total > 1
@@ -419,7 +419,7 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
    * @returns {boolean}
    */
   get singleShot () {
-    const value = this.usesPerRound.normal.toString()
+    const value = (this.usesPerRound.normal ?? '').toString()
     const roll = new Roll(value)
     if (value !== '' && roll.isDeterministic) {
       return roll.evaluateSync().total > 0
