@@ -1,5 +1,5 @@
 /* global Actor canvas ChatMessage CONFIG CONST Folder foundry fromUuid fromUuidSync game Hooks Macro Ray Roll Token TokenDocument ui */
-import { FOLDER_ID, STATUS_EFFECTS, TARGET_ALLOWED, TRADE_ALLOWED } from '../constants.js'
+import { FOLDER_ID, DICE_POOL_REASONS, STATUS_EFFECTS, TARGET_ALLOWED, TRADE_ALLOWED } from '../constants.js'
 import CoC7ActorPickerDialog from './actor-picker-dialog.js'
 import CoC7DicePool from './dice-pool.js'
 import CoC7Link from './link.js'
@@ -250,8 +250,6 @@ export default class CoC7Utilities {
     const contents = []
     for (const actor of actors) {
       if (TARGET_ALLOWED.includes(actor.type)) {
-        const nameQuickHealer = game.i18n.localize('CoC7.quickHealer')
-        const quickHealer = !!actor.items.find(doc => doc.type === 'talent' && doc.name === nameQuickHealer)
         const isCriticalWounds = !game.settings.get(FOLDER_ID, 'pulpRuleIgnoreMajorWounds') && actor.hasConditionStatus(STATUS_EFFECTS.criticalWounds)
         const dailySanityLoss = actor.system.attribs.san.dailyLoss
         const currentSanityLimit = actor.system.attribs.san.dailyLimit
@@ -269,11 +267,7 @@ export default class CoC7Utilities {
           if (isCriticalWounds === true) {
             rows.push('<li class="coc7-upgrade-failed">' + game.i18n.localize('CoC7.hasCriticalWounds') + '</li>')
           } else {
-            let healAmount = (game.settings.get(FOLDER_ID, 'pulpRuleFasterRecovery') ? 2 : 1)
-            if (quickHealer === true) {
-              healAmount++
-            }
-            healAmount = Math.min(healAmount, hpMax - hpValue)
+            const healAmount = Math.min(actor.system.config.naturalHealing, hpMax - hpValue)
             if (healAmount === 1) {
               rows.push('<li class="coc7-upgrade-success">' + game.i18n.localize('CoC7.healthRecovered') + '</li>')
             } else {
@@ -779,12 +773,14 @@ export default class CoC7Utilities {
       if (Object.keys(fallback).length > 0) {
         const anyItems = await CoC7Utilities.guessItems('skill', [...new Set(Object.values(fallback))], { source })
         for (const key in fallback) {
-          foundItems[key] = foundry.utils.duplicate(anyItems[fallback[key]])
-          if (foundItems[key].system.properties?.requiresname ?? false) {
-            foundItems[key].system.properties.requiresname = false
-          }
-          if (foundItems[key].system.properties?.picknameonly ?? false) {
-            foundItems[key].system.properties.picknameonly = false
+          if (typeof anyItems[fallback[key]] !== 'undefined') {
+            foundItems[key] = foundry.utils.duplicate(anyItems[fallback[key]])
+            if (foundItems[key].system.properties?.requiresname ?? false) {
+              foundItems[key].system.properties.requiresname = false
+            }
+            if (foundItems[key].system.properties?.picknameonly ?? false) {
+              foundItems[key].system.properties.picknameonly = false
+            }
           }
         }
       }
@@ -1504,5 +1500,24 @@ export default class CoC7Utilities {
       return 'Actor.' + oldStyle.actor
     }
     return 'Actor.xxxxxxxxxxxxxxxx'
+  }
+
+  /**
+   * Get list of pool modifier options
+   * @param {object} options
+   * @param {boolean} options.forMelee
+   * @param {boolean} options.forRanged
+   * @returns {object}
+   */
+  static dicePoolReasons ({ forMelee = false, forRanged = false } = {}) {
+    const output = {}
+    for (const key in DICE_POOL_REASONS) {
+      if ((forMelee && DICE_POOL_REASONS[key].forMelee) || (forRanged && DICE_POOL_REASONS[key].forRanged)) {
+        if (DICE_POOL_REASONS[key].active === true || (typeof DICE_POOL_REASONS[key].active === 'function') && DICE_POOL_REASONS[key].active()) {
+          output[key] = DICE_POOL_REASONS[key]
+        }
+      }
+    }
+    return output
   }
 }

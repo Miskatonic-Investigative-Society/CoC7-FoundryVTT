@@ -95,14 +95,14 @@ export default class CoC7ActiveEffect {
           unit = '%'
           /* // FoundryVTT V13 */
           if (game.release.generation < 14 && effect.parent instanceof Actor) {
-            name = effect.parent.system.skills[key].name
+            name = effect.parent.system.skills[key]?.name ?? key.replace(/>>/g, '.')
           } else if (typeof effect.actor?.system.skills[key] !== 'undefined') {
             name = effect.actor.system.skills[key].name
           } else {
             name = key.replace(/>>/g, '.')
           }
         } else {
-          const match = change.key.match(/^system\.(characteristics|attribs)\.([^.]+)\.(bonusDice|max|value)$/)
+          const match = change.key.match(/^system\.(characteristics|attribs|config)\.([^.]+)\.(bonusDice|max|value)$/)
           if (match && (match[3] !== 'max' || match[1] === 'attribs')) {
             what = match[3]
             switch (match[1]) {
@@ -115,6 +115,18 @@ export default class CoC7ActiveEffect {
               case 'characteristics':
                 name = game.i18n.localize(CONFIG.Actor.dataModels.character.defineSchema().characteristics.getField(match[2])?.hint ?? false)
                 unit = '%'
+                break
+              case 'config':
+                switch (match[2]) {
+                  case 'idea':
+                    name = game.i18n.localize('CoC7.IdeaCheck')
+                    unit = '%'
+                    break
+                  case 'know':
+                    name = game.i18n.localize('CoC7.KnowCheck')
+                    unit = '%'
+                    break
+                }
                 break
             }
           } else {

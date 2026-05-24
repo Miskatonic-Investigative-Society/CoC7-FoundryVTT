@@ -62,7 +62,7 @@
 <div class="ranged-targets-portraits flexrow" data-actor-uuid="{{attackerUuid}}">
   {{#each targets as |target offset|}}
     {{#if target.uuid}}
-      <img class="portrait open-actor switch-target{{#if target.active}} active{{/if}}" data-offset="{{offset}}" data-actor-uuid="{{target.uuid}}" src="{{target.img}}" data-tooltip="{{target.name}}{{#if target.roundedDistance}}, {{target.roundedDistance}}{{#if target.unit}} {{target.unit}}{{/if}}{{/if}}" />
+      <img class="portrait open-actor switch-target{{#if target.active}} active{{/if}}" data-offset="{{offset}}" data-actor-uuid="{{../attackerUuid}}" src="{{target.img}}" data-tooltip="{{target.name}}{{#if target.roundedDistance}}, {{target.roundedDistance}}{{#if target.unit}} {{target.unit}}{{/if}}{{/if}}" />
     {{/if}}
   {{/each}}
 </div>
@@ -80,13 +80,12 @@
           <button class="keeper-only-control{{#if target.longRange}} switched-on{{/if}}" data-action="toggleTargetValue" data-set="longRange">{{localize 'CoC7.rangeCombatCard.LongRange'}}</button>
           <button class="keeper-only-control{{#if target.extremeRange}} switched-on{{/if}}" data-action="toggleTargetValue" data-set="extremeRange">{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}</button>
           <button class="keeper-only-control{{#if target.outOfRange}} switched-on{{/if}}" data-action="toggleTargetValue" data-set="outOfRange">{{localize 'CoC7.rangeCombatCard.OutOfRange'}}</button>
-          <button class="keeper-only-control{{#if (ne target.size 'normal')}} switched-on{{/if}}" data-action="toggleTargetValue" data-set="size" data-tooltip="{{lookup ../sizeTooltip target.size}}">{{lookup ../sizeLabel target.size}}</button>
         </div>
         {{#if ../poolBonus}}
           <label>{{localize 'CoC7.BonusDice'}}</label>
           <div class="coc7-card-buttons coc7-half-buttons flexrow">
             {{#each ../poolBonus as |poolModifier|}}
-              <button class="keeper-only-control{{#if (contains poolModifier.key target.poolKeys)}} switched-on{{/if}}" data-action="toggleTargetKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
+              <button class="keeper-only-control{{#if (contains poolModifier.key target.poolKeys)}} switched-on{{/if}}{{#if (contains poolModifier.key target.poolDisabled)}} talent-off{{/if}}" data-action="toggleTargetKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
             {{/each}}
           </div>
         {{/if}}
@@ -94,7 +93,23 @@
           <label>{{localize 'CoC7.PenaltyDice'}}</label>
           <div class="coc7-card-buttons coc7-half-buttons flexrow">
             {{#each ../poolPenalty as |poolModifier|}}
-              <button class="keeper-only-control{{#if (contains poolModifier.key target.poolKeys)}} switched-on{{/if}}" data-action="toggleTargetKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
+              <button class="keeper-only-control{{#if (contains poolModifier.key target.poolKeys)}} switched-on{{/if}}{{#if (contains poolModifier.key target.poolDisabled)}} talent-off{{/if}}" data-action="toggleTargetKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
+            {{/each}}
+          </div>
+        {{/if}}
+        {{#if ../attackerTalent}}
+          <label>{{localize 'CoC7.TalentsAttacker'}}</label>
+          <div class="coc7-card-buttons">
+            {{#each ../attackerTalent as |link|}}
+              {{{link}}}
+            {{/each}}
+          </div>
+        {{/if}}
+        {{#if targetTalent}}
+          <label>{{localize 'CoC7.TalentsTarget'}}</label>
+          <div class="coc7-card-buttons">
+            {{#each targetTalent as |link|}}
+              {{{link}}}
             {{/each}}
           </div>
         {{/if}}
@@ -125,19 +140,28 @@
       {{/unless}}
     </div>
     <div class="coc7-tags">
-      <span{{#unless ../weaponRolled}} class="not-keeper-block"{{/unless}}>
-        {{#if target.baseRange}}<span class="tag">{{localize 'CoC7.rangeCombatCard.BaseRange'}}</span>{{/if}}
-        {{#if target.longRange}}<span class="tag">{{localize 'CoC7.rangeCombatCard.LongRange'}}</span>{{/if}}
-        {{#if target.extremeRange}}<span class="tag">{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}</span>{{/if}}
-        {{#if target.outOfRange}}<span class="tag">{{localize 'CoC7.rangeCombatCard.OutOfRange'}}</span>{{/if}}
-        {{#if (ne target.size 'normal')}}<span class="tag" data-tooltip="{{lookup ../sizeTooltip target.size}}">{{lookup ../sizeLabel target.size}}</span>{{/if}}
-        {{#each ../poolBonus as |poolModifier|}}
-          {{#if (contains poolModifier.key target.poolKeys)}}<span class="tag" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</span>{{/if}}
-        {{/each}}
-        {{#each ../poolPenalty as |poolModifier|}}
-          {{#if (contains poolModifier.key target.poolKeys)}}<span class="tag" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</span>{{/if}}
-        {{/each}}
-      </span>
+      {{#unless ../weaponRolled}}
+        <div class="keeper-only-block">
+          {{#if (eq target.size 'big')}}
+            <span class="tag">{{localize 'CoC7.rangeCombatCard.BigTarget'}}</span>
+          {{/if}}
+          {{#if (eq target.size 'small')}}
+            <span class="tag">{{localize 'CoC7.combatCard.SmallTarget'}}</span>
+          {{/if}}
+        </div>
+        <div class="not-keeper-block">
+          {{#if target.baseRange}}<span class="tag">{{localize 'CoC7.rangeCombatCard.BaseRange'}}</span>{{/if}}
+          {{#if target.longRange}}<span class="tag">{{localize 'CoC7.rangeCombatCard.LongRange'}}</span>{{/if}}
+          {{#if target.extremeRange}}<span class="tag">{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}</span>{{/if}}
+          {{#if target.outOfRange}}<span class="tag">{{localize 'CoC7.rangeCombatCard.OutOfRange'}}</span>{{/if}}
+          {{#each ../poolBonus as |poolModifier|}}
+            {{#if (contains poolModifier.key target.poolKeys)}}<span class="tag" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</span>{{/if}}
+          {{/each}}
+          {{#each ../poolPenalty as |poolModifier|}}
+            {{#if (contains poolModifier.key target.poolKeys)}}<span class="tag" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</span>{{/if}}
+          {{/each}}
+        </div>
+      {{/unless}}
       <span class="tag">{{target.difficultyName}}</span>
       {{#if (lt 0 target.finalPoolModifier)}}
         <span class="tag">{{localize 'CoC7.BonusDice'}}: {{target.absolutePoolModifier}}</span>

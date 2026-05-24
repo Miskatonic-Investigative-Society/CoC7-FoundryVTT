@@ -652,9 +652,6 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
               }
               foundCompendiumItem[pack.collection].push(row)
             } else if (['archetype', 'experiencePackage', 'setup', 'occupation'].includes(item.type)) {
-              if (typeof foundCompendiumItem[pack.collection] === 'undefined') {
-                foundCompendiumItem[pack.collection] = []
-              }
               const row = {}
               const found = item.system?.itemKeys?.filter(t => t.match(/^i.skill.(firearms|fighting|ranged)-throw$/)) ?? []
               if (found.length) {
@@ -689,6 +686,9 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
                 }
               }
               if (Object.keys(row).length) {
+                if (typeof foundCompendiumItem[pack.collection] === 'undefined') {
+                  foundCompendiumItem[pack.collection] = []
+                }
                 row._id = item._id
                 foundCompendiumItem[pack.collection].push(row)
               }

@@ -3558,10 +3558,14 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       augmentRoll = '1D10'
     }
     if (augmentRoll) {
+      if (this.system.config.luckRecovery !== '' && Roll.validate(this.system.config.luckRecovery)) {
+        const luckRecovery = this.system.config.luckRecovery.trim()
+        augmentRoll = augmentRoll + (luckRecovery.match(/^[+-]/) ? '' : '+') + luckRecovery
+      }
       const augmentValue = await new Roll(augmentRoll).evaluate()
       rolls.push(augmentValue)
       await this.update({
-        'system.attribs.lck.value': currentLuck + parseInt(augmentValue.total, 10)
+        'system.attribs.lck.value': Math.min(99, currentLuck + parseInt(augmentValue.total, 10))
       })
       message = '<div class="coc7-upgrade-success">' + game.i18n.format('CoC7.LuckIncreased', {
         die: upgradeRoll.total,
@@ -3575,12 +3579,15 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       }) + '</div>'
     }
     if (!fastForward) {
+      for (const roll of rolls) {
+        message += await roll.render()
+      }
       const messageData = {
         flavor: game.i18n.localize('CoC7.RollLuck4Dev'),
         speaker: {
           actor: this.id
         },
-        // rolls,
+        rolls,
         content: message
       }
       ChatMessage.create(messageData)

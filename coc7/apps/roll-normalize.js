@@ -38,7 +38,9 @@ export default class CoC7RollNormalize {
       COMBINED: 'C/CO',
       NORMAL: 'C/NO',
       OPPOSED: 'C/OP',
-      SAN_CHECK: 'C/SC'
+      SAN_CHECK: 'C/SC',
+      IDEA_CHECK: 'C/IC',
+      KNOW_CHECK: 'C/KC'
     }
   }
 
@@ -63,6 +65,10 @@ export default class CoC7RollNormalize {
     }
     if (config.rollType === CoC7RollNormalize.ROLL_TYPE.ATTRIBUTE && config.key === 'san') {
       select[CoC7RollNormalize.CARD_TYPE.SAN_CHECK] = 'CoC7.SanityLossEncounter'
+    } else if (config.rollType === CoC7RollNormalize.ROLL_TYPE.CHARACTERISTIC && config.key === 'int') {
+      select[CoC7RollNormalize.CARD_TYPE.IDEA_CHECK] = 'CoC7.IdeaCheck'
+    } else if (config.rollType === CoC7RollNormalize.ROLL_TYPE.CHARACTERISTIC && config.key === 'edu') {
+      select[CoC7RollNormalize.CARD_TYPE.KNOW_CHECK] = 'CoC7.KnowCheck'
     }
     return select
   }
@@ -108,6 +114,9 @@ export default class CoC7RollNormalize {
       isShiftKey: options.isShiftKey === true || options.fastForward === true || options.event?.shiftKey === true,
       key: options.key ?? '',
       poolModifier: options.poolModifier ?? 0,
+      poolModifierDefault: 0,
+      poolModifierKnow: options.poolModifierKnow ?? 0,
+      poolModifierIdea: options.poolModifierIdea ?? 0,
       preventStandby: options.preventStandby ?? false,
       rollType: options.rollType ?? CoC7RollNormalize.ROLL_TYPE.MANUAL,
       runRoll: options.runRoll ?? true,
@@ -136,6 +145,19 @@ export default class CoC7RollNormalize {
       options.sanMin = options.actor?.system?.special?.sanLoss?.checkPassed ?? ''
       options.sanMax = options.actor?.system?.special?.sanLoss?.checkFailled ?? ''
       options.sanReason = options.actor?.system.infos.type?.length ? options.actor.system.infos.type : options.actor.name
+      if (options.characteristic === 'know') {
+        config.cardType = CoC7RollNormalize.CARD_TYPE.KNOW_CHECK
+        options.characteristic = 'edu'
+      } else if (options.characteristic === 'idea') {
+        config.cardType = CoC7RollNormalize.CARD_TYPE.IDEA_CHECK
+        options.characteristic = 'int'
+      }
+      if (options.characteristic === 'edu' && config.poolModifierKnow === 0) {
+        config.poolModifierKnow = options.actor.system.config.know.bonusDice ?? 0
+      }
+      if (options.characteristic === 'int' && config.poolModifierIdea === 0) {
+        config.poolModifierIdea = options.actor.system.config.idea.bonusDice ?? 0
+      }
       if (item !== false) {
         if (item.type === 'skill') {
           config.rollType = CoC7RollNormalize.ROLL_TYPE.SKILL
@@ -197,7 +219,7 @@ export default class CoC7RollNormalize {
       ui.notifications.error(game.i18n.format('CoC7.ErrorNotFound', { missing: game.i18n.localize('CoC7.Roll') }))
       return false
     }
-    if (![CoC7RollNormalize.CARD_TYPE.COMBINED, CoC7RollNormalize.CARD_TYPE.NORMAL, CoC7RollNormalize.CARD_TYPE.OPPOSED, CoC7RollNormalize.CARD_TYPE.SAN_CHECK].includes(config.cardType)) {
+    if (![CoC7RollNormalize.CARD_TYPE.COMBINED, CoC7RollNormalize.CARD_TYPE.NORMAL, CoC7RollNormalize.CARD_TYPE.OPPOSED, CoC7RollNormalize.CARD_TYPE.SAN_CHECK, CoC7RollNormalize.CARD_TYPE.KNOW_CHECK, CoC7RollNormalize.CARD_TYPE.IDEA_CHECK].includes(config.cardType)) {
       /* // FoundryVTT V12 */
       ui.notifications.error(game.i18n.format('CoC7.ErrorInvalidFormula', { value: game.i18n.localize('CoC7.ErrorInvalidCardType') }))
       return false
@@ -208,6 +230,12 @@ export default class CoC7RollNormalize {
       return false
     }
     config.poolModifier = Math.max(-CoC7DicePool.maxDicePenalty, Math.min(CoC7DicePool.maxDiceBonus, config.poolModifier))
+    config.poolModifierDefault = config.poolModifier
+    if (config.cardType === CoC7RollNormalize.CARD_TYPE.KNOW_CHECK) {
+      config.poolModifier = config.poolModifierKnow
+    } else if (config.cardType === CoC7RollNormalize.CARD_TYPE.IDEA_CHECK) {
+      config.poolModifier = config.poolModifierIdea
+    }
     return config
   }
 
@@ -323,6 +351,8 @@ export default class CoC7RollNormalize {
         }
         break
       case CoC7RollNormalize.CARD_TYPE.NORMAL:
+      case CoC7RollNormalize.CARD_TYPE.IDEA_CHECK:
+      case CoC7RollNormalize.CARD_TYPE.KNOW_CHECK:
         {
           const check = new CoC7Check()
           check.poolModifier = config.poolModifier
@@ -342,6 +372,7 @@ export default class CoC7RollNormalize {
           if (config.flavor) {
             check.flavor = config.flavor
           }
+          check.cardType = config.cardType
           switch (config.rollType) {
             case CoC7RollNormalize.ROLL_TYPE.SKILL:
               await check.rollSkill(config.key)

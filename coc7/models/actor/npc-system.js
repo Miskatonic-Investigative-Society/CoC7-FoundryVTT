@@ -44,6 +44,7 @@ export default class CoC7ModelsActorNPCSystem extends CoC7ModelsActorGlobalSyste
           })
         )
       }),
+      config: CoC7ModelsActorCharacterSystem.defineSchemaConfig(),
       infos: new fields.SchemaField({
         type: new fields.StringField({ initial: '' }),
         occupation: new fields.StringField({ initial: '' }),

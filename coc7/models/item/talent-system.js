@@ -1,4 +1,5 @@
 /* global foundry */
+import { TALENT_ADJUSTMENT_TYPES } from '../../constants.js'
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 
 export default class CoC7ModelsItemTalentSystem extends CoC7ModelsItemGlobalSystem {
@@ -26,7 +27,13 @@ export default class CoC7ModelsItemTalentSystem extends CoC7ModelsItemGlobalSyst
         basic: new fields.BooleanField({ label: 'CoC7.BasicTalent', initial: false }),
         insane: new fields.BooleanField({ label: 'CoC7.InsaneTalent', initial: false }),
         other: new fields.BooleanField({ label: 'CoC7.OtherTalent', initial: false })
-      })
+      }),
+      adjustments: new fields.ArrayField(
+        new fields.SchemaField({
+          type: new fields.StringField({ choices: TALENT_ADJUSTMENT_TYPES, initial: 'disableCombatPool' }),
+          config: new fields.JSONField({ })
+        })
+      )
     }
   }
 
