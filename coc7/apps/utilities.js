@@ -779,12 +779,14 @@ export default class CoC7Utilities {
       if (Object.keys(fallback).length > 0) {
         const anyItems = await CoC7Utilities.guessItems('skill', [...new Set(Object.values(fallback))], { source })
         for (const key in fallback) {
-          foundItems[key] = foundry.utils.duplicate(anyItems[fallback[key]])
-          if (foundItems[key].system.properties?.requiresname ?? false) {
-            foundItems[key].system.properties.requiresname = false
-          }
-          if (foundItems[key].system.properties?.picknameonly ?? false) {
-            foundItems[key].system.properties.picknameonly = false
+          if (typeof anyItems[fallback[key]] !== 'undefined') {
+            foundItems[key] = foundry.utils.duplicate(anyItems[fallback[key]])
+            if (foundItems[key].system.properties?.requiresname ?? false) {
+              foundItems[key].system.properties.requiresname = false
+            }
+            if (foundItems[key].system.properties?.picknameonly ?? false) {
+              foundItems[key].system.properties.picknameonly = false
+            }
           }
         }
       }
