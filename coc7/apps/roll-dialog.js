@@ -35,6 +35,11 @@ export default class CoC7RollDialog extends foundry.applications.api.DialogV2 {
         }
       ],
       hideDifficulty: options.hideDifficulty === true,
+      poolModifiers: {
+        default: options.poolModifierDefault,
+        idea: options.poolModifierIdea ?? 0,
+        know: options.poolModifierKnow ?? 0
+      },
       options: {
         cardType: options.cardType,
         difficulty: options.difficulty,
@@ -55,6 +60,21 @@ export default class CoC7RollDialog extends foundry.applications.api.DialogV2 {
       rejectClose: true,
       /* // FoundryVTT V12 */
       content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/apps/bonus.hbs', data),
+      render: (event, dialog) => {
+        dialog.element.querySelector('select[name=cardType]')?.addEventListener('change', (event) => {
+          const poolModifier = event.currentTarget.form.querySelector('input[name=poolModifier]')
+          switch (event.currentTarget.value) {
+            case CoC7RollNormalize.CARD_TYPE.IDEA_CHECK:
+              poolModifier.value = data.poolModifiers.idea
+              break
+            case CoC7RollNormalize.CARD_TYPE.KNOW_CHECK:
+              poolModifier.value = data.poolModifiers.know
+              break
+            default:
+              poolModifier.value = data.poolModifiers.default
+          }
+        })
+      },
       ok: {
         callback: (event, button, dialog) => {
           if (typeof button.form.elements.cardType !== 'undefined') {

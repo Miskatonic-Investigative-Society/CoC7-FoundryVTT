@@ -7,7 +7,7 @@ export default class CoC7ModelsActorCharacterSheetV3 extends CoC7ModelsActorChar
     classes: ['investigator'],
     position: {
       width: 980,
-      height: 811
+      height: 814
     },
     window: {
       resizable: true

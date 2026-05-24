@@ -234,6 +234,16 @@ export default class CoC7ModelsActorGlobalSystem extends foundry.abstract.TypeDa
   }
 
   /**
+   * Create Schema
+   * @returns {DataSchema}
+   */
+  static defineSchemaConfig () {
+    const fields = foundry.data.fields
+    return new fields.SchemaField({
+    })
+  }
+
+  /**
    * @inheritdoc
    */
   prepareBaseData () {
@@ -262,6 +272,14 @@ export default class CoC7ModelsActorGlobalSystem extends foundry.abstract.TypeDa
         if (maxValue) {
           this.attribs.mp.value = this.attribs.mp.max
         }
+      }
+      this.config.know = {
+        value: this.characteristics.edu.value,
+        bonusDice: this.characteristics.edu.bonusDice ?? 0
+      }
+      this.config.idea = {
+        value: this.characteristics.int.value,
+        bonusDice: this.characteristics.int.bonusDice ?? 0
       }
     }
   }
