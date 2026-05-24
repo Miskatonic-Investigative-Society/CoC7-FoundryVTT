@@ -11,6 +11,12 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+## Version 8.10
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
 - Add Active Effects to Talent Item
 - Add idea and know rolls to Investigator v3 sheet
 - Add optional Down Darker Trails Shooting with off-hand
