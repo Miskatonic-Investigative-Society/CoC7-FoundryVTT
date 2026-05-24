@@ -102,3 +102,13 @@ The available changes are :
     - system.skills.Fighting (Brawl).system.bonusDice
     - system.skills.i.skill.fighting-brawl.system.value
     - system.skills.i.skill.fighting-brawl.system.bonusDice
+  - All languages
+    - system.skills.i.skill.language-*.system.value
+    - system.skills.i.skill.language-*.system.bonusDice
+- Investigator values
+  - system.config.luckRecovery (added to end of luck recovery formula)
+  - system.config.naturalHealing (natural healing per day)
+  - system.config.idea.bonusDice
+  - system.config.idea.value
+  - system.config.know.bonusDice
+  - system.config.know.value
