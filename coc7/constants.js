@@ -1,4 +1,4 @@
-/* global CONFIG */
+/* global CONFIG game */
 export const FOLDER_ID = 'CoC7'
 
 export const ERAS = {
@@ -147,6 +147,9 @@ export const FIGHTING_NAMES = {
 
 export const DICE_POOL_REASONS = {
   outnumbered: {
+    active: true,
+    ifAttacker: false,
+    ifDefender: true,
     forBonus: true,
     forPenalty: false,
     forMelee: true,
@@ -155,6 +158,9 @@ export const DICE_POOL_REASONS = {
     tooltip: 'CoC7.TitleOutNumbered'
   },
   surprised: {
+    active: true,
+    ifAttacker: false,
+    ifDefender: true,
     forBonus: true,
     forPenalty: false,
     forMelee: true,
@@ -162,7 +168,32 @@ export const DICE_POOL_REASONS = {
     name: 'CoC7.combatCard.surprised',
     tooltip: 'CoC7.TitleSurprised'
   },
+  sizeBig: {
+    active: true,
+    ifAttacker: true,
+    ifDefender: false,
+    forBonus: true,
+    forPenalty: false,
+    forMelee: false,
+    forRanged: true,
+    name: 'CoC7.rangeCombatCard.BigTarget',
+    tooltip: 'CoC7.rangeCombatCard.BigTargetTooltip'
+  },
+  sizeSmall: {
+    active: true,
+    ifAttacker: true,
+    ifDefender: false,
+    forBonus: false,
+    forPenalty: true,
+    forMelee: false,
+    forRanged: true,
+    name: 'CoC7.combatCard.SmallTarget',
+    tooltip: 'CoC7.combatCard.SmallTargetTooltip'
+  },
   cover: {
+    active: true,
+    ifAttacker: false,
+    ifDefender: false,
     forBonus: false,
     forPenalty: true,
     forMelee: false,
@@ -171,6 +202,9 @@ export const DICE_POOL_REASONS = {
     tooltip: 'CoC7.rangeCombatCard.CoverTitle'
   },
   surprisedRanged: {
+    active: true,
+    ifAttacker: false,
+    ifDefender: true,
     forBonus: true,
     forPenalty: false,
     forMelee: false,
@@ -179,6 +213,9 @@ export const DICE_POOL_REASONS = {
     tooltip: 'CoC7.rangeCombatCard.SurprisedTargetTitle'
   },
   pointBlankRange: {
+    active: true,
+    ifAttacker: false,
+    ifDefender: false,
     forBonus: true,
     forPenalty: false,
     forMelee: false,
@@ -187,6 +224,9 @@ export const DICE_POOL_REASONS = {
     tooltip: 'CoC7.rangeCombatCard.PointBlankRangeTitle'
   },
   inMelee: {
+    active: true,
+    ifAttacker: true,
+    ifDefender: false,
     forBonus: false,
     forPenalty: true,
     forMelee: false,
@@ -195,12 +235,37 @@ export const DICE_POOL_REASONS = {
     tooltip: 'CoC7.rangeCombatCard.InMeleeTitle'
   },
   fast: {
+    active: true,
+    ifAttacker: false,
+    ifDefender: false,
     forBonus: false,
     forPenalty: true,
     forMelee: false,
     forRanged: true,
     name: 'CoC7.rangeCombatCard.FastMovingTarget',
     tooltip: 'CoC7.rangeCombatCard.FastMovingTargetTitle'
+  },
+  shootWithOffhand: {
+    active: () => game.settings.get(FOLDER_ID, 'ddtRuleShootingWithOffHand'),
+    ifAttacker: true,
+    ifDefender: false,
+    forBonus: false,
+    forPenalty: true,
+    forMelee: false,
+    forRanged: true,
+    name: 'CoC7.rangeCombatCard.ShootingWithOffHand',
+    tooltip: 'CoC7.Settings.DDTRules.ShootingWithOffHand.Hint'
+  },
+  reloading: {
+    active: true,
+    ifAttacker: true,
+    ifDefender: false,
+    forBonus: false,
+    forPenalty: true,
+    forMelee: false,
+    forRanged: true,
+    name: 'CoC7.rangeCombatCard.ReloadingFirearm',
+    tooltip: 'CoC7.rangeCombatCard.ReloadingFirearmTooltip'
   }
 }
 
@@ -269,5 +334,11 @@ export const SPELL_COST_TYPE_KEYS = {
   triggerPrompt: {
     name: 'CoC7.Spell.Cost.TriggerPrompt',
     group: 'CoC7.Spell.Group.Prompt'
+  }
+}
+
+export const TALENT_ADJUSTMENT_TYPES = {
+  disableCombatPool: {
+    name: 'CoC7.Talent.Type.DisableCombatPool'
   }
 }

@@ -1,4 +1,4 @@
-# System documentation for version 8.8
+# System documentation for version 8.10
 
 This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
 
@@ -18,9 +18,12 @@ This documentation can be reopened under [fa-solid fa-cogs]Game Settings -> Help
 
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
 
-- [Spells](item_spell.md) can once again automatically deduct costs from the caster. The old costs will be available, if the updater can not convert it, in the Keeper tab. The new system allows for more interactive casting an example can be found in the Items Examples compendium @UUID[Compendium.CoC7.items.Item.4Rrff1sAoWh7NFkL]{Test Spell}
+- [Active effects](effects.md) - Add Luck Recovery formula, Natural Healing value, Know roll bonus dice/value, Idea roll bonus dice/value, and Wildcard bonus dice/value based on CoC ID adjustments
+- Added Idea and Know roll buttons to Investigator Sheet v3
+- Add Active Effects to Talent Items
 
-### Changes in version 8.1 -  8.7
+### Changes in version 8.1 -  8.9
+- [Spells](item_spell.md) can once again automatically deduct costs from the caster. The old costs will be available, if the updater can not convert it, in the Keeper tab. The new system allows for more interactive casting an example can be found in the Items Examples compendium @UUID[Compendium.CoC7.items.Item.4Rrff1sAoWh7NFkL]{Test Spell}
 - Allow reordering of Characteristics in house rules settings
 - Move to FoundryVTT implementations of dataModels, AppV2, and Tooltips
 - Trigger Actor Picker if User interacting with chat message owns multiple Actors

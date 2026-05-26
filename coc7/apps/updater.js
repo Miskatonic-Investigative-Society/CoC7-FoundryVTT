@@ -1,4 +1,4 @@
-/* global ChatMessage CONFIG foundry fromUuid game Roll ui */
+/* global ChatMessage CONFIG CONST foundry fromUuid game Roll ui */
 // cSpell:words Uniki Unik
 import { FOLDER_ID } from '../constants.js'
 import CoC7ChatChaseObstacle from './chat-chase-obstacle.js'
@@ -29,11 +29,11 @@ export default class CoC7Updater {
     const updatedModules = game.settings.get(FOLDER_ID, 'systemUpdatedModuleVersion') || {}
     const currentModules = {}
     const knownModuleVersions = {
-      'call-of-cthulhu-foundryvtt-investigator-wizard': '1.0.5', // cspell:disable-line
-      'cha-coc-fvtt-en-keeperitems': '1.3.5', // cspell:disable-line
-      'cha-coc-fvtt-en-notimetoscream': '1.0.7', // cspell:disable-line
-      'cha-coc-fvtt-en-quickstart': '5.0.5', // cspell:disable-line
-      'cha-coc-fvtt-en-starterset': '5.0.5' // cspell:disable-line
+      'call-of-cthulhu-foundryvtt-investigator-wizard': '1.1.0', // cspell:disable-line
+      'cha-coc-fvtt-en-keeperitems': '1.4.0', // cspell:disable-line
+      'cha-coc-fvtt-en-notimetoscream': '1.1.0', // cspell:disable-line
+      'cha-coc-fvtt-en-quickstart': '5.1.0', // cspell:disable-line
+      'cha-coc-fvtt-en-starterset': '5.1.0' // cspell:disable-line
     }
     for (const pack of game.packs) {
       if (![FOLDER_ID, 'world'].includes(pack.metadata.packageName) && ['Actor', 'Item', 'Scene'].includes(pack.metadata.type)) {
@@ -221,7 +221,9 @@ export default class CoC7Updater {
   static mergeEmbeddedDocuments (document, documentUpdates, type, packId, parentUuid, newData) {
     const existing = documentUpdates.findIndex(r => r.type === type && r.packId === packId && r.parentUuid === parentUuid)
     for (const key in newData) {
-      foundry.utils.setProperty(document, key, newData[key])
+      if (!['effects'].includes(key)) {
+        foundry.utils.setProperty(document, key, newData[key])
+      }
     }
     newData._id = document._id
     if (existing === -1) {
@@ -275,6 +277,7 @@ export default class CoC7Updater {
     CoC7Updater._migrateItemSkillName({ document, documentUpdates, packId, parentUuid })
     CoC7Updater._migrateItemChases({ document, documentUpdates, packId, parentUuid })
     CoC7Updater._migrateItemSpells({ document, documentUpdates, packId, parentUuid })
+    CoC7Updater._migrateItemQuickHealer({ document, documentUpdates, packId, parentUuid })
 
     for (const offset in document.effects?.contents ?? []) {
       const image = String(document.effects.contents[offset].img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
@@ -700,6 +703,53 @@ export default class CoC7Updater {
             })
           }
         }
+      }
+    }
+  }
+
+  /**
+   * Migrate Item Embedded Documents
+   * @param {object} options
+   * @param {object} options.document
+   * @param {object} options.documentUpdates
+   * @param {string} options.packId
+   * @param {string} options.parentUuid
+   */
+  static _migrateItemQuickHealer ({ document, documentUpdates, packId = '', parentUuid = '' } = {}) {
+    if (document.type === 'talent') {
+      if (document.name === game.i18n.localize('CoC7.quickHealer') && document.effects.size === 0) {
+        const effects = []
+        if (game.release.generation < 14) {
+          effects.push({
+            name: game.i18n.localize('CoC7.quickHealer'),
+            img: 'icons/svg/aura.svg',
+            changes: [
+              {
+                key: 'system.config.naturalHealing',
+                mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+                value: 1
+              }
+            ]
+          })
+        } else {
+          effects.push({
+            name: game.i18n.localize('CoC7.quickHealer'),
+            img: 'icons/svg/aura.svg',
+            system: {
+              changes: [
+                {
+                  key: 'system.config.naturalHealing',
+                  type: 'add',
+                  value: 1
+                }
+              ]
+            }
+          })
+        }
+        console.log(effects)
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
+          effects
+        })
       }
     }
   }
