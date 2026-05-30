@@ -1850,5 +1850,24 @@
 "CoC7.Spell.Legacy.Hint": "Använd kostnaderna på detaljfliken som stöder de mer interaktiva kostnaderna som många trollformler kräver och som kan tas bort automatiskt från en aktör.",
 "CoC7.Spell.Legacy.Label": "Gamla trollformelkostnader",
 "CoC7.SpellCosts": "Trollformelkostnader",
-"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Spelare"
+"TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Spelare",
+
+"CoC7.ActorConfig.NaturalHealing": "Naturlig läkning per dag",
+"CoC7.CheckRollResult": "{name} ({value}%) - {difficulty} svårighetsgrad",
+"CoC7.Idea": "Idé",
+"CoC7.IdeaCheck": "Idéslag",
+"CoC7.Know": "Kunskap",
+"CoC7.KnowCheck": "Kunskapsslag",
+"CoC7.ManualTalents": "Manuella talanger",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Hint": "Att skjuta med fel hand ger en straff-tärning.",
+"CoC7.Settings.DDTRules.ShootingWithOffHand.Name": "Skjuta med fel hand",
+"CoC7.TalentsAttacker": "Talanger för angripare",
+"CoC7.TalentsTarget": "Talanger för måltavlor",
+"CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Vänsterklick</strong> slå slag med alternativ</li><li><strong>Shift + Vänsterklick</strong> Omedelbart slag med normal svårighetsgrad</li></ul>",
+"CoC7.combatCard.SmallTargetTooltip": "1 strafftärning. Måltavlan är storlek -2 eller mindre",
+"CoC7.rangeCombatCard.BigTargetTooltip": "1 bonustärning. Måltavlan är storlek 4 eller större",
+"CoC7.rangeCombatCard.ReloadingFirearm": "Laddar om ett skott",
+"CoC7.rangeCombatCard.ReloadingFirearmTooltip": "1 strafftärning. Laddar om ett skott och avfyrar inom samma omgång",
+"CoC7.rangeCombatCard.ShootingWithOffHand": "Fel hand",
+"SETTINGS.DownDarkerTrailsRules": "Down Darker Trails-regler"
 }
