@@ -11,6 +11,19 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+## Version 8.11
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Fix combat rolls silently failing if no target is selected
+- Fix mouse cursor not showing pointer on CCI with more than one region
+- Update to Simplified Chinese localization, thanks to @LiangHao-cloud #2095
+- Update to Taiwanese localization, thanks to @zeteticl #2097
+- Update to Japanese localization, thanks to @doumoku #2098
+- Update to Swedish localization, thanks to @Rangertheman #2099
+
 ## Version 8.10
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

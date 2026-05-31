@@ -9,6 +9,8 @@ Clickable Events extends this to allow mouse interactions to run macros, Chaosiu
 
 You can get the UUID for Drawing, Lights, Map Notes, Scene Regions, and Tiles by clicking the [fa-solid fa-passport]Copy Document UUID button in the header.
 
+If you are using FoundryVTT v14 the [fa-solid fa-puzzle-piece]Placeables tab allows you to Drag and Drop the Drawings, Map Notes, Scene Regions, and Tiles instead of getting the UUID
+
 If you are using FoundryVTT v13 you can drag Scene Regions and Region Behaviors onto the [fa-solid fa-child-reaching]Behaviors tab to duplicate them into your new Scene Region
 
 ## CCI: Drawing Toggle
@@ -73,6 +75,18 @@ This is designed to play/stop a sound or playlist
 - **Action** - Define if clicking on this region will play or stop the playback
 - **Select Playlist** - Enter the UUID of the Playlist and then press the Add Document button or Drag it here
 - **Select Playlist Sound** - Enter the UUID as per Select Playlist or Drag it here
+
+## CCI: Player
+Drag and Drop Investigators to populate image, name, and occupation for quick access to the sheet
+
+- **Mouse Button** - Should this clear on Left or Right mouse buttons
+- **Investigator Image Tile** - Which tile contains the image
+- **Placeholder image** - When player is cleared show this image
+- **Investigator Name Drawing** - Which drawing contains the Actor name
+- **Placeholder text** - When player is cleared show this Actor name
+- **Investigator Occupation Drawing** - Which drawing contains the occupation name
+- **Placeholder text** - When player is cleared show this occupation name
+- **Other Player Region** - Region on other scenes to replicate Drag and Drop or clear actions
 
 ## CCI: Tile Toggle
 This is designed to be used with CCI Open Document (above) to show and hide a Tile, which has an CCI: Open Document Scene Region. It requires two regions, one to show and the other to hide. This can only be triggered by the GM (Keeper).
