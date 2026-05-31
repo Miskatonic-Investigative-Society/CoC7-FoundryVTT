@@ -231,6 +231,25 @@ body.theme-dark .coc7-adventure-entry.sheet .editor-content.ProseMirror,
     .coc7-title-image {
       position: relative;
 
+      & + .click-to-expand {
+        opacity: 0;
+        text-align: center;
+        margin: 0;
+        height: 0;
+        transform: translateY(-2.1rem);
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+
+        color: white;
+        font-weight: 700;
+        font-size: 1.3rem;
+        text-shadow: 0 1px 3px black, 0 0 6px black;
+      }
+
+      &:hover + .click-to-expand {
+        opacity: 1;
+      }
+
       img {
         max-width: none;
         width: calc(100% + 16px + 8px + 1px);
