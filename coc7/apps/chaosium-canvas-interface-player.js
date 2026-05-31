@@ -89,7 +89,7 @@ export default class ChaosiumCanvasInterfacePlayer extends ChaosiumCanvasInterfa
    * Handle click event
    */
   async #handleClickEvent () {
-    await ChaosiumCanvasInterfacePlayer.setupPlayer(this.parent, { img: this.imagePlaceholder, name: this.namePlaceholder, occupation: this.occupationPlaceholder, uuid: '' })
+    await ChaosiumCanvasInterfacePlayer.setupPlayer(this.parent, { img: false, name: false, occupation: false, uuid: false })
   }
 
   /**
@@ -114,47 +114,56 @@ export default class ChaosiumCanvasInterfacePlayer extends ChaosiumCanvasInterfa
    * Setup or clear the player
    * @param {RegionBehavior} behavior
    * @param {object} options
-   * @param {string} options.img
-   * @param {string} options.name
-   * @param {string} options.occupation
-   * @param {string} options.uuid
+   * @param {string|false} options.img
+   * @param {string|false} options.name
+   * @param {string|false} options.occupation
+   * @param {string|false} options.uuid
    */
-  static async setupPlayer (behavior, { img = '', name = '', occupation = '', uuid = '' }={}) {
+  static async setupPlayer (behavior, { img = false, name = false, occupation = false, uuid = false }={}) {
     const scenes = {}
-    for (const uuid of behavior.system.imageTiles) {
-      const parts = foundry.utils.parseUuid(uuid)
-      if (parts.primaryType === 'Scene') {
-        if (typeof scenes[parts.primaryId]?.[parts.type] === 'undefined') {
-          foundry.utils.setProperty(scenes, parts.primaryId + '.' + parts.type, [])
-        }
-        scenes[parts.primaryId][parts.type].push({
-          _id: parts.id,
-          'texture.src': img
-        })
+    const behaviors = [behavior]
+    for (const regionUuid of behavior.system.otherRegions) {
+      const region = await fromUuid(regionUuid)
+      if (region) {
+        behaviors.push(...region.behaviors.filter(doc => doc.type === 'ChaosiumCanvasInterfacePlayer'))
       }
     }
-    for (const uuid of behavior.system.nameDrawings) {
-      const parts = foundry.utils.parseUuid(uuid)
-      if (parts.primaryType === 'Scene') {
-        if (typeof scenes[parts.primaryId]?.[parts.type] === 'undefined') {
-          foundry.utils.setProperty(scenes, parts.primaryId + '.' + parts.type, [])
+    for (const behavior of behaviors) {
+      for (const uuid of behavior.system.imageTiles) {
+        const parts = foundry.utils.parseUuid(uuid)
+        if (parts.primaryType === 'Scene') {
+          if (typeof scenes[parts.primaryId]?.[parts.type] === 'undefined') {
+            foundry.utils.setProperty(scenes, parts.primaryId + '.' + parts.type, [])
+          }
+          scenes[parts.primaryId][parts.type].push({
+            _id: parts.id,
+            'texture.src': (img === false ? behavior.system.imagePlaceholder : img)
+          })
         }
-        scenes[parts.primaryId][parts.type].push({
-          _id: parts.id,
-          'text': name
-        })
       }
-    }
-    for (const uuid of behavior.system.occupationDrawings) {
-      const parts = foundry.utils.parseUuid(uuid)
-      if (parts.primaryType === 'Scene') {
-        if (typeof scenes[parts.primaryId]?.[parts.type] === 'undefined') {
-          foundry.utils.setProperty(scenes, parts.primaryId + '.' + parts.type, [])
+      for (const uuid of behavior.system.nameDrawings) {
+        const parts = foundry.utils.parseUuid(uuid)
+        if (parts.primaryType === 'Scene') {
+          if (typeof scenes[parts.primaryId]?.[parts.type] === 'undefined') {
+            foundry.utils.setProperty(scenes, parts.primaryId + '.' + parts.type, [])
+          }
+          scenes[parts.primaryId][parts.type].push({
+            _id: parts.id,
+            'text': (name === false ? behavior.system.namePlaceholder : name)
+          })
         }
-        scenes[parts.primaryId][parts.type].push({
-          _id: parts.id,
-          'text': occupation
-        })
+      }
+      for (const uuid of behavior.system.occupationDrawings) {
+        const parts = foundry.utils.parseUuid(uuid)
+        if (parts.primaryType === 'Scene') {
+          if (typeof scenes[parts.primaryId]?.[parts.type] === 'undefined') {
+            foundry.utils.setProperty(scenes, parts.primaryId + '.' + parts.type, [])
+          }
+          scenes[parts.primaryId][parts.type].push({
+            _id: parts.id,
+            'text': (occupation === false ? behavior.system.occupationPlaceholder : occupation)
+          })
+        }
       }
     }
     for (const sceneId in scenes) {
@@ -165,31 +174,27 @@ export default class ChaosiumCanvasInterfacePlayer extends ChaosiumCanvasInterfa
         await CONFIG[type].documentClass.updateDocuments(scenes[sceneId][type], options)
       }
     }
-    const regions = [behavior.parent.uuid, ...behavior.system.otherRegions]
-    for (const regionUuid of regions) {
-      const region = await fromUuid(regionUuid)
-      if (region) {
-        if (uuid === '') {
-          const openDocument = region.behaviors.find(doc => doc.type === 'ChaosiumCanvasInterfaceOpenDocument')
-          if (openDocument) {
-            await openDocument.delete()
-          }
-        } else {
-          const behaviors = foundry.utils.duplicate(region.behaviors)
-          const index = behaviors.findIndex(doc => doc.type === 'ChaosiumCanvasInterfaceOpenDocument')
-          if (index === -1) {
-            behaviors.push({
-              name: game.i18n.localize('TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument'),
-              type: 'ChaosiumCanvasInterfaceOpenDocument',
-              system: {
-                documentUuid: uuid
-              }
-            })
-          } else {
-            behaviors[index].system.documentUuid = uuid
-          }
-          await region.update({ behaviors })
+    for (const behavior of behaviors) {
+      if (uuid === false) {
+        const openDocument = behavior.parent.behaviors.find(doc => doc.type === 'ChaosiumCanvasInterfaceOpenDocument')
+        if (openDocument) {
+          await openDocument.delete()
         }
+      } else {
+        const behaviors = foundry.utils.duplicate(behavior.parent.behaviors)
+        const index = behaviors.findIndex(doc => doc.type === 'ChaosiumCanvasInterfaceOpenDocument')
+        if (index === -1) {
+          behaviors.push({
+            name: game.i18n.localize('TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument'),
+            type: 'ChaosiumCanvasInterfaceOpenDocument',
+            system: {
+              documentUuid: uuid
+            }
+          })
+        } else {
+          behaviors[index].system.documentUuid = uuid
+        }
+        await behavior.parent.update({ behaviors })
       }
     }
   }
