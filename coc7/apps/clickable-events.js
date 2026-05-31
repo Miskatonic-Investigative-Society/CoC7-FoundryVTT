@@ -152,14 +152,16 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
             const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
             const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
             if (behaviors) {
-              setPointer = await behaviors.reduce(async (c, b) => {
-                const r = await b.system._handleMouseOverEvent()
-                if (r !== false && r !== true) {
-                  console.error(b.uuid + ' did not return a boolean')
+              setPointer = (await Promise.all(behaviors.map(async (doc) => {
+                const r = await doc.system._handleMouseOverEvent()
+                if (r === true) {
+                  return true
                 }
-                c = c || r
-                return c
-              }, false)
+                if (r !== false) {
+                  console.error(doc.uuid + ' did not return a boolean')
+                }
+                return false
+              }))).reduce((c, b) => c || b, setPointer)
             }
           }
         }
