@@ -2,23 +2,23 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cs.json (467 untranslated strings)](#csjson)
+[cs.json (492 untranslated strings)](#csjson)
 
-[de.json (425 untranslated strings)](#dejson)
+[de.json (450 untranslated strings)](#dejson)
 
-[es.json (426 untranslated strings)](#esjson)
+[es.json (451 untranslated strings)](#esjson)
 
-[it.json (503 untranslated strings)](#itjson)
+[it.json (528 untranslated strings)](#itjson)
 
-[pt-BR.json (657 untranslated strings)](#pt-brjson)
+[pt-BR.json (682 untranslated strings)](#pt-brjson)
 
-[ru.json (573 untranslated strings)](#rujson)
+[ru.json (598 untranslated strings)](#rujson)
 
-[uk.json (468 untranslated strings)](#ukjson)
+[uk.json (493 untranslated strings)](#ukjson)
 
 
 ## cs.json
-467 untranslated strings
+492 untranslated strings
 ```
 "CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
 "CoC7.AddedEmbeddedItems": "Added {names}",
@@ -338,6 +338,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Know": "Know",
 "CoC7.KnowCheck": "Know Roll",
 "CoC7.LocationPing": "Ping Location",
+"CoC7.LuckReduceLossRatio": "Spend {luck} luck to reduce {name} by {loss}",
 "CoC7.ManualTalents": "Manual Talents",
 "CoC7.MapNoteNoBackground": "Hide Background",
 "CoC7.MessageCast": "To Chat",
@@ -348,6 +349,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.NewArmorName": "new armor",
 "CoC7.NoTarget": "Target Dummy",
 "CoC7.NoTargetTitle": "Do you want to proceed without a target?",
+"CoC7.NotEnoughLuck": "You do not have enough luck",
 "CoC7.ParticipantAttacker": "Attacker",
 "CoC7.ParticipantDefender": "Defender",
 "CoC7.ParticipantNone": "Attacker or Defender",
@@ -399,6 +401,21 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
 "CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Hint": "",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Name": "Avoid Certain Death",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Hint": "",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Name": "Half Sanity Loss",
+"CoC7.Settings.PulpRules.LuckHeal.Hint": "",
+"CoC7.Settings.PulpRules.LuckHeal.Name": "It's Only a Scratch!",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Hint": "",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Name": "Look Out Master!",
+"CoC7.Settings.PulpRules.LuckMalfunction.Hint": "",
+"CoC7.Settings.PulpRules.LuckMalfunction.Name": "Ignore Weapon Fumble or Malfunction Consequences",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Hint": "",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Name": "Second Attack",
+"CoC7.Settings.PulpRules.LuckSpent.Title": "Using Luck",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Hint": "",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Name": "Avoid Unconsciousness",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
 "CoC7.SheetExperiencePackageName": "Experience",
@@ -456,6 +473,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
 "CoC7.ToolTipSeeNotes": "See notes",
 "CoC7.ToolTipShort": "<label>{skill} {regular}% ({hard}/{extreme})</label>",
+"CoC7.UseLuck": "Use Luck",
+"CoC7.UseLuckForAvoidDeath": "Spend {luck} luck to avoid death",
+"CoC7.UseLuckForAvoidUnconsciousness": "Spend {luck} luck to avoid unconsciousness for one round",
+"CoC7.UseLuckForHeal": "Spend 20 luck to recover 1D6 hit points",
+"CoC7.UseLuckForLookOutMaster": "Spend all luck FOR Look Out Master!",
+"CoC7.UseLuckForReduceLoss": "Spend luck to reduce {name}",
+"CoC7.UseLuckForSecondAttack": "Spend 10 luck for a second attack",
+"CoC7.UseLuckForWeaponFailure": "Spend 10 luck to avoid negative consequences",
 "CoC7.WhatCopiedClipboard": ""{what}" copied to clipboard.",
 "CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
 "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
@@ -489,7 +514,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## de.json
-425 untranslated strings
+450 untranslated strings
 ```
 "CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
 "CoC7.AddedEmbeddedItems": "Added {names}",
@@ -786,6 +811,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Know": "Know",
 "CoC7.KnowCheck": "Know Roll",
 "CoC7.LocationPing": "Ping Location",
+"CoC7.LuckReduceLossRatio": "Spend {luck} luck to reduce {name} by {loss}",
 "CoC7.ManualTalents": "Manual Talents",
 "CoC7.MapNoteNoBackground": "Hide Background",
 "CoC7.MessageCast": "To Chat",
@@ -796,6 +822,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.NewArmorName": "new armor",
 "CoC7.NoTarget": "Target Dummy",
 "CoC7.NoTargetTitle": "Do you want to proceed without a target?",
+"CoC7.NotEnoughLuck": "You do not have enough luck",
 "CoC7.ParticipantAttacker": "Attacker",
 "CoC7.ParticipantDefender": "Defender",
 "CoC7.ParticipantNone": "Attacker or Defender",
@@ -843,6 +870,21 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
 "CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Hint": "",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Name": "Avoid Certain Death",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Hint": "",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Name": "Half Sanity Loss",
+"CoC7.Settings.PulpRules.LuckHeal.Hint": "",
+"CoC7.Settings.PulpRules.LuckHeal.Name": "It's Only a Scratch!",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Hint": "",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Name": "Look Out Master!",
+"CoC7.Settings.PulpRules.LuckMalfunction.Hint": "",
+"CoC7.Settings.PulpRules.LuckMalfunction.Name": "Ignore Weapon Fumble or Malfunction Consequences",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Hint": "",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Name": "Second Attack",
+"CoC7.Settings.PulpRules.LuckSpent.Title": "Using Luck",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Hint": "",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Name": "Avoid Unconsciousness",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
 "CoC7.SkillHintFighting": "Ctrl + Click to not default specialization name",
@@ -896,6 +938,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TalentsTarget": "Target Talents",
 "CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
 "CoC7.ToolTipShort": "<label>{skill} {regular}% ({hard}/{extreme})</label>",
+"CoC7.UseLuck": "Use Luck",
+"CoC7.UseLuckForAvoidDeath": "Spend {luck} luck to avoid death",
+"CoC7.UseLuckForAvoidUnconsciousness": "Spend {luck} luck to avoid unconsciousness for one round",
+"CoC7.UseLuckForHeal": "Spend 20 luck to recover 1D6 hit points",
+"CoC7.UseLuckForLookOutMaster": "Spend all luck FOR Look Out Master!",
+"CoC7.UseLuckForReduceLoss": "Spend luck to reduce {name}",
+"CoC7.UseLuckForSecondAttack": "Spend 10 luck for a second attack",
+"CoC7.UseLuckForWeaponFailure": "Spend 10 luck to avoid negative consequences",
 "CoC7.WhatCopiedClipboard": ""{what}" copied to clipboard.",
 "CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
 "CoC7.rangeCombatCard.BaseRangeShort": "Base",
@@ -918,7 +968,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## es.json
-426 untranslated strings
+451 untranslated strings
 ```
 "CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
 "CoC7.AddedEmbeddedItems": "Added {names}",
@@ -1215,6 +1265,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Know": "Know",
 "CoC7.KnowCheck": "Know Roll",
 "CoC7.LocationPing": "Ping Location",
+"CoC7.LuckReduceLossRatio": "Spend {luck} luck to reduce {name} by {loss}",
 "CoC7.ManualTalents": "Manual Talents",
 "CoC7.MapNoteNoBackground": "Hide Background",
 "CoC7.MessageCast": "To Chat",
@@ -1225,6 +1276,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.NewArmorName": "new armor",
 "CoC7.NoTarget": "Target Dummy",
 "CoC7.NoTargetTitle": "Do you want to proceed without a target?",
+"CoC7.NotEnoughLuck": "You do not have enough luck",
 "CoC7.ParticipantAttacker": "Attacker",
 "CoC7.ParticipantDefender": "Defender",
 "CoC7.ParticipantNone": "Attacker or Defender",
@@ -1272,6 +1324,21 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
 "CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Hint": "",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Name": "Avoid Certain Death",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Hint": "",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Name": "Half Sanity Loss",
+"CoC7.Settings.PulpRules.LuckHeal.Hint": "",
+"CoC7.Settings.PulpRules.LuckHeal.Name": "It's Only a Scratch!",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Hint": "",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Name": "Look Out Master!",
+"CoC7.Settings.PulpRules.LuckMalfunction.Hint": "",
+"CoC7.Settings.PulpRules.LuckMalfunction.Name": "Ignore Weapon Fumble or Malfunction Consequences",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Hint": "",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Name": "Second Attack",
+"CoC7.Settings.PulpRules.LuckSpent.Title": "Using Luck",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Hint": "",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Name": "Avoid Unconsciousness",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
 "CoC7.SkillHintFighting": "Ctrl + Click to not default specialization name",
@@ -1326,6 +1393,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
 "CoC7.ToolTipSeeNotes": "See notes",
 "CoC7.ToolTipShort": "<label>{skill} {regular}% ({hard}/{extreme})</label>",
+"CoC7.UseLuck": "Use Luck",
+"CoC7.UseLuckForAvoidDeath": "Spend {luck} luck to avoid death",
+"CoC7.UseLuckForAvoidUnconsciousness": "Spend {luck} luck to avoid unconsciousness for one round",
+"CoC7.UseLuckForHeal": "Spend 20 luck to recover 1D6 hit points",
+"CoC7.UseLuckForLookOutMaster": "Spend all luck FOR Look Out Master!",
+"CoC7.UseLuckForReduceLoss": "Spend luck to reduce {name}",
+"CoC7.UseLuckForSecondAttack": "Spend 10 luck for a second attack",
+"CoC7.UseLuckForWeaponFailure": "Spend 10 luck to avoid negative consequences",
 "CoC7.WhatCopiedClipboard": ""{what}" copied to clipboard.",
 "CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
 "CoC7.rangeCombatCard.BaseRangeShort": "Base",
@@ -1348,7 +1423,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfaceToScene": "CCI: To Scene"
 ```
 ## it.json
-503 untranslated strings
+528 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -1690,6 +1765,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.KnowCheck": "Know Roll",
 "CoC7.Lck": "Lck",
 "CoC7.LocationPing": "Ping Location",
+"CoC7.LuckReduceLossRatio": "Spend {luck} luck to reduce {name} by {loss}",
 "CoC7.ManualTalents": "Manual Talents",
 "CoC7.MapNoteNoBackground": "Hide Background",
 "CoC7.MessageCast": "To Chat",
@@ -1700,6 +1776,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.NewArmorName": "new armor",
 "CoC7.NoTarget": "Target Dummy",
 "CoC7.NoTargetTitle": "Do you want to proceed without a target?",
+"CoC7.NotEnoughLuck": "You do not have enough luck",
 "CoC7.ParticipantAttacker": "Attacker",
 "CoC7.ParticipantDefender": "Defender",
 "CoC7.ParticipantNone": "Attacker or Defender",
@@ -1756,6 +1833,21 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
 "CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Hint": "",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Name": "Avoid Certain Death",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Hint": "",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Name": "Half Sanity Loss",
+"CoC7.Settings.PulpRules.LuckHeal.Hint": "",
+"CoC7.Settings.PulpRules.LuckHeal.Name": "It's Only a Scratch!",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Hint": "",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Name": "Look Out Master!",
+"CoC7.Settings.PulpRules.LuckMalfunction.Hint": "",
+"CoC7.Settings.PulpRules.LuckMalfunction.Name": "Ignore Weapon Fumble or Malfunction Consequences",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Hint": "",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Name": "Second Attack",
+"CoC7.Settings.PulpRules.LuckSpent.Title": "Using Luck",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Hint": "",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Name": "Avoid Unconsciousness",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
 "CoC7.Settings.ShowWorldEra.Hint": "",
@@ -1815,6 +1907,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
 "CoC7.ToolTipSeeNotes": "See notes",
 "CoC7.ToolTipShort": "<label>{skill} {regular}% ({hard}/{extreme})</label>",
+"CoC7.UseLuck": "Use Luck",
+"CoC7.UseLuckForAvoidDeath": "Spend {luck} luck to avoid death",
+"CoC7.UseLuckForAvoidUnconsciousness": "Spend {luck} luck to avoid unconsciousness for one round",
+"CoC7.UseLuckForHeal": "Spend 20 luck to recover 1D6 hit points",
+"CoC7.UseLuckForLookOutMaster": "Spend all luck FOR Look Out Master!",
+"CoC7.UseLuckForReduceLoss": "Spend luck to reduce {name}",
+"CoC7.UseLuckForSecondAttack": "Spend 10 luck for a second attack",
+"CoC7.UseLuckForWeaponFailure": "Spend 10 luck to avoid negative consequences",
 "CoC7.WhatCopiedClipboard": ""{what}" copied to clipboard.",
 "CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
 "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",
@@ -1855,7 +1955,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-657 untranslated strings
+682 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -2283,6 +2383,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.LinkCheckModifPushing": "{name} check - pushing({modifier})",
 "CoC7.LinkCheckPushing": "{name} check - pushing",
 "CoC7.LocationPing": "Ping Location",
+"CoC7.LuckReduceLossRatio": "Spend {luck} luck to reduce {name} by {loss}",
 "CoC7.ManualTalents": "Manual Talents",
 "CoC7.MapNoteNoBackground": "Hide Background",
 "CoC7.MessageCast": "To Chat",
@@ -2328,6 +2429,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.NewArmorName": "new armor",
 "CoC7.NoTarget": "Target Dummy",
 "CoC7.NoTargetTitle": "Do you want to proceed without a target?",
+"CoC7.NotEnoughLuck": "You do not have enough luck",
 "CoC7.ParticipantAttacker": "Attacker",
 "CoC7.ParticipantDefender": "Defender",
 "CoC7.ParticipantNone": "Attacker or Defender",
@@ -2390,6 +2492,21 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
 "CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Hint": "",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Name": "Avoid Certain Death",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Hint": "",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Name": "Half Sanity Loss",
+"CoC7.Settings.PulpRules.LuckHeal.Hint": "",
+"CoC7.Settings.PulpRules.LuckHeal.Name": "It's Only a Scratch!",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Hint": "",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Name": "Look Out Master!",
+"CoC7.Settings.PulpRules.LuckMalfunction.Hint": "",
+"CoC7.Settings.PulpRules.LuckMalfunction.Name": "Ignore Weapon Fumble or Malfunction Consequences",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Hint": "",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Name": "Second Attack",
+"CoC7.Settings.PulpRules.LuckSpent.Title": "Using Luck",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Hint": "",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Name": "Avoid Unconsciousness",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
 "CoC7.Settings.ShowWorldEra.Hint": "",
@@ -2467,6 +2584,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ToolTipSeeNotes": "See notes",
 "CoC7.ToolTipShort": "<label>{skill} {regular}% ({hard}/{extreme})</label>",
 "CoC7.Unavailable": "Unavailable",
+"CoC7.UseLuck": "Use Luck",
+"CoC7.UseLuckForAvoidDeath": "Spend {luck} luck to avoid death",
+"CoC7.UseLuckForAvoidUnconsciousness": "Spend {luck} luck to avoid unconsciousness for one round",
+"CoC7.UseLuckForHeal": "Spend 20 luck to recover 1D6 hit points",
+"CoC7.UseLuckForLookOutMaster": "Spend all luck FOR Look Out Master!",
+"CoC7.UseLuckForReduceLoss": "Spend luck to reduce {name}",
+"CoC7.UseLuckForSecondAttack": "Spend 10 luck for a second attack",
+"CoC7.UseLuckForWeaponFailure": "Spend 10 luck to avoid negative consequences",
 "CoC7.WaitingOnUser": "Waiting On User",
 "CoC7.WhatCopiedClipboard": ""{what}" copied to clipboard.",
 "CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
@@ -2516,7 +2641,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-573 untranslated strings
+598 untranslated strings
 ```
 "CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
 "CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
@@ -2882,6 +3007,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.LinkCheckPushing": "{name} check - pushing",
 "CoC7.LocationNotEmpty": "You can't remove a location with an actor",
 "CoC7.LocationPing": "Ping Location",
+"CoC7.LuckReduceLossRatio": "Spend {luck} luck to reduce {name} by {loss}",
 "CoC7.ManualTalents": "Manual Talents",
 "CoC7.MapNoteNoBackground": "Hide Background",
 "CoC7.MessageCast": "To Chat",
@@ -2901,6 +3027,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.NewArmorName": "new armor",
 "CoC7.NoTarget": "Target Dummy",
 "CoC7.NoTargetTitle": "Do you want to proceed without a target?",
+"CoC7.NotEnoughLuck": "You do not have enough luck",
 "CoC7.ParticipantAttacker": "Attacker",
 "CoC7.ParticipantDefender": "Defender",
 "CoC7.ParticipantNone": "Attacker or Defender",
@@ -2962,6 +3089,21 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
 "CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Hint": "",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Name": "Avoid Certain Death",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Hint": "",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Name": "Half Sanity Loss",
+"CoC7.Settings.PulpRules.LuckHeal.Hint": "",
+"CoC7.Settings.PulpRules.LuckHeal.Name": "It's Only a Scratch!",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Hint": "",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Name": "Look Out Master!",
+"CoC7.Settings.PulpRules.LuckMalfunction.Hint": "",
+"CoC7.Settings.PulpRules.LuckMalfunction.Name": "Ignore Weapon Fumble or Malfunction Consequences",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Hint": "",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Name": "Second Attack",
+"CoC7.Settings.PulpRules.LuckSpent.Title": "Using Luck",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Hint": "",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Name": "Avoid Unconsciousness",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
 "CoC7.Settings.ShowWorldEra.Hint": "",
@@ -3035,6 +3177,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ToolTipSeeNotes": "See notes",
 "CoC7.ToolTipShort": "<label>{skill} {regular}% ({hard}/{extreme})</label>",
 "CoC7.Unavailable": "Unavailable",
+"CoC7.UseLuck": "Use Luck",
+"CoC7.UseLuckForAvoidDeath": "Spend {luck} luck to avoid death",
+"CoC7.UseLuckForAvoidUnconsciousness": "Spend {luck} luck to avoid unconsciousness for one round",
+"CoC7.UseLuckForHeal": "Spend 20 luck to recover 1D6 hit points",
+"CoC7.UseLuckForLookOutMaster": "Spend all luck FOR Look Out Master!",
+"CoC7.UseLuckForReduceLoss": "Spend luck to reduce {name}",
+"CoC7.UseLuckForSecondAttack": "Spend 10 luck for a second attack",
+"CoC7.UseLuckForWeaponFailure": "Spend 10 luck to avoid negative consequences",
 "CoC7.WaitingOnUser": "Waiting On User",
 "CoC7.WhatCopiedClipboard": ""{what}" copied to clipboard.",
 "CoC7.YouGainedCthulhuMythos": "Your mind quail before the unearthly manifestation (+{value}% Cthulhu Mythos)",
@@ -3093,7 +3243,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## uk.json
-468 untranslated strings
+493 untranslated strings
 ```
 "CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
 "CoC7.AddedEmbeddedItems": "Added {names}",
@@ -3414,6 +3564,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Know": "Know",
 "CoC7.KnowCheck": "Know Roll",
 "CoC7.LocationPing": "Ping Location",
+"CoC7.LuckReduceLossRatio": "Spend {luck} luck to reduce {name} by {loss}",
 "CoC7.ManualTalents": "Manual Talents",
 "CoC7.MapNoteNoBackground": "Hide Background",
 "CoC7.MessageCast": "To Chat",
@@ -3424,6 +3575,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.NewArmorName": "new armor",
 "CoC7.NoTarget": "Target Dummy",
 "CoC7.NoTargetTitle": "Do you want to proceed without a target?",
+"CoC7.NotEnoughLuck": "You do not have enough luck",
 "CoC7.ParticipantAttacker": "Attacker",
 "CoC7.ParticipantDefender": "Defender",
 "CoC7.ParticipantNone": "Attacker or Defender",
@@ -3475,6 +3627,21 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.HouseRules.Hint": "Configure common house rules and reorder characteristics",
 "CoC7.Settings.HouseRules.Label": "Configure House Rules",
 "CoC7.Settings.PulpRules.All": "All",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Hint": "",
+"CoC7.Settings.PulpRules.LuckAvoidDeath.Name": "Avoid Certain Death",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Hint": "",
+"CoC7.Settings.PulpRules.LuckHalfSanityLoss.Name": "Half Sanity Loss",
+"CoC7.Settings.PulpRules.LuckHeal.Hint": "",
+"CoC7.Settings.PulpRules.LuckHeal.Name": "It's Only a Scratch!",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Hint": "",
+"CoC7.Settings.PulpRules.LuckLookOutMaster.Name": "Look Out Master!",
+"CoC7.Settings.PulpRules.LuckMalfunction.Hint": "",
+"CoC7.Settings.PulpRules.LuckMalfunction.Name": "Ignore Weapon Fumble or Malfunction Consequences",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Hint": "",
+"CoC7.Settings.PulpRules.LuckSecondAttack.Name": "Second Attack",
+"CoC7.Settings.PulpRules.LuckSpent.Title": "Using Luck",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Hint": "",
+"CoC7.Settings.PulpRules.LuckUnconsciousness.Name": "Avoid Unconsciousness",
 "CoC7.Settings.PulpRules.None": "None",
 "CoC7.Settings.PulpRules.Some": "Partial",
 "CoC7.SheetExperiencePackageName": "Experience",
@@ -3532,6 +3699,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ToolTipBasic": "<label>{skill} {regular}% ({hard}/{extreme})</label><ul><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ul>",
 "CoC7.ToolTipSeeNotes": "See notes",
 "CoC7.ToolTipShort": "<label>{skill} {regular}% ({hard}/{extreme})</label>",
+"CoC7.UseLuck": "Use Luck",
+"CoC7.UseLuckForAvoidDeath": "Spend {luck} luck to avoid death",
+"CoC7.UseLuckForAvoidUnconsciousness": "Spend {luck} luck to avoid unconsciousness for one round",
+"CoC7.UseLuckForHeal": "Spend 20 luck to recover 1D6 hit points",
+"CoC7.UseLuckForLookOutMaster": "Spend all luck FOR Look Out Master!",
+"CoC7.UseLuckForReduceLoss": "Spend luck to reduce {name}",
+"CoC7.UseLuckForSecondAttack": "Spend 10 luck for a second attack",
+"CoC7.UseLuckForWeaponFailure": "Spend 10 luck to avoid negative consequences",
 "CoC7.WhatCopiedClipboard": ""{what}" copied to clipboard.",
 "CoC7.combatCard.SmallTargetTooltip": "1 penalty die. Target is build -2 or smaller",
 "CoC7.rangeCombatBlastDamage": "{min} to {max} yard(s) takes {total} points of damage",

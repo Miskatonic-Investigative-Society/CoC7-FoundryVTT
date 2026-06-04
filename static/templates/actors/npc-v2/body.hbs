@@ -261,6 +261,23 @@
       {{> 'systems/CoC7/templates/actors/npc-v2/tab/combat.hbs'}}
     </div>
   </div>
+  {{#if hasLuckAbilities}}
+    <div class="tab-group flexcol" data-panel="LuckSpend" {{#if document.system.flags.panelLuckSpend}} data-html-element-toggled="on" {{/if}}>
+      <div class="tab-group-header">
+        <div class="tab-group-title">{{localize 'CoC7.UseLuck'}}</div>
+      </div>
+      <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelLuckSpend}} html-element-hidden{{/unless}}">
+        <div class="use-luck-list">
+          {{#if usingLuck.pulpRuleLuckSecondAttack}}
+            <button class="item-control trigger-button" data-action="useLuckSecondAttack">{{localize 'CoC7.UseLuckForSecondAttack'}}</button>
+          {{/if}}
+          {{#if usingLuck.pulpRuleLuckLookOutMaster}}
+            <button class="item-control trigger-button" data-action="useLuckLookOutMaster">{{localize 'CoC7.UseLuckForLookOutMaster'}}</button>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  {{/if}}
   {{#if hasInventory}}
     <div class="tab-group flexcol" data-panel="Inventory" {{#if document.system.flags.panelInventory}} data-html-element-toggled="on" {{/if}}>
       <div class="tab-group-header">

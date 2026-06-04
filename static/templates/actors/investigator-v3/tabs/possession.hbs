@@ -220,6 +220,27 @@
       <div>
         <textarea name="system.notes" placeholder="{{localize 'CoC7.PossessionsNotesHolder'}}">{{document.system.notes}}</textarea>
       </div>
+      {{#if hasLuckAbilities}}
+        <header class="section-header">
+          <h3 class="section-heading">{{localize 'CoC7.UseLuck'}}</h3>
+        </header>
+        {{#if usingLuck.pulpRuleLuckUnconsciousness}}
+          <div class="luck-spend-with-reset">
+            <button class="item-control trigger-button" data-action="useLuckAvoidUnconsciousness">{{localize 'CoC7.UseLuckForAvoidUnconsciousness' luck=document.system.config.luckAvoidUnconsciousness}}</button>
+            <button class="item-control reset-button" data-action="resetLuckAvoidUnconsciousness"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+          </div>
+        {{/if}}
+        {{#if usingLuck.pulpRuleLuckHeal}}
+          <div class="luck-spend">
+            <button class="item-control trigger-button" data-action="useLuckHeal">{{localize 'CoC7.UseLuckForHeal'}}</button>
+          </div>
+        {{/if}}
+        {{#if usingLuck.pulpRuleLuckAvoidDeath}}
+          <div class="luck-spend">
+            <button class="item-control trigger-button" data-action="useLuckAvoidDeath">{{localize 'CoC7.UseLuckForAvoidDeath' luck=(ifThen (gt 30 document.system.attribs.lck.value) 30 document.system.attribs.lck.value)}}</button>
+          </div>
+        {{/if}}
+      {{/if}}
     </div>
   </div>
 </section>

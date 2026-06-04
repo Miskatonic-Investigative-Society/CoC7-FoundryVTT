@@ -108,6 +108,13 @@ export default class CoC7Updater {
         game.settings.set(FOLDER_ID, 'pulpRuleFasterRecovery', true)
         game.settings.set(FOLDER_ID, 'pulpRuleIgnoreMajorWounds', true)
         game.settings.set(FOLDER_ID, 'pulpRuleIgnoreAgePenalties', true)
+        game.settings.set(FOLDER_ID, 'pulpRuleLuckMalfunction', true)
+        game.settings.set(FOLDER_ID, 'pulpRuleLuckHalfSanityLoss', true)
+        game.settings.set(FOLDER_ID, 'pulpRuleLuckUnconsciousness', true)
+        game.settings.set(FOLDER_ID, 'pulpRuleLuckHeal', true)
+        game.settings.set(FOLDER_ID, 'pulpRuleLuckAvoidDeath', true)
+        game.settings.set(FOLDER_ID, 'pulpRuleLuckSecondAttack', true)
+        game.settings.set(FOLDER_ID, 'pulpRuleLuckLookOutMaster', true)
       }
       await CoC7Updater.migrateChatMessages()
     }

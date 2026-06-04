@@ -110,6 +110,62 @@ const SETTINGS = {
     config: false,
     default: false,
     type: Boolean
+  },
+  pulpRuleLuckMalfunction: {
+    name: 'CoC7.Settings.PulpRules.LuckMalfunction.Name',
+    hint: 'CoC7.Settings.PulpRules.LuckMalfunction.Hint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
+  },
+  pulpRuleLuckHalfSanityLoss: {
+    name: 'CoC7.Settings.PulpRules.LuckHalfSanityLoss.Name',
+    hint: 'CoC7.Settings.PulpRules.LuckHalfSanityLoss.Hint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
+  },
+  pulpRuleLuckUnconsciousness: {
+    name: 'CoC7.Settings.PulpRules.LuckUnconsciousness.Name',
+    hint: 'CoC7.Settings.PulpRules.LuckUnconsciousness.Hint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
+  },
+  pulpRuleLuckHeal: {
+    name: 'CoC7.Settings.PulpRules.LuckHeal.Name',
+    hint: 'CoC7.Settings.PulpRules.LuckHeal.Hint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
+  },
+  pulpRuleLuckAvoidDeath: {
+    name: 'CoC7.Settings.PulpRules.LuckAvoidDeath.Name',
+    hint: 'CoC7.Settings.PulpRules.LuckAvoidDeath.Hint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
+  },
+  pulpRuleLuckSecondAttack: {
+    name: 'CoC7.Settings.PulpRules.LuckSecondAttack.Name',
+    hint: 'CoC7.Settings.PulpRules.LuckSecondAttack.Hint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
+  },
+  pulpRuleLuckLookOutMaster: {
+    name: 'CoC7.Settings.PulpRules.LuckLookOutMaster.Name',
+    hint: 'CoC7.Settings.PulpRules.LuckLookOutMaster.Hint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
   }
 }
 
@@ -333,9 +389,14 @@ export default class CoC7SettingsGameRules extends foundry.applications.api.Hand
     }
     game.settings.set(FOLDER_ID, 'pulpRules', pulpRules.true && !pulpRules.false)
     if (rebootRequired) {
-      foundry.applications.settings.SettingsConfig.reloadConfirm({
-        world: true
-      })
+      /* // FoundryVTT V12 */
+      if (game.release.generation === 12) {
+        foundry.utils.debouncedReload()
+      } else {
+        foundry.applications.settings.SettingsConfig.reloadConfirm({
+          world: true
+        })
+      }
     }
   }
 }

@@ -724,6 +724,31 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                   }
                 }
 
+                .luck-spend-with-reset {
+                  display: grid;
+                  grid-template-columns: 1fr auto;
+                  gap: @4px;
+
+                  button.reset-button {
+                    height: 100%;
+                  }
+                }
+
+                .luck-spend {
+                  .flex-row()
+                }
+
+                .luck-spend,
+                .luck-spend-with-reset {
+                  margin-top: @8px;
+
+                    button.trigger-button {
+                    height: auto;
+                    padding: 0 @4px;
+                    flex: 0 0 100%;
+                  }
+                }
+
                 textarea {
                   width: 100%;
                   resize: vertical;

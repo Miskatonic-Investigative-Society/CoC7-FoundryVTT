@@ -243,7 +243,8 @@ export default class CoC7ModelsActorGlobalSystem extends foundry.abstract.TypeDa
       /* // FoundryVTT V13 */
       // add these with persisted = false
       // luckRecovery: new fields.StringField({ initial: '' }),
-      // naturalHealing: new fields.NumberField({ nullable: false, initial: 1 }).
+      luckAvoidUnconsciousness: new fields.NumberField({ nullable: false, initial: 1 })
+      // naturalHealing: new fields.NumberField({ nullable: false, initial: 1 }),
       // idea: new fields.SchemaField({
       //   bonusDice: new fields.NumberField({ initial: 0 }),
       //   value: new fields.NumberField({ nullable: false, initial: 0 })

@@ -188,7 +188,8 @@ export default class ChaosiumCanvasInterfacePlayer extends ChaosiumCanvasInterfa
             name: game.i18n.localize('TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument'),
             type: 'ChaosiumCanvasInterfaceOpenDocument',
             system: {
-              documentUuid: uuid
+              documentUuid: uuid,
+              permission: 'DOCUMENT'
             }
           })
         } else {

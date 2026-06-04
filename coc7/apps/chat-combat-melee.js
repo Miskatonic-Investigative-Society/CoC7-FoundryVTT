@@ -17,6 +17,7 @@ export default class CoC7ChatCombatMelee {
   #dicePool
   #isAutoSuccess
   #isNoResponse
+  #noConsequence
   #participant
   #poolModifier
   #poolKeys
@@ -31,6 +32,7 @@ export default class CoC7ChatCombatMelee {
     this.#dicePool = CoC7DicePool.newPool({ })
     this.#isAutoSuccess = false
     this.#isNoResponse = false
+    this.#noConsequence = false
     this.#poolModifier = 0
     this.#participant = CoC7ChatCombatMelee.participant.initiator
     this.#poolKeys = []
@@ -109,6 +111,7 @@ export default class CoC7ChatCombatMelee {
       'isAutoSuccess',
       'isNoResponse',
       // 'itemUuid' - no response can be selected
+      // 'noConsequence' - new field
       'participant',
       'poolKeys',
       'poolModifier',
@@ -127,6 +130,9 @@ export default class CoC7ChatCombatMelee {
       check.#isAutoSuccess = load.isAutoSuccess
       check.#isNoResponse = load.isNoResponse
       check.item = load.itemUuid
+      if (typeof load.noConsequence !== 'undefined') {
+        check.#noConsequence = load.noConsequence
+      }
       check.#participant = load.participant
       check.#poolKeys = load.poolKeys
       check.#poolModifier = load.poolModifier
@@ -447,6 +453,25 @@ export default class CoC7ChatCombatMelee {
           }
         }
         break
+      case 'useLuckForWeaponFailure':
+        {
+          const check = await CoC7ChatCombatMelee.loadFromMessage(message)
+          if (check) {
+            const actor = await fromUuid(check.message.flags[FOLDER_ID].load.actorUuid)
+            if (actor) {
+              const newLuck = parseInt(actor?.system.attribs.lck.value ?? 0, 10) - 10
+              if (newLuck >= 0 && await actor.spendLuck(10) !== false) {
+                check.#noConsequence = true
+              } else {
+                ui.notifications.warn('CoC7.NotEnoughLuck', { localize: true })
+              }
+              check.updateMessage()
+            } else {
+              ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+            }
+          }
+        }
+        break
     }
   }
 
@@ -574,9 +599,11 @@ export default class CoC7ChatCombatMelee {
       attackerName: (attacker ? (attacker.isToken ? attacker.token.name : attacker.name) : ''),
       attackerTalent: [],
       attackerUuid: CoC7Utilities.getActorUuid(attacker),
+      badConsequence: !this.#noConsequence && (this.#dicePool.isMalfunction || this.#dicePool.isFumble),
       bonusDice: Math.abs(this.#dicePool.poolModifier),
       bonusType: game.i18n.localize(this.#dicePool.poolModifier < 0 ? 'CoC7.DiceModifierPenalty' : 'CoC7.DiceModifierBonus'),
       buttons: {},
+      canLuckAwayConsequences: game.settings.get(FOLDER_ID, 'pulpRuleLuckMalfunction'),
       checkRevealed: this.#checkRevealed,
       diceGroup,
       displayActorOnCard: (attacker ? game.settings.get(FOLDER_ID, 'displayActorOnCard') : false),
@@ -743,6 +770,7 @@ export default class CoC7ChatCombatMelee {
             isAutoSuccess: this.#isAutoSuccess,
             isNoResponse: this.#isNoResponse,
             itemUuid: data.itemUuid,
+            noConsequence: this.#noConsequence,
             participant: this.#participant,
             poolKeys: this.#poolKeys,
             poolModifier: this.#poolModifier,
