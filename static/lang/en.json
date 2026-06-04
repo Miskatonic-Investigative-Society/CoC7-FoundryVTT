@@ -1074,6 +1074,7 @@
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
   "CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
   "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When using the investigator wizard improvements and characteristic adjustments are not made",
+  "CoC7.Settings.PulpRules.LuckSpent.Title": "Using Luck",
   "CoC7.Settings.PulpRules.LuckMalfunction.Name": "Ignore Weapon Fumble or Malfunction Consequences",
   "CoC7.Settings.PulpRules.LuckMalfunction.Hint": "",
   "CoC7.Settings.PulpRules.LuckHalfSanityLoss.Name": "Half Sanity Loss",
