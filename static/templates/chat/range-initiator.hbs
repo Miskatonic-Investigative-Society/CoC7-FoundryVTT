@@ -280,6 +280,11 @@
         {{/if}}
       {{/if}}
     {{/each}}
+    {{#if (and canLuckAwayConsequences badConsequence)}}
+      <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{../attackerUuid}}">
+        <button data-action="useLuckForWeaponFailure">{{localize 'CoC7.UseLuckForWeaponFailure'}}</button>
+      </div>
+    {{/if}}
     {{#if didAnyShotHit}}
       {{#unless damageRolled}}
         <div class="owner-and-keeper-block coc7-card-buttons flexrow" data-actor-uuid="{{attackerUuid}}">

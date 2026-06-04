@@ -172,6 +172,12 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
       context.hasConditions = context.document.effects.size > 0 || Object.keys(context.document.system.conditions).filter(condition => context.document.system.conditions[condition].value).length > 0
     }
 
+    context.usingLuck = (context.document.system.luckSpendAbilities ?? []).reduce((c, k) => {
+      c[k] = game.settings.get(FOLDER_ID, k)
+      return c
+    }, {})
+    context.hasLuckAbilities = Object.values(context.usingLuck).reduce((c, b) => c || b, false)
+
     return context
   }
 
@@ -382,6 +388,59 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
         case 'notes-toggle':
           this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
           this.document.update({ 'system.attribs.armor.notes': !this.document.system.attribs.armor.notes })
+          break
+        case 'useLuckAvoidUnconsciousness':
+          if (event.detail === 1) {
+            (async () => {
+              const newLuck = parseInt(this.document.system.attribs.lck.value ?? 0, 10) - this.document.system.config.luckAvoidUnconsciousness
+              if (newLuck >= 0 && await this.document.spendLuck(this.document.system.config.luckAvoidUnconsciousness) !== false) {
+                this.document.update({ 'system.config.luckAvoidUnconsciousness': this.document.system.config.luckAvoidUnconsciousness * 2 })
+              } else {
+                ui.notifications.warn('CoC7.NotEnoughLuck', { localize: true })
+              }
+            })()
+          }
+          break
+        case 'resetLuckAvoidUnconsciousness':
+          this.document.update({ 'system.config.luckAvoidUnconsciousness': 1 })
+          break
+        case 'useLuckHeal':
+          if (event.detail === 1) {
+            (async () => {
+              const newLuck = parseInt(this.document.system.attribs.lck.value ?? 0, 10) - 20
+              if (newLuck >= 0 && await this.document.spendLuck(20) !== false) {
+                const roll = (await new Roll('1D6', {}, { flavor: game.i18n.localize('CoC7.Settings.PulpRules.LuckHeal.Name') }).roll())
+                await this.document.setHp(parseInt(roll.total, 10) + parseInt(this.document.system.attribs.hp.value, 10))
+                roll.toMessage({ content: '' })
+              } else {
+                ui.notifications.warn('CoC7.NotEnoughLuck', { localize: true })
+              }
+            })()
+          }
+          break
+        case 'useLuckAvoidDeath':
+          (async () => {
+            const oldLuck = parseInt(this.document.system.attribs.lck.value ?? 0, 10)
+            if (oldLuck >= 30 && await this.document.spendLuck(this.document.system.attribs.lck.value) !== false) {
+              const roll = (await new Roll('1D6+1', {}, { flavor: game.i18n.localize('CoC7.Settings.PulpRules.LuckAvoidDeath.Name') }).roll())
+              await this.document.setHp(parseInt(roll.total, 10) + parseInt(this.document.system.attribs.hp.value, 10))
+              roll.toMessage({ content: '' })
+            } else {
+              ui.notifications.warn('CoC7.NotEnoughLuck', { localize: true })
+            }
+          })()
+          break
+        case 'useLuckSecondAttack':
+          if (event.detail === 1) {
+            this.document.update({
+              'system.attribs.lck.value': Math.max(0, parseInt(this.document.system.attribs.lck.value ?? 0, 10) - 10)
+            })
+          }
+          break
+        case 'useLuckLookOutMaster':
+          this.document.update({
+            'system.attribs.lck.value': 0
+          })
           break
       }
     }))

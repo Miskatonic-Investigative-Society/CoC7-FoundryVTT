@@ -20,6 +20,7 @@ import CoC7PointSelectionDialog from '../../apps/point-selection-dialog.js'
 import CoC7RollNormalize from '../../apps/roll-normalize.js'
 import CoC7SkillSelectionDialog from '../../apps/skill-selection-dialog.js'
 import CoC7SkillSpecializationSelectDialog from '../../apps/skill-specialization-select-dialog.js'
+import CoC7SpendLuckDialog from '../../apps/spend-luck-dialog.js'
 import CoC7Utilities from '../../apps/utilities.js'
 import deprecated from '../../deprecated.js'
 
@@ -2276,8 +2277,25 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     const changes = {
       'system.attribs.san.value': Math.min(sanMax, Math.max(0, value))
     }
-    const difference = changes['system.attribs.san.value'] - (this.system.attribs.san.value ?? 0)
+    let difference = changes['system.attribs.san.value'] - (this.system.attribs.san.value ?? 0)
     if (difference < 0) {
+      if (game.settings.get(FOLDER_ID, 'pulpRuleLuckHalfSanityLoss')) {
+        const nameValue = Math.floor(Math.abs(difference) / 2)
+        const luckValue = nameValue * 2
+        const newLuck = parseInt(this.system.attribs.lck.value ?? 0, 10) - luckValue
+        if (newLuck >= 0) {
+          const luckSpent = await CoC7SpendLuckDialog.create({ name: game.i18n.localize('CoC7.SANLoss'), luckValue, nameValue })
+          if (luckSpent > 0) {
+            if (await this.spendLuck(luckValue) !== false) {
+              difference = difference + nameValue
+              changes['system.attribs.san.value'] = changes['system.attribs.san.value'] + nameValue
+            } else {
+              ui.notifications.error('CoC7.Errors.UnparsableModification')
+              return
+            }
+          }
+        }
+      }
       changes['system.attribs.san.dailyLoss'] = (this.system.attribs.san.dailyLoss ?? 0) - difference
       if (difference <= -5) {
         await this.conditionsSet([STATUS_EFFECTS.tempoInsane])
@@ -4358,7 +4376,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     const newValue = Math.min(hpMax, Math.max(0, value))
     const hpValue = (this.system.attribs.hp.value ?? 0)
     if (newValue >= hpValue) {
-      return this.#modifyHp(newValue)
+      return this.#modifyHp(newValue - hpValue)
     }
     const damage = await this.dealDamage(hpValue - newValue, { ignoreArmor: true })
     return hpValue - damage

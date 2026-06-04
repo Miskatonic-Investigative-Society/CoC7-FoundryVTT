@@ -8,6 +8,7 @@ export default class CoC7ChatCombatRanged {
   #aiming
   #asyncAttacker
   #asyncItem
+  #badConsequence
   #burst
   #damage
   #damageDealt
@@ -29,6 +30,7 @@ export default class CoC7ChatCombatRanged {
   constructor () {
     // this.#asyncActor = undefined
     // this.#asyncItem = undefined
+    this.#badConsequence = false
     this.#weaponRolled = false
     this.#singleShot = false
     this.#multipleShots = false
@@ -266,6 +268,9 @@ export default class CoC7ChatCombatRanged {
           anyRolledSuccess = true
         }
         await item.system.shootAmmunition(this.#shots[offset].bulletsShot + this.#shots[offset].transitBullets)
+        if (this.#shots[offset].dicePool.isMalfunction || this.#shots[offset].dicePool.isFumble) {
+          this.#badConsequence = true
+        }
         if (this.#shots[offset].dicePool.isMalfunction) {
           this.#shots[offset].dicePool.setSuccess(false)
           break
@@ -297,6 +302,9 @@ export default class CoC7ChatCombatRanged {
         }
         if (shot.dicePool.isRolledSuccess) {
           await CoC7Utilities.messageRollFlagForDevelopment(this.message.id, itemSkill, true)
+        }
+        if (shot.dicePool.isMalfunction || shot.dicePool.isFumble) {
+          this.#badConsequence = true
         }
         if (shot.dicePool.isMalfunction) {
           shot.dicePool.setSuccess(false)
@@ -448,6 +456,7 @@ export default class CoC7ChatCombatRanged {
    */
   static async loadFromMessage (message) {
     const keys = [
+      // badConsequence - new field
       'actorUuid',
       'aiming',
       'burst',
@@ -470,6 +479,9 @@ export default class CoC7ChatCombatRanged {
       const check = new CoC7ChatCombatRanged()
       check.message = message
       const load = foundry.utils.duplicate(message.flags[FOLDER_ID].load)
+      if (typeof load.badConsequence !== 'undefined') {
+        check.#badConsequence = load.badConsequence
+      }
       check.attacker = load.actorUuid
       check.#aiming = load.aiming
       check.#burst = load.burst
@@ -727,6 +739,23 @@ export default class CoC7ChatCombatRanged {
           }
         }
         break
+      case 'useLuckForWeaponFailure':
+        {
+          const check = await CoC7ChatCombatRanged.loadFromMessage(message)
+          if (check) {
+            const attacker = (await check.attacker)
+            const newLuck = parseInt(attacker?.system.attribs.lck.value ?? 0, 10) - 10
+            if (newLuck >= 0 && await attacker.spendLuck(10) !== false) {
+              check.#badConsequence = false
+            } else {
+              ui.notifications.warn('CoC7.NotEnoughLuck', { localize: true })
+            }
+            check.updateMessage()
+          } else {
+            ui.notifications.warn('CoC7.Errors.UnparsableMessage', { localize: true })
+          }
+        }
+        break
     }
   }
 
@@ -869,7 +898,9 @@ export default class CoC7ChatCombatRanged {
       attackerName: (attacker?.isToken ? attacker.token.name : attacker?.name),
       attackerTalent: [],
       attackerUuid: CoC7Utilities.getActorUuid(attacker),
+      badConsequence: this.#badConsequence,
       burst: this.#burst,
+      canLuckAwayConsequences: game.settings.get(FOLDER_ID, 'pulpRuleLuckMalfunction'),
       damage: this.#damage,
       damageDealt: this.#damageDealt,
       damageRolled: this.#damageRolled,
@@ -1065,6 +1096,7 @@ export default class CoC7ChatCombatRanged {
             as: 'CoC7ChatCombatRanged',
             actorUuid: data.attackerUuid,
             aiming: this.#aiming,
+            badConsequence: this.#badConsequence,
             burst: this.#burst,
             damage: this.#damage,
             damageDealt: this.#damageDealt,

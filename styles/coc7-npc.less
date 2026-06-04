@@ -344,6 +344,18 @@
         .item {
           flex: 0 0 calc(33% - @4px);
           flex-wrap: wrap;
+
+        }
+      }
+
+      .use-luck-list {
+        display: grid;
+        grid-template-columns: repeat(3, 33%);
+        gap: @4px;
+        margin-top: @4px;
+
+        button.trigger-button {
+          height: auto;
         }
       }
 
