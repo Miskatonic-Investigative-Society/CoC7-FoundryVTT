@@ -64,6 +64,7 @@ export default class CoC7ModelsActorNPCSystem extends CoC7ModelsActorGlobalSyste
         panelInventoryWeapons: new fields.BooleanField({ initial: true }),
         panelInventoryArmor: new fields.BooleanField({ initial: true }),
         panelInventoryStatuses: new fields.BooleanField({ initial: true }),
+        panelLuckSpend: new fields.BooleanField({ initial: false }),
         panelNotes: new fields.BooleanField({ initial: true }),
         panelMacros: new fields.BooleanField({ initial: true }),
         panelEffects: new fields.BooleanField({ initial: false }),
@@ -78,5 +79,13 @@ export default class CoC7ModelsActorNPCSystem extends CoC7ModelsActorGlobalSyste
    */
   static get defaultImg () {
     return 'systems/' + FOLDER_ID + '/assets/icons/cultist.svg'
+  }
+
+  /**
+   * Array of Luck Spend setting keys
+   * @returns {Array}
+   */
+  get luckSpendAbilities () {
+    return ['pulpRuleLuckSecondAttack', 'pulpRuleLuckLookOutMaster']
   }
 }

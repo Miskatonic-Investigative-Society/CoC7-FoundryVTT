@@ -184,6 +184,14 @@ export default class CoC7ModelsActorCharacterSystem extends CoC7ModelsActorGloba
   }
 
   /**
+   * Array of Luck Spend setting keys
+   * @returns {Array}
+   */
+  get luckSpendAbilities () {
+    return ['pulpRuleLuckUnconsciousness', 'pulpRuleLuckHeal', 'pulpRuleLuckAvoidDeath']
+  }
+
+  /**
    * List of skills used for Active Effects
    * @returns {Array}
    */
