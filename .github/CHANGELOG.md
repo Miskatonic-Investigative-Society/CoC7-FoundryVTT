@@ -11,6 +11,18 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+## Version 8.12
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Implement Pulp Luck Spend abilities
+- Fix CCI: Player open sheet only being clickable by the Keeper
+- Fix guessing items by adding additional checks, thanks to @Achoobert #2106
+- Fix v12 changing setting reboot
+- Update to French localization, thanks to @vonv #2105
+
 ## Version 8.11
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
