@@ -389,9 +389,14 @@ export default class CoC7SettingsGameRules extends foundry.applications.api.Hand
     }
     game.settings.set(FOLDER_ID, 'pulpRules', pulpRules.true && !pulpRules.false)
     if (rebootRequired) {
-      foundry.applications.settings.SettingsConfig.reloadConfirm({
-        world: true
-      })
+      /* // FoundryVTT V12 */
+      if (game.release.generation === 12) {
+        foundry.utils.debouncedReload()
+      } else {
+        foundry.applications.settings.SettingsConfig.reloadConfirm({
+          world: true
+        })
+      }
     }
   }
 }
