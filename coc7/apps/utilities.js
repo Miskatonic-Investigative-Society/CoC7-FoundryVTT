@@ -700,13 +700,13 @@ export default class CoC7Utilities {
    * @returns {object}
    */
   static async guessItems (type, names, { source = '', fallbackAny = false } = {}) {
-    const checkList = names.map(t => t.toLocaleLowerCase())
+    const checkList = names.filter(name => typeof name === 'string' && name !== '').map(t => t.toLocaleLowerCase())
     const foundItems = []
     for (let o = 0, oM = source.length; o < oM; o++) {
       let existing = []
       switch (source.substring(o, o + 1)) {
         case 'i':
-          existing = game.items.filter(doc => doc.type === type && checkList.includes(doc.flags?.[FOLDER_ID]?.cocidFlag?.id.toLocaleLowerCase()))
+          existing = game.items.filter(doc => doc.type === type && checkList.includes(doc.flags?.[FOLDER_ID]?.cocidFlag?.id?.toLocaleLowerCase()))
           for (const item of existing) {
             if (typeof foundItems[item.flags[FOLDER_ID].cocidFlag.id] === 'undefined') {
               foundItems[item.flags[FOLDER_ID].cocidFlag.id] = item
@@ -728,7 +728,7 @@ export default class CoC7Utilities {
           for (const pack of game.packs) {
             if (pack.metadata.type === 'Item' && ['wworld', 'ssystem', 'mmodule'].includes(source[o] + pack.metadata.packageType)) { // cspell:disable-line
               const documents = await pack.getDocuments()
-              existing = documents.filter(doc => doc.type === type && checkList.includes(doc.flags?.[FOLDER_ID]?.cocidFlag?.id.toLocaleLowerCase()))
+              existing = documents.filter(doc => doc.type === type && checkList.includes(doc.flags?.[FOLDER_ID]?.cocidFlag?.id?.toLocaleLowerCase()))
               for (const item of existing) {
                 if (typeof foundItems[item.flags[FOLDER_ID].cocidFlag.id] === 'undefined') {
                   foundItems[item.flags[FOLDER_ID].cocidFlag.id] = item
@@ -787,6 +787,9 @@ export default class CoC7Utilities {
     }
     const output = {}
     for (const name of names) {
+      if (typeof name !== 'string' || name === '') {
+        continue
+      }
       const key = name.toLocaleLowerCase()
       if (typeof foundItems[key] !== 'undefined') {
         output[name] = foundItems[key]
