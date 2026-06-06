@@ -591,16 +591,38 @@ export default class CoCID {
    * @returns {Array}
    */
   static async #onlyDocuments (candidates, progressBar) {
+    const packs = {}
     for (const offset in candidates) {
-      if (progressBar !== false) {
-        // await new Promise(resolve => setTimeout(resolve, 1000))
-        progressBar.bar.update({ pct: progressBar.current / progressBar.max })
-        progressBar.current++
-      }
-      if (!(candidates[offset] instanceof foundry.abstract.DataModel)) {
-        candidates[offset] = await fromUuid(candidates[offset].uuid)
+      if (candidates[offset] instanceof foundry.abstract.DataModel) {
+        if (progressBar !== false) {
+          // await new Promise(resolve => setTimeout(resolve, 1000))
+          progressBar.bar.update({ pct: progressBar.current / progressBar.max })
+          progressBar.current++
+        }
+      } else {
+        const match = candidates[offset].uuid.match(/^Compendium\.(.+)\.Item\.(.+)$/)
+        if (typeof packs[match[1]] === 'undefined') {
+          packs[match[1]] = {}
+        }
+        packs[match[1]][match[2]] = offset
       }
     }
+    const all = []
+    for (const packId in packs) {
+      const pack = game.packs.get(packId)
+      all.push(pack.getDocuments({ _id__in: Object.keys(packs[packId]) }).then(documents => {
+        for (const document of documents) {
+          if (progressBar !== false) {
+            // await new Promise(resolve => setTimeout(resolve, 1000))
+            progressBar.bar.update({ pct: progressBar.current / progressBar.max })
+            progressBar.current++
+          }
+          const offset = packs[packId][document._id]
+          candidates[offset] = document
+        }
+      }))
+    }
+    await Promise.all(all)
     if (progressBar !== false) {
       // await new Promise(resolve => setTimeout(resolve, 1000))
       progressBar.bar.remove()
