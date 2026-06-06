@@ -11,6 +11,9 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+- Speed up loading of CoC ID Items from compendiums thanks to, @arrowedisgaming, #2086
+- Update to Swedish localization, thanks to @Rangertheman #2112
+
 ## Version 8.12
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
