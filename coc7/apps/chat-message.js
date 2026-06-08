@@ -21,7 +21,7 @@ export default class CoC7ChatMessage {
             const activeEffect = message.flags[FOLDER_ID]?.load?.activeEffect
             const type = message.flags[FOLDER_ID]?.load?.type
             const key = message.flags[FOLDER_ID]?.load?.value
-            const total = message.rolls.reduce((c, r) => c + r.total, 0) * (modifier === CoC7RollAsModifierDialog.MODIFIERS.HEAL_MODIFY ? 1 : -1)
+            let total = message.rolls.reduce((c, r) => c + r.total, 0) * (modifier === CoC7RollAsModifierDialog.MODIFIERS.HEAL_MODIFY ? 1 : -1)
             if (activeEffect === CoC7RollAsModifierDialog.ACTIVE_EFFECT_METHODS.NONE) {
               switch (type) {
                 case CoC7RollAsModifierDialog.TYPES.ATTRIBUTE:
@@ -34,15 +34,35 @@ export default class CoC7ChatMessage {
                         })
                         break
                       case 'hp':
-                        await actor.setHp(Math.max(0, parseInt(actor.system.attribs[key].value, 10) + total))
+                        {
+                          const oldValue = parseInt(actor.system.attribs[key].value, 10)
+                          const newValue = await actor.setHp(Math.max(0, oldValue + total))
+                          total = newValue - oldValue
+                        }
                         break
                       case 'san':
-                        await actor.setSan(Math.max(0, parseInt(actor.system.attribs[key].value, 10) + total))
+                        {
+                          const oldValue = parseInt(actor.system.attribs[key].value, 10)
+                          const newValue = await actor.setSan(Math.max(0, oldValue + total))
+                          total = newValue - oldValue
+                        }
+                        break
+                      case 'lck':
+                        {
+                          const oldValue = parseInt(actor.system.attribs[key].value, 10)
+                          const newValue = await actor.setLuck(Math.max(0, oldValue + total))
+                          total = newValue - oldValue
+                        }
                         break
                       default:
-                        await actor.update({
-                          ['system.attribs.' + key + '.value']: Math.max(0, parseInt(actor.system.attribs[key].value, 10) + total)
-                        })
+                        {
+                          const oldValue = parseInt(actor.system.attribs[key].value, 10)
+                          const newValue = Math.max(0, oldValue + total)
+                          await actor.update({
+                            ['system.attribs.' + key + '.value']: newValue
+                          })
+                          total = newValue - oldValue
+                        }
                         break
                     }
                   } else {
@@ -51,9 +71,12 @@ export default class CoC7ChatMessage {
                   break
                 case CoC7RollAsModifierDialog.TYPES.CHARACTERISTIC:
                   if (actor.system.schema.getField('characteristics')?.getField(key)) {
+                    const oldValue = parseInt(actor.system.characteristics[key].value, 10)
+                    const newValue = Math.max(0, oldValue + total)
                     await actor.update({
-                      ['system.characteristics.' + key + '.value']: Math.max(0, parseInt(actor.system.characteristics[key].value, 10) + total)
+                      ['system.characteristics.' + key + '.value']: newValue
                     })
+                    total = newValue - oldValue
                   } else {
                     ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
                   }

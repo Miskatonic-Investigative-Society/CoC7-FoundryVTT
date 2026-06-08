@@ -1519,16 +1519,13 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
 
   /**
    * Set luck value
-   * @deprecated Temporary forward
    * @param {integer} value
-   * @returns {Promise<Document>}
+   * @returns {int}
    */
   async setLuck (value) {
-    deprecated.noReplacement({
-      was: 'actor.setLuck(?)',
-      until: 15
-    })
-    return await this.update({ 'system.attribs.lck.value': value })
+    const newValue = Math.min(99, value)
+    await this.update({ 'system.attribs.lck.value': newValue })
+    return newValue
   }
 
   /**
@@ -3582,9 +3579,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       }
       const augmentValue = await new Roll(augmentRoll).evaluate()
       rolls.push(augmentValue)
-      await this.update({
-        'system.attribs.lck.value': Math.min(99, currentLuck + parseInt(augmentValue.total, 10))
-      })
+      await this.setLuck(currentLuck + parseInt(augmentValue.total, 10))
       message = '<div class="coc7-upgrade-success">' + game.i18n.format('CoC7.LuckIncreased', {
         die: upgradeRoll.total,
         score: currentLuck,
