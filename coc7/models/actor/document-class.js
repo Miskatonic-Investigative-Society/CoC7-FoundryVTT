@@ -3579,11 +3579,11 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       }
       const augmentValue = await new Roll(augmentRoll).evaluate()
       rolls.push(augmentValue)
-      await this.setLuck(currentLuck + parseInt(augmentValue.total, 10))
+      const newValue = await this.setLuck(currentLuck + parseInt(augmentValue.total, 10))
       message = '<div class="coc7-upgrade-success">' + game.i18n.format('CoC7.LuckIncreased', {
         die: upgradeRoll.total,
         score: currentLuck,
-        augment: augmentValue.total
+        augment: newValue - currentLuck
       }) + '</div>'
     } else {
       message = '<div class="coc7-upgrade-failed">' + game.i18n.format('CoC7.LuckNotIncreased', {
