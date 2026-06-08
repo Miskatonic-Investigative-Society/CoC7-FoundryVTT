@@ -11,6 +11,8 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+- Fix luck recovery button trigger and prevent incorrect call to skill development
+- Show modified value if heal/damage value changes when applying from roll message
 - Speed up loading of CoC ID Items from compendiums thanks to, @arrowedisgaming, #2086
 - Update to Swedish localization, thanks to @Rangertheman #2112
 
