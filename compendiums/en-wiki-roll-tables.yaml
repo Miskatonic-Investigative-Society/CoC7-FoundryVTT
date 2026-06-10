@@ -37,3 +37,1254 @@ flags:
       id: rt..bouts-of-madness-table-realtime
       lang: en
       priority: 0
+---
+name: Names
+type: folder
+_id: w2vkKXFHcbQVeB7H
+color: '#75844c'
+---
+name: Male first name, american
+_id: yvXk3GTSA9adwv1z
+folder: w2vkKXFHcbQVeB7H
+description: 'Male first names for use in various macros'
+results:
+  - type: text
+    name: 'Aaron'
+  - type: text
+    name: 'Abraham'
+  - type: text
+    name: 'Adam'
+  - type: text
+    name: 'Adolph'
+  - type: text
+    name: 'Albert'
+  - type: text
+    name: 'Alex'
+  - type: text
+    name: 'Alexander'
+  - type: text
+    name: 'Alfred'
+  - type: text
+    name: 'Allen'
+  - type: text
+    name: 'Alonzo'
+  - type: text
+    name: 'Alvin'
+  - type: text
+    name: 'Amos'
+  - type: text
+    name: 'Andrew'
+  - type: text
+    name: 'Anthony'
+  - type: text
+    name: 'Archie'
+  - type: text
+    name: 'Arnold'
+  - type: text
+    name: 'Arthur'
+  - type: text
+    name: 'August'
+  - type: text
+    name: 'Ben'
+  - type: text
+    name: 'Benjamin'
+  - type: text
+    name: 'Bennie'
+  - type: text
+    name: 'Bernard'
+  - type: text
+    name: 'Bert'
+  - type: text
+    name: 'Bill'
+  - type: text
+    name: 'Calvin'
+  - type: text
+    name: 'Carl'
+  - type: text
+    name: 'Cecil'
+  - type: text
+    name: 'Charles'
+  - type: text
+    name: 'Charley'
+  - type: text
+    name: 'Charlie'
+  - type: text
+    name: 'Chester'
+  - type: text
+    name: 'Clarence'
+  - type: text
+    name: 'Claud'
+  - type: text
+    name: 'Claude'
+  - type: text
+    name: 'Clayton'
+  - type: text
+    name: 'Clifton'
+  - type: text
+    name: 'Clinton'
+  - type: text
+    name: 'Cliﬀord'
+  - type: text
+    name: 'Clyde'
+  - type: text
+    name: 'Cornelius'
+  - type: text
+    name: 'Curtis'
+  - type: text
+    name: 'Dan'
+  - type: text
+    name: 'Daniel'
+  - type: text
+    name: 'Dave'
+  - type: text
+    name: 'David'
+  - type: text
+    name: 'Dennis'
+  - type: text
+    name: 'Dewey'
+  - type: text
+    name: 'Donald'
+  - type: text
+    name: 'Earl'
+  - type: text
+    name: 'Earnest'
+  - type: text
+    name: 'Ed'
+  - type: text
+    name: 'Eddie'
+  - type: text
+    name: 'Edgar'
+  - type: text
+    name: 'Edmund'
+  - type: text
+    name: 'Edward'
+  - type: text
+    name: 'Edwin'
+  - type: text
+    name: 'Elbert'
+  - type: text
+    name: 'Ellis'
+  - type: text
+    name: 'Elmer'
+  - type: text
+    name: 'Emil'
+  - type: text
+    name: 'Emmett'
+  - type: text
+    name: 'Ernest'
+  - type: text
+    name: 'Eugene'
+  - type: text
+    name: 'Everett'
+  - type: text
+    name: 'Felix'
+  - type: text
+    name: 'Floyd'
+  - type: text
+    name: 'Francis'
+  - type: text
+    name: 'Frank'
+  - type: text
+    name: 'Franklin'
+  - type: text
+    name: 'Fred'
+  - type: text
+    name: 'Frederick'
+  - type: text
+    name: 'George'
+  - type: text
+    name: 'Gerald'
+  - type: text
+    name: 'Gilbert'
+  - type: text
+    name: 'Glen'
+  - type: text
+    name: 'Glenn'
+  - type: text
+    name: 'Gordon'
+  - type: text
+    name: 'Grover'
+  - type: text
+    name: 'Gus'
+  - type: text
+    name: 'Guy'
+  - type: text
+    name: 'Harold'
+  - type: text
+    name: 'Harrison'
+  - type: text
+    name: 'Harry'
+  - type: text
+    name: 'Harvey'
+  - type: text
+    name: 'Henry'
+  - type: text
+    name: 'Herbert'
+  - type: text
+    name: 'Herman'
+  - type: text
+    name: 'Homer'
+  - type: text
+    name: 'Horace'
+  - type: text
+    name: 'Howard'
+  - type: text
+    name: 'Hubert'
+  - type: text
+    name: 'Hugh'
+  - type: text
+    name: 'Ira'
+  - type: text
+    name: 'Irvin'
+  - type: text
+    name: 'Irving'
+  - type: text
+    name: 'Isaac'
+  - type: text
+    name: 'Jack'
+  - type: text
+    name: 'Jacob'
+  - type: text
+    name: 'Jake'
+  - type: text
+    name: 'James'
+  - type: text
+    name: 'Jasper'
+  - type: text
+    name: 'Jay'
+  - type: text
+    name: 'Jerry'
+  - type: text
+    name: 'Jess'
+  - type: text
+    name: 'Jesse'
+  - type: text
+    name: 'Jessie'
+  - type: text
+    name: 'Jim'
+  - type: text
+    name: 'Joe'
+  - type: text
+    name: 'John'
+  - type: text
+    name: 'Johnnie'
+  - type: text
+    name: 'Jose'
+  - type: text
+    name: 'Joseph'
+  - type: text
+    name: 'Julius'
+  - type: text
+    name: 'Kenneth'
+  - type: text
+    name: 'Lawrence'
+  - type: text
+    name: 'Lee'
+  - type: text
+    name: 'Leo'
+  - type: text
+    name: 'Leon'
+  - type: text
+    name: 'Leonard'
+  - type: text
+    name: 'Leroy'
+  - type: text
+    name: 'Leslie'
+  - type: text
+    name: 'Lester'
+  - type: text
+    name: 'Lewis'
+  - type: text
+    name: 'Lloyd'
+  - type: text
+    name: 'Lonnie'
+  - type: text
+    name: 'Louis'
+  - type: text
+    name: 'Luther'
+  - type: text
+    name: 'Mack'
+  - type: text
+    name: 'Manuel'
+  - type: text
+    name: 'Marion'
+  - type: text
+    name: 'Mark'
+  - type: text
+    name: 'Marshall'
+  - type: text
+    name: 'Martin'
+  - type: text
+    name: 'Marvin'
+  - type: text
+    name: 'Matthew'
+  - type: text
+    name: 'Maurice'
+  - type: text
+    name: 'Max'
+  - type: text
+    name: 'Melvin'
+  - type: text
+    name: 'Michael'
+  - type: text
+    name: 'Mike'
+  - type: text
+    name: 'Milton'
+  - type: text
+    name: 'Morris'
+  - type: text
+    name: 'Moses'
+  - type: text
+    name: 'Nathan'
+  - type: text
+    name: 'Nelson'
+  - type: text
+    name: 'Nicholas'
+  - type: text
+    name: 'Norman'
+  - type: text
+    name: 'Oliver'
+  - type: text
+    name: 'Ollie'
+  - type: text
+    name: 'Orville'
+  - type: text
+    name: 'Oscar'
+  - type: text
+    name: 'Otis'
+  - type: text
+    name: 'Otto'
+  - type: text
+    name: 'Owen'
+  - type: text
+    name: 'Patrick'
+  - type: text
+    name: 'Paul'
+  - type: text
+    name: 'Percy'
+  - type: text
+    name: 'Perry'
+  - type: text
+    name: 'Peter'
+  - type: text
+    name: 'Phil'
+  - type: text
+    name: 'Phillip'
+  - type: text
+    name: 'Ralph'
+  - type: text
+    name: 'Ray'
+  - type: text
+    name: 'Raymond'
+  - type: text
+    name: 'Reuben'
+  - type: text
+    name: 'Richard'
+  - type: text
+    name: 'Robert'
+  - type: text
+    name: 'Roland'
+  - type: text
+    name: 'Roscoe'
+  - type: text
+    name: 'Ross'
+  - type: text
+    name: 'Roy'
+  - type: text
+    name: 'Rudolph'
+  - type: text
+    name: 'Rufus'
+  - type: text
+    name: 'Russell'
+  - type: text
+    name: 'Sam'
+  - type: text
+    name: 'Samuel'
+  - type: text
+    name: 'Sherman'
+  - type: text
+    name: 'Sidney'
+  - type: text
+    name: 'Simon'
+  - type: text
+    name: 'Stanley'
+  - type: text
+    name: 'Stephen'
+  - type: text
+    name: 'Steve'
+  - type: text
+    name: 'Sylvester'
+  - type: text
+    name: 'Theodore'
+  - type: text
+    name: 'Thomas'
+  - type: text
+    name: 'Tom'
+  - type: text
+    name: 'Vernon'
+  - type: text
+    name: 'Victor'
+  - type: text
+    name: 'Vincent'
+  - type: text
+    name: 'Virgil'
+  - type: text
+    name: 'Wallace'
+  - type: text
+    name: 'Walter'
+  - type: text
+    name: 'Warren'
+  - type: text
+    name: 'Wesley'
+  - type: text
+    name: 'Wilbur'
+  - type: text
+    name: 'Will'
+  - type: text
+    name: 'Willard'
+  - type: text
+    name: 'William'
+  - type: text
+    name: 'Willie'
+  - type: text
+    name: 'Willis'
+  - type: text
+    name: 'Zach'
+  - type: text
+    name: 'Zachary'
+  - type: text
+    name: 'Zebediah'
+  - type: text
+    name: 'Zebulon'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..male_first_name_american
+      lang: en
+      priority: 0
+---
+name: Female first name, american
+_id: zvWGA3uHfT3jbOqT
+folder: w2vkKXFHcbQVeB7H
+description: 'Female first names for use in various macros'
+results:
+  - type: text
+    name: 'Ada'
+  - type: text
+    name: 'Addie'
+  - type: text
+    name: 'Agnes'
+  - type: text
+    name: 'Alberta'
+  - type: text
+    name: 'Alice'
+  - type: text
+    name: 'Allie'
+  - type: text
+    name: 'Alma'
+  - type: text
+    name: 'Alta'
+  - type: text
+    name: 'Amanda'
+  - type: text
+    name: 'Amelia'
+  - type: text
+    name: 'Amy'
+  - type: text
+    name: 'Ann'
+  - type: text
+    name: 'Anna'
+  - type: text
+    name: 'Anne'
+  - type: text
+    name: 'Annie'
+  - type: text
+    name: 'Augusta'
+  - type: text
+    name: 'Barbara'
+  - type: text
+    name: 'Beatrice'
+  - type: text
+    name: 'Belle'
+  - type: text
+    name: 'Bernice'
+  - type: text
+    name: 'Bettina'
+  - type: text
+    name: 'Bertha'
+  - type: text
+    name: 'Bessie'
+  - type: text
+    name: 'Betty'
+  - type: text
+    name: 'Beulah'
+  - type: text
+    name: 'Blanche'
+  - type: text
+    name: 'Callie'
+  - type: text
+    name: 'Caroline'
+  - type: text
+    name: 'Carrie'
+  - type: text
+    name: 'Catherine'
+  - type: text
+    name: 'Celia'
+  - type: text
+    name: 'Charlotte'
+  - type: text
+    name: 'Christine'
+  - type: text
+    name: 'Clara'
+  - type: text
+    name: 'Cora'
+  - type: text
+    name: 'Daisy'
+  - type: text
+    name: 'Delia'
+  - type: text
+    name: 'Della'
+  - type: text
+    name: 'Dora'
+  - type: text
+    name: 'Doris'
+  - type: text
+    name: 'Dorothy'
+  - type: text
+    name: 'Edith'
+  - type: text
+    name: 'Edna'
+  - type: text
+    name: 'Eleanor'
+  - type: text
+    name: 'Eliza'
+  - type: text
+    name: 'Elizabeth'
+  - type: text
+    name: 'Ella'
+  - type: text
+    name: 'Ellen'
+  - type: text
+    name: 'Elsie'
+  - type: text
+    name: 'Elva'
+  - type: text
+    name: 'Emily'
+  - type: text
+    name: 'Emma'
+  - type: text
+    name: 'Erma'
+  - type: text
+    name: 'Essie'
+  - type: text
+    name: 'Estella'
+  - type: text
+    name: 'Estelle'
+  - type: text
+    name: 'Esther'
+  - type: text
+    name: 'Ethel'
+  - type: text
+    name: 'Etta'
+  - type: text
+    name: 'Eula'
+  - type: text
+    name: 'Eunice'
+  - type: text
+    name: 'Eva'
+  - type: text
+    name: 'Evelyn'
+  - type: text
+    name: 'Eﬃe'
+  - type: text
+    name: 'Fannie'
+  - type: text
+    name: 'Fern'
+  - type: text
+    name: 'Flora'
+  - type: text
+    name: 'Florence'
+  - type: text
+    name: 'Flossie'
+  - type: text
+    name: 'Frances'
+  - type: text
+    name: 'Freda'
+  - type: text
+    name: 'Frieda'
+  - type: text
+    name: 'Genevieve'
+  - type: text
+    name: 'Georgia'
+  - type: text
+    name: 'Gertrude'
+  - type: text
+    name: 'Gladys'
+  - type: text
+    name: 'Goldie'
+  - type: text
+    name: 'Grace'
+  - type: text
+    name: 'Hannah'
+  - type: text
+    name: 'Harriet'
+  - type: text
+    name: 'Hattie'
+  - type: text
+    name: 'Hazel'
+  - type: text
+    name: 'Helen'
+  - type: text
+    name: 'Henrietta'
+  - type: text
+    name: 'Hilda'
+  - type: text
+    name: 'Ida'
+  - type: text
+    name: 'Ina'
+  - type: text
+    name: 'Inez'
+  - type: text
+    name: 'Irene'
+  - type: text
+    name: 'Irma'
+  - type: text
+    name: 'Isabel'
+  - type: text
+    name: 'Isabelle'
+  - type: text
+    name: 'Iva'
+  - type: text
+    name: 'Jane'
+  - type: text
+    name: 'Janie'
+  - type: text
+    name: 'Jean'
+  - type: text
+    name: 'Jennie'
+  - type: text
+    name: 'Jessie'
+  - type: text
+    name: 'Josephine'
+  - type: text
+    name: 'Josie'
+  - type: text
+    name: 'Julia'
+  - type: text
+    name: 'Kate'
+  - type: text
+    name: 'Katherine'
+  - type: text
+    name: 'Kathleen'
+  - type: text
+    name: 'Kathryn'
+  - type: text
+    name: 'Katie'
+  - type: text
+    name: 'Laura'
+  - type: text
+    name: 'Lela'
+  - type: text
+    name: 'Lena'
+  - type: text
+    name: 'Leona'
+  - type: text
+    name: 'Lillian'
+  - type: text
+    name: 'Lillie'
+  - type: text
+    name: 'Lizzie'
+  - type: text
+    name: 'Lois'
+  - type: text
+    name: 'Lola'
+  - type: text
+    name: 'Loretta'
+  - type: text
+    name: 'Lottie'
+  - type: text
+    name: 'Louise'
+  - type: text
+    name: 'Lucile'
+  - type: text
+    name: 'Lucille'
+  - type: text
+    name: 'Lucy'
+  - type: text
+    name: 'Luella'
+  - type: text
+    name: 'Lula'
+  - type: text
+    name: 'Lulu'
+  - type: text
+    name: 'Lydia'
+  - type: text
+    name: 'Mabel'
+  - type: text
+    name: 'Mable'
+  - type: text
+    name: 'Madeline'
+  - type: text
+    name: 'Mae'
+  - type: text
+    name: 'Maggie'
+  - type: text
+    name: 'Mamie'
+  - type: text
+    name: 'Margaret'
+  - type: text
+    name: 'Marguerite'
+  - type: text
+    name: 'Maria'
+  - type: text
+    name: 'Marian'
+  - type: text
+    name: 'Marie'
+  - type: text
+    name: 'Marion'
+  - type: text
+    name: 'Marjorie'
+  - type: text
+    name: 'Martha'
+  - type: text
+    name: 'Mary'
+  - type: text
+    name: 'Matilda'
+  - type: text
+    name: 'Mattie'
+  - type: text
+    name: 'Maud'
+  - type: text
+    name: 'Maude'
+  - type: text
+    name: 'May'
+  - type: text
+    name: 'Mayme'
+  - type: text
+    name: 'Mildred'
+  - type: text
+    name: 'Millie'
+  - type: text
+    name: 'Minnie'
+  - type: text
+    name: 'Mollie'
+  - type: text
+    name: 'Myrtle'
+  - type: text
+    name: 'Nancy'
+  - type: text
+    name: 'Nannie'
+  - type: text
+    name: 'Naomi'
+  - type: text
+    name: 'Nell'
+  - type: text
+    name: 'Nellie'
+  - type: text
+    name: 'Nettie'
+  - type: text
+    name: 'Nina'
+  - type: text
+    name: 'Nora'
+  - type: text
+    name: 'Norma'
+  - type: text
+    name: 'Ola'
+  - type: text
+    name: 'Olga'
+  - type: text
+    name: 'Olive'
+  - type: text
+    name: 'Ollie'
+  - type: text
+    name: 'Ora'
+  - type: text
+    name: 'Pauline'
+  - type: text
+    name: 'Pearl'
+  - type: text
+    name: 'Rachel'
+  - type: text
+    name: 'Rebecca'
+  - type: text
+    name: 'Rena'
+  - type: text
+    name: 'Rosa'
+  - type: text
+    name: 'Rose'
+  - type: text
+    name: 'Rosie'
+  - type: text
+    name: 'Ruby'
+  - type: text
+    name: 'Ruth'
+  - type: text
+    name: 'Sadie'
+  - type: text
+    name: 'Sallie'
+  - type: text
+    name: 'Sara'
+  - type: text
+    name: 'Sarah'
+  - type: text
+    name: 'Selma'
+  - type: text
+    name: 'Sophia'
+  - type: text
+    name: 'Sophie'
+  - type: text
+    name: 'Stella'
+  - type: text
+    name: 'Susan'
+  - type: text
+    name: 'Susie'
+  - type: text
+    name: 'Sylvia'
+  - type: text
+    name: 'Thelma'
+  - type: text
+    name: 'Theresa'
+  - type: text
+    name: 'Tillie'
+  - type: text
+    name: 'Velma'
+  - type: text
+    name: 'Vera'
+  - type: text
+    name: 'Verna'
+  - type: text
+    name: 'Victoria'
+  - type: text
+    name: 'Viola'
+  - type: text
+    name: 'Violet'
+  - type: text
+    name: 'Virgie'
+  - type: text
+    name: 'Virginia'
+  - type: text
+    name: 'Vivian'
+  - type: text
+    name: 'Willie'
+  - type: text
+    name: 'Winifred'
+  - type: text
+    name: 'Winnie'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..female_first_name_american
+      lang: en
+      priority: 0
+---
+name: Last name, american
+_id: QwGXBkSLea1sJEvK
+folder: w2vkKXFHcbQVeB7H
+description: 'Last names for use in various macros'
+results:
+  - type: text
+    name: 'Abraham'
+  - type: text
+    name: 'Adler'
+  - type: text
+    name: 'Allen'
+  - type: text
+    name: 'Ankins'
+  - type: text
+    name: 'Arandt'
+  - type: text
+    name: 'Arthur'
+  - type: text
+    name: 'Avery'
+  - type: text
+    name: 'Baker'
+  - type: text
+    name: 'Barnham'
+  - type: text
+    name: 'Basis'
+  - type: text
+    name: 'Belanger'
+  - type: text
+    name: 'Bentz'
+  - type: text
+    name: 'Bessler'
+  - type: text
+    name: 'Best'
+  - type: text
+    name: 'Bevard'
+  - type: text
+    name: 'Blakely'
+  - type: text
+    name: 'Bleeker'
+  - type: text
+    name: 'Bouche'
+  - type: text
+    name: 'Boursaw'
+  - type: text
+    name: 'Brant'
+  - type: text
+    name: 'Brawley'
+  - type: text
+    name: 'Brock'
+  - type: text
+    name: 'Brockman'
+  - type: text
+    name: 'Bruce'
+  - type: text
+    name: 'Buchman'
+  - type: text
+    name: 'Burnett'
+  - type: text
+    name: 'Burnette'
+  - type: text
+    name: 'Burns'
+  - type: text
+    name: 'Buss'
+  - type: text
+    name: 'Butterﬁeld'
+  - type: text
+    name: 'Cartman'
+  - type: text
+    name: 'Cantin'
+  - type: text
+    name: 'Caﬀey'
+  - type: text
+    name: 'Christopher'
+  - type: text
+    name: 'Click'
+  - type: text
+    name: 'Codere'
+  - type: text
+    name: 'Collins'
+  - type: text
+    name: 'Coutu'
+  - type: text
+    name: 'Cowell'
+  - type: text
+    name: 'Cowman'
+  - type: text
+    name: 'Crankovitch'
+  - type: text
+    name: 'Cuthburt'
+  - type: text
+    name: 'Cuttling'
+  - type: text
+    name: 'Darwin'
+  - type: text
+    name: 'Davis'
+  - type: text
+    name: 'Dorman'
+  - type: text
+    name: 'Drafs'
+  - type: text
+    name: 'Eakley'
+  - type: text
+    name: 'Edwards'
+  - type: text
+    name: 'Elliott'
+  - type: text
+    name: 'Elsner'
+  - type: text
+    name: 'English'
+  - type: text
+    name: 'Ernlaid'
+  - type: text
+    name: 'Fanbrick'
+  - type: text
+    name: 'Fandrick'
+  - type: text
+    name: 'Farwell'
+  - type: text
+    name: 'Feigel'
+  - type: text
+    name: 'Felten'
+  - type: text
+    name: 'Fenske'
+  - type: text
+    name: 'Fergin'
+  - type: text
+    name: 'Fillman'
+  - type: text
+    name: 'Finley'
+  - type: text
+    name: 'Firske'
+  - type: text
+    name: 'Flatt'
+  - type: text
+    name: 'Floria'
+  - type: text
+    name: 'Fralich'
+  - type: text
+    name: 'Franklin'
+  - type: text
+    name: 'Freeman'
+  - type: text
+    name: 'Frisbe'
+  - type: text
+    name: 'Furlong'
+  - type: text
+    name: 'Gager'
+  - type: text
+    name: 'Garvin'
+  - type: text
+    name: 'Germain'
+  - type: text
+    name: 'Goodwin'
+  - type: text
+    name: 'Gray'
+  - type: text
+    name: 'Greenwald'
+  - type: text
+    name: 'Greenwalt'
+  - type: text
+    name: 'Griﬀen'
+  - type: text
+    name: 'Griﬃth'
+  - type: text
+    name: 'Hahn'
+  - type: text
+    name: 'Halsted'
+  - type: text
+    name: 'Hammermeister'
+  - type: text
+    name: 'Hancock'
+  - type: text
+    name: 'Harmal'
+  - type: text
+    name: 'Hass'
+  - type: text
+    name: 'Hastings'
+  - type: text
+    name: 'Hayes'
+  - type: text
+    name: 'Heminger'
+  - type: text
+    name: 'Henchal'
+  - type: text
+    name: 'Hessen'
+  - type: text
+    name: 'Hidland'
+  - type: text
+    name: 'Hilt'
+  - type: text
+    name: 'Hogue'
+  - type: text
+    name: 'Hollister'
+  - type: text
+    name: 'Hollman'
+  - type: text
+    name: 'Howell'
+  - type: text
+    name: 'Hyde'
+  - type: text
+    name: 'Kasper'
+  - type: text
+    name: 'Kegley'
+  - type: text
+    name: 'Kinney'
+  - type: text
+    name: 'Kisro'
+  - type: text
+    name: 'Kleeman'
+  - type: text
+    name: 'Kloburcher'
+  - type: text
+    name: 'Leach'
+  - type: text
+    name: 'Lehman'
+  - type: text
+    name: 'Len'
+  - type: text
+    name: 'Lesatz'
+  - type: text
+    name: 'Levard'
+  - type: text
+    name: 'Lindh'
+  - type: text
+    name: 'Lraise'
+  - type: text
+    name: 'Luckstrim'
+  - type: text
+    name: 'Lynch'
+  - type: text
+    name: 'Madison'
+  - type: text
+    name: 'Manse'
+  - type: text
+    name: 'Marcus'
+  - type: text
+    name: 'Markus'
+  - type: text
+    name: 'Matchinski'
+  - type: text
+    name: 'Mathews'
+  - type: text
+    name: 'McAlpine'
+  - type: text
+    name: 'McBurney'
+  - type: text
+    name: 'McCarney'
+  - type: text
+    name: 'McCown'
+  - type: text
+    name: 'McCutchen'
+  - type: text
+    name: 'McCutcheon'
+  - type: text
+    name: 'McDonald'
+  - type: text
+    name: 'McGraw'
+  - type: text
+    name: 'Merrick'
+  - type: text
+    name: 'Metic'
+  - type: text
+    name: 'Molzan'
+  - type: text
+    name: 'Morris'
+  - type: text
+    name: 'Moses'
+  - type: text
+    name: 'Nickels'
+  - type: text
+    name: 'Norval'
+  - type: text
+    name: 'O''Connell'
+  - type: text
+    name: 'O''Neal'
+  - type: text
+    name: 'O''Neil'
+  - type: text
+    name: 'Olson'
+  - type: text
+    name: 'Ozanich'
+  - type: text
+    name: 'Pantiel'
+  - type: text
+    name: 'Patterson'
+  - type: text
+    name: 'Patzer'
+  - type: text
+    name: 'Peppin'
+  - type: text
+    name: 'Perkins'
+  - type: text
+    name: 'Porter'
+  - type: text
+    name: 'Price'
+  - type: text
+    name: 'Rapp'
+  - type: text
+    name: 'Raslo'
+  - type: text
+    name: 'Razner'
+  - type: text
+    name: 'Renaldt'
+  - type: text
+    name: 'Rifenberg'
+  - type: text
+    name: 'Riley'
+  - type: text
+    name: 'Ripley'
+  - type: text
+    name: 'Rosental'
+  - type: text
+    name: 'Rossini'
+  - type: text
+    name: 'Russell'
+  - type: text
+    name: 'Sawyer'
+  - type: text
+    name: 'Schiltgan'
+  - type: text
+    name: 'Schiltzen'
+  - type: text
+    name: 'Schliske'
+  - type: text
+    name: 'Schubert'
+  - type: text
+    name: 'Schmidt'
+  - type: text
+    name: 'School'
+  - type: text
+    name: 'Schroeder'
+  - type: text
+    name: 'Schuthosk'
+  - type: text
+    name: 'Shepherd'
+  - type: text
+    name: 'Schwarm'
+  - type: text
+    name: 'Schwartz'
+  - type: text
+    name: 'Shane'
+  - type: text
+    name: 'Shattuck'
+  - type: text
+    name: 'Shaw'
+  - type: text
+    name: 'Simmons'
+  - type: text
+    name: 'Slack'
+  - type: text
+    name: 'Smith'
+  - type: text
+    name: 'Speltzer'
+  - type: text
+    name: 'Stewart'
+  - type: text
+    name: 'Stimac'
+  - type: text
+    name: 'Strenburg'
+  - type: text
+    name: 'Strong'
+  - type: text
+    name: 'Stroshine'
+  - type: text
+    name: 'Swansun'
+  - type: text
+    name: 'Swanson'
+  - type: text
+    name: 'Syveran'
+  - type: text
+    name: 'Tenker'
+  - type: text
+    name: 'Thomas'
+  - type: text
+    name: 'Traver'
+  - type: text
+    name: 'Urton'
+  - type: text
+    name: 'Vallier'
+  - type: text
+    name: 'Wagner'
+  - type: text
+    name: 'Wall'
+  - type: text
+    name: 'Walsted'
+  - type: text
+    name: 'Warner'
+  - type: text
+    name: 'Webber'
+  - type: text
+    name: 'Welch'
+  - type: text
+    name: 'Wentlandt'
+  - type: text
+    name: 'Westin'
+  - type: text
+    name: 'White'
+  - type: text
+    name: 'Wilkilgon'
+  - type: text
+    name: 'Wiltsey'
+  - type: text
+    name: 'Winters'
+  - type: text
+    name: 'Woods'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..last_name_american
+      lang: en
+      priority: 0

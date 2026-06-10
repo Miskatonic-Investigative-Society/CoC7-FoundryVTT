@@ -1,0 +1,262 @@
+_id: osUcnVzKwmAKuZel
+name: Token Namer
+type: folder
+color: '#75844c'
+---
+_id: osUcnVzKwmBGuZel
+name: Actor Namer
+type: folder
+color: '#75844c'
+---
+_id: coc7macrofixtok1
+name: Reset Token Name
+type: script
+scope: global
+img: icons/sundries/flags/banner-yellow.webp
+command: |
+  // Set token name to actor name
+  const tokens = canvas.tokens.controlled;
+  if (tokens.length > 0) {
+    const updates = [];
+    tokens.forEach(token => {
+      updates.push({
+        _id: token.id,
+        name: token.actor.name
+      });
+    });
+    canvas.scene.updateEmbeddedDocuments("Token", updates);
+  } else {
+    ui.notifications.warn("No tokens were selected");
+  }
+flags:
+  CoC7:
+    cocidFlag:
+      id: m..fix-token-name
+      lang: en
+      priority: 0
+---
+_id: coc7macrandmaleA
+name: Random Male Name American (Token)
+type: script
+scope: global
+folder: osUcnVzKwmAKuZel
+img: icons/sundries/documents/passport-document-identification.webp
+command: |
+  // This is meant for wildcard NPCs
+  // Generates a random male name from compendium tables and applies it to selected tokens.
+  async function getRandomMaleName() {
+    const table1 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.yvXk3GTSA9adwv1z");
+    const table2 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.QwGXBkSLea1sJEvK");
+    if (!table1 || !table2) {
+      ui.notifications.error("Compendium table not found!");
+      return null;
+    }
+    const firstNameResult = await table1.draw({ displayChat: false });
+    const lastNameResult = await table2.draw({ displayChat: false });
+    if (firstNameResult.results.length > 0 || lastNameResult.results.length > 0) {
+      const firstName = firstNameResult.results[0].name;
+      const lastName = lastNameResult.results[0].name;
+      return `${firstName} ${lastName}`;
+    }
+    return null;
+  }
+
+  const tokens = canvas.tokens.controlled;
+  if (tokens.length > 0) {
+    const updates = [];
+    for (const token of tokens) {
+      const randomName = await getRandomMaleName();
+      if (randomName) {
+        updates.push({
+          _id: token.id,
+          name: randomName
+        });
+      }
+    }
+    if (updates.length > 0) {
+      canvas.scene.updateEmbeddedDocuments("Token", updates);
+      ui.notifications.info(`Updated ${updates.length} token names.`);
+    }
+  } else {
+    ui.notifications.warn("No tokens were selected");
+  }
+flags:
+  CoC7:
+    cocidFlag:
+      id: m..random-male-name
+      lang: en
+      priority: 0
+---
+_id: coc7macrandfemA2
+name: Random Female Name American (Token)
+type: script
+scope: global
+folder: osUcnVzKwmAKuZel
+img: icons/sundries/documents/passport-document-identification.webp
+command: |
+  // This is meant for wildcard NPCs
+  // Generates a random female name from compendium tables and applies it to selected tokens.
+  async function getRandomFemaleName() {
+    const table1 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.zvWGA3uHfT3jbOqT");
+    const table2 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.QwGXBkSLea1sJEvK");
+    if (!table1 || !table2) {
+      ui.notifications.error("Compendium table not found!");
+      return null;
+    }
+    const firstNameResult = await table1.draw({ displayChat: false });
+    const lastNameResult = await table2.draw({ displayChat: false });
+    if (firstNameResult.results.length > 0 || lastNameResult.results.length > 0) {
+      const firstName = firstNameResult.results[0].name;
+      const lastName = lastNameResult.results[0].name;
+      return `${firstName} ${lastName}`;
+    }
+    return null;
+  }
+
+  const tokens = canvas.tokens.controlled;
+  if (tokens.length > 0) {
+    const updates = [];
+    for (const token of tokens) {
+      const randomName = await getRandomFemaleName();
+      if (randomName) {
+        updates.push({
+          _id: token.id,
+          name: randomName
+        });
+      }
+    }
+    if (updates.length > 0) {
+      canvas.scene.updateEmbeddedDocuments("Token", updates);
+      ui.notifications.info(`Updated ${updates.length} token names.`);
+    }
+  } else {
+    ui.notifications.warn("No tokens were selected");
+  }
+flags:
+  CoC7:
+    cocidFlag:
+      id: m..random-female-name
+      lang: en
+      priority: 0
+---
+_id: coc7macrandfemA1
+name: Random Female Name American (Actor)
+type: script
+scope: global
+folder: osUcnVzKwmBGuZel
+img: icons/commodities/tech/electronics-button-skull-red.webp
+command: |
+  // WARNING: This macro will overwrite the name of the actor!
+  // Generates a random female name from compendium tables and applies it to ACTOR of selected token.
+  async function getRandomFemaleName() {
+    const table1 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.zvWGA3uHfT3jbOqT");
+    const table2 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.QwGXBkSLea1sJEvK");
+    if (!table1 || !table2) {
+      ui.notifications.error("Compendium table not found!");
+      return null;
+    }
+    const firstNameResult = await table1.draw({ displayChat: false });
+    const lastNameResult = await table2.draw({ displayChat: false });
+    if (firstNameResult.results.length > 0 || lastNameResult.results.length > 0) {
+      const firstName = firstNameResult.results[0].name;
+      const lastName = lastNameResult.results[0].name;
+      return `${firstName} ${lastName}`;
+    }
+    return null;
+  }
+  const tokens = canvas.tokens.controlled;
+  if (tokens.length > 0) {
+    const updates = [];
+    for (const token of tokens) {
+      const randomName = await getRandomFemaleName();
+      if (randomName) {
+        updates.push({
+          actor: {
+            _id: token.actor.id,
+            name: randomName,
+            prototypeToken: {
+              name: randomName
+            },
+            token: {
+              _id: token.id,
+              name: randomName
+            }
+          }
+        });
+      }
+    }
+    if (updates.length > 0) {
+      const updatedActors = await Actor.implementation.updateDocuments(updates.map(update => update.actor));
+      const updatedTokens = await Token.implementation.updateDocuments(updates.map(update => update.token));
+      ui.notifications.info(`Updated ${updates.length} token names.`);
+    }
+  } else {
+    ui.notifications.warn("No tokens were selected");
+  }
+flags:
+  CoC7:
+    cocidFlag:
+      id: m..random-female-name-actor-american
+      lang: en
+      priority: 0
+---
+_id: coc7mabrandfemA5
+name: Random Male Name American (Actor)
+type: script
+scope: global
+folder: osUcnVzKwmBGuZel
+img: icons/commodities/tech/electronics-button-skull-red.webp
+command: |
+  // WARNING: This macro will overwrite the name of the actor!
+  // Generates a random male name from compendium tables and applies it to ACTOR of selected token.
+  async function getRandomMaleName() {
+    const table1 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.zvWGA3uHfT3jbOqT");
+    const table2 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.QwGXBkSLea1sJEvK");
+    if (!table1 || !table2) {
+      ui.notifications.error("Compendium table not found!");
+      return null;
+    }
+    const firstNameResult = await table1.draw({ displayChat: false });
+    const lastNameResult = await table2.draw({ displayChat: false });
+    if (firstNameResult.results.length > 0 || lastNameResult.results.length > 0) {
+      const firstName = firstNameResult.results[0].name;
+      const lastName = lastNameResult.results[0].name;
+      return `${firstName} ${lastName}`;
+    }
+    return null;
+  }
+  const tokens = canvas.tokens.controlled;
+  if (tokens.length > 0) {
+    const updates = [];
+    for (const token of tokens) {
+      const randomName = await getRandomMaleName();
+      if (randomName) {
+        updates.push({
+          actor: {
+            _id: token.actor.id,
+            name: randomName,
+            prototypeToken: {
+              name: randomName
+            },
+            token: {
+              _id: token.id,
+              name: randomName
+            }
+          }
+        });
+      }
+    }
+    if (updates.length > 0) {
+      const updatedActors = await Actor.implementation.updateDocuments(updates.map(update => update.actor));
+      const updatedTokens = await Token.implementation.updateDocuments(updates.map(update => update.token));
+      ui.notifications.info(`Updated ${updates.length} token names.`);
+    }
+  } else {
+    ui.notifications.warn("No tokens were selected");
+  }
+flags:
+  CoC7:
+    cocidFlag:
+      id: m..random-male-name-actor-american
+      lang: en
+      priority: 0
