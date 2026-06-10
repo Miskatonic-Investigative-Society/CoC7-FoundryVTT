@@ -37,3 +37,4142 @@ flags:
       id: rt..bouts-of-madness-table-realtime
       lang: en
       priority: 0
+---
+name: Names
+type: folder
+_id: w2vkKXFHcbQVeB7H
+color: '#75844c'
+---
+name: Male first name, american
+_id: yvXk3GTSA9adwv1z
+folder: w2vkKXFHcbQVeB7H
+description: 'Male first names for use in various macros'
+results:
+  - type: text
+    name: 'Aaron'
+  - type: text
+    name: 'Abraham'
+  - type: text
+    name: 'Adam'
+  - type: text
+    name: 'Adolph'
+  - type: text
+    name: 'Albert'
+  - type: text
+    name: 'Alex'
+  - type: text
+    name: 'Alexander'
+  - type: text
+    name: 'Alfred'
+  - type: text
+    name: 'Allen'
+  - type: text
+    name: 'Alonzo'
+  - type: text
+    name: 'Alvin'
+  - type: text
+    name: 'Amos'
+  - type: text
+    name: 'Andrew'
+  - type: text
+    name: 'Anthony'
+  - type: text
+    name: 'Archie'
+  - type: text
+    name: 'Arnold'
+  - type: text
+    name: 'Arthur'
+  - type: text
+    name: 'August'
+  - type: text
+    name: 'Ben'
+  - type: text
+    name: 'Benjamin'
+  - type: text
+    name: 'Bennie'
+  - type: text
+    name: 'Bernard'
+  - type: text
+    name: 'Bert'
+  - type: text
+    name: 'Bill'
+  - type: text
+    name: 'Calvin'
+  - type: text
+    name: 'Carl'
+  - type: text
+    name: 'Cecil'
+  - type: text
+    name: 'Charles'
+  - type: text
+    name: 'Charley'
+  - type: text
+    name: 'Charlie'
+  - type: text
+    name: 'Chester'
+  - type: text
+    name: 'Clarence'
+  - type: text
+    name: 'Claud'
+  - type: text
+    name: 'Claude'
+  - type: text
+    name: 'Clayton'
+  - type: text
+    name: 'Clifton'
+  - type: text
+    name: 'Clinton'
+  - type: text
+    name: 'Cliﬀord'
+  - type: text
+    name: 'Clyde'
+  - type: text
+    name: 'Cornelius'
+  - type: text
+    name: 'Curtis'
+  - type: text
+    name: 'Dan'
+  - type: text
+    name: 'Daniel'
+  - type: text
+    name: 'Dave'
+  - type: text
+    name: 'David'
+  - type: text
+    name: 'Dennis'
+  - type: text
+    name: 'Dewey'
+  - type: text
+    name: 'Donald'
+  - type: text
+    name: 'Earl'
+  - type: text
+    name: 'Earnest'
+  - type: text
+    name: 'Ed'
+  - type: text
+    name: 'Eddie'
+  - type: text
+    name: 'Edgar'
+  - type: text
+    name: 'Edmund'
+  - type: text
+    name: 'Edward'
+  - type: text
+    name: 'Edwin'
+  - type: text
+    name: 'Elbert'
+  - type: text
+    name: 'Ellis'
+  - type: text
+    name: 'Elmer'
+  - type: text
+    name: 'Emil'
+  - type: text
+    name: 'Emmett'
+  - type: text
+    name: 'Ernest'
+  - type: text
+    name: 'Eugene'
+  - type: text
+    name: 'Everett'
+  - type: text
+    name: 'Felix'
+  - type: text
+    name: 'Floyd'
+  - type: text
+    name: 'Francis'
+  - type: text
+    name: 'Frank'
+  - type: text
+    name: 'Franklin'
+  - type: text
+    name: 'Fred'
+  - type: text
+    name: 'Frederick'
+  - type: text
+    name: 'George'
+  - type: text
+    name: 'Gerald'
+  - type: text
+    name: 'Gilbert'
+  - type: text
+    name: 'Glen'
+  - type: text
+    name: 'Glenn'
+  - type: text
+    name: 'Gordon'
+  - type: text
+    name: 'Grover'
+  - type: text
+    name: 'Gus'
+  - type: text
+    name: 'Guy'
+  - type: text
+    name: 'Harold'
+  - type: text
+    name: 'Harrison'
+  - type: text
+    name: 'Harry'
+  - type: text
+    name: 'Harvey'
+  - type: text
+    name: 'Henry'
+  - type: text
+    name: 'Herbert'
+  - type: text
+    name: 'Herman'
+  - type: text
+    name: 'Homer'
+  - type: text
+    name: 'Horace'
+  - type: text
+    name: 'Howard'
+  - type: text
+    name: 'Hubert'
+  - type: text
+    name: 'Hugh'
+  - type: text
+    name: 'Ira'
+  - type: text
+    name: 'Irvin'
+  - type: text
+    name: 'Irving'
+  - type: text
+    name: 'Isaac'
+  - type: text
+    name: 'Jack'
+  - type: text
+    name: 'Jacob'
+  - type: text
+    name: 'Jake'
+  - type: text
+    name: 'James'
+  - type: text
+    name: 'Jasper'
+  - type: text
+    name: 'Jay'
+  - type: text
+    name: 'Jerry'
+  - type: text
+    name: 'Jess'
+  - type: text
+    name: 'Jesse'
+  - type: text
+    name: 'Jessie'
+  - type: text
+    name: 'Jim'
+  - type: text
+    name: 'Joe'
+  - type: text
+    name: 'John'
+  - type: text
+    name: 'Johnnie'
+  - type: text
+    name: 'Jose'
+  - type: text
+    name: 'Joseph'
+  - type: text
+    name: 'Julius'
+  - type: text
+    name: 'Kenneth'
+  - type: text
+    name: 'Lawrence'
+  - type: text
+    name: 'Lee'
+  - type: text
+    name: 'Leo'
+  - type: text
+    name: 'Leon'
+  - type: text
+    name: 'Leonard'
+  - type: text
+    name: 'Leroy'
+  - type: text
+    name: 'Leslie'
+  - type: text
+    name: 'Lester'
+  - type: text
+    name: 'Lewis'
+  - type: text
+    name: 'Lloyd'
+  - type: text
+    name: 'Lonnie'
+  - type: text
+    name: 'Louis'
+  - type: text
+    name: 'Luther'
+  - type: text
+    name: 'Mack'
+  - type: text
+    name: 'Manuel'
+  - type: text
+    name: 'Marion'
+  - type: text
+    name: 'Mark'
+  - type: text
+    name: 'Marshall'
+  - type: text
+    name: 'Martin'
+  - type: text
+    name: 'Marvin'
+  - type: text
+    name: 'Matthew'
+  - type: text
+    name: 'Maurice'
+  - type: text
+    name: 'Max'
+  - type: text
+    name: 'Melvin'
+  - type: text
+    name: 'Michael'
+  - type: text
+    name: 'Mike'
+  - type: text
+    name: 'Milton'
+  - type: text
+    name: 'Morris'
+  - type: text
+    name: 'Moses'
+  - type: text
+    name: 'Nathan'
+  - type: text
+    name: 'Nelson'
+  - type: text
+    name: 'Nicholas'
+  - type: text
+    name: 'Norman'
+  - type: text
+    name: 'Oliver'
+  - type: text
+    name: 'Ollie'
+  - type: text
+    name: 'Orville'
+  - type: text
+    name: 'Oscar'
+  - type: text
+    name: 'Otis'
+  - type: text
+    name: 'Otto'
+  - type: text
+    name: 'Owen'
+  - type: text
+    name: 'Patrick'
+  - type: text
+    name: 'Paul'
+  - type: text
+    name: 'Percy'
+  - type: text
+    name: 'Perry'
+  - type: text
+    name: 'Peter'
+  - type: text
+    name: 'Phil'
+  - type: text
+    name: 'Phillip'
+  - type: text
+    name: 'Ralph'
+  - type: text
+    name: 'Ray'
+  - type: text
+    name: 'Raymond'
+  - type: text
+    name: 'Reuben'
+  - type: text
+    name: 'Richard'
+  - type: text
+    name: 'Robert'
+  - type: text
+    name: 'Roland'
+  - type: text
+    name: 'Roscoe'
+  - type: text
+    name: 'Ross'
+  - type: text
+    name: 'Roy'
+  - type: text
+    name: 'Rudolph'
+  - type: text
+    name: 'Rufus'
+  - type: text
+    name: 'Russell'
+  - type: text
+    name: 'Sam'
+  - type: text
+    name: 'Samuel'
+  - type: text
+    name: 'Sherman'
+  - type: text
+    name: 'Sidney'
+  - type: text
+    name: 'Simon'
+  - type: text
+    name: 'Stanley'
+  - type: text
+    name: 'Stephen'
+  - type: text
+    name: 'Steve'
+  - type: text
+    name: 'Sylvester'
+  - type: text
+    name: 'Theodore'
+  - type: text
+    name: 'Thomas'
+  - type: text
+    name: 'Tom'
+  - type: text
+    name: 'Vernon'
+  - type: text
+    name: 'Victor'
+  - type: text
+    name: 'Vincent'
+  - type: text
+    name: 'Virgil'
+  - type: text
+    name: 'Wallace'
+  - type: text
+    name: 'Walter'
+  - type: text
+    name: 'Warren'
+  - type: text
+    name: 'Wesley'
+  - type: text
+    name: 'Wilbur'
+  - type: text
+    name: 'Will'
+  - type: text
+    name: 'Willard'
+  - type: text
+    name: 'William'
+  - type: text
+    name: 'Willie'
+  - type: text
+    name: 'Willis'
+  - type: text
+    name: 'Zach'
+  - type: text
+    name: 'Zachary'
+  - type: text
+    name: 'Zebediah'
+  - type: text
+    name: 'Zebulon'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..male_first_name_american
+      lang: en
+      priority: 0
+---
+name: Female first name, american
+_id: zvWGA3uHfT3jbOqT
+folder: w2vkKXFHcbQVeB7H
+description: 'Female first names for use in various macros'
+results:
+  - type: text
+    name: 'Ada'
+  - type: text
+    name: 'Addie'
+  - type: text
+    name: 'Agnes'
+  - type: text
+    name: 'Alberta'
+  - type: text
+    name: 'Alice'
+  - type: text
+    name: 'Allie'
+  - type: text
+    name: 'Alma'
+  - type: text
+    name: 'Alta'
+  - type: text
+    name: 'Amanda'
+  - type: text
+    name: 'Amelia'
+  - type: text
+    name: 'Amy'
+  - type: text
+    name: 'Ann'
+  - type: text
+    name: 'Anna'
+  - type: text
+    name: 'Anne'
+  - type: text
+    name: 'Annie'
+  - type: text
+    name: 'Augusta'
+  - type: text
+    name: 'Barbara'
+  - type: text
+    name: 'Beatrice'
+  - type: text
+    name: 'Belle'
+  - type: text
+    name: 'Bernice'
+  - type: text
+    name: 'Bettina'
+  - type: text
+    name: 'Bertha'
+  - type: text
+    name: 'Bessie'
+  - type: text
+    name: 'Betty'
+  - type: text
+    name: 'Beulah'
+  - type: text
+    name: 'Blanche'
+  - type: text
+    name: 'Callie'
+  - type: text
+    name: 'Caroline'
+  - type: text
+    name: 'Carrie'
+  - type: text
+    name: 'Catherine'
+  - type: text
+    name: 'Celia'
+  - type: text
+    name: 'Charlotte'
+  - type: text
+    name: 'Christine'
+  - type: text
+    name: 'Clara'
+  - type: text
+    name: 'Cora'
+  - type: text
+    name: 'Daisy'
+  - type: text
+    name: 'Delia'
+  - type: text
+    name: 'Della'
+  - type: text
+    name: 'Dora'
+  - type: text
+    name: 'Doris'
+  - type: text
+    name: 'Dorothy'
+  - type: text
+    name: 'Edith'
+  - type: text
+    name: 'Edna'
+  - type: text
+    name: 'Eleanor'
+  - type: text
+    name: 'Eliza'
+  - type: text
+    name: 'Elizabeth'
+  - type: text
+    name: 'Ella'
+  - type: text
+    name: 'Ellen'
+  - type: text
+    name: 'Elsie'
+  - type: text
+    name: 'Elva'
+  - type: text
+    name: 'Emily'
+  - type: text
+    name: 'Emma'
+  - type: text
+    name: 'Erma'
+  - type: text
+    name: 'Essie'
+  - type: text
+    name: 'Estella'
+  - type: text
+    name: 'Estelle'
+  - type: text
+    name: 'Esther'
+  - type: text
+    name: 'Ethel'
+  - type: text
+    name: 'Etta'
+  - type: text
+    name: 'Eula'
+  - type: text
+    name: 'Eunice'
+  - type: text
+    name: 'Eva'
+  - type: text
+    name: 'Evelyn'
+  - type: text
+    name: 'Eﬃe'
+  - type: text
+    name: 'Fannie'
+  - type: text
+    name: 'Fern'
+  - type: text
+    name: 'Flora'
+  - type: text
+    name: 'Florence'
+  - type: text
+    name: 'Flossie'
+  - type: text
+    name: 'Frances'
+  - type: text
+    name: 'Freda'
+  - type: text
+    name: 'Frieda'
+  - type: text
+    name: 'Genevieve'
+  - type: text
+    name: 'Georgia'
+  - type: text
+    name: 'Gertrude'
+  - type: text
+    name: 'Gladys'
+  - type: text
+    name: 'Goldie'
+  - type: text
+    name: 'Grace'
+  - type: text
+    name: 'Hannah'
+  - type: text
+    name: 'Harriet'
+  - type: text
+    name: 'Hattie'
+  - type: text
+    name: 'Hazel'
+  - type: text
+    name: 'Helen'
+  - type: text
+    name: 'Henrietta'
+  - type: text
+    name: 'Hilda'
+  - type: text
+    name: 'Ida'
+  - type: text
+    name: 'Ina'
+  - type: text
+    name: 'Inez'
+  - type: text
+    name: 'Irene'
+  - type: text
+    name: 'Irma'
+  - type: text
+    name: 'Isabel'
+  - type: text
+    name: 'Isabelle'
+  - type: text
+    name: 'Iva'
+  - type: text
+    name: 'Jane'
+  - type: text
+    name: 'Janie'
+  - type: text
+    name: 'Jean'
+  - type: text
+    name: 'Jennie'
+  - type: text
+    name: 'Jessie'
+  - type: text
+    name: 'Josephine'
+  - type: text
+    name: 'Josie'
+  - type: text
+    name: 'Julia'
+  - type: text
+    name: 'Kate'
+  - type: text
+    name: 'Katherine'
+  - type: text
+    name: 'Kathleen'
+  - type: text
+    name: 'Kathryn'
+  - type: text
+    name: 'Katie'
+  - type: text
+    name: 'Laura'
+  - type: text
+    name: 'Lela'
+  - type: text
+    name: 'Lena'
+  - type: text
+    name: 'Leona'
+  - type: text
+    name: 'Lillian'
+  - type: text
+    name: 'Lillie'
+  - type: text
+    name: 'Lizzie'
+  - type: text
+    name: 'Lois'
+  - type: text
+    name: 'Lola'
+  - type: text
+    name: 'Loretta'
+  - type: text
+    name: 'Lottie'
+  - type: text
+    name: 'Louise'
+  - type: text
+    name: 'Lucile'
+  - type: text
+    name: 'Lucille'
+  - type: text
+    name: 'Lucy'
+  - type: text
+    name: 'Luella'
+  - type: text
+    name: 'Lula'
+  - type: text
+    name: 'Lulu'
+  - type: text
+    name: 'Lydia'
+  - type: text
+    name: 'Mabel'
+  - type: text
+    name: 'Mable'
+  - type: text
+    name: 'Madeline'
+  - type: text
+    name: 'Mae'
+  - type: text
+    name: 'Maggie'
+  - type: text
+    name: 'Mamie'
+  - type: text
+    name: 'Margaret'
+  - type: text
+    name: 'Marguerite'
+  - type: text
+    name: 'Maria'
+  - type: text
+    name: 'Marian'
+  - type: text
+    name: 'Marie'
+  - type: text
+    name: 'Marion'
+  - type: text
+    name: 'Marjorie'
+  - type: text
+    name: 'Martha'
+  - type: text
+    name: 'Mary'
+  - type: text
+    name: 'Matilda'
+  - type: text
+    name: 'Mattie'
+  - type: text
+    name: 'Maud'
+  - type: text
+    name: 'Maude'
+  - type: text
+    name: 'May'
+  - type: text
+    name: 'Mayme'
+  - type: text
+    name: 'Mildred'
+  - type: text
+    name: 'Millie'
+  - type: text
+    name: 'Minnie'
+  - type: text
+    name: 'Mollie'
+  - type: text
+    name: 'Myrtle'
+  - type: text
+    name: 'Nancy'
+  - type: text
+    name: 'Nannie'
+  - type: text
+    name: 'Naomi'
+  - type: text
+    name: 'Nell'
+  - type: text
+    name: 'Nellie'
+  - type: text
+    name: 'Nettie'
+  - type: text
+    name: 'Nina'
+  - type: text
+    name: 'Nora'
+  - type: text
+    name: 'Norma'
+  - type: text
+    name: 'Ola'
+  - type: text
+    name: 'Olga'
+  - type: text
+    name: 'Olive'
+  - type: text
+    name: 'Ollie'
+  - type: text
+    name: 'Ora'
+  - type: text
+    name: 'Pauline'
+  - type: text
+    name: 'Pearl'
+  - type: text
+    name: 'Rachel'
+  - type: text
+    name: 'Rebecca'
+  - type: text
+    name: 'Rena'
+  - type: text
+    name: 'Rosa'
+  - type: text
+    name: 'Rose'
+  - type: text
+    name: 'Rosie'
+  - type: text
+    name: 'Ruby'
+  - type: text
+    name: 'Ruth'
+  - type: text
+    name: 'Sadie'
+  - type: text
+    name: 'Sallie'
+  - type: text
+    name: 'Sara'
+  - type: text
+    name: 'Sarah'
+  - type: text
+    name: 'Selma'
+  - type: text
+    name: 'Sophia'
+  - type: text
+    name: 'Sophie'
+  - type: text
+    name: 'Stella'
+  - type: text
+    name: 'Susan'
+  - type: text
+    name: 'Susie'
+  - type: text
+    name: 'Sylvia'
+  - type: text
+    name: 'Thelma'
+  - type: text
+    name: 'Theresa'
+  - type: text
+    name: 'Tillie'
+  - type: text
+    name: 'Velma'
+  - type: text
+    name: 'Vera'
+  - type: text
+    name: 'Verna'
+  - type: text
+    name: 'Victoria'
+  - type: text
+    name: 'Viola'
+  - type: text
+    name: 'Violet'
+  - type: text
+    name: 'Virgie'
+  - type: text
+    name: 'Virginia'
+  - type: text
+    name: 'Vivian'
+  - type: text
+    name: 'Willie'
+  - type: text
+    name: 'Winifred'
+  - type: text
+    name: 'Winnie'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..female_first_name_american
+      lang: en
+      priority: 0
+---
+name: Last name, american
+_id: QwGXBkSLea1sJEvK
+folder: w2vkKXFHcbQVeB7H
+description: 'Last names for use in various macros'
+results:
+  - type: text
+    name: 'Abraham'
+  - type: text
+    name: 'Adler'
+  - type: text
+    name: 'Allen'
+  - type: text
+    name: 'Ankins'
+  - type: text
+    name: 'Arandt'
+  - type: text
+    name: 'Arthur'
+  - type: text
+    name: 'Avery'
+  - type: text
+    name: 'Baker'
+  - type: text
+    name: 'Barnham'
+  - type: text
+    name: 'Basis'
+  - type: text
+    name: 'Belanger'
+  - type: text
+    name: 'Bentz'
+  - type: text
+    name: 'Bessler'
+  - type: text
+    name: 'Best'
+  - type: text
+    name: 'Bevard'
+  - type: text
+    name: 'Blakely'
+  - type: text
+    name: 'Bleeker'
+  - type: text
+    name: 'Bouche'
+  - type: text
+    name: 'Boursaw'
+  - type: text
+    name: 'Brant'
+  - type: text
+    name: 'Brawley'
+  - type: text
+    name: 'Brock'
+  - type: text
+    name: 'Brockman'
+  - type: text
+    name: 'Bruce'
+  - type: text
+    name: 'Buchman'
+  - type: text
+    name: 'Burnett'
+  - type: text
+    name: 'Burnette'
+  - type: text
+    name: 'Burns'
+  - type: text
+    name: 'Buss'
+  - type: text
+    name: 'Butterﬁeld'
+  - type: text
+    name: 'Cartman'
+  - type: text
+    name: 'Cantin'
+  - type: text
+    name: 'Caﬀey'
+  - type: text
+    name: 'Christopher'
+  - type: text
+    name: 'Click'
+  - type: text
+    name: 'Codere'
+  - type: text
+    name: 'Collins'
+  - type: text
+    name: 'Coutu'
+  - type: text
+    name: 'Cowell'
+  - type: text
+    name: 'Cowman'
+  - type: text
+    name: 'Crankovitch'
+  - type: text
+    name: 'Cuthburt'
+  - type: text
+    name: 'Cuttling'
+  - type: text
+    name: 'Darwin'
+  - type: text
+    name: 'Davis'
+  - type: text
+    name: 'Dorman'
+  - type: text
+    name: 'Drafs'
+  - type: text
+    name: 'Eakley'
+  - type: text
+    name: 'Edwards'
+  - type: text
+    name: 'Elliott'
+  - type: text
+    name: 'Elsner'
+  - type: text
+    name: 'English'
+  - type: text
+    name: 'Ernlaid'
+  - type: text
+    name: 'Fanbrick'
+  - type: text
+    name: 'Fandrick'
+  - type: text
+    name: 'Farwell'
+  - type: text
+    name: 'Feigel'
+  - type: text
+    name: 'Felten'
+  - type: text
+    name: 'Fenske'
+  - type: text
+    name: 'Fergin'
+  - type: text
+    name: 'Fillman'
+  - type: text
+    name: 'Finley'
+  - type: text
+    name: 'Firske'
+  - type: text
+    name: 'Flatt'
+  - type: text
+    name: 'Floria'
+  - type: text
+    name: 'Fralich'
+  - type: text
+    name: 'Franklin'
+  - type: text
+    name: 'Freeman'
+  - type: text
+    name: 'Frisbe'
+  - type: text
+    name: 'Furlong'
+  - type: text
+    name: 'Gager'
+  - type: text
+    name: 'Garvin'
+  - type: text
+    name: 'Germain'
+  - type: text
+    name: 'Goodwin'
+  - type: text
+    name: 'Gray'
+  - type: text
+    name: 'Greenwald'
+  - type: text
+    name: 'Greenwalt'
+  - type: text
+    name: 'Griﬀen'
+  - type: text
+    name: 'Griﬃth'
+  - type: text
+    name: 'Hahn'
+  - type: text
+    name: 'Halsted'
+  - type: text
+    name: 'Hammermeister'
+  - type: text
+    name: 'Hancock'
+  - type: text
+    name: 'Harmal'
+  - type: text
+    name: 'Hass'
+  - type: text
+    name: 'Hastings'
+  - type: text
+    name: 'Hayes'
+  - type: text
+    name: 'Heminger'
+  - type: text
+    name: 'Henchal'
+  - type: text
+    name: 'Hessen'
+  - type: text
+    name: 'Hidland'
+  - type: text
+    name: 'Hilt'
+  - type: text
+    name: 'Hogue'
+  - type: text
+    name: 'Hollister'
+  - type: text
+    name: 'Hollman'
+  - type: text
+    name: 'Howell'
+  - type: text
+    name: 'Hyde'
+  - type: text
+    name: 'Kasper'
+  - type: text
+    name: 'Kegley'
+  - type: text
+    name: 'Kinney'
+  - type: text
+    name: 'Kisro'
+  - type: text
+    name: 'Kleeman'
+  - type: text
+    name: 'Kloburcher'
+  - type: text
+    name: 'Leach'
+  - type: text
+    name: 'Lehman'
+  - type: text
+    name: 'Len'
+  - type: text
+    name: 'Lesatz'
+  - type: text
+    name: 'Levard'
+  - type: text
+    name: 'Lindh'
+  - type: text
+    name: 'Lraise'
+  - type: text
+    name: 'Luckstrim'
+  - type: text
+    name: 'Lynch'
+  - type: text
+    name: 'Madison'
+  - type: text
+    name: 'Manse'
+  - type: text
+    name: 'Marcus'
+  - type: text
+    name: 'Markus'
+  - type: text
+    name: 'Matchinski'
+  - type: text
+    name: 'Mathews'
+  - type: text
+    name: 'McAlpine'
+  - type: text
+    name: 'McBurney'
+  - type: text
+    name: 'McCarney'
+  - type: text
+    name: 'McCown'
+  - type: text
+    name: 'McCutchen'
+  - type: text
+    name: 'McCutcheon'
+  - type: text
+    name: 'McDonald'
+  - type: text
+    name: 'McGraw'
+  - type: text
+    name: 'Merrick'
+  - type: text
+    name: 'Metic'
+  - type: text
+    name: 'Molzan'
+  - type: text
+    name: 'Morris'
+  - type: text
+    name: 'Moses'
+  - type: text
+    name: 'Nickels'
+  - type: text
+    name: 'Norval'
+  - type: text
+    name: 'O''Connell'
+  - type: text
+    name: 'O''Neal'
+  - type: text
+    name: 'O''Neil'
+  - type: text
+    name: 'Olson'
+  - type: text
+    name: 'Ozanich'
+  - type: text
+    name: 'Pantiel'
+  - type: text
+    name: 'Patterson'
+  - type: text
+    name: 'Patzer'
+  - type: text
+    name: 'Peppin'
+  - type: text
+    name: 'Perkins'
+  - type: text
+    name: 'Porter'
+  - type: text
+    name: 'Price'
+  - type: text
+    name: 'Rapp'
+  - type: text
+    name: 'Raslo'
+  - type: text
+    name: 'Razner'
+  - type: text
+    name: 'Renaldt'
+  - type: text
+    name: 'Rifenberg'
+  - type: text
+    name: 'Riley'
+  - type: text
+    name: 'Ripley'
+  - type: text
+    name: 'Rosental'
+  - type: text
+    name: 'Rossini'
+  - type: text
+    name: 'Russell'
+  - type: text
+    name: 'Sawyer'
+  - type: text
+    name: 'Schiltgan'
+  - type: text
+    name: 'Schiltzen'
+  - type: text
+    name: 'Schliske'
+  - type: text
+    name: 'Schubert'
+  - type: text
+    name: 'Schmidt'
+  - type: text
+    name: 'School'
+  - type: text
+    name: 'Schroeder'
+  - type: text
+    name: 'Schuthosk'
+  - type: text
+    name: 'Shepherd'
+  - type: text
+    name: 'Schwarm'
+  - type: text
+    name: 'Schwartz'
+  - type: text
+    name: 'Shane'
+  - type: text
+    name: 'Shattuck'
+  - type: text
+    name: 'Shaw'
+  - type: text
+    name: 'Simmons'
+  - type: text
+    name: 'Slack'
+  - type: text
+    name: 'Smith'
+  - type: text
+    name: 'Speltzer'
+  - type: text
+    name: 'Stewart'
+  - type: text
+    name: 'Stimac'
+  - type: text
+    name: 'Strenburg'
+  - type: text
+    name: 'Strong'
+  - type: text
+    name: 'Stroshine'
+  - type: text
+    name: 'Swansun'
+  - type: text
+    name: 'Swanson'
+  - type: text
+    name: 'Syveran'
+  - type: text
+    name: 'Tenker'
+  - type: text
+    name: 'Thomas'
+  - type: text
+    name: 'Traver'
+  - type: text
+    name: 'Urton'
+  - type: text
+    name: 'Vallier'
+  - type: text
+    name: 'Wagner'
+  - type: text
+    name: 'Wall'
+  - type: text
+    name: 'Walsted'
+  - type: text
+    name: 'Warner'
+  - type: text
+    name: 'Webber'
+  - type: text
+    name: 'Welch'
+  - type: text
+    name: 'Wentlandt'
+  - type: text
+    name: 'Westin'
+  - type: text
+    name: 'White'
+  - type: text
+    name: 'Wilkilgon'
+  - type: text
+    name: 'Wiltsey'
+  - type: text
+    name: 'Winters'
+  - type: text
+    name: 'Woods'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..last_name_american
+      lang: en
+      priority: 0
+---
+name: Male first name, egypt
+_id: ZHVAN9WWGu38Ujle
+folder: w2vkKXFHcbQVeB7H
+description: 'Male first names for use in various macros'
+results:
+  - type: text
+    name: 'Abbas'
+  - type: text
+    name: 'Abdel Aziz'
+  - type: text
+    name: 'Abdel Fattah'
+  - type: text
+    name: 'Abdel Halim'
+  - type: text
+    name: 'Abdel Hamied'
+  - type: text
+    name: 'Abdel Meguid'
+  - type: text
+    name: 'Abdel Qader'
+  - type: text
+    name: 'Abdel Rahman'
+  - type: text
+    name: 'Abdelrahman'
+  - type: text
+    name: 'Ahmed'
+  - type: text
+    name: 'Ali'
+  - type: text
+    name: 'Amal'
+  - type: text
+    name: 'Amin'
+  - type: text
+    name: 'Antoun'
+  - type: text
+    name: 'Anwar'
+  - type: text
+    name: 'Atef'
+  - type: text
+    name: 'Aziz'
+  - type: text
+    name: 'Bahaa'
+  - type: text
+    name: 'Bahgat'
+  - type: text
+    name: 'Basili'
+  - type: text
+    name: 'Bishoy'
+  - type: text
+    name: 'Boutros'
+  - type: text
+    name: 'Daoud'
+  - type: text
+    name: 'Dawlat'
+  - type: text
+    name: 'Effat'
+  - type: text
+    name: 'Emad'
+  - type: text
+    name: 'Enayat'
+  - type: text
+    name: 'Essam'
+  - type: text
+    name: 'Fares'
+  - type: text
+    name: 'Farid'
+  - type: text
+    name: 'Farouk'
+  - type: text
+    name: 'Fathy'
+  - type: text
+    name: 'Fawzy'
+  - type: text
+    name: 'Fikry'
+  - type: text
+    name: 'Fouad'
+  - type: text
+    name: 'Fouada'
+  - type: text
+    name: 'Fuad'
+  - type: text
+    name: 'Gaber'
+  - type: text
+    name: 'Galal'
+  - type: text
+    name: 'Galila'
+  - type: text
+    name: 'Gamal'
+  - type: text
+    name: 'Gamalat'
+  - type: text
+    name: 'Girgis'
+  - type: text
+    name: 'Gomaa'
+  - type: text
+    name: 'Habib'
+  - type: text
+    name: 'Hafez'
+  - type: text
+    name: 'Haikal'
+  - type: text
+    name: 'Hamida'
+  - type: text
+    name: 'Hanem'
+  - type: text
+    name: 'Hanim'
+  - type: text
+    name: 'Hassan'
+  - type: text
+    name: 'Hikmat'
+  - type: text
+    name: 'Hoda'
+  - type: text
+    name: 'Houriya'
+  - type: text
+    name: 'Hussein'
+  - type: text
+    name: 'Ibrahim'
+  - type: text
+    name: 'Ihsan'
+  - type: text
+    name: 'Insaf'
+  - type: text
+    name: 'Inshirah'
+  - type: text
+    name: 'Ishaq'
+  - type: text
+    name: 'Iskandar'
+  - type: text
+    name: 'Ismail'
+  - type: text
+    name: 'Ismat'
+  - type: text
+    name: 'Jamil'
+  - type: text
+    name: 'Kamal'
+  - type: text
+    name: 'Kamel'
+  - type: text
+    name: 'Kandil'
+  - type: text
+    name: 'Kareem'
+  - type: text
+    name: 'Karima'
+  - type: text
+    name: 'Kawkab'
+  - type: text
+    name: 'Khadija'
+  - type: text
+    name: 'Khalil'
+  - type: text
+    name: 'Labib'
+  - type: text
+    name: 'Latif'
+  - type: text
+    name: 'Latifa'
+  - type: text
+    name: 'Lutfi'
+  - type: text
+    name: 'Lydia'
+  - type: text
+    name: 'Mabrouka'
+  - type: text
+    name: 'Madiha'
+  - type: text
+    name: 'Magda'
+  - type: text
+    name: 'Magdy'
+  - type: text
+    name: 'Mahassen'
+  - type: text
+    name: 'Maher'
+  - type: text
+    name: 'Mahmoud'
+  - type: text
+    name: 'Makram'
+  - type: text
+    name: 'Mansour'
+  - type: text
+    name: 'Marwan'
+  - type: text
+    name: 'Maryam'
+  - type: text
+    name: 'Mervat'
+  - type: text
+    name: 'Metwally'
+  - type: text
+    name: 'Midhat'
+  - type: text
+    name: 'Mikhail'
+  - type: text
+    name: 'Mina'
+  - type: text
+    name: 'Mirfat'
+  - type: text
+    name: 'Mohamed'
+  - type: text
+    name: 'Monira'
+  - type: text
+    name: 'Morcos'
+  - type: text
+    name: 'Mostafa'
+  - type: text
+    name: 'Mounir'
+  - type: text
+    name: 'Moussa'
+  - type: text
+    name: 'Murad'
+  - type: text
+    name: 'Mustafa'
+  - type: text
+    name: 'Nabawiya'
+  - type: text
+    name: 'Nabil'
+  - type: text
+    name: 'Nafisa'
+  - type: text
+    name: 'Nagat'
+  - type: text
+    name: 'Naglaa'
+  - type: text
+    name: 'Naguib'
+  - type: text
+    name: 'Naima'
+  - type: text
+    name: 'Nariman'
+  - type: text
+    name: 'Nasr'
+  - type: text
+    name: 'Nawal'
+  - type: text
+    name: 'Nazli'
+  - type: text
+    name: 'Neemat'
+  - type: text
+    name: 'Nimet'
+  - type: text
+    name: 'Olfat'
+  - type: text
+    name: 'Omar'
+  - type: text
+    name: 'Osman'
+  - type: text
+    name: 'Rafiq'
+  - type: text
+    name: 'Ragab'
+  - type: text
+    name: 'Raouf'
+  - type: text
+    name: 'Rashad'
+  - type: text
+    name: 'Rawya'
+  - type: text
+    name: 'Refaat'
+  - type: text
+    name: 'Roushdy'
+  - type: text
+    name: 'Saad'
+  - type: text
+    name: 'Sabah'
+  - type: text
+    name: 'Saber'
+  - type: text
+    name: 'Saeed'
+  - type: text
+    name: 'Safia'
+  - type: text
+    name: 'Safinaz'
+  - type: text
+    name: 'Safwat'
+  - type: text
+    name: 'Sakina'
+  - type: text
+    name: 'Salem'
+  - type: text
+    name: 'Salim'
+  - type: text
+    name: 'Salwa'
+  - type: text
+    name: 'Sameh'
+  - type: text
+    name: 'Samia'
+  - type: text
+    name: 'Samiha'
+  - type: text
+    name: 'Samir'
+  - type: text
+    name: 'Sania'
+  - type: text
+    name: 'Sarwat'
+  - type: text
+    name: 'Sawsan'
+  - type: text
+    name: 'Sayed'
+  - type: text
+    name: 'Selim'
+  - type: text
+    name: 'Set-Abouha'
+  - type: text
+    name: 'Shaban'
+  - type: text
+    name: 'Shadia'
+  - type: text
+    name: 'Shaker'
+  - type: text
+    name: 'Shawqi'
+  - type: text
+    name: 'Shenouda'
+  - type: text
+    name: 'Sherif'
+  - type: text
+    name: 'Sherifa'
+  - type: text
+    name: 'Shukri'
+  - type: text
+    name: 'Sobhi'
+  - type: text
+    name: 'Soliman'
+  - type: text
+    name: 'Souhair'
+  - type: text
+    name: 'Tadros'
+  - type: text
+    name: 'Taha'
+  - type: text
+    name: 'Tahia'
+  - type: text
+    name: 'Talaat'
+  - type: text
+    name: 'Tariq'
+  - type: text
+    name: 'Tawfika'
+  - type: text
+    name: 'Tawfiq'
+  - type: text
+    name: 'Tewfik'
+  - type: text
+    name: 'Tharwat'
+  - type: text
+    name: 'Thoraya'
+  - type: text
+    name: 'Wafaa'
+  - type: text
+    name: 'Wagdy'
+  - type: text
+    name: 'Waguih'
+  - type: text
+    name: 'Wahid'
+  - type: text
+    name: 'Wedad'
+  - type: text
+    name: 'Yehia'
+  - type: text
+    name: 'Youssef'
+  - type: text
+    name: 'Zahra'
+  - type: text
+    name: 'Zakaria'
+  - type: text
+    name: 'Zaki'
+  - type: text
+    name: 'Zakia'
+  - type: text
+    name: 'Zein'
+  - type: text
+    name: 'Zenat'
+  - type: text
+    name: 'Zubaida'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..male_first_name_egypt
+      lang: en
+      priority: 0
+---
+name: Female first name, egypt
+_id: FtiaqCH69ZpC6wpk
+folder: w2vkKXFHcbQVeB7H
+description: 'Female first names for use in various macros'
+results:
+  - type: text
+    name: 'Aaliyah'
+  - type: text
+    name: 'Adila'
+  - type: text
+    name: 'Aida'
+  - type: text
+    name: 'Aisha'
+  - type: text
+    name: 'Amal'
+  - type: text
+    name: 'Amina'
+  - type: text
+    name: 'Amira'
+  - type: text
+    name: 'Aziza'
+  - type: text
+    name: 'Azza'
+  - type: text
+    name: 'Badia'
+  - type: text
+    name: 'Bahia'
+  - type: text
+    name: 'Bahiga'
+  - type: text
+    name: 'Bahiya'
+  - type: text
+    name: 'Dalal'
+  - type: text
+    name: 'Dawlat'
+  - type: text
+    name: 'Demiana'
+  - type: text
+    name: 'Dina'
+  - type: text
+    name: 'Doria'
+  - type: text
+    name: 'Effat'
+  - type: text
+    name: 'Enayat'
+  - type: text
+    name: 'Esther'
+  - type: text
+    name: 'Fadia'
+  - type: text
+    name: 'Faiza'
+  - type: text
+    name: 'Farida'
+  - type: text
+    name: 'Fathia'
+  - type: text
+    name: 'Fatma'
+  - type: text
+    name: 'Fawzia'
+  - type: text
+    name: 'Fayza'
+  - type: text
+    name: 'Fikriya'
+  - type: text
+    name: 'Fouada'
+  - type: text
+    name: 'Galila'
+  - type: text
+    name: 'Gamalat'
+  - type: text
+    name: 'Hamida'
+  - type: text
+    name: 'Hanan'
+  - type: text
+    name: 'Hanem'
+  - type: text
+    name: 'Hanim'
+  - type: text
+    name: 'Helena'
+  - type: text
+    name: 'Hikmat'
+  - type: text
+    name: 'Hoda'
+  - type: text
+    name: 'Houriya'
+  - type: text
+    name: 'Huda'
+  - type: text
+    name: 'Ihsan'
+  - type: text
+    name: 'Iman'
+  - type: text
+    name: 'Insaf'
+  - type: text
+    name: 'Inshirah'
+  - type: text
+    name: 'Irene'
+  - type: text
+    name: 'Ismat'
+  - type: text
+    name: 'Kamela'
+  - type: text
+    name: 'Karima'
+  - type: text
+    name: 'Kawkab'
+  - type: text
+    name: 'Khadija'
+  - type: text
+    name: 'Laila'
+  - type: text
+    name: 'Latifa'
+  - type: text
+    name: 'Layla'
+  - type: text
+    name: 'Lydia'
+  - type: text
+    name: 'Mabrouka'
+  - type: text
+    name: 'Madiha'
+  - type: text
+    name: 'Magda'
+  - type: text
+    name: 'Mahassen'
+  - type: text
+    name: 'Maria'
+  - type: text
+    name: 'Mariam'
+  - type: text
+    name: 'Marina'
+  - type: text
+    name: 'Martha'
+  - type: text
+    name: 'Maryam'
+  - type: text
+    name: 'Mervat'
+  - type: text
+    name: 'Mirfat'
+  - type: text
+    name: 'Monira'
+  - type: text
+    name: 'Nabawiya'
+  - type: text
+    name: 'Nabila'
+  - type: text
+    name: 'Nadia'
+  - type: text
+    name: 'Nafisa'
+  - type: text
+    name: 'Nagat'
+  - type: text
+    name: 'Naglaa'
+  - type: text
+    name: 'Naima'
+  - type: text
+    name: 'Nariman'
+  - type: text
+    name: 'Nawal'
+  - type: text
+    name: 'Nazli'
+  - type: text
+    name: 'Neemat'
+  - type: text
+    name: 'Nimet'
+  - type: text
+    name: 'Olfat'
+  - type: text
+    name: 'Rashida'
+  - type: text
+    name: 'Rateeba'
+  - type: text
+    name: 'Raufa'
+  - type: text
+    name: 'Rawhia'
+  - type: text
+    name: 'Rawya'
+  - type: text
+    name: 'Sabah'
+  - type: text
+    name: 'Safia'
+  - type: text
+    name: 'Safinaz'
+  - type: text
+    name: 'Safiya'
+  - type: text
+    name: 'Sakina'
+  - type: text
+    name: 'Salwa'
+  - type: text
+    name: 'Samia'
+  - type: text
+    name: 'Samiha'
+  - type: text
+    name: 'Samira'
+  - type: text
+    name: 'Sania'
+  - type: text
+    name: 'Sawsan'
+  - type: text
+    name: 'Set-Abouha'
+  - type: text
+    name: 'Shadia'
+  - type: text
+    name: 'Sherifa'
+  - type: text
+    name: 'Soad'
+  - type: text
+    name: 'Souhair'
+  - type: text
+    name: 'Tahia'
+  - type: text
+    name: 'Tawfika'
+  - type: text
+    name: 'Thoraya'
+  - type: text
+    name: 'Wafaa'
+  - type: text
+    name: 'Wedad'
+  - type: text
+    name: 'Zahra'
+  - type: text
+    name: 'Zakia'
+  - type: text
+    name: 'Zeinab'
+  - type: text
+    name: 'Zenat'
+  - type: text
+    name: 'Zubaida'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..female_first_name_egypt
+      lang: en
+      priority: 0
+---
+name: Last name, egypt
+_id: URz0fBlqbPj5ggg4
+folder: w2vkKXFHcbQVeB7H
+description: 'Last names for use in various macros'
+results:
+  - type: text
+    name: 'Abaza'
+  - type: text
+    name: 'Abbas'
+  - type: text
+    name: 'Abdelnour'
+  - type: text
+    name: 'Abou Zeid'
+  - type: text
+    name: 'Afifi'
+  - type: text
+    name: 'Aga'
+  - type: text
+    name: 'Agha'
+  - type: text
+    name: 'Al-Masri'
+  - type: text
+    name: 'Al-Rashidi'
+  - type: text
+    name: 'Ali'
+  - type: text
+    name: 'Amer'
+  - type: text
+    name: 'Amin'
+  - type: text
+    name: 'Anwar'
+  - type: text
+    name: 'Ashour'
+  - type: text
+    name: 'Atiya'
+  - type: text
+    name: 'Awad'
+  - type: text
+    name: 'Azer'
+  - type: text
+    name: 'Badawy'
+  - type: text
+    name: 'Badrawi'
+  - type: text
+    name: 'Barakat'
+  - type: text
+    name: 'Bayoumi'
+  - type: text
+    name: 'Bishara'
+  - type: text
+    name: 'Boutros'
+  - type: text
+    name: 'Cherif'
+  - type: text
+    name: 'Darwish'
+  - type: text
+    name: 'Desouky'
+  - type: text
+    name: 'Doss'
+  - type: text
+    name: 'Ebeid'
+  - type: text
+    name: 'El-Aziz'
+  - type: text
+    name: 'El-Baz'
+  - type: text
+    name: 'El-Demerdash'
+  - type: text
+    name: 'El-Din'
+  - type: text
+    name: 'El-Feki'
+  - type: text
+    name: 'El-Gammal'
+  - type: text
+    name: 'El-Gawhary'
+  - type: text
+    name: 'El-Ghazaly'
+  - type: text
+    name: 'El-Gindy'
+  - type: text
+    name: 'El-Haddad'
+  - type: text
+    name: 'El-Kholy'
+  - type: text
+    name: 'El-Maghraby'
+  - type: text
+    name: 'El-Masry'
+  - type: text
+    name: 'El-Naggar'
+  - type: text
+    name: 'El-Sawy'
+  - type: text
+    name: 'El-Sayed'
+  - type: text
+    name: 'El-Shafei'
+  - type: text
+    name: 'El-Shamy'
+  - type: text
+    name: 'El-Zayyat'
+  - type: text
+    name: 'Fahmy'
+  - type: text
+    name: 'Fakhry'
+  - type: text
+    name: 'Farid'
+  - type: text
+    name: 'Fawzy'
+  - type: text
+    name: 'Fikry'
+  - type: text
+    name: 'Gaber'
+  - type: text
+    name: 'Galal'
+  - type: text
+    name: 'Ghali'
+  - type: text
+    name: 'Ghaly'
+  - type: text
+    name: 'Ghanem'
+  - type: text
+    name: 'Girgis'
+  - type: text
+    name: 'Gomaa'
+  - type: text
+    name: 'Habib'
+  - type: text
+    name: 'Hafez'
+  - type: text
+    name: 'Hamdy'
+  - type: text
+    name: 'Hanna'
+  - type: text
+    name: 'Haroun'
+  - type: text
+    name: 'Hassan'
+  - type: text
+    name: 'Hegazy'
+  - type: text
+    name: 'Heikal'
+  - type: text
+    name: 'Helmy'
+  - type: text
+    name: 'Ibrahim'
+  - type: text
+    name: 'Iskandar'
+  - type: text
+    name: 'Ismail'
+  - type: text
+    name: 'Kamal'
+  - type: text
+    name: 'Kandil'
+  - type: text
+    name: 'Khalil'
+  - type: text
+    name: 'Khayat'
+  - type: text
+    name: 'Khoury'
+  - type: text
+    name: 'Labib'
+  - type: text
+    name: 'Lutfi'
+  - type: text
+    name: 'Mahmoud'
+  - type: text
+    name: 'Makram'
+  - type: text
+    name: 'Mansour'
+  - type: text
+    name: 'Metwally'
+  - type: text
+    name: 'Mikhail'
+  - type: text
+    name: 'Mohamed'
+  - type: text
+    name: 'Moussa'
+  - type: text
+    name: 'Murad'
+  - type: text
+    name: 'Mustafa'
+  - type: text
+    name: 'Naguib'
+  - type: text
+    name: 'Nassar'
+  - type: text
+    name: 'Osman'
+  - type: text
+    name: 'Qassem'
+  - type: text
+    name: 'Ragab'
+  - type: text
+    name: 'Refaat'
+  - type: text
+    name: 'Rizk'
+  - type: text
+    name: 'Rostom'
+  - type: text
+    name: 'Roushdy'
+  - type: text
+    name: 'Saad'
+  - type: text
+    name: 'Sabbagh'
+  - type: text
+    name: 'Salem'
+  - type: text
+    name: 'Sarwat'
+  - type: text
+    name: 'Sawiris'
+  - type: text
+    name: 'Selim'
+  - type: text
+    name: 'Shaban'
+  - type: text
+    name: 'Shaker'
+  - type: text
+    name: 'Shenouda'
+  - type: text
+    name: 'Shoukry'
+  - type: text
+    name: 'Sobhi'
+  - type: text
+    name: 'Soliman'
+  - type: text
+    name: 'Suriyal'
+  - type: text
+    name: 'Tadros'
+  - type: text
+    name: 'Taha'
+  - type: text
+    name: 'Talaat'
+  - type: text
+    name: 'Tharwat'
+  - type: text
+    name: 'Waguih'
+  - type: text
+    name: 'Yakan'
+  - type: text
+    name: 'Youssef'
+  - type: text
+    name: 'Zaghloul'
+  - type: text
+    name: 'Zaki'
+  - type: text
+    name: 'Zulfikar'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..last_name_egypt
+      lang: en
+      priority: 0
+---
+name: Male first name, french
+_id: CgswsC7Zj5NjtfeR
+folder: w2vkKXFHcbQVeB7H
+description: 'Male first names for use in various macros'
+results:
+  - type: text
+    name: 'Adrien'
+  - type: text
+    name: 'Albert'
+  - type: text
+    name: 'Alfred'
+  - type: text
+    name: 'André'
+  - type: text
+    name: 'Antoine'
+  - type: text
+    name: 'Armand'
+  - type: text
+    name: 'Arthur'
+  - type: text
+    name: 'Auguste'
+  - type: text
+    name: 'Benoît'
+  - type: text
+    name: 'Bernard'
+  - type: text
+    name: 'Blaise'
+  - type: text
+    name: 'Camille'
+  - type: text
+    name: 'Charles'
+  - type: text
+    name: 'Christian'
+  - type: text
+    name: 'Claude'
+  - type: text
+    name: 'Clément'
+  - type: text
+    name: 'Denis'
+  - type: text
+    name: 'Désiré'
+  - type: text
+    name: 'Édouard'
+  - type: text
+    name: 'Éloi'
+  - type: text
+    name: 'Émile'
+  - type: text
+    name: 'Emmanuel'
+  - type: text
+    name: 'Ernest'
+  - type: text
+    name: 'Étienne'
+  - type: text
+    name: 'Eugène'
+  - type: text
+    name: 'Fabien'
+  - type: text
+    name: 'Félix'
+  - type: text
+    name: 'Fernand'
+  - type: text
+    name: 'Firmin'
+  - type: text
+    name: 'François'
+  - type: text
+    name: 'Frédéric'
+  - type: text
+    name: 'Gabriel'
+  - type: text
+    name: 'Gaston'
+  - type: text
+    name: 'Georges'
+  - type: text
+    name: 'Gérard'
+  - type: text
+    name: 'Gilbert'
+  - type: text
+    name: 'Guillaume'
+  - type: text
+    name: 'Gustave'
+  - type: text
+    name: 'Guy'
+  - type: text
+    name: 'Henri'
+  - type: text
+    name: 'Hubert'
+  - type: text
+    name: 'Ignace'
+  - type: text
+    name: 'Isidore'
+  - type: text
+    name: 'Jacques'
+  - type: text
+    name: 'Jean'
+  - type: text
+    name: 'Jean-Pierre'
+  - type: text
+    name: 'Jérôme'
+  - type: text
+    name: 'Joseph'
+  - type: text
+    name: 'Jules'
+  - type: text
+    name: 'Julien'
+  - type: text
+    name: 'Juste'
+  - type: text
+    name: 'Laurent'
+  - type: text
+    name: 'Lazare'
+  - type: text
+    name: 'Léon'
+  - type: text
+    name: 'Léonce'
+  - type: text
+    name: 'Léopold'
+  - type: text
+    name: 'Louis'
+  - type: text
+    name: 'Lucien'
+  - type: text
+    name: 'Marc'
+  - type: text
+    name: 'Marcel'
+  - type: text
+    name: 'Martial'
+  - type: text
+    name: 'Mathieu'
+  - type: text
+    name: 'Maurice'
+  - type: text
+    name: 'Maxime'
+  - type: text
+    name: 'Médard'
+  - type: text
+    name: 'Michel'
+  - type: text
+    name: 'Narcisse'
+  - type: text
+    name: 'Nicolas'
+  - type: text
+    name: 'Noël'
+  - type: text
+    name: 'Octave'
+  - type: text
+    name: 'Olivier'
+  - type: text
+    name: 'Pascal'
+  - type: text
+    name: 'Patrice'
+  - type: text
+    name: 'Paul'
+  - type: text
+    name: 'Philippe'
+  - type: text
+    name: 'Pierre'
+  - type: text
+    name: 'Prosper'
+  - type: text
+    name: 'Raoul'
+  - type: text
+    name: 'Raymond'
+  - type: text
+    name: 'Rémi'
+  - type: text
+    name: 'René'
+  - type: text
+    name: 'Robert'
+  - type: text
+    name: 'Roger'
+  - type: text
+    name: 'Roland'
+  - type: text
+    name: 'Samuel'
+  - type: text
+    name: 'Saturnin'
+  - type: text
+    name: 'Serge'
+  - type: text
+    name: 'Simon'
+  - type: text
+    name: 'Sylvain'
+  - type: text
+    name: 'Théodore'
+  - type: text
+    name: 'Théophile'
+  - type: text
+    name: 'Thibault'
+  - type: text
+    name: 'Urbain'
+  - type: text
+    name: 'Valentin'
+  - type: text
+    name: 'Valéry'
+  - type: text
+    name: 'Victor'
+  - type: text
+    name: 'Vincent'
+  - type: text
+    name: 'Xavier'
+  - type: text
+    name: 'Yves'
+  - type: text
+    name: 'Zacharie'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..male_first_name_french
+      lang: en
+      priority: 0
+---
+name: Female first name, french
+_id: 8a6hBEOeDLZHDHjg
+folder: w2vkKXFHcbQVeB7H
+description: 'Female first names for use in various macros'
+results:
+  - type: text
+    name: 'Adrienne'
+  - type: text
+    name: 'Agnès'
+  - type: text
+    name: 'Albertine'
+  - type: text
+    name: 'Alexandrine'
+  - type: text
+    name: 'Alice'
+  - type: text
+    name: 'Amélie'
+  - type: text
+    name: 'Angèle'
+  - type: text
+    name: 'Anne'
+  - type: text
+    name: 'Antoinette'
+  - type: text
+    name: 'Augustine'
+  - type: text
+    name: 'Aurélie'
+  - type: text
+    name: 'Bernadette'
+  - type: text
+    name: 'Berthe'
+  - type: text
+    name: 'Blanche'
+  - type: text
+    name: 'Caroline'
+  - type: text
+    name: 'Catherine'
+  - type: text
+    name: 'Cécile'
+  - type: text
+    name: 'Charlotte'
+  - type: text
+    name: 'Claire'
+  - type: text
+    name: 'Clémence'
+  - type: text
+    name: 'Clothilde'
+  - type: text
+    name: 'Colette'
+  - type: text
+    name: 'Constance'
+  - type: text
+    name: 'Corinne'
+  - type: text
+    name: 'Danielle'
+  - type: text
+    name: 'Denise'
+  - type: text
+    name: 'Édith'
+  - type: text
+    name: 'Edwige'
+  - type: text
+    name: 'Éléonore'
+  - type: text
+    name: 'Éliane'
+  - type: text
+    name: 'Élisabeth'
+  - type: text
+    name: 'Émilie'
+  - type: text
+    name: 'Estelle'
+  - type: text
+    name: 'Eugénie'
+  - type: text
+    name: 'Félicité'
+  - type: text
+    name: 'Fernande'
+  - type: text
+    name: 'Flore'
+  - type: text
+    name: 'Françoise'
+  - type: text
+    name: 'Gabrielle'
+  - type: text
+    name: 'Gaby'
+  - type: text
+    name: 'Geneviève'
+  - type: text
+    name: 'Georgette'
+  - type: text
+    name: 'Germaine'
+  - type: text
+    name: 'Gilberte'
+  - type: text
+    name: 'Gisèle'
+  - type: text
+    name: 'Hélène'
+  - type: text
+    name: 'Hortense'
+  - type: text
+    name: 'Huguette'
+  - type: text
+    name: 'Inès'
+  - type: text
+    name: 'Irène'
+  - type: text
+    name: 'Isabelle'
+  - type: text
+    name: 'Jacqueline'
+  - type: text
+    name: 'Jeanne'
+  - type: text
+    name: 'Josette'
+  - type: text
+    name: 'Josiane'
+  - type: text
+    name: 'Juliette'
+  - type: text
+    name: 'Laure'
+  - type: text
+    name: 'Léone'
+  - type: text
+    name: 'Léonie'
+  - type: text
+    name: 'Liliane'
+  - type: text
+    name: 'Louise'
+  - type: text
+    name: 'Lucie'
+  - type: text
+    name: 'Lucienne'
+  - type: text
+    name: 'Lucile'
+  - type: text
+    name: 'Madeleine'
+  - type: text
+    name: 'Marcelle'
+  - type: text
+    name: 'Marguerite'
+  - type: text
+    name: 'Marie'
+  - type: text
+    name: 'Marthe'
+  - type: text
+    name: 'Mathilde'
+  - type: text
+    name: 'Micheline'
+  - type: text
+    name: 'Monique'
+  - type: text
+    name: 'Noémie'
+  - type: text
+    name: 'Odette'
+  - type: text
+    name: 'Paulette'
+  - type: text
+    name: 'Pauline'
+  - type: text
+    name: 'Philomène'
+  - type: text
+    name: 'Pierrette'
+  - type: text
+    name: 'Raymonde'
+  - type: text
+    name: 'Reine'
+  - type: text
+    name: 'Renée'
+  - type: text
+    name: 'Rosalie'
+  - type: text
+    name: 'Rose'
+  - type: text
+    name: 'Sabine'
+  - type: text
+    name: 'Sidonie'
+  - type: text
+    name: 'Simone'
+  - type: text
+    name: 'Solange'
+  - type: text
+    name: 'Sophie'
+  - type: text
+    name: 'Suzanne'
+  - type: text
+    name: 'Sylvie'
+  - type: text
+    name: 'Thérèse'
+  - type: text
+    name: 'Valentine'
+  - type: text
+    name: 'Victoire'
+  - type: text
+    name: 'Virginie'
+  - type: text
+    name: 'Viviane'
+  - type: text
+    name: 'Yvette'
+  - type: text
+    name: 'Yvonne'
+  - type: text
+    name: 'Zoé'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..female_first_name_french
+      lang: en
+      priority: 0
+---
+name: Last name, french
+_id: RqleWfudXnnkEznG
+folder: w2vkKXFHcbQVeB7H
+description: 'Last names for use in various macros'
+results:
+  - type: text
+    name: 'Antoine'
+  - type: text
+    name: 'Arnaud'
+  - type: text
+    name: 'Barbier'
+  - type: text
+    name: 'Béranger'
+  - type: text
+    name: 'Bernard'
+  - type: text
+    name: 'Bertrand'
+  - type: text
+    name: 'Blanc'
+  - type: text
+    name: 'Blanchard'
+  - type: text
+    name: 'Bonnet'
+  - type: text
+    name: 'Boyer'
+  - type: text
+    name: 'Brun'
+  - type: text
+    name: 'Brunet'
+  - type: text
+    name: 'Caron'
+  - type: text
+    name: 'Chevalier'
+  - type: text
+    name: 'Clément'
+  - type: text
+    name: 'Colin'
+  - type: text
+    name: 'Daniel'
+  - type: text
+    name: 'Denis'
+  - type: text
+    name: 'Deshayes'
+  - type: text
+    name: 'Dubois'
+  - type: text
+    name: 'Dufour'
+  - type: text
+    name: 'Dumont'
+  - type: text
+    name: 'Dupont'
+  - type: text
+    name: 'Durand'
+  - type: text
+    name: 'Duval'
+  - type: text
+    name: 'Évrard'
+  - type: text
+    name: 'Fabre'
+  - type: text
+    name: 'Faure'
+  - type: text
+    name: 'Fontaine'
+  - type: text
+    name: 'Fournier'
+  - type: text
+    name: 'François'
+  - type: text
+    name: 'Gaillard'
+  - type: text
+    name: 'Garcia'
+  - type: text
+    name: 'Garnier'
+  - type: text
+    name: 'Gauthier'
+  - type: text
+    name: 'Gautier'
+  - type: text
+    name: 'Girard'
+  - type: text
+    name: 'Giraud'
+  - type: text
+    name: 'Guerin'
+  - type: text
+    name: 'Guillaume'
+  - type: text
+    name: 'Henry'
+  - type: text
+    name: 'Hubert'
+  - type: text
+    name: 'Joly'
+  - type: text
+    name: 'Joubert'
+  - type: text
+    name: 'Lacroix'
+  - type: text
+    name: 'Laine'
+  - type: text
+    name: 'Lambert'
+  - type: text
+    name: 'Laurent'
+  - type: text
+    name: 'Leclerc'
+  - type: text
+    name: 'Lecomte'
+  - type: text
+    name: 'Lefebvre'
+  - type: text
+    name: 'Lefèvre'
+  - type: text
+    name: 'Lefort'
+  - type: text
+    name: 'Legrand'
+  - type: text
+    name: 'Lemaire'
+  - type: text
+    name: 'Leroy'
+  - type: text
+    name: 'Lopez'
+  - type: text
+    name: 'Lucas'
+  - type: text
+    name: 'Mallet'
+  - type: text
+    name: 'Marchand'
+  - type: text
+    name: 'Marie'
+  - type: text
+    name: 'Martin'
+  - type: text
+    name: 'Martinez'
+  - type: text
+    name: 'Masson'
+  - type: text
+    name: 'Mathier'
+  - type: text
+    name: 'Menard'
+  - type: text
+    name: 'Mercier'
+  - type: text
+    name: 'Meunier'
+  - type: text
+    name: 'Meyer'
+  - type: text
+    name: 'Michel'
+  - type: text
+    name: 'Millet'
+  - type: text
+    name: 'Moreau'
+  - type: text
+    name: 'Morel'
+  - type: text
+    name: 'Morin'
+  - type: text
+    name: 'Muller'
+  - type: text
+    name: 'Nicolas'
+  - type: text
+    name: 'Noel'
+  - type: text
+    name: 'Olivier'
+  - type: text
+    name: 'Perron'
+  - type: text
+    name: 'Perrot'
+  - type: text
+    name: 'Petit'
+  - type: text
+    name: 'Philippe'
+  - type: text
+    name: 'Prevost'
+  - type: text
+    name: 'Renard'
+  - type: text
+    name: 'Richard'
+  - type: text
+    name: 'Rivière'
+  - type: text
+    name: 'Robert'
+  - type: text
+    name: 'Robin'
+  - type: text
+    name: 'Rousseau'
+  - type: text
+    name: 'Roussel'
+  - type: text
+    name: 'Roux'
+  - type: text
+    name: 'Simon'
+  - type: text
+    name: 'Tessier'
+  - type: text
+    name: 'Thomas'
+  - type: text
+    name: 'Vidal'
+  - type: text
+    name: 'Vincent'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..last_name_french
+      lang: en
+      priority: 0
+---
+name: Male first name, german
+_id: 9TibdIR53aKHfY1g
+folder: w2vkKXFHcbQVeB7H
+description: 'Male first names for use in various macros'
+results:
+  - type: text
+    name: 'Adolf'
+  - type: text
+    name: 'Albert'
+  - type: text
+    name: 'Alexander'
+  - type: text
+    name: 'Alfons'
+  - type: text
+    name: 'Alfred'
+  - type: text
+    name: 'Alois'
+  - type: text
+    name: 'Anton'
+  - type: text
+    name: 'Armin'
+  - type: text
+    name: 'Arthur'
+  - type: text
+    name: 'August'
+  - type: text
+    name: 'Bernhard'
+  - type: text
+    name: 'Berthold'
+  - type: text
+    name: 'Bertram'
+  - type: text
+    name: 'Bruno'
+  - type: text
+    name: 'Clemens'
+  - type: text
+    name: 'Dankmar'
+  - type: text
+    name: 'Detlef'
+  - type: text
+    name: 'Dietmar'
+  - type: text
+    name: 'Eberhard'
+  - type: text
+    name: 'Eduard'
+  - type: text
+    name: 'Egbert'
+  - type: text
+    name: 'Ekkehard'
+  - type: text
+    name: 'Emil'
+  - type: text
+    name: 'Erich'
+  - type: text
+    name: 'Ernst'
+  - type: text
+    name: 'Erwin'
+  - type: text
+    name: 'Ewald'
+  - type: text
+    name: 'Felix'
+  - type: text
+    name: 'Ferdinand'
+  - type: text
+    name: 'Franz'
+  - type: text
+    name: 'Friedrich'
+  - type: text
+    name: 'Fritz'
+  - type: text
+    name: 'Gabriel'
+  - type: text
+    name: 'Georg'
+  - type: text
+    name: 'Gerhard'
+  - type: text
+    name: 'Gerold'
+  - type: text
+    name: 'Gregor'
+  - type: text
+    name: 'Gunther'
+  - type: text
+    name: 'Gustav'
+  - type: text
+    name: 'Hans'
+  - type: text
+    name: 'Harald'
+  - type: text
+    name: 'Hartmut'
+  - type: text
+    name: 'Heinrich'
+  - type: text
+    name: 'Hellmut'
+  - type: text
+    name: 'Herbert'
+  - type: text
+    name: 'Hermann'
+  - type: text
+    name: 'Horst'
+  - type: text
+    name: 'Hubert'
+  - type: text
+    name: 'Hugo'
+  - type: text
+    name: 'Ignaz'
+  - type: text
+    name: 'Jakob'
+  - type: text
+    name: 'Joachim'
+  - type: text
+    name: 'Jochen'
+  - type: text
+    name: 'Johannes'
+  - type: text
+    name: 'Josef'
+  - type: text
+    name: 'Julius'
+  - type: text
+    name: 'Karl'
+  - type: text
+    name: 'Klaus'
+  - type: text
+    name: 'Konrad'
+  - type: text
+    name: 'Kurt'
+  - type: text
+    name: 'Leo'
+  - type: text
+    name: 'Lorenz'
+  - type: text
+    name: 'Lothar'
+  - type: text
+    name: 'Ludwig'
+  - type: text
+    name: 'Manfred'
+  - type: text
+    name: 'Martin'
+  - type: text
+    name: 'Matthias'
+  - type: text
+    name: 'Max'
+  - type: text
+    name: 'Michael'
+  - type: text
+    name: 'Moritz'
+  - type: text
+    name: 'Norbert'
+  - type: text
+    name: 'Oskar'
+  - type: text
+    name: 'Otto'
+  - type: text
+    name: 'Paul'
+  - type: text
+    name: 'Peter'
+  - type: text
+    name: 'Philipp'
+  - type: text
+    name: 'Raimund'
+  - type: text
+    name: 'Reiner'
+  - type: text
+    name: 'Reinhold'
+  - type: text
+    name: 'Richard'
+  - type: text
+    name: 'Robert'
+  - type: text
+    name: 'Roland'
+  - type: text
+    name: 'Rudolf'
+  - type: text
+    name: 'Siegfried'
+  - type: text
+    name: 'Siegmund'
+  - type: text
+    name: 'Stephan'
+  - type: text
+    name: 'Theodor'
+  - type: text
+    name: 'Thomas'
+  - type: text
+    name: 'Ulrich'
+  - type: text
+    name: 'Valentin'
+  - type: text
+    name: 'Viktor'
+  - type: text
+    name: 'Vinzenz'
+  - type: text
+    name: 'Waldemar'
+  - type: text
+    name: 'Walter'
+  - type: text
+    name: 'Wendelin'
+  - type: text
+    name: 'Werner'
+  - type: text
+    name: 'Wigber'
+  - type: text
+    name: 'Wilhelm'
+  - type: text
+    name: 'Wolfgang'
+  - type: text
+    name: 'Wolfram'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..male_first_name_german
+      lang: en
+      priority: 0
+---
+name: Female first name, german
+_id: o41fAGK55fO3yHmS
+folder: w2vkKXFHcbQVeB7H
+description: 'Female first names for use in various macros'
+results:
+  - type: text
+    name: 'Adelheid'
+  - type: text
+    name: 'Agnes'
+  - type: text
+    name: 'Amalie'
+  - type: text
+    name: 'Anna'
+  - type: text
+    name: 'Anni'
+  - type: text
+    name: 'Auguste'
+  - type: text
+    name: 'Barbara'
+  - type: text
+    name: 'Beate'
+  - type: text
+    name: 'Bertha'
+  - type: text
+    name: 'Brigitte'
+  - type: text
+    name: 'Brunhilde'
+  - type: text
+    name: 'Charlotte'
+  - type: text
+    name: 'Christa'
+  - type: text
+    name: 'Clara'
+  - type: text
+    name: 'Dagmar'
+  - type: text
+    name: 'Dora'
+  - type: text
+    name: 'Dorothea'
+  - type: text
+    name: 'Edeltraud'
+  - type: text
+    name: 'Edith'
+  - type: text
+    name: 'Eleonore'
+  - type: text
+    name: 'Elfriede'
+  - type: text
+    name: 'Elisabeth'
+  - type: text
+    name: 'Elsa'
+  - type: text
+    name: 'Elsbeth'
+  - type: text
+    name: 'Emma'
+  - type: text
+    name: 'Emmy'
+  - type: text
+    name: 'Erika'
+  - type: text
+    name: 'Erna'
+  - type: text
+    name: 'Eva'
+  - type: text
+    name: 'Felicitas'
+  - type: text
+    name: 'Frieda'
+  - type: text
+    name: 'Gabriele'
+  - type: text
+    name: 'Gerda'
+  - type: text
+    name: 'Gertrud'
+  - type: text
+    name: 'Gisela'
+  - type: text
+    name: 'Greta'
+  - type: text
+    name: 'Gundula'
+  - type: text
+    name: 'Hanna'
+  - type: text
+    name: 'Hedwig'
+  - type: text
+    name: 'Helene'
+  - type: text
+    name: 'Helga'
+  - type: text
+    name: 'Henriette'
+  - type: text
+    name: 'Hermine'
+  - type: text
+    name: 'Hertha'
+  - type: text
+    name: 'Hildegard'
+  - type: text
+    name: 'Ida'
+  - type: text
+    name: 'Ilse'
+  - type: text
+    name: 'Ingeborg'
+  - type: text
+    name: 'Ingrid'
+  - type: text
+    name: 'Irene'
+  - type: text
+    name: 'Irma'
+  - type: text
+    name: 'Irmgard'
+  - type: text
+    name: 'Johanna'
+  - type: text
+    name: 'Josefa'
+  - type: text
+    name: 'Jutta'
+  - type: text
+    name: 'Karin'
+  - type: text
+    name: 'Karoline'
+  - type: text
+    name: 'Käthe'
+  - type: text
+    name: 'Klara'
+  - type: text
+    name: 'Kunigunde'
+  - type: text
+    name: 'Leonore'
+  - type: text
+    name: 'Lieselotte'
+  - type: text
+    name: 'Lotte'
+  - type: text
+    name: 'Lucia'
+  - type: text
+    name: 'Luise'
+  - type: text
+    name: 'Magdalena'
+  - type: text
+    name: 'Margarete'
+  - type: text
+    name: 'Maria'
+  - type: text
+    name: 'Marianne'
+  - type: text
+    name: 'Marie'
+  - type: text
+    name: 'Martha'
+  - type: text
+    name: 'Mathilde'
+  - type: text
+    name: 'Mechthild'
+  - type: text
+    name: 'Meta'
+  - type: text
+    name: 'Minna'
+  - type: text
+    name: 'Olga'
+  - type: text
+    name: 'Ottilie'
+  - type: text
+    name: 'Paula'
+  - type: text
+    name: 'Renate'
+  - type: text
+    name: 'Rita'
+  - type: text
+    name: 'Rosa'
+  - type: text
+    name: 'Roswitha'
+  - type: text
+    name: 'Ruth'
+  - type: text
+    name: 'Sabina'
+  - type: text
+    name: 'Selma'
+  - type: text
+    name: 'Sieglinde'
+  - type: text
+    name: 'Sigrid'
+  - type: text
+    name: 'Sophie'
+  - type: text
+    name: 'Susanne'
+  - type: text
+    name: 'Tekla'
+  - type: text
+    name: 'Therese'
+  - type: text
+    name: 'Trude'
+  - type: text
+    name: 'Ulrike'
+  - type: text
+    name: 'Ursula'
+  - type: text
+    name: 'Vera'
+  - type: text
+    name: 'Walburga'
+  - type: text
+    name: 'Wally'
+  - type: text
+    name: 'Waltraud'
+  - type: text
+    name: 'Wilhelmine'
+  - type: text
+    name: 'Zenzi'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..female_first_name_german
+      lang: en
+      priority: 0
+---
+name: Last name, german
+_id: Wg1Dm6yUzdlWc6Em
+folder: w2vkKXFHcbQVeB7H
+description: 'Last names for use in various macros'
+results:
+  - type: text
+    name: 'Albrecht'
+  - type: text
+    name: 'Arnold'
+  - type: text
+    name: 'Bauer'
+  - type: text
+    name: 'Baumann'
+  - type: text
+    name: 'Beck'
+  - type: text
+    name: 'Becker'
+  - type: text
+    name: 'Berger'
+  - type: text
+    name: 'Bergmann'
+  - type: text
+    name: 'Böhm'
+  - type: text
+    name: 'Brandt'
+  - type: text
+    name: 'Braun'
+  - type: text
+    name: 'Busch'
+  - type: text
+    name: 'Dietrich'
+  - type: text
+    name: 'Engel'
+  - type: text
+    name: 'Fischer'
+  - type: text
+    name: 'Frank'
+  - type: text
+    name: 'Franke'
+  - type: text
+    name: 'Friedrich'
+  - type: text
+    name: 'Fuchs'
+  - type: text
+    name: 'Graf'
+  - type: text
+    name: 'Gross'
+  - type: text
+    name: 'Günther'
+  - type: text
+    name: 'Haas'
+  - type: text
+    name: 'Hahn'
+  - type: text
+    name: 'Hartmann'
+  - type: text
+    name: 'Heinrich'
+  - type: text
+    name: 'Hermann'
+  - type: text
+    name: 'Hoffmann'
+  - type: text
+    name: 'Hofman'
+  - type: text
+    name: 'Horn'
+  - type: text
+    name: 'Huber'
+  - type: text
+    name: 'Jäger'
+  - type: text
+    name: 'Jung'
+  - type: text
+    name: 'Kaiser'
+  - type: text
+    name: 'Keller'
+  - type: text
+    name: 'Klein'
+  - type: text
+    name: 'Koch'
+  - type: text
+    name: 'Köhler'
+  - type: text
+    name: 'König'
+  - type: text
+    name: 'Krämer'
+  - type: text
+    name: 'Kraus'
+  - type: text
+    name: 'Krause'
+  - type: text
+    name: 'Krüger'
+  - type: text
+    name: 'Kuhn'
+  - type: text
+    name: 'Kühn'
+  - type: text
+    name: 'Lang'
+  - type: text
+    name: 'Lange'
+  - type: text
+    name: 'Lehmann'
+  - type: text
+    name: 'Lorenz'
+  - type: text
+    name: 'Ludwig'
+  - type: text
+    name: 'Maier'
+  - type: text
+    name: 'Martin'
+  - type: text
+    name: 'Mayer'
+  - type: text
+    name: 'Meier'
+  - type: text
+    name: 'Meyer'
+  - type: text
+    name: 'Möller'
+  - type: text
+    name: 'Müller'
+  - type: text
+    name: 'Neumann'
+  - type: text
+    name: 'Otto'
+  - type: text
+    name: 'Peters'
+  - type: text
+    name: 'Pfeiffer'
+  - type: text
+    name: 'Pohl'
+  - type: text
+    name: 'Richter'
+  - type: text
+    name: 'Roth'
+  - type: text
+    name: 'Sauer'
+  - type: text
+    name: 'Schäfer'
+  - type: text
+    name: 'Schmid'
+  - type: text
+    name: 'Schmidt'
+  - type: text
+    name: 'Schmitt'
+  - type: text
+    name: 'Schneider'
+  - type: text
+    name: 'Scholz'
+  - type: text
+    name: 'Schreiber'
+  - type: text
+    name: 'Schröder'
+  - type: text
+    name: 'Schubert'
+  - type: text
+    name: 'Schulte'
+  - type: text
+    name: 'Schulz'
+  - type: text
+    name: 'Schulze'
+  - type: text
+    name: 'Schumacher'
+  - type: text
+    name: 'Schuster'
+  - type: text
+    name: 'Schwarz'
+  - type: text
+    name: 'Seidel'
+  - type: text
+    name: 'Simon'
+  - type: text
+    name: 'Sommer'
+  - type: text
+    name: 'Stein'
+  - type: text
+    name: 'Thomas'
+  - type: text
+    name: 'Vogel'
+  - type: text
+    name: 'Vogt'
+  - type: text
+    name: 'Voigt'
+  - type: text
+    name: 'Wagner'
+  - type: text
+    name: 'Walter'
+  - type: text
+    name: 'Weber'
+  - type: text
+    name: 'Weiß'
+  - type: text
+    name: 'Werner'
+  - type: text
+    name: 'Winkler'
+  - type: text
+    name: 'Winter'
+  - type: text
+    name: 'Wolf'
+  - type: text
+    name: 'Wolff'
+  - type: text
+    name: 'Woll'
+  - type: text
+    name: 'Ziegler'
+  - type: text
+    name: 'Zimmermann'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..last_name_german
+      lang: en
+      priority: 0
+---
+name: Male first name, hispanic
+_id: UzJWzYo2VfO6rHJh
+folder: w2vkKXFHcbQVeB7H
+description: 'Male first names for use in various macros'
+results:
+  - type: text
+    name: 'Agustín'
+  - type: text
+    name: 'Alberto'
+  - type: text
+    name: 'Alejandro'
+  - type: text
+    name: 'Alfonso'
+  - type: text
+    name: 'Alfredo'
+  - type: text
+    name: 'Andrés'
+  - type: text
+    name: 'Ángel'
+  - type: text
+    name: 'Antonio'
+  - type: text
+    name: 'Armando'
+  - type: text
+    name: 'Arturo'
+  - type: text
+    name: 'Benito'
+  - type: text
+    name: 'Bernardo'
+  - type: text
+    name: 'Bonifacio'
+  - type: text
+    name: 'Carlos'
+  - type: text
+    name: 'Claudio'
+  - type: text
+    name: 'Conrado'
+  - type: text
+    name: 'Cristóbal'
+  - type: text
+    name: 'Diego'
+  - type: text
+    name: 'Domingo'
+  - type: text
+    name: 'Edmundo'
+  - type: text
+    name: 'Eduardo'
+  - type: text
+    name: 'Elías'
+  - type: text
+    name: 'Eliseo'
+  - type: text
+    name: 'Emilio'
+  - type: text
+    name: 'Enrique'
+  - type: text
+    name: 'Ernesto'
+  - type: text
+    name: 'Esteban'
+  - type: text
+    name: 'Eugenio'
+  - type: text
+    name: 'Fausto'
+  - type: text
+    name: 'Federico'
+  - type: text
+    name: 'Felipe'
+  - type: text
+    name: 'Félix'
+  - type: text
+    name: 'Fernando'
+  - type: text
+    name: 'Francisco'
+  - type: text
+    name: 'Germán'
+  - type: text
+    name: 'Gilberto'
+  - type: text
+    name: 'Gonzalo'
+  - type: text
+    name: 'Gregorio'
+  - type: text
+    name: 'Guillermo'
+  - type: text
+    name: 'Gustavo'
+  - type: text
+    name: 'Héctor'
+  - type: text
+    name: 'Hipólito'
+  - type: text
+    name: 'Hugo'
+  - type: text
+    name: 'Humberto'
+  - type: text
+    name: 'Ignacio'
+  - type: text
+    name: 'Isidro'
+  - type: text
+    name: 'Jaime'
+  - type: text
+    name: 'Javier'
+  - type: text
+    name: 'Jesús'
+  - type: text
+    name: 'Joaquín'
+  - type: text
+    name: 'Jorge'
+  - type: text
+    name: 'José'
+  - type: text
+    name: 'Juan'
+  - type: text
+    name: 'Julián'
+  - type: text
+    name: 'Leandro'
+  - type: text
+    name: 'Leopoldo'
+  - type: text
+    name: 'Lorenzo'
+  - type: text
+    name: 'Lucas'
+  - type: text
+    name: 'Luciano'
+  - type: text
+    name: 'Lucio'
+  - type: text
+    name: 'Luis'
+  - type: text
+    name: 'Manuel'
+  - type: text
+    name: 'Marcelo'
+  - type: text
+    name: 'Marcos'
+  - type: text
+    name: 'Mariano'
+  - type: text
+    name: 'Mario'
+  - type: text
+    name: 'Martín'
+  - type: text
+    name: 'Mateo'
+  - type: text
+    name: 'Mauricio'
+  - type: text
+    name: 'Máximo'
+  - type: text
+    name: 'Miguel'
+  - type: text
+    name: 'Moisés'
+  - type: text
+    name: 'Nicolás'
+  - type: text
+    name: 'Octavio'
+  - type: text
+    name: 'Orlando'
+  - type: text
+    name: 'Oscar'
+  - type: text
+    name: 'Pablo'
+  - type: text
+    name: 'Pascual'
+  - type: text
+    name: 'Patricio'
+  - type: text
+    name: 'Pedro'
+  - type: text
+    name: 'Rafael'
+  - type: text
+    name: 'Ramón'
+  - type: text
+    name: 'Raúl'
+  - type: text
+    name: 'Ricardo'
+  - type: text
+    name: 'Roberto'
+  - type: text
+    name: 'Rodolfo'
+  - type: text
+    name: 'Rodrigo'
+  - type: text
+    name: 'Rubén'
+  - type: text
+    name: 'Salvador'
+  - type: text
+    name: 'Santiago'
+  - type: text
+    name: 'Sebastián'
+  - type: text
+    name: 'Sergio'
+  - type: text
+    name: 'Teodoro'
+  - type: text
+    name: 'Tomás'
+  - type: text
+    name: 'Valentín'
+  - type: text
+    name: 'Vicente'
+  - type: text
+    name: 'Victor'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..male_first_name_hispanic
+      lang: en
+      priority: 0
+---
+name: Female first name, hispanic
+_id: I85PTdmWM75s6GgA
+folder: w2vkKXFHcbQVeB7H
+description: 'Female first names for use in various macros'
+results:
+  - type: text
+    name: 'Adriana'
+  - type: text
+    name: 'Alicia'
+  - type: text
+    name: 'Amparo'
+  - type: text
+    name: 'Ana'
+  - type: text
+    name: 'Ángela'
+  - type: text
+    name: 'Anita'
+  - type: text
+    name: 'Antonia'
+  - type: text
+    name: 'Aurora'
+  - type: text
+    name: 'Beatriz'
+  - type: text
+    name: 'Blanca'
+  - type: text
+    name: 'Camila'
+  - type: text
+    name: 'Carmen'
+  - type: text
+    name: 'Catalina'
+  - type: text
+    name: 'Cecilia'
+  - type: text
+    name: 'Celia'
+  - type: text
+    name: 'Clara'
+  - type: text
+    name: 'Concepción'
+  - type: text
+    name: 'Consuelo'
+  - type: text
+    name: 'Cristina'
+  - type: text
+    name: 'Dolores'
+  - type: text
+    name: 'Dora'
+  - type: text
+    name: 'Elena'
+  - type: text
+    name: 'Elvira'
+  - type: text
+    name: 'Emilia'
+  - type: text
+    name: 'Esperanza'
+  - type: text
+    name: 'Estela'
+  - type: text
+    name: 'Ester'
+  - type: text
+    name: 'Eugenia'
+  - type: text
+    name: 'Eva'
+  - type: text
+    name: 'Felicia'
+  - type: text
+    name: 'Flora'
+  - type: text
+    name: 'Florencia'
+  - type: text
+    name: 'Francisca'
+  - type: text
+    name: 'Gloria'
+  - type: text
+    name: 'Graciela'
+  - type: text
+    name: 'Guadalupe'
+  - type: text
+    name: 'Hilda'
+  - type: text
+    name: 'Inés'
+  - type: text
+    name: 'Irene'
+  - type: text
+    name: 'Irma'
+  - type: text
+    name: 'Isabel'
+  - type: text
+    name: 'Josefa'
+  - type: text
+    name: 'Josefina'
+  - type: text
+    name: 'Juana'
+  - type: text
+    name: 'Julia'
+  - type: text
+    name: 'Leonor'
+  - type: text
+    name: 'Leticia'
+  - type: text
+    name: 'Lola'
+  - type: text
+    name: 'Lourdes'
+  - type: text
+    name: 'Lucía'
+  - type: text
+    name: 'Luisa'
+  - type: text
+    name: 'Luz'
+  - type: text
+    name: 'Magdalena'
+  - type: text
+    name: 'Manuela'
+  - type: text
+    name: 'Marcela'
+  - type: text
+    name: 'Margarita'
+  - type: text
+    name: 'María'
+  - type: text
+    name: 'Marina'
+  - type: text
+    name: 'Marta'
+  - type: text
+    name: 'Matilde'
+  - type: text
+    name: 'Mercedes'
+  - type: text
+    name: 'Milagros'
+  - type: text
+    name: 'Modesta'
+  - type: text
+    name: 'Natalia'
+  - type: text
+    name: 'Nelly'
+  - type: text
+    name: 'Nieves'
+  - type: text
+    name: 'Noemí'
+  - type: text
+    name: 'Ofelia'
+  - type: text
+    name: 'Otilia'
+  - type: text
+    name: 'Palmira'
+  - type: text
+    name: 'Pastora'
+  - type: text
+    name: 'Patricia'
+  - type: text
+    name: 'Paula'
+  - type: text
+    name: 'Paulina'
+  - type: text
+    name: 'Perla'
+  - type: text
+    name: 'Petrona'
+  - type: text
+    name: 'Pilar'
+  - type: text
+    name: 'Pura'
+  - type: text
+    name: 'Rafaela'
+  - type: text
+    name: 'Ramona'
+  - type: text
+    name: 'Raquel'
+  - type: text
+    name: 'Rebeca'
+  - type: text
+    name: 'Regina'
+  - type: text
+    name: 'Rita'
+  - type: text
+    name: 'Rosa'
+  - type: text
+    name: 'Rosalía'
+  - type: text
+    name: 'Rosario'
+  - type: text
+    name: 'Ruth'
+  - type: text
+    name: 'Sara'
+  - type: text
+    name: 'Silvia'
+  - type: text
+    name: 'Socorro'
+  - type: text
+    name: 'Sofía'
+  - type: text
+    name: 'Soledad'
+  - type: text
+    name: 'Teodora'
+  - type: text
+    name: 'Teresa'
+  - type: text
+    name: 'Valentina'
+  - type: text
+    name: 'Yolanda'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..female_first_name_hispanic
+      lang: en
+      priority: 0
+---
+name: Last name, hispanic
+_id: ueDFG6iweDSi97F1
+folder: w2vkKXFHcbQVeB7H
+description: 'Last names for use in various macros'
+results:
+  - type: text
+    name: 'Aguilar'
+  - type: text
+    name: 'Alonso'
+  - type: text
+    name: 'Alvarez'
+  - type: text
+    name: 'Arias'
+  - type: text
+    name: 'Benitez'
+  - type: text
+    name: 'Cabrera'
+  - type: text
+    name: 'Campos'
+  - type: text
+    name: 'Cano'
+  - type: text
+    name: 'Carrasco'
+  - type: text
+    name: 'Castillo'
+  - type: text
+    name: 'Castro'
+  - type: text
+    name: 'Cortes'
+  - type: text
+    name: 'Crespo'
+  - type: text
+    name: 'Cruz'
+  - type: text
+    name: 'Delgado'
+  - type: text
+    name: 'Diaz'
+  - type: text
+    name: 'Diez'
+  - type: text
+    name: 'Dominguez'
+  - type: text
+    name: 'Duran'
+  - type: text
+    name: 'Esteban'
+  - type: text
+    name: 'Fernandez'
+  - type: text
+    name: 'Ferrer'
+  - type: text
+    name: 'Flores'
+  - type: text
+    name: 'Fuentes'
+  - type: text
+    name: 'Gallego'
+  - type: text
+    name: 'García'
+  - type: text
+    name: 'Gil'
+  - type: text
+    name: 'Gimenez'
+  - type: text
+    name: 'Gomez'
+  - type: text
+    name: 'Gonzalez'
+  - type: text
+    name: 'Guerrero'
+  - type: text
+    name: 'Gutierrez'
+  - type: text
+    name: 'Hernandez'
+  - type: text
+    name: 'Herrera'
+  - type: text
+    name: 'Hidalgo'
+  - type: text
+    name: 'Ibañez'
+  - type: text
+    name: 'Iglesias'
+  - type: text
+    name: 'Jimenez'
+  - type: text
+    name: 'Leon'
+  - type: text
+    name: 'Lopez'
+  - type: text
+    name: 'Lorente'
+  - type: text
+    name: 'Lozano'
+  - type: text
+    name: 'Marin'
+  - type: text
+    name: 'Marquez'
+  - type: text
+    name: 'Martin'
+  - type: text
+    name: 'Martinez'
+  - type: text
+    name: 'Medina'
+  - type: text
+    name: 'Mendez'
+  - type: text
+    name: 'Miranda'
+  - type: text
+    name: 'Molina'
+  - type: text
+    name: 'Montero'
+  - type: text
+    name: 'Mora'
+  - type: text
+    name: 'Morales'
+  - type: text
+    name: 'Moreno'
+  - type: text
+    name: 'Moya'
+  - type: text
+    name: 'Muñoz'
+  - type: text
+    name: 'Navarro'
+  - type: text
+    name: 'Nieto'
+  - type: text
+    name: 'Nuñez'
+  - type: text
+    name: 'Ortega'
+  - type: text
+    name: 'Ortiz'
+  - type: text
+    name: 'Parra'
+  - type: text
+    name: 'Pascual'
+  - type: text
+    name: 'Pastor'
+  - type: text
+    name: 'Peña'
+  - type: text
+    name: 'Perez'
+  - type: text
+    name: 'Prieto'
+  - type: text
+    name: 'Ramirez'
+  - type: text
+    name: 'Ramos'
+  - type: text
+    name: 'Reyes'
+  - type: text
+    name: 'Rodriguez'
+  - type: text
+    name: 'Rojas'
+  - type: text
+    name: 'Roman'
+  - type: text
+    name: 'Romero'
+  - type: text
+    name: 'Rubio'
+  - type: text
+    name: 'Ruiz'
+  - type: text
+    name: 'Saez'
+  - type: text
+    name: 'Sanchez'
+  - type: text
+    name: 'Santana'
+  - type: text
+    name: 'Santiago'
+  - type: text
+    name: 'Santos'
+  - type: text
+    name: 'Sanz'
+  - type: text
+    name: 'Serrano'
+  - type: text
+    name: 'Soler'
+  - type: text
+    name: 'Soto'
+  - type: text
+    name: 'Suarez'
+  - type: text
+    name: 'Torres'
+  - type: text
+    name: 'Vaca'
+  - type: text
+    name: 'Vargas'
+  - type: text
+    name: 'Vazquez'
+  - type: text
+    name: 'Vega'
+  - type: text
+    name: 'Velasco'
+  - type: text
+    name: 'Vicente'
+  - type: text
+    name: 'Vidal'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..last_name_hispanic
+      lang: en
+      priority: 0
+---
+name: Male first name, kenyan
+_id: oRb99h0Ngh5DyWqc
+folder: w2vkKXFHcbQVeB7H
+description: 'Male first names for use in various macros'
+results:
+  - type: text
+    name: 'Amos'
+  - type: text
+    name: 'Issa'
+  - type: text
+    name: 'Jabali'
+  - type: text
+    name: 'Jairo'
+  - type: text
+    name: 'Juma'
+  - type: text
+    name: 'Kamau'
+  - type: text
+    name: 'Kassim'
+  - type: text
+    name: 'Kipkemboi'
+  - type: text
+    name: 'Kiplangat'
+  - type: text
+    name: 'Kiprono'
+  - type: text
+    name: 'Kiptoo'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..male_first_name_kenyan
+      lang: en
+      priority: 0
+---
+name: Female first name, kenyan
+_id: lCm4CTt2kNpGczj9
+folder: w2vkKXFHcbQVeB7H
+description: 'Female first names for use in various macros'
+results:
+  - type: text
+    name: 'Achieng'
+  - type: text
+    name: 'Akinyi'
+  - type: text
+    name: 'Atieno'
+  - type: text
+    name: 'Deka'
+  - type: text
+    name: 'Farida'
+  - type: text
+    name: 'Fatuma'
+  - type: text
+    name: 'Gathigia'
+  - type: text
+    name: 'Gathoni'
+  - type: text
+    name: 'Halima'
+  - type: text
+    name: 'Kadzo'
+  - type: text
+    name: 'Kamene'
+  - type: text
+    name: 'Kendi'
+  - type: text
+    name: 'Kerubo'
+  - type: text
+    name: 'Kwamboka'
+  - type: text
+    name: 'Malia'
+  - type: text
+    name: 'Mbithe'
+  - type: text
+    name: 'Mumbi'
+  - type: text
+    name: 'Muthoni'
+  - type: text
+    name: 'Mwikali'
+  - type: text
+    name: 'Naliaka'
+  - type: text
+    name: 'Nanjala'
+  - type: text
+    name: 'Nasimiyu'
+  - type: text
+    name: 'Nyambura'
+  - type: text
+    name: 'Zainab'
+  - type: text
+    name: 'Zawadi'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..female_first_name_kenyan
+      lang: en
+      priority: 0
+---
+name: Last name, kenyan
+_id: SZjGHSm1d3HSbhMv
+folder: w2vkKXFHcbQVeB7H
+description: 'Last names for use in various macros'
+results:
+  - type: text
+    name: 'Abdalla'
+  - type: text
+    name: 'Adan'
+  - type: text
+    name: 'Barasa'
+  - type: text
+    name: 'Cheruiyot'
+  - type: text
+    name: 'Choge'
+  - type: text
+    name: 'Gichuhi'
+  - type: text
+    name: 'Gikandi'
+  - type: text
+    name: 'Gikonyo'
+  - type: text
+    name: 'Githinji'
+  - type: text
+    name: 'Kariuki'
+  - type: text
+    name: 'Khalif'
+  - type: text
+    name: 'Kibet'
+  - type: text
+    name: 'Kilonzo'
+  - type: text
+    name: 'Kimani'
+  - type: text
+    name: 'Kipkorir'
+  - type: text
+    name: 'Kiptoo'
+  - type: text
+    name: 'Madoya'
+  - type: text
+    name: 'Mbaruk'
+  - type: text
+    name: 'Mboya'
+  - type: text
+    name: 'Mutiso'
+  - type: text
+    name: 'Mwangi'
+  - type: text
+    name: 'Njoroge'
+  - type: text
+    name: 'Odinga'
+  - type: text
+    name: 'Oluoch'
+  - type: text
+    name: 'Opondo'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..last_name_kenyan
+      lang: en
+      priority: 0

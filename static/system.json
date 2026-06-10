@@ -27,7 +27,8 @@
       "packs": [
         "en-wiki-phobias-and-manias",
         "en-wiki-roll-tables",
-        "en-wiki-weapons"
+        "en-wiki-weapons",
+        "en-wiki-macros"
       ]
     },
     {
@@ -113,6 +114,13 @@
       "type": "Item",
       "name": "en-wiki-weapons",
       "path": "packs/en-wiki-weapons",
+      "system": "CoC7"
+    },
+    {
+      "label": "Macros | en",
+      "type": "Macro",
+      "name": "en-wiki-macros",
+      "path": "packs/en-wiki-macros",
       "system": "CoC7"
     }
   ],
