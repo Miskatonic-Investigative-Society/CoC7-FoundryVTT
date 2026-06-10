@@ -148,50 +148,47 @@ img: icons/commodities/tech/electronics-button-skull-red.webp
 command: |
   // WARNING: This macro will overwrite the name of the actor!
   // Generates a random female name from compendium tables and applies it to ACTOR of selected token.
-  async function getRandomFemaleName() {
-    const table1 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.zvWGA3uHfT3jbOqT");
-    const table2 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.QwGXBkSLea1sJEvK");
+  async function getRandomFemaleName () {
+    const table1 = await fromUuid('Compendium.CoC7.en-wiki-roll-tables.RollTable.zvWGA3uHfT3jbOqT')
+    const table2 = await fromUuid('Compendium.CoC7.en-wiki-roll-tables.RollTable.QwGXBkSLea1sJEvK')
     if (!table1 || !table2) {
-      ui.notifications.error("Compendium table not found!");
-      return null;
+      ui.notifications.error('Compendium table not found!')
+      return null
     }
-    const firstNameResult = await table1.draw({ displayChat: false });
-    const lastNameResult = await table2.draw({ displayChat: false });
-    if (firstNameResult.results.length > 0 || lastNameResult.results.length > 0) {
-      const firstName = firstNameResult.results[0].name;
-      const lastName = lastNameResult.results[0].name;
-      return `${firstName} ${lastName}`;
-    }
-    return null;
+    const firstNameResult = await table1.draw({ displayChat: false })
+    const lastNameResult = await table2.draw({ displayChat: false })
+    const firstName = firstNameResult.results[0].name
+    const lastName = lastNameResult.results[0].name
+    return `${firstName} ${lastName}`
   }
-  const tokens = canvas.tokens.controlled;
+  const tokens = canvas.tokens.controlled
   if (tokens.length > 0) {
-    const updates = [];
+    const updaterActors = []
+    const updaterTokens = []
     for (const token of tokens) {
-      const randomName = await getRandomFemaleName();
+      const randomName = await getRandomFemaleName()
       if (randomName) {
-        updates.push({
-          actor: {
-            _id: token.actor.id,
-            name: randomName,
-            prototypeToken: {
-              name: randomName
-            },
-            token: {
-              _id: token.id,
-              name: randomName
-            }
+        updaterActors.push({
+          _id: token.actor.id,
+          name: randomName,
+          prototypeToken: {
+            name: randomName
           }
-        });
+        })
+        updaterTokens.push({
+          _id: token.id,
+          name: randomName
+        })
       }
     }
-    if (updates.length > 0) {
-      const updatedActors = await Actor.implementation.updateDocuments(updates.map(update => update.actor));
-      const updatedTokens = await Token.implementation.updateDocuments(updates.map(update => update.token));
-      ui.notifications.info(`Updated ${updates.length} token names.`);
+    for (const update of updaterActors) {
+      await Actor.implementation.updateDocuments([update])
     }
+    await canvas.scene.updateEmbeddedDocuments('Token', updaterTokens)
+
+    ui.notifications.info(`Updated ${update.length} actor names.`)
   } else {
-    ui.notifications.warn("No tokens were selected");
+    ui.notifications.warn('No tokens were selected')
   }
 flags:
   CoC7:
@@ -209,50 +206,47 @@ img: icons/commodities/tech/electronics-button-skull-red.webp
 command: |
   // WARNING: This macro will overwrite the name of the actor!
   // Generates a random male name from compendium tables and applies it to ACTOR of selected token.
-  async function getRandomMaleName() {
-    const table1 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.zvWGA3uHfT3jbOqT");
-    const table2 = await fromUuid("Compendium.CoC7.en-wiki-roll-tables.RollTable.QwGXBkSLea1sJEvK");
+  async function getRandomMaleName () {
+    const table1 = await fromUuid('Compendium.CoC7.en-wiki-roll-tables.RollTable.yvXk3GTSA9adwv1z')
+    const table2 = await fromUuid('Compendium.CoC7.en-wiki-roll-tables.RollTable.QwGXBkSLea1sJEvK')
     if (!table1 || !table2) {
-      ui.notifications.error("Compendium table not found!");
-      return null;
+      ui.notifications.error('Compendium table not found!')
+      return null
     }
-    const firstNameResult = await table1.draw({ displayChat: false });
-    const lastNameResult = await table2.draw({ displayChat: false });
-    if (firstNameResult.results.length > 0 || lastNameResult.results.length > 0) {
-      const firstName = firstNameResult.results[0].name;
-      const lastName = lastNameResult.results[0].name;
-      return `${firstName} ${lastName}`;
-    }
-    return null;
+    const firstNameResult = await table1.draw({ displayChat: false })
+    const lastNameResult = await table2.draw({ displayChat: false })
+    const firstName = firstNameResult.results[0].name
+    const lastName = lastNameResult.results[0].name
+    return `${firstName} ${lastName}`
   }
-  const tokens = canvas.tokens.controlled;
+  const tokens = canvas.tokens.controlled
   if (tokens.length > 0) {
-    const updates = [];
+    const updaterActors = []
+    const updaterTokens = []
     for (const token of tokens) {
-      const randomName = await getRandomMaleName();
+      const randomName = await getRandomMaleName()
       if (randomName) {
-        updates.push({
-          actor: {
-            _id: token.actor.id,
-            name: randomName,
-            prototypeToken: {
-              name: randomName
-            },
-            token: {
-              _id: token.id,
-              name: randomName
-            }
+        updaterActors.push({
+          _id: token.actor.id,
+          name: randomName,
+          prototypeToken: {
+            name: randomName
           }
-        });
+        })
+        updaterTokens.push({
+          _id: token.id,
+          name: randomName
+        })
       }
     }
-    if (updates.length > 0) {
-      const updatedActors = await Actor.implementation.updateDocuments(updates.map(update => update.actor));
-      const updatedTokens = await Token.implementation.updateDocuments(updates.map(update => update.token));
-      ui.notifications.info(`Updated ${updates.length} token names.`);
+    for (const update of updaterActors) {
+      await Actor.implementation.updateDocuments([update])
     }
+    await canvas.scene.updateEmbeddedDocuments('Token', updaterTokens)
+
+    ui.notifications.info(`Updated ${update.length} actor names.`)
   } else {
-    ui.notifications.warn("No tokens were selected");
+    ui.notifications.warn('No tokens were selected')
   }
 flags:
   CoC7:
