@@ -4560,6 +4560,24 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
    * @returns {object}
    */
   static migrateData (source) {
+    const coerceAttribNumber = (path, { computeAuto = false } = {}) => {
+      const value = foundry.utils.getProperty(source, path)
+      if (typeof value === 'undefined' || value === null) return
+      if (value === 'auto') {
+        if (computeAuto) {
+          const computedValue = computeAuto()
+          if (typeof computedValue !== 'undefined') {
+            foundry.utils.setProperty(source, path, computedValue)
+          }
+        }
+        return
+      }
+      const numericValue = Number(value)
+      if (!Number.isNaN(numericValue)) {
+        foundry.utils.setProperty(source, path, numericValue)
+      }
+    }
+
     if (source.type === 'vehicle') {
       // Move vehicle attribs to vehicle stats
       if (typeof source.system?.description?.notes !== 'undefined' && typeof source.system?.description?.keeper === 'undefined') {
@@ -4586,6 +4604,28 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       if (typeof source.system?.attribs?.armor?.locations !== 'undefined' && typeof source.system?.stats?.armor?.locations === 'undefined') {
         foundry.utils.setProperty(source, 'system.stats.armor.locations', source.system.attribs.armor.locations)
       }
+      coerceAttribNumber('system.stats.hp')
+      coerceAttribNumber('system.stats.mov')
+      coerceAttribNumber('system.stats.build.value')
+      coerceAttribNumber('system.stats.build.current')
+      coerceAttribNumber('system.stats.armor.value')
+    }
+    if (['character', 'npc', 'creature'].includes(source.type)) {
+      coerceAttribNumber('system.attribs.hp.value')
+      coerceAttribNumber('system.attribs.hp.max')
+      coerceAttribNumber('system.attribs.mp.value')
+      coerceAttribNumber('system.attribs.mp.max')
+      coerceAttribNumber('system.attribs.lck.value')
+      coerceAttribNumber('system.attribs.san.value')
+      coerceAttribNumber('system.attribs.san.max')
+      coerceAttribNumber('system.attribs.san.dailyLoss')
+      coerceAttribNumber('system.attribs.san.dailyLimit')
+      coerceAttribNumber('system.attribs.mov.value', {
+        computeAuto: () => CoC7ModelsActorDocumentClass.movFromCharacteristics(source.system?.characteristics ?? {}, source.type, source.system?.infos?.age)
+      })
+      coerceAttribNumber('system.attribs.build.value', {
+        computeAuto: () => CoC7ModelsActorDocumentClass.buildFromCharacteristics(source.system?.characteristics ?? {})
+      })
     }
     // Migrate status to conditions
     if (['character', 'npc', 'creature'].includes(source.type) && typeof source.system?.status !== 'undefined' && typeof source.system?.conditions === 'undefined') {
