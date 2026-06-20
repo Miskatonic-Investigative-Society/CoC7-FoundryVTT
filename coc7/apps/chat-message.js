@@ -35,9 +35,13 @@ export default class CoC7ChatMessage {
                         break
                       case 'hp':
                         {
-                          const oldValue = parseInt(actor.system.attribs[key].value, 10)
-                          const newValue = await actor.setHp(Math.max(0, oldValue + total))
-                          total = newValue - oldValue
+                          if (total < 0) {
+                            total = -(await actor.dealDamage(-total))
+                          } else {
+                            const oldValue = parseInt(actor.system.attribs[key].value, 10)
+                            const newValue = await actor.setHp(Math.max(0, oldValue + total))
+                            total = newValue - oldValue
+                          }
                         }
                         break
                       case 'san':
