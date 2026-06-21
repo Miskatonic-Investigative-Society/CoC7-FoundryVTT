@@ -173,7 +173,7 @@ export default class CoC7ModelsItemSetupSystem extends CoC7ModelsItemGlobalSyste
     }
     // Migrate description to object
     if (typeof source.description === 'string') {
-      foundry.utils.setProperty(source, 'description.value', source.description)
+      foundry.utils.setProperty(source, 'description', { value: source.description })
     }
     return super.migrateData(source)
   }

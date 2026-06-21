@@ -11,7 +11,12 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+- Fix Actor characteristic tooltip displaying null for empty fields
+- Fix Actor documents where number fields contain invalid text, thanks to @zeteticl, #2096
+- Fix chat message hp damage using new health value instead difference
+- Fix Item old description string to json format, thanks to @zeteticl, #2096
 - Fix luck recovery button trigger and prevent incorrect call to skill development
+- Fix missing formatting on item description with separate properties list
 - Show modified value if heal/damage value changes when applying from roll message
 - Speed up loading of CoC ID Items from compendiums thanks to, @arrowedisgaming, #2086
 - Update to Swedish localization, thanks to @Rangertheman #2112
