@@ -600,11 +600,13 @@ export default class CoCID {
           progressBar.current++
         }
       } else {
-        const match = candidates[offset].uuid.match(/^Compendium\.(.+)\.Item\.(.+)$/)
-        if (typeof packs[match[1]] === 'undefined') {
-          packs[match[1]] = {}
+        const parts = foundry.utils.parseUuid(candidates[offset].uuid)
+        if (typeof parts.collection?.collection === 'string' && typeof parts.id === 'string') {
+          if (typeof packs[parts.collection.collection] === 'undefined') {
+            packs[parts.collection.collection] = {}
+          }
+          packs[parts.collection.collection][parts.id] = offset
         }
-        packs[match[1]][match[2]] = offset
       }
     }
     const all = []
