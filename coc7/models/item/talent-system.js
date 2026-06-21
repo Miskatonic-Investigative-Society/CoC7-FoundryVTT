@@ -45,7 +45,7 @@ export default class CoC7ModelsItemTalentSystem extends CoC7ModelsItemGlobalSyst
   static migrateData (source) {
     // Migrate description to object
     if (typeof source.description === 'string') {
-      foundry.utils.setProperty(source, 'description.value', source.description)
+      foundry.utils.setProperty(source, 'description', { value: source.description })
     }
     return super.migrateData(source)
   }

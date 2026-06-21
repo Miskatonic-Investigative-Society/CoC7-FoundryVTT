@@ -4561,23 +4561,23 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
    */
   static migrateData (source) {
     if (source.type === 'vehicle') {
-      // Move vehicle attribs to vehicle stats
+      // Move valid vehicle attribs to vehicle stats
       if (typeof source.system?.description?.notes !== 'undefined' && typeof source.system?.description?.keeper === 'undefined') {
         foundry.utils.setProperty(source, 'system.description.keeper', source.system.description.notes)
       }
-      if (typeof source.system?.attribs?.hp?.value !== 'undefined' && typeof source.system?.stats?.hp === 'undefined') {
+      if (typeof source.system?.attribs?.hp?.value !== 'undefined' && typeof source.system?.stats?.hp === 'undefined' && !isNaN(Number(source.system.attribs.hp.value))) {
         foundry.utils.setProperty(source, 'system.stats.hp', source.system.attribs.hp.value)
       }
-      if (typeof source.system?.attribs?.mov?.value !== 'undefined' && typeof source.system?.stats?.mov === 'undefined') {
+      if (typeof source.system?.attribs?.mov?.value !== 'undefined' && typeof source.system?.stats?.mov === 'undefined' && !isNaN(Number(source.system.attribs.mov.value))) {
         foundry.utils.setProperty(source, 'system.stats.mov', source.system.attribs.mov.value)
       }
-      if (typeof source.system?.attribs?.build?.value !== 'undefined' && typeof source.system?.stats?.build?.value === 'undefined') {
+      if (typeof source.system?.attribs?.build?.value !== 'undefined' && typeof source.system?.stats?.build?.value === 'undefined' && !isNaN(Number(source.system.attribs.build.value))) {
         foundry.utils.setProperty(source, 'system.stats.build.value', source.system.attribs.build.value)
       }
-      if (typeof source.system?.attribs?.build?.current !== 'undefined' && typeof source.system?.stats?.build?.current === 'undefined') {
+      if (typeof source.system?.attribs?.build?.current !== 'undefined' && typeof source.system?.stats?.build?.current === 'undefined' && !isNaN(Number(source.system.attribs.build.current))) {
         foundry.utils.setProperty(source, 'system.stats.build.current', source.system.attribs.build.current)
       }
-      if (typeof source.system?.attribs?.armor?.value !== 'undefined' && typeof source.system?.stats?.armor?.value === 'undefined') {
+      if (typeof source.system?.attribs?.armor?.value !== 'undefined' && typeof source.system?.stats?.armor?.value === 'undefined' && !isNaN(Number(source.system.attribs.armor.value))) {
         foundry.utils.setProperty(source, 'system.stats.armor.value', source.system.attribs.armor.value)
       }
       if (typeof source.system?.attribs?.armor?.localized !== 'undefined' && typeof source.system?.stats?.armor?.localized === 'undefined') {
@@ -4587,6 +4587,43 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
         foundry.utils.setProperty(source, 'system.stats.armor.locations', source.system.attribs.armor.locations)
       }
     }
+    // Convert NaN values to null for fields that are now foundry.data.fields.NumberField
+    if (['character', 'npc', 'creature'].includes(source.type)) {
+      if (typeof source.system?.attribs?.hp?.value !== 'undefined' && isNaN(Number(source.system.attribs.hp.value))) {
+        foundry.utils.setProperty(source, 'system.attribs.hp.value', null)
+      }
+      if (typeof source.system?.attribs?.hp?.max !== 'undefined' && isNaN(Number(source.system.attribs.hp.max))) {
+        foundry.utils.setProperty(source, 'system.attribs.hp.max', null)
+      }
+      if (typeof source.system?.attribs?.mp?.value !== 'undefined' && isNaN(Number(source.system.attribs.mp.value))) {
+        foundry.utils.setProperty(source, 'system.attribs.mp.value', null)
+      }
+      if (typeof source.system?.attribs?.mp?.max !== 'undefined' && isNaN(Number(source.system.attribs.mp.max))) {
+        foundry.utils.setProperty(source, 'system.attribs.mp.max', null)
+      }
+      if (typeof source.system?.attribs?.lck?.value !== 'undefined' && isNaN(Number(source.system.attribs.lck.value))) {
+        foundry.utils.setProperty(source, 'system.attribs.lck.value', null)
+      }
+      if (typeof source.system?.attribs?.san?.value !== 'undefined' && isNaN(Number(source.system.attribs.san.value))) {
+        foundry.utils.setProperty(source, 'system.attribs.san.value', null)
+      }
+      if (typeof source.system?.attribs?.san?.max !== 'undefined' && isNaN(Number(source.system.attribs.san.max))) {
+        foundry.utils.setProperty(source, 'system.attribs.san.max', null)
+      }
+      if (typeof source.system?.attribs?.san?.dailyLoss !== 'undefined' && isNaN(Number(source.system.attribs.san.dailyLoss))) {
+        foundry.utils.setProperty(source, 'system.attribs.san.dailyLoss', null)
+      }
+      if (typeof source.system?.attribs?.san?.dailyLimit !== 'undefined' && isNaN(Number(source.system.attribs.san.dailyLimit))) {
+        foundry.utils.setProperty(source, 'system.attribs.san.dailyLimit', null)
+      }
+      if (typeof source.system?.attribs?.mov?.value !== 'undefined' && isNaN(Number(source.system.attribs.mov.value))) {
+        foundry.utils.setProperty(source, 'system.attribs.mov.value', null)
+      }
+      if (typeof source.system?.attribs?.build?.value !== 'undefined' && isNaN(Number(source.system.attribs.build.value))) {
+        foundry.utils.setProperty(source, 'system.attribs.build.value', null)
+      }
+    }
+
     // Migrate status to conditions
     if (['character', 'npc', 'creature'].includes(source.type) && typeof source.system?.status !== 'undefined' && typeof source.system?.conditions === 'undefined') {
       if (source.system.status?.criticalWounds?.value) {
