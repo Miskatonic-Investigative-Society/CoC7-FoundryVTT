@@ -89,8 +89,9 @@ export default class CoC7ChatCombatMelee {
       const chatData = await check.getChatData()
       const targetMessage = await ChatMessage.create(chatData)
       if (targetMessage && attackerCheck) {
-        attackerCheck.#targetMessageId = targetMessage.id
-        attackerCheck.updateMessage()
+        const check = await CoC7ChatCombatMelee.loadFromMessage(attackerCheck.message)
+        check.#targetMessageId = targetMessage.id
+        check.updateMessage()
       }
       return
     }

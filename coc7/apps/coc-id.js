@@ -1,4 +1,4 @@
-/* global Actor Card CONFIG foundry fromUuid game Item JournalEntry Macro Playlist RollTable Scene ui */
+/* global Actor Card CONFIG foundry game Item JournalEntry Macro Playlist RollTable Scene ui */
 import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7Utilities from './utilities.js'
 import deprecated from '../deprecated.js'
