@@ -72,7 +72,7 @@ export default class CoC7ChatCombatRanged {
       const check = new CoC7ChatCombatRanged()
       check.attacker = attackerUuid
       check.item = itemUuid
-      check.#sceneUuid = canvas.scene.uuid
+      check.#sceneUuid = canvas.scene?.uuid ?? ''
       const attacker = (await check.attacker)
       const item = (await check.item)
       if (attacker && item) {
@@ -103,7 +103,7 @@ export default class CoC7ChatCombatRanged {
           img: '',
           name: '',
           uuid: '',
-          unit: canvas.grid.units,
+          unit: canvas.grid?.units ?? game.i18n.localize('CoC7.DistanceUnitFeet'),
           poolDisabled: [],
           poolKeys: [],
           poolModifier,
