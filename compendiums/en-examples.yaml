@@ -895,9 +895,7 @@ items:
       skillName: 'Throw'
       specialization: ''
       properties:
-        fighting: true
-        combat: true
-        special: true
+        push: true
     flags:
       CoC7:
         cocidFlag:

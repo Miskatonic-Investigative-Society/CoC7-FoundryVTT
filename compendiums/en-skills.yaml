@@ -801,8 +801,7 @@ system:
     value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
   base: 20
   properties:
-    fighting: true
-    special: true
+    push: true
 flags:
   CoC7:
     cocidFlag:
