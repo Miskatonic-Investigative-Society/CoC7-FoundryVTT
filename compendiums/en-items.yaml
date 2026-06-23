@@ -63,7 +63,7 @@ system:
 flags:
   CoC7:
     cocidFlag:
-      id: i.setup.standard
+      id: i.setup.s-setup
       lang: en
       eras:
         standard: true
@@ -206,7 +206,7 @@ img: systems/CoC7/assets/icons/skills/fighting_brawl.svg
 system:
   skill:
     main:
-      name: Brawl
+      name: i.skill.brawl
   range:
     normal:
       damage: 1D3

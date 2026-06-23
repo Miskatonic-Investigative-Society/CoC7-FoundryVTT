@@ -1184,6 +1184,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           this.coc7Config.defaultEra = event.target.value
           await game.settings.set(FOLDER_ID, 'worldEra', this.coc7Config.defaultEra)
           this.coc7Config.cacheCoCID = await CoC7InvestigatorWizard.loadCacheItemByCoCID()
+          this.coc7Config.cacheBackstories = game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: /^rt\.\.backstory-/, type: 'rt' })
           // To prevent flashing show message for at least 500 ms
           const buffer = 500 - (Date.now() - started)
           // Don't bother if less than 10ms remaining
