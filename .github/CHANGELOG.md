@@ -11,6 +11,12 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+## Version 8.13
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
 - Fix Actor characteristic tooltip displaying null for empty fields
 - Fix Actor documents where number fields contain invalid text, thanks to @zeteticl, #2096
 - Fix chat message hp damage using new health value instead difference
