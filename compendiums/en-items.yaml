@@ -63,7 +63,7 @@ system:
 flags:
   CoC7:
     cocidFlag:
-      id: i.setup.standard
+      id: i.setup.s-setup
       lang: en
       eras:
         standard: true
