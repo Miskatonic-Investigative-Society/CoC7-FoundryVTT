@@ -1,4 +1,4 @@
-/* global Actor Card CONFIG foundry fromUuid game Item JournalEntry Macro Playlist RollTable Scene ui */
+/* global Actor Card CONFIG foundry game Item JournalEntry Macro Playlist RollTable Scene ui */
 import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7Utilities from './utilities.js'
 import deprecated from '../deprecated.js'
@@ -591,16 +591,40 @@ export default class CoCID {
    * @returns {Array}
    */
   static async #onlyDocuments (candidates, progressBar) {
+    const packs = {}
     for (const offset in candidates) {
-      if (progressBar !== false) {
-        // await new Promise(resolve => setTimeout(resolve, 1000))
-        progressBar.bar.update({ pct: progressBar.current / progressBar.max })
-        progressBar.current++
-      }
-      if (!(candidates[offset] instanceof foundry.abstract.DataModel)) {
-        candidates[offset] = await fromUuid(candidates[offset].uuid)
+      if (candidates[offset] instanceof foundry.abstract.DataModel) {
+        if (progressBar !== false) {
+          // await new Promise(resolve => setTimeout(resolve, 1000))
+          progressBar.bar.update({ pct: progressBar.current / progressBar.max })
+          progressBar.current++
+        }
+      } else {
+        const parts = foundry.utils.parseUuid(candidates[offset].uuid)
+        if (typeof parts.collection?.collection === 'string' && typeof parts.id === 'string') {
+          if (typeof packs[parts.collection.collection] === 'undefined') {
+            packs[parts.collection.collection] = {}
+          }
+          packs[parts.collection.collection][parts.id] = offset
+        }
       }
     }
+    const all = []
+    for (const packId in packs) {
+      const pack = game.packs.get(packId)
+      all.push(pack.getDocuments({ _id__in: Object.keys(packs[packId]) }).then(documents => {
+        for (const document of documents) {
+          if (progressBar !== false) {
+            // await new Promise(resolve => setTimeout(resolve, 1000))
+            progressBar.bar.update({ pct: progressBar.current / progressBar.max })
+            progressBar.current++
+          }
+          const offset = packs[packId][document._id]
+          candidates[offset] = document
+        }
+      }))
+    }
+    await Promise.all(all)
     if (progressBar !== false) {
       // await new Promise(resolve => setTimeout(resolve, 1000))
       progressBar.bar.remove()
