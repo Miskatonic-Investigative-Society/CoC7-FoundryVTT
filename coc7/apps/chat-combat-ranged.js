@@ -1018,11 +1018,6 @@ export default class CoC7ChatCombatRanged {
       if (this.#fullAuto) {
         poolModifier -= this.#shots.length
       }
-      if (data.targets[offset].size === CoC7ChatCombatRanged.TARGET_SIZE.small) {
-        poolModifier--
-      } else if (data.targets[offset].size === CoC7ChatCombatRanged.TARGET_SIZE.big) {
-        poolModifier++
-      }
       for (const poolRow of data.poolBonus) {
         if (data.targets[offset].poolKeys.includes(poolRow.key)) {
           poolModifier++
