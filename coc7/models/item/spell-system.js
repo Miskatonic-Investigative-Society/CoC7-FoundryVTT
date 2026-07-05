@@ -163,7 +163,17 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
       castingTime = this.castingTime
       for (const cost of costList) {
         const ifParts = cost.if.match(/^(!)?@?(.+)$/)
-        if (!ifParts || (variables[ifParts[2]] ?? false) === !ifParts[1]) {
+        let checkResult = !ifParts
+        if (!checkResult && typeof variables[ifParts[2]] !== 'undefined') {
+          const check = !ifParts[1]
+          const value = variables[ifParts[2]]
+          if (typeof value === 'boolean') {
+            checkResult = check === value
+          } else if (value.toString().match(/^-?\d+(\.\d+)?$/)) {
+            checkResult = (check && value.toString() !== '0') || (!check && value.toString() === '0')
+          }
+        }
+        if (checkResult) {
           // SPELL_COST_TYPE_KEYS
           switch (cost.type) {
             case 'additionalCasterPromptAdd':
@@ -229,7 +239,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
               promptRows.push({
                 type: 'toggle',
                 key: CoC7ModelsItemSpellSystem.keyName(cost.config.variable),
-                label: cost.config.prompt,
+                label: CoC7ModelsItemSpellSystem.keyReplacement(cost.config.prompt, variables),
                 value: false
               })
               break
