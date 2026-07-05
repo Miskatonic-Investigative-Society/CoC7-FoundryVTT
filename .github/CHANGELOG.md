@@ -11,6 +11,19 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+## Version 8.14
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Fix double penalty / bonus of ranged size.
+- Remove CoC7.Spell from translations to prevent issues with CoC7.Spell.* keys, thanks to @zeteticl #2126
+- Update spell cost "if" to support zero / non zero integer checks.
+- Update to French localization, thanks to @vonv #2128
+- Update to Simplified Chinese localization, thanks to @LiangHao-cloud #2129
+- Update to Taiwanese localization, thanks to @zeteticl #2125
+
 ## Version 8.13
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
