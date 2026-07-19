@@ -1,4 +1,3 @@
-/* global CONST foundry fromUuid game NotesLayer */
 import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
 
 export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasInterface {

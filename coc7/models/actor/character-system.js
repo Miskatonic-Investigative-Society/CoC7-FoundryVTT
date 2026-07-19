@@ -1,4 +1,3 @@
-/* global foundry */
 import { FOLDER_ID, MONETARY_FORMAT_KEYS, MONETARY_TYPE_KEYS } from '../../constants.js'
 import CoC7ModelsActorGlobalSystem from './global-system.js'
 

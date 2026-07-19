@@ -1,4 +1,3 @@
-/* global CONFIG foundry game */
 import { FOLDER_ID } from '../constants.js'
 import CoC7Utilities from './utilities.js'
 
@@ -11,7 +10,7 @@ export default class CoC7RollAsModifierDialog extends foundry.applications.api.H
     super(...args)
     this.coc7Config = coc7Config
     this.coc7Config.allSkills = {}
-    game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: /^i\.skill\./, type: 'i', showLoading: true }).then((items) => {
+    game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp: /^i\.skill\./, type: 'i', showLoading: true }).then((items) => {
       for (const item of items) {
         this.coc7Config.allSkills[item.flags.CoC7.cocidFlag.id] = item.name
       }

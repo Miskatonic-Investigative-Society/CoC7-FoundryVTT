@@ -1,4 +1,3 @@
-/* global CONFIG */
 import CoC7ModelsActiveEffectDocumentClass from '../models/active-effect/document-class.js'
 import CoC7ModelsActorCharacterSystem from '../models/actor/character-system.js'
 import CoC7ModelsActorContainerSystem from '../models/actor/container-system.js'

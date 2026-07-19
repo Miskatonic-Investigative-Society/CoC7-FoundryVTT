@@ -1,4 +1,3 @@
-/* global Actor CONFIG CONST foundry fromUuid game TextEditor */
 import { STATUS_EFFECTS } from '../constants.js'
 import deprecated from '../deprecated.js'
 

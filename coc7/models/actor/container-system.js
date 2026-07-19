@@ -1,4 +1,3 @@
-/* global foundry */
 import CoC7ModelsActorGlobalSystem from './global-system.js'
 
 export default class CoC7ModelsActorContainerSystem extends CoC7ModelsActorGlobalSystem {

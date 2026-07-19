@@ -1,4 +1,3 @@
-/* global ChatMessage foundry fromUuid game renderTemplate TokenDocument ui */
 import { FOLDER_ID } from '../constants.js'
 import CoC7ActorPickerDialog from './actor-picker-dialog.js'
 import CoC7ChatDamage from './chat-damage.js'
@@ -79,7 +78,7 @@ export default class CoC7ChatOpposedMessage {
    */
   static async getActor (identifier) {
     if (identifier.match(/^a\./)) {
-      return ((await game.CoC7.cocid.fromCoCID(identifier))?.[0]) ?? null
+      return ((await game[FOLDER_ID].cocid.fromCoCID(identifier))?.[0]) ?? null
     }
     if (identifier.indexOf('.') > -1) {
       return await fromUuid(identifier)

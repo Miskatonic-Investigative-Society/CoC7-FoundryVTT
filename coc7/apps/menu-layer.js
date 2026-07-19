@@ -1,4 +1,3 @@
-/* global foundry PlaceablesLayer */
 /* // FoundryVTT V12 */
 export default class CoC7MenuLayer extends (foundry.canvas?.layers?.PlaceablesLayer ?? PlaceablesLayer) {
   /**

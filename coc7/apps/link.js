@@ -1,5 +1,5 @@
-/* global canvas ChatMessage CONFIG foundry fromUuid game TextEditor */
 // cSpell:words combinedall combinedany
+import { FOLDER_ID } from '../constants.js'
 import CoC7ActorPickerDialog from './actor-picker-dialog.js'
 import CoC7ChatCombinedMessage from './chat-combined-message.js'
 import CoC7ChatOpposedMessage from './chat-opposed-message.js'
@@ -339,7 +339,7 @@ export default class CoC7Link {
             } else if (['skill'].includes(data.dataset.subtype?.toLowerCase())) {
               humanName = data.dataset.name
               if (data.dataset.name.match(/^.\.[^\\.]*\..+$/)) {
-                const cocIdName = (await game.CoC7.cocid.fromCoCID(data.dataset.name))?.[0]?.name
+                const cocIdName = (await game[FOLDER_ID].cocid.fromCoCID(data.dataset.name))?.[0]?.name
                 if (cocIdName) {
                   humanName = cocIdName
                 }
@@ -372,7 +372,7 @@ export default class CoC7Link {
           {
             let humanName = data.dataset.name
             if (humanName.match(/^.\.[^\\.]*\..+$/)) {
-              const cocIdName = (await game.CoC7.cocid.fromCoCID(humanName))?.[0]?.name
+              const cocIdName = (await game[FOLDER_ID].cocid.fromCoCID(humanName))?.[0]?.name
               if (cocIdName) {
                 humanName = cocIdName
               }

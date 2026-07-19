@@ -1,4 +1,3 @@
-/* global ChatMessage game */
 import { FOLDER_ID } from '../constants.js'
 import CoC7ChatCombinedMessage from './chat-combined-message.js'
 import CoC7ChatOpposedMessage from './chat-opposed-message.js'

@@ -1,4 +1,3 @@
-/* global ChatMessage CONFIG foundry game Item renderTemplate Roll ui */
 import { FOLDER_ID, CHAT_MESSAGE_MODE, SPELL_COST_TYPE_KEYS } from '../../constants.js'
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 import CoC7SpellVariablesDialog from '../../apps/spell-variables-dialog.js'

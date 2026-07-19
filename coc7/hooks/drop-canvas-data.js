@@ -1,4 +1,3 @@
-/* global fromUuidSync */
 import ChaosiumCanvasInterfacePlayer from '../apps/chaosium-canvas-interface-player.js'
 import CoC7Canvas from '../apps/canvas.js'
 

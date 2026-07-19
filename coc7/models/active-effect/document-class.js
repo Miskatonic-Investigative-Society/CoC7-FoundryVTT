@@ -1,7 +1,7 @@
-/* global ActiveEffect */
 export default class CoC7ModelsActiveEffectDocumentClass extends ActiveEffect {
   /**
    * Apply ActiveEffect change to Actor
+   * @deprecated FoundryVTT v13
    * @param {Document} actor
    * @param {object} change
    * @returns {object}

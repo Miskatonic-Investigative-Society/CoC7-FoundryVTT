@@ -1,4 +1,3 @@
-/* global fromUuid */
 import CoC7ActorPickerDialog from '../apps/actor-picker-dialog.js'
 import CoC7DicePool from '../apps/dice-pool.js'
 import CoC7RollNormalize from '../apps/roll-normalize.js'

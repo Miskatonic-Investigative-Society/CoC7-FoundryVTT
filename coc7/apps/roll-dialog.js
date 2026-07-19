@@ -1,4 +1,3 @@
-/* global foundry game renderTemplate */
 import { FOLDER_ID } from '../constants.js'
 import CoC7DicePool from './dice-pool.js'
 import CoC7RollNormalize from './roll-normalize.js'

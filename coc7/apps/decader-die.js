@@ -1,4 +1,3 @@
-/* global foundry */
 export default class CoC7DecaderDie extends foundry.dice.terms.Die {
   /**
    * @inheritdoc

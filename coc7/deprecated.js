@@ -1,4 +1,3 @@
-/* global ActiveEffect CONFIG DragDrop FilePicker foundry fromUuid game Hooks SceneNavigation */
 import { FOLDER_ID } from './constants.js'
 import CoC7CloseDocumentSheetConfig from './hooks/close-document-sheet-config.js'
 import CoC7CloseSettingsConfig from './hooks/close-settings-config.js'
@@ -141,7 +140,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.fromCoCIDRegexAllMixed',
       until: 15
     })
-    return game.CoC7.cocid.fromCoCIDRegexAllMixed({ cocidRegExp, type, lang, era, scope: 'world', langFallback })
+    return game[FOLDER_ID].cocid.fromCoCIDRegexAllMixed({ cocidRegExp, type, lang, era, scope: 'world', langFallback })
   }
 
   /**
@@ -154,7 +153,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.fromCoCIDRegexAllMixed',
       until: 15
     })
-    return game.CoC7.cocid.fromCoCIDRegexAllMixed({ cocidRegExp, type, lang, era, scope: 'compendiums', langFallback })
+    return game[FOLDER_ID].cocid.fromCoCIDRegexAllMixed({ cocidRegExp, type, lang, era, scope: 'compendiums', langFallback })
   }
 
   /**
@@ -167,7 +166,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.eraToggle',
       until: 15
     })
-    return game.CoC7.cocid.eraToggle(document, era)
+    return game[FOLDER_ID].cocid.eraToggle(document, era)
   }
 
   /**
@@ -180,7 +179,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.expandItemArray',
       until: 15
     })
-    return game.CoC7.cocid.expandItemArray({ itemList, lang, era, langFallback, showLoading })
+    return game[FOLDER_ID].cocid.expandItemArray({ itemList, lang, era, langFallback, showLoading })
   }
 
   /**
@@ -193,7 +192,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.fromCoCID',
       until: 15
     })
-    return game.CoC7.cocid.fromCoCID(cocid, lang, era, langFallback)
+    return game[FOLDER_ID].cocid.fromCoCID(cocid, lang, era, langFallback)
   }
 
   /**
@@ -206,7 +205,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.fromCoCIDAll',
       until: 15
     })
-    return game.CoC7.cocid.fromCoCIDAll({ cocid, lang, era, scope, langFallback, showLoading })
+    return game[FOLDER_ID].cocid.fromCoCIDAll({ cocid, lang, era, scope, langFallback, showLoading })
   }
 
   /**
@@ -219,7 +218,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.fromCoCIDBest',
       until: 15
     })
-    return game.CoC7.cocid.fromCoCIDBest({ cocid, lang, era, langFallback, showLoading })
+    return game[FOLDER_ID].cocid.fromCoCIDBest({ cocid, lang, era, langFallback, showLoading })
   }
 
   /**
@@ -232,7 +231,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.findCocIdInList',
       until: 15
     })
-    return game.CoC7.cocid.findCocIdInList(cocid, list)
+    return game[FOLDER_ID].cocid.findCocIdInList(cocid, list)
   }
 
   /**
@@ -245,7 +244,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.fromCoCIDRegexBest',
       until: 15
     })
-    return game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp, type, lang, era, langFallback, showLoading })
+    return game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp, type, lang, era, langFallback, showLoading })
   }
 
   /**
@@ -258,7 +257,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.getPrefix',
       until: 15
     })
-    return game.CoC7.cocid.getPrefix(document)
+    return game[FOLDER_ID].cocid.getPrefix(document)
   }
 
   /**
@@ -271,7 +270,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.guessGroupFromDocument',
       until: 15
     })
-    return game.CoC7.cocid.guessGroupFromDocument(document)
+    return game[FOLDER_ID].cocid.guessGroupFromDocument(document)
   }
 
   /**
@@ -284,7 +283,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.guessGroupFromKey',
       until: 15
     })
-    return game.CoC7.cocid.guessGroupFromKey(document)
+    return game[FOLDER_ID].cocid.guessGroupFromKey(document)
   }
 
   /**
@@ -297,7 +296,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.guessId',
       until: 15
     })
-    return game.CoC7.cocid.guessId(document)
+    return game[FOLDER_ID].cocid.guessId(document)
   }
 
   /**
@@ -310,7 +309,7 @@ class DeprecatedWarningCoCID {
       now: 'game.CoC7.cocid.makeGroupRegEx',
       until: 15
     })
-    return game.CoC7.cocid.makeGroupRegEx(document)
+    return game[FOLDER_ID].cocid.makeGroupRegEx(document)
   }
 }
 

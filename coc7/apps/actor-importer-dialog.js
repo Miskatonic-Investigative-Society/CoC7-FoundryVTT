@@ -1,4 +1,3 @@
-/* global CONFIG foundry game Hooks ui */
 // cSpell:words iwms wmis
 import { FOLDER_ID } from '../constants.js'
 import CoC7ActorImporter from './actor-importer.js'
@@ -330,6 +329,6 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
 
 Hooks.once('ready', () => {
   if (game.modules.get('CoC7-Importer-Tests')?.active) {
-    game.CoC7.actorImporter = CoC7ActorImporter
+    game[FOLDER_ID].actorImporter = CoC7ActorImporter
   }
 })

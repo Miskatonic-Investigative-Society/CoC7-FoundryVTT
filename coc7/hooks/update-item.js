@@ -1,4 +1,3 @@
-/* global game */
 import { FOLDER_ID } from '../constants.js'
 
 /**
@@ -10,6 +9,6 @@ import { FOLDER_ID } from '../constants.js'
  */
 export default function (document, changed, options, userId) {
   if (typeof changed.flags?.[FOLDER_ID]?.cocidFlag?.id === 'string') {
-    game.CoC7.skillNames.addItem(changed.flags[FOLDER_ID].cocidFlag.id)
+    game[FOLDER_ID].skillNames.addItem(changed.flags[FOLDER_ID].cocidFlag.id)
   }
 }

@@ -1,4 +1,3 @@
-/* global CONFIG foundry fromUuidSync game Item Roll TextEditor ui */
 // cSpell:words mdrn drka glit nvct
 import { FOLDER_ID } from '../../constants.js'
 import deprecated from '../../deprecated.js'

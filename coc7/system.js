@@ -1,4 +1,3 @@
-/* global Hooks */
 import '../styles/coc7-index.less'
 import './polyfill.js'
 import CoC7ChatMessage from './hooks/chat-message.js'

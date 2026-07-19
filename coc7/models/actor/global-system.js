@@ -1,4 +1,3 @@
-/* global CONFIG foundry game */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ModelsActorDocumentClass from './document-class.js'
 import CoC7StringField from '../fields/string-field.js'

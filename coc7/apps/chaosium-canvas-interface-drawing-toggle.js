@@ -1,4 +1,4 @@
-/* global CONST foundry fromUuid game */
+import { FOLDER_ID } from '../constants.js'
 import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
 
 export default class ChaosiumCanvasInterfaceDrawingToggle extends ChaosiumCanvasInterface {
@@ -234,9 +234,9 @@ export default class ChaosiumCanvasInterfaceDrawingToggle extends ChaosiumCanvas
         setTimeout(() => {
           if (button === this.regionButton) {
             if (this.triggerAsButton === ChaosiumCanvasInterface.triggerButton.Right) {
-              game.CoC7.ClickRegionRightUuid(uuid)
+              game[FOLDER_ID].ClickRegionRightUuid(uuid)
             } else if (this.triggerAsButton === ChaosiumCanvasInterface.triggerButton.Left) {
-              game.CoC7.ClickRegionLeftUuid(uuid)
+              game[FOLDER_ID].ClickRegionLeftUuid(uuid)
             }
           }
         }, 100)

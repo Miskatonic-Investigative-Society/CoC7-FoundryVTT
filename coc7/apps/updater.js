@@ -1,4 +1,3 @@
-/* global ChatMessage CONFIG CONST foundry fromUuid game Roll ui */
 // cSpell:words Uniki Unik
 import { FOLDER_ID } from '../constants.js'
 import CoC7ChatChaseObstacle from './chat-chase-obstacle.js'

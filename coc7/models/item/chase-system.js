@@ -1,4 +1,3 @@
-/* global canvas CONST foundry fromUuid game PIXI ui */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ChaseParticipant from '../chase/participant.js'
 import CoC7ChatChaseObstacle from '../../apps/chat-chase-obstacle.js'
@@ -622,7 +621,7 @@ export default class CoC7ModelsItemChaseSystem extends CoC7ModelsItemGlobalSyste
         ui.notifications.error(game.i18n.format('CoC7.ParticipantNotEnoughMovement', { assistantUuid: participantId, actions: participants[participantIndex].currentMovementActions }))
         return
       }
-      const offset2 = locations[offset].participants.findIndex(p => participantId)
+      const offset2 = locations[offset].participants.findIndex(p => p === participantId)
       locations[offset].participants.splice(offset2, 1)
       locations[newLocation].participants.push(participantId)
       participants[participantIndex].currentMovementActions -= totalMove

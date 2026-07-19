@@ -1,4 +1,3 @@
-/* global game */
 import { FOLDER_ID } from '../constants.js'
 import CoC7ChatChaseObstacle from '../apps/chat-chase-obstacle.js'
 import CoC7ChatCombatMelee from '../apps/chat-combat-melee.js'

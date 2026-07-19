@@ -1,4 +1,3 @@
-/* global foundry fromUuid game */
 import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
 
 export default class ChaosiumCanvasInterfaceToScene extends ChaosiumCanvasInterface {

@@ -1,4 +1,5 @@
-/* global foundry game */
+import { FOLDER_ID } from '../../constants.js'
+
 export default class CoC7ModelsItemGlobalSystem extends foundry.abstract.TypeDataModel {
   /**
    * Create update object
@@ -25,7 +26,7 @@ export default class CoC7ModelsItemGlobalSystem extends foundry.abstract.TypeDat
    */
   async toggleProperty (property, key, { isCtrlKey = false } = {}) {
     if (property === 'eras') {
-      await game.CoC7.cocid.eraToggle(this.parent, key, { isCtrlKey })
+      await game[FOLDER_ID].cocid.eraToggle(this.parent, key, { isCtrlKey })
     } else {
       const changes = await this.prepareToggleUpdate(property, key, { isCtrlKey })
       this.parent.update(changes)

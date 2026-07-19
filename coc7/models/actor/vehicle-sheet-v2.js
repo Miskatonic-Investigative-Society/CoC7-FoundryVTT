@@ -1,4 +1,3 @@
-/* global foundry game TextEditor */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ModelsActorGlobalSheet from './global-sheet.js'
 

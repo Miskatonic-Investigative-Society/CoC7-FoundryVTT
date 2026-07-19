@@ -1,4 +1,3 @@
-/* global foundry game TextEditor */
 import { FOLDER_ID } from '../constants.js'
 
 export default class CoC7SkillPopup extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2) {

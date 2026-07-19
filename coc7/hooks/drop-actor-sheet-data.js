@@ -1,4 +1,3 @@
-/* global fromUuid */
 import CoC7Link from '../apps/link.js'
 
 /**

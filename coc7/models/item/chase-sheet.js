@@ -1,4 +1,3 @@
-/* global canvas CONFIG ContextMenu DragDrop foundry fromUuid game TextEditor TokenDocument ui */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ChaseParticipant from '../chase/participant.js'
 import CoC7ChaseParticipantDialog from '../../apps/chase-participant-dialog.js'

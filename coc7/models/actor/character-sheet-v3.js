@@ -1,4 +1,3 @@
-/* global foundry game */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ModelsActorCharacterSheetV2 from './character-sheet-v2.js'
 

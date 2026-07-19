@@ -1,4 +1,3 @@
-/* global ChatMessage CONST foundry game renderTemplate Roll ui */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7DicePool from '../../apps/dice-pool.js'
 import CoC7ModelsItemGlobalSystem from './global-system.js'

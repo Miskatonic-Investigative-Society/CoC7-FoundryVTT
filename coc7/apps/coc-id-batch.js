@@ -1,4 +1,3 @@
-/* global foundry fromUuid game Item */
 import { FOLDER_ID } from '../constants.js'
 import CoC7Utilities from './utilities.js'
 
@@ -410,7 +409,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
     }
     if (Object.keys(missingNames).filter(key => missingNames[key] === '').length > 0) {
       const cocidRegExp = new RegExp('^' + CoC7Utilities.quoteRegExp(idPrefix))
-      const items = await game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp, type: idType, era: false, showLoading: true })
+      const items = await game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp, type: idType, era: false, showLoading: true })
       for (const item of items) {
         foundKeys[item.name] = item.flags.CoC7.cocidFlag.id
       }

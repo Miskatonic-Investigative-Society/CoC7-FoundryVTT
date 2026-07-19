@@ -1,4 +1,3 @@
-/* global ActiveEffectConfig canvas CONFIG CONST DragDrop FormDataExtended foundry game ui */
 import { FOLDER_ID } from '../constants.js'
 import CoC7DicePool from './dice-pool.js'
 import CoC7Link from './link.js'

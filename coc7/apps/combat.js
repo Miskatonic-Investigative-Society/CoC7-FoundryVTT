@@ -1,4 +1,3 @@
-/* global game */
 import { FOLDER_ID } from '../constants.js'
 import CoC7DicePool from './dice-pool.js'
 

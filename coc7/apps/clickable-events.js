@@ -1,4 +1,3 @@
-/* global canvas CONFIG CONST DocumentSheetConfig foundry fromUuid game NotesLayer RegionBehavior TokenLayer */
 import ChaosiumCanvasInterfaceAmbientLightToggle from './chaosium-canvas-interface-ambient-light-toggle.js'
 import ChaosiumCanvasInterfaceDrawingToggle from './chaosium-canvas-interface-drawing-toggle.js'
 import ChaosiumCanvasInterfaceMapPinToggle from './chaosium-canvas-interface-map-pin-toggle.js'

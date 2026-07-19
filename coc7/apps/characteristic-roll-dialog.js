@@ -1,4 +1,3 @@
-/* global ChatMessage CONFIG FormDataExtended foundry game Roll */
 import { FOLDER_ID } from '../constants.js'
 import CoC7Utilities from './utilities.js'
 
