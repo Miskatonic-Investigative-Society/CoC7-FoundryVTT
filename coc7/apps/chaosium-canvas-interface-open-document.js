@@ -1,4 +1,3 @@
-/* global CONST foundry fromUuid game JournalEntryPage */
 import ChaosiumCanvasInterface from './chaosium-canvas-interface.js'
 
 export default class ChaosiumCanvasInterfaceOpenDocument extends ChaosiumCanvasInterface {

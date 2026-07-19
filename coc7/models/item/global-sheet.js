@@ -1,4 +1,3 @@
-/* global foundry fromUuid game Item ui */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ActiveEffect from '../../apps/active-effect.js'
 import CoC7DropCoCID from '../../apps/drop-coc-id.js'

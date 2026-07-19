@@ -1,4 +1,3 @@
-/* global game */
 import { FOLDER_ID, STATUS_EFFECTS } from '../constants.js'
 import CoC7ActiveEffect from '../apps/active-effect.js'
 

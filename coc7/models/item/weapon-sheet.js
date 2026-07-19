@@ -1,4 +1,3 @@
-/* global foundry game TextEditor */
 import { FOLDER_ID, ERAS } from '../../constants.js'
 import CoC7ModelsItemGlobalSheet from './global-sheet.js'
 import CoC7Utilities from '../../apps/utilities.js'

@@ -1,4 +1,3 @@
-/* global Actor canvas ChatMessage CONFIG CONST Folder foundry fromUuid fromUuidSync game Hooks Macro Ray Roll Token TokenDocument ui */
 import { FOLDER_ID, DICE_POOL_REASONS, STATUS_EFFECTS, TARGET_ALLOWED, TRADE_ALLOWED } from '../constants.js'
 import CoC7ActorPickerDialog from './actor-picker-dialog.js'
 import CoC7DicePool from './dice-pool.js'
@@ -460,7 +459,7 @@ export default class CoC7Utilities {
     const eras = Object.entries(document.flags?.[FOLDER_ID]?.cocidFlag?.eras ?? {}).filter(e => e[1]).map(e => e[0])
     const worldEra = game.settings.get(FOLDER_ID, 'worldEra')
     const era = (eras.length === 0 || eras.includes(worldEra) ? worldEra : eras[0])
-    const items = foundry.utils.getProperty(document, source).itemDocuments.map(d => typeof d === 'string' ? JSON.parse(d) : d).concat(await game.CoC7.cocid.expandItemArray({ itemList: foundry.utils.getProperty(document, source).itemKeys, era, showLoading: true }))
+    const items = foundry.utils.getProperty(document, source).itemDocuments.map(d => typeof d === 'string' ? JSON.parse(d) : d).concat(await game[FOLDER_ID].cocid.expandItemArray({ itemList: foundry.utils.getProperty(document, source).itemKeys, era, showLoading: true }))
     items.sort(CoC7Utilities.sortByNameKey)
     return items
   }
@@ -616,6 +615,7 @@ export default class CoC7Utilities {
    * @returns {string}
    */
   static quoteRegExp (string) {
+    /* // FoundryVTT V13 */
     // Replace with RegExp.escape() when support is increased
     // https://bitbucket.org/cggaertner/js-hacks/raw/master/quote.js
     const len = string.length
@@ -754,7 +754,7 @@ export default class CoC7Utilities {
       }
       return c
     }, {})
-    const found = await game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: game.CoC7.cocid.makeGroupRegEx(Object.keys(cocids)), type: 'i', showLoading: true })
+    const found = await game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp: game[FOLDER_ID].cocid.makeGroupRegEx(Object.keys(cocids)), type: 'i', showLoading: true })
     for (const item of found) {
       const cocid = item.flags[FOLDER_ID].cocidFlag.id
       const key = cocids[cocid]

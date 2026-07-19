@@ -1,4 +1,3 @@
-/* global foundry game */
 export default function (data, updates, actor) {
   /* // FoundryVTT V12 */
   if (game.release.generation === 12) {

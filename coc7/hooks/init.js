@@ -1,4 +1,3 @@
-/* global Combat CONFIG CONST foundry fromUuid game Hooks TextEditor */
 import { ERAS } from '../constants.js'
 import CoC7ClickableEvents from '../apps/clickable-events.js'
 import CoC7Combat from '../apps/combat.js'
@@ -26,10 +25,7 @@ export default function () {
   link.setAttribute('media', 'all')
   document.head.append(link)
 
-  if (!foundry.utils.isNewerVersion(game.version, 13)) {
-    /* // FoundryVTT V12 */
-    document.body.classList.add('running-v12')
-  }
+  document.body.classList.add('running-v' + game.release.generation.toString())
 
   game.CoC7 = {
     macros: {
@@ -135,9 +131,4 @@ export default function () {
       return (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).createAnchor(data)
     }
   })
-
-  if (['14.359', '14.360'].includes(game.version)) {
-    // Hide deprecated warnings with first two stable v14 releases
-    CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
-  }
 }

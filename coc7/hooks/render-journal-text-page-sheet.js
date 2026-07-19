@@ -1,4 +1,3 @@
-/* global $ */
 import { FOLDER_ID } from '../constants.js'
 
 /**

@@ -1,4 +1,3 @@
-/* global game */
 import { FOLDER_ID } from '../constants.js'
 import CoC7EnableVariantRulesEn from '../tours/enable-variant-rules-en.js'
 import CoC7EnableVariantRulesEs from '../tours/enable-variant-rules-es.js'

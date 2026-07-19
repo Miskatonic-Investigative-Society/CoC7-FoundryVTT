@@ -1,4 +1,3 @@
-/* global Actors foundry game Items */
 import { FOLDER_ID } from '../constants.js'
 import CoC7ModelsActorCharacterSheetSummarizedV2 from '../models/actor/character-sheet-summarized-v2.js'
 import CoC7ModelsActorCharacterSheetSummarizedV3 from '../models/actor/character-sheet-summarized-v3.js'

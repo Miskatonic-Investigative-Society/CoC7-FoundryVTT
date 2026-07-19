@@ -1,4 +1,3 @@
-/* global foundry game */
 import CoCIDEditor from '../apps/coc-id-editor.js'
 
 /**

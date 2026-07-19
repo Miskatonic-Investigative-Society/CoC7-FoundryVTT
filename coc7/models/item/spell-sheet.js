@@ -1,4 +1,3 @@
-/* global CONFIG DragDrop foundry game Item TextEditor */
 import { FOLDER_ID, SPELL_COST_TYPE_KEYS } from '../../constants.js'
 import CoC7ModelsItemGlobalSheet from './global-sheet.js'
 import CoC7Utilities from '../../apps/utilities.js'

@@ -1,4 +1,3 @@
-/* global FilePicker foundry game ui */
 import { FOLDER_ID } from '../constants.js'
 
 /* // FoundryVTT V12 */

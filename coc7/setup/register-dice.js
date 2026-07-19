@@ -1,4 +1,3 @@
-/* global CONFIG */
 import CoC7DecaderDie from '../apps/decader-die.js'
 import CoC7DecaderDieOther from '../apps/decader-die-other.js'
 

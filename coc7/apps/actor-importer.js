@@ -1,4 +1,3 @@
-/* global Actor CONFIG foundry game ui */
 import { FOLDER_ID } from '../constants.js'
 import CoC7ActorImporterRegExp from './actor-importer-regexp.js'
 import CoC7ModelsItemSkillSystem from '../models/item/skill-system.js'

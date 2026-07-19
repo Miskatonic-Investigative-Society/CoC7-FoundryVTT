@@ -1,4 +1,3 @@
-/* global foundry */
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 
 export default class CoC7ModelsItemStatusSystem extends CoC7ModelsItemGlobalSystem {

@@ -1,4 +1,3 @@
-/* global foundry */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ModelsActorGlobalSystem from './global-system.js'
 

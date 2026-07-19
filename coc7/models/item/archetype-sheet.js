@@ -1,4 +1,3 @@
-/* global DragDrop foundry game TextEditor */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ModelsItemGlobalSheet from './global-sheet.js'
 

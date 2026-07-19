@@ -1,4 +1,3 @@
-/* global CONFIG game */
 export const FOLDER_ID = 'CoC7'
 
 export const ERAS = {

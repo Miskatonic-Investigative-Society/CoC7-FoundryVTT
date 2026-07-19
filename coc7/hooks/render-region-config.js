@@ -1,4 +1,3 @@
-/* global DragDrop foundry fromUuid RegionBehavior */
 export default function (application, element, context, options) {
   new (foundry.applications.ux?.DragDrop ?? DragDrop)({
     permissions: {

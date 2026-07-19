@@ -1,4 +1,3 @@
-/* global foundry loadTemplates Roll */
 import { FOLDER_ID } from '../constants.js'
 
 export default async function () {

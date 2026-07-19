@@ -1,4 +1,3 @@
-/* global canvas CONST foundry fromUuid game PIXI ui */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ChaseParticipant from '../chase/participant.js'
 import CoC7ChatChaseObstacle from '../../apps/chat-chase-obstacle.js'

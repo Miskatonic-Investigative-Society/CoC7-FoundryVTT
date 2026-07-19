@@ -1,4 +1,3 @@
-/* global canvas CONST foundry fromUuid game TokenDocument ui */
 import { FOLDER_ID, TARGET_ALLOWED } from '../constants.js'
 import CoC7Utilities from './utilities.js'
 

@@ -1,4 +1,3 @@
-/* global Actor canvas CONFIG foundry fromUuid game */
 import { FOLDER_ID, ERAS } from '../constants.js'
 
 export default class CoCIDActorUpdateItems extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2) {
@@ -206,7 +205,7 @@ export default class CoCIDActorUpdateItems extends foundry.applications.api.Hand
         }
       }
     }
-    const found = await game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: game.CoC7.cocid.makeGroupRegEx(Object.keys(ids)), type: 'i', showLoading: true })
+    const found = await game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp: game[FOLDER_ID].cocid.makeGroupRegEx(Object.keys(ids)), type: 'i', showLoading: true })
     for (const item of found) {
       ids[item.flags.CoC7.cocidFlag.id] = this.getUpdateData(item.toObject())
     }

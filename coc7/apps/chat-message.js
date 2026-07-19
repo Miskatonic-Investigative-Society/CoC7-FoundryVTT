@@ -1,4 +1,3 @@
-/* global ChatMessage CONST foundry game renderTemplate ui */
 import { FOLDER_ID } from '../constants.js'
 import CoC7ActorPickerDialog from './actor-picker-dialog.js'
 import CoC7RollAsModifierDialog from './roll-as-modifier-dialog.js'

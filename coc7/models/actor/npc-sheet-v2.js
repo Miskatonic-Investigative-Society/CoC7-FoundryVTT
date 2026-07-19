@@ -1,4 +1,3 @@
-/* global ChatMessage CONFIG foundry fromUuid game renderTemplate Roll TextEditor ui */
 import { FOLDER_ID, CHAT_MESSAGE_MODE } from '../../constants.js'
 import CoC7DicePool from '../../apps/dice-pool.js'
 import CoC7Link from '../../apps/link.js'

@@ -1,4 +1,3 @@
-/* global foundry game ui */
 import { FOLDER_ID } from '../constants.js'
 import CoC7RegisterTours from '../setup/register-tours.js'
 import CoC7SystemSocket from '../apps/system-socket.js'
@@ -22,9 +21,9 @@ export default function () {
   if (typeof readMe[lang] === 'undefined') {
     lang = 'en'
   }
-  game.CoC7.Manual = readMe[lang]
+  game[FOLDER_ID].Manual = readMe[lang]
   if (foundry.utils.isNewerVersion(game.system.version, instructionsVersion ?? '0')) {
-    game.packs.get(FOLDER_ID + '.system-doc').getDocument(game.CoC7.Manual).then((doc) => {
+    game.packs.get(FOLDER_ID + '.system-doc').getDocument(game[FOLDER_ID].Manual).then((doc) => {
       /* // FoundryVTT V12 */
       doc.sheet.render(true)
       game.settings.set(FOLDER_ID, 'showInstructions', game.system.version)
@@ -32,7 +31,7 @@ export default function () {
   }
 
   CoC7RegisterTours()
-  game.CoC7.skillNames.refreshList()
+  game[FOLDER_ID].skillNames.refreshList()
   game.socket.on('system.' + FOLDER_ID, async data => {
     CoC7SystemSocket.callSocket(data)
   })

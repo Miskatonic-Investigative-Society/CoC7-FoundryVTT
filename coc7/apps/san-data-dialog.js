@@ -1,4 +1,3 @@
-/* global foundry renderTemplate */
 import { FOLDER_ID } from '../constants.js'
 
 export default class CoC7SanDataDialog extends foundry.applications.api.DialogV2 {

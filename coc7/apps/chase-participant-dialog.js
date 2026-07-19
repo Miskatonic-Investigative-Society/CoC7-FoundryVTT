@@ -1,4 +1,3 @@
-/* global CONFIG DragDrop foundry fromUuid game ui */
 import { FOLDER_ID, TARGET_ALLOWED } from '../constants.js'
 import CoC7ChaseParticipant from '../models/chase/participant.js'
 import CoC7DicePool from './dice-pool.js'

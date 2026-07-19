@@ -1,4 +1,3 @@
-/* global Handlebars */
 export default function () {
   Handlebars.registerHelper('calcHard', function (value) {
     if (typeof value !== 'object' && value.toString().match(/^\d+$/)) {

@@ -1,4 +1,3 @@
-/* global CONFIG foundry fromUuid game renderTemplate */
 import { FOLDER_ID, TARGET_ALLOWED } from '../../constants.js'
 import CoC7Check from '../../apps/check.js'
 import CoC7DicePool from '../../apps/dice-pool.js'

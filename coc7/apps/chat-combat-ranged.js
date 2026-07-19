@@ -1,4 +1,3 @@
-/* global canvas ChatMessage CONFIG foundry fromUuid game Hooks renderTemplate Roll TextEditor ui */
 import { FOLDER_ID, CHAT_MESSAGE_MODE, DICE_POOL_REASONS, TARGET_ALLOWED } from '../constants.js'
 import CoC7DicePool from './dice-pool.js'
 import CoC7SystemSocket from './system-socket.js'

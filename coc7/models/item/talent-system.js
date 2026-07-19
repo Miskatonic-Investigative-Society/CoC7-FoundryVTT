@@ -1,4 +1,3 @@
-/* global foundry */
 import { TALENT_ADJUSTMENT_TYPES } from '../../constants.js'
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 

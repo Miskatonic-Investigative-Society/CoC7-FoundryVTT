@@ -1,4 +1,3 @@
-/* global foundry */
 import { MONETARY_FORMAT_KEYS, MONETARY_TYPE_KEYS } from '../../constants.js'
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 import CoC7Utilities from '../../apps/utilities.js'

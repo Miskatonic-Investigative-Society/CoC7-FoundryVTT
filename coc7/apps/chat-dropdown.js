@@ -1,4 +1,3 @@
-/* global foundry game renderTemplate */
 import { FOLDER_ID } from '../constants.js'
 
 export default class CoC7ChatDropdown {

@@ -1,4 +1,3 @@
-/* global foundry */
 export default class ChaosiumCanvasInterface extends foundry.data.regionBehaviors.RegionBehaviorType {
   /**
    * Action Options Key Name Pairs

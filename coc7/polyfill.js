@@ -1,4 +1,3 @@
-/* global ActorSheet CONFIG foundry ItemSheet */
 /* // jQuery */
 // SlideUp / SlideDown / Slide Toggle
 /* // FoundryVTT V12 */

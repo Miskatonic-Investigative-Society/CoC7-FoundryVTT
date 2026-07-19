@@ -1,4 +1,3 @@
-/* global CONFIG Folder foundry game Item */
 import { FOLDER_ID } from '../constants.js'
 
 export default class CoCIDCompendiumPopulate extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2) {
@@ -78,7 +77,7 @@ export default class CoCIDCompendiumPopulate extends foundry.applications.api.Ha
       const included = this.coc7Config.types.filter(t => t.toggle).map(t => t.id)
       const destination = game.packs.get(this.coc7Config.packList)
       if (included.length && destination) {
-        const items = await game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^i.(' + included.join('|') + ')'), type: 'i', showLoading: true })
+        const items = await game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^i.(' + included.join('|') + ')'), type: 'i', showLoading: true })
         const folders = await [...new Set(items.map(d => d.type))].reduce(async (sc, t) => {
           const name = game.i18n.localize('TYPES.Item.' + t)
           let folder = destination.folders.find(d => d.name === name)

@@ -1,4 +1,3 @@
-/* global $ game */
 import { FOLDER_ID, ERAS } from '../constants.js'
 
 /**

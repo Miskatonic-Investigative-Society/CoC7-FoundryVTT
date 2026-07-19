@@ -1,4 +1,3 @@
-/* global ChatMessage CONFIG foundry fromUuid game Roll TokenDocument ui */
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ActiveEffect from '../../apps/active-effect.js'
 import CoC7ChatDamage from '../../apps/chat-damage.js'

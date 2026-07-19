@@ -1,4 +1,3 @@
-/* global foundry game Roll */
 // cSpell:words dbrl brst slnt
 import { FOLDER_ID, ERAS } from '../../constants.js'
 import CoC7ModelsItemGlobalSystem from './global-system.js'
@@ -176,7 +175,7 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
     if (!found && object.name) {
       // get main skill for coc id
       if (object.name.match(/^i\.skill\..+$/)) {
-        const skill = await game.CoC7.cocid.fromCoCIDBest({ cocid: object.name })
+        const skill = await game[FOLDER_ID].cocid.fromCoCIDBest({ cocid: object.name })
         if (skill.length) {
           skills.push(skill[0].system.skillName)
           found = true
