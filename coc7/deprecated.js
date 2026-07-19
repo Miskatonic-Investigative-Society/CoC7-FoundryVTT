@@ -137,7 +137,7 @@ class DeprecatedWarningCoCID {
   static async documentsFromWorld ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true, progressBar = 0 } = {}) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.documentsFromWorld',
-      now: 'game[FOLDER_ID].cocid.fromCoCIDRegexAllMixed',
+      now: 'game.CoC7.cocid.fromCoCIDRegexAllMixed',
       until: 15
     })
     return game[FOLDER_ID].cocid.fromCoCIDRegexAllMixed({ cocidRegExp, type, lang, era, scope: 'world', langFallback })
@@ -150,7 +150,7 @@ class DeprecatedWarningCoCID {
   static async documentsFromCompendia ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true, progressBar = 0 } = {}) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.documentsFromCompendia',
-      now: 'game[FOLDER_ID].cocid.fromCoCIDRegexAllMixed',
+      now: 'game.CoC7.cocid.fromCoCIDRegexAllMixed',
       until: 15
     })
     return game[FOLDER_ID].cocid.fromCoCIDRegexAllMixed({ cocidRegExp, type, lang, era, scope: 'compendiums', langFallback })
@@ -163,7 +163,7 @@ class DeprecatedWarningCoCID {
   static async eraToggle (document, era) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.eraToggle',
-      now: 'game[FOLDER_ID].cocid.eraToggle',
+      now: 'game.CoC7.cocid.eraToggle',
       until: 15
     })
     return game[FOLDER_ID].cocid.eraToggle(document, era)
@@ -176,7 +176,7 @@ class DeprecatedWarningCoCID {
   static async expandItemArray ({ itemList, lang = game.i18n.lang, era = true, langFallback = true, showLoading = false } = {}) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.expandItemArray',
-      now: 'game[FOLDER_ID].cocid.expandItemArray',
+      now: 'game.CoC7.cocid.expandItemArray',
       until: 15
     })
     return game[FOLDER_ID].cocid.expandItemArray({ itemList, lang, era, langFallback, showLoading })
@@ -189,7 +189,7 @@ class DeprecatedWarningCoCID {
   static fromCoCID (cocid, lang = game.i18n.lang, era = true, langFallback = true) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.fromCoCID',
-      now: 'game[FOLDER_ID].cocid.fromCoCID',
+      now: 'game.CoC7.cocid.fromCoCID',
       until: 15
     })
     return game[FOLDER_ID].cocid.fromCoCID(cocid, lang, era, langFallback)
@@ -202,7 +202,7 @@ class DeprecatedWarningCoCID {
   static async fromCoCIDAll ({ cocid, lang = game.i18n.lang, era = false, scope = 'all', langFallback = true, showLoading = false } = {}) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.fromCoCIDAll',
-      now: 'game[FOLDER_ID].cocid.fromCoCIDAll',
+      now: 'game.CoC7.cocid.fromCoCIDAll',
       until: 15
     })
     return game[FOLDER_ID].cocid.fromCoCIDAll({ cocid, lang, era, scope, langFallback, showLoading })
@@ -215,7 +215,7 @@ class DeprecatedWarningCoCID {
   static fromCoCIDBest ({ cocid, lang = game.i18n.lang, era = true, langFallback = true, showLoading = false } = {}) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.fromCoCIDBest',
-      now: 'game[FOLDER_ID].cocid.fromCoCIDBest',
+      now: 'game.CoC7.cocid.fromCoCIDBest',
       until: 15
     })
     return game[FOLDER_ID].cocid.fromCoCIDBest({ cocid, lang, era, langFallback, showLoading })
@@ -228,7 +228,7 @@ class DeprecatedWarningCoCID {
   static findCocIdInList (cocid, list) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.findCocIdInList',
-      now: 'game[FOLDER_ID].cocid.findCocIdInList',
+      now: 'game.CoC7.cocid.findCocIdInList',
       until: 15
     })
     return game[FOLDER_ID].cocid.findCocIdInList(cocid, list)
@@ -241,7 +241,7 @@ class DeprecatedWarningCoCID {
   static async fromCoCIDRegexBest ({ cocidRegExp, type, lang = game.i18n.lang, era = true, langFallback = true, showLoading = false } = {}) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.fromCoCIDRegexBest',
-      now: 'game[FOLDER_ID].cocid.fromCoCIDRegexBest',
+      now: 'game.CoC7.cocid.fromCoCIDRegexBest',
       until: 15
     })
     return game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp, type, lang, era, langFallback, showLoading })
@@ -254,7 +254,7 @@ class DeprecatedWarningCoCID {
   static getPrefix (document) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.getPrefix',
-      now: 'game[FOLDER_ID].cocid.getPrefix',
+      now: 'game.CoC7.cocid.getPrefix',
       until: 15
     })
     return game[FOLDER_ID].cocid.getPrefix(document)
@@ -267,7 +267,7 @@ class DeprecatedWarningCoCID {
   static guessGroupFromDocument (document) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.guessGroupFromDocument',
-      now: 'game[FOLDER_ID].cocid.guessGroupFromDocument',
+      now: 'game.CoC7.cocid.guessGroupFromDocument',
       until: 15
     })
     return game[FOLDER_ID].cocid.guessGroupFromDocument(document)
@@ -280,7 +280,7 @@ class DeprecatedWarningCoCID {
   static guessGroupFromKey (document) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.guessGroupFromKey',
-      now: 'game[FOLDER_ID].cocid.guessGroupFromKey',
+      now: 'game.CoC7.cocid.guessGroupFromKey',
       until: 15
     })
     return game[FOLDER_ID].cocid.guessGroupFromKey(document)
@@ -293,7 +293,7 @@ class DeprecatedWarningCoCID {
   static guessId (document) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.guessId',
-      now: 'game[FOLDER_ID].cocid.guessId',
+      now: 'game.CoC7.cocid.guessId',
       until: 15
     })
     return game[FOLDER_ID].cocid.guessId(document)
@@ -306,7 +306,7 @@ class DeprecatedWarningCoCID {
   static makeGroupRegEx (document) {
     deprecated.warningLogger({
       was: 'game.system.api.cocid.makeGroupRegEx',
-      now: 'game[FOLDER_ID].cocid.makeGroupRegEx',
+      now: 'game.CoC7.cocid.makeGroupRegEx',
       until: 15
     })
     return game[FOLDER_ID].cocid.makeGroupRegEx(document)
@@ -319,7 +319,7 @@ class DeprecatedWarningCoC7DamageCard {
    * @deprecated No replacement
    */
   static get defaultOptions () { // eslint-disable-line getter-return
-    deprecated.noLongerAvailable({ was: 'game[FOLDER_ID].cards.CoC7DamageCard.defaultOptions()' })
+    deprecated.noLongerAvailable({ was: 'game.CoC7.cards.CoC7DamageCard.defaultOptions()' })
   }
 
   /**
@@ -328,7 +328,7 @@ class DeprecatedWarningCoC7DamageCard {
    * @param {jQuery} html
    */
   static async bindListeners (html) {
-    deprecated.noLongerAvailable({ was: 'game[FOLDER_ID].cards.CoC7DamageCard.bindListeners(?)' })
+    deprecated.noLongerAvailable({ was: 'game.CoC7.cards.CoC7DamageCard.bindListeners(?)' })
   }
 
   /**
@@ -337,7 +337,7 @@ class DeprecatedWarningCoC7DamageCard {
    * @param {string} messageId
    */
   static async fromMessageId (messageId) {
-    deprecated.noLongerAvailable({ was: 'game[FOLDER_ID].cards.CoC7DamageCard.fromMessageId(?)' })
+    deprecated.noLongerAvailable({ was: 'game.CoC7.cards.CoC7DamageCard.fromMessageId(?)' })
   }
 
   /**
@@ -346,7 +346,7 @@ class DeprecatedWarningCoC7DamageCard {
    * @param {object} message
    */
   static async fromMessage (message) {
-    deprecated.noLongerAvailable({ was: 'game[FOLDER_ID].cards.CoC7DamageCard.fromMessage(?)' })
+    deprecated.noLongerAvailable({ was: 'game.CoC7.cards.CoC7DamageCard.fromMessage(?)' })
   }
 
   /**
@@ -355,7 +355,7 @@ class DeprecatedWarningCoC7DamageCard {
    * @param {HtmlElement} card
    */
   static async fromHTMLCardElement (card) {
-    deprecated.noLongerAvailable({ was: 'game[FOLDER_ID].cards.CoC7DamageCard.fromHTMLCardElement(?)' })
+    deprecated.noLongerAvailable({ was: 'game.CoC7.cards.CoC7DamageCard.fromHTMLCardElement(?)' })
   }
 
   /**
@@ -364,7 +364,7 @@ class DeprecatedWarningCoC7DamageCard {
    * @param {object} data
    */
   static async fromData (data) {
-    deprecated.noLongerAvailable({ was: 'game[FOLDER_ID].cards.CoC7DamageCard.fromData(?)' })
+    deprecated.noLongerAvailable({ was: 'game.CoC7.cards.CoC7DamageCard.fromData(?)' })
   }
 }
 
