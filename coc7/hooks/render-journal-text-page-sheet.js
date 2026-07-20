@@ -24,4 +24,14 @@ export default function (application, html, data) {
       })
     }
   }
+  html.find('.actor-embed-name-link').click(async (event) => {
+    event.preventDefault()
+    const uuid = event.currentTarget.dataset.uuid
+    if (uuid) {
+      const doc = await fromUuid(uuid)
+      if (doc && doc.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED)) {
+        doc.sheet.render(true)
+      }
+    }
+  })
 }
