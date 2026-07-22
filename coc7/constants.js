@@ -341,3 +341,5 @@ export const TALENT_ADJUSTMENT_TYPES = {
     name: 'CoC7.Talent.Type.DisableCombatPool'
   }
 }
+
+export const JOURNAL_STYLES = {}
