@@ -2,17 +2,36 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[ja.json (29 untranslated strings)](#jajson)
+[cn.json (1 untranslated strings)](#cnjson)
 
-[ko.json (359 untranslated strings)](#kojson)
+[fr.json (1 untranslated strings)](#frjson)
 
-[pl.json (335 untranslated strings)](#pljson)
+[ja.json (30 untranslated strings)](#jajson)
+
+[ko.json (360 untranslated strings)](#kojson)
+
+[pl.json (336 untranslated strings)](#pljson)
+
+[sv.json (1 untranslated strings)](#svjson)
+
+[zh-tw.json (1 untranslated strings)](#zh-twjson)
 
 
+## cn.json
+1 untranslated strings
+```
+"CoC7.Config.JournalCSS": "Journal CSS Class"
+```
+## fr.json
+1 untranslated strings
+```
+"CoC7.Config.JournalCSS": "Journal CSS Class"
+```
 ## ja.json
-29 untranslated strings
+30 untranslated strings
 ```
 "CoC7.ArmorWillFormula": "Armor value needs rolled",
+"CoC7.Config.JournalCSS": "Journal CSS Class",
 "CoC7.ErrorUnableToParseFormula": "{value} is not a valid formula",
 "CoC7.LuckReduceLossRatio": "Spend {luck} luck to reduce {name} by {loss}",
 "CoC7.NotEnoughLuck": "You do not have enough luck",
@@ -43,7 +62,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.UseLuckForWeaponFailure": "Spend 10 luck to avoid negative consequences"
 ```
 ## ko.json
-359 untranslated strings
+360 untranslated strings
 ```
 "CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
 "CoC7.AddedEmbeddedItems": "Added {names}",
@@ -222,6 +241,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Config.AdventureChangeHint": "You will need to close and reopen the document for the changes to be applied",
 "CoC7.Config.AdventureSubheading": "Fixed Adventure Subheading",
 "CoC7.Config.FixedHeadingCSS": "Fixed Adventure Heading CSS",
+"CoC7.Config.JournalCSS": "Journal CSS Class",
 "CoC7.DefenderDodging": "Defender is dodging",
 "CoC7.DeleteBookProgress": "Remove book progress",
 "CoC7.DistanceUnitFeet": "ft",
@@ -406,7 +426,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player"
 ```
 ## pl.json
-335 untranslated strings
+336 untranslated strings
 ```
 "CoC7.ActorConfig.NaturalHealing": "Natural Healing Per Day",
 "CoC7.AddedEmbeddedItems": "Added {names}",
@@ -564,6 +584,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Config.AdventureChangeHint": "You will need to close and reopen the document for the changes to be applied",
 "CoC7.Config.AdventureSubheading": "Fixed Adventure Subheading",
 "CoC7.Config.FixedHeadingCSS": "Fixed Adventure Heading CSS",
+"CoC7.Config.JournalCSS": "Journal CSS Class",
 "CoC7.DefenderDodging": "Defender is dodging",
 "CoC7.DeleteBookProgress": "Remove book progress",
 "CoC7.DistanceUnitFeet": "ft",
@@ -743,4 +764,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.UseIconForEras": "Use icons for eras",
 "SETTINGS.UseIconForErasHint": "Show icons for era toggles to save space.",
 "TYPES.RegionBehavior.ChaosiumCanvasInterfacePlayer": "CCI: Player"
+```
+## sv.json
+1 untranslated strings
+```
+"CoC7.Config.JournalCSS": "Journal CSS Class"
+```
+## zh-tw.json
+1 untranslated strings
+```
+"CoC7.Config.JournalCSS": "Journal CSS Class"
 ```
