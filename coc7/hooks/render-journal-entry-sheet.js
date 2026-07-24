@@ -29,5 +29,8 @@ export default function (application, element, context, options) {
         }
       }
     }
+    if ((application.document.getFlag(FOLDER_ID, 'journal-css') ?? '') !== '') {
+      element.classList.add(application.document.getFlag(FOLDER_ID, 'journal-css'))
+    }
   }
 }

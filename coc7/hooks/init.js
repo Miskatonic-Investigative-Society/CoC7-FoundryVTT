@@ -1,5 +1,4 @@
-/* global Combat CONFIG CONST foundry fromUuid game Hooks TextEditor */
-import { ERAS } from '../constants.js'
+import { FOLDER_ID, ERAS, JOURNAL_STYLES } from '../constants.js'
 import CoC7ClickableEvents from '../apps/clickable-events.js'
 import CoC7Combat from '../apps/combat.js'
 import CoC7CompendiumFilter from '../setup/compendium-filter.js'
@@ -26,10 +25,7 @@ export default function () {
   link.setAttribute('media', 'all')
   document.head.append(link)
 
-  if (!foundry.utils.isNewerVersion(game.version, 13)) {
-    /* // FoundryVTT V12 */
-    document.body.classList.add('running-v12')
-  }
+  document.body.classList.add('running-v' + game.release.generation.toString())
 
   game.CoC7 = {
     macros: {
@@ -49,6 +45,9 @@ export default function () {
         name,
         icon
       }
+    },
+    journalStyle: (value, label) => {
+      JOURNAL_STYLES[value] = label
     },
     skillNames: new CoCIDSkillCache(),
     // Manual,
@@ -136,8 +135,78 @@ export default function () {
     }
   })
 
-  if (['14.359', '14.360'].includes(game.version)) {
-    // Hide deprecated warnings with first two stable v14 releases
-    CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
-  }
+  CONFIG.TextEditor.enrichers.push({
+    pattern: /@coc-actor\[([^\]]+)\](?:\{([^}]+)\})?/gi,
+    enricher: async (match, { relativeTo } = {}) => {
+      const parts = match[1].split(',')
+      let actor
+      for (const part of parts) {
+        if (foundry.utils.parseUuid(part).type === 'Actor') {
+          actor = await fromUuid(part)
+          if (actor) {
+            break
+          }
+        }
+      }
+      if (!actor) {
+        const a = document.createElement('a')
+        a.classList.add('content-link', 'broken')
+        const i = document.createElement('i')
+        i.classList.add('fa-solid', 'fa-link-slash')
+        a.innerText = match[2] ?? game.i18n.localize('COMMON.Unknown')
+        a.prepend(i)
+        return a
+      }
+
+
+      const context = {
+        displayName: match[2] ?? actor.name,
+        document: actor,
+        hasOccupation: actor.system.infos.occupation.length,
+        link: actor.toAnchor().outerHTML,
+        occupation: actor.system.infos.occupation,
+        short: parts.indexOf('short') > -1,
+        showLink: parts.indexOf('no-link') === -1,
+        skills: actor.items.filter(doc => doc.type === 'skill').map(doc => { return { label: doc.name, value: doc.system.value } }).sort(CoC7Utilities.sortByLabelKey)
+      }
+
+      context.characteristics = {}
+      const characteristicsOrder = ['str', 'app', 'con', 'pow', 'siz', 'edu', 'dex', 'san', 'int']
+      for (const key of characteristicsOrder) {
+        const type = (key === 'san' ? 'attribs' : 'characteristics')
+        if (context.document.system[type][key].value !== null) {
+          const value = context.document.system.schema.getField(type).getField(key)
+          context.characteristics[key] = {
+            key,
+            short: value.label,
+            label: value.hint,
+            value: context.document.system[type][key].value
+          }
+        }
+      }
+
+      const occupation = document.occupation
+      if (occupation) {
+        context.occupation = occupation.name
+      }
+
+      if (['creature', 'npc'].includes(context.document.type)) {
+        /* // FoundryVTT V12 */
+        context.enrichedBiographyPersonalDescription = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.document.system.biography.personalDescription.value,
+          {
+            async: true,
+            secrets: context.document.editable
+          }
+        )
+      }
+
+      /* // FoundryVTT V12 */
+      const html = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/actors/embed.hbs', context)
+
+      const div = document.createElement('div')
+      div.innerHTML = html
+      return div.firstElementChild
+    }
+  })
 }

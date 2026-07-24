@@ -1,4 +1,3 @@
-/* global foundry game */
 import CoC7Tour from '../apps/tour.js'
 
 export default class CoC7EnableVariantRulesEn extends CoC7Tour {

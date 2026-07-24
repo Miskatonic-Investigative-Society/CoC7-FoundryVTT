@@ -1,4 +1,3 @@
-/* global foundry game */
 import { FOLDER_ID } from '../constants.js'
 
 export default class CoC7SkillSpecializationSelectDialog extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2) {

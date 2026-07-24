@@ -1,4 +1,3 @@
-/* global CONFIG game */
 export const FOLDER_ID = 'CoC7'
 
 export const ERAS = {
@@ -342,3 +341,5 @@ export const TALENT_ADJUSTMENT_TYPES = {
     name: 'CoC7.Talent.Type.DisableCombatPool'
   }
 }
+
+export const JOURNAL_STYLES = {}

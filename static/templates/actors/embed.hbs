@@ -1,0 +1,58 @@
+<section class="actor-embed" data-actor-uuid="{{document.uuid}}">
+  <div class="actor-embed-header">
+    <img class="actor-embed-image" src="{{document.img}}" alt="{{name}}">
+
+    <div class="actor-embed-name">
+      <h2 class="actor-embed-name-link" data-uuid="{{document.uuid}}"><i class="fa-solid fa-user"></i>{{displayName}}</h2>
+      <div class="actor-embed-subtitle">{{#if hasOccupation}}{{occupation}}{{/if}}{{#if (and hasOccupation document.system.infos.age)}}, {{/if}}{{#if document.system.infos.age}}age {{document.system.infos.age}}{{/if}}</div>
+
+      <div class="actor-embed-characteristics">
+        {{#each characteristics as |characteristic key|}}
+          <div class="actor-embed-characteristic" data-tooltip="{{localize characteristic.short}} {{characteristic.value}}% ({{calcHard characteristic.value}}/{{calcExtreme characteristic.value}})">
+            <label>{{localize characteristic.short}}</label>
+            <div>{{characteristic.value}}</div>
+          </div>
+        {{/each}}
+      </div>
+
+      <div class="actor-embed-attribs">
+        <div class="actor-embed-attrib">
+          <label>{{localize 'CoC7.HP'}}</label>
+          <div>{{document.system.attribs.hp.max}}</div>
+        </div>
+        <div class="actor-embed-attrib">
+          <label>{{localize 'CoC7.DB'}}</label>
+          <div>{{document.system.attribs.db.value}}</div>
+        </div>
+        <div class="actor-embed-attrib">
+          <label>{{localize 'CoC7.Build'}}</label>
+          <div>{{document.system.attribs.build.value}}</div>
+        </div>
+        <div class="actor-embed-attrib">
+          <label>{{localize 'CoC7.Mov'}}</label>
+          <div>{{document.system.attribs.mov.value}}</div>
+        </div>
+        <div class="actor-embed-attrib">
+          <label>{{localize 'CoC7.MP'}}</label>
+          <div>{{document.system.attribs.mp.max}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{#unless short}}
+    <div class="actor-embed-description">
+      {{{enrichedBiographyPersonalDescription}}}
+    </div>
+
+    <div class="actor-embed-skills">
+      <h4>Skills</h4>
+      {{#each skills}}
+        <span class="actor-arkham-skill" data-tooltip="{{localize label}} {{value}}% ({{calcHard value}}/{{calcExtreme value}})">{{label}} {{value}}%</span>
+      {{/each}}
+    </div>
+  {{/unless}}
+  {{#if showLink}}
+    <div class="actor-embed-link">{{{link}}}</div>
+  {{/if}}
+</section>

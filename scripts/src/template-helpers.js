@@ -382,6 +382,7 @@ export default class TemplateHelpers {
    * @returns {string}
    */
   static quoteRegExp (string) {
+    /* // FoundryVTT V13 */
     // Replace in Node 24 with RegExp.escape()
     // https://bitbucket.org/cggaertner/js-hacks/raw/master/quote.js
     const len = string.length

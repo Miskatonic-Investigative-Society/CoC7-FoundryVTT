@@ -45,7 +45,9 @@
       "Miskatonic",
       "Modif",
       "mnvr",
+      "Noto",
       "noxpgain",
+      "onloadingdone",
       "picknameonly",
       "placeables",
       "playername",
@@ -73,6 +75,7 @@
       "toggleable",
       "unticked",
       "webp",
+      "webpackbar",
       "Xtrm"
     ],
     // flagWords - list of words to be always considered incorrect

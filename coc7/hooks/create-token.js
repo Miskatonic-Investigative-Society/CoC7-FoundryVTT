@@ -1,4 +1,3 @@
-/* global foundry game ui */
 import { FOLDER_ID } from '../constants.js'
 
 /**

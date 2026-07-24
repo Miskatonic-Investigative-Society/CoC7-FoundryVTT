@@ -1,4 +1,3 @@
-/* global foundry game */
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 
 export default class CoC7ModelsItemArmorSystem extends CoC7ModelsItemGlobalSystem {

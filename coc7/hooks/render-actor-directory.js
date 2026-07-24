@@ -1,4 +1,3 @@
-/* global CONST foundry game */
 import { FOLDER_ID } from '../constants.js'
 import CoC7ActorImporterDialog from '../apps/actor-importer-dialog.js'
 import CoC7InvestigatorWizard from '../apps/investigator-wizard.js'

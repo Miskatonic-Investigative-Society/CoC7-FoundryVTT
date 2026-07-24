@@ -1,4 +1,3 @@
-/* global CONFIG foundry game */
 import { FOLDER_ID, FIGHTING_NAMES } from '../../constants.js'
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 import CoC7Utilities from '../../apps/utilities.js'

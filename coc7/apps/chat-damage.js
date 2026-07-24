@@ -1,4 +1,3 @@
-/* global ChatMessage foundry fromUuid game renderTemplate Roll TextEditor TokenDocument ui */
 import { FOLDER_ID, CHAT_MESSAGE_MODE } from '../constants.js'
 import CoC7ActorPickerDialog from './actor-picker-dialog.js'
 import CoC7ChatCombatMelee from './chat-combat-melee.js'

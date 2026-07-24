@@ -1,5 +1,3 @@
-/* global foundry game */
-
 export default class CoC7DelayedTooltip {
   /**
    * If FoundryVTT tooltip is already shown wait before showing the next

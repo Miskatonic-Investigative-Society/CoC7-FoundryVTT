@@ -1,4 +1,3 @@
-/* global CONFIG foundry game Roll */
 export default class CoC7AverageRoll extends Roll {
   /**
    * Convert DiceTerm classes to average value

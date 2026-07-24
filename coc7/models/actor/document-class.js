@@ -1,4 +1,3 @@
-/* global Actor ChatMessage CONFIG CONST foundry fromUuid fromUuidSync game Hooks Roll TextEditor Token ui */
 import { FOLDER_ID, STATUS_EFFECTS } from '../../constants.js'
 import CoC7AverageRoll from '../../apps/average-roll.js'
 import CoC7CharacteristicRollDialog from '../../apps/characteristic-roll-dialog.js'
@@ -605,7 +604,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
         if (hasSkillFlag) {
           skillList = this.items.filter(d => d.type === 'skill' && d.system.properties?.special && d.system.specialization === skill.system.specialization && skillFlags.some(flag => skill.system.flags?.[flag] === true && d.system.flags?.[flag] === false))
         }
-        const group = game.CoC7.cocid.guessGroupFromDocument(skill)
+        const group = game[FOLDER_ID].cocid.guessGroupFromDocument(skill)
         if (group) {
           const existingKeys = skillList.reduce((c, d) => {
             c.push(d.name)
@@ -614,7 +613,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
             }
             return c
           }, [])
-          const others = (await game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
+          const others = (await game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
             return item.system.properties.special && !item.system.properties.requiresname && !item.system.properties.picknameonly
           })
           skillList = skillList.concat(others.filter(d => !existingKeys.includes(d.name) && (!d.flags[FOLDER_ID]?.cocidFlag?.id || !existingKeys.includes(d.flags[FOLDER_ID]?.cocidFlag?.id))))
@@ -938,11 +937,11 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     }
     if (Number(data.system.creditRating.max) > 0) {
       // Occupations with a credit rating require a credit rating skill
-      const actorCreditRating = game.CoC7.cocid.findCocIdInList('i.skill.credit-rating', itemByType.skill ?? [])
+      const actorCreditRating = game[FOLDER_ID].cocid.findCocIdInList('i.skill.credit-rating', itemByType.skill ?? [])
       if (actorCreditRating.length === 0) {
-        const actorCreditRating = game.CoC7.cocid.findCocIdInList('i.skill.credit-rating', this.items)
+        const actorCreditRating = game[FOLDER_ID].cocid.findCocIdInList('i.skill.credit-rating', this.items)
         if (actorCreditRating.length === 0) {
-          const actorCreditRating = await game.CoC7.cocid.fromCoCID('i.skill.credit-rating')
+          const actorCreditRating = await game[FOLDER_ID].cocid.fromCoCID('i.skill.credit-rating')
           if (actorCreditRating.length) {
             const newItem = foundry.utils.duplicate(actorCreditRating[0])
             if (typeof itemByType.skill === 'undefined') {
@@ -1142,11 +1141,11 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
           }
         }
         if (rolled['i.skill.cthulhu-mythos'] > 0) {
-          const cthulhuMythosSkill = game.CoC7.cocid.findCocIdInList('i.skill.cthulhu-mythos', itemByType.skill ?? [])
+          const cthulhuMythosSkill = game[FOLDER_ID].cocid.findCocIdInList('i.skill.cthulhu-mythos', itemByType.skill ?? [])
           if (cthulhuMythosSkill.length === 0) {
-            const cthulhuMythosSkill = game.CoC7.cocid.findCocIdInList('i.skill.cthulhu-mythos', this.items)
+            const cthulhuMythosSkill = game[FOLDER_ID].cocid.findCocIdInList('i.skill.cthulhu-mythos', this.items)
             if (cthulhuMythosSkill.length === 0) {
-              const cthulhuMythosSkill = await game.CoC7.cocid.fromCoCID('i.skill.cthulhu-mythos')
+              const cthulhuMythosSkill = await game[FOLDER_ID].cocid.fromCoCID('i.skill.cthulhu-mythos')
               if (cthulhuMythosSkill.length) {
                 const newItem = foundry.utils.duplicate(cthulhuMythosSkill[0])
                 if (typeof itemByType.skill === 'undefined') {
@@ -2695,7 +2694,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       // Attempt to load from actor by CoC ID
       let item = this.getFirstItemByCoCID(itemIdentifier)
       if (!item) {
-        const newItems = await game.CoC7.cocid.fromCoCIDBest({ cocid: itemIdentifier, showLoading: true })
+        const newItems = await game[FOLDER_ID].cocid.fromCoCIDBest({ cocid: itemIdentifier, showLoading: true })
         if (newItems.length === 1) {
           item = await this.getItemAdding(newItems[0], itemIdentifier)
         }
@@ -4803,7 +4802,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
         value: actor?.system.characteristics[field.name].value
       }
     }
-    for (const item of Object.values(await game.CoC7.skillNames.getList())) {
+    for (const item of Object.values(await game[FOLDER_ID].skillNames.getList())) {
       if (!item.system.isAnySkill) {
         listOptions[item.name] = {
           type: 'cocid',

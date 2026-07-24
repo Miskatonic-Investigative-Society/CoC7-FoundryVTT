@@ -1,4 +1,3 @@
-/* global Actor Card CONFIG foundry game Item JournalEntry Macro Playlist RollTable Scene ui */
 import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7Utilities from './utilities.js'
 import deprecated from '../deprecated.js'
@@ -19,7 +18,7 @@ export default class CoCID {
     CONFIG.Playlist.compendiumIndexFields.push('flags.' + FOLDER_ID + '.cocidFlag')
     CONFIG.RollTable.compendiumIndexFields.push('flags.' + FOLDER_ID + '.cocidFlag')
     CONFIG.Scene.compendiumIndexFields.push('flags.' + FOLDER_ID + '.cocidFlag')
-    game.CoC7.cocid = CoCID
+    game[FOLDER_ID].cocid = CoCID
   }
 
   /**

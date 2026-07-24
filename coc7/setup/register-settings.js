@@ -1,4 +1,3 @@
-/* global CONFIG CONST foundry game ui */
 import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7SettingsGameRules from '../apps/settings-game-rules.js'
 import CoC7SettingsHouseRules from '../apps/settings-house-rules.js'
@@ -60,7 +59,7 @@ export default function () {
       }, {}),
     onChange: () => {
       ui.players.render(deprecated.renderForce)
-      game.CoC7.skillNames.refreshList()
+      game[FOLDER_ID].skillNames.refreshList()
     }
   })
 

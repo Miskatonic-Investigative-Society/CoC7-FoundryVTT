@@ -1,4 +1,3 @@
-/* global Actor ChatMessage CONFIG CONST DragDrop foundry game Hooks renderTemplate Roll TextEditor ui */
 import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7DicePool from './dice-pool.js'
 import CoC7ModelsActorDocumentClass from '../models/actor/document-class.js'
@@ -157,7 +156,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
    */
   static async loadCacheItemByCoCID () {
     return new Promise((resolve, reject) => {
-      game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: /^i\./, type: 'i', showLoading: true }).then((items) => {
+      game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp: /^i\./, type: 'i', showLoading: true }).then((items) => {
         const list = {}
         for (const item of items) {
           list[item.flags.CoC7.cocidFlag.id] = item
@@ -179,10 +178,10 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
   /**
    * Get Cached Item
    * @param {string} id
-   * @returns {Document|false}
+   * @returns {Document|undefined}
    */
   async getCacheItemByCoCID (id) {
-    return (await this.coc7Config.cacheCoCID)[id] ?? false
+    return (await this.coc7Config.cacheCoCID)[id]
   }
 
   /**
@@ -883,7 +882,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             }
           }
           if (this.coc7Config.archetype !== '') {
-            const archetype = await game.CoC7.cocid.fromCoCID(this.coc7Config.archetype)
+            const archetype = await game[FOLDER_ID].cocid.fromCoCID(this.coc7Config.archetype)
             if (archetype.length === 1) {
               context.archetype.total = archetype[0].system.bonusPoints
             }
@@ -1027,7 +1026,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             context.backstories[index] = {
               index,
               name: this.coc7Config.bioSections[index].name,
-              rolls: (rolls !== '' && game.CoC7.cocid.findCocIdInList(rolls, allBackstories).length ? rolls : ''),
+              rolls: (rolls !== '' && game[FOLDER_ID].cocid.findCocIdInList(rolls, allBackstories).length ? rolls : ''),
               value: this.coc7Config.bioSections[index].value
             }
           }
@@ -1184,7 +1183,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           this.coc7Config.defaultEra = event.target.value
           await game.settings.set(FOLDER_ID, 'worldEra', this.coc7Config.defaultEra)
           this.coc7Config.cacheCoCID = await CoC7InvestigatorWizard.loadCacheItemByCoCID()
-          this.coc7Config.cacheBackstories = game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: /^rt\.\.backstory-/, type: 'rt' })
+          this.coc7Config.cacheBackstories = game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp: /^rt\.\.backstory-/, type: 'rt' })
           // To prevent flashing show message for at least 500 ms
           const buffer = 500 - (Date.now() - started)
           // Don't bother if less than 10ms remaining
@@ -1565,7 +1564,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           const index = button.dataset.index
           const key = button.dataset.key
           if (typeof this.coc7Config.bioSections[index] !== 'undefined') {
-            const table = await game.CoC7.cocid.fromCoCID(key)
+            const table = await game[FOLDER_ID].cocid.fromCoCID(key)
             if (table.length === 1) {
               const tableResults = await table[0].roll()
               for (const tableResult of tableResults.results) {
@@ -1724,7 +1723,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         } else if (typeof this.coc7Config.skillItems[nameCreditRating] !== 'undefined') {
           this.addItemToList(this.coc7Config.skillItems[nameCreditRating].item, flags)
         } else {
-          const skill = await game.CoC7.cocid.fromCoCID(this.cocidCreditRating)
+          const skill = await game[FOLDER_ID].cocid.fromCoCID(this.cocidCreditRating)
           if (skill.length) {
             this.addItemToList(skill[0], flags)
           }
@@ -1877,9 +1876,9 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         this.coc7Config.skillItems[key].rows[index].selected = false
       }
       let skillList = []
-      const group = game.CoC7.cocid.guessGroupFromKey(key)
+      const group = game[FOLDER_ID].cocid.guessGroupFromKey(key)
       if (group) {
-        skillList = (await game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
+        skillList = (await game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
           return !(item.system.properties?.special && !!(item.system.properties?.requiresname || item.system.properties?.picknameonly))
         })
         if (skillList.length > 1) {
@@ -1988,11 +1987,11 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                         item = foundry.utils.duplicate(row.selected)
                       }
                       if (item.system.properties.own || key === this.cocidLanguageOwn) {
-                        const regEx = new RegExp('^' + CoC7Utilities.quoteRegExp(game.CoC7.cocid.guessGroupFromDocument(item)))
+                        const regEx = new RegExp('^' + CoC7Utilities.quoteRegExp(game[FOLDER_ID].cocid.guessGroupFromDocument(item)))
                         own[key] = {
                           name: item.name,
                           specialization: item.system.specialization,
-                          options: game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: regEx, type: 'i' }),
+                          options: game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp: regEx, type: 'i' }),
                           selected: this.coc7Config.own[key]?.selected ?? '',
                           value: this.coc7Config.own[key]?.value ?? ''
                         }
@@ -2125,14 +2124,14 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       archetype: 0
     }
     if (data.archetype !== '') {
-      const archetype = await game.CoC7.cocid.fromCoCID(data.archetype)
+      const archetype = await game[FOLDER_ID].cocid.fromCoCID(data.archetype)
       if (archetype.length === 1) {
         items.push(archetype[0].toObject())
         development.archetype = archetype[0].system.bonusPoints
       }
     }
     if (data.occupation !== '') {
-      const occupation = await game.CoC7.cocid.fromCoCID(data.occupation)
+      const occupation = await game[FOLDER_ID].cocid.fromCoCID(data.occupation)
       if (occupation.length === 1) {
         items.push(occupation[0].toObject())
         const options = []
@@ -2288,7 +2287,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       chooseRolledValues: game.settings.get(FOLDER_ID, 'InvestigatorWizardChooseValues'),
       placeable: foundry.utils.duplicate(game.settings.get(FOLDER_ID, 'InvestigatorWizardQuickFire')),
       cacheCoCID: CoC7InvestigatorWizard.loadCacheItemByCoCID(),
-      cacheBackstories: game.CoC7.cocid.fromCoCIDRegexBest({ cocidRegExp: /^rt\.\.backstory-/, type: 'rt' }),
+      cacheBackstories: game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp: /^rt\.\.backstory-/, type: 'rt' }),
       cacheItems: {},
       setup: game.settings.get(FOLDER_ID, 'InvestigatorWizardSetup'),
       skillItems: {},

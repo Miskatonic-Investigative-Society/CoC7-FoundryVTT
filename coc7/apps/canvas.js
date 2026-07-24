@@ -1,4 +1,3 @@
-/* global foundry game */
 import CoC7Link from './link.js'
 
 export default class CoC7Canvas {

@@ -1,4 +1,3 @@
-/* global canvas game */
 // cSpell:words devphase charcreate xptoggle fakeroll startrest gmtools
 import { FOLDER_ID } from '../constants.js'
 import CoC7ActorImporterDialog from './actor-importer-dialog.js'
@@ -150,11 +149,11 @@ export default class CoC7SceneControls {
             toggle: true,
             icon: 'game-icon game-icon-dice-fire',
             name: 'alwaysCrit',
-            active: game.CoC7.dev.dice.alwaysCrit,
+            active: game[FOLDER_ID].dev.dice.alwaysCrit,
             title: 'All rolls will crit',
             onChange: (event, toggled) => {
-              game.CoC7.dev.dice.alwaysCrit = toggled
-              if (toggled && game.CoC7.dev.dice.alwaysFumble) {
+              game[FOLDER_ID].dev.dice.alwaysCrit = toggled
+              if (toggled && game[FOLDER_ID].dev.dice.alwaysFumble) {
                 document.querySelector('button[data-action="tool"][data-tool="alwaysFumble"]')?.click()
                 /* // FoundryVTT V12 */
                 document.querySelector('li.control-tool.toggle[data-tool="alwaysFumble"]')?.click()
@@ -165,11 +164,11 @@ export default class CoC7SceneControls {
             toggle: true,
             icon: 'game-icon game-icon-fire-extinguisher',
             name: 'alwaysFumble',
-            active: game.CoC7.dev.dice.alwaysFumble,
+            active: game[FOLDER_ID].dev.dice.alwaysFumble,
             title: 'All rolls will fumble',
             onChange: (event, toggled) => {
-              game.CoC7.dev.dice.alwaysFumble = toggled
-              if (toggled && game.CoC7.dev.dice.alwaysCrit) {
+              game[FOLDER_ID].dev.dice.alwaysFumble = toggled
+              if (toggled && game[FOLDER_ID].dev.dice.alwaysCrit) {
                 document.querySelector('button[data-action="tool"][data-tool="alwaysCrit"]')?.click()
                 /* // FoundryVTT V12 */
                 document.querySelector('li.control-tool.toggle[data-tool="alwaysCrit"]')?.click()

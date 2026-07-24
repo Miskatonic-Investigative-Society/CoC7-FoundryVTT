@@ -1,4 +1,3 @@
-/* global CONFIG foundry game Roll */
 import { FOLDER_ID } from '../constants.js'
 
 export default class CoC7DicePool {
@@ -130,7 +129,7 @@ export default class CoC7DicePool {
     if ((game.settings.get('core', 'diceConfiguration').d10 ?? '') === '' && game.settings.get(FOLDER_ID, 'hiddendevmenu')) {
       const bonusDice = []
       const penaltyDice = []
-      if (game.CoC7.dev.dice.alwaysCrit) {
+      if (game[FOLDER_ID].dev.dice.alwaysCrit) {
         for (let offset = 0; offset < this.#penaltyCount; offset++) {
           penaltyDice.push(10)
         }
@@ -138,7 +137,7 @@ export default class CoC7DicePool {
           bonusDice.push(Math.ceil((1 - CONFIG.Dice.randomUniform()) * 10))
         }
         rolls = CoC7DicePool.#createRollsFromResults({ baseDie: 10, bonusDice, penaltyDice, unitDie: 1 })
-      } else if (game.CoC7.dev.dice.alwaysFumble) {
+      } else if (game[FOLDER_ID].dev.dice.alwaysFumble) {
         let value = 100
         if (this.#minimumFumbleFromThreshold() === 96) {
           value = 95 + Math.ceil((1 - CONFIG.Dice.randomUniform()) * 5)

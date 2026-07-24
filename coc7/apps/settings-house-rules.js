@@ -1,4 +1,3 @@
-/* global DragDrop foundry game */
 import { FOLDER_ID } from '../constants.js'
 
 const SETTINGS = {

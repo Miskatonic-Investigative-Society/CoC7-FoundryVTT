@@ -1,4 +1,3 @@
-/* global Compendium CONFIG foundry game Hooks SearchFilter */
 import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7Utilities from '../apps/utilities.js'
 

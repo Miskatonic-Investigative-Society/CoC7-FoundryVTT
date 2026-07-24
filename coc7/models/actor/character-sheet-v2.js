@@ -1,4 +1,3 @@
-/* global foundry fromUuid game renderTemplate TextEditor */
 import { FOLDER_ID, MONETARY_FORMATS, MONETARY_TYPES } from '../../constants.js'
 import CoC7CreateMythosEncounter from '../../apps/create-mythos-encounter.js'
 import CoC7ModelsActorGlobalSheet from './global-sheet.js'

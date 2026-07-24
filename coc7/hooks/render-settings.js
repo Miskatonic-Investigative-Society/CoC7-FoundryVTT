@@ -1,4 +1,3 @@
-/* global foundry fromUuid game */
 import { FOLDER_ID } from '../constants.js'
 import deprecated from '../deprecated.js'
 
@@ -18,7 +17,7 @@ export default function (application, element, context, options) {
     button.append(buttonIcon)
     button.append(buttonText)
     button.addEventListener('click', async () => {
-      (await fromUuid('Compendium.CoC7.system-doc.JournalEntry.' + game.CoC7.Manual))?.sheet.render(true)
+      (await fromUuid('Compendium.CoC7.system-doc.JournalEntry.' + game[FOLDER_ID].Manual))?.sheet.render(true)
     })
     /* // FoundryVTT V12 */
     if (game.release.generation === 12) {

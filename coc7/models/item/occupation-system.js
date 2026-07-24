@@ -1,4 +1,3 @@
-/* global foundry game */
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 import CoC7Utilities from '../../apps/utilities.js'
 

@@ -1,4 +1,3 @@
-/* global CONFIG foundry */
 import { FOLDER_ID, STATUS_EFFECTS } from '../constants.js'
 
 export default function () {

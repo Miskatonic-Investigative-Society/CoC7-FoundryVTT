@@ -1,4 +1,3 @@
-/* global game ProseMirror */
 import { FOLDER_ID } from '../constants.js'
 
 /**

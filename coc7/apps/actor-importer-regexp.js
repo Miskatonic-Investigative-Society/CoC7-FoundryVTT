@@ -1,4 +1,3 @@
-/* global game */
 import CoC7Utilities from './utilities.js'
 
 /**

@@ -1575,6 +1575,7 @@
   "CoC7.Config.FixedHeadingCSS": "Fixed Adventure Heading CSS",
   "CoC7.Config.AdventureSubheading": "Fixed Adventure Subheading",
   "CoC7.Config.AdventureChangeHint": "You will need to close and reopen the document for the changes to be applied",
+  "CoC7.Config.JournalCSS": "Journal CSS Class",
   "CoC7.ModifiedByActiveEffect": "This is modified by an Active Effect and can not be edited directly",
 
   "CoC7.CoC7ModelsActorContainerSheetV2": "CoC7 Container Sheet",

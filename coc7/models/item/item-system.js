@@ -1,4 +1,3 @@
-/* global foundry game */
 import { ERAS } from '../../constants.js'
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 

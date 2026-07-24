@@ -1,4 +1,3 @@
-/* global ChatMessage foundry fromUuid game Hooks renderTemplate TextEditor TokenDocument ui */
 import { FOLDER_ID, CHAT_MESSAGE_MODE, DICE_POOL_REASONS } from '../constants.js'
 import CoC7ActorPickerDialog from './actor-picker-dialog.js'
 import CoC7ChatDropdown from './chat-dropdown.js'

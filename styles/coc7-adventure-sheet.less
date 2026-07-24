@@ -561,6 +561,120 @@ body.theme-dark .coc7-adventure-entry.sheet .editor-content.ProseMirror,
   section.tmi-toggleable p.toggle:hover {
     text-shadow: var(--text-shadow);
   }
+
+  .actor-embed {
+    overflow: hidden;
+    max-width: 28rem;
+    margin: 0 auto;
+
+    .actor-embed-header {
+      .flex-row(@align: flex-start);
+      column-gap: 1rem;
+    }
+    .actor-embed-image {
+      max-width: 12.5rem;
+      max-height: 21rem;
+      margin: 0 0 0.5rem;
+    }
+
+    h2 {
+      text-transform: none;
+      font-family: Lusitana;
+      font-weight: bold;
+      font-size: var(--font-size-28);
+    }
+
+    .actor-embed-name-link {
+      cursor: pointer;
+    }
+
+    .actor-embed-subtitle {
+      color: var(--coc7-adventure-colour);
+      font-style: italic;
+    }
+
+    .actor-embed-characteristics {
+      .flex-row();
+      flex-wrap: wrap;
+      margin: 1rem 0;
+
+      .actor-embed-characteristic {
+        .flex-row();
+        flex: 0 0 50%;
+        padding: 0.25rem;
+        border-bottom: 2px solid var(--coc7-adventure-colour);
+
+        &:nth-child(2n) {
+          padding-left: 0.75rem;
+        }
+
+        &:nth-child(2n + 1) {
+          padding-right: 0.75rem;
+        }
+
+        &:last-child,
+        &:nth-last-child(2):nth-child(odd) {
+          border: none;
+        }
+
+        label {
+          flex: 0.5;
+          font-weight: bold;
+        }
+
+        div {
+          flex: 1;
+          text-align: center;
+        }
+      }
+    }
+
+    .actor-embed-attribs {
+      .flex-col();
+
+      .actor-embed-attrib {
+        .flex-row();
+        padding: 0.25rem;
+
+        &:nth-child(2n) {
+          background-color: rgb(from var(--coc7-adventure-colour) r g b / 20%);
+        }
+
+        label {
+          flex: 1;
+          font-weight: bold;
+        }
+
+        div {
+          flex: 1;
+        }
+      }
+    }
+
+    .actor-embed-description {
+      margin-top: 2rem;
+    }
+
+    .actor-embed-skills {
+      h4 {
+        font-style: italic;
+      }
+
+      .actor-arkham-skill::after {
+        content: ','
+      }
+
+      .actor-arkham-skill:last-child::after {
+        content: '.'
+      }
+    }
+
+    .actor-embed-link {
+      margin-top: 0.5rem;
+      text-align: center;
+      padding-bottom: 2px;
+    }
+  }
 }
 
 .coc7-formatted-text,

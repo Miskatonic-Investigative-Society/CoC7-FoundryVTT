@@ -1,4 +1,3 @@
-/* global CONFIG fromUuid game TokenDocument ui */
 import { FOLDER_ID, CHAT_MESSAGE_MODE } from '../constants.js'
 import CoC7ChatCombinedMessage from './chat-combined-message.js'
 import CoC7ChatOpposedMessage from './chat-opposed-message.js'

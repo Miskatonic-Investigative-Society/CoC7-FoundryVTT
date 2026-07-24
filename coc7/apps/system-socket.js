@@ -1,4 +1,3 @@
-/* global fromUuid game NotesLayer ui */
 import { FOLDER_ID } from '../constants.js'
 import CoC7ChatCombinedMessage from './chat-combined-message.js'
 import CoC7ChatOpposedMessage from './chat-opposed-message.js'
@@ -53,9 +52,9 @@ export default class CoC7SystemSocket {
             break
           case 'thanksUpdatedMessage':
             if (['messageId'].every(k => typeof data[k] !== 'undefined')) {
-              const index = game.CoC7.messagePermissionQueue.findIndex(o => o.messageId === data.messageId)
+              const index = game[FOLDER_ID].messagePermissionQueue.findIndex(o => o.messageId === data.messageId)
               if (index > -1) {
-                game.CoC7.messagePermissionQueue.splice(data.index, 1)
+                game[FOLDER_ID].messagePermissionQueue.splice(data.index, 1)
                 CoC7SystemSocket.messagePermissionQueue(data.messageId)
               }
             }
@@ -112,9 +111,9 @@ export default class CoC7SystemSocket {
    * @param {string} messageId
    */
   static async messagePermissionQueue (messageId) {
-    const index = game.CoC7.messagePermissionQueue.findIndex(o => o.messageId === messageId)
+    const index = game[FOLDER_ID].messagePermissionQueue.findIndex(o => o.messageId === messageId)
     if (index > -1) {
-      const data = game.CoC7.messagePermissionQueue[index]
+      const data = game[FOLDER_ID].messagePermissionQueue[index]
       const message = game.messages.get(data.messageId)
       if (message) {
         await message.update({
@@ -175,8 +174,8 @@ export default class CoC7SystemSocket {
       const message = game.messages.get(data.messageId)
       const user = game.users.get(data.who)
       if (message && user && (await CoC7Utilities.canModifyActor({ message, user })).length) {
-        const index = game.CoC7.messagePermissionQueue.findIndex(o => o.messageId === data.messageId)
-        game.CoC7.messagePermissionQueue.push(data)
+        const index = game[FOLDER_ID].messagePermissionQueue.findIndex(o => o.messageId === data.messageId)
+        game[FOLDER_ID].messagePermissionQueue.push(data)
         if (index === -1) {
           CoC7SystemSocket.messagePermissionQueue(data.messageId)
         }

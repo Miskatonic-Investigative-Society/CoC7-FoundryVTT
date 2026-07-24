@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import decompress from 'decompress'
+import decompress from '@xhmikosr/decompress'
 import fetch from 'node-fetch'
 import TemplateHelpers from './src/template-helpers.js'
 import webfontsGenerator from '@vusion/webfonts-generator' // eslint-disable-line import/no-unresolved

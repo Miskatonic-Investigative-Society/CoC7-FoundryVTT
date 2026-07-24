@@ -1,4 +1,3 @@
-/* global foundry Roll */
 export default class CoC7StringField extends foundry.data.fields.StringField {
   /**
    * Active Effect on String Field Add as a formula

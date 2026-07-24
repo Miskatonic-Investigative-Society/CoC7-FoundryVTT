@@ -1,4 +1,3 @@
-/* global CONFIG foundry game TextEditor ui */
 import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7Utilities from './utilities.js'
 
@@ -53,8 +52,8 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
 
     context.supportedLanguages = CONFIG.supportedLanguages
 
-    context.guessCode = game.CoC7.cocid.guessId(context.document)
-    context.idPrefix = game.CoC7.cocid.getPrefix(context.document)
+    context.guessCode = game[FOLDER_ID].cocid.guessId(context.document)
+    context.idPrefix = game[FOLDER_ID].cocid.getPrefix(context.document)
 
     const cocidFlag = context.document.flags?.[FOLDER_ID]?.cocidFlag ?? {}
 
@@ -171,7 +170,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
 
     form.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', async (event) => {
       const era = event.currentTarget.dataset.property
-      await game.CoC7.cocid.eraToggle(this.document, era, { isCtrlKey: CoC7Utilities.isCtrlKey(event) })
+      await game[FOLDER_ID].cocid.eraToggle(this.document, era, { isCtrlKey: CoC7Utilities.isCtrlKey(event) })
     }))
 
     form.querySelector('input[name=_existing')?.addEventListener('change', (event) => {
@@ -239,7 +238,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
             button.classList.add('invalid-coc-id')
           }
           button.dataset.action = 'cocid'
-          button.dataset.tooltip = 'CoC7.CoCIDFlag.id'
+          button.dataset.tooltip = 'CoC7.CoCIDFlag.key'
           copyUuidButton.after(button)
         }
       }
@@ -278,7 +277,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
    * @returns {object}
    */
   async getDocumentsInScope (usedEras, cocid, lang, scope) {
-    const documents = await game.CoC7.cocid.fromCoCIDAll({
+    const documents = await game[FOLDER_ID].cocid.fromCoCIDAll({
       cocid,
       lang,
       scope,
