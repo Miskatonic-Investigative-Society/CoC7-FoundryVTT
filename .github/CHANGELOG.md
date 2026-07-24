@@ -11,6 +11,15 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 **_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
 
+## Version 8.15
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+
+- Fix Chase participant leaving location that didn't enter it first becomes a duplicate of the first person to enter
+- Fix Investigator Wizard return undefined if failed to find in cache
+
 ## Version 8.14
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
