@@ -178,10 +178,10 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
   /**
    * Get Cached Item
    * @param {string} id
-   * @returns {Document|false}
+   * @returns {Document|undefined}
    */
   async getCacheItemByCoCID (id) {
-    return (await this.coc7Config.cacheCoCID)[id] ?? false
+    return (await this.coc7Config.cacheCoCID)[id]
   }
 
   /**
