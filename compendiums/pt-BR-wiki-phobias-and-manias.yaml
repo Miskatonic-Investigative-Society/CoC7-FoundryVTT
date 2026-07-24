@@ -1,0 +1,329 @@
+_id: P5nXnVY3u52GwN1X
+name: Fobias
+type: folder
+color: '#75844c'
+---
+_id: S9nXnVY3u52GwN0T
+name: Manias
+type: folder
+color: '#75844c'
+---
+name: Agatomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Bondade patológica</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.agathomania
+      lang: pt-BR
+      priority: 0
+---
+name: Algomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Obsessão por dor</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.algomania
+      lang: pt-BR
+      priority: 0
+---
+name: Amenomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Alegria irracional</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.amenomania
+      lang: pt-BR
+      priority: 0
+---
+name: Bibliocleptomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Compulsão por roubar livros</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.bibliokleptomania
+      lang: pt-BR
+      priority: 0
+---
+name: Dicemania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Obsessão por ver a justiça ser feita</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.dikemania
+      lang: pt-BR
+      priority: 0
+---
+name: Geliomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Compulsão incontrolável para rir</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.geliomania
+      lang: pt-BR
+      priority: 0
+---
+name: Clazomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Compulsão irracional para gritar</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.klazomania
+      lang: pt-BR
+      priority: 0
+---
+name: Cleptomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Compulsão irracional por roubar</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.kleptomania
+      lang: pt-BR
+      priority: 0
+---
+name: Nosomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Delírio de sofrer de uma doença imaginária</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.nosomania
+      lang: pt-BR
+      priority: 0
+---
+name: Pseudomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Compulsão irracional por mentir</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.pseudomania
+      lang: pt-BR
+      priority: 0
+---
+name: Acrofobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Medo de alturas</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.acrophobia
+      lang: pt-BR
+      priority: 0
+---
+name: Aracnofobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Medo de aranhas</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.arachnophobia
+      lang: pt-BR
+      priority: 0
+---
+name: Bibliofobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Medo de livros</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.bibliophobia
+      lang: pt-BR
+      priority: 0
+---
+name: Eisoptrofobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Medo de espelhos</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.eisoptrophobia
+      lang: pt-BR
+      priority: 0
+---
+name: Hemafobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Medo de sangue</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.hemaphobia
+      lang: pt-BR
+      priority: 0
+---
+name: Necrofobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Medo de coisas mortas</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.necrophobia
+      lang: pt-BR
+      priority: 0
+---
+name: Odontofobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Medo de dentes</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.odontophobia
+      lang: pt-BR
+      priority: 0
+---
+name: Pirofobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Medo de fogo</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.pyrophobia
+      lang: pt-BR
+      priority: 0
+---
+name: Telefonofobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Medo de telefones</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.telephonophobia
+      lang: pt-BR
+      priority: 0
+---
+name: Xenofobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Medo de estranhos ou estrangeiros</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.xenophobia
+      lang: pt-BR
+      priority: 0

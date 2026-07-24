@@ -26,18 +26,21 @@ export default class GenerateCompendiums {
       }
     }
 
+    const sortedLangs = [...langs].sort((a, b) => b.length - a.length)
     const batch = []
     for (const pack of foundryConfig.json.packs) {
-      const match = pack.path.match(/^packs\/([^-]+)-(.+)$/)
+      const packPath = pack.path.replace(/^packs\//, '')
+      const lang = sortedLangs.find(lang => packPath.startsWith(lang + '-'))
 
-      if (!match) {
-        throw new Error('Incorrect folder found in ./' + foundryConfig.type + '.json file for ' + pack.name)
+      if (!lang) {
+        TemplateHelpers.ansiFormat('Skipping Pack ' + packPath + ' (' + pack.type + ')', { color: 'yellow', output: true })
+        continue
       }
 
       const single = {
         type: pack.type,
-        lang: match[1],
-        pack: match[2]
+        lang,
+        pack: packPath.substring(lang.length + 1)
       }
 
       if (fs.existsSync(rootFolder + '/compendiums/' + single.lang + '-' + single.pack + '.yaml')) {
@@ -60,7 +63,7 @@ export default class GenerateCompendiums {
       const yamlObject = loadAll(yaml)
 
       const documents = yamlObject.filter(doc => doc).reduce((c, doc) => {
-        const entity = TemplateHelpers.processDocument(collisions, doc, { type: single.type, pack: single.lang, id: foundryConfig.json.id })
+        const entity = TemplateHelpers.processDocument(collisions, doc, { type: single.type, lang: single.lang, id: foundryConfig.json.id })
         c[entity.id] = entity.value
         return c
       }, {})

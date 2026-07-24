@@ -1,0 +1,39 @@
+name: Tabela de Acessos de Loucura (Tempo Real)
+formula: 1d10
+results:
+  - type: text
+    name: 'Amnésia'
+    description: 'O investigador não se lembra dos acontecimentos desde a última vez em que esteve em um lugar seguro. Para ele, em um momento estava tomando café da manhã e, no instante seguinte, está diante de um monstro. Isso dura [[/r 1D10]] rodadas.'
+  - type: text
+    name: 'Incapacidade Psicossomática'
+    description: 'O investigador sofre cegueira, surdez ou perda do uso de um membro de origem psicossomática por [[/r 1D10]] rodadas.'
+  - type: text
+    name: 'Violência'
+    description: 'Uma névoa vermelha de fúria toma o investigador afetado, que explode em uma onda de violência e destruição descontroladas contra tudo ao redor, aliados e inimigos, por [[/r 1D10]] rodadas.'
+  - type: text
+    name: 'Paranoia'
+    description: 'O investigador sofre paranoia severa por [[/r 1D10]] rodadas. Todos querem pegá-lo! Ninguém é confiável! Ele está sendo espionado; alguém o traiu; o que ele vê é uma ilusão.'
+  - type: text
+    name: 'Pessoa Significativa'
+    description: 'Consulte a entrada Pessoas Significativas nos antecedentes do investigador. O investigador confunde outra pessoa na cena com sua pessoa significativa. Considere a natureza da relação; o investigador age de acordo com ela. Isso dura [[/r 1D10]] rodadas.'
+  - type: text
+    name: 'Desmaio'
+    description: 'O investigador desmaia, recuperando-se após [[/r 1D10]] rodadas.'
+  - type: text
+    name: 'Fugir em Pânico'
+    description: 'O investigador é compelido a se afastar o máximo possível por qualquer meio disponível, mesmo que isso signifique pegar o único veículo e deixar todos para trás. Ele foge por [[/r 1D10]] rodadas.'
+  - type: text
+    name: 'Histeria Física ou Explosão Emocional'
+    description: 'O investigador fica incapacitado rindo, chorando, gritando etc. por [[/r 1D10]] rodadas.'
+  - type: text
+    name: 'Fobia'
+    description: 'O investigador adquire uma nova fobia, como claustrofobia (medo de espaços confinados), demonofobia (medo de espíritos ou demônios) ou catsaridafobia (medo de baratas). Mesmo que a fonte da fobia não esteja presente, o investigador imagina que ela está ali pelas próximas [[/r 1D10]] rodadas, e todas as ações sofrem um dado de penalidade enquanto o acesso continuar.'
+  - type: text
+    name: 'Mania'
+    description: 'O investigador adquire uma nova mania, como ablutomania (compulsão por lavar-se), pseudomania (compulsão irracional por mentir) ou helmintomania (apreço excessivo por vermes). O investigador procura satisfazer essa nova mania pelas próximas [[/r 1D10]] rodadas, e todas as ações sofrem um dado de penalidade enquanto o acesso continuar.'
+flags:
+  CoC7:
+    cocidFlag:
+      id: rt..bouts-of-madness-table-realtime
+      lang: pt-BR
+      priority: 0
