@@ -1,0 +1,310 @@
+_id: CcH7CdXGtGTjMSCg
+name: Exemplo de Configuração dos Anos 1920
+type: setup
+img: icons/svg/item-bag.svg
+system:
+  description:
+    value: <p>Configuração padrão para personagem dos anos 1920.</p>
+  source: ''
+  items:
+   - i.skill.accounting
+   - i.skill.anthropology
+   - i.skill.appraise
+   - i.skill.archaeology
+   - i.skill.art-craft-any
+   - i.skill.charm
+   - i.skill.climb
+   - i.skill.credit-rating
+   - i.skill.cthulhu-mythos
+   - i.skill.disguise
+   - i.skill.dodge
+   - i.skill.drive-auto
+   - i.skill.electrical-repair
+   - i.skill.fast-talk
+   - i.skill.fighting-brawl
+   - i.skill.throw
+   - i.skill.firearms-handgun
+   - i.skill.firearms-rifle-shotgun
+   - i.skill.first-aid
+   - i.skill.history
+   - i.skill.intimidate
+   - i.skill.jump
+   - i.skill.language-own
+   - i.skill.law
+   - i.skill.library-use
+   - i.skill.listen
+   - i.skill.locksmith
+   - i.skill.mechanical-repair
+   - i.skill.medicine
+   - i.skill.natural-world
+   - i.skill.navigate
+   - i.skill.occult
+   - i.skill.operate-heavy-machinery
+   - i.skill.persuade
+   - i.skill.pilot-any
+   - i.skill.psychoanalysis
+   - i.skill.psychology
+   - i.skill.ride
+   - i.skill.science-any
+   - i.skill.sleight-of-hand
+   - i.skill.spot-hidden
+   - i.skill.stealth
+   - i.skill.survival-any
+   - i.skill.swim
+   - i.skill.track
+   - i.weapon.brawl
+  bioSections:
+   - Descrição Pessoal
+   - Ideologia/Crenças
+   - Pessoas Significativas
+   - Locais Significativos
+   - Pertences Valiosos
+   - Traços
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.setup.s-setup
+      lang: pt-BR
+      eras:
+        standard: true
+      priority: 0
+---
+_id: lu04TIRrg9P3vRqY
+name: Pacificador
+type: archetype
+img: icons/svg/invisible.svg
+system:
+  source: 'FoundryVTT CoC7'
+  description:
+    value: '<p>Uma pessoa solucionadora de problemas que possui uma habilidade natural para encontrar ou perceber o “olho da tempestade” e enxergar uma questão por todos os lados. Motivado pela harmonia, o pacificador busca manter o equilíbrio, seja entre indivíduos ou grupos de pessoas, e preservar o status quo. Seu objetivo é trazer soluções e pode ser muito adaptável, embora às vezes em prejuízo próprio, pois coloca todos os outros à frente de suas próprias necessidades. Embora muitas vezes descrito como “tranquilo” ou “passivo”, pode ser firme, sensato e ousado, especialmente quando uma crise acontece.</p>'
+  suggestedOccupations: '<p>Atleta, Barman/Garçonete, Policial de Ronda, Mordomo, Criminoso, Autoridade Eleita, Operário, Missionário, Enfermeiro, Sacerdote, Secretário, Iogue.</p>'
+  suggestedTraços: '<p>calmo sob pressão, sensato, modesto, altruísta.</p>'
+  coreCharacteristics:
+    app: true
+    int: true
+  skills:
+   - i.skill.charm
+   - i.skill.fast-talk
+   - i.skill.history
+   - i.skill.first-aid
+   - i.skill.intimidate
+   - i.skill.language-any
+   - i.skill.listen
+   - i.skill.persuade
+   - i.skill.psychology
+   - i.skill.spot-hidden
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.archetype.peacemaker
+      lang: pt-BR
+      priority: 0
+---
+_id: zyCszwqyTg21l9E2
+name: Raio da morte (protótipo)
+type: weapon
+img: icons/svg/sword.svg
+system:
+  range:
+    normal:
+      value: 17
+      damage: 5d6
+  usesPerRound:
+    max: ''
+    burst: ''
+  bullets: ''
+  malfunction: ''
+  properties:
+    rngd: true
+    slnt: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.example-death-ray-prototype
+      lang: pt-BR
+      priority: 0
+---
+_id: uWQYNsMURpspTetM
+name: Arma experimental
+type: weapon
+img: icons/svg/sword.svg
+system:
+  description:
+    value: <p>Descrição da arma</p><p>selecionar 'Área de efeito' habilitará 3 danos e alcances diferentes</p><p>selecionar 'Automática' permitirá escolher 2 perícias diferentes para a arma</p><p>selecionar 'Especial' ativará o campo de entrada especial</p><p>Na aba de combate, se os ícones estiverem com fundo vermelho, significa que nenhuma perícia foi selecionada para essa arma</p><p>Edite a arma e selecione a perícia correta.</p>
+    special: '<p>Você pode adicionar uma descrição especial ou comandos aqui:</p><p>Comando 1: [[/r 2d17kh]]</p>'
+  skill:
+    main:
+      name: A ser selecionada quando a arma pertencer a alguém
+  range:
+    normal:
+      value: 5
+      damage: 3d6
+  usesPerRound:
+    max: ''
+    burst: ''
+  bullets: ''
+  malfunction: 85
+  properties:
+    rngd: true
+    brst: true
+    spcl: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.example-experimental-weapon
+      lang: pt-BR
+      priority: 0
+---
+_id: NOsh6EdNSjpjahDF
+name: Vendedor Ambulante
+type: occupation
+img: icons/svg/ice-aura.svg
+system:
+  source: 'FoundryVTT CoC7'
+  description:
+    value: '<p>Também conhecidos como “mascates” e “ambulantes”, vendedores ambulantes circulam, geralmente com um carrinho de mão ou carrinho, vendendo pequenos artigos a transeuntes, como objetos artesanais, comidas e petiscos ou outros itens baratos. São conhecidos por anunciar suas mercadorias em voz alta para atrair clientes, bem como por seu jogo de cintura e conversa para aumentar as vendas.</p><p>Passar o dia todo na rua significa que conhecem diferentes localidades, o vai e vem dos moradores, e são um ímã para coletar ou iniciar fofocas.</p><p><strong>Contatos Sugeridos:</strong> outros vendedores, forças da lei locais, fornecedores comerciais, mordomos e outros empregados domésticos.</p>'
+  type:
+    classic: true
+  occupationSkillPoints:
+    app:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 10
+    max: 40
+  skills:
+   - i.skill.appraise
+   - i.skill.fighting-brawl
+   - i.skill.listen
+   - i.skill.navigate
+   - i.skill.psychology
+  groups:
+   - options: 1
+     skills:
+      - i.skill.accounting
+      - i.skill.art-craft-any
+   - options: 1
+     skills:
+      - i.skill.charm
+      - i.skill.fast-talk
+   - options: 1
+     skills:
+      - i.skill.language-any
+      - i.skill.sleight-of-hand
+  personal: 0
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.occupation.street-vendor
+      lang: pt-BR
+      priority: 0
+---
+_id: 3elxAwnv7WCUNwng
+name: Soco
+type: weapon
+img: systems/CoC7/assets/icons/skills/fighting_brawl.svg
+system:
+  skill:
+    main:
+      name: i.skill.brawl
+  range:
+    normal:
+      damage: 1D3
+  usesPerRound:
+    max: ''
+  bullets: ''
+  malfunction: ''
+  properties:
+    rngd: false
+    addb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.brawl
+      lang: pt-BR
+      priority: 0
+---
+_id: yqvwz769ZeJplOW7
+name: Talento de Exemplo
+type: talent
+img: icons/svg/item-bag.svg
+system:
+  source: ''
+  type:
+    physical: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.talent.example-talent
+      lang: pt-BR
+      priority: 0
+---
+_id: 4Rrff1sAoWh7NFkL
+name: Feitiço de Teste
+type: spell
+img: systems/CoC7/assets/icons/pentagram-rose.svg
+system:
+  castingTime: 10 - 15 minutos
+  costList:
+    - type: promptToggleButton
+      if: ''
+      config: '{"prompt":"O alvo esta acordado","variable":"@awake"}'
+    - type: promptRequireNumber
+      if: ''
+      config: '{"prompt":"Quantidade de pontos de magia que voce esta gastando","variable":"@castermp"}'
+    - type: additionalCasterPromptAdd
+      if: ''
+      config: '{"prompt":"Outros que conhecem o feitico","variable":"@casters","step":"1","min":"0"}'
+    - type: additionalCasterPromptRequireNumber
+      if: ''
+      config: '{"prompt":"Pontos de magia","variable":"@castermp"}'
+    - type: additionalCasterPromptAdd
+      if: ''
+      config: '{"prompt":"Outros conjuradores","variable":"@others","step":"1","min":"0"}'
+    - type: additionalCasterCost
+      if: ''
+      config: '{"modify":"mp","value":"1"}'
+    - type: triggerPrompt
+      if: ''
+    - type: casterCost
+      if: ''
+      config: '{"modify":"mp","value":"@castermp"}'
+    - type: casterCost
+      if: ''
+      config: '{"modify":"san","value":"1D3 - 1"}'
+    - type: casterCost
+      if: '@awake'
+      config: '{"modify":"pow","value":"1"}'
+    - type: castingTime
+      if: '!@awake'
+      config: '{"value":"10 minutos"}'
+    - type: castingTime
+      if: '@awake'
+      config: '{"value":"15 minutos"}'
+    - type: setVariable
+      if: ''
+      config: '{"variable":"@totalMp","value":"@others.length + @casters.castermp + @castermp"}'
+    - type: setVariable
+      if: ''
+      config: '{"variable":"@minutes","value":"@totalMp / 6"}'
+    - type: additionalInformation
+      if: ''
+      config: '{"prompt":"Duracao do pesadelo: @minutes minutos"}'
+  description:
+    value: "<p>Force outro humano a ter um pesadelo.</p><p>O conjurador adiciona uma quantidade de pontos de magia e sofre [[/r 1D3 - 1]] Pontos de Sanidade. Se o alvo dos pesadelos estiver acordado, o conjurador deve gastar 1 POD e a conjuração leva cinco minutos adicionais.</p><p>Conjuradores adicionais que conheçam o feitiço também podem adicionar uma quantidade de pontos de magia; qualquer outra pessoa presente pode adicionar um ponto de magia.</p><p>O pesadelo começa com o alvo fazendo uma prova para a qual não estudou e será prolongado em um minuto para cada seis pontos de magia gastos.</p><p></p>"
+  source: FoundryVTT CoC7
+  type:
+    bind: false
+    call: false
+    combat: false
+    contact: true
+    dismiss: false
+    enchantment: false
+    gate: false
+    summon: false
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.spell.test-spell
+      lang: pt-BR
+      priority: 0

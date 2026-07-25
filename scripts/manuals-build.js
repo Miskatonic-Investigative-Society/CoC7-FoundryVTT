@@ -175,6 +175,96 @@ const sources = {
       }
     ]
   },
+  'pt-BR': {
+    name: 'Chamado de Cthulhu 7a Edicao',
+    priority: 0,
+    pages: [
+      {
+        name: 'Documentacao do sistema',
+        file: 'README.md'
+      },
+      {
+        name: 'Efeitos ativos',
+        file: 'effects.md'
+      },
+      {
+        name: 'Importador de atores',
+        file: 'actor_importer.md'
+      },
+      {
+        name: 'Interface Chaosium Canvas',
+        file: 'cci.md'
+      },
+      {
+        name: 'Criacao de personagem',
+        file: 'character_creation.md'
+      },
+      {
+        name: 'Perseguicoes',
+        file: 'chases.md'
+      },
+      {
+        name: 'Sistema CoC ID',
+        file: 'coc-id-system.md'
+      },
+      {
+        name: 'Combate',
+        file: 'combat.md'
+      },
+      {
+        name: 'Folha de comandos rapidos',
+        file: 'commands_cheat_sheet.md'
+      },
+      {
+        name: 'Compendios',
+        file: 'compendiums.md'
+      },
+      {
+        name: 'Criando seu primeiro investigador',
+        file: 'first_investigator.md'
+      },
+      {
+        name: 'Itens',
+        file: 'items.md'
+      },
+      {
+        name: 'Tipo de item: Arquetipo',
+        file: 'item_archetype.md'
+      },
+      {
+        name: 'Tipo de item: Livro',
+        file: 'item_book.md'
+      },
+      {
+        name: 'Tipo de item: Ocupacao',
+        file: 'item_occupation.md'
+      },
+      {
+        name: 'Tipo de item: Configuracao',
+        file: 'item_setup.md'
+      },
+      {
+        name: 'Tipo de item: Pericia',
+        file: 'item_skill.md'
+      },
+      {
+        name: 'Tipo de item: Magia',
+        file: 'item_spell.md'
+      },
+      {
+        name: 'Links',
+        file: 'links.md'
+      },
+      {
+        name: 'Ferramenta de criacao de links',
+        file: 'link_creation_window.md'
+      },
+      {
+        name: 'Sanidade',
+        file: 'sanity.md'
+      }
+    ]
+  },
   es: {
     name: 'La Llamada de Cthulhu 7ª Edición',
     priority: 0,

@@ -1,0 +1,109 @@
+# Criacao de Personagem
+
+O sistema inclui alguns compendios prontos para voce customizar. Eles sao redefinidos sempre que o sistema e atualizado ou instalado, por isso e recomendado copia-los para seu proprio compendio e edita-los conforme necessario.
+
+# Pericias
+
+Nesta secao voce criara ou editara [pericias](item_skill.md)
+
+1. Va para [fa-solid fa-atlas]Pacotes de Compendio
+2. Clique em [fa-solid fa-atlas]Criar Compendio
+
+    - De um nome ao compendio, por exemplo `Minhas Pericias`
+    - Selecione _Item_ como _Tipo de Documento_
+
+## Usar pericias existentes
+
+1. Abra o compendio Pericias
+2. Arraste quaisquer pericias que queira customizar para seu novo compendio
+
+## Criar novas pericias
+
+1. Va para [fa-solid fa-suitcase]Diretorio de Itens
+2. Clique em [fa-solid fa-suitcase]Criar Item
+
+    - De um nome a pericia
+    - Defina _Tipo_ como _Pericia_
+
+# Configuracao
+
+[Configuracoes](item_setup.md) sao conjuntos predefinidos de pericias e uma forma de gerar caracteristicas. Isso pode ser feito rolando dados ou atribuindo uma certa quantidade de pontos, por exemplo. Depois que uma configuracao e criada, ela pode ser usada na criacao de varios personagens.
+
+1. Va para [fa-solid fa-suitcase]Diretorio de Itens
+2. Clique em [fa-solid fa-suitcase]Criar Item
+
+    - De um nome ao item
+    - Defina _Tipo_ como _Configuracao_
+
+3. Defina a configuracao para estabelecer a configuracao basica de um tipo de personagem.
+    - Voce pode adicionar uma descricao textual na aba _Descricao_
+    - Ao clicar no _icone_, voce pode selecionar um novo
+    - Na aba _Detalhes_ voce pode:
+        - Selecionar os _Sabores de Cthulhu_ em que esta configuracao e valida
+        - Definir as secoes de biografia e seus nomes (clique no `+` para adicionar secoes extras de Biografia)
+        - Arrastar itens padrao como @Compendium[CoC7.items.3elxAwnv7WCUNwng]{Soco}
+        - Mostrar / ocultar a aba _Caracteristicas_ com a caixa _Habilitar caracteristicas_
+    - A aba _Caracteristicas_ permite definir a formula para rolar os dados de cada caracteristica
+    - A aba _Pericias_ permite definir o conjunto padrao de pericias arrastando itens do tipo _pericia_ para a area de _pericias comuns_.
+
+# Ocupacoes
+
+Uma [ocupacao](item_occupation.md) ajuda a definir o historico do personagem. Pense nela como a definicao do conjunto de _pericias ocupacionais_ (aquelas em que o personagem pode gastar seus pontos de ocupacao), alem da definicao de como calcular a quantidade de pontos de ocupacao disponiveis. Por fim, a _ocupacao_ tambem permite definir o valor minimo e maximo de _credito_ para um personagem com essa _ocupacao_.
+
+Tenha em mente que o conjunto de _pericias ocupacionais_ nao precisa ser fixo. O sistema permite configurar a _ocupacao_ para que, quando ela for arrastada para uma ficha de Personagem, ofereca a opcao de selecionar uma ou mais pericias de uma lista fechada, ou ate adicionar um numero predefinido de pericias escolhidas entre todas as disponiveis.
+
+O processo de criacao de uma _ocupacao_ e o seguinte:
+
+1. Va para [fa-solid fa-suitcase]Diretorio de Itens
+2. Clique em [fa-solid fa-suitcase]Criar Item
+
+    - De um nome ao item
+    - Defina _Tipo_ como _Ocupacao_
+
+3. Defina a _ocupacao_ para selecionar as caracteristicas relevantes e as pericias ocupacionais
+    - Voce pode adicionar uma descricao textual na aba _Descricao_ e definir a _Fonte_
+    - Ao clicar no _icone_, voce pode selecionar um novo
+    - Na aba _Detalhes_ voce pode:
+        - Selecionar o _Tipo de Ocupacao_
+        - Definir as caracteristicas usadas para calcular os _pontos de ocupacao_. Voce pode marcar as caracteristicas desejadas e definir o multiplicador. Para as marcadas como _Opcional_, o jogador tera de escolher uma delas durante a criacao.
+
+            Por exemplo, se uma ocupacao usa _EDU * 2 + (FOR ou DES) * 2_, selecione _Educacao_ e coloque _2_ no _Multiplicador_ sem marcar _Opcional_. Depois, para _Forca_ e _Destreza_, marque ambas, marque _Opcional_ em ambas e coloque _2_ no Multiplicador de ambas.
+
+        - Por fim, defina o valor _Minimo_ e _Maximo_ da pericia _Nivel de Credito_ para essa ocupacao.
+    - A aba _Pericias_ permite selecionar as _pericias ocupacionais_ arrastando itens do Tipo _pericia_ para as diferentes secoes. Uma ocupacao tipica tem 8 pericias alem da pericia _Nivel de Credito_.
+        - _Pericias Comuns_ inclui as pericias ocupacionais padrao que nao podem ser alteradas
+        - A secao _Grupos de pericias opcionais_ permite adicionar grupos (voce pode criar varios) de pericias para o jogador escolher. Ao clicar no sinal `+`, um grupo e criado; voce pode definir o _Numero a escolher_ e montar um conjunto de pericias disponiveis arrastando-as para o grupo.
+        - Por fim, _Pericias Adicionais_ permite informar um numero de pericias que o jogador pode escolher entre as demais pericias disponiveis.
+
+# Criacao de _Personagem Jogador_
+
+Voce pode criar um _Personagem Jogador_ criando o _ator_ e preenchendo a _Ficha de Personagem_ em branco correspondente, mas isso fica muito mais facil se voce tiver criado previamente uma _configuracao_ e uma _ocupacao_ (veja acima). Se tiver criado ambas, o processo para criar o _Personagem Jogador_ e o seguinte:
+
+1. Va para [fa-solid fa-users]Diretorio de Atores
+2. Clique em [fa-solid fa-user]Criar Ator
+
+    - De um nome ao ator
+    - Defina _Tipo_ como _Personagem_
+
+3. Arraste e solte um item do Tipo _configuracao_ (por exemplo anos 1920, 1890, Pulp, Moderno etc.) na ficha para fazer a configuracao basica usando a configuracao definida no item. Isso geralmente inclui rolar as caracteristicas ou definir seus valores com o sistema de pontos, alem de definir um conjunto padrao de pericias correspondente a configuracao escolhida.
+
+4. Arraste e solte um item do Tipo _ocupacao_ na ficha. Isso provavelmente envolvera selecionar algumas pericias de um conjunto reduzido ou entre as restantes. O sistema calculara os _Pontos Pessoais_ e _Pontos de Ocupacao_ disponiveis e atribuira parte dos Pontos de Ocupacao para atingir o valor minimo de _Nivel de Credito_ da ocupacao selecionada.
+
+5. No menu do Guardiao a esquerda, clique em [game-icon game-icon-tentacle-strike]Ferramentas do Guardiao. Se esse menu nao estiver disponivel, e necessario ter uma cena ativa, que pode ser criada no [fa-solid fa-map]Diretorio de Cenas
+
+6. No novo submenu, clique em [fa-solid fa-user-edit]Modo de criacao de personagem. Uma nova aba chamada _Desenvolvimento_ deve aparecer nas fichas de personagem.
+
+7. Clique na aba Desenvolvimento do personagem
+
+8. A primeira coluna de pontos e para suas pericias ocupacionais; elas podem ser alternadas clicando nelas
+    - Se voce tiver habilitado a regra Pulp de Arquetipos, havera um segundo ponto para alternar isso
+
+9. Distribua pontos de ocupacao/pessoais na aba Desenvolvimento levando em conta que cada pericia possui 5 colunas:
+    1. A primeira e a porcentagem base da pericia
+    2. A segunda e onde se colocam os _Pontos de interesse pessoal_ durante a criacao do personagem
+    3. A terceira fica disponivel apenas para as _pericias ocupacionais_ (marcadas com um circulo escuro antes do nome da pericia) e e usada para atribuir os _Pontos de Ocupacao_.
+        - Se voce tiver habilitado a regra Pulp de Arquetipos, havera uma quarta coluna para inserir aqui seus pontos de arquetipo
+    4. A quarta/quinta coluna deve estar inicialmente em branco e e onde os pontos de experiencia aparecerao (voce tambem pode atribuir pontos aqui se estiver jogando com um personagem experiente)
+    5. A coluna final e somente leitura e mostra o valor final calculado para a pericia (a soma das outras 4)
+
+- [Video mostrando o processo de criacao de personagem](https://www.youtube.com/watch?v=VsQZHVXFwlk)
