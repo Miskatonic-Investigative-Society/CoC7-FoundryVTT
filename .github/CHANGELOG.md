@@ -9,7 +9,19 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
-**_!! Not all features will work with FoundryVTT v12 please consider upgrading !!_**
+## Version 8.16
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading, this is the last release to support FoundryVTT v12 !!_**
+
+- Dropping an Investigator on a scene checks the scene level before checking if dropped on a CCI: Player Region
+- Fix book reading progress bar in firefox, thanks to Achoobert #2153
+- If rolling initiative hidden combatant create blind chat messages
+- Weapon distances @STR will now resolve to @str
+- Update to Brazilian Portuguese localization and created manual, thanks to @rangelsardinha #2143
+- Update to Korean localization, thanks to @Rutz179 #2152
+- Update to Swedish localization, thanks to @Rangertheman #2150
 
 ## Version 8.15
 
