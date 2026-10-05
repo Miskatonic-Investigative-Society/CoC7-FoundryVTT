@@ -131,7 +131,7 @@ export default class CoC7Combat {
       }
 
       // Produce an initiative roll for the Combatant
-      const roll = await combatant.actor.rollInitiative(!!combatant.getFlag('CoC7', 'hasGun'))
+      const roll = await combatant.actor.rollInitiative(!!combatant.getFlag('CoC7', 'hasGun'), { hidden: combatant.hidden })
       updates.push({ _id: id, initiative: roll })
     }
     if (!updates.length) return this

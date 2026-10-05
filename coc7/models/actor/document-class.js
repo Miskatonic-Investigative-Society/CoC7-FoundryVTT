@@ -1294,6 +1294,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     const parsed = {}
     for (const key of this.system.schema.getField('characteristics').keys()) {
       parsed[key] = foundry.utils.getProperty(this, 'system.characteristics.' + key + '.value')
+      parsed[key.toUpperCase()] = parsed[key]
     }
     for (const key of this.system.schema.getField('attribs').keys()) {
       const field = this.system.schema.getField('attribs').getField(key)
@@ -1301,9 +1302,11 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       const max = field.getField('max')
       if (typeof value !== 'undefined') {
         parsed[key] = foundry.utils.getProperty(this, 'system.attribs.' + key + '.value')
+        parsed[key.toUpperCase()] = parsed[key]
       }
       if (typeof max !== 'undefined') {
         parsed[key + 'Max'] = foundry.utils.getProperty(this, 'system.attribs.' + key + '.max')
+        parsed[key.toUpperCase()] = parsed[key]
       }
     }
     for (const item of this.items) {
@@ -2989,9 +2992,11 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
   /**
    * Get initiative
    * @param {boolean} hasGun
+   * @param {object} options
+   * @param {boolean} options.hidden
    * @returns {integer}
    */
-  async rollInitiative (hasGun = false) {
+  async rollInitiative (hasGun = false, { hidden = false }) {
     switch (game.settings.get(FOLDER_ID, 'initiativeRule')) {
       case 'optional':
         {
@@ -2999,6 +3004,9 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
           check.actor = this.uuid
           if (hasGun) {
             check.poolModifier = 1
+          }
+          if (hidden) {
+            check.blind = true
           }
           check.flavor = game.i18n.localize('CoC7.InitiativeRoll')
           await check.rollCharacteristic('dex')

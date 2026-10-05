@@ -1,0 +1,27 @@
+# Sistema CoC ID
+
+O CoC ID e usado para identificar documentos equivalentes entre idiomas, eras e compendios. Ele permite que o sistema encontre uma pericia, item ou tabela apropriada mesmo quando existem varias versoes do mesmo documento.
+
+**ID do Sistema (CoC ID)**: Definir o ID de uma pericia como i.skill.dodge permite que o sistema saiba que aquela pericia deve ser tratada como Esquivar na carta de combate.
+
+**Idioma**: Indica em qual idioma esta versao do Item esta.
+
+**Sabores de Cthulhu**: Voce tambem pode controlar para qual era uma pericia foi criada. Lidar com Animais, por exemplo, possui valores base diferentes dependendo da era.
+
+**Prioridade do ID do Sistema**: O maior numero sera considerado a melhor opcao.
+
+## Item
+
+Os IDs de itens normalmente usam o formato `i.tipo.nome`. Isso permite que itens do mundo, de modulos e do sistema sejam comparados e substituidos quando representam o mesmo conteudo.
+
+## RollTable
+
+Tabelas de rolagem tambem podem usar CoC ID para que o sistema encontre a versao adequada da tabela conforme idioma, era e prioridade.
+
+## Traducoes
+
+Quando existem documentos equivalentes em varios idiomas, o CoC ID ajuda o sistema a escolher a traducao correta para o idioma ativo.
+
+## RQID
+
+RQID e usado por solicitacoes de rolagem para identificar o tipo de pedido e o documento ou regra relacionada.
