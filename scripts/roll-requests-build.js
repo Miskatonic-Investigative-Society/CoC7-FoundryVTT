@@ -326,66 +326,167 @@ const parameters = [
   }
 ]
 
-const foundryConfig = TemplateHelpers.loadFoundryConfig()
+const ptBRTranslations = {
+  Attrib: 'Atributo',
+  Luck: 'Sorte',
+  Sanity: 'Sanidade',
+  Characteristic: 'Característica',
+  APP: 'APA',
+  CON: 'CON',
+  DEX: 'DES',
+  EDU: 'EDU',
+  INT: 'INT',
+  POW: 'POD',
+  SIZ: 'TAM',
+  STR: 'FOR',
+  Skill: 'Perícia',
+  Accounting: 'Contabilidade',
+  Anthropology: 'Antropologia',
+  Appraise: 'Avaliação',
+  Archaeology: 'Arqueologia',
+  'Art/Craft (Fine Art)': 'Arte/Ofício (Belas Artes)',
+  Charm: 'Charme',
+  Climb: 'Escalar',
+  'Computer Use': 'Computadores',
+  'Credit Rating': 'Nível de Crédito',
+  'Cthulhu Mythos': 'Mitos de Cthulhu',
+  Demolitions: 'Demolições',
+  Disguise: 'Disfarce',
+  Diving: 'Mergulho',
+  Dodge: 'Esquivar',
+  'Drive Auto': 'Dirigir Automóveis',
+  'Electrical Repair': 'Consertos Elétricos',
+  Electronics: 'Eletrônica',
+  'Fast Talk': 'Lábia',
+  'Fighting (Brawl)': 'Lutar (Briga)',
+  'Firearms (Handgun)': 'Armas de Fogo (Pistola)',
+  'Firearms (Rifle/Shotgun)': 'Armas de Fogo (Rifles/Escopetas)',
+  'Firearms (Submachine Gun)': 'Armas de Fogo (Submetralhadora)',
+  'First Aid': 'Primeiros Socorros',
+  History: 'História',
+  Intimidate: 'Intimidação',
+  Jump: 'Saltar',
+  'Language (Any)': 'Outra Língua (Qualquer)',
+  'Language (Own)': 'Língua Nativa',
+  Law: 'Direito',
+  'Library Use': 'Usar Bibliotecas',
+  Listen: 'Escutar',
+  Locksmith: 'Chaveiro',
+  'Mechanical Repair': 'Consertos Mecânicos',
+  Medicine: 'Medicina',
+  'Natural World': 'História Natural',
+  Navigate: 'Navegação',
+  Occult: 'Ocultismo',
+  'Operate Heavy Machinery': 'Operar Maquinário Pesado',
+  Persuade: 'Persuasão',
+  'Pilot (Boat)': 'Pilotar (Barco)',
+  Psychoanalysis: 'Psicanálise',
+  Psychology: 'Psicologia',
+  'Read Lips': 'Ler Lábios',
+  Ride: 'Cavalgar',
+  'Science (Chemistry)': 'Ciência (Química)',
+  'Sleight of Hand': 'Prestidigitação',
+  'Spot Hidden': 'Encontrar',
+  Stealth: 'Furtividade',
+  'Survival (Desert)': 'Sobrevivência (Deserto)',
+  Swim: 'Natação',
+  'Fighting (Throw)': 'Arremessar',
+  Track: 'Rastrear',
+  Regular: 'Regular',
+  Hard: 'Sólido',
+  Extreme: 'Extremo',
+  Critical: 'Crítico',
+  Blind: 'Oculto',
+  '1 Bonus': '1 Bônus',
+  '2 Bonus': '2 Bônus',
+  '1 Penalty': '1 Penalidade',
+  '2 Penalty': '2 Penalidade',
+  Type: 'Tipo',
+  Name: 'Nome',
+  Parameters: 'Parâmetros',
+  Code: 'Código',
+  'Roll Requests': 'Solicitações de Rolagem'
+}
 
-const folderId = foundryConfig.json.id
+function translate (text, lang) {
+  if (lang === 'pt-BR') {
+    return ptBRTranslations[text] ?? text
+  }
+  return text
+}
 
-try {
+function buildRollRequests ({ lang, packName, id, pageId }) {
   const html = [
     '<table><tbody>',
     '<tr>',
-    '<td><p style="text-align:center"><strong>Type</strong></p></td>',
-    '<td><p style="text-align:center"><strong>Name</strong></p></td>',
-    '<td><p style="text-align:center"><strong>Parameters</strong></p></td>',
-    '<td><p style="text-align:center"><strong>Code</strong></p></td>',
+    '<td><p style="text-align:center"><strong>' + translate('Type', lang) + '</strong></p></td>',
+    '<td><p style="text-align:center"><strong>' + translate('Name', lang) + '</strong></p></td>',
+    '<td><p style="text-align:center"><strong>' + translate('Parameters', lang) + '</strong></p></td>',
+    '<td><p style="text-align:center"><strong>' + translate('Code', lang) + '</strong></p></td>',
     '</tr>'
   ]
   for (const roll1 of rolls) {
     for (const roll2 of roll1.names) {
       for (const parameter of parameters) {
+        const rollType = translate(roll1.name, lang)
+        const rollName = translate(roll2.name, lang)
+        const parameterName = translate(parameter.name, lang)
         html.push('<tr>')
-        html.push('<td><p style="text-align:center"><strong>' + roll1.name + '</strong></p></td>')
-        html.push('<td><p style="text-align:center">' + roll2.name + '</p></td>')
-
-        html.push('<td><p style="text-align:center">' + parameter.name + '</p></td>')
-        html.push('<td><p style="text-align:center">@coc7.check[subtype:' + roll1.subtype + ',name:' + roll2.name + ',difficulty:' + parameter.difficulty + ',poolModifier:' + parameter.poolModifier + ',icon:' + roll2.icon + ']{ ' + roll2.name + (parameter.code !== '' ? ' (' + parameter.code + ')' : '') + '}</p></td>')
+        html.push('<td><p style="text-align:center"><strong>' + rollType + '</strong></p></td>')
+        html.push('<td><p style="text-align:center">' + rollName + '</p></td>')
+        html.push('<td><p style="text-align:center">' + parameterName + '</p></td>')
+        html.push('<td><p style="text-align:center">@coc7.check[subtype:' + roll1.subtype + ',name:' + rollName + ',difficulty:' + parameter.difficulty + ',poolModifier:' + parameter.poolModifier + ',icon:' + roll2.icon + ']{ ' + rollName + (parameter.code !== '' ? ' (' + parameter.code + ')' : '') + '}</p></td>')
         html.push('</tr>')
       }
     }
   }
 
-  const id = 'qaWAuaZa42JtdBhF'
-  const pageId = 'izVAGIeSXPWURg7U'
-  const dbFile = {
-    ['!journal!' + id]: {
-      name: 'Roll Requests',
-      pages: [
-        {
-          _id: pageId,
-          name: 'Roll Requests',
-          type: 'text',
-          title: {
-            show: false
-          },
-          text: {
-            content: html.join('')
+  const title = translate('Roll Requests', lang)
+  return {
+    packName,
+    dbFile: {
+      ['!journal!' + id]: {
+        name: title,
+        pages: [
+          {
+            _id: pageId,
+            name: title,
+            type: 'text',
+            title: {
+              show: false
+            },
+            text: {
+              content: html.join('')
+            }
           }
-        }
-      ],
-      _id: id,
-      flags: {
-        [folderId]: {
-          cocidFlag: {
-            id: 'je..roll-requests',
-            lang: 'en',
-            priority: 0
+        ],
+        _id: id,
+        flags: {
+          [folderId]: {
+            cocidFlag: {
+              id: 'je..roll-requests',
+              lang,
+              priority: 0
+            }
           }
         }
       }
     }
   }
-  TemplateHelpers.createBinaryPack('roll-requests', dbFile)
-  console.log('Generated: ./binary-packs/roll-requests')
+}
+
+const foundryConfig = TemplateHelpers.loadFoundryConfig()
+
+const folderId = foundryConfig.json.id
+
+try {
+  for (const { packName, dbFile } of [
+    buildRollRequests({ lang: 'en', packName: 'roll-requests', id: 'qaWAuaZa42JtdBhF', pageId: 'izVAGIeSXPWURg7U' }),
+    buildRollRequests({ lang: 'pt-BR', packName: 'pt-BR-roll-requests', id: 'YHPXdXsscq0p7j2g', pageId: 'HsfEQQO4zI8ieOiD' })
+  ]) {
+    TemplateHelpers.createBinaryPack(packName, dbFile)
+    console.log('Generated: ./binary-packs/' + packName)
+  }
 } catch (e) {
   TemplateHelpers.showErrorAndExit(e)
 }

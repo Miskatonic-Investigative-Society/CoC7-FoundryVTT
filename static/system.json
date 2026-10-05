@@ -43,11 +43,33 @@
       ]
     },
     {
-      "name": "System Manuals",
+      "name": "Manuais do Sistema",
       "sorting": "a",
       "color": "#75844c",
       "packs": [
         "system-doc"
+      ]
+    },
+    {
+      "name": "Cthulhuwiki | pt-BR",
+      "sorting": "a",
+      "color": "#75844c",
+      "packs": [
+        "pt-BR-wiki-phobias-and-manias",
+        "pt-BR-wiki-roll-tables",
+        "pt-BR-wiki-weapons"
+      ]
+    },
+    {
+      "name": "Exemplos do Sistema | pt-BR",
+      "sorting": "a",
+      "color": "#75844c",
+      "packs": [
+        "pt-BR-examples",
+        "pt-BR-items",
+        "pt-BR-roll-requests",
+        "pt-BR-sanity-tables-examples",
+        "pt-BR-skills"
       ]
     }
   ],
@@ -88,7 +110,7 @@
       "system": "CoC7"
     },
     {
-      "label": "System manuals",
+      "label": "Manuais do Sistema",
       "type": "JournalEntry",
       "name": "system-doc",
       "path": "packs/system-doc",
@@ -113,6 +135,62 @@
       "type": "Item",
       "name": "en-wiki-weapons",
       "path": "packs/en-wiki-weapons",
+      "system": "CoC7"
+    },
+    {
+      "label": "Perícias | pt-BR",
+      "type": "Item",
+      "name": "pt-BR-skills",
+      "path": "packs/pt-BR-skills",
+      "system": "CoC7"
+    },
+    {
+      "label": "Exemplos de Itens | pt-BR",
+      "type": "Item",
+      "name": "pt-BR-items",
+      "path": "packs/pt-BR-items",
+      "system": "CoC7"
+    },
+    {
+      "label": "Exemplos | pt-BR",
+      "type": "Actor",
+      "name": "pt-BR-examples",
+      "path": "packs/pt-BR-examples",
+      "system": "CoC7"
+    },
+    {
+      "label": "Solicitações de Rolagem | pt-BR",
+      "type": "JournalEntry",
+      "name": "pt-BR-roll-requests",
+      "path": "packs/pt-BR-roll-requests",
+      "system": "CoC7"
+    },
+    {
+      "label": "Tabela de Sanidade | pt-BR",
+      "type": "RollTable",
+      "name": "pt-BR-sanity-tables-examples",
+      "path": "packs/pt-BR-sanity-tables-examples",
+      "system": "CoC7"
+    },
+    {
+      "label": "Fobias e Manias | pt-BR",
+      "type": "Item",
+      "name": "pt-BR-wiki-phobias-and-manias",
+      "path": "packs/pt-BR-wiki-phobias-and-manias",
+      "system": "CoC7"
+    },
+    {
+      "label": "Tabelas | pt-BR",
+      "type": "RollTable",
+      "name": "pt-BR-wiki-roll-tables",
+      "path": "packs/pt-BR-wiki-roll-tables",
+      "system": "CoC7"
+    },
+    {
+      "label": "Armas | pt-BR",
+      "type": "Item",
+      "name": "pt-BR-wiki-weapons",
+      "path": "packs/pt-BR-wiki-weapons",
       "system": "CoC7"
     }
   ],

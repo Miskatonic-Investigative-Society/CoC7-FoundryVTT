@@ -1,0 +1,62 @@
+# Links
+
+- Links sao uma forma de o GM solicitar uma rolagem (Caracteristica, Atributo, Pericia, perda de SAN, Arma).
+- Links podem conter um efeito ativo.
+- Links sao criados no registro de chat. Ao clicar em um link, ele acionara um teste para seu(s) personagem(ns) controlado(s)/representado(s).
+- Links podem ser incluidos em qualquer editor, principalmente entradas de diario.
+- Links podem ser criados de 5 formas:
+  - Digitando manualmente (leia os detalhes abaixo).
+  - Com CTRL+clique em qualquer elemento da ficha (Caracteristica, Atributo, pericia, perda de SAN).
+  - Arrastando um elemento da ficha (Caracteristica, Atributo, pericia (+CTRL)) para um editor (Entrada de diario).
+  - Com CTRL + arrastar um item (pericia ou arma) de um compendio ou diretorio de itens para um editor. Quando um link e criado dessa forma e usado como GM, se o personagem controlado nao possuir a arma/pericia, voce sera perguntado se deseja criar o item correspondente.
+  - Usando o compendio incluido escrito por Lozalojo.
+- Links podem ser arrastados do registro de chat para um editor.
+- Quando um link e criado, as janelas de selecao de dificuldade/penalidade serao abertas. Segure SHIFT para ignorar esse comportamento.
+- Quando um link e criado, o modo de rolagem sera verificado. Se o modo de rolagem estiver definido como 'rolagem cega para o GM', o link sera criado como cego.
+- Quando um link e criado com dificuldade e penalidade, as janelas de dificuldade/penalidade nao aparecem.
+- Quando um link e criado sem dificuldade ou penalidade, as janelas de dificuldade/penalidade aparecem. Segurar SHIFT avancara a rolagem rapidamente (regular/sem penalidade).
+
+## Escrevendo links
+
+- Links devem ser escritos usando a [Ferramenta de criacao de links](link_creation_window.md). A janela de criacao de links e uma ferramenta do GM. Ela fica na barra lateral esquerda.
+
+Links para mensagens de chat e editores de ficha (NPC, Entradas de diario...).
+O formato do link e `@@coc7.TIPO_DE_PEDIDO[OPCOES]{TEXTO_A_EXIBIR}`
+
+- `TIPO_DE_PEDIDO`:
+  - `sanloss`: aciona um teste de SAN; em caso de falha, propoe deduzir a SAN correspondente.
+  - `check`: aciona um teste conforme as opcoes.
+  - `item`: aciona o uso de uma arma. Apenas itens do tipo arma podem ser acionados.
+- `OPCOES: []` = opcional, padrao
+  - `sanloss`:
+    - `sanMax`: perda maxima de SAN
+    - `sanMin`: perda minima de SAN
+  - `check`:
+    - `type`: tipo de teste (`characteristic`, `skill`, `attrib`).
+    - `name`: nome da pericia/caracteristica/atributo.
+    - [`blind`]: forca um teste cego; se ausente, o teste dependera do modo de rolagem selecionado.
+  - todos:
+    - [`difficulty`]: `?` (cego), `0` (regular), `+` (dificil), `++` (extremo), `+++` (critico).
+    - [`modifier`]: `-x` (x dados de penalidade), `+x` (x dados de bonus), `0` (sem modificador).
+    - [`icon`]: icone a usar ([font awesome](https://fontawesome.com/icons), `fa-solid fa-dice`).
+- `TEXTO_A_EXIBIR`: Nome a exibir; e opcional.
+
+### Exemplos
+
+| Link                                                                                                          | Resultado                                                          |
+| ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `@@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]`                                               | {Perda de Sanidade Dificil (-1) 1/1D6}                             |
+| `@@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]`                                                 | {Teste dificil de FOR (-1)}                                        |
+| `@@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]`                                                 | {Teste dificil de Sorte (-1)}                                      |
+| `@@coc7.check[type:skill,icon:fa-solid fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]` | {Teste dificil de Antropologia (-1)} (com icone)                   |
+| `@@coc7.sanloss[sanMax:1D6,sanMin:1]`                                                                         | {Perda de Sanidade 1/1D6} (sem nome, dificuldade ou modificador)   |
+| `@@coc7.check[type:skill,icon:fa-solid fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`              | {Teste de Antropologia (+1)} (com icone, sem nome ou dificuldade)  |
+
+### Usando links
+
+- Voce pode arrastar/soltar links do chat para fichas e entre fichas.
+- Voce pode arrastar/soltar um link diretamente em um token.
+- Voce pode arrastar/soltar itens e pericias em uma entrada de diario enquanto segura CTRL; isso criara o teste correspondente com dificuldade regular e modificador 0.
+- Voce pode criar um link no chat segurando CTRL e clicando, em qualquer ficha (PC/NPC/Criatura), na caracteristica/sorte/SAN/pericia/arma/perda de SAN correspondente.
+  - Isso abrira o dialogo de selecao de penalidade/dificuldade. Clicar no link gerado acionara o teste com todos os parametros.
+  - Segurar Shift durante a acao nao abrira o dialogo de penalidade/dificuldade. Clicar no link gerado abrira o dialogo de penalidade/dificuldade e entao acionara o teste.

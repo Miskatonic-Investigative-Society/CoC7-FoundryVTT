@@ -1,0 +1,1129 @@
+_id: 2r5xD2GY15lSTtEm
+name: Armas Corpo a Corpo
+type: folder
+color: '#75844c'
+---
+_id: 3zZuq7B7eNxU2QMC
+name: Pistolas
+type: folder
+color: '#75844c'
+---
+_id: OJkZsHH3vZYEUeQC
+name: Rifles
+type: folder
+color: '#75844c'
+---
+_id: w2vkKXFHcaQVeB7H
+name: Escopetas
+type: folder
+color: '#75844c'
+---
+_id: JAeTufherjBnBPgA
+name: Submetralhadoras
+type: folder
+color: '#75844c'
+---
+_id: CMWcRDEeZED0VpyQ
+name: Metralhadoras
+type: folder
+color: '#75844c'
+---
+name: Arco
+type: weapon
+img: icons/weapons/bows/shortbow-white.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-bow'
+  range:
+    normal:
+      value: 30
+      damage: '1D6'
+  bullets: 1
+  properties:
+    rngd: true
+    ahdb: true
+  malfunction: 97
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.bow
+      lang: pt-BR
+      priority: 0
+---
+name: Soco-inglês
+type: weapon
+img: icons/weapons/fist/fist-knuckles-spiked-stone.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-brawl'
+  range:
+    normal:
+      damage: '1D3+1'
+  properties:
+    rngd: false
+    addb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.brass-knuckles
+      lang: pt-BR
+      priority: 0
+---
+name: Chicote
+type: weapon
+img: icons/weapons/misc/whip-red-yellow.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-whip'
+  range:
+    normal:
+      value: 3
+      damage: '1D3'
+  properties:
+    rngd: true
+    ahdb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.bullwhip
+      lang: pt-BR
+      priority: 0
+---
+name: Tocha Acesa
+type: weapon
+img: icons/sundries/lights/torch-brown-lit.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-brawl'
+  range:
+    normal:
+      damage: '1D6'
+  properties:
+    rngd: false
+    burn: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.burning-torch
+      lang: pt-BR
+      priority: 0
+---
+name: Cassetete
+type: weapon
+img: icons/weapons/clubs/club-baton-blue.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-brawl'
+  range:
+    normal:
+      damage: '1D8'
+  properties:
+    rngd: false
+    addb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.blackjack
+      lang: pt-BR
+      priority: 0
+---
+name: Clava, Grande
+type: weapon
+img: icons/weapons/clubs/club-baton-blue.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-brawl'
+  range:
+    normal:
+      damage: '1D8'
+  properties:
+    rngd: false
+    addb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.club-large
+      lang: pt-BR
+      priority: 0
+---
+name: Clava, Pequena
+type: weapon
+img: icons/weapons/clubs/club-baton-blue.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-brawl'
+  range:
+    normal:
+      damage: '1D6'
+  properties:
+    rngd: false
+    addb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.club-small
+      lang: pt-BR
+      priority: 0
+---
+name: Besta
+type: weapon
+img: icons/weapons/crossbows/crossbow-white.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-bow'
+  range:
+    normal:
+      value: 50
+      damage: '1D8+2'
+  usesPerRound:
+    normal: 0.5
+  bullets: 1
+  properties:
+    rngd: true
+    ahdb: true
+  malfunction: 96
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.crossbow
+      lang: pt-BR
+      priority: 0
+---
+name: Garrote
+type: weapon
+img: icons/equipment/neck/choker-chain-thin-gold.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-garrote'
+  range:
+    normal:
+      damage: '1D6'
+  properties:
+    rngd: false
+    addb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.garrote
+      lang: pt-BR
+      priority: 0
+---
+name: Machadinha/Foice
+type: weapon
+img: icons/tools/hand/hatchet-steel-grey.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-axe'
+  range:
+    normal:
+      damage: '1D6+1'
+  properties:
+    rngd: false
+    addb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.hatchet-sickle
+      lang: pt-BR
+      priority: 0
+---
+name: Faca Grande
+type: weapon
+img: icons/weapons/swords/sword-machete-white.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-brawl'
+  range:
+    normal:
+      damage: '1D8'
+  properties:
+    rngd: false
+    addb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.knife-large
+      lang: pt-BR
+      priority: 0
+---
+name: Faca Média
+type: weapon
+img: icons/tools/cooking/knife-chef-steel-brown.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-brawl'
+  range:
+    normal:
+      damage: '1D4+2'
+  properties:
+    rngd: false
+    addb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.knife-medium
+      lang: pt-BR
+      priority: 0
+---
+name: Faca Pequena
+type: weapon
+img: icons/weapons/daggers/knife-green.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-brawl'
+  range:
+    normal:
+      damage: '1D4'
+  properties:
+    rngd: false
+    addb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.knife-small
+      lang: pt-BR
+      priority: 0
+---
+name: Nunchaku
+type: weapon
+img: icons/weapons/staves/staff-mended.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-flail'
+  range:
+    normal:
+      damage: '1D8'
+  properties:
+    rngd: false
+    addb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.nunchaku
+      lang: pt-BR
+      priority: 0
+---
+name: Pedra, Arremessada
+type: weapon
+img: icons/commodities/stone/boulder-grey.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.throw'
+  range:
+    normal:
+      value: '@STR/5'
+      damage: '1D4'
+  properties:
+    rngd: true
+    ahdb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.rock-thrown
+      lang: pt-BR
+      priority: 0
+---
+name: Shuriken
+type: weapon
+img: icons/weapons/thrown/shuriken-double-red.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.throw'
+  range:
+    normal:
+      value: '@STR/5'
+      damage: '1D3'
+  properties:
+    rngd: true
+    ahdb: true
+  usesPerRound:
+    normal: 2
+  malfunction: 97
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.shuriken
+      lang: pt-BR
+      priority: 0
+---
+name: Lança
+type: weapon
+img: icons/weapons/polearms/spear-flared-blue.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.fighting-spear'
+  range:
+    normal:
+      damage: '1D8+1'
+  properties:
+    rngd: false
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.spear
+      lang: pt-BR
+      priority: 0
+---
+name: Lança, Arremessada
+type: weapon
+img: icons/weapons/polearms/spear-flared-blue.webp
+folder: 2r5xD2GY15lSTtEm
+system:
+  skill:
+    main:
+      name: 'i.skill.throw'
+  range:
+    normal:
+      value: '@STR/5'
+      damage: '1D8'
+  properties:
+    rngd: true
+    ahdb: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.shuriken
+      lang: pt-BR
+      priority: 0
+---
+name: .22 Curta Automática
+type: weapon
+img: icons/weapons/guns/gun-pistol-flintlock-metal.webp
+folder: 3zZuq7B7eNxU2QMC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-handgun'
+  range:
+    normal:
+      value: 10
+      damage: '1D6'
+  bullets: 6
+  usesPerRound:
+    normal: 1
+    max: 3
+  properties:
+    rngd: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.22-short-automatic
+      lang: pt-BR
+      priority: 0
+---
+name: .25 Derringer (1B)
+type: weapon
+img: icons/weapons/guns/gun-pistol-flintlock-metal.webp
+folder: 3zZuq7B7eNxU2QMC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-handgun'
+  range:
+    normal:
+      value: 3
+      damage: '1D6'
+  bullets: 1
+  usesPerRound:
+    normal: 1
+    max: 1
+  properties:
+    rngd: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.25-derringer-1b
+      lang: pt-BR
+      priority: 0
+---
+name: Revólver .32 ou 7,65 mm
+type: weapon
+img: icons/weapons/guns/gun-pistol-flintlock-metal.webp
+folder: 3zZuq7B7eNxU2QMC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-handgun'
+  range:
+    normal:
+      value: 15
+      damage: '1D8'
+  bullets: 6
+  usesPerRound:
+    normal: 1
+    max: 3
+  properties:
+    rngd: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.32-or-7-65mm-revolver
+      lang: pt-BR
+      priority: 0
+---
+name: Automática .32 ou 7,65 mm
+type: weapon
+img: icons/weapons/guns/gun-pistol-flintlock-metal.webp
+folder: 3zZuq7B7eNxU2QMC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-handgun'
+  range:
+    normal:
+      value: 15
+      damage: '1D8'
+  bullets: 8
+  usesPerRound:
+    normal: 1
+    max: 3
+  properties:
+    rngd: true
+  malfunction: 99
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.32-or-7-65mm-automatic
+      lang: pt-BR
+      priority: 0
+---
+name: Modelo P08 Luger
+type: weapon
+img: icons/weapons/guns/gun-pistol-flintlock-metal.webp
+folder: 3zZuq7B7eNxU2QMC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-handgun'
+  range:
+    normal:
+      value: 15
+      damage: '1D10'
+  bullets: 8
+  usesPerRound:
+    normal: 1
+    max: 3
+  properties:
+    rngd: true
+  malfunction: 99
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.model-p08-luger
+      lang: pt-BR
+      priority: 0
+---
+name: Revólver .45
+type: weapon
+img: icons/weapons/guns/gun-pistol-flintlock-metal.webp
+folder: 3zZuq7B7eNxU2QMC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-handgun'
+  range:
+    normal:
+      value: 15
+      damage: '1D10+2'
+  bullets: 6
+  usesPerRound:
+    normal: 1
+    max: 3
+  properties:
+    rngd: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.45-revolver
+      lang: pt-BR
+      priority: 0
+---
+name: Automática .45
+type: weapon
+img: icons/weapons/guns/gun-pistol-flintlock-metal.webp
+folder: 3zZuq7B7eNxU2QMC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-handgun'
+  range:
+    normal:
+      value: 15
+      damage: '1D10+2'
+  bullets: 7
+  usesPerRound:
+    normal: 1
+    max: 3
+  properties:
+    rngd: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.45-automatic
+      lang: pt-BR
+      priority: 0
+---
+name: Rifle .22 de Ferrolho
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: OJkZsHH3vZYEUeQC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 30
+      damage: '1D6+1'
+  bullets: 6
+  usesPerRound:
+    normal: 1
+    max: 1
+  properties:
+    rngd: true
+  malfunction: 99
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.22-bolt-action-rifle
+      lang: pt-BR
+      priority: 0
+---
+name: Carabina .30 de Alavanca
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: OJkZsHH3vZYEUeQC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 50
+      damage: '2D6'
+  bullets: 6
+  usesPerRound:
+    normal: 1
+    max: 1
+  properties:
+    rngd: true
+  malfunction: 98
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.30-lever-action-carbine
+      lang: pt-BR
+      priority: 0
+---
+name: Rifle .45 Martini-Henry
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: OJkZsHH3vZYEUeQC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 80
+      damage: '1D8+1D6+3'
+  bullets: 1
+  usesPerRound:
+    normal: ⅓
+    max: ⅓
+  properties:
+    rngd: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.45-martini-henry-rifle
+      lang: pt-BR
+      priority: 0
+---
+name: Rifle de Ar Comprimido do Cel. Moran
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: OJkZsHH3vZYEUeQC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 20
+      damage: '2D6+1'
+  bullets: 1
+  usesPerRound:
+    normal: ⅓
+    max: ⅓
+  properties:
+    rngd: true
+  malfunction: 88
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.col-moran-s-air-rifle
+      lang: pt-BR
+      priority: 0
+---
+name: .303 Lee-Enfield
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: OJkZsHH3vZYEUeQC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 110
+      damage: '2D6+4'
+  bullets: 10
+  usesPerRound:
+    normal: 1
+    max: 1
+  properties:
+    rngd: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.303-lee-enfield
+      lang: pt-BR
+      priority: 0
+---
+name: Rifle .30-06 de Ferrolho
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: OJkZsHH3vZYEUeQC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 110
+      damage: '2D6+4'
+  bullets: 5
+  usesPerRound:
+    normal: 1
+    max: 1
+  properties:
+    rngd: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.30-06-bolt-action-rifle
+      lang: pt-BR
+      priority: 0
+---
+name: Rifle de Elefante (2C)
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: OJkZsHH3vZYEUeQC
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 100
+      damage: '3D6+4'
+  bullets: 2
+  usesPerRound:
+    normal: 1
+    max: 2
+  properties:
+    rngd: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.elephant-gun-2b
+      lang: pt-BR
+      priority: 0
+---
+name: Escopeta Calibre 20 (2C)
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: w2vkKXFHcaQVeB7H
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 10
+      damage: '2D6'
+    long:
+      value: 20
+      damage: '1D6'
+    extreme:
+      value: 50
+      damage: '1D3'
+  bullets: 2
+  usesPerRound:
+    normal: 1
+    max: 2
+  properties:
+    rngd: true
+    shotgun: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.20-gauge-shotgun-2b
+      lang: pt-BR
+      priority: 0
+---
+name: Escopeta Calibre 16 (2C)
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: w2vkKXFHcaQVeB7H
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 10
+      damage: '2D6+2'
+    long:
+      value: 20
+      damage: '1D6+1'
+    extreme:
+      value: 50
+      damage: '1D4'
+  bullets: 2
+  usesPerRound:
+    normal: 1
+    max: 2
+  properties:
+    rngd: true
+    shotgun: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.16-gauge-shotgun-2b
+      lang: pt-BR
+      priority: 0
+---
+name: Escopeta Calibre 12 (2C)
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: w2vkKXFHcaQVeB7H
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 10
+      damage: '4D6'
+    long:
+      value: 20
+      damage: '2D6'
+    extreme:
+      value: 50
+      damage: '1D6'
+  bullets: 2
+  usesPerRound:
+    normal: 1
+    max: 2
+  properties:
+    rngd: true
+    shotgun: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.12-gauge-shotgun-2b
+      lang: pt-BR
+      priority: 0
+---
+name: Escopeta Calibre 12 (semiautomática)
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: w2vkKXFHcaQVeB7H
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 10
+      damage: '4D6'
+    long:
+      value: 20
+      damage: '2D6'
+    extreme:
+      value: 50
+      damage: '1D6'
+  bullets: 5
+  usesPerRound:
+    normal: 1
+    max: 2
+  properties:
+    rngd: true
+    shotgun: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.12-gauge-shotgun-semi-auto
+      lang: pt-BR
+      priority: 0
+---
+name: Escopeta Calibre 12 (2C serrada)
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+folder: w2vkKXFHcaQVeB7H
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-rifle-shotgun'
+  range:
+    normal:
+      value: 5
+      damage: '4D6'
+    long:
+      value: 10
+      damage: '1D6'
+  bullets: 2
+  usesPerRound:
+    normal: 1
+    max: 2
+  properties:
+    rngd: true
+    shotgun: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.12-gauge-shotgun-2b-sawed-off
+      lang: pt-BR
+      priority: 0
+---
+name: Bergmann MP181/MP2811
+type: weapon
+img: icons/weapons/guns/gun-red.webp
+folder: JAeTufherjBnBPgA
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-submachine-gun'
+  range:
+    normal:
+      value: 20
+      damage: '1D10'
+  bullets: 20
+  usesPerRound:
+    normal: 1
+    max: 2
+  properties:
+    rngd: true
+  malfunction: 96
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.bergmann-mp181-mp2811
+      lang: pt-BR
+      priority: 0
+---
+name: Thompson
+type: weapon
+img: icons/weapons/guns/gun-red.webp
+folder: JAeTufherjBnBPgA
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-submachine-gun'
+  range:
+    normal:
+      value: 20
+      damage: '1D10+2'
+  bullets: 20
+  usesPerRound:
+    normal: 1
+    max: 1
+  properties:
+    rngd: true
+  malfunction: 96
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.thompson
+      lang: pt-BR
+      priority: 0
+---
+name: Rifle Automático Browning M1918
+type: weapon
+img: icons/weapons/guns/gun-purple.webp
+folder: CMWcRDEeZED0VpyQ
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-machine-gun'
+  range:
+    normal:
+      value: 90
+      damage: '2D6+4'
+  bullets: 20
+  usesPerRound:
+    normal: 1
+    max: 2
+  properties:
+    rngd: true
+  malfunction: 100
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.browning-auto-rifle-m1918
+      lang: pt-BR
+      priority: 0
+---
+name: .30 Browning M1917A1
+type: weapon
+img: icons/weapons/guns/gun-purple.webp
+folder: CMWcRDEeZED0VpyQ
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-machine-gun'
+  range:
+    normal:
+      value: 150
+      damage: '2D6+4'
+  bullets: 250
+  usesPerRound:
+    normal: 1
+    max: 1
+  properties:
+    rngd: true
+  malfunction: 96
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.30-browning-m1917a1
+      lang: pt-BR
+      priority: 0
+---
+name: Metralhadora Bren
+type: weapon
+img: icons/weapons/guns/gun-purple.webp
+folder: CMWcRDEeZED0VpyQ
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-machine-gun'
+  range:
+    normal:
+      value: 110
+      damage: '2D6+4'
+  bullets: 30
+  usesPerRound:
+    normal: 1
+    max: 1
+  properties:
+    rngd: true
+  malfunction: 96
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.bren-gun
+      lang: pt-BR
+      priority: 0
+---
+name: Metralhadora Lewis Mark I
+type: weapon
+img: icons/weapons/guns/gun-purple.webp
+folder: CMWcRDEeZED0VpyQ
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-machine-gun'
+  range:
+    normal:
+      value: 110
+      damage: '2D6+4'
+  bullets: 47
+  usesPerRound:
+    normal: 1
+    max: 1
+  properties:
+    rngd: true
+  malfunction: 96
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.mark-i-lewis-gun
+      lang: pt-BR
+      priority: 0
+---
+name: Vickers .303
+type: weapon
+img: icons/weapons/guns/gun-purple.webp
+folder: CMWcRDEeZED0VpyQ
+system:
+  skill:
+    main:
+      name: 'i.skill.firearms-machine-gun'
+  range:
+    normal:
+      value: 110
+      damage: '2D6+4'
+  bullets: 250
+  usesPerRound:
+    normal: 1
+    max: 1
+  properties:
+    rngd: true
+  malfunction: 99
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.weapon.vickers-303
+      lang: pt-BR
+      priority: 0

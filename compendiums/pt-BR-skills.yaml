@@ -1,0 +1,2307 @@
+_id: UOuN0gESXPp2HXwH
+name: Contabilidade
+type: skill
+img: systems/CoC7/assets/icons/skills/accounting.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.accounting
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: dQ4zUjSteT3sgwKx
+name: Lidar com Animais
+type: skill
+img: systems/CoC7/assets/icons/skills/animal_handling.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    push: true
+    rarity: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.animal-handling
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: ovIp66Luwfwbq28F
+name: Antropologia
+type: skill
+img: systems/CoC7/assets/icons/skills/anthropology.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.anthropology
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: wOs3gryeGRPkGoWD
+name: Avaliação
+type: skill
+img: systems/CoC7/assets/icons/skills/appraise.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.appraise
+      lang: pt-BR
+      priority: 0
+---
+_id: GHhkcJUqjcP4lToY
+name: Arqueologia
+type: skill
+img: systems/CoC7/assets/icons/skills/archaeology.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.archaeology
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+      priority: 0
+---
+_id: m6V53lyfz7zh95FE
+name: Arte/Ofício (Atuação)
+type: skill
+img: systems/CoC7/assets/icons/skills/art_craft_acting.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.art-craft-acting
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+        regencyPulp: true
+        regency: true
+      priority: 0
+---
+_id: HAuFBG4ZT2yO9yn7
+name: Arte/Ofício (Qualquer)
+type: skill
+img: systems/CoC7/assets/icons/skills/art_craft_any.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    special: true
+    requiresname: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.art-craft-any
+      lang: pt-BR
+      priority: 0
+---
+_id: m8sBJxvuUdtQ2mDU
+name: Arte/Ofício (Belas Artes)
+type: skill
+img: systems/CoC7/assets/icons/skills/art_craft_fine_art.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.art-craft-fine-art
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
+---
+_id: zcvnv8qY4GrVwwTL
+name: Arte/Ofício (Falsificação)
+type: skill
+img: systems/CoC7/assets/icons/skills/art_craft_forgery.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.art-craft-forgery
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
+---
+_id: WLYZNASZ2YP8zN3g
+name: Arte/Ofício (Fotografia)
+type: skill
+img: systems/CoC7/assets/icons/skills/art_craft_photography.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.art-craft-photography
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+      priority: 0
+---
+_id: JgtxiN3KzooOWIQV
+name: Charme
+type: skill
+img: systems/CoC7/assets/icons/skills/charm.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 15
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.charm
+      lang: pt-BR
+      priority: 0
+---
+_id: I80gmmo830LuOBKl
+name: Civismo
+type: skill
+img: systems/CoC7/assets/icons/skills/shaking-hands.svg
+system:
+  description:
+    value: <p>Veja Cthulhu Invictus</p>
+  base: 10
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.civics
+      lang: pt-BR
+      eras:
+        invictus: true
+      priority: 0
+---
+_id: oh5eFj00Wohnx1My
+name: Escalar
+type: skill
+img: systems/CoC7/assets/icons/skills/climb.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 20
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.climb
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        darkAges: true
+        darkAgesPulp: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+        gasLight: true
+      priority: 0
+---
+_id: VZSv9eodMQ4ZPcrO
+name: Computadores
+type: skill
+img: systems/CoC7/assets/icons/skills/computer_use.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.computer-use
+      lang: pt-BR
+      eras:
+        modern: true
+        modernPulp: true
+      priority: 0
+---
+_id: vYrJ5h9cIQBzvw8E
+name: Nível de Crédito
+type: skill
+img: systems/CoC7/assets/icons/skills/credit_rating.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 0
+  properties:
+    noxpgain: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.credit-rating
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: WJky66ezt2ef5ksH
+name: Mitos de Cthulhu
+type: skill
+img: systems/CoC7/assets/icons/skills/cthulhu_mythos.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 0
+  properties:
+    noxpgain: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.cthulhu-mythos
+      lang: pt-BR
+      priority: 0
+---
+_id: bJt90h73GqdP7ti6
+name: Demolições
+type: skill
+img: systems/CoC7/assets/icons/skills/demolitions.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    rarity: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.demolitions
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
+---
+_id: gzNPM9gbx0EZffBV
+name: Disfarce
+type: skill
+img: systems/CoC7/assets/icons/skills/disguise.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.disguise
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        darkAges: true
+        darkAgesPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: 4lN6yD6zwbjX6BFp
+name: Mergulho
+type: skill
+img: systems/CoC7/assets/icons/skills/diving_helmet.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    push: true
+    rarity: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.diving
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
+---
+_id: wK8XxNj9QwXlGFEb
+name: Esquivar
+type: skill
+img: systems/CoC7/assets/icons/skills/dodge.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1/2*@DEX
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.dodge
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        darkAges: true
+        darkAgesPulp: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+        gasLight: true
+      priority: 0
+---
+_id: Og2OWQH93aSDWAMZ
+name: Dirigir Automóveis
+type: skill
+img: systems/CoC7/assets/icons/skills/drive_auto.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 20
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.drive-auto
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: Sxviv60td6kbS4kp
+name: Conduzir Carruagem
+type: skill
+img: systems/CoC7/assets/icons/skills/cartwheel.svg
+system:
+  description:
+    value: <p>Veja Cthulhu by Gaslight</p>
+  base: 20
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.drive-carriage
+      lang: pt-BR
+      eras:
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
+---
+_id: rAK5soSX1n3jXj2A
+name: Conduzir Cavalo / Bois
+type: skill
+img: systems/CoC7/assets/icons/skills/cartwheel.svg
+system:
+  description:
+    value: <p>Veja Cthulhu Invictus</p>
+  base: 20
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.drive-horse-oxen
+      lang: pt-BR
+      eras:
+        darkAges: true
+        darkAgesPulp: true
+        invictus: true
+      priority: 0
+---
+_id: sqenne0VZoF54W5k
+name: Conduzir Carroça / Carruagem
+type: skill
+img: systems/CoC7/assets/icons/skills/cartwheel.svg
+system:
+  description:
+    value: <p>Veja o livro Down Darker Trails</p>
+  base: 20
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.drive-wagon-coach
+      lang: pt-BR
+      eras:
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
+---
+_id: NBkq8oCGM1FjmsyF
+name: Consertos Elétricos
+type: skill
+img: systems/CoC7/assets/icons/skills/electrical_repair.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.electrical-repair
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: oEfvPMTx0cgyPlgV
+name: Eletrônica
+type: skill
+img: systems/CoC7/assets/icons/skills/electronics.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.electronics
+      lang: pt-BR
+      eras:
+        modern: true
+        modernPulp: true
+      priority: 0
+---
+_id: t7uiYybrk8dHFdjp
+name: Império
+type: skill
+img: systems/CoC7/assets/icons/skills/laurel_crown.svg
+system:
+  description:
+    value: <p>Veja Cthulhu Invictus</p>
+  base: 25
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.empire
+      lang: pt-BR
+      eras:
+        invictus: true
+      priority: 0
+---
+_id: ld78TITwKNFPpanQ
+name: Lábia
+type: skill
+img: systems/CoC7/assets/icons/skills/fast_talk.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.fast-talk
+      lang: pt-BR
+      priority: 0
+---
+_id: 4y7D44TpkHVKxA7s
+name: Lutar (Qualquer)
+type: skill
+img: systems/CoC7/assets/icons/skills/fighting_brawl.svg
+system:
+  description:
+    value: <p>Use in occupations / archetypes to prompt to select one Fighting skill</p>
+  base: 0
+  properties:
+    fighting: true
+    special: true
+    picknameonly: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-any
+      lang: pt-BR
+      priority: 0
+---
+_id: T8fSLCwSD8C0iK8t
+name: Lutar (Machado)
+type: skill
+img: systems/CoC7/assets/icons/skills/fighting_axe.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 15
+  properties:
+    fighting: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-axe
+      lang: pt-BR
+      priority: 0
+---
+_id: vS8bsPWFlwgOecoB
+name: Lutar (Briga)
+type: skill
+img: systems/CoC7/assets/icons/skills/fighting_brawl.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 25
+  properties:
+    fighting: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-brawl
+      lang: pt-BR
+      priority: 0
+---
+_id: Ed8OShyl7D834Ihk
+name: Lutar (Motosserra)
+type: skill
+img: systems/CoC7/assets/icons/skills/fighting_chainsaw.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    fighting: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-chainsaw
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: OcnZzOYWaP4VsjXS
+name: Lutar (Mangual)
+type: skill
+img: systems/CoC7/assets/icons/skills/fighting_flail.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    fighting: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-flail
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: TPOu48DT4QIrqE68
+name: Lutar (Garrote)
+type: skill
+img: systems/CoC7/assets/icons/skills/fighting_garrote.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 15
+  properties:
+    fighting: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-garrote
+      lang: pt-BR
+      priority: 0
+---
+_id: IttOdCAGTeE6VU3F
+name: Lutar (Lança)
+type: skill
+img: systems/CoC7/assets/icons/skills/fighting_spear.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 20
+  properties:
+    fighting: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-spear
+      lang: pt-BR
+      priority: 0
+---
+_id: hRPbMl2N0t6aBlyc
+name: Lutar (Espada)
+type: skill
+img: systems/CoC7/assets/icons/skills/fighting_sword.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 20
+  properties:
+    fighting: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-sword
+      lang: pt-BR
+      priority: 0
+---
+_id: sWt5Q3ZXd6NlwhXU
+name: Arremessar
+type: skill
+img: systems/CoC7/assets/icons/skills/fighting_throw.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 20
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.throw
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: Pb3QI7x9xJVeXi8a
+name: Lutar (Chicote)
+type: skill
+img: systems/CoC7/assets/icons/skills/fighting_whip.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    fighting: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-whip
+      lang: pt-BR
+      priority: 0
+---
+_id: YPiD2ubZensxjKGU
+name: Armas de Fogo (Qualquer)
+type: skill
+img: systems/CoC7/assets/icons/skills/firearms_handgun.svg
+system:
+  description:
+    value: <p>Use em ocupações / arquétipos para solicitar a seleção de uma perícia de Armas de Fogo</p>
+  base: 0
+  properties:
+    firearm: true
+    special: true
+    picknameonly: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-any
+      lang: pt-BR
+      priority: 0
+---
+_id: qET2wCGGdy3z18Gc
+name: Armas de Fogo (Artilharia)
+type: skill
+img: systems/CoC7/assets/icons/skills/firearms_artillery.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    firearm: true
+    special: true
+    rarity: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-artillery
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: VwGWZ2LBOwtMaw08
+name: Armas de Fogo (Arco)
+type: skill
+img: systems/CoC7/assets/icons/skills/firearms_bow.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 15
+  properties:
+    firearm: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-bow
+      lang: pt-BR
+      priority: 0
+---
+_id: 35dvJDsrY8JipXRU
+name: Armas de Fogo (Lança-chamas)
+type: skill
+img: systems/CoC7/assets/icons/skills/firearms_flamethrower.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    firearm: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-flamethrower
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: KmDGtn7ukUFVb265
+name: Armas de Fogo (Pistola)
+type: skill
+img: systems/CoC7/assets/icons/skills/firearms_handgun.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 20
+  properties:
+    firearm: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-handgun
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+      priority: 0
+---
+_id: 23vdyJDDfjyneH3I
+name: Armas de Fogo (Armas Pesadas)
+type: skill
+img: systems/CoC7/assets/icons/skills/firearms_heavy_weapons.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    firearm: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-heavy-weapons
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: QcomAOgmOS5g3dsh
+name: Armas de Fogo (Metralhadora)
+type: skill
+img: systems/CoC7/assets/icons/skills/firearms_machine_gun.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    firearm: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-machine-gun
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: m2pYjKk4Gk3FcEBL
+name: Armas de Fogo (Rifles/Escopetas)
+type: skill
+img: systems/CoC7/assets/icons/skills/firearms_rifle_shotgun.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 25
+  properties:
+    firearm: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-rifle-shotgun
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+      priority: 0
+---
+_id: gRUXG91zIJXOLye1
+name: Armas de Fogo (Submetralhadora)
+type: skill
+img: systems/CoC7/assets/icons/skills/firearms_submachine_gun.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 15
+  properties:
+    firearm: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-submachine-gun
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: nZ8rdL4PLb7A7f5B
+name: Primeiros Socorros
+type: skill
+img: systems/CoC7/assets/icons/skills/first_aid.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 30
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.first-aid
+      lang: pt-BR
+      priority: 0
+---
+_id: SflwB1bbjaQebiPQ
+name: Jogos de Azar
+type: skill
+img: systems/CoC7/assets/icons/skills/poker-hand.svg
+system:
+  description:
+    value: <p>Veja o livro Down Darker Trails</p>
+  base: 10
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.gambling
+      lang: pt-BR
+      eras:
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
+---
+_id: URo2NSSJSNdvOqXU
+name: História
+type: skill
+img: systems/CoC7/assets/icons/skills/history.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.history
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: mEblnQjptKvKCeIg
+name: Hipnose
+type: skill
+img: systems/CoC7/assets/icons/skills/hypnosis.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    rarity: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.hypnosis
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
+---
+_id: hDr4eUbS398oniTa
+name: Intimidação
+type: skill
+img: systems/CoC7/assets/icons/skills/intimidate.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 15
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.intimidate
+      lang: pt-BR
+      priority: 0
+---
+_id: c5utlFbDM7J8TA8b
+name: Saltar
+type: skill
+img: systems/CoC7/assets/icons/skills/jump.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 20
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.jump
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: Yu3Xk8kZBlz0G82y
+name: Outra Língua (Qualquer)
+type: skill
+img: systems/CoC7/assets/icons/skills/language.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    requiresname: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-any
+      lang: pt-BR
+      priority: 0
+---
+_id: rhJ1Q9OB3uTUZmjD
+name: Língua Nativa
+type: skill
+img: systems/CoC7/assets/icons/skills/language.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: '@EDU'
+  properties:
+    push: true
+    special: true
+    requiresname: true
+    keepbasevalue: true
+    own: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-own
+      lang: pt-BR
+      priority: 0
+---
+_id: CWeSJuv7ROn1n4yH
+name: Outra Língua (Tcheco)
+type: skill
+img: systems/CoC7/assets/icons/skills/language.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-czech
+      lang: pt-BR
+      priority: 0
+---
+_id: QUhj7EFX371aTfkU
+name: Outra Língua (Holandês)
+type: skill
+img: systems/CoC7/assets/icons/skills/language.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-dutch
+      lang: pt-BR
+      priority: 0
+---
+_id: TvoAFvsyxegxp6Oq
+name: Outra Língua (Inglês)
+type: skill
+img: systems/CoC7/assets/icons/skills/language.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-english
+      lang: pt-BR
+      priority: 0
+---
+_id: 95Ob2LDCxfcJraxB
+name: Outra Língua (Alemão)
+type: skill
+img: systems/CoC7/assets/icons/skills/language.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-german
+      lang: pt-BR
+      priority: 0
+---
+_id: Xf5ojFt4EebLlxUi
+name: Outra Língua (Polonês)
+type: skill
+img: systems/CoC7/assets/icons/skills/language.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-polish
+      lang: pt-BR
+      priority: 0
+---
+_id: QAtNuUcR75jEb4aZ
+name: Outra Língua (Russo)
+type: skill
+img: systems/CoC7/assets/icons/skills/language.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-russian
+      lang: pt-BR
+      priority: 0
+---
+_id: 753u4GsC5uHZCNwM
+name: Outra Língua (Suaíli)
+type: skill
+img: systems/CoC7/assets/icons/skills/language.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-swahili
+      lang: pt-BR
+      priority: 0
+---
+_id: fUOXVGsE5l4QX4Tv
+name: Outra Língua (Iorubá)
+type: skill
+img: systems/CoC7/assets/icons/skills/language.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-yoruba
+      lang: pt-BR
+      priority: 0
+---
+_id: zdetbvN3oO9cAdV1
+name: Outra Língua (Zulu)
+type: skill
+img: systems/CoC7/assets/icons/skills/language.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-zulu
+      lang: pt-BR
+      priority: 0
+---
+_id: 64hnBZNC8FM7oTkg
+name: Direito
+type: skill
+img: systems/CoC7/assets/icons/skills/law.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.law
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: BcWHh8EhmyKj7bNk
+name: Usar Bibliotecas
+type: skill
+img: systems/CoC7/assets/icons/skills/library_use.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 20
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.library-use
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: MoAB0NRNlpEc2qWr
+name: Escutar
+type: skill
+img: systems/CoC7/assets/icons/skills/listen.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 20
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.listen
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: MRbFH52Zh9TzhLBh
+name: Chaveiro
+type: skill
+img: systems/CoC7/assets/icons/skills/locksmith.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.locksmith
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: rCJKGay6D0ucqgeg
+name: Conhecimento (Qualquer)
+type: skill
+img: systems/CoC7/assets/icons/skills/classical_knowledge.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    requiresname: true
+    rarity: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.lore-any
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+      priority: 0
+---
+_id: 0qCTuRFUCACSEsWj
+name: Consertos Mecânicos
+type: skill
+img: systems/CoC7/assets/icons/skills/mechanical_repair.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.mechanical-repair
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
+---
+_id: Xmg7oAy70DKpv4kq
+name: Medicina
+type: skill
+img: systems/CoC7/assets/icons/skills/medicine.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.medicine
+      lang: pt-BR
+      priority: 0
+---
+_id: jTcu6Ni2ek7Yz5q3
+name: História Natural
+type: skill
+img: systems/CoC7/assets/icons/skills/natural_world.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.natural-world
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
+---
+_id: 1c3fdvpQtvZf5YXK
+name: Navegação
+type: skill
+img: systems/CoC7/assets/icons/skills/navigate.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.navigate
+      lang: pt-BR
+      priority: 0
+---
+_id: 6pSfZVS68jSHxa5T
+name: Ocultismo
+type: skill
+img: systems/CoC7/assets/icons/skills/occult.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.occult
+      lang: pt-BR
+      priority: 0
+---
+_id: cuExWy1130KUwuWz
+name: Operar Maquinário Pesado
+type: skill
+img: systems/CoC7/assets/icons/skills/operate_heavy_machinery.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.operate-heavy-machinery
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+      priority: 0
+---
+_id: uMzSNURmZqjxr7mU
+name: Persuasão
+type: skill
+img: systems/CoC7/assets/icons/skills/persuade.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.persuade
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: uQsVn8K6XRXQmtaI
+name: Pilotar (Qualquer)
+type: skill
+img: systems/CoC7/assets/icons/skills/pilot_any.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    requiresname: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.pilot-any
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+      priority: 0
+---
+_id: rXBU2GofiO2qOsGv
+name: Psicanálise
+type: skill
+img: systems/CoC7/assets/icons/skills/psychoanalysis.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.psychoanalysis
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: MFR4eR79niGaLfph
+name: Psicologia
+type: skill
+img: systems/CoC7/assets/icons/skills/psychology.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.psychology
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: SL2OorS0Xx6ty02A
+name: Ler Lábios
+type: skill
+img: systems/CoC7/assets/icons/skills/read_lips.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    rarity: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.read-lips
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: o7TdzbuSP7ticONf
+name: Cavalgar
+type: skill
+img: systems/CoC7/assets/icons/skills/ride.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 5
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.ride
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
+---
+_id: EMA6uEtQBgJtBcPl
+name: Uso de Cordas
+type: skill
+img: systems/CoC7/assets/icons/skills/lasso.svg
+system:
+  description:
+    value: <p>Veja o livro Down Darker Trails</p>
+  base: 5
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.rope-use
+      lang: pt-BR
+      eras:
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
+---
+_id: KvZuYcg3AmVrwKi2
+name: Ciência (Qualquer)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_any.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    requiresname: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-any
+      lang: pt-BR
+      priority: 0
+---
+_id: hhvqA2BOljk1FHVg
+name: Ciência (Astronomia)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_astronomy.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    push: true
+    special: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-astronomy
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: IBSDR6U4dE1uejVp
+name: Ciência (Biologia)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_biology.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-biology
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: ShPoibiLsd07AtZv
+name: Ciência (Botânica)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_botany.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-botany
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: 8twBT7nbyh5dEp3J
+name: Ciência (Química)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_chemistry.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-chemistry
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: UASTWOvgCYi8G1QQ
+name: Ciência (Criptografia)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_cryptography.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-cryptography
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: 9zy7PLmTLXknFce4
+name: Ciência (Engenharia)
+type: skill
+img: systems/CoC7/assets/icons/skills/spanner.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-engineering
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: Nw5tSvi2Knxlqmg1
+name: Ciência (Forense)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_forensics.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-forensics
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: QwaL3UC3Gvjd3hmF
+name: Ciência (Geologia)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_geology.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-geology
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: TwYYqLHe1PXnOCDF
+name: Ciência (Matemática)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_mathematics.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-mathematics
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: w7hWVU14syjweIH2
+name: Ciência (Meteorologia)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_meteorology.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-meteorology
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: V9ulAwDyLVqqQ0su
+name: Ciência (Farmácia)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_pharmacy.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-pharmacy
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: Dh6sHWep0qKQmi3I
+name: Ciência (Física)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_physics.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-physics
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: 0rlp7EuZDzQGjIYf
+name: Ciência (Zoologia)
+type: skill
+img: systems/CoC7/assets/icons/skills/science_zoology.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 1
+  properties:
+    special: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-zoology
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
+---
+_id: KKFNX5M4LtEtiuxs
+name: Prestidigitação
+type: skill
+img: systems/CoC7/assets/icons/skills/sleight_of_hand.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.sleight-of-hand
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: nHaWNwtW3Lg0sqYJ
+name: Encontrar
+type: skill
+img: systems/CoC7/assets/icons/skills/spot_hidden.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 25
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.spot-hidden
+      lang: pt-BR
+      priority: 0
+---
+_id: DcV524K0jNfjDEZC
+name: Furtividade
+type: skill
+img: systems/CoC7/assets/icons/skills/stealth.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 20
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.stealth
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        darkAges: true
+        darkAgesPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: X99v5MtRlfTNjL3B
+name: Sobrevivência (Qualquer)
+type: skill
+img: systems/CoC7/assets/icons/skills/survival_any.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    special: true
+    requiresname: true
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.survival-any
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: 1zSIeY0eat2AxQok
+name: Natação
+type: skill
+img: systems/CoC7/assets/icons/skills/swim.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 20
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.swim
+      lang: pt-BR
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
+---
+_id: AcUIbZFhfoXqQP2m
+name: Rastrear
+type: skill
+img: systems/CoC7/assets/icons/skills/track.svg
+system:
+  description:
+    value: <p>Veja o Livro Básico de Chamado de Cthulhu - 7ª Ed.</p>
+  base: 10
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.track
+      lang: pt-BR
+      priority: 0
+---
+_id: HzOGu2yLcL9obry3
+name: Armadilha
+type: skill
+img: systems/CoC7/assets/icons/skills/wolf-trap.svg
+system:
+  description:
+    value: <p>Veja o livro Down Darker Trails</p>
+  base: 10
+  properties:
+    push: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.skill.trap
+      lang: pt-BR
+      eras:
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
+---

@@ -1,0 +1,126 @@
+# Documentacao do sistema para a versao 8.10
+
+Este documento e uma visao geral em andamento do sistema CoC7. Ele nao e um tutorial completo de FoundryVTT.
+
+Para jogar, voce precisa de um destes materiais:
+
+- Chamado de Cthulhu 7a Edicao - Livro do Guardiao
+- Chamado de Cthulhu 7a Edicao - Caixa Inicial
+- Chamado de Cthulhu 7a Edicao - Regras de Inicio Rapido
+
+O sistema automatiza a maior parte das tarefas e regras comuns usadas durante uma partida.
+
+Varias partes das fichas possuem dicas flutuantes que aparecem apos dois segundos. Esse atraso pode ser alterado nas configuracoes.
+
+Esta documentacao pode ser reaberta em Configuracoes de Jogo -> Ajuda e Documentacao -> Ver Manual do Sistema CoC7.
+
+# Alteracoes recentes
+
+Para a lista completa, consulte o [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) no GitHub.
+
+- [Efeitos ativos](effects.md) - adiciona formula de recuperacao de Sorte, cura natural, dados/valores de bonus para testes de Saber, Ideia e curingas baseados em ajustes de CoC ID.
+- Adicionados botoes de testes de Ideia e Saber na Ficha de Investigador v3.
+- Adicionados Efeitos Ativos a itens de Talento.
+
+### Alteracoes da versao 8.1 ate 8.9
+
+- [Feiticos](item_spell.md) voltam a deduzir custos automaticamente do conjurador.
+- Permite reordenar caracteristicas nas regras opcionais.
+- Migracao para implementacoes FoundryVTT de dataModels, AppV2 e Tooltips.
+- Aciona o seletor de ator quando o usuario possui varios atores ao interagir com mensagem de chat.
+- Move game.system.api.cocid para game.CoC7.cocid.
+- Adiciona botao de ping de localizacao ao item de Perseguicao.
+- Move progresso de livros e feiticos aprendidos para o Ator.
+- Move i.skill.fighting-throw, i.skill.firearms-throw e i.skill.ranged-throw para Arremessar (i.skill.throw).
+- Permite ligar ou desligar estilos de diario CoC7 nas paginas de configuracao.
+- Permite alternar o painel de notas de PNJ.
+- Rolagens podem ser atribuidas pelo Guardiao como dano/cura a caracteristicas, atributos ou pericias.
+- Rolagens d100 foram movidas para uma nova classe de pool de dados.
+- Opcoes de CSS customizado e arte da ficha foram movidas para configuracoes de jogo.
+- Adiciona configuracao para usar icones de eras em vez de texto.
+- Adiciona regra opcional para permitir Forcar desastres.
+
+# Modulos Chaosium
+
+- [Call of Cthulhu - Starter Set](https://foundryvtt.com/packages/cha-coc-fvtt-en-starterset)
+- [Call of Cthulhu - Quick-Start Rules](https://foundryvtt.com/packages/cha-coc-fvtt-en-quickstart)
+- [Call of Cthulhu - FoundryVTT - Investigator Wizard](https://foundryvtt.com/packages/call-of-cthulhu-foundryvtt-investigator-wizard)
+- [Call of Cthulhu - Core Content](https://foundryvtt.com/packages/cha-coc-fvtt-en-keeperitems)
+- [Call of Cthulhu - No Time To Scream](https://foundryvtt.com/packages/cha-coc-fvtt-en-notimetoscream)
+
+# Secoes gerais
+
+- [Criando seu primeiro investigador](first_investigator.md)
+- [Criacao de personagem](character_creation.md)
+- [Efeitos ativos](effects.md)
+- [Importador de atores](actor_importer.md)
+- [CCI](cci.md)
+- [Combate](combat.md)
+- [Compendios](compendiums.md)
+- [Tipos de item](items.md)
+- [Arquétipo](item_archetype.md)
+- [Livro](item_book.md)
+- [Perseguicoes](chases.md)
+- [Ocupacao](item_occupation.md)
+- [Configuracao](item_setup.md)
+- [Pericia](item_skill.md)
+- [Feitico](item_spell.md)
+- [Ferramenta de criacao de links](link_creation_window.md)
+- [Links](links.md)
+- [Sanidade](sanity.md)
+
+# Visao geral de atores
+
+- _Personagem_ - Um personagem completo, normalmente um investigador.
+- _Contêiner_ - Um recipiente de inventario.
+- _Criatura_ - Um personagem simplificado, adequado para criaturas.
+- _PNJ_ - Um personagem simplificado para personagens nao jogadores.
+
+# Visao geral de itens
+
+- _Arquétipo_ - Conjunto de pericias e atributos para arquétipos de Pulp Cthulhu.
+- _Livro_ - Tomo arcano que pode conter feiticos e melhorias.
+- _Item_ - Equipamento comum.
+- _Ocupacao_ - Conjunto de pericias ocupacionais e calculo de pontos de ocupacao.
+- _Configuracao_ - Padrao inicial para criar personagens, criaturas ou PNJs.
+- _Pericia_ - Pericia com porcentagem base e etiquetas.
+- _Feitico_ - Magia.
+- _Condicao_ - Fobia ou mania.
+- _Talento_ - Poder especial de Pulp Cthulhu.
+- _Arma_ - Item com estatisticas de arma, incluindo ataques desarmados.
+
+# Visao geral das configuracoes
+
+Abra a aba Configuracoes de Jogo e clique em Configurar Configuracoes. Em seguida abra Configuracoes do Sistema.
+
+- _Regras Variantes/Opcionais_ - Regras Pulp e outras regras opcionais.
+- _Configuracoes de Iniciativa_ - Opcoes de iniciativa.
+- _Configuracoes de Rolagem_ - Padroes das rolagens.
+- _Configuracoes de Cartas de Chat_ - Mensagens de chat.
+- _Configuracoes de Cena_ - Opcoes de cena.
+- _Configuracoes de Arte do Jogo_ - Icone e mensagem de pausa personalizados.
+- _Configuracoes de Ficha_ - Opcoes de ficha e CSS opcional.
+- _Configuracoes de Armas_ - Opcoes para armas.
+- _Desenvolvedor e Depuracao_ - Use apenas em mundos de teste.
+- _Configuracoes de Tabelas_ - Tabelas automaticas para Acessos de Loucura.
+
+# Menu de cena de Chamado de Cthulhu
+
+Para acessar este menu, tenha uma cena ativa. As opcoes sao apenas para o Guardiao.
+
+- _Ferramentas do Guardiao_
+  - _Fase de desenvolvimento_: jogadores fazem testes de aumento para pericias marcadas.
+  - _Modo de criacao de personagem_: jogadores distribuem pontos nas pericias.
+  - _Ganho de XP_: marca pericias para melhora apos sucesso.
+  - _Enviar rolagem falsa aos jogadores_: mostra uma rolagem privada falsa do GM.
+  - _Iniciar descanso_: seleciona personagens para descansar e rolar ganhos de XP.
+- _Rolar!_: rola 1d100 com limite, dificuldade e dados de bonus/penalidade.
+- _Criar link_: cria link de rolagem para os jogadores clicarem.
+
+# Atalhos de teclado e mouse
+
+- Clique direito em elemento rolavel: inclui em rolagem resistida.
+- Alt + clique direito: inclui em rolagem combinada.
+- Shift + clique esquerdo: rola sem perguntar dificuldade ou bonus/penalidade.
+- Ctrl + clique esquerdo: cria solicitacao de rolagem, apenas para o GM.
+- Alt + clique esquerdo em Sanidade: pede perda minima e maxima de Sanidade.
