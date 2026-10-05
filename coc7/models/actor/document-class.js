@@ -2992,9 +2992,11 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
   /**
    * Get initiative
    * @param {boolean} hasGun
+   * @param {object} options
+   * @param {boolean} options.hidden
    * @returns {integer}
    */
-  async rollInitiative (hasGun = false) {
+  async rollInitiative (hasGun = false, { hidden = false }) {
     switch (game.settings.get(FOLDER_ID, 'initiativeRule')) {
       case 'optional':
         {
@@ -3002,6 +3004,9 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
           check.actor = this.uuid
           if (hasGun) {
             check.poolModifier = 1
+          }
+          if (hidden) {
+            check.blind = true
           }
           check.flavor = game.i18n.localize('CoC7.InitiativeRoll')
           await check.rollCharacteristic('dex')
