@@ -16,6 +16,7 @@ export default function () {
     es: '35FM7ZOdzC6L2xlj', // cspell:disable-line
     fr: 'tdakyzTVOQsAMdSm', // cspell:disable-line
     ja: '75sD0ovkj4TDpvzv', // cspell:disable-line
+    'pt-BR': 'XGK5T1yaKllplbW4', // cspell:disable-line
     uk: '98TuflgZUmQoJdSK' // cspell:disable-line
   }
   if (typeof readMe[lang] === 'undefined') {

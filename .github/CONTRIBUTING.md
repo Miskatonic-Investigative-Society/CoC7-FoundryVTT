@@ -31,9 +31,13 @@ The more detail on reproducing, the better! Bugs are hard to fix if we can not r
 
 ## Translators Wanted!
 
-We are always looking for translators, there is a lot to translate, and we can not do it all. If you see any translations missing for you language, Feel free to look in the corresponding `*.json` file in the `lang` folder. Comparing against the `en.json` is a good idea, for a baseline.
+We are always looking for translators, there is a lot to translate, and we can not do it all. If you see any translations missing for you language, Feel free to look in the corresponding `*.json` file in the `static/lang` folder. Comparing against the `en.json` is a good idea, for a baseline.
 
 For the list of missing translations, see: [TRANSLATIONS](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md).
+
+The [Manual](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/tree/develop/docs) is available in game in the System Manuals compendium. This is editable in the `coc7/manual` folder and compiled into the system manual and using `npm run manuals-build` information how each version displays the text can be see [below](#manual-coc7manual)
+
+To translate compendiums a separate module should be created
 
 ## Coding
 
