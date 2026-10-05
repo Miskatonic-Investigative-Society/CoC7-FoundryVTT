@@ -48,7 +48,10 @@
       {{#if isKeeper}}
         <a class="{{#if (lt progress necessary)}}item-control{{else}}item-control-disabled{{/if}}" data-action="decrease-progress"><i class="fa-regular fa-minus-circle"></i></a>
       {{/if}}
-      <progress name="system.study.progress" value="{{progress}}" max="{{necessary}}" data-label="{{localize 'CoC7.Progress'}}: {{progress}} / {{necessary}} {{localize units}}"></progress>
+      <div class="progress-wrap">
+        <progress name="system.study.progress" value="{{progress}}" max="{{necessary}}"></progress>
+        <span class="progress-label">{{localize 'CoC7.Progress'}}: {{progress}} / {{necessary}} {{localize units}}</span>
+      </div>
       {{#if isKeeper}}
         <a class="{{#if (lt progress necessary)}}item-control{{else}}item-control-disabled{{/if}}" data-action="increase-progress"><i class="fa-regular fa-plus-circle"></i></a>
       {{/if}}
