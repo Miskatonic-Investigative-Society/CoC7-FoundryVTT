@@ -1294,6 +1294,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     const parsed = {}
     for (const key of this.system.schema.getField('characteristics').keys()) {
       parsed[key] = foundry.utils.getProperty(this, 'system.characteristics.' + key + '.value')
+      parsed[key.toUpperCase()] = parsed[key]
     }
     for (const key of this.system.schema.getField('attribs').keys()) {
       const field = this.system.schema.getField('attribs').getField(key)
@@ -1301,9 +1302,11 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       const max = field.getField('max')
       if (typeof value !== 'undefined') {
         parsed[key] = foundry.utils.getProperty(this, 'system.attribs.' + key + '.value')
+        parsed[key.toUpperCase()] = parsed[key]
       }
       if (typeof max !== 'undefined') {
         parsed[key + 'Max'] = foundry.utils.getProperty(this, 'system.attribs.' + key + '.max')
+        parsed[key.toUpperCase()] = parsed[key]
       }
     }
     for (const item of this.items) {
