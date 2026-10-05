@@ -289,7 +289,7 @@ export default function () {
       hint: 'SETTINGS.ArtPauseImageHint',
       scope: 'world',
       config: true,
-      default: 'systems/' + FOLDER_ID + '/assets/icons/time-trap.svg',
+      default: 'systems/' + FOLDER_ID + '/assets/game-icons/lorc/time-trap.svg',
       type: String
     })
     game.settings.register(FOLDER_ID, 'artPauseText', {

@@ -51,6 +51,6 @@ export default class CoC7ModelsActorVehicleSystem extends CoC7ModelsActorGlobalS
    * @returns {string}
    */
   static get defaultImg () {
-    return 'systems/' + FOLDER_ID + '/assets/icons/jeep.svg'
+    return 'systems/' + FOLDER_ID + '/assets/game-icons/delapouite/jeep.svg'
   }
 }

@@ -12,7 +12,7 @@ export default class CoC7ModelsItemSkillSystem extends CoC7ModelsItemGlobalSyste
    * @returns {string}
    */
   static get defaultImg () {
-    return 'systems/' + FOLDER_ID + '/assets/icons/skills.svg'
+    return 'systems/' + FOLDER_ID + '/assets/game-icons/delapouite/skills.svg'
   }
 
   /**
@@ -20,7 +20,7 @@ export default class CoC7ModelsItemSkillSystem extends CoC7ModelsItemGlobalSyste
    * @returns {string}
    */
   static get iconLanguage () {
-    return 'systems/' + FOLDER_ID + '/assets/icons/skills/language.svg'
+    return 'systems/' + FOLDER_ID + '/assets/game-icons/skoll/talk.svg'
   }
 
   /**

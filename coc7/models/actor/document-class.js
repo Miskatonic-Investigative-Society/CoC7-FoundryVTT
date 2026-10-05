@@ -48,9 +48,9 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       case 'container':
         return 'icons/svg/chest.svg'
       case 'creature':
-        return 'systems/CoC7/assets/icons/floating-tentacles.svg'
+        return 'systems/CoC7/assets/game-icons/delapouite/floating-tentacles.svg'
       case 'npc':
-        return 'systems/CoC7/assets/icons/cultist.svg'
+        return 'systems/CoC7/assets/game-icons/lorc/cultist.svg'
     }
   }
 

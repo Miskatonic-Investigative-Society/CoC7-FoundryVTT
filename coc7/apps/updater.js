@@ -1,4 +1,4 @@
-// cSpell:words Uniki Unik
+// cSpell:words caro-asercion delapouite john-colburn lorc lord-berandas sbed skoll Uniki Unik
 import { FOLDER_ID } from '../constants.js'
 import CoC7ChatChaseObstacle from './chat-chase-obstacle.js'
 import CoC7ChatCombatMelee from './chat-combat-melee.js'
@@ -292,6 +292,15 @@ export default class CoC7Updater {
           img: 'systems/CoC7/assets/icons/' + image[1]
         })
       }
+      const image2 = String(document.effects.contents[offset].img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+      if (image2) {
+        const newName = CoC7Updater.gameIconsRemap(image2[1])
+        if (newName !== false) {
+          CoC7Updater.mergeEmbeddedDocuments(document.effects.contents[offset], documentUpdates, 'ActiveEffect', packId, document.uuid, {
+            img: 'systems/CoC7/assets/game-icons/' + newName
+          })
+        }
+      }
     }
   }
 
@@ -351,6 +360,15 @@ export default class CoC7Updater {
         img: 'systems/CoC7/assets/icons/' + image[1]
       })
     }
+    const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    if (image2) {
+      const newName = CoC7Updater.gameIconsRemap(image2[1])
+      if (newName !== false) {
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
+          img: 'systems/CoC7/assets/game-icons/' + newName
+        })
+      }
+    }
     switch (document.type) {
       case 'archetype':
       case 'book':
@@ -366,6 +384,14 @@ export default class CoC7Updater {
             if (image) {
               document.system.itemDocuments[offset].img = 'systems/CoC7/assets/icons/' + image[1]
               changed = true
+            }
+            const image2 = String(document.system.itemDocuments[offset].img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+            if (image2) {
+              const newName = CoC7Updater.gameIconsRemap(image2[1])
+              if (newName !== false) {
+                document.system.itemDocuments[offset].img = 'systems/CoC7/assets/game-icons/' + newName
+                changed = true
+              }
             }
             document.system.itemDocuments[offset] = JSON.stringify(document.system.itemDocuments[offset])
           }
@@ -390,6 +416,14 @@ export default class CoC7Updater {
               if (image) {
                 document.system.groups[offset2].itemDocuments[offset].img = 'systems/CoC7/assets/icons/' + image[1]
                 changed = true
+              }
+              const image2 = String(document.system.groups[offset2].itemDocuments[offset].img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+              if (image2) {
+                const newName = CoC7Updater.gameIconsRemap(image2[1])
+                if (newName !== false) {
+                  document.system.groups[offset2].itemDocuments[offset].img = 'systems/CoC7/assets/game-icons/' + newName
+                  changed = true
+                }
               }
               document.system.groups[offset2].itemDocuments[offset] = JSON.stringify(document.system.groups[offset2].itemDocuments[offset])
             }
@@ -775,12 +809,30 @@ export default class CoC7Updater {
         img: 'systems/CoC7/assets/icons/' + image[1]
       })
     }
+    const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    if (image2) {
+      const newName = CoC7Updater.gameIconsRemap(image2[1])
+      if (newName !== false) {
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, {
+          img: 'systems/CoC7/assets/game-icons/' + newName
+        })
+      }
+    }
     if (typeof document.prototypeToken?.texture?.src !== 'undefined') {
       const image = String(document.prototypeToken.texture.src).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
       if (image) {
         CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, {
           'prototypeToken.texture.src': 'systems/CoC7/assets/icons/' + image[1]
         })
+      }
+      const image2 = String(document.prototypeToken.texture.src).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+      if (image2) {
+        const newName = CoC7Updater.gameIconsRemap(image2[1])
+        if (newName !== false) {
+          CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, {
+            'prototypeToken.texture.src': 'systems/CoC7/assets/game-icons/' + newName
+          })
+        }
       }
     }
     for (const offset in document.effects?.contents ?? []) {
@@ -789,6 +841,15 @@ export default class CoC7Updater {
         CoC7Updater.mergeEmbeddedDocuments(document.effects.contents[offset], documentUpdates, 'ActiveEffect', packId, document.uuid, {
           img: 'systems/CoC7/assets/icons/' + image[1]
         })
+      }
+      const image2 = String(document.effects.contents[offset].img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+      if (image2) {
+        const newName = CoC7Updater.gameIconsRemap(image2[1])
+        if (newName !== false) {
+          CoC7Updater.mergeEmbeddedDocuments(document.effects.contents[offset], documentUpdates, 'ActiveEffect', packId, document.uuid, {
+            img: 'systems/CoC7/assets/game-icons/' + newName
+          })
+        }
       }
     }
   }
@@ -951,6 +1012,15 @@ export default class CoC7Updater {
         img: 'systems/CoC7/assets/icons/' + image[1]
       })
     }
+    const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    if (image2) {
+      const newName = CoC7Updater.gameIconsRemap(image2[1])
+      if (newName !== false) {
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Macro', packId, parentUuid, {
+          img: 'systems/CoC7/assets/game-icons/' + newName
+        })
+      }
+    }
   }
 
   /**
@@ -968,12 +1038,30 @@ export default class CoC7Updater {
         img: 'systems/CoC7/assets/icons/' + image[1]
       })
     }
+    const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    if (image2) {
+      const newName = CoC7Updater.gameIconsRemap(image2[1])
+      if (newName !== false) {
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'RollTable', packId, parentUuid, {
+          img: 'systems/CoC7/assets/game-icons/' + newName
+        })
+      }
+    }
     for (const offset in document.results.contents ?? []) {
       const image = String(document.results.contents[offset].img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
       if (image) {
         CoC7Updater.mergeEmbeddedDocuments(document.results.contents[offset], documentUpdates, 'TableResult', packId, document.uuid, {
           img: 'systems/CoC7/assets/icons/' + image[1]
         })
+      }
+      const image2 = String(document.results.contents[offset].img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+      if (image2) {
+        const newName = CoC7Updater.gameIconsRemap(image2[1])
+        if (newName !== false) {
+          CoC7Updater.mergeEmbeddedDocuments(document.results.contents[offset], documentUpdates, 'TableResult', packId, document.uuid, {
+            img: 'systems/CoC7/assets/game-icons/' + newName
+          })
+        }
       }
     }
   }
@@ -992,6 +1080,15 @@ export default class CoC7Updater {
       CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Token', packId, parentUuid, {
         img: 'systems/CoC7/assets/icons/' + image[1]
       })
+    }
+    const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    if (image2) {
+      const newName = CoC7Updater.gameIconsRemap(image2[1])
+      if (newName !== false) {
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Token', packId, parentUuid, {
+          img: 'systems/CoC7/assets/game-icons/' + newName
+        })
+      }
     }
   }
 
@@ -1105,5 +1202,249 @@ export default class CoC7Updater {
         }, 500)
       }
     }
+  }
+
+  /**
+   * Convert renamed icons to original name
+   * @param {string} oldName
+   * @returns {string}
+   */
+  static gameIconsRemap (oldName) {
+    switch (oldName) {
+      case 'accounting.svg':
+        return 'delapouite/money-stack.svg'
+      case 'animal_handling.svg':
+        return 'delapouite/jumping-dog.svg'
+      case 'anthropology.svg':
+        return 'delapouite/human-pyramid.svg'
+      case 'appraise.svg':
+        return 'delapouite/glass-ball.svg'
+      case 'archaeology.svg':
+        return 'delapouite/great-pyramid.svg'
+      case 'archive-register.svg':
+        return 'delapouite/archive-register.svg'
+      case 'arm-sling.svg':
+        return 'delapouite/arm-sling.svg'
+      case 'art_craft_acting.svg':
+        return 'delapouite/theater-curtains.svg'
+      case 'art_craft_any.svg':
+        return 'lorc/shining-heart.svg'
+      case 'art_craft_fine_art.svg':
+        return 'delapouite/paint-brush.svg'
+      case 'art_craft_forgery.svg':
+        return 'delapouite/paper-tray.svg'
+      case 'art_craft_photography.svg':
+        return 'delapouite/photo-camera.svg'
+      case 'barrier.svg':
+        return 'delapouite/barrier.svg'
+      case 'cartwheel.svg':
+        return 'lorc/cartwheel.svg'
+      case 'charm.svg':
+        return 'lorc/charm.svg'
+      case 'church.svg':
+        return 'delapouite/church.svg'
+      case 'classical_knowledge.svg':
+        return 'delapouite/classical-knowledge.svg'
+      case 'climb.svg':
+        return 'delapouite/mountain-road.svg'
+      case 'cog.svg':
+        return 'lorc/cog.svg'
+      case 'computer_use.svg':
+        return 'lord-berandas/computing.svg'
+      case 'credit_rating.svg':
+        return 'delapouite/credits-currency.svg'
+      case 'cthulhu_mythos.svg':
+        return 'delapouite/fish-monster.svg'
+      case 'cultist.svg':
+        return 'lorc/cultist.svg'
+      case 'demolitions.svg':
+        return 'lorc/demolish.svg'
+      case 'diploma.svg':
+        return 'delapouite/diploma.svg'
+      case 'disguise.svg':
+        return 'lorc/domino-mask.svg'
+      case 'diving_helmet.svg':
+        return 'delapouite/diving-helmet.svg'
+      case 'dodge.svg':
+        return 'lorc/dodging.svg'
+      case 'diving.svg':
+        return 'delapouite/pool-dive.svg'
+      case 'drive_auto.svg':
+        return 'skoll/race-car.svg'
+      case 'electrical_repair.svg':
+        return 'delapouite/electrical-resistance.svg'
+      case 'electronics.svg':
+        return 'delapouite/musical-keyboard.svg'
+      case 'evasion.svg':
+        return 'delapouite/evasion.svg'
+      case 'eye-shield.svg':
+        return 'lorc/eye-shield.svg'
+      case 'falling.svg':
+        return 'sbed/falling.svg'
+      case 'fast_talk.svg':
+        return 'lorc/back-forth.svg'
+      case 'fighting_axe.svg':
+        return 'delapouite/sharp-axe.svg'
+      case 'fighting_brawl.svg':
+        return 'lorc/mailed-fist.svg'
+      case 'fighting_chainsaw.svg':
+        return 'delapouite/chainsaw.svg'
+      case 'fighting_flail.svg':
+        return 'delapouite/flail.svg'
+      case 'fighting_garrote.svg':
+        return 'delapouite/skipping-rope.svg'
+      case 'fighting_spear.svg':
+        return 'delapouite/spear-feather.svg'
+      case 'fighting_sword.svg':
+        return 'lorc/sword-clash.svg'
+      case 'fighting_throw.svg':
+        return 'delapouite/throwing-ball.svg'
+      case 'fighting_whip.svg':
+        return 'lorc/whip.svg'
+      case 'firearms_artillery.svg':
+        return 'delapouite/missile-launcher.svg'
+      case 'firearms_bow.svg':
+        return 'lorc/pocket-bow.svg'
+      case 'firearms_flamethrower.svg':
+        return 'delapouite/flamethrower.svg'
+      case 'firearms_handgun.svg':
+        return 'john-colburn/pistol-gun.svg'
+      case 'firearms_heavy_weapons.svg':
+        return 'lorc/missile-pod.svg'
+      case 'firearms_machine_gun.svg':
+        return 'skoll/machine-gun.svg'
+      case 'firearms_rifle_shotgun.svg':
+        return 'skoll/winchester-rifle.svg'
+      case 'firearms_submachine_gun.svg':
+        return 'delapouite/machine-gun-magazine.svg'
+      case 'first_aid.svg':
+        return 'delapouite/first-aid-kit.svg'
+      case 'floating-tentacles.svg':
+        return 'delapouite/floating-tentacles.svg'
+      case 'hanging-spider.svg':
+        return 'lorc/hanging-spider.svg'
+      case 'hazard-sign.svg':
+        return 'lorc/hazard-sign.svg'
+      case 'heart-beats.svg':
+        return 'delapouite/heart-beats.svg'
+      case 'history.svg':
+        return 'delapouite/book-pile.svg'
+      case 'hypnosis.svg':
+        return 'lorc/twirl-center.svg'
+      case 'intimidate.svg':
+        return 'delapouite/tired-eye.svg'
+      case 'jeep.svg':
+        return 'delapouite/jeep.svg'
+      case 'jump.svg':
+        return 'delapouite/jump-across.svg'
+      case 'knocked-out-stars.svg':
+        return 'delapouite/knocked-out-stars.svg'
+      case 'language.svg':
+        return 'skoll/talk.svg'
+      case 'lasso.svg':
+        return 'delapouite/lasso.svg'
+      case 'laurel_crown.svg':
+        return 'lorc/laurel-crown.svg'
+      case 'law.svg':
+        return 'delapouite/3d-hammer.svg'
+      case 'library_use.svg':
+        return 'delapouite/archive-research.svg'
+      case 'listen.svg':
+        return 'delapouite/sound-on.svg'
+      case 'locksmith.svg':
+        return 'delapouite/house-keys.svg'
+      case 'mechanical_repair.svg':
+        return 'lorc/mechanical-arm.svg'
+      case 'medicine.svg':
+        return 'delapouite/plague-doctor-profile.svg'
+      case 'natural_world.svg':
+        return 'delapouite/forest.svg'
+      case 'navigate.svg':
+        return 'delapouite/earth-america.svg'
+      case 'occult.svg':
+        return 'lorc/evil-book.svg'
+      case 'operate_heavy_machinery.svg':
+        return 'delapouite/melting-metal.svg'
+      case 'paranoia.svg':
+        return 'lorc/paranoia.svg'
+      case 'pentagram-rose.svg':
+        return 'lorc/pentagram-rose.svg'
+      case 'persuade.svg':
+        return 'lorc/conversation.svg'
+      case 'pilot_any.svg':
+        return 'delapouite/ship-wheel.svg'
+      case 'poker-hand.svg':
+        return 'lorc/poker-hand.svg'
+      case 'psychoanalysis.svg':
+        return 'lorc/psychic-waves.svg'
+      case 'psychology.svg':
+        return 'delapouite/all-seeing-eye.svg'
+      case 'read_lips.svg':
+        return 'lorc/lips.svg'
+      case 'ride.svg':
+        return 'delapouite/horse-head.svg'
+      case 'rolling-dices.svg':
+        return 'delapouite/rolling-dices.svg'
+      case 'round-potion.svg':
+        return 'caro-asercion/round-potion.svg'
+      case 'science_any.svg':
+        return 'lorc/materials-science.svg'
+      case 'science_astronomy.svg':
+        return 'lorc/ringed-planet.svg'
+      case 'science_biology.svg':
+        return 'lorc/dna2.svg'
+      case 'science_botany.svg':
+        return 'delapouite/plant-seed.svg'
+      case 'science_chemistry.svg':
+        return 'lorc/chemical-drop.svg'
+      case 'science_cryptography.svg':
+        return 'delapouite/flower-emblem.svg'
+      case 'science_forensics.svg':
+        return 'lorc/bloody-stash.svg'
+      case 'science_geology.svg':
+        return 'lorc/earth-spit.svg'
+      case 'science_mathematics.svg':
+        return 'delapouite/calculator.svg'
+      case 'science_meteorology.svg':
+        return 'delapouite/cloud-download.svg'
+      case 'science_pharmacy.svg':
+        return 'lorc/pill.svg'
+      case 'science_physics.svg':
+        return 'lorc/vibrating-ball.svg'
+      case 'science_zoology.svg':
+        return 'lorc/animal-skull.svg'
+      case 'secret-book.svg':
+        return 'delapouite/secret-book.svg'
+      case 'shaking-hands.svg':
+        return 'delapouite/shaking-hands.svg'
+      case 'skills.svg':
+        return 'delapouite/skills.svg'
+      case 'sleight_of_hand.svg':
+        return 'lorc/hand.svg'
+      case 'spanner.svg':
+        return 'lorc/spanner.svg'
+      case 'spot_hidden.svg':
+        return 'lorc/magnifying-glass.svg'
+      case 'stealth.svg':
+        return 'lorc/hidden.svg'
+      case 'survival_any.svg':
+        return 'lorc/campfire.svg'
+      case 'swim.svg':
+        return 'delapouite/swimfins.svg' // cspell:disable-line
+      case 'tentacles-skull.svg':
+        return 'lorc/tentacles-skull.svg'
+      case 'time-trap.svg':
+        return 'lorc/time-trap.svg'
+      case 'tombstone.svg':
+        return 'lorc/tombstone.svg'
+      case 'track.svg':
+        return 'delapouite/deer-track.svg'
+      case 'whiplash.svg':
+        return 'lorc/whiplash.svg'
+      case 'wolf-trap.svg':
+        return 'lorc/wolf-trap.svg'
+    }
+    console.log('Unknown Game Icons Remap', oldName)
+    return false
   }
 }

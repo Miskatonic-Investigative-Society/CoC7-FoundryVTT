@@ -13,7 +13,7 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
    * @returns {string}
    */
   static get defaultImg () {
-    return 'systems/' + FOLDER_ID + '/assets/icons/secret-book.svg'
+    return 'systems/' + FOLDER_ID + '/assets/game-icons/delapouite/secret-book.svg'
   }
 
   /**

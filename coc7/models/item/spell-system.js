@@ -9,7 +9,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
    * @returns {string}
    */
   static get defaultImg () {
-    return 'systems/' + FOLDER_ID + '/assets/icons/pentagram-rose.svg'
+    return 'systems/' + FOLDER_ID + '/assets/game-icons/lorc/pentagram-rose.svg'
   }
 
   /**
