@@ -2,6 +2,8 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
+The **pt-BR** translation is currently up to date
+
 The following translations have more than 360 untranslated strings [are you able to help?](./ABANDONED.md)
 
 [cs.json (493 untranslated strings)](./ABANDONED.md#csjson)
@@ -11,8 +13,6 @@ The following translations have more than 360 untranslated strings [are you able
 [es.json (452 untranslated strings)](./ABANDONED.md#esjson)
 
 [it.json (529 untranslated strings)](./ABANDONED.md#itjson)
-
-[pt-BR.json (683 untranslated strings)](./ABANDONED.md#pt-brjson)
 
 [ru.json (599 untranslated strings)](./ABANDONED.md#rujson)
 

@@ -326,93 +326,92 @@ const parameters = [
   }
 ]
 
-const ptBRTranslations = {
-  Attrib: 'Atributo',
-  Luck: 'Sorte',
-  Sanity: 'Sanidade',
-  Characteristic: 'Característica',
-  APP: 'APA',
-  CON: 'CON',
-  DEX: 'DES',
-  EDU: 'EDU',
-  INT: 'INT',
-  POW: 'POD',
-  SIZ: 'TAM',
-  STR: 'FOR',
-  Skill: 'Perícia',
-  Accounting: 'Contabilidade',
-  Anthropology: 'Antropologia',
-  Appraise: 'Avaliação',
-  Archaeology: 'Arqueologia',
-  'Art/Craft (Fine Art)': 'Arte/Ofício (Belas Artes)',
-  Charm: 'Charme',
-  Climb: 'Escalar',
-  'Computer Use': 'Computadores',
-  'Credit Rating': 'Nível de Crédito',
-  'Cthulhu Mythos': 'Mitos de Cthulhu',
-  Demolitions: 'Demolições',
-  Disguise: 'Disfarce',
-  Diving: 'Mergulho',
-  Dodge: 'Esquivar',
-  'Drive Auto': 'Dirigir Automóveis',
-  'Electrical Repair': 'Consertos Elétricos',
-  Electronics: 'Eletrônica',
-  'Fast Talk': 'Lábia',
-  'Fighting (Brawl)': 'Lutar (Briga)',
-  'Firearms (Handgun)': 'Armas de Fogo (Pistola)',
-  'Firearms (Rifle/Shotgun)': 'Armas de Fogo (Rifles/Escopetas)',
-  'Firearms (Submachine Gun)': 'Armas de Fogo (Submetralhadora)',
-  'First Aid': 'Primeiros Socorros',
-  History: 'História',
-  Intimidate: 'Intimidação',
-  Jump: 'Saltar',
-  'Language (Any)': 'Outra Língua (Qualquer)',
-  'Language (Own)': 'Língua Nativa',
-  Law: 'Direito',
-  'Library Use': 'Usar Bibliotecas',
-  Listen: 'Escutar',
-  Locksmith: 'Chaveiro',
-  'Mechanical Repair': 'Consertos Mecânicos',
-  Medicine: 'Medicina',
-  'Natural World': 'História Natural',
-  Navigate: 'Navegação',
-  Occult: 'Ocultismo',
-  'Operate Heavy Machinery': 'Operar Maquinário Pesado',
-  Persuade: 'Persuasão',
-  'Pilot (Boat)': 'Pilotar (Barco)',
-  Psychoanalysis: 'Psicanálise',
-  Psychology: 'Psicologia',
-  'Read Lips': 'Ler Lábios',
-  Ride: 'Cavalgar',
-  'Science (Chemistry)': 'Ciência (Química)',
-  'Sleight of Hand': 'Prestidigitação',
-  'Spot Hidden': 'Encontrar',
-  Stealth: 'Furtividade',
-  'Survival (Desert)': 'Sobrevivência (Deserto)',
-  Swim: 'Natação',
-  'Fighting (Throw)': 'Arremessar',
-  Track: 'Rastrear',
-  Regular: 'Regular',
-  Hard: 'Sólido',
-  Extreme: 'Extremo',
-  Critical: 'Crítico',
-  Blind: 'Oculto',
-  '1 Bonus': '1 Bônus',
-  '2 Bonus': '2 Bônus',
-  '1 Penalty': '1 Penalidade',
-  '2 Penalty': '2 Penalidade',
-  Type: 'Tipo',
-  Name: 'Nome',
-  Parameters: 'Parâmetros',
-  Code: 'Código',
-  'Roll Requests': 'Solicitações de Rolagem'
+const translations = {
+  'pt-BR': {
+    Attrib: 'Atributo',
+    Luck: 'Sorte',
+    Sanity: 'Sanidade',
+    Characteristic: 'Característica',
+    APP: 'APA',
+    CON: 'CON',
+    DEX: 'DES',
+    EDU: 'EDU',
+    INT: 'INT',
+    POW: 'POD',
+    SIZ: 'TAM',
+    STR: 'FOR',
+    Skill: 'Perícia',
+    Accounting: 'Contabilidade',
+    Anthropology: 'Antropologia',
+    Appraise: 'Avaliação',
+    Archaeology: 'Arqueologia',
+    'Art/Craft (Fine Art)': 'Arte/Ofício (Belas Artes)',
+    Charm: 'Charme',
+    Climb: 'Escalar',
+    'Computer Use': 'Computadores',
+    'Credit Rating': 'Nível de Crédito',
+    'Cthulhu Mythos': 'Mitos de Cthulhu',
+    Demolitions: 'Demolições',
+    Disguise: 'Disfarce',
+    Diving: 'Mergulho',
+    Dodge: 'Esquivar',
+    'Drive Auto': 'Dirigir Automóveis',
+    'Electrical Repair': 'Consertos Elétricos',
+    Electronics: 'Eletrônica',
+    'Fast Talk': 'Lábia',
+    'Fighting (Brawl)': 'Lutar (Briga)',
+    'Firearms (Handgun)': 'Armas de Fogo (Pistola)',
+    'Firearms (Rifle/Shotgun)': 'Armas de Fogo (Rifles/Escopetas)',
+    'Firearms (Submachine Gun)': 'Armas de Fogo (Submetralhadora)',
+    'First Aid': 'Primeiros Socorros',
+    History: 'História',
+    Intimidate: 'Intimidação',
+    Jump: 'Saltar',
+    'Language (Any)': 'Outra Língua (Qualquer)',
+    'Language (Own)': 'Língua Nativa',
+    Law: 'Direito',
+    'Library Use': 'Usar Bibliotecas',
+    Listen: 'Escutar',
+    Locksmith: 'Chaveiro',
+    'Mechanical Repair': 'Consertos Mecânicos',
+    Medicine: 'Medicina',
+    'Natural World': 'História Natural',
+    Navigate: 'Navegação',
+    Occult: 'Ocultismo',
+    'Operate Heavy Machinery': 'Operar Maquinário Pesado',
+    Persuade: 'Persuasão',
+    'Pilot (Boat)': 'Pilotar (Barco)',
+    Psychoanalysis: 'Psicanálise',
+    Psychology: 'Psicologia',
+    'Read Lips': 'Ler Lábios',
+    Ride: 'Cavalgar',
+    'Science (Chemistry)': 'Ciência (Química)',
+    'Sleight of Hand': 'Prestidigitação',
+    'Spot Hidden': 'Encontrar',
+    Stealth: 'Furtividade',
+    'Survival (Desert)': 'Sobrevivência (Deserto)',
+    Swim: 'Natação',
+    'Fighting (Throw)': 'Arremessar',
+    Track: 'Rastrear',
+    Regular: 'Regular',
+    Hard: 'Sólido',
+    Extreme: 'Extremo',
+    Critical: 'Crítico',
+    Blind: 'Oculto',
+    '1 Bonus': '1 Bônus',
+    '2 Bonus': '2 Bônus',
+    '1 Penalty': '1 Penalidade',
+    '2 Penalty': '2 Penalidade',
+    Type: 'Tipo',
+    Name: 'Nome',
+    Parameters: 'Parâmetros',
+    Code: 'Código',
+    'Roll Requests': 'Solicitações de Rolagem'
+  }
 }
 
 function translate (text, lang) {
-  if (lang === 'pt-BR') {
-    return ptBRTranslations[text] ?? text
-  }
-  return text
+  return (translations[lang]?.[text] ?? text)
 }
 
 function buildRollRequests ({ lang, packName, id, pageId }) {
@@ -428,13 +427,11 @@ function buildRollRequests ({ lang, packName, id, pageId }) {
   for (const roll1 of rolls) {
     for (const roll2 of roll1.names) {
       for (const parameter of parameters) {
-        const rollType = translate(roll1.name, lang)
         const rollName = translate(roll2.name, lang)
-        const parameterName = translate(parameter.name, lang)
         html.push('<tr>')
-        html.push('<td><p style="text-align:center"><strong>' + rollType + '</strong></p></td>')
+        html.push('<td><p style="text-align:center"><strong>' + translate(roll1.name, lang) + '</strong></p></td>')
         html.push('<td><p style="text-align:center">' + rollName + '</p></td>')
-        html.push('<td><p style="text-align:center">' + parameterName + '</p></td>')
+        html.push('<td><p style="text-align:center">' + translate(parameter.name, lang) + '</p></td>')
         html.push('<td><p style="text-align:center">@coc7.check[subtype:' + roll1.subtype + ',name:' + rollName + ',difficulty:' + parameter.difficulty + ',poolModifier:' + parameter.poolModifier + ',icon:' + roll2.icon + ']{ ' + rollName + (parameter.code !== '' ? ' (' + parameter.code + ')' : '') + '}</p></td>')
         html.push('</tr>')
       }
@@ -481,8 +478,7 @@ const folderId = foundryConfig.json.id
 
 try {
   for (const { packName, dbFile } of [
-    buildRollRequests({ lang: 'en', packName: 'roll-requests', id: 'qaWAuaZa42JtdBhF', pageId: 'izVAGIeSXPWURg7U' }),
-    buildRollRequests({ lang: 'pt-BR', packName: 'pt-BR-roll-requests', id: 'YHPXdXsscq0p7j2g', pageId: 'HsfEQQO4zI8ieOiD' })
+    buildRollRequests({ lang: 'en', packName: 'roll-requests', id: 'qaWAuaZa42JtdBhF', pageId: 'izVAGIeSXPWURg7U' })
   ]) {
     TemplateHelpers.createBinaryPack(packName, dbFile)
     console.log('Generated: ./binary-packs/' + packName)
