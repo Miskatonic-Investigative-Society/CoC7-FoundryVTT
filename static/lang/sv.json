@@ -1894,5 +1894,6 @@
 "CoC7.UseLuckForLookOutMaster": "Använd alla turpoäng för Se upp, mästare!",
 "CoC7.UseLuckForReduceLoss": "Använd turpoäng för att minska {name}",
 "CoC7.UseLuckForSecondAttack": "Använd 10 turpoäng för en andra attack",
-"CoC7.UseLuckForWeaponFailure": "Använd 10 turpoäng för att undvika konsekvenserna av vapenfel eller vapenfummel"
+"CoC7.UseLuckForWeaponFailure": "Använd 10 turpoäng för att undvika konsekvenserna av vapenfel eller vapenfummel",
+"CoC7.Config.JournalCSS": "CSS-klasser för journalen"
 }
