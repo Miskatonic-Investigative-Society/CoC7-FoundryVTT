@@ -56,7 +56,7 @@
         transition-duration: 0.1s;
         transition-timing-function: cubic-bezier(0.2, 0.4, 0.7, 0.8);
         filter: brightness(65%);
-        width: @76px;
+        width: @rem76px;
         flex-basis: var(--tab-width);
         writing-mode: sideways-lr;
 
@@ -72,7 +72,7 @@
           content: '';
           position: absolute;
           width: var(--tab-width);
-          height: @76px;
+          height: @rem76px;
           right: 0;
           bottom: 100%;
           rotate: -90deg;
@@ -98,7 +98,7 @@
         }
 
         &.small-ribbon {
-          --tab-width: @48px;
+          --tab-width: @rem48px;
           // flex-basis: 48px;
           // width: 67px;
           margin-left: 30px;
@@ -110,8 +110,8 @@
 
           i {
             position: relative;
-            font-size: @29px;
-            max-width: @30px;
+            font-size: @rem29px;
+            max-width: @rem30px;
             // overflow: hidden;
             text-shadow: 2px 2px 4px #000000;
             z-index: 1;
@@ -131,11 +131,11 @@
 
           &::after {
             background-image: var(--investigator-sheet-tab-blue);
-            background-size: @100px;
+            background-size: @rem100px;
           }
 
           i {
-            font-size: @24px;
+            font-size: @rem24px;
           }
         }
 
@@ -150,7 +150,7 @@
 
         &.skills {
           --tab-color: var(--color-hp);
-          --tab-width: @92px;
+          --tab-width: @rem92px;
 
           &::after {
             background-image: var(--investigator-sheet-tab-red);
@@ -159,7 +159,7 @@
 
         &.combat {
           --tab-color: var(--color-mp);
-          --tab-width: @90px;
+          --tab-width: @rem90px;
 
           &::after {
             background-image: var(--investigator-sheet-tab-blue);
@@ -168,7 +168,7 @@
 
         &.possessions {
           --tab-color: var(--color-luck);
-          --tab-width: @101px;
+          --tab-width: @rem101px;
 
           &::after {
             background-image: var(--investigator-sheet-tab-yellow);
@@ -177,7 +177,7 @@
 
         &.background {
           --tab-color: var(--color-sanity);
-          --tab-width: @108px;
+          --tab-width: @rem108px;
 
           &::after {
             background-image: var(--investigator-sheet-tab-green);
@@ -192,7 +192,7 @@
           max-width: 76px;
           overflow: hidden;
           text-shadow: 2px 2px 4px #000000;
-          font-size: @19px;
+          font-size: @rem19px;
           line-height: 1;
           z-index: 1;
         }
@@ -228,13 +228,13 @@
           .flex-col();
 
           .character-detail {
-            .flex-row(@col-gap: @5px);
+            .flex-row(@col-gap: @rem5px);
 
             .title {
               font-family: var(--investigator-sheet-primary-font);
-              font-size: @22px;
+              font-size: @rem22px;
               text-transform: uppercase;
-              line-height: @24px;
+              line-height: @rem24px;
             }
 
             .detail-value {
@@ -242,19 +242,19 @@
               background: transparent;
               border: none;
               font-family: var(--investigator-sheet-secondary-font);
-              font-size: @20px;
+              font-size: @rem20px;
               color: var(--color-labels);
-              height: @24px;
-              line-height: @24px;
-              padding: @2px @3px 0;
+              height: @rem24px;
+              line-height: @rem24px;
+              padding: @rem2px @rem3px 0;
               overflow: hidden;
 
               &:is(span) {
-                padding-top: @1px;
+                padding-top: @rem1px;
               }
 
               &.detail-age {
-                flex: 0 0 @48px;
+                flex: 0 0 @rem48px;
               }
             }
 
@@ -266,7 +266,7 @@
         }
 
         .scroll-container {
-          .flex-col(@row-gap: @7px);
+          .flex-col(@row-gap: @rem7px);
           overflow: auto;
         }
 
@@ -307,7 +307,7 @@
             grid-template-rows: repeat(2, 1.5fr);
 
             .characteristic-name {
-              font-size: @25px;
+              font-size: @rem25px;
               color: var(--color-labels);
               margin: 0;
               border: 0;
@@ -335,7 +335,7 @@
                   grid-area: mainScore;
                   border: 0;
                   background: transparent;
-                  font-size: @24px;
+                  font-size: @rem24px;
                   justify-self: center;
                   align-self: center;
                   text-align: center;
@@ -343,7 +343,7 @@
                 }
 
                 .part-detail-value {
-                  font-size: @13px;
+                  font-size: @rem13px;
                   justify-self: center;
                   align-self: center;
                   font-weight: bold;
@@ -380,7 +380,7 @@
           .secondary-attribute {
             --color: var(--color-labels);
             display: grid;
-            grid-template-rows: @25px @24px @48px;
+            grid-template-rows: @rem25px @rem24px @rem48px;
             font-family: var(--investigator-sheet-primary-font);
             background: var(--color-tint);
             border-radius: var(--border-radius-large);
@@ -403,7 +403,7 @@
 
             .attribute-name {
               color: var(--color);
-              font-size: @24px;
+              font-size: @rem24px;
               text-align: center;
               font-weight: bold;
             }
@@ -412,7 +412,7 @@
               background: transparent;
               border: none;
               text-align: center;
-              font-size: @20px;
+              font-size: @rem20px;
             }
 
             .attribute-total {
@@ -422,8 +422,8 @@
               background-position: bottom;
               background-color: var(--color);
               color: #FFF;
-              padding-top: @2px;
-              padding-bottom: @24px;
+              padding-top: @rem2px;
+              padding-bottom: @rem24px;
               border-radius: 0 0 var(--border-radius-large) var(--border-radius-large);
 
               &:read-only {
@@ -445,7 +445,7 @@
           position: relative;
           border-radius: var(--border-radius-large);
           overflow: hidden;
-          font-size: @18px;
+          font-size: @rem18px;
           font-family: var(--investigator-sheet-primary-font);
           background: var(--color-tint);
 
@@ -461,12 +461,12 @@
           }
 
           .derived-attributes-box {
-            font-size: @18px;
+            font-size: @rem18px;
 
             .derived-attribute {
-              padding: @3px;
+              padding: @rem3px;
               display: inline-flex;
-              column-gap: @3px;
+              column-gap: @rem3px;
 
               .derived-attribute-name {
                 flex: auto;
@@ -475,7 +475,7 @@
               }
 
               .derived-attribute-value {
-                width: @26px;
+                width: @rem26px;
                 text-align: center;
               }
 
@@ -491,19 +491,19 @@
 
               .derived-attribute-build,
               .derived-attribute-mov {
-                width: @26px;
+                width: @rem26px;
               }
 
               .derived-attribute-db {
-                width: @38px;
+                width: @rem38px;
               }
 
               .derived-attribute-armor {
-                width: @35px;
+                width: @rem35px;
               }
 
               .derived-attribute-dailysan {
-                width: @24px;
+                width: @rem24px;
               }
             }
           }
@@ -636,7 +636,7 @@
               }
 
               i {
-                font-size: @64px;
+                font-size: @rem64px;
               }
             }
 
@@ -650,7 +650,7 @@
               .flex-row(@justify: center);
               width: 28px;
               height: 28px;
-              font-size: @30px;
+              font-size: @rem30px;
             }
           }
         }
@@ -665,7 +665,7 @@
         .photo-frame {
           --overlap: 0;
           --offset: 0;
-          left: @64px;
+          left: @rem64px;
         }
       }
 
@@ -740,7 +740,7 @@
                 flex: 1 1 0;
                 width: 100%;
                 align-self: center;
-                .flex-row(@col-gap: @8px; @justify: var(--justify));
+                .flex-row(@col-gap: @rem8px; @justify: var(--justify));
 
                 &:last-child {
                   --justify: flex-end;
@@ -754,8 +754,8 @@
             }
 
             .section-header {
-              .flex-row(@col-gap: @13px);
-              padding: 0 0 @1px;
+              .flex-row(@col-gap: @rem13px);
+              padding: 0 0 @rem1px;
               border-bottom: 2px solid var(--color-labels);
             }
 
@@ -772,13 +772,13 @@
               .bio-section {
                 .events {
                   min-height: 65px;
-                  line-height: @24px;
+                  line-height: @rem24px;
                 }
               }
 
               .cash-assets {
-                .flex-col(@row-gap: @3px);
-                font-size: @13px;
+                .flex-col(@row-gap: @rem3px);
+                font-size: @rem13px;
 
                 .asset {
                   .flex-row();
@@ -790,7 +790,7 @@
                   }
 
                   input[type='number'].cash-assets-range {
-                    flex: 0 0 @35px;
+                    flex: 0 0 @rem35px;
                   }
 
                   select.cash-assets-type {
@@ -799,7 +799,7 @@
                   }
 
                   .item-control {
-                    margin-left: @7px;
+                    margin-left: @rem7px;
                   }
                 }
               }
@@ -812,7 +812,7 @@
               .skill-points {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: @2px;
+                gap: @rem2px;
                 text-align: center;
               }
 
@@ -842,31 +842,31 @@
               }
 
               .header-section {
-                .flex-row(@col-gap: @5px; @justify: center);
-                padding: @1px @4px;
+                .flex-row(@col-gap: @rem5px; @justify: center);
+                padding: @rem1px @rem4px;
                 border: 1px dashed black;
                 border-radius: var(--border-radius-small);
-                line-height: @26px;
+                line-height: @rem26px;
                 text-align: center;
                 color: #fff;
                 font-family: var(--investigator-sheet-primary-font);
-                font-size: @22px;
+                font-size: @rem22px;
 
                 &.warning {
                   border: 1px solid var(--color-level-error);
                 }
 
                 .points {
-                  .flex-row(@col-gap: @5px);
+                  .flex-row(@col-gap: @rem5px);
                 }
 
                 label {
                   font-family: var(--investigator-sheet-primary-font);
-                  font-size: @19px;
+                  font-size: @rem19px;
                 }
 
                 input {
-                  width: @32px;
+                  width: @rem32px;
                   color: #fff;
                   text-align: center;
                 }
@@ -876,18 +876,18 @@
                 .flex-col();
                 margin: 0;
                 padding: 0;
-                line-height: @17px;
+                line-height: @rem17px;
 
                 li.item {
                   margin: 0;
                   display: grid;
-                  grid-template-columns: @16px auto @21px @21px @21px @21px @21px;
+                  grid-template-columns: @rem16px auto @rem21px @rem21px @rem21px @rem21px @rem21px;
                   align-items: center;
                   border-bottom: 1px solid var(--color-sheet-front);
                   color: var(--color-sheet-front);
 
                   &.pulpCharacter {
-                    grid-template-columns: @30px auto @21px @21px @21px @21px @21px @21px;
+                    grid-template-columns: @rem30px auto @rem21px @rem21px @rem21px @rem21px @rem21px @rem21px;
                   }
 
                   &:nth-child(even) {
@@ -895,11 +895,11 @@
                   }
 
                   .item-controls {
-                    column-gap: @1px;
+                    column-gap: @rem1px;
                   }
 
                   .skill-name {
-                    .flex-row(@col-gap: @5px);
+                    .flex-row(@col-gap: @rem5px);
 
                     &.rollable.flagged4dev {
                       color: var(--investigator-sheet-points-color-experience);
@@ -927,11 +927,11 @@
 
                     span,
                     input {
-                      height: @16px;
-                      line-height: @16px;
-                      padding: @1px @3px;
+                      height: @rem16px;
+                      line-height: @rem16px;
+                      padding: @rem1px @rem3px;
                       margin: 0;
-                      font-size: @13px;
+                      font-size: @rem13px;
                       text-align: right;
                       color: #fff;
                       border: 0;
@@ -949,8 +949,8 @@
               ul.effects-list {
                 li {
                   &.items-header {
-                    margin: @2px 0;
-                    padding: @3px;
+                    margin: @rem2px 0;
+                    padding: @rem3px;
                     border: none;
                     font-weight: bold;
                     border-bottom: 2px solid var(--color-highlight);
@@ -965,12 +965,12 @@
                   }
 
                   .effect-identifier {
-                    .flex-row(@col-gap: @5px);
+                    .flex-row(@col-gap: @rem5px);
                   }
 
                   .item-name {
                     margin: 0;
-                    font-size: @14px;
+                    font-size: @rem14px;
                     font-family: var(--investigator-sheet-secondary-font);
                   }
 
@@ -980,8 +980,8 @@
                   }
 
                   .item-controls {
-                    .flex-row(@justify: flex-end; @col-gap: @10px);
-                    flex: 0 0 @64px;
+                    .flex-row(@justify: flex-end; @col-gap: @rem10px);
+                    flex: 0 0 @rem64px;
                   }
                 }
               }
@@ -992,16 +992,16 @@
             /* ---------------------------------------- */
             &.skills {
               ul.item-list {
-                --icon-size: @20px;
+                --icon-size: @rem20px;
                 display: block;
                 column-count: 2;
                 column-gap: 15px;
 
                 li {
-                  margin: @1px 0;
+                  margin: @rem1px 0;
 
                   &.specialization-header {
-                    margin: @3px 0;
+                    margin: @rem3px 0;
                     font-weight: bold;
                     list-style: none;
                   }
@@ -1022,8 +1022,8 @@
                   li.item {
                     display: grid;
                     border-bottom: 1px solid;
-                    grid-template-columns: @24px @32px 1fr @168px @44px @44px;
-                    grid-template-rows: @32px 1fr;
+                    grid-template-columns: @rem24px @rem32px 1fr @rem168px @rem44px @rem44px;
+                    grid-template-rows: @rem32px 1fr;
                     grid-template-areas:
                       'expand image name range weaponControl itemControl'
                       'details details details details details details';
@@ -1032,12 +1032,12 @@
                     .expand-arrow {
                       .flex-row(@justify: center; );
                       transition: rotate 0.2s ease-out;
-                      font-size: @18px;
+                      font-size: @rem18px;
 
                       i {
                         &::before {
                           display: block;
-                          height: @15px;
+                          height: @rem15px;
                         }
                       }
                     }
@@ -1074,12 +1074,12 @@
                     }
 
                     .weapon-controls {
-                      .flex-row(@col-gap: @5px);
+                      .flex-row(@col-gap: @rem5px);
 
                       .tag {
                         margin: 0;
-                        font-size: @13px;
-                        padding: @2px;
+                        font-size: @rem13px;
+                        padding: @rem2px;
                         line-height: 1;
                       }
 
@@ -1088,7 +1088,7 @@
                       }
 
                       .ammo span.tag {
-                        width: @22px;
+                        width: @rem22px;
                         text-align: center;
                       }
                     }
@@ -1098,14 +1098,14 @@
 
               .skill-list {
                 ul.item-list {
-                  --icon-size: @20px;
+                  --icon-size: @rem20px;
                   display: block;
                   column-count: 2;
-                  column-gap: @15px;
+                  column-gap: @rem15px;
                   margin: 8px 0;
 
                   li {
-                    margin: 0 0 @2px;
+                    margin: 0 0 @rem2px;
                   }
                 }
               }
@@ -1115,18 +1115,18 @@
             /*  Gear & Cash Tab Specifics               */
             /* ---------------------------------------- */
             &.possessions {
-              --icon-size: @20px;
+              --icon-size: @rem20px;
 
               .inventory {
                 display: grid;
                 grid-template-columns: 60% 1fr;
-                column-gap: @15px;
+                column-gap: @rem15px;
 
                 .gear {
                   .flex-col(@row-gap: var(--section-gap));
 
                   .items {
-                    .flex-col(@row-gap: @10px);
+                    .flex-col(@row-gap: @rem10px);
                   }
                 }
 
@@ -1134,11 +1134,11 @@
                   overflow-x: auto;
 
                   .cash-row {
-                    .flex-row(@col-gap: @5px);
+                    .flex-row(@col-gap: @rem5px);
 
                     label {
                       font-weight: 700;
-                      line-height: @22px;
+                      line-height: @rem22px;
                     }
 
                     span {
@@ -1149,7 +1149,7 @@
                   .luck-spend-with-reset {
                     display: grid;
                     grid-template-columns: 1fr auto;
-                    gap: @4px;
+                    gap: @rem4px;
 
                     button.reset-button {
                       height: 100%;
@@ -1162,11 +1162,11 @@
 
                   .luck-spend,
                   .luck-spend-with-reset {
-                    margin-top: @8px;
+                    margin-top: @rem8px;
 
                      button.trigger-button {
                       height: auto;
-                      padding: 0 @4px;
+                      padding: 0 @rem4px;
                       flex: 0 0 100%;
                     }
                   }
@@ -1187,8 +1187,8 @@
                 .section-header {
                   .item-controls {
                     justify-content: flex-end;
-                    flex-basis: @80px;
-                    column-gap: @10px;
+                    flex-basis: @rem80px;
+                    column-gap: @rem10px;
 
                     .item-control {
                       &:first-child {
@@ -1237,7 +1237,7 @@
   .application.coc7.sheet.investigator {
     section.window-content {
       div.investigator {
-        --top-padding: @31px;
+        --top-padding: @rem31px;
         background-image: none;
 
         aside.personal-details {
@@ -1278,7 +1278,7 @@
                 .weapon-list {
                   ul.item-list {
                     li.item {
-                      grid-template-columns: @24px @32px 1fr @120px @44px @44px;
+                      grid-template-columns: @rem24px @rem32px 1fr @rem120px @rem44px @rem44px;
                     }
                   }
                 }
@@ -1296,7 +1296,7 @@
     section.window-content {
       nav.tabs {
         .tab {
-          width: @56px;
+          width: @rem56px;
 
           &::before {
             content: '';
@@ -1447,7 +1447,7 @@
                 .weapon-list {
                   ul.item-list {
                     li.item {
-                      grid-template-columns: @24px @32px 1fr;
+                      grid-template-columns: @rem24px @rem32px 1fr;
                       grid-template-areas:
                         'expand image name weaponControl itemControl'
                         'range range range range range'

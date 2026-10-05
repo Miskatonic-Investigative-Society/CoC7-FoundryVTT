@@ -17,7 +17,7 @@
         input[type=number],
         input[type=text] {
           flex: 2;
-          padding: 0 @8px;
+          padding: 0 @rem8px;
           height: 2.5rem;
         }
 
@@ -48,7 +48,7 @@
       font-weight: bold;
       align-self: flex-start;
       flex: 0.5;
-      margin: @3px 0;
+      margin: @rem3px 0;
     }
 
     select {
@@ -70,7 +70,7 @@
     }
 
     .flexcol.form-gapped {
-      gap: @8px;
+      gap: @rem8px;
     }
 
     .flexrow {
@@ -84,19 +84,19 @@
           flex: 2;
 
           .control {
-            margin-left: @8px;
+            margin-left: @rem8px;
             text-align: right;
           }
 
           input.short-number {
-            width: @80px;
+            width: @rem80px;
           }
         }
       }
 
       .separator {
         flex: 0 0 auto;
-        margin: 0 @3px;
+        margin: 0 @rem3px;
       }
     }
 
@@ -107,12 +107,12 @@
     }
 
     table {
-      margin: @8px;
-      width: calc(100% - @8px - @8px);
+      margin: @rem8px;
+      width: calc(100% - @rem8px - @rem8px);
 
       th,
       td {
-        padding: @2px @2px
+        padding: @rem2px @rem2px
       }
 
       tr:first-child {
@@ -123,35 +123,35 @@
 
   &.active-effect-config {
     .link-header {
-      gap: @6px;
-      padding: @16px @16px 0;
+      gap: @rem6px;
+      padding: @rem16px @rem16px 0;
     }
 
     .link-body {
-      margin: @8px @16px;
-      padding: @8px;
+      margin: @rem8px @rem16px;
+      padding: @rem8px;
     }
 
     section {
-      padding: @8px @16px;
+      padding: @rem8px @rem16px;
     }
 
     .link-buttons {
-      gap: @6px;
-      padding: 0 @16px @16px;
+      gap: @rem6px;
+      padding: 0 @rem16px @rem16px;
     }
   }
 
   &.container {
     section {
-      padding: @8px @16px;
+      padding: @rem8px @rem16px;
       --scroll-margin: 0;
 
       .tab-group-header {
         .flex-row();
         background: rgba(0, 0, 0, 0.15);
         border: 2px groove #eeede0;
-        padding: @2px @6px;
+        padding: @rem2px @rem6px;
         cursor: pointer;
 
         div {
@@ -160,7 +160,7 @@
           &.tab-group-title {
             flex: 2;
             font-family: var(--investigator-sheet-primary-font);
-            font-size: @16px;
+            font-size: @rem16px;
             text-align: center;
           }
 
@@ -179,7 +179,7 @@
       }
 
       button {
-        --button-size: @20px;
+        --button-size: @rem20px;
       }
 
       .toggle-attributes {
@@ -197,11 +197,11 @@
 
       ol.casters {
         margin: 0;
-        padding-left: @8px;
+        padding-left: @rem8px;
         flex: 0 0 100%;
 
         li {
-          gap: @4px;
+          gap: @rem4px;
 
           label {
             flex: 0 0 auto;
@@ -212,7 +212,7 @@
   }
 
   section.window-content {
-    padding: @16px;
+    padding: @rem16px;
 
     prose-mirror,
     .prosemirror {
@@ -225,9 +225,9 @@
 
     .item-header {
       flex: 0 0 auto;
-      gap: @6px;
+      gap: @rem6px;
       align-items: flex-start;
-      padding: 0 @5px;
+      padding: 0 @rem5px;
 
       label {
         flex: 0 0 auto;
@@ -236,35 +236,35 @@
       }
 
       input[type="text"] {
-        --input-height: @24px;
-        padding: 0 @4px;
+        --input-height: @rem24px;
+        padding: 0 @rem4px;
         font-size: var(--font-size-13);
 
         &.large {
           font-size: var(--font-size-24);
-          height: @45px;
+          height: @rem45px;
         }
       }
 
       .item-subheader {
-        gap: @6px;
+        gap: @rem6px;
         align-items: flex-start;
       }
 
       .flexcol.item-property {
-        gap: @3px;
+        gap: @rem3px;
 
         .flexrow {
-          gap: @3px;
+          gap: @rem3px;
         }
 
         .columns-two {
-          gap: @16px;
+          gap: @rem16px;
 
           .column-row {
             flex: 1;
             align-items: center;
-            gap: @4px;
+            gap: @rem4px;
           }
         }
       }
@@ -276,33 +276,33 @@
       }
 
       .profile-img {
-        flex: 0 0 @90px;
-        height: @90px;
-        border: @1px solid var(--color-form-label);
-        border-radius: @2px;
+        flex: 0 0 @rem90px;
+        height: @rem90px;
+        border: @rem1px solid var(--color-form-label);
+        border-radius: @rem2px;
         background-color: rgba(200, 200, 200, var(--profile-img-bg));
         cursor: pointer;
 
         &.small {
-          flex: 0 0 @70px;
-          height: @70px;
+          flex: 0 0 @rem70px;
+          height: @rem70px;
         }
       }
     }
 
     div.item-list {
-      row-gap: @4px;
+      row-gap: @rem4px;
       margin: 0;
       padding: 0;
 
       .item-header,
       .item {
-        gap: @8px;
-        padding: @4px @2px @3px;
+        gap: @rem8px;
+        padding: @rem4px @rem2px @rem3px;
         border-bottom: 1px solid var(--color-fieldset-border);
 
         .detail-value {
-          flex: 0 0 @25px;
+          flex: 0 0 @rem25px;
           text-align: right;
         }
 
@@ -314,7 +314,7 @@
 
         .item-controls {
           flex: 0 0 auto;
-          font-size: @12px;
+          font-size: @rem12px;
         }
 
         .item-summary {
@@ -435,7 +435,7 @@
   }
 
   .chase-actor-header {
-    gap: @8px;
+    gap: @rem8px;
     line-height: 2rem;
 
     .chase-token,

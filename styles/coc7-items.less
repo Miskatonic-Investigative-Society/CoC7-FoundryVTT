@@ -3,38 +3,38 @@
     padding: 0;
 
     .form-gapped {
-      gap: @8px;
+      gap: @rem8px;
     }
 
     .flexrow {
       .separator {
         flex: 0 0 auto;
-        margin: 0 @3px;
+        margin: 0 @rem3px;
       }
     }
 
     .item-header {
-      padding: @16px @16px 0;
+      padding: @rem16px @rem16px 0;
 
       .spell-casting {
         flex: 0 0 7.625rem;
-        gap: @16px;
+        gap: @rem16px;
         align-items: center;
 
         .flexrow {
-          gap: @4px;
+          gap: @rem4px;
         }
       }
     }
 
     .spell-progress {
-      line-height: @24px;
-      padding: @4px @16px;
-      gap: @8px;
+      line-height: @rem24px;
+      padding: @rem4px @rem16px;
+      gap: @rem8px;
 
       a.item-control,
       a.item-control-disabled {
-        margin-top: @2px;
+        margin-top: @rem2px;
         flex: 0 0 auto;
       }
 
@@ -53,24 +53,24 @@
       progress {
         appearance: none;
         background: rgba(0, 0, 0, 0.05);
-        border-radius: @4px;
+        border-radius: @rem4px;
         border: 1px solid var(--color-form-label);
         flex: 1;
-        height: @24px;
+        height: @rem24px;
 
         &::-moz-progress-bar {
           background: goldenrod;
-          border-radius: @4px;
+          border-radius: @rem4px;
         }
 
         &::-webkit-progress-bar {
           background: rgba(0, 0, 0, 0.05);
-          border-radius: @4px;
+          border-radius: @rem4px;
         }
 
         &::-webkit-progress-value {
           background: goldenrod;
-          border-radius: @4px;
+          border-radius: @rem4px;
         }
       }
 
@@ -90,11 +90,11 @@
     }
 
     nav.tabs {
-      border-top: @1px solid var(--color-text-selection-bg);
-      border-bottom: @1px solid var(--color-text-selection-bg);
+      border-top: @rem1px solid var(--color-text-selection-bg);
+      border-bottom: @rem1px solid var(--color-text-selection-bg);
       line-height: 2;
-      margin: @4px 0;
-      padding: 0 @5px;
+      margin: @rem4px 0;
+      padding: 0 @rem5px;
       font-size: var(--font-size-16);
       background-color: var(--nav-bg-color);
 
@@ -102,10 +102,10 @@
         flex: 1;
         font-family: var(--investigator-sheet-primary-font);
         text-transform: uppercase;
-        font-size: @18px;
+        font-size: @rem18px;
 
         &.icon-only-tab {
-          flex: 0 0 @32px;
+          flex: 0 0 @rem32px;
           color: var(--color-green);
         }
       }
@@ -113,11 +113,11 @@
 
     section.tab.flexcol {
       flex: 1;
-      padding: @8px @16px @16px;
+      padding: @rem8px @rem16px @rem16px;
 
       &.scrollable {
-        margin-right: calc(-1* var(--scroll-margin) + @8px);
-        padding-right: @8px;
+        margin-right: calc(-1* var(--scroll-margin) + @rem8px);
+        padding-right: @rem8px;
 
         .item-controls {
           flex: 0 0 auto;
@@ -126,8 +126,8 @@
         ul.effects-list {
           li {
             &.items-header {
-              margin: @2px 0;
-              padding: @3px;
+              margin: @rem2px 0;
+              padding: @rem3px;
               border: none;
               font-weight: bold;
               border-bottom: 2px solid var(--color-highlight);
@@ -142,7 +142,7 @@
             }
 
             .effect-identifier {
-              .flex-row(@col-gap: @5px);
+              .flex-row(@col-gap: @rem5px);
             }
 
             h4 {
@@ -153,21 +153,21 @@
 
             .effect-source,
             .effect-duration {
-              flex: 0 0 @90px;
+              flex: 0 0 @rem90px;
             }
 
             .item-controls {
-              flex: 0 0 @64px;
+              flex: 0 0 @rem64px;
             }
           }
         }
       }
 
       .book-details {
-        gap: @8px;
+        gap: @rem8px;
 
         input.short {
-          flex: 0 0 @40px;
+          flex: 0 0 @rem40px;
         }
 
         .book-type {
@@ -182,15 +182,15 @@
       }
 
       .book-other {
-        margin-top: @8px;
+        margin-top: @rem8px;
         gap: 0;
 
         .book-other-header,
         .book-other-row {
           display: grid;
-          grid-template-columns: 60% auto @20px;
-          gap: @8px;
-          padding: @4px;
+          grid-template-columns: 60% auto @rem20px;
+          gap: @rem8px;
+          padding: @rem4px;
 
           .item-controls {
             text-align: center;
@@ -203,7 +203,7 @@
           font-weight: bold;
           text-align: center;
           background-color: rgba(0, 0, 0, 0.2);
-          border-radius: @8px @8px 0 0;
+          border-radius: @rem8px @rem8px 0 0;
         }
 
         .book-other-row:nth-child(odd) {
@@ -215,12 +215,12 @@
         }
 
         .book-other-row:last-child {
-          border-radius: 0 0 @8px @8px;
+          border-radius: 0 0 @rem8px @rem8px;
         }
 
         &:not(:has(.book-other-row)) {
           .book-other-header {
-            border-radius: @8px;
+            border-radius: @rem8px;
           }
         }
 
@@ -228,8 +228,8 @@
 
       .spell-cost-lists {
         .spell-cost-list {
-          margin-bottom: @8px;
-          gap: @2px;
+          margin-bottom: @rem8px;
+          gap: @rem2px;
 
           .item-controls {
             height: 5rem;
@@ -241,19 +241,19 @@
 
           .item-controls-column {
             flex-direction: column;
-            gap: @8px;
+            gap: @rem8px;
             justify-content: center;
           }
 
           .spell-cost-block {
-            gap: @4px;
-            padding: @4px;
+            gap: @rem4px;
+            padding: @rem4px;
             border: 1px solid #000;
-            border-radius: @8px;
+            border-radius: @rem8px;
 
             .spell-cost-row {
-              gap: @4px;
-              min-height: @22px;
+              gap: @rem4px;
+              min-height: @rem22px;
 
               label {
                 flex: 0 0 auto;
@@ -289,7 +289,7 @@
       }
 
       select {
-        padding: 0 @4px;
+        padding: 0 @rem4px;
       }
 
       .cash-assets-range {

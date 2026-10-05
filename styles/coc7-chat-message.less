@@ -20,7 +20,7 @@
     }
 
     .coc7-rest-block {
-      margin-bottom: @8px;
+      margin-bottom: @rem8px;
     }
 
     .coc7-keep-width-hidden {
@@ -58,19 +58,19 @@
     .coc7-chat-content,
     .coc7-chat-description,
     .coc7-target-name {
-      margin: @6px 0;
+      margin: @rem6px 0;
     }
 
     .coc7-chat-content,
     .coc7-target-name {
       label {
         font-weight: bold;
-        margin: @4px 0
+        margin: @rem4px 0
       }
     }
 
     .bonus-penalty-selector {
-      margin: @6px @12px 0;
+      margin: @rem6px @rem12px 0;
       opacity: 0.6;
       font-size: var(--font-size-12);
 
@@ -94,27 +94,27 @@
       }
 
       input[type=range] {
-        height: @20px;
+        height: @rem20px;
       }
     }
 
     .coc7-card-buttons {
-      padding: @5px;
-      gap: @4px;
+      padding: @rem5px;
+      gap: @rem4px;
 
       &.coc7-half-buttons {
         justify-content: space-around;
 
         button {
-          min-width: calc(50% - @8px);
-          max-width: calc(50% - @8px);
+          min-width: calc(50% - @rem8px);
+          max-width: calc(50% - @rem8px);
         }
       }
 
       button {
-        width: calc(100% - @16px);
+        width: calc(100% - @rem16px);
         font-size: var(--font-size-13);
-        min-width: calc(100% - @16px);
+        min-width: calc(100% - @rem16px);
         height: auto;
         min-height: calc(var(--button-size) / 1.5);
 
@@ -127,7 +127,7 @@
           color: var(--color-text-primary);
           // background: var(--button-hover-background-color);
           border-color: var(--color-level-error-border);
-          box-shadow: 0 0 @4px var(--color-level-error-border);
+          box-shadow: 0 0 @rem4px var(--color-level-error-border);
 
           &[data-action="toggleValue"][data-set="isCombat"] i {
             color: red;
@@ -167,7 +167,7 @@
 
       &.keeper-only-block,
       &.owner-and-keeper-block {
-        margin-bottom: @5px;
+        margin-bottom: @rem5px;
       }
     }
 
@@ -232,7 +232,7 @@
     }
 
     .coc7-card-result {
-      margin: 0 0 @5px;
+      margin: 0 0 @rem5px;
       line-height: var(--input-height);
       text-align: center;
       background: rgba(0, 0, 0, 0.1);
@@ -243,7 +243,7 @@
     }
 
     .coc7-formatted-text.overflowing {
-      max-height: @40px;
+      max-height: @rem40px;
       overflow: hidden;
       -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
       mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
@@ -256,7 +256,7 @@
 
     .dice-roll {
       &.no-dice-formula {
-        padding-top: @6px;
+        padding-top: @rem6px;
       }
 
       .dice-formula {
@@ -378,19 +378,19 @@
     }
 
     .with-top-gap {
-      margin-top: @6px;
+      margin-top: @rem6px;
     }
 
     .ranged-targets-portraits {
-      padding: @8px 0 0;
+      padding: @rem8px 0 0;
 
       &:not(:has(*)) {
         padding: 0;
       }
 
       img {
-        flex: 0 0 @24px;
-        max-width: @24px;
+        flex: 0 0 @rem24px;
+        max-width: @rem24px;
         border: 1px solid #ccc;
         opacity: 0.5;
 
@@ -411,13 +411,13 @@
     .ranged-results,
     .ranged-shots {
       border-top: 2px groove #fff;
-      margin-top: @3px;
-      padding-top: @5px;
+      margin-top: @rem3px;
+      padding-top: @rem5px;
     }
   }
 
   .coc7-book-gains {
-    margin-top: @8px;
+    margin-top: @rem8px;
     gap: 0;
 
     .coc7-spell-gains-header,
@@ -435,8 +435,8 @@
     .coc7-spell-gains-row,
     .coc7-book-gains-header,
     .coc7-book-gains-row {
-      gap: @8px;
-      padding: @4px;
+      gap: @rem8px;
+      padding: @rem4px;
 
       .item-controls {
         text-align: center;
@@ -449,7 +449,7 @@
       font-weight: bold;
       text-align: center;
       background-color: rgba(0, 0, 0, 0.2);
-      border-radius: @8px @8px 0 0;
+      border-radius: @rem8px @rem8px 0 0;
     }
 
     .coc7-book-gains-header {
@@ -468,12 +468,12 @@
 
     .coc7-spell-gains-row:last-child,
     .coc7-book-gains-row:last-child {
-      border-radius: 0 0 @8px @8px;
+      border-radius: 0 0 @rem8px @rem8px;
     }
 
     &:not(:has(.coc7-book-gains-row)) {
       .coc7-book-gains-header {
-        border-radius: @8px;
+        border-radius: @rem8px;
       }
     }
   }
@@ -483,11 +483,11 @@
     text-align: center;
     font-size: var(--font-size-18);
     font-weight: bold;
-    padding: @4px;
+    padding: @rem4px;
   }
 
   .coc7-status-list {
-    padding-top: @5px;
+    padding-top: @rem5px;
     border-top: 2px groove #fff;
   }
 

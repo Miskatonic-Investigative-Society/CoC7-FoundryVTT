@@ -68,8 +68,8 @@
   --investigator-sheet-points-color-occupation: var(--color-mp); // #101345
   --investigator-sheet-points-color-archetype: var(--color-luck); // #79501c
   --investigator-sheet-points-color-experience: var(--color-sanity); // #2e4b1f;
-  --icon-size: @24px;
-  --section-gap: @20px;
+  --icon-size: @rem24px;
+  --section-gap: @rem20px;
   --color-table-row: rgba(0, 0, 0, 0.1);
   /* ---------------------------------------- */
   /*  Global Misc                             */
@@ -188,14 +188,14 @@ body.theme-dark .application.coc7,
 
   prose-mirror,
   .prosemirror {
-    min-height: @100px;
+    min-height: @rem100px;
 
     &.active {
-      min-height: @315px;
+      min-height: @rem315px;
     }
 
     &.inactive {
-      padding: 0 @8px;
+      padding: 0 @rem8px;
     }
 
     &:hover,
@@ -205,13 +205,13 @@ body.theme-dark .application.coc7,
     }
 
     .editor-container {
-      margin: 0 @8px;
+      margin: 0 @rem8px;
     }
 
     .editor-content {
       position: static;
       padding: 0;
-      margin-bottom: @10px;
+      margin-bottom: @rem10px;
 
       & :last-child {
         margin-bottom: 0;
@@ -219,8 +219,8 @@ body.theme-dark .application.coc7,
     }
 
     button.toggle {
-      top: @5px;
-      right: @5px;
+      top: @rem5px;
+      right: @rem5px;
     }
   }
 
@@ -253,15 +253,15 @@ body.theme-dark .application.coc7,
   }
 
   .input-replacement-gap {
-    height: @20px;
+    height: @rem20px;
   }
 
   input:not([type=checkbox]):not([type=radio]),
   select {
     flex: 1;
-    height: @22px;
+    height: @rem22px;
     margin: 0;
-    padding: 0 @3px;
+    padding: 0 @rem3px;
   }
 
   /* ---------------------------------------- */
@@ -286,11 +286,11 @@ body.theme-dark .application.coc7,
   }
 
   .button {
-    .flex-row(@col-gap: @5px);
+    .flex-row(@col-gap: @rem5px);
     margin: 0;
-    padding: 0 @3px;
+    padding: 0 @rem3px;
     font-family: var(--investigator-sheet-secondary-font);
-    font-size: @12px;
+    font-size: @rem12px;
     height: var(--button-size);
     min-height: var(--button-size);
     border: 1px groove var(--button-border-color);
@@ -334,16 +334,16 @@ body.theme-dark .application.coc7,
     span.warning {
       outline: 2px dashed rgb(from var(--color-warning) r g b / 0.3);
       background-color: rgb(from var(--color-warning) r g b / 0.3);
-      margin: 0 @16px;
+      margin: 0 @rem16px;
     }
 
     .sheet-extras {
-      .flex-row(@direction: row-reverse; @col-gap: @5px);
+      .flex-row(@direction: row-reverse; @col-gap: @rem5px);
       position: absolute;
-      top: @2px;
-      right: @5px;
-      font-size: @32px;
-      line-height: @16px;
+      top: @rem2px;
+      right: @rem5px;
+      font-size: @rem32px;
+      line-height: @rem16px;
       flex-direction: row-reverse;
 
       .token-drag-handle {
@@ -357,7 +357,7 @@ body.theme-dark .application.coc7,
       .button,
       .tag {
         .flex-row(@justify: center);
-        --button-size: @32px;
+        --button-size: @rem32px;
         width: var(--button-size);
         height: var(--button-size);
         font-size: 1.3rem;
@@ -374,7 +374,7 @@ body.theme-dark .application.coc7,
     flex: 1 0 auto;
     margin: 10px 0;
     font-family: var(--investigator-sheet-primary-font);
-    font-size: @32px;
+    font-size: @rem32px;
     font-weight: bold;
     text-transform: uppercase;
     color: var(--color-interact);
@@ -385,7 +385,7 @@ body.theme-dark .application.coc7,
     flex: 1 0 auto;
     margin: 0;
     font-family: var(--investigator-sheet-primary-font);
-    font-size: @22px;
+    font-size: @rem22px;
     text-transform: uppercase;
   }
 
@@ -403,27 +403,27 @@ body.theme-dark .application.coc7,
   .tag {
     display: inline-block;
     white-space: nowrap;
-    padding: 0 @3px;
-    font-size: @9px;
-    line-height: @12px;
+    padding: 0 @rem3px;
+    font-size: @rem9px;
+    line-height: @rem12px;
     border: 1px solid #999;
     border-radius: var(--border-radius-small);
     background: var(--color-tint);
   }
 
   .bio-section {
-    .flex-col(@row-gap: @5px);
+    .flex-col(@row-gap: @rem5px);
 
     .events {
       .event {
-        .flex-row(@col-gap: @5px);
+        .flex-row(@col-gap: @rem5px);
 
         .title {
           flex-grow: 1;
         }
 
         .values {
-          flex: 0 0 @32px;
+          flex: 0 0 @rem32px;
           text-align: center;
 
           input {
@@ -438,20 +438,20 @@ body.theme-dark .application.coc7,
 
     input[type='text'].title {
       font-family: var(--investigator-sheet-primary-font);
-      font-size: @18px;
-      height: @24px;
+      font-size: @rem18px;
+      height: @rem24px;
     }
   }
 
   .item-controls {
-    .flex-row(@col-gap: @5px);
+    .flex-row(@col-gap: @rem5px);
     justify-content: flex-end;
     flex: 0 0 auto;
 
     .item-control-disabled,
     .item-control {
-      line-height: @14px;
-      height: @14px;
+      line-height: @rem14px;
+      height: @rem14px;
     }
 
     .item-control-disabled {
@@ -473,7 +473,7 @@ body.theme-dark .application.coc7,
   }
 
   ul.item-list {
-    .flex-col(@row-gap: @5px);
+    .flex-col(@row-gap: @rem5px);
     margin: 0;
     padding: 0;
 
@@ -489,14 +489,14 @@ body.theme-dark .application.coc7,
       margin: 0;
 
       &.item {
-        .flex-row(@col-gap: @5px);
+        .flex-row(@col-gap: @rem5px);
         margin: 0;
         width: 100%;
         align-items: center;
         break-inside: avoid;
 
         &.specialization {
-          padding-left: @13px;
+          padding-left: @rem13px;
         }
 
         .item-image {
@@ -509,7 +509,7 @@ body.theme-dark .application.coc7,
         }
 
         .item-score {
-          flex: 0 0 @32px;
+          flex: 0 0 @rem32px;
           font-weight: 700;
           color: var(--color-text);
           line-height: 1;
@@ -525,7 +525,7 @@ body.theme-dark .application.coc7,
         }
 
         .npc-skill-score {
-          flex: 0 0 @32px;
+          flex: 0 0 @rem32px;
           text-align: right;
         }
 
@@ -534,17 +534,17 @@ body.theme-dark .application.coc7,
         }
 
         .skill-calc {
-          flex: 0 0 @48px;
+          flex: 0 0 @rem48px;
           text-align: left;
           color: var(--color-text);
-          padding-left: @5px;
+          padding-left: @rem5px;
           overflow: hidden;
           display: none;
           line-height: 1;
         }
 
         .skill-icons {
-          .flex-row(@col-gap: @5px);
+          .flex-row(@col-gap: @rem5px);
 
           div.hidden-icon {
             height: 0;
@@ -569,7 +569,7 @@ body.theme-dark .application.coc7,
             .flex-row();
 
             i {
-              height: @14px;
+              height: @rem14px;
             }
           }
         }
@@ -595,7 +595,7 @@ body.theme-dark .application.coc7,
   .form-group {
     label {
       flex: 1;
-      line-height: @20px;
+      line-height: @rem20px;
       font-weight: bold;
       margin: 0;
       overflow: hidden;
@@ -609,7 +609,7 @@ body.theme-dark .application.coc7,
 
       >* {
         flex: 1;
-        margin: 0 @3px 0 0;
+        margin: 0 @rem3px 0 0;
 
         &:last-child {
           margin-right: 0;
@@ -647,11 +647,11 @@ body.theme-dark .application.coc7,
   }
 
   .item-labels {
-    gap: @16px;
+    gap: @rem16px;
     font-size: var(--font-size-12);
 
     .item-label {
-      gap: @4px;
+      gap: @rem4px;
       flex: none;
       font-weight: bold;
       white-space: nowrap;
@@ -659,22 +659,22 @@ body.theme-dark .application.coc7,
   }
 
   .properties-list {
-    flex: 0 0 @130px;
-    margin: @5px 0 @5px;
+    flex: 0 0 @rem130px;
+    margin: @rem5px 0 @rem5px;
 
     &.item-details {
-      gap: @4px;
+      gap: @rem4px;
       padding: 0;
       font-size: var(--font-size-12);
     }
 
     .property {
-      border: @2px groove var(--color-fieldset-border);
+      border: @rem2px groove var(--color-fieldset-border);
       background: rgba(0, 0, 0, 0.05);
       text-align: center;
-      margin: @3px 0;
-      padding: 0 @2px;
-      border-radius: @8px;
+      margin: @rem3px 0;
+      padding: 0 @rem2px;
+      border-radius: @rem8px;
     }
   }
 }

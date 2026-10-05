@@ -1,6 +1,6 @@
 .application.coc7.sheet.npc {
   overflow: visible;
-  font-size: @16px;
+  font-size: @rem16px;
 
   section.window-content {
     &:has(.tab-group-notes.visible-notes) {
@@ -11,7 +11,7 @@
     font-family: var(--investigator-sheet-secondary-font);
 
     div.npc {
-      gap: @6px;
+      gap: @rem6px;
 
       div.editor-content {
         font-size: var(--font-size-14);
@@ -22,7 +22,7 @@
       }
 
       .item-controlled-width {
-        flex: 0 0 @20px;
+        flex: 0 0 @rem20px;
 
         &.slid-out-notes {
           display: none;
@@ -36,13 +36,13 @@
         .flex-row();
 
         .character-detail {
-          .flex-row(@col-gap: @5px);
+          .flex-row(@col-gap: @rem5px);
 
           .title {
             font-family: var(--investigator-sheet-primary-font);
-            font-size: @15px;
+            font-size: @rem15px;
             text-transform: uppercase;
-            line-height: @17px;
+            line-height: @rem17px;
           }
 
           .detail-value {
@@ -50,11 +50,11 @@
             background: transparent;
             border: none;
             font-family: var(--investigator-sheet-secondary-font);
-            font-size: @13px;
+            font-size: @rem13px;
             color: var(--color-labels);
-            height: @17px;
-            line-height: @17px;
-            padding: @2px @3px 0;
+            height: @rem17px;
+            line-height: @rem17px;
+            padding: @rem2px @rem3px 0;
 
             &.name-value {
               flex: 1.3;
@@ -100,7 +100,7 @@
         align-items: flex-start;
 
         .attribute-detail {
-          gap: @6px;
+          gap: @rem6px;
 
           .attributes {
             align-items: flex-start;
@@ -123,9 +123,9 @@
             div.roll-san,
             div.characteristic-name {
               font-family: var(--investigator-sheet-primary-font);
-              font-size: @15px;
+              font-size: @rem15px;
               text-transform: uppercase;
-              line-height: @17px;
+              line-height: @rem17px;
             }
 
             div.attribute-name,
@@ -135,7 +135,7 @@
 
             .notes-toggle {
               flex: 0 0 auto;
-              margin: 0 @2px;
+              margin: 0 @rem2px;
               font-size: var(--font-size-15);
               line-height: var(--font-size-15);
             }
@@ -154,11 +154,11 @@
               background: transparent;
               border: none;
               font-family: var(--investigator-sheet-secondary-font);
-              font-size: @13px;
+              font-size: @rem13px;
               color: var(--color-labels);
-              height: @17px;
-              line-height: @17px;
-              padding: @2px @3px 0;
+              height: @rem17px;
+              line-height: @rem17px;
+              padding: @rem2px @rem3px 0;
 
               &.attribute-value {
                 text-align: right;
@@ -189,15 +189,15 @@
         }
 
         div.profile-img {
-          flex: 0 0 @100px;
-          margin: 0 0 0 @16px;
+          flex: 0 0 @rem100px;
+          margin: 0 0 0 @rem16px;
 
           img[data-action="editImage"] {
             cursor: pointer;
           }
 
           a {
-            font-size: @100px;
+            font-size: @rem100px;
           }
         }
       }
@@ -229,7 +229,7 @@
         }
 
         .tab-group-tab {
-          padding: @16px;
+          padding: @rem16px;
         }
       }
 
@@ -237,7 +237,7 @@
         .flex-row();
         background: rgba(0, 0, 0, 0.15);
         border: 2px groove #eeede0;
-        padding: @2px @6px;
+        padding: @rem2px @rem6px;
         cursor: pointer;
 
         div {
@@ -246,7 +246,7 @@
           &.tab-group-title {
             flex: 2;
             font-family: var(--investigator-sheet-primary-font);
-            font-size: @16px;
+            font-size: @rem16px;
             text-align: center;
           }
 
@@ -258,11 +258,11 @@
 
       .tab-group-tab {
         .inventory-tab {
-          margin: 0 @4px;
+          margin: 0 @rem4px;
 
           .tab-group-header {
             .tab-group-title {
-              font-size: @15px;
+              font-size: @rem15px;
             }
           }
         }
@@ -273,23 +273,23 @@
         background: transparent;
         border: none;
         font-family: var(--investigator-sheet-secondary-font);
-        font-size: @13px;
+        font-size: @rem13px;
         color: var(--color-labels);
-        height: @17px;
-        line-height: @17px;
-        padding: @2px @3px 0;
+        height: @rem17px;
+        line-height: @rem17px;
+        padding: @rem2px @rem3px 0;
       }
 
       .item-list,
       .skill-list {
-        gap: @8px;
+        gap: @rem8px;
 
         .item {
           .npc-specialization {
             color: #a42;
-            font-size: @10px;
+            font-size: @rem10px;
             flex: 0 0 auto;
-            margin-right: @3px;
+            margin-right: @rem3px;
           }
 
           .skill-name {
@@ -297,7 +297,7 @@
           }
 
           .detail-value {
-            flex: 0 0 @25px;
+            flex: 0 0 @rem25px;
             text-align: right;
           }
 
@@ -314,7 +314,7 @@
 
           .item-controls {
             flex: 0 0 auto;
-            font-size: @12px;
+            font-size: @rem12px;
           }
 
           input:read-only {
@@ -324,11 +324,11 @@
       }
 
       .item-list {
-        row-gap: @4px;
-        margin-bottom: @8px;
+        row-gap: @rem4px;
+        margin-bottom: @rem8px;
 
         .item {
-          gap: @8px;
+          gap: @rem8px;
 
           .coc7-formatted-text {
             font-size: var(--font-size-14);
@@ -337,12 +337,12 @@
       }
 
       .skill-list {
-        font-size: @15px;
-        padding-top: @4px;
-        row-gap: @2px;
+        font-size: @rem15px;
+        padding-top: @rem4px;
+        row-gap: @rem2px;
 
         .item {
-          flex: 0 0 calc(33% - @4px);
+          flex: 0 0 calc(33% - @rem4px);
           flex-wrap: wrap;
 
         }
@@ -351,8 +351,8 @@
       .use-luck-list {
         display: grid;
         grid-template-columns: repeat(3, 33%);
-        gap: @4px;
-        margin-top: @4px;
+        gap: @rem4px;
+        margin-top: @rem4px;
 
         button.trigger-button {
           height: auto;
@@ -365,14 +365,14 @@
 
       div.attacks-per-round {
         font-family: var(--investigator-sheet-primary-font);
-        font-size: @15px;
+        font-size: @rem15px;
         text-transform: uppercase;
-        line-height: @17px;
+        line-height: @rem17px;
         flex: 0 0 auto;
       }
 
       .combat-row {
-        font-size: @15px;
+        font-size: @rem15px;
         border-top: 1px groove #ccc;
         border-left: 1px groove #ccc;
         align-items: stretch;
@@ -384,20 +384,20 @@
         &.combat-title {
           font-family: var(--investigator-sheet-primary-font);
           text-transform: uppercase;
-          line-height: @17px;
+          line-height: @rem17px;
           text-align: center;
         }
 
         .combat-value {
           border-right: 1px groove #ccc;
-          padding: @2px 0;
+          padding: @rem2px 0;
           line-height: 1;
 
           &.skill-name {
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: @13px;
+            font-size: @rem13px;
           }
 
           &.no-skill-set {
@@ -406,23 +406,23 @@
           }
 
           div.weapon-damage {
-            font-size: @11px;
+            font-size: @rem11px;
           }
 
           div.weapon-controls {
-            flex: 0 0 @40px;
-            column-gap: @2px;
-            margin: 0 @2px;
+            flex: 0 0 @rem40px;
+            column-gap: @rem2px;
+            margin: 0 @rem2px;
 
             span.tag {
-              font-size: @13px;
+              font-size: @rem13px;
             }
           }
 
           div.item-controls {
-            flex: 0 0 @24px;
-            font-size: @11px;
-            column-gap: @2px;
+            flex: 0 0 @rem24px;
+            font-size: @rem11px;
+            column-gap: @rem2px;
           }
         }
 
@@ -430,8 +430,8 @@
           flex: 0 0 100%;
 
           .toggle-attributes button {
-            font-size: @10px;
-            padding: @3px;
+            font-size: @rem10px;
+            padding: @rem3px;
           }
         }
       }
@@ -449,8 +449,8 @@
 
         li {
           &.items-header {
-            margin: @2px 0;
-            padding: @3px;
+            margin: @rem2px 0;
+            padding: @rem3px;
             border: none;
             font-weight: bold;
             border-bottom: 2px solid var(--color-highlight);
@@ -466,7 +466,7 @@
           }
 
           .effect-identifier {
-            .flex-row(@col-gap: @5px);
+            .flex-row(@col-gap: @rem5px);
           }
 
           h4 {
@@ -476,15 +476,15 @@
           }
 
           .effect-source {
-            flex: 0 0 @130px;
+            flex: 0 0 @rem130px;
           }
 
           .effect-duration {
-            flex: 0 0 @90px;
+            flex: 0 0 @rem90px;
           }
 
           .item-controls {
-            flex: 0 0 @64px;
+            flex: 0 0 @rem64px;
           }
         }
       }

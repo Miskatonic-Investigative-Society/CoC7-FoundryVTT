@@ -56,11 +56,11 @@ body {
   }
 
   .toggle-row {
-    margin: @3px 0;
+    margin: @rem3px 0;
     align-items: flex-start;
 
     .toggle-attributes {
-      gap: @3px;
+      gap: @rem3px;
 
       button {
         background: var(--button-background-color);
@@ -83,21 +83,21 @@ body {
   }
 
   fieldset {
-    border-radius: @8px;
-    gap: @3px;
-    margin-bottom: @16px;
+    border-radius: @rem8px;
+    gap: @rem3px;
+    margin-bottom: @rem16px;
 
     &:last-of-type {
       margin-bottom: 0;
     }
 
     &:not(:has(> legend)) {
-      margin-top: @7px;
-      padding-top: @7px;
+      margin-top: @rem7px;
+      padding-top: @rem7px;
     }
 
     >.flexrow {
-      gap: @3px;
+      gap: @rem3px;
     }
 
     &.skill-group {
@@ -114,22 +114,22 @@ body {
     }
 
     .columns {
-      gap: @8px;
+      gap: @rem8px;
 
       .column-first {
-        flex: 0 0 calc(100% - @4px);
+        flex: 0 0 calc(100% - @rem4px);
       }
 
       .column-second {
-        flex: 0 0 calc(50% - @4px);
+        flex: 0 0 calc(50% - @rem4px);
       }
 
       .column-third {
-        flex: 0 0 calc(33% - @4px);
+        flex: 0 0 calc(33% - @rem4px);
       }
 
       input:not([type=checkbox]):not([type=radio]).small {
-        flex: 0 0 @48px;
+        flex: 0 0 @rem48px;
       }
     }
   }
@@ -149,8 +149,8 @@ body {
 
 .keeper-only-block {
   background: #f5eaf5;
-  padding: @4px;
-  border-radius: @4px;
+  padding: @rem4px;
+  border-radius: @rem4px;
 
   &.as-whisper-block {
     background: var(--color-whisper-background);
@@ -175,10 +175,10 @@ body {
 
   .drop-location {
     flex: 0 0 100%;
-    gap: @8px;
+    gap: @rem8px;
     .characteristic {
       border: 1px solid #000;
-      padding: @4px;
+      padding: @rem4px;
       text-align: center;
     }
   }
@@ -242,7 +242,7 @@ body {
 
 .inline-roll-data {
   flex: 0 0 auto;
-  padding: @2px @4px 0;
+  padding: @rem2px @rem4px 0;
   border: 1px solid #000;
 
   &.critical {
@@ -267,10 +267,10 @@ body {
 }
 
 .inline-tooltip {
-  gap: @4px;
+  gap: @rem4px;
 
   .flexrow {
-    gap: @4px;
+    gap: @rem4px;
 
     .die-result {
       flex: 0 0 auto;
@@ -292,7 +292,7 @@ body {
 
     .dice-total {
       flex: 0 0 auto;
-      padding: @4px;
+      padding: @rem4px;
 
       &.critical {
         background-color: palegreen;
@@ -327,7 +327,7 @@ body {
 
     .dice-formula {
       flex: 0 0 auto;
-      padding: @4px;
+      padding: @rem4px;
 
       &.critical {
         background-color: whitesmoke;
