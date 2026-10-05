@@ -23,8 +23,7 @@ export default class CoC7ChatDropdown {
     const data = {
       buttons
     }
-    // /* // FoundryV12 */
-    const html = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/parts/dropdown.hbs', data)
+    const html = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/parts/dropdown.hbs', data)
     const element = document.createElement('div')
     element.innerHTML = html
     if (element.children.length !== 1) {
@@ -33,21 +32,16 @@ export default class CoC7ChatDropdown {
     const dropdown = element.children[0]
     dropdown.id = elementId
     let container
-    // /* // FoundryV12 */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      container = target.closest('.chat-sidebar')
-    } else {
-      container = target.closest('.chat-scroll')
-      const ol = container.querySelector('.chat-log')
-      if (ol.classList.contains('themed')) {
-        dropdown.classList.add('themed')
-      }
-      if (ol.classList.contains('theme-light')) {
-        dropdown.classList.add('theme-light')
-      }
-      if (ol.classList.contains('theme-dark')) {
-        dropdown.classList.add('theme-dark')
-      }
+    container = target.closest('.chat-scroll')
+    const ol = container.querySelector('.chat-log')
+    if (ol.classList.contains('themed')) {
+      dropdown.classList.add('themed')
+    }
+    if (ol.classList.contains('theme-light')) {
+      dropdown.classList.add('theme-light')
+    }
+    if (ol.classList.contains('theme-dark')) {
+      dropdown.classList.add('theme-dark')
     }
     container.append(dropdown)
     dropdown.style.width = (target.closest('.coc7-card-buttons').offsetWidth) + 'px'

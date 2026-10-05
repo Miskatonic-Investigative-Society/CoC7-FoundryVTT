@@ -238,11 +238,10 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
             if (CONFIG.debug.CoC7Importer) {
               console.debug('character:', character)
             }
-            /* // FoundryVTT V12 */
-            ui.notifications.info(game.i18n.format('CoC7.ActorImported', {
+            ui.notifications.info('CoC7.ActorImported', { format: {
               actorType: game.i18n.localize('TYPES.Actor.character'),
               actorName: character.name
-            }), { console: false })
+            }, console: false })
             await character.sheet.render({ force: true })
             this.close()
           } else {
@@ -282,28 +281,11 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
     if (CONFIG.debug.CoC7Importer) {
       console.debug('createdActor:', createdActor)
     }
-    /* // FoundryVTT V12 */
-    ui.notifications.info(game.i18n.format('CoC7.ActorImported', {
+    ui.notifications.info('CoC7.ActorImported', { format: {
       actorType: game.i18n.localize('TYPES.Actor.' + createdActor.type),
       actorName: createdActor.name
-    }), { console: false })
+    }, console: false })
     await createdActor.sheet.render({ force: true })
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**

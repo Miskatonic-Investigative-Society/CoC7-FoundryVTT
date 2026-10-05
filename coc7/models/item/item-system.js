@@ -18,15 +18,12 @@ export default class CoC7ModelsItemItemSystem extends CoC7ModelsItemGlobalSystem
       /* // FoundryVTT V13 - not required
       attributes: {},
       */
-      /* // FoundryVTT V12 */
-      price: (foundry.utils.isNewerVersion(game.version, 13)
-        ? new fields.TypedObjectField(
-          new fields.StringField({ nullable: true, initial: null }),
-          {
-            validateKey: (key) => typeof ERAS[key] !== 'undefined'
-          }
-        )
-        : new fields.ObjectField())
+      price: new fields.TypedObjectField(
+        new fields.StringField({ nullable: true, initial: null }),
+        {
+          validateKey: (key) => typeof ERAS[key] !== 'undefined'
+        }
+      )
     }
   }
 

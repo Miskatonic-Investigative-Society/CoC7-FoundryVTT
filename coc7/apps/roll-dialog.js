@@ -57,8 +57,7 @@ export default class CoC7RollDialog extends foundry.applications.api.DialogV2 {
         width: 610
       },
       rejectClose: true,
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/apps/bonus.hbs', data),
+      content: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/apps/bonus.hbs', data),
       render: (event, dialog) => {
         dialog.element.querySelector('select[name=cardType]')?.addEventListener('change', (event) => {
           const poolModifier = event.currentTarget.form.querySelector('input[name=poolModifier]')

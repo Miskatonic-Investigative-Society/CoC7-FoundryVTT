@@ -1,5 +1,5 @@
 export default function (application, element, context, options) {
-  new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+  new foundry.applications.ux.DragDrop({
     permissions: {
       drop: true
     },

@@ -56,6 +56,5 @@ export default async function () {
     'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/tabs/active-effects.hbs',
     Roll.CHAT_TEMPLATE
   ]
-  /* // FoundryVTT V12 */
-  return (foundry.applications.handlebars?.loadTemplates ?? loadTemplates)(templatePaths)
+  return foundry.applications.handlebars.loadTemplates(templatePaths)
 }

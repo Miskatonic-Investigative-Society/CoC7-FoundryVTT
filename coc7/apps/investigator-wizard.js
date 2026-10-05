@@ -204,8 +204,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       }
       if (missing.length) {
         const era = game.i18n.format(ERAS[this.coc7Config.defaultEra]?.name ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: this.coc7Config.defaultEra })
-        /* // FoundryVTT V12 */
-        ui.notifications.warn(game.i18n.format('CoC7.CoCIDFlag.error.documents-not-found', { cocids: missing.join(', '), lang: game.i18n.lang, era }))
+        ui.notifications.warn('CoC7.CoCIDFlag.error.documents-not-found', { format: { cocids: missing.join(', '), lang: game.i18n.lang, era } })
       }
     }
     return documents
@@ -298,8 +297,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             context.coc7Config.defaultSetup = ''
             context.coc7Config.setup = ''
           } else {
-            /* // FoundryVTT V12 */
-            context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+            context.description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
               setup.system.description.value,
               {
                 async: true,
@@ -343,8 +341,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           if (context.coc7Config.setup !== '') {
             const setup = context.setups.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.setup)
             if (typeof setup !== 'undefined') {
-              /* // FoundryVTT V12 */
-              context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+              context.description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
                 setup.system.description.value,
                 {
                   async: true,
@@ -367,8 +364,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           if (context.coc7Config.archetype !== '') {
             const archetype = context.archetypes.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.archetype)
             if (typeof archetype !== 'undefined') {
-              /* // FoundryVTT V12 */
-              context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+              context.description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
                 archetype.system.description.value,
                 {
                   async: true,
@@ -394,16 +390,14 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                 skills.push(skill.name)
               }
               context.skills = skills.join(', ')
-              /* // FoundryVTT V12 */
-              context.suggestedOccupations = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+              context.suggestedOccupations = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
                 archetype.system.suggestedOccupations,
                 {
                   async: true,
                   secrets: game.user.isGM
                 }
               )
-              /* // FoundryVTT V12 */
-              context.suggestedTraits = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+              context.suggestedTraits = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
                 archetype.system.suggestedTraits,
                 {
                   async: true,
@@ -632,8 +626,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         if (context.coc7Config.occupation !== '') {
           const occupation = context.occupations.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.occupation)
           if (typeof occupation !== 'undefined') {
-            /* // FoundryVTT V12 */
-            context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+            context.description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
               occupation.system.description.value,
               {
                 async: true,
@@ -1222,8 +1215,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_CHARACTERISTICS:
-        /* // FoundryVTT V12 */
-        new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+        new foundry.applications.ux.DragDrop({
           dragSelector: '.draggable',
           permissions: {
             dragstart: true,
@@ -1441,8 +1433,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           if (setup) {
             const die = await new Roll(setup.system.characteristics.rolls.luck.toString()).evaluate()
             this.coc7Config.setupModifiers.luck = [die.total]
-            /* // FoundryVTT V12 */
-            const html = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(Roll.CHAT_TEMPLATE, {
+            const html = await foundry.applications.handlebars.renderTemplate(Roll.CHAT_TEMPLATE, {
               formula: game.i18n.localize('CoC7.InvestigatorWizard.RollTwiceForLuck') + ': ' + setup.system.characteristics.rolls.luck.toString(),
               tooltip: await die.getTooltip(),
               total: die.total
@@ -1482,8 +1473,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
               this._onClickDeleteSkill(event)
           }
         }))
-        /* // FoundryVTT V12 */
-        new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+        new foundry.applications.ux.DragDrop({
           dragSelector: '.draggable',
           permissions: {
             dragstart: true,
@@ -1568,9 +1558,8 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             if (table.length === 1) {
               const tableResults = await table[0].roll()
               for (const tableResult of tableResults.results) {
-                /* // FoundryVTT V12 */
                 if (tableResult.type === CONST.TABLE_RESULT_TYPES.TEXT || (tableResult.type === CONST.TABLE_RESULT_TYPES.DOCUMENT && typeof tableResult.type.documentUuid === 'undefined')) {
-                  this.coc7Config.bioSections[index].value = (this.coc7Config.bioSections[index].value + '\n' + (tableResult.description ?? tableResult.text).trim()).trim()
+                  this.coc7Config.bioSections[index].value = (this.coc7Config.bioSections[index].value + '\n' + tableResult.description.trim()).trim()
                 }
               }
             }
@@ -1579,22 +1568,6 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         }))
         break
     }
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**

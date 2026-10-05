@@ -691,6 +691,24 @@ export default class CoC7Utilities {
   }
 
   /**
+   * Create the directory if it doesn't exist and save a base64 encoded image into it
+   * @param {string} filePath
+   * @param {string} fileName
+   * @param {string} base64
+   * @returns {boolean}
+   */
+  static async saveBase64 (filePath, fileName, base64) {
+    const parsed = (new foundry.applications.apps.FilePicker())._inferSourceAndTarget(filePath)
+    foundry.applications.apps.FilePicker.implementation.createDirectory(parsed[0], parsed[1]).catch((e) => {
+      if (!e.message.startsWith('EEXIST')) {
+        ui.notifications.error('CoC7.ActorImporterUploadError', { localize: true })
+        return false
+      }
+    })
+    return foundry.helpers.media.ImageHelper.uploadBase64(base64, fileName, parsed[1], { storage: parsed[0] })
+  }
+
+  /**
    * Get Item from name and type
    * @param {string} type
    * @param {Array} names
@@ -964,8 +982,7 @@ export default class CoC7Utilities {
       }
       const nowRemaining = Object.keys(derived).length
       if (nowRemaining === remaining) {
-        /* // FoundryVTT V12 */
-        throw new Error(game.i18n.format((foundry.utils.isNewerVersion(game.version, 13) ? 'DICE.ErrorNotParsable' : 'DICE.ErrorNonNumeric'), { formula: Object.values(derived).join(' / ') }))
+        throw new Error(game.i18n.format('DICE.ErrorNotParsable', { formula: Object.values(derived).join(' / ') }))
       }
       if (Object.keys(updates).length) {
         await actor.update(updates, { render: false })
@@ -1270,7 +1287,7 @@ export default class CoC7Utilities {
   static async getActorFromUuid (actorUuid) {
     const model = await fromUuid(actorUuid)
     if (model) {
-      if (model instanceof (foundry.canvas.placeables?.Token ?? Token)) {
+      if (model instanceof foundry.canvas.placeables.Token) {
         if (model.document?.actorLink === true) {
           return model.document.actor
         }
@@ -1290,7 +1307,7 @@ export default class CoC7Utilities {
   static getActorUuid (model) {
     if (!model) {
       return null
-    } else if (model instanceof (foundry.canvas.placeables?.Token ?? Token)) {
+    } else if (model instanceof foundry.canvas.placeables.Token) {
       if (model.document.actorLink === true) {
         return model.document.actor.uuid
       }
@@ -1423,7 +1440,7 @@ export default class CoC7Utilities {
    * @returns {object}
    */
   static distanceBetweenTokens (token1, token2) {
-    let distance = new (foundry.canvas.geometry?.Ray ?? Ray)(token1.object.center, token2.object.center).distance / canvas.grid.size
+    let distance = new foundry.canvas.geometry.Ray(token1.object.center, token2.object.center).distance / canvas.grid.size
     if (game.settings.get(FOLDER_ID, 'distanceElevation')) {
       const elevation = Math.abs((token1.elevation || 0) - (token2.elevation || 0)) / canvas.grid.distance
       distance = Math.sqrt(distance * distance + elevation * elevation)
@@ -1460,8 +1477,7 @@ export default class CoC7Utilities {
       default:
         if (typeof this.toYardWarnings[unit] === 'undefined') {
           this.toYardWarnings[unit] = true
-          /* // FoundryVTT V12 */
-          ui.notifications.warn(game.i18n.format('CoC7.ErrorUnknownDistanceUnit', { distance: distance.toFixed(2), unit }))
+          ui.notifications.warn('CoC7.ErrorUnknownDistanceUnit', { format: { distance: distance.toFixed(2), unit } })
         }
         return distance
     }

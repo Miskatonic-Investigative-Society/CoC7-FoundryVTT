@@ -151,7 +151,7 @@ export default class CoC7SettingsHouseRules extends foundry.applications.api.Han
   async _renderHTML (context, options) {
     const parts = await super._renderHTML(context, options)
 
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dragSelector: '.characteristic',
       permissions: {
         dragstart: true,

@@ -8,9 +8,5 @@ import CoCIDEditor from '../apps/coc-id-editor.js'
  * @param {ApplicationRenderOptions} options
  */
 export default function (application, element, context, options) {
-  /* // FoundryVTT V12 */
-  if (!foundry.utils.isNewerVersion(game.version, 13)) {
-    return
-  }
   CoCIDEditor.addCoCIDSheetHeaderButton(application, element)
 }

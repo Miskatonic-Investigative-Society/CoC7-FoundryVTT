@@ -231,7 +231,6 @@ export default class CoC7ModelsActorCharacterSystem extends CoC7ModelsActorGloba
         }
       }
     }
-    //
   }
 
   /**

@@ -77,7 +77,6 @@ export default function () {
   CoC7ClickableEvents.initSelf()
 
   deprecated.CoCID()
-  deprecated.init()
 
   CONFIG.TextEditor.enrichers.push({
     pattern: /@chaosiumUUID\[([^#\]]+)(?:#([^\]]+))?](?:{([^}]+)})?/gi,
@@ -131,7 +130,7 @@ export default function () {
         }
       }
 
-      return (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).createAnchor(data)
+      return foundry.applications.ux.TextEditor.implementation.createAnchor(data)
     }
   })
 
@@ -157,7 +156,6 @@ export default function () {
         a.prepend(i)
         return a
       }
-
 
       const context = {
         displayName: match[2] ?? actor.name,
@@ -191,8 +189,7 @@ export default function () {
       }
 
       if (['creature', 'npc'].includes(context.document.type)) {
-        /* // FoundryVTT V12 */
-        context.enrichedBiographyPersonalDescription = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedBiographyPersonalDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.biography.personalDescription.value,
           {
             async: true,
@@ -201,8 +198,7 @@ export default function () {
         )
       }
 
-      /* // FoundryVTT V12 */
-      const html = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/actors/embed.hbs', context)
+      const html = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/actors/embed.hbs', context)
 
       const div = document.createElement('div')
       div.innerHTML = html

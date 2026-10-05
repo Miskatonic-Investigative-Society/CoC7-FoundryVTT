@@ -2,7 +2,6 @@ import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7SettingsGameRules from '../apps/settings-game-rules.js'
 import CoC7SettingsHouseRules from '../apps/settings-house-rules.js'
 import CoC7Utilities from '../apps/utilities.js'
-import deprecated from '../deprecated.js'
 
 export default function () {
   game.settings.registerMenu(FOLDER_ID, 'gameRules', {
@@ -31,7 +30,8 @@ export default function () {
     scope: 'world',
     config: true,
     type: String,
-    default: 'worlds/' + game.world.id + '/dhole-images'
+    default: 'worlds/' + game.world.id + '/dhole-images',
+    filePicker: 'folder'
   })
 
   game.settings.register(FOLDER_ID, 'worldEra', {
@@ -41,24 +41,18 @@ export default function () {
     config: true,
     default: 'standard',
     type: String,
-    /* // FoundryVTT V12 */
-    choices: foundry.utils.isNewerVersion(game.version, 13)
-      ? () => Object.entries(ERAS).reduce((c, e) => {
-        c.push({
-          value: e[0],
-          label: game.i18n.localize(e[1].name)
-        })
-        return c
-      }, []).sort(CoC7Utilities.sortByLabelKey).reduce((c, e) => {
-        c[e.value] = e.label
-        return c
-      }, {})
-      : Object.entries(ERAS).reduce((c, e) => {
-        c[e[0]] = e[1].name
-        return c
-      }, {}),
+    choices: () => Object.entries(ERAS).reduce((c, e) => {
+      c.push({
+        value: e[0],
+        label: game.i18n.localize(e[1].name)
+      })
+      return c
+    }, []).sort(CoC7Utilities.sortByLabelKey).reduce((c, e) => {
+      c[e.value] = e.label
+      return c
+    }, {}),
     onChange: () => {
-      ui.players.render(deprecated.renderForce)
+      ui.players.render({ force: true })
       game[FOLDER_ID].skillNames.refreshList()
     }
   })
@@ -71,8 +65,7 @@ export default function () {
     default: true,
     type: Boolean,
     onChange: () => {
-      /* // FoundryVTT V12 */
-      ui.players.render(true)
+      ui.players.render({ force: true })
     }
   })
 

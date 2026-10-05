@@ -110,8 +110,7 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
        * The Actor who owns this does not have the skill of
        * the language in which it was written
        */
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.UnknownLanguage', { actor: this.parent.actor?.name ?? '?' }))
+      ui.notifications.error('CoC7.UnknownLanguage', { format: { actor: this.parent.actor?.name ?? '?' } })
       return
     }
     const config = {
@@ -169,8 +168,7 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
     const knownBook = this.parent.actor?.system.getBook(this.parent)
     if (knownBook?.initialReading !== true) {
       /** Actor did not performed an initial reading first */
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.InitialReadingNeeded', { actor: this.parent.actor.name, book: this.parent.name }))
+      ui.notifications.error('CoC7.InitialReadingNeeded', { format: { actor: this.parent.actor.name, book: this.parent.name } })
       return
     }
     if (modify < 0) {
@@ -255,19 +253,16 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
     const knownBook = this.parent.actor?.system.getBook(this.parent)
     if (knownBook?.initialReading !== true) {
       /** Actor did not performed an initial reading first */
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.InitialReadingNeeded', { actor: this.parent.actor.name, book: this.parent.name }))
+      ui.notifications.error('CoC7.InitialReadingNeeded', { format: { actor: this.parent.actor.name, book: this.parent.name } })
       return
     }
     const spell = (await this.items()).find(spell => spell._id === spellId)
     if (spell) {
       if (knownBook.spellsLearned.includes(spellId)) {
-        /* // FoundryVTT V12 */
-        ui.notifications.warn(game.i18n.format('CoC7.SpellAlreadyLearned', { spell: spell.name, book: this.parent.name }))
+        ui.notifications.warn('CoC7.SpellAlreadyLearned', { format: { spell: spell.name, book: this.parent.name } })
         return
       }
-      /* // FoundryVTT V12 */
-      ui.notifications.info(game.i18n.format('CoC7.SpellSuccessfullyLearned', { spell: spell.name, book: this.parent.name }))
+      ui.notifications.info('CoC7.SpellSuccessfullyLearned', { format: { spell: spell.name, book: this.parent.name } })
       await this.parent.actor.createEmbeddedDocuments('Item', [
         foundry.utils.duplicate(spell)
       ])
@@ -390,8 +385,7 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
         })
       }
     }
-    /* // FoundryVTT V12 */
-    const html = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/book-development.hbs', templateData)
+    const html = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/book-development.hbs', templateData)
     const chatData = {
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.parent.actor }),
@@ -414,8 +408,7 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
     const knownBook = this.parent.actor?.system.getBook(this.parent)
     if (knownBook?.initialReading !== true) {
       /** Actor did not performed an initial reading first */
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.InitialReadingNeeded', { actor: this.parent.actor.name, book: this.parent.name }))
+      ui.notifications.error('CoC7.InitialReadingNeeded', { format: { actor: this.parent.actor.name, book: this.parent.name } })
       return
     }
     const spell = (await this.items()).find(spell => spell._id === id)

@@ -47,8 +47,7 @@ export default class CoC7ExperiencePackageDialog extends foundry.applications.ap
   async _onRender (context, options) {
     await super._onRender(context, options)
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: '.drop-item',
       permissions: {
         drop: game.user.isGM
@@ -338,21 +337,5 @@ export default class CoC7ExperiencePackageDialog extends foundry.applications.ap
     }
 
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 }

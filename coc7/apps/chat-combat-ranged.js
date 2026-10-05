@@ -652,7 +652,7 @@ export default class CoC7ChatCombatRanged {
                     check.#targets[offset].poolKeys.splice(index, 1)
                   }
                 } else if (set === 'fast' && check.#targets[offset].mov < 8) {
-                  ui.notifications.warn(game.i18n.format('CoC7.WarnFastTargetWithWrongMOV', { mov: check.#targets[offset].mov }))
+                  ui.notifications.warn('CoC7.WarnFastTargetWithWrongMOV', { format: { mov: check.#targets[offset].mov } })
                 }
               } else {
                 check.#targets[offset].poolKeys.splice(index, 1)
@@ -906,8 +906,7 @@ export default class CoC7ChatCombatRanged {
       didAnyShotHit: !!this.#shots.find(s => s.dicePool.isSuccess),
       displayActorOnCard: game.settings.get(FOLDER_ID, 'displayActorOnCard'),
       enrichedWeaponDescriptionSpecial: '',
-      /* // FoundryVTT V12 */
-      enrichedItemDescriptionValue: await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      enrichedItemDescriptionValue: await foundry.applications.ux.TextEditor.implementation.enrichHTML(
         item?.system.description?.value,
         {
           async: true,
@@ -971,7 +970,7 @@ export default class CoC7ChatCombatRanged {
     const attackerKeys = Object.keys(dicePoolReasons).filter(k => dicePoolReasons[k].ifAttacker)
     const attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable))) ?? []
     const attackerPoolDisabled = attackerTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
-    data.attackerTalent = await Promise.all(attackerTalents.map(async (doc) => await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(doc.link, { async: true }) ))
+    data.attackerTalent = await Promise.all(attackerTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
     for (const key in dicePoolReasons) {
       const type = (dicePoolReasons[key].forBonus ? 'poolBonus' : (dicePoolReasons[key].forPenalty ? 'poolPenalty' : ''))
       if (type) {
@@ -992,7 +991,7 @@ export default class CoC7ChatCombatRanged {
         const target = await fromUuid(data.targets[offset].uuid)
         const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)))
         const targetPoolDisabled = targetTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
-        data.targets[offset].targetTalent = await Promise.all(targetTalents.map(async (doc) => await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(doc.link, { async: true }) ))
+        data.targets[offset].targetTalent = await Promise.all(targetTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
         data.targets[offset].poolDisabled = attackerPoolDisabled.concat(targetPoolDisabled)
       }
       let difficulty = CoC7DicePool.difficultyLevel.regular
@@ -1066,7 +1065,7 @@ export default class CoC7ChatCombatRanged {
       }
     }
     if (data.hasWeaponSpecial) {
-      data.enrichedWeaponDescriptionSpecial = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      data.enrichedWeaponDescriptionSpecial = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
         item.system.description.special,
         {
           async: true,
@@ -1121,8 +1120,7 @@ export default class CoC7ChatCombatRanged {
         }
       },
       rolls: (this.message?.rolls ?? []).concat(this.#shots.reduce((c, s) => c.concat(s.dicePool.newRolls), [])),
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/range-initiator.hbs', data)
+      content: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/range-initiator.hbs', data)
     }
     if (typeof this.message?.whisper === 'undefined') {
       /* // FoundryVTT V13 */
@@ -1371,7 +1369,7 @@ export default class CoC7ChatCombatRanged {
           itemName: data.itemName
         })
       }
-      update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/range-initiator.hbs', data)
+      update.content = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/range-initiator.hbs', data)
       update._id = message.id
       updates.push(update)
     }

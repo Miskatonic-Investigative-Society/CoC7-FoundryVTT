@@ -1,5 +1,4 @@
 import { FOLDER_ID } from '../constants.js'
-import CoC7DirectoryPicker from '../apps/directory-picker.js'
 
 /**
  * Create header element
@@ -7,13 +6,6 @@ import CoC7DirectoryPicker from '../apps/directory-picker.js'
  * @returns {HTMLElement}
  */
 function createTitleNode (text) {
-  /* // FoundryVTT V12 */
-  if (game.release.generation === 12) {
-    const title = document.createElement('h2')
-    title.classList.add('setting-header')
-    title.innerText = game.i18n.localize(text)
-    return title
-  }
   const title = document.createElement('h4')
   title.classList.add('border')
   title.innerText = game.i18n.localize(text)
@@ -28,14 +20,7 @@ function createTitleNode (text) {
  * @param {ApplicationRenderOptions} options
  */
 export default function (application, element, context, options) {
-  CoC7DirectoryPicker.processHtml(element)
-  let systemTab
-  /* // FoundryVTT V12 */
-  if (typeof element.querySelector !== 'undefined') {
-    systemTab = element.querySelector('.tab[data-tab=system]')
-  } else {
-    systemTab = element.find('.tab[data-tab=system]')[0]
-  }
+  const systemTab = element.querySelector('.tab[data-tab=system]')
   systemTab.querySelector('input[name=' + FOLDER_ID + '\\.displayInitDices]')?.closest('div.form-group').before(createTitleNode('SETTINGS.TitleInitiative'))
   systemTab.querySelector('input[name=' + FOLDER_ID + '\\.stanbyGMRolls]')?.closest('div.form-group').before(createTitleNode('SETTINGS.TitleRoll'))
   systemTab.querySelector('input[name=' + FOLDER_ID + '\\.trustedCanModfyChatCard]')?.closest('div.form-group').before(createTitleNode('SETTINGS.TitleChatCards'))

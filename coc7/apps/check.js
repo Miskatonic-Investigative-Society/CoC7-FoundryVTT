@@ -587,8 +587,7 @@ export default class CoC7Check {
       speaker,
       rolls: (this.message?.rolls ?? []).concat(this.#dicePool.newRolls),
       flavor: this.flavor,
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(template, data)
+      content: await foundry.applications.handlebars.renderTemplate(template, data)
     }
     if (this.isInitiativeRoll) {
       foundry.utils.setProperty(chatData, 'flags.core.initiativeRoll', true)

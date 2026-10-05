@@ -181,7 +181,7 @@ export default class CoC7CharacteristicRollDialog extends foundry.applications.a
     event.preventDefault()
     const li = event.currentTarget.closest('.item')
     const form = event.currentTarget.closest('form')
-    const formData = new (foundry.applications.ux.FormDataExtended ?? FormDataExtended)(form)
+    const formData = new foundry.applications.ux.FormDataExtended(form)
     for (const key in this.coc7Config.values) {
       if (typeof formData.object[key] !== 'undefined' && formData.object[key].toString().length && !isNaN(Number(formData.object[key]))) {
         this.coc7Config.values[key] = Number(formData.object[key])
@@ -241,22 +241,6 @@ export default class CoC7CharacteristicRollDialog extends foundry.applications.a
         break
     }
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**

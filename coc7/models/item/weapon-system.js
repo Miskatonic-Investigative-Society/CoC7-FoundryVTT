@@ -90,15 +90,12 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
         rare: new fields.BooleanField({ label: 'CoC7.WeaponRare', initial: false }),
         burn: new fields.BooleanField({ label: 'CoC7.Weapon.Property.Burn', initial: false })
       }),
-      /* // FoundryVTT V12 */
-      price: (foundry.utils.isNewerVersion(game.version, 13)
-        ? new fields.TypedObjectField(
-          new fields.StringField({ nullable: true, initial: null }),
-          {
-            validateKey: (key) => typeof ERAS[key] !== 'undefined'
-          }
-        )
-        : new fields.ObjectField())
+      price: new fields.TypedObjectField(
+        new fields.StringField({ nullable: true, initial: null }),
+        {
+          validateKey: (key) => typeof ERAS[key] !== 'undefined'
+        }
+      )
     }
   }
 

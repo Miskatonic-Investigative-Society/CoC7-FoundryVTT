@@ -25,8 +25,7 @@ export default function () {
   game[FOLDER_ID].Manual = readMe[lang]
   if (foundry.utils.isNewerVersion(game.system.version, instructionsVersion ?? '0')) {
     game.packs.get(FOLDER_ID + '.system-doc').getDocument(game[FOLDER_ID].Manual).then((doc) => {
-      /* // FoundryVTT V12 */
-      doc.sheet.render(true)
+      doc.sheet.render({ force: true })
       game.settings.set(FOLDER_ID, 'showInstructions', game.system.version)
     })
   }
@@ -37,17 +36,9 @@ export default function () {
     CoC7SystemSocket.callSocket(data)
   })
 
-  /* // FoundryVTT V12 */
-  if (!foundry.utils.isNewerVersion(game.version, 13)) {
-    const value = game.settings.get('core', 'fontSize')
-    if (typeof value !== 'undefined') {
-      document.body.style.setProperty('--font-size', String(value))
-    }
-  } else {
-    const value = game.settings.get('core', 'uiConfig')
-    if (typeof value.fontScale !== 'undefined') {
-      document.body.style.setProperty('--font-size', String(value.fontScale))
-    }
+  const value = game.settings.get('core', 'uiConfig')
+  if (typeof value.fontScale !== 'undefined') {
+    document.body.style.setProperty('--font-size', String(value.fontScale))
   }
 
   // Attempt to fix bad setting
@@ -66,6 +57,7 @@ export default function () {
   deprecated.ready()
   CoC7Updater.checkForUpdate()
 
+  /* // FoundryVTT V14 */
   if (game.modules.get('dice-so-nice')?.version === '5.3.0') {
     ui.notifications.error('Dice So Nice 5.3.0 is not compatible with the system, please update to 5.3.2', { localize: false, permanent: true, console: false })
   }

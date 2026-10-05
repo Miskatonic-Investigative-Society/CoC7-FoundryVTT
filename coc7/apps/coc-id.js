@@ -1,6 +1,5 @@
 import { FOLDER_ID, ERAS } from '../constants.js'
 import CoC7Utilities from './utilities.js'
-import deprecated from '../deprecated.js'
 
 export default class CoCID {
   /**
@@ -122,8 +121,7 @@ export default class CoCID {
         if (era === true) {
           era = game.settings.get(FOLDER_ID, 'worldEra')
         }
-        /* // FoundryVTT V12 */
-        ui.notifications.warn(game.i18n.format('CoC7.CoCIDFlag.error.documents-not-found', { cocids: cocids.filter(x => !notMissing.includes(x)).join(', '), lang, era: CoCID.eraText(era) }))
+        ui.notifications.warn('CoC7.CoCIDFlag.error.documents-not-found', { format: { cocids: cocids.filter(x => !notMissing.includes(x)).join(', '), lang, era: CoCID.eraText(era) } })
       }
       items = items.concat(all)
     }
@@ -221,14 +219,9 @@ export default class CoCID {
     let progressBar = false
     if (showLoading && candidates.length > 0) {
       progressBar = {
+        bar: ui.notifications.info('CoC7.CoCIDFlag.loading', { localize: true, progress: true, console: false }),
         current: 0,
         max: candidates.length + 1 // Will always call pct = 1 after progress to prevent rounding issues
-      }
-      /* // FoundryVTT V12 */
-      if (foundry.utils.isNewerVersion(game.version, 13)) {
-        progressBar.bar = ui.notifications.info('CoC7.CoCIDFlag.loading', { localize: true, progress: true, console: false })
-      } else {
-        progressBar.bar = deprecated.displayProgressBar(game.i18n.localize('CoC7.CoCIDFlag.loading'))
       }
     }
     return await CoCID.#onlyDocuments(candidates, progressBar)
@@ -291,14 +284,9 @@ export default class CoCID {
     const documentList = Object.values(ids)
     if (showLoading && documentList.length > 0) {
       progressBar = {
+        bar: ui.notifications.info('CoC7.CoCIDFlag.loading', { localize: true, progress: true, console: false }),
         current: 0,
         max: documentList.length + 1 // Will always call pct = 1 after progress to prevent rounding issues
-      }
-      /* // FoundryVTT V12 */
-      if (foundry.utils.isNewerVersion(game.version, 13)) {
-        progressBar.bar = ui.notifications.info('CoC7.CoCIDFlag.loading', { localize: true, progress: true, console: false })
-      } else {
-        progressBar.bar = deprecated.displayProgressBar(game.i18n.localize('CoC7.CoCIDFlag.loading'))
       }
     }
     return await CoCID.#onlyDocuments(documentList, progressBar)
@@ -315,8 +303,7 @@ export default class CoCID {
    */
   static fromCoCID (cocid, lang = game.i18n.lang, era = true, langFallback = true, showLoading = false) {
     if (era === false) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: game.i18n.localize('CoC7.Any') }))
+      ui.notifications.error('CoC7.CoCIDFlag.error.unknown-era', { format: { era: game.i18n.localize('CoC7.Any') } })
       return []
     }
     return CoCID.fromCoCIDBest({ cocid, lang, era, langFallback, showLoading })
@@ -337,8 +324,7 @@ export default class CoCID {
       return []
     }
     if (era === false) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: game.i18n.localize('CoC7.Any') }))
+      ui.notifications.error('CoC7.CoCIDFlag.error.unknown-era', { format: { era: game.i18n.localize('CoC7.Any') } })
       return []
     }
     const type = cocid.split('.')[0]
@@ -372,14 +358,9 @@ export default class CoCID {
     let progressBar = false
     if (showLoading) {
       progressBar = {
+        bar: ui.notifications.info('SETUP.PackagesLoading', { localize: true, progress: true, console: false }),
         current: 0,
         max: (['all', 'world'].includes(scope) ? 1 : 0) + (['all', 'compendiums'].includes(scope) ? game.packs.size : 0) + 1 // Will always call pct = 1 after progress to prevent rounding issues
-      }
-      /* // FoundryVTT V12 */
-      if (foundry.utils.isNewerVersion(game.version, 13)) {
-        progressBar.bar = ui.notifications.info('SETUP.PackagesLoading', { localize: true, progress: true, console: false })
-      } else {
-        progressBar.bar = deprecated.displayProgressBar(game.i18n.localize('SETUP.PackagesLoading'))
       }
     }
     if (['all', 'world'].includes(scope)) {

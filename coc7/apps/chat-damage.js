@@ -467,8 +467,7 @@ export default class CoC7ChatDamage {
       damageFormula: await this.#damageFormula(),
       displayActorOnCard: game.settings.get(FOLDER_ID, 'displayActorOnCard'),
       enrichedWeaponDescriptionSpecial: '',
-      /* // FoundryVTT V12 */
-      enrichedItemDescriptionValue: await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      enrichedItemDescriptionValue: await foundry.applications.ux.TextEditor.implementation.enrichHTML(
         item?.system?.description?.value,
         {
           async: true,
@@ -500,7 +499,7 @@ export default class CoC7ChatDamage {
       weaponDamage: item?.system?.range?.[this.#damageRange]?.damage
     }
     if (data.hasWeaponSpecial) {
-      data.enrichedWeaponDescriptionSpecial = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      data.enrichedWeaponDescriptionSpecial = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
         item.system.description.special,
         {
           async: true,
@@ -547,8 +546,7 @@ export default class CoC7ChatDamage {
         }
       },
       rolls: (this.message?.rolls ?? []),
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/damage.hbs', data)
+      content: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/damage.hbs', data)
     }
     if (typeof this.message?.whisper === 'undefined') {
       /* // FoundryVTT V13 */
@@ -811,7 +809,7 @@ export default class CoC7ChatDamage {
       const check = await CoC7ChatDamage.loadFromMessage(merged)
       if (check) {
         const data = await check.getTemplateData()
-        update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/damage.hbs', data)
+        update.content = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/damage.hbs', data)
         update.flavor = check.flavor
         update._id = message.id
         updates.push(update)
@@ -871,7 +869,7 @@ export default class CoC7ChatDamage {
       const check = await CoC7ChatDamage.loadFromMessage(merged)
       if (check) {
         const data = await check.getTemplateData()
-        update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/damage.hbs', data)
+        update.content = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/damage.hbs', data)
         update.flavor = check.flavor
         update._id = message.id
         updates.push(update)

@@ -89,8 +89,7 @@ export default class CoC7ModelsItemStatusSheet extends CoC7ModelsItemGlobalSheet
             context._properties.push(value.label)
           }
         }
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -108,8 +107,7 @@ export default class CoC7ModelsItemStatusSheet extends CoC7ModelsItemGlobalSheet
             isEnabled: context.document.system.type[key] === true
           })
         }
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionNotes = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionNotes = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.notes,
           {
             async: true,
@@ -121,8 +119,7 @@ export default class CoC7ModelsItemStatusSheet extends CoC7ModelsItemGlobalSheet
         context.effects = await CoC7ActiveEffect.prepareActiveEffectCategories(context.document, { status: false })
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,

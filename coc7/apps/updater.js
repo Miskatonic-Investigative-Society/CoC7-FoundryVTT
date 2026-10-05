@@ -11,7 +11,6 @@ import CoC7ConCheck from '../apps/con-check.js'
 import CoC7SanCheckCard from '../apps/san-check-card.js'
 import CoC7Utilities from './utilities.js'
 import CoCIDBatch from './coc-id-batch.js'
-import deprecated from '../deprecated.js'
 
 export default class CoC7Updater {
   /**
@@ -1100,14 +1099,9 @@ export default class CoC7Updater {
     const deleteIds = []
 
     let progressBar = {
+      bar: ui.notifications.info('DOCUMENT.ChatMessages', { localize: true, progress: true, console: false }),
       current: 0,
       max: game.messages.contents.length + 1 // Will always call pct = 1 after progress to prevent rounding issues
-    }
-    /* // FoundryVTT V12 */
-    if (foundry.utils.isNewerVersion(game.version, 13)) {
-      progressBar.bar = ui.notifications.info('DOCUMENT.ChatMessages', { localize: true, progress: true, console: false })
-    } else {
-      progressBar.bar = deprecated.displayProgressBar(game.i18n.localize('DOCUMENT.ChatMessages'))
     }
     for (const offset in game.messages.contents) {
       progressBar.bar.update({ pct: progressBar.current / progressBar.max })

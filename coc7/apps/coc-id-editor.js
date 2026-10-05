@@ -44,12 +44,6 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
   async _prepareContext (options) {
     const context = await super._prepareContext(options)
 
-    /* // FoundryV12 polyfill */
-    if (!context.document) {
-      context.document = this.document
-      context.editable = this.isEditable
-    }
-
     context.supportedLanguages = CONFIG.supportedLanguages
 
     context.guessCode = game[FOLDER_ID].cocid.guessId(context.document)
@@ -130,22 +124,6 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
 
   /**
    * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
-  }
-
-  /**
-   * @inheritdoc
    * @param {ApplicationRenderContext} context
    * @param {RenderOptions} options
    * @returns {Promise<void>}
@@ -159,8 +137,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
       const text = event.target.closest('.form-value').querySelector('input').value
       if (text) {
         game.clipboard.copyPlainText(text).then(() => {
-          /* // FoundryVTT V12 */
-          ui.notifications.info(game.i18n.format('CoC7.WhatCopiedClipboard', { what: text }), { console: false })
+          ui.notifications.info('CoC7.WhatCopiedClipboard', { format: { what: text }, console: false })
         })
       }
     }))
@@ -220,8 +197,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
             if (event.detail > 1) return // Ignore repeated clicks
             if (event.button === 2 && (application.document.flags[FOLDER_ID]?.cocidFlag?.id ?? false)) {
               game.clipboard.copyPlainText(application.document.flags[FOLDER_ID].cocidFlag.id).then(() => {
-                /* // FoundryVTT V12 */
-                ui.notifications.info(game.i18n.format('CoC7.WhatCopiedClipboard', { what: game.i18n.localize('CoC7.CoCIDFlag.key') }), { console: false })
+                ui.notifications.info('CoC7.WhatCopiedClipboard', { format: { what: game.i18n.localize('CoC7.CoCIDFlag.key') }, console: false })
               })
             } else {
               new CoCIDEditor({ document: application.document }, {}).render({ force: true, focus: true })
@@ -242,29 +218,6 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
           copyUuidButton.after(button)
         }
       }
-    }
-  }
-
-  /**
-   * Add CoC ID Button to sheet header
-   * @deprecated FoundryVTT v12
-   * @param {Application} application
-   * @param {ApplicationHeaderButton} buttons
-   */
-  static addCoCIDSheetHeaderButtonV12 (application, buttons) {
-    if (game.user.isGM) {
-      const sheetCoCID = application.document.flags?.[FOLDER_ID]?.cocidFlag
-      const noId = (typeof sheetCoCID === 'undefined' || typeof sheetCoCID.id === 'undefined' || sheetCoCID.id === '')
-      const CoCIDEditorButton = {
-        class: (noId ? 'invalid-coc-id' : 'valid-coc-id'),
-        label: 'CoC7.CoCIDFlag.id',
-        icon: 'fa-solid fa-fingerprint',
-        onclick: () => {
-          new CoCIDEditor({ document: application.document }, {}).render(true, { focus: true })
-        }
-      }
-      const numberOfButtons = buttons.length
-      buttons.splice(numberOfButtons - 1, 0, CoCIDEditorButton)
     }
   }
 
@@ -326,8 +279,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
         }, {}),
         priority: parseInt(d.flags[FOLDER_ID].cocidFlag.priority, 10),
         lang: d.flags[FOLDER_ID].cocidFlag.lang ?? 'en',
-        /* // FoundryVTT V12 */
-        link: await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(d.link, { async: true }),
+        link: await foundry.applications.ux.TextEditor.implementation.enrichHTML(d.link, { async: true }),
         folder: folders.map(n => n.indexOf(' ') > -1 ? '"' + n + '"' : n).join(' &gt; ')
       }
     }))
@@ -351,22 +303,12 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
       ['flags.' + FOLDER_ID + '.cocidFlag.lang']: submitData.lang || game.i18n.lang,
       ['flags.' + FOLDER_ID + '.cocidFlag.priority']: submitData.priority || 0
     }
-    if (typeof this.document.sheet.element?.querySelector === 'undefined') {
-      /* // FoundryVTT V12 */
-      const html = this.document.sheet.element.find('header.window-header a.header-button.invalid-coc-id,header.window-header a.header-button.valid-coc-id')
-      if (html) {
-        html.css({
-          color: (changes['flags.' + FOLDER_ID + '.cocidFlag.id'].length ? 'var(--color-text-light-highlight)' : 'var(--color-level-error)')
-        })
-      }
-    } else {
-      const html = this.document.sheet.element.querySelector('header.window-header [data-action="cocid"]')
-      if (html) {
-        if (changes['flags.' + FOLDER_ID + '.cocidFlag.id'].length) {
-          html.classList.remove('invalid-coc-id')
-        } else {
-          html.classList.add('invalid-coc-id')
-        }
+    const html = this.document.sheet.element.querySelector('header.window-header [data-action="cocid"]')
+    if (html) {
+      if (changes['flags.' + FOLDER_ID + '.cocidFlag.id'].length) {
+        html.classList.remove('invalid-coc-id')
+      } else {
+        html.classList.add('invalid-coc-id')
       }
     }
     this.document.update(changes)

@@ -94,8 +94,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
             isEnabled: context.document.system.type[key] === true
           })
         }
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -104,8 +103,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
         )
         break
       case 'details':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionAlternativeNames = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionAlternativeNames = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.alternativeNames,
           {
             async: true,
@@ -116,8 +114,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
         context._costListCosts = CONFIG.Item.dataModels.spell.availableCosts()
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,
@@ -191,7 +188,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
       event.preventDefault()
       event.stopPropagation()
     }))
-    const dragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    const dragDrop = new foundry.applications.ux.DragDrop({
       dragSelector: '.spell-cost-list',
       dropSelector: '.spell-cost-list',
       permissions: {

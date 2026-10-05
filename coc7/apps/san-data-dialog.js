@@ -17,7 +17,7 @@ export default class CoC7SanDataDialog extends foundry.applications.api.DialogV2
       window: {
         title: 'CoC7.SanDataSelectionWindow'
       },
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/apps/san-data-dialog.hbs', data),
+      content: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/apps/san-data-dialog.hbs', data),
       ok: {
         callback: (event, button, dialog) => {
           if (typeof button.form.elements.sanMin !== 'undefined') {

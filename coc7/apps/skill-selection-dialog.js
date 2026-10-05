@@ -55,22 +55,6 @@ export default class CoC7SkillSelectionDialog extends foundry.applications.api.H
 
   /**
    * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
-  }
-
-  /**
-   * @inheritdoc
    * @param {string} partId
    * @param {ApplicationRenderContext} context
    * @param {HandlebarsRenderOptions} options

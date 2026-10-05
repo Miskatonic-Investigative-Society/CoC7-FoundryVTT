@@ -102,7 +102,7 @@ export default class CoCIDCompendiumPopulate extends foundry.applications.api.Ha
           return doc
         })
         await Item.implementation.createDocuments(newDocs, { pack: this.coc7Config.packList })
-        destination.render(true)
+        destination.render({ force: true })
       } else {
         event.submitter.classList.remove('currently-submitting')
         return
@@ -144,22 +144,6 @@ export default class CoCIDCompendiumPopulate extends foundry.applications.api.Ha
         break
     }
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**

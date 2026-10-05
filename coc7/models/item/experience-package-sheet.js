@@ -1,6 +1,5 @@
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ModelsItemGlobalSheet from './global-sheet.js'
-import deprecated from '../../deprecated.js'
 
 export default class CoC7ModelsItemExperiencePackageSheet extends CoC7ModelsItemGlobalSheet {
   static DEFAULT_OPTIONS = {
@@ -84,8 +83,7 @@ export default class CoC7ModelsItemExperiencePackageSheet extends CoC7ModelsItem
 
     switch (partId) {
       case 'description':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -110,8 +108,7 @@ export default class CoC7ModelsItemExperiencePackageSheet extends CoC7ModelsItem
         context.groups = await context.document.system.skillGroups()
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,
@@ -133,12 +130,7 @@ export default class CoC7ModelsItemExperiencePackageSheet extends CoC7ModelsItem
     await super._onRender(context, options)
 
     if (context.document.isEmbedded) {
-      /* // FoundryVTT V12 */
-      if (!this._toggleDisabled) {
-        deprecated.disableForm(this.options.window.frame, this.element)
-      } else {
-        this._toggleDisabled(true)
-      }
+      this._toggleDisabled(true)
     }
 
     this.element.querySelectorAll('.item div.summary').forEach((element) => element.addEventListener('click', this._onItemSummary.bind(this)))
@@ -178,8 +170,7 @@ export default class CoC7ModelsItemExperiencePackageSheet extends CoC7ModelsItem
       }
     }))
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: '.drop-item',
       permissions: {
         drop: true

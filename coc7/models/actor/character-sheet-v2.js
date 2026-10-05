@@ -156,8 +156,7 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
 
     context.hasInventory = this.hasInventory(context)
 
-    /* // FoundryVTT V12 */
-    context.enrichedBackstory = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+    context.enrichedBackstory = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       context.document.system.backstory,
       {
         async: true,
@@ -165,8 +164,7 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
       }
     )
 
-    /* // FoundryVTT V12 */
-    context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+    context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       context.document.system.description.keeper,
       {
         async: true,
@@ -238,8 +236,7 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
         context.biographySections.push({
           title: biography.title,
           value: biography.value,
-          /* // FoundryVTT V12 */
-          enriched: await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          enriched: await foundry.applications.ux.TextEditor.implementation.enrichHTML(
             biography.value,
             {
               async: true,
@@ -424,8 +421,7 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
               const tempHTML = document.createElement('div')
               tempHTML.classList.add(part, 'flexcol', 'limited-view')
               tempHTML.dataset.applicationPart = part
-              /* // FoundryVTT V12 */
-              tempHTML.innerHTML = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/actors/limited.hbs', context)
+              tempHTML.innerHTML = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/actors/limited.hbs', context)
               parts[part] = tempHTML
             }
             break

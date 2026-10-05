@@ -113,8 +113,7 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
         }
         break
       case 'description':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -123,8 +122,7 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
         )
         break
       case 'content':
-        /* // FoundryVTT V12 */
-        context.enrichedContent = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedContent = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.content,
           {
             async: true,
@@ -207,8 +205,7 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
         context.spellListEmpty = context.spells.length === 0
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,
@@ -304,8 +301,7 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
         this.render()
       }
     }))
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: '.drop-item',
       permissions: {
         drop: true
@@ -315,8 +311,7 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
       }
     }).bind(this.element)
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: '.drop-skill-item',
       permissions: {
         drop: true
@@ -384,8 +379,7 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
   async alterProgressBy (event, increase) {
     let alter = 1
     const knownBook = this.document.actor?.system.getBook(this.document)
-    /* // FoundryVTT V12 */
-    if (game.release.generation > 12 && knownBook && event.shiftKey) {
+    if (knownBook && event.shiftKey) {
       const max = Number(increase ? knownBook.necessary - knownBook.progress : knownBook.progress)
       if (max > 1) {
         alter = await new Promise((resolve, reject) => {

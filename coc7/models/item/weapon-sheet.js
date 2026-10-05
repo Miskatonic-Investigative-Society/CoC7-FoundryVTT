@@ -103,8 +103,7 @@ export default class CoC7ModelsItemWeaponSheet extends CoC7ModelsItemGlobalSheet
         }
         break
       case 'details':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionSpecial = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionSpecial = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.special,
           {
             async: true,
@@ -113,8 +112,7 @@ export default class CoC7ModelsItemWeaponSheet extends CoC7ModelsItemGlobalSheet
         )
         break
       case 'description':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -138,8 +136,7 @@ export default class CoC7ModelsItemWeaponSheet extends CoC7ModelsItemGlobalSheet
         context.useEraIcons = game.settings.get(FOLDER_ID, 'sheetEraIcons')
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,

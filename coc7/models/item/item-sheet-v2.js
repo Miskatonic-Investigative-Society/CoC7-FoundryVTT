@@ -88,8 +88,7 @@ export default class CoC7ModelsItemItemSheetV2 extends CoC7ModelsItemGlobalSheet
         context.worldEra = game.settings.get(FOLDER_ID, 'worldEra')
         break
       case 'description':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -116,8 +115,7 @@ export default class CoC7ModelsItemItemSheetV2 extends CoC7ModelsItemGlobalSheet
         context.useEraIcons = game.settings.get(FOLDER_ID, 'sheetEraIcons')
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,

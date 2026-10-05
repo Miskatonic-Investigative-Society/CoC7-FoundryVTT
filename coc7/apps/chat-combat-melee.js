@@ -608,8 +608,7 @@ export default class CoC7ChatCombatMelee {
       diceGroup,
       displayActorOnCard: (attacker ? game.settings.get(FOLDER_ID, 'displayActorOnCard') : false),
       enrichedWeaponDescriptionSpecial: '',
-      /* // FoundryVTT V12 */
-      enrichedItemDescriptionValue: await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      enrichedItemDescriptionValue: await foundry.applications.ux.TextEditor.implementation.enrichHTML(
         item?.system?.description?.value,
         {
           async: true,
@@ -656,11 +655,11 @@ export default class CoC7ChatCombatMelee {
     const attackerKeys = Object.keys(dicePoolReasons).filter(k => dicePoolReasons[k].ifAttacker)
     const attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable))) ?? []
     const attackerPoolDisabled = attackerTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
-    data.attackerTalent = await Promise.all(attackerTalents.map(async (doc) => await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(doc.link, { async: true }) ))
+    data.attackerTalent = await Promise.all(attackerTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
     const targetKeys = Object.keys(dicePoolReasons).filter(k => dicePoolReasons[k].ifDefender)
     const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable))) ?? []
     const targetPoolDisabled = targetTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
-    data.targetTalent = await Promise.all(targetTalents.map(async (doc) => await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(doc.link, { async: true }) ))
+    data.targetTalent = await Promise.all(targetTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
     for (const key in dicePoolReasons) {
       const type = (dicePoolReasons[key].forBonus ? 'poolBonus' : (dicePoolReasons[key].forPenalty ? 'poolPenalty' : ''))
       if (type) {
@@ -706,7 +705,7 @@ export default class CoC7ChatCombatMelee {
       data.targetName = game.i18n.localize('CoC7.NoTarget')
     }
     if (data.hasWeaponSpecial) {
-      data.enrichedWeaponDescriptionSpecial = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      data.enrichedWeaponDescriptionSpecial = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
         item.system.description.special,
         {
           async: true,
@@ -781,8 +780,7 @@ export default class CoC7ChatCombatMelee {
         }
       },
       rolls: (this.message?.rolls ?? []).concat(this.#dicePool.newRolls),
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(data.template, data)
+      content: await foundry.applications.handlebars.renderTemplate(data.template, data)
     }
     if (typeof this.message?.whisper === 'undefined') {
       /* // FoundryVTT V13 */
@@ -960,7 +958,7 @@ export default class CoC7ChatCombatMelee {
       const merged = foundry.utils.mergeObject(message, update, { inplace: false })
       const check = await CoC7ChatCombatMelee.loadFromMessage(merged)
       const data = await check.getTemplateData()
-      update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(data.template, data)
+      update.content = await foundry.applications.handlebars.renderTemplate(data.template, data)
       update._id = message.id
       updates.push(update)
     }

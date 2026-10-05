@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Remove v12 specific code and styles
+
 ## Version 8.16
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

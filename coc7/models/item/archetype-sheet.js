@@ -56,8 +56,7 @@ export default class CoC7ModelsItemArchetypeSheet extends CoC7ModelsItemGlobalSh
       }
     }))
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: '.drop-item',
       permissions: {
         drop: true
@@ -151,8 +150,7 @@ export default class CoC7ModelsItemArchetypeSheet extends CoC7ModelsItemGlobalSh
           `${game.i18n.localize('CoC7.PulpTalents')}: ${context.document.system.talents}`,
           `${game.i18n.localize('CoC7.BonusPoints')}: ${context.document.system.bonusPoints}`
         ]
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -170,16 +168,14 @@ export default class CoC7ModelsItemArchetypeSheet extends CoC7ModelsItemGlobalSh
             isEnabled: context.document.system.coreCharacteristics[key] === true
           })
         }
-        /* // FoundryVTT V12 */
-        context.enrichedSuggestedOccupations = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedSuggestedOccupations = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.suggestedOccupations,
           {
             async: true,
             secrets: context.editable
           }
         )
-        /* // FoundryVTT V12 */
-        context.enrichedSuggestedTraits = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedSuggestedTraits = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.suggestedTraits,
           {
             async: true,
@@ -192,8 +188,7 @@ export default class CoC7ModelsItemArchetypeSheet extends CoC7ModelsItemGlobalSh
         context.skillListEmpty = context.skills.length === 0
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,

@@ -1,9 +1,7 @@
-// cSpell:words injurues malf subskill skillname
+// cSpell:words injurues malf skillname subskill
 import { FOLDER_ID } from '../constants.js'
 import CoC7ModelsItemSkillSystem from '../models/item/skill-system.js'
-import CoC7DirectoryPicker from './directory-picker.js'
 import CoC7Utilities from './utilities.js'
-import deprecated from '../deprecated.js'
 
 export default class CoC7DholeHouseActorImporter {
   /**
@@ -335,22 +333,6 @@ export default class CoC7DholeHouseActorImporter {
   }
 
   /**
-   * Convert base 64 png data to png and save
-   * @param {string} base64Portrait
-   * @param {string} fileName
-   * @returns {string}
-   */
-  static async savePortrait (base64Portrait, fileName) {
-    const base64Response = await fetch('data:image/png;base64,' + base64Portrait)
-    const imageBlob = await base64Response.blob()
-    const filePath = CoC7DirectoryPicker.uploadToDefaultDirectory(
-      imageBlob,
-      fileName
-    )
-    return filePath
-  }
-
-  /**
    * Convert Dholehouse JSON into Foundry Actor
    * @param {object} dholeHouseCharacterData
    * @param {object} options
@@ -388,23 +370,15 @@ export default class CoC7DholeHouseActorImporter {
       foundry.utils.setProperty(dholeHouseCharacterData, 'Investigator.Weapons.weapon', [dholeHouseCharacterData.Investigator.Weapons.weapon])
     }
     const progressBar = {
+      bar: ui.notifications.info('CoC7.CoCIDFlag.loading', { localize: true, progress: true, console: false }),
       current: 0,
       max: dholeHouseCharacterData.Investigator.Skills.Skill.length + dholeHouseCharacterData.Investigator.Possessions.item.length + dholeHouseCharacterData.Investigator.Weapons.weapon.length + 1
-    }
-    /* // FoundryVTT V12 */
-    if (foundry.utils.isNewerVersion(game.version, 13)) {
-      progressBar.bar = ui.notifications.info('CoC7.CoCIDFlag.loading', { localize: true, progress: true, console: false })
-    } else {
-      progressBar.bar = deprecated.displayProgressBar(game.i18n.localize('CoC7.CoCIDFlag.loading'))
     }
     const characterData = await CoC7DholeHouseActorImporter.convertDholeHouseCharacterData(dholeHouseCharacterData, options, progressBar)
     if (CONFIG.debug.CoC7Importer) {
       console.log('Character Data:', characterData)
     }
     const importedCharactersFolder = await CoC7Utilities.createImportCharactersFolderIfNotExists()
-    if (!CoC7DirectoryPicker.createDefaultDirectory()) {
-      return false
-    }
     const actorData = {
       name: characterData.name,
       type: 'character',
@@ -414,14 +388,14 @@ export default class CoC7DholeHouseActorImporter {
     const npc = await Actor.create(actorData)
     // If possible upload the image portrait
     if (dholeHouseCharacterData.Investigator.PersonalDetails.Portrait?.length > 10) {
-      const fileName = 'avatar-' + npc.id + '.png'
-      const portrait = await CoC7DholeHouseActorImporter.savePortrait(
-        dholeHouseCharacterData.Investigator.PersonalDetails.Portrait,
-        fileName
+      const portrait = await CoC7Utilities.saveBase64(
+        game.settings.get(FOLDER_ID, 'dholeUploadDirectory'),
+        'avatar-' + npc.id + '.png',
+        'data:image/png;base64,' + dholeHouseCharacterData.Investigator.PersonalDetails.Portrait
       )
-      if (portrait !== false) {
+      if (portrait.path) {
         npc.update({
-          img: portrait
+          img: portrait.path
         })
       }
     }

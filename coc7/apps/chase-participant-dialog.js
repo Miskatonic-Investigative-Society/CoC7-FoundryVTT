@@ -68,8 +68,7 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
   async _onRender (context, options) {
     await super._onRender(context, options)
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: '.window-content',
       permissions: {
         drop: game.user.isGM
@@ -79,8 +78,7 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
       }
     }).bind(this.element)
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dragSelector: '.chase-token',
       permissions: {
         dragstart: game.user.isGM
@@ -250,7 +248,7 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
       this.coc7Config.participant = await CoC7ChaseParticipantDialog.createParticipant(await CoC7Utilities.getActorUuid(found[0]))
       await this.render()
     } else {
-      ui.notifications.warn(game.i18n.localize('CoC7.ErrorTokenIncorrect'))
+      ui.notifications.warn('CoC7.ErrorTokenIncorrect', { localize: true })
     }
   }
 
@@ -353,21 +351,5 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
       locationId,
       participant
     }).render({ force: true })
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 }

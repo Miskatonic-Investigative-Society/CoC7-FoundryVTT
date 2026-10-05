@@ -2,7 +2,6 @@ import { FOLDER_ID } from '../../constants.js'
 import CoC7ActiveEffect from '../../apps/active-effect.js'
 import CoC7DropCoCID from '../../apps/drop-coc-id.js'
 import CoC7Utilities from '../../apps/utilities.js'
-import deprecated from '../../deprecated.js'
 
 export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheetV2) {
   static DEFAULT_OPTIONS = {
@@ -150,8 +149,7 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
         updates[source + '.' + collectionName].push(newEntry)
       }
       if (names.length) {
-        /* // FoundryVTT V12 */
-        ui.notifications.info(game.i18n.format('CoC7.AddedEmbeddedItems', { names: '"' + names.join('" / "') + '"' }))
+        ui.notifications.info('CoC7.AddedEmbeddedItems', { format: { names: '"' + names.join('" / "') + '"' } })
         const object = foundry.utils.expandObject(updates)
         const parts = source.match(/\.([^\\.]+)\.\d+$/)
         if (parts) {
@@ -205,30 +203,7 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
     if (!this.isEditable) return
     this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', (event) => { this._onClickToggle(event) }))
 
-    /* // FoundryVTT V12 */
-    if (game.release.generation === 12) {
-      this.element.querySelectorAll('img[data-action="editImage"]').forEach((element) => element.addEventListener('click', async (event) => {
-        deprecated.AppV2EditImage(event, this.document, this.element, { submitOnChange: this.options.form.submitOnChange, position: this.position })
-      }))
-    }
-
     CoC7ActiveEffect._onRender(this.element, context.document)
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<ApplicationRenderContext>}
-   */
-  async _prepareContext (options) {
-    const context = await super._prepareContext(options)
-
-    /* // FoundryV12 polyfill */
-    if (!context.document) {
-      context.document = this.document
-    }
-
-    return context
   }
 
   /**
@@ -247,28 +222,7 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
       context.tab = undefined
     }
 
-    /* // FoundryV12 polyfill */
-    if (game.release.generation === 12) {
-      context.editable = this.isEditable
-    }
-
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**

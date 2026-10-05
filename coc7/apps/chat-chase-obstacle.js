@@ -980,8 +980,7 @@ export default class CoC7ChatChaseObstacle {
         }
       },
       rolls: (this.message?.rolls ?? []).concat(this.#dicePool.newRolls),
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/chase-obstacle.hbs', data)
+      content: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/chase-obstacle.hbs', data)
     }
     /* // FoundryVTT V13 */
     if (game.release.generation < 14) {
@@ -1166,7 +1165,7 @@ export default class CoC7ChatChaseObstacle {
       const merged = foundry.utils.mergeObject(message, update, { inplace: false })
       const check = await CoC7ChatChaseObstacle.loadFromMessage(merged)
       const data = await check.getTemplateData()
-      update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/chase-obstacle.hbs', data)
+      update.content = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/chase-obstacle.hbs', data)
       update._id = message.id
       updates.push(update)
     }

@@ -214,18 +214,15 @@ export default class CoC7RollNormalize {
       }
     }
     if (!okay && typeof options.event === 'undefined' && ![CoC7RollNormalize.ROLL_TYPE.MANUAL, CoC7RollNormalize.ROLL_TYPE.ENCOUNTER].includes(config.rollType)) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ErrorNotFound', { missing: game.i18n.localize('CoC7.Roll') }))
+      ui.notifications.error('CoC7.ErrorNotFound', { format: { missing: game.i18n.localize('CoC7.Roll') } })
       return false
     }
     if (![CoC7RollNormalize.CARD_TYPE.COMBINED, CoC7RollNormalize.CARD_TYPE.NORMAL, CoC7RollNormalize.CARD_TYPE.OPPOSED, CoC7RollNormalize.CARD_TYPE.SAN_CHECK, CoC7RollNormalize.CARD_TYPE.KNOW_CHECK, CoC7RollNormalize.CARD_TYPE.IDEA_CHECK].includes(config.cardType)) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ErrorInvalidFormula', { value: game.i18n.localize('CoC7.ErrorInvalidCardType') }))
+      ui.notifications.error('CoC7.ErrorInvalidFormula', { format: { value: game.i18n.localize('CoC7.ErrorInvalidCardType') } })
       return false
     }
     if (!config.askValue && typeof config.threshold === 'undefined' && ![CoC7RollNormalize.ROLL_TYPE.SKILL, CoC7RollNormalize.ROLL_TYPE.CHARACTERISTIC, CoC7RollNormalize.ROLL_TYPE.ATTRIBUTE, CoC7RollNormalize.ROLL_TYPE.ENCOUNTER].includes(config.rollType)) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ErrorInvalidFormula', { value: game.i18n.localize('CoC7.ErrorInvalidRollType') }))
+      ui.notifications.error('CoC7.ErrorInvalidFormula', { format: { value: game.i18n.localize('CoC7.ErrorInvalidRollType') } })
       return false
     }
     config.poolModifier = Math.max(-CoC7DicePool.maxDicePenalty, Math.min(CoC7DicePool.maxDiceBonus, config.poolModifier))

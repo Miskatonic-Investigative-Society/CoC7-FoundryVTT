@@ -97,19 +97,6 @@ export default class CoC7Link {
     CONFIG.CoC7Link = {
       documentClass: CoC7Link
     }
-    /* // FoundryVTT V12 */
-    if (game.release.generation === 12) {
-      document.body.addEventListener('click', event => {
-        if (event.target?.closest('a.coc7-link')) {
-          CoC7Link._onLinkClick(event)
-        }
-      })
-      document.body.addEventListener('dragstart', event => {
-        if (event.target?.closest('a.coc7-link')) {
-          CoC7Link._onDragCoC7Link(event)
-        }
-      })
-    }
     CONFIG.TextEditor.enrichers.push({
       id: 'coc7-enricher',
       pattern: new RegExp('@(coc7)\\.' + '(check|effect|item|sanloss)' + '\\[((?:[^\\[\\]]*(?:\\[[^\\[\\]]*[^\\[\\]]*\\])*[^\\[\\]]*)*)\\]' + '(?:{([^}]+)})?', 'gi'),
@@ -632,8 +619,7 @@ export default class CoC7Link {
    */
   static async linkMacro (data) {
     const linkObj = await CoC7Link.fromDropData(data)
-    /* // FoundryVTT V12 */
-    ;(foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+    foundry.applications.ux.TextEditor.implementation.enrichHTML(
       linkObj._createDocumentLink(),
       {
         async: true,

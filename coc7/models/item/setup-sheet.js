@@ -79,8 +79,7 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
       }
     }))
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: '.drop-item',
       permissions: {
         drop: true
@@ -291,8 +290,7 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
             context._properties.push(era.name)
           }
         }
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -324,8 +322,7 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
           }
         }
         if (context.oneBlockBackStory) {
-          /* // FoundryVTT V12 */
-          context.enrichedBackstory = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.enrichedBackstory = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
             context.document.system.backstory,
             {
               async: true,
@@ -354,8 +351,7 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
         context.skillListEmpty = context.skills.length === 0
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,

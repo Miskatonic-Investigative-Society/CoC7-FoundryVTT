@@ -1,5 +1,4 @@
 import { STATUS_EFFECTS } from '../constants.js'
-import deprecated from '../deprecated.js'
 
 export default class CoC7ActiveEffect {
   /**
@@ -25,7 +24,7 @@ export default class CoC7ActiveEffect {
           }
         ])
       case 'edit':
-        return effect.sheet.render(deprecated.renderForce)
+        return effect.sheet.render({ force: true })
       case 'delete':
         return effect.delete()
       case 'toggle':
@@ -79,7 +78,7 @@ export default class CoC7ActiveEffect {
     const changes = (game.release.generation < 14 ? effect.changes : effect.system.changes)
     for (const change of changes) {
       /* // FoundryVTT V13 */
-      const changeType = (game.release.generation < 14 ? (change.mode === CONST.ACTIVE_EFFECT_MODES.ADD ? 'add' : (change.mode === CONST.ACTIVE_EFFECT_MODES.OVERRIDE? 'override' : 'other')) : change.type)
+      const changeType = (game.release.generation < 14 ? (change.mode === CONST.ACTIVE_EFFECT_MODES.ADD ? 'add' : (change.mode === CONST.ACTIVE_EFFECT_MODES.OVERRIDE ? 'override' : 'other')) : change.type)
       if (['add', 'override'].includes(changeType)) {
         let name = false
         let what = false
@@ -173,8 +172,7 @@ export default class CoC7ActiveEffect {
       uuid: effect.uuid,
       img: effect.img,
       name: effect.name,
-      /* // FoundryVTT V12 */
-      source: effect.transfer && embeddedItem ? await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(effect.parent.link, { async: true }) : effect.sourceName,
+      source: effect.transfer && embeddedItem ? await foundry.applications.ux.TextEditor.implementation.enrichHTML(effect.parent.link, { async: true }) : effect.sourceName,
       duration: effect.duration.label,
       isSuppressed: effect.isSuppressed,
       isTemporary: effect.isTemporary,

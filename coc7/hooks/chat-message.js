@@ -6,6 +6,7 @@ import deprecated from '../deprecated.js'
 
 /**
  * Intercept user sent chat message
+ * @deprecated This no longer works in Foundry v14 due to the way the parser works
  * @param {ChatLog} chatLog
  * @param {string} message
  * @param {object} options
@@ -18,7 +19,7 @@ export default function (chatLog, message, { speaker, user }) {
   if (match) {
     deprecated.noReplacement({
       was: '/roll 1d%',
-      until: 16
+      until: 14
     })
     // Delay calling function to prevent chatMessage key down triggering default
     setTimeout(async function () {

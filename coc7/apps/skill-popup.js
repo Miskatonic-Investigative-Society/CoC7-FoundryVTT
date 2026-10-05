@@ -34,8 +34,7 @@ export default class CoC7SkillPopup extends foundry.applications.api.HandlebarsA
 
     context.document = this.options.document
 
-    /* // FoundryVTT V12 */
-    context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+    context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       context.document.system.description.value,
       {
         async: true,
@@ -50,21 +49,5 @@ export default class CoC7SkillPopup extends foundry.applications.api.HandlebarsA
     }
 
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 }

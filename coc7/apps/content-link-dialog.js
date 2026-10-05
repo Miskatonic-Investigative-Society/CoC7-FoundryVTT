@@ -140,45 +140,28 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
             group: 'primary',
             cssClass: (this.tabGroups.primary === 'details' ? 'active' : ''),
             icon: 'fa-solid fa-book',
-            /* // FoundryVTT V12 */
-            label: (game.release.generation === 12 ? 'EFFECT.TabDetails' : 'EFFECT.TABS.details')
+            label: 'EFFECT.TABS.details'
           },
           {
             id: 'duration',
             group: 'primary',
             cssClass: (this.tabGroups.primary === 'duration' ? 'active' : ''),
             icon: 'fa-solid fa-clock',
-            /* // FoundryVTT V12 */
-            label: (game.release.generation === 12 ? 'EFFECT.TabDuration' : 'EFFECT.TABS.duration')
+            label: 'EFFECT.TABS.duration'
           },
           {
             id: 'effects',
             group: 'primary',
             cssClass: (this.tabGroups.primary === 'effects' ? 'active' : ''),
             icon: 'fa-solid fa-cogs',
-            /* // FoundryVTT V12 */
-            label: (game.release.generation === 12 ? 'EFFECT.TabEffects' : 'EFFECT.TABS.changes')
+            label: 'EFFECT.TABS.changes'
           }
         ]
         context.rootId = 'new-effect'
         context.statuses = CONFIG.statusEffects.map(s => ({ value: s.id, label: game.i18n.localize(s.name) }))
         context.actorNames = this.coc7Config.actors.map(a => a.name).join(', ')
-        context.priorities = (foundry.applications.sheets.ActiveEffectConfig ?? ActiveEffectConfig).DEFAULT_PRIORITIES
+        context.priorities = foundry.applications.sheets.ActiveEffectConfig.DEFAULT_PRIORITIES
         context.fields = CONFIG.ActiveEffect.documentClass.schema.fields
-        if (game.release.generation === 12) {
-          context.fields.tint.label = game.i18n.localize(context.fields.tint.label)
-          context.fields.description.label = game.i18n.localize(context.fields.description.label)
-          context.fields.disabled.label = game.i18n.localize('EFFECT.Disabled')
-          context.fields.statuses.label = 'Status Conditions'
-          context.fields.duration.fields.seconds.label = game.i18n.localize(context.fields.duration.fields.seconds.label)
-          context.fields.duration.fields.startTime.label = game.i18n.localize(context.fields.duration.fields.startTime.label)
-          context.fields.duration.fields.rounds.label = game.i18n.localize('COMBAT.Rounds')
-          context.fields.duration.fields.turns.label = game.i18n.localize('COMBAT.Turns')
-          context.fields.duration.fields.startRound.label = game.i18n.localize('COMBAT.Round')
-          context.fields.duration.fields.startTurn.label = game.i18n.localize('COMBAT.Turn')
-        }
-        /* // FoundryVTT V12 */
-        context.noPriority = (game.release.generation === 12)
         context.modifiers = [
           {
             id: 'difficulty',
@@ -226,22 +209,6 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
 
   /**
    * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
-  }
-
-  /**
-   * @inheritdoc
    * @param {ApplicationRenderContext} context
    * @param {RenderOptions} options
    * @returns {Promise<void>}
@@ -272,8 +239,7 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
       this.render({ force: true })
     }))
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       permissions: {
         drop: true
       },
@@ -287,10 +253,8 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
    * Add Active Effect Change
    */
   static async #onAddChange () {
-    /* // FoundryVTT V12 */
-    ;(this.form ?? this.element).dispatchEvent(new SubmitEvent('submit'))
-    /* // FoundryVTT V12 */
-    const submitData = new (foundry.applications?.ux?.FormDataExtended ?? FormDataExtended)(this.form ?? this.element)
+    this.form.dispatchEvent(new SubmitEvent('submit'))
+    const submitData = new foundry.applications.ux.FormDataExtended(this.form)
     const formData = foundry.utils.expandObject(submitData.object)
     const changes = Object.values(formData.changes ?? {})
     changes.push({})
@@ -303,10 +267,8 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
    * @param {ClickEvent} event
    */
   static async #onDeleteChange (event) {
-    /* // FoundryVTT V12 */
-    ;(this.form ?? this.element).dispatchEvent(new SubmitEvent('submit'))
-    /* // FoundryVTT V12 */
-    const submitData = new (foundry.applications?.ux?.FormDataExtended ?? FormDataExtended)(this.form ?? this.element)
+    this.form.dispatchEvent(new SubmitEvent('submit'))
+    const submitData = new foundry.applications.ux.FormDataExtended(this.form)
     const formData = foundry.utils.expandObject(submitData.object)
     const changes = Object.values(formData.changes)
     const row = event.target.closest('li')
@@ -345,8 +307,7 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
       switch (event.submitter?.dataset?.action) {
         case 'clipboard':
           await game.clipboard.copyPlainText(link._createDocumentLink(null))
-          /* // FoundryVTT V12 */
-          ui.notifications.info(game.i18n.format('CoC7.WhatCopiedClipboard', { what: game.i18n.localize('CoC7.CreateLink') }), { console: false })
+          ui.notifications.info('CoC7.WhatCopiedClipboard', { format: { what: game.i18n.localize('CoC7.CreateLink') }, console: false })
           break
         case 'chat':
           link.toChatMessage()

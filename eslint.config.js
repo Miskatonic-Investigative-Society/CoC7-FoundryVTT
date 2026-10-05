@@ -44,30 +44,6 @@ const config = [
         /* // FoundryVTT V14 */
         $: 'readonly',
 
-        /* // FoundryVTT V12 */
-        ActiveEffectConfig: 'readonly',
-        Actors: 'readonly',
-        ActorSheet: 'readonly',
-        Compendium: 'readonly',
-        ContextMenu: 'readonly',
-        DocumentSheetConfig: 'readonly',
-        DragDrop: 'readonly',
-        FilePicker: 'readonly',
-        FormDataExtended: 'readonly',
-        Items: 'readonly',
-        ItemSheet: 'readonly',
-        loadTemplates: 'readonly',
-        NotesLayer: 'readonly',
-        PlaceablesLayer: 'readonly',
-        Ray: 'readonly',
-        renderTemplate: 'readonly',
-        SceneNavigation: 'readonly',
-        SearchFilter: 'readonly',
-        TextEditor: 'readonly',
-        Token: 'readonly',
-        TokenLayer: 'readonly',
-        Tour: 'readonly',
-
         ...globals.browser,
         ...globals.node
       }

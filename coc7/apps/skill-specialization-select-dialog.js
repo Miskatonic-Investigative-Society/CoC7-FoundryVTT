@@ -140,22 +140,6 @@ export default class CoC7SkillSpecializationSelectDialog extends foundry.applica
   }
 
   /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
-  }
-
-  /**
    * Create popup
    * @param {object} options
    * @param {Array} options.skills

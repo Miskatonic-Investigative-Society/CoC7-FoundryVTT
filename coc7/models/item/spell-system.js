@@ -402,8 +402,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
     }
     const template = 'systems/' + FOLDER_ID + '/templates/chat/spell.hbs'
     const description = this.description.value
-    /* // FoundryVTT V12 */
-    const html = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(template, { additionalInformation, automatedCosts, automatedLosses, casterGroups, castingTime, description, dice, diceTemplate: Roll.CHAT_TEMPLATE, manualLosses })
+    const html = await foundry.applications.handlebars.renderTemplate(template, { additionalInformation, automatedCosts, automatedLosses, casterGroups, castingTime, description, dice, diceTemplate: Roll.CHAT_TEMPLATE, manualLosses })
     let chatData = {
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor }),

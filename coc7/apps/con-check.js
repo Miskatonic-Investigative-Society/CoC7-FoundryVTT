@@ -152,8 +152,7 @@ export default class CoC7ConCheck {
       },
       blind: isBlind,
       rolls: (this.message?.rolls ?? []).concat(this.#dicePool.newRolls),
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/con-check.hbs', data)
+      content: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/con-check.hbs', data)
     }
     if (typeof this.message?.whisper === 'undefined') {
       if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode'))) {

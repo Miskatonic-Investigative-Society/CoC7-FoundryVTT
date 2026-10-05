@@ -28,11 +28,6 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
   async _prepareContext (options) {
     const context = await super._prepareContext(options)
 
-    /* // FoundryV12 polyfill */
-    if (!context.document) {
-      context.document = this.document
-    }
-
     context.canDragToken = (context.document.token instanceof TokenDocument) && game.user.isGM
     context.linkedActor = (context.document.token ?? context.document.prototypeToken)?.actorLink === true
     context.isToken = context.document.isToken
@@ -196,11 +191,6 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
       context.tab = undefined
     }
 
-    /* // FoundryV12 polyfill */
-    if (game.release.generation === 12) {
-      context.editable = this.isEditable
-    }
-
     return context
   }
 
@@ -306,14 +296,6 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return
-
-    /* // FoundryVTT V12 */
-    if (game.release.generation === 12) {
-      deprecated.ActorAppV2DragDrop(this)
-      this.element.querySelectorAll('img[data-action="editImage"]').forEach((element) => element.addEventListener('click', async (event) => {
-        deprecated.AppV2EditImage(event, this.document, this.element, { submitOnChange: this.options.form.submitOnChange, position: this.position })
-      }))
-    }
 
     this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', (event) => { this._onClickToggle(event) }))
 
@@ -496,8 +478,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
     this.element.querySelectorAll('.read-only').forEach((element) => element.addEventListener('dblclick', this._toggleReadOnly.bind(this)))
 
     // Everything below here is not available if in compendium
-    /* // FoundryVTT V12 */
-    if (context.document.inCompendium ?? !!context.document.pack) return
+    if (context.document.inCompendium) return
 
     this.element.querySelectorAll('.attribute-name.rollable').forEach((element) => {
       element.addEventListener('click', this._onRollAttribTest.bind(this))
@@ -526,22 +507,6 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
       element.addEventListener('click', this._onWeaponRoll.bind(this))
       element.addEventListener('contextmenu', this._onOpposedRoll.bind(this))
     })
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**
@@ -1156,8 +1121,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
     const name = event.target?.name
     const value = event.target?.value
     if (name && typeof overrides[name] !== 'undefined') {
-      /* // FoundryVTT V12 */
-      ui.notifications.warn(game.i18n.format('CoC7.EffectAppliedCantOverride', { name }))
+      ui.notifications.warn('CoC7.EffectAppliedCantOverride', { format: { name } })
       return
     }
 
@@ -1193,8 +1157,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
         try {
           new Roll(value).evaluateSync({ maximize: true })
         } catch (e) {
-          /* // FoundryVTT V12 */
-          ui.notifications.error(game.i18n.format('CoC7.ErrorInvalidFormula', { value }))
+          ui.notifications.error('CoC7.ErrorInvalidFormula', { format: { value } })
         }
         break
     }
@@ -1331,8 +1294,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
         if (flag === 'occupation' && occupation) {
           const newValue = parseInt(value, 10)
           if (newValue > occupation.system.creditRating.max || newValue < occupation.system.creditRating.min) {
-            /* // FoundryVTT V12 */
-            ui.notifications.warn(game.i18n.format('CoC7.CreditOutOfRange', { min: occupation.system.creditRating.min, max: occupation.system.creditRating.max }))
+            ui.notifications.warn('CoC7.CreditOutOfRange', { format: { min: occupation.system.creditRating.min, max: occupation.system.creditRating.max } })
           }
         }
       }

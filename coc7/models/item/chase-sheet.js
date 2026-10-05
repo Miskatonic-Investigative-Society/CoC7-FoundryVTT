@@ -115,8 +115,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
       case 'participants':
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,
@@ -166,8 +165,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
 
     this.element.querySelectorAll('.participant-controls .item-control').forEach((element) => element.addEventListener('click', (event) => { this._onParticipantControlClicked(event) }))
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dragSelector: '.pin-location',
       permissions: {
         dragstart: true
@@ -177,8 +175,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
       }
     }).bind(this.element)
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: 'section.tab.participants',
       permissions: {
         drop: true
@@ -193,8 +190,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
     if (context.document.system.started) {
       this.element.querySelectorAll('.chase-location .chase-participant').forEach((element) => element.addEventListener('click', (event) => { this._onChaseParticipantClick(event) }))
 
-      /* // FoundryVTT V12 */
-      new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+      new foundry.applications.ux.DragDrop({
         dragSelector: '.chase-participant',
         dropSelector: '.chase-location',
         permissions: {
@@ -225,7 +221,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
                 })
               }
             }
-            new (foundry.applications.ux?.ContextMenu?.implementation ?? ContextMenu)(element, '.assist-dropdown', contextOptions, {
+            new foundry.applications.ux.ContextMenu.implementation(element, '.assist-dropdown', contextOptions, {
               jQuery: false,
               fixed: true,
               eventName: 'click'
