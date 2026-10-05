@@ -2,7 +2,7 @@
   "id": "CoC7",
   "title": "Call of Cthulhu 7th Edition",
   "description": "An implementation of the Call of Cthulhu 7th Edition game system for Foundry Virtual Tabletop.",
-  "version": "8.15",
+  "version": "8.16",
   "authors": [
     {
       "name": "Miskatonic Investigative Society"
@@ -43,33 +43,11 @@
       ]
     },
     {
-      "name": "Manuais do Sistema",
+      "name": "System Manuals",
       "sorting": "a",
       "color": "#75844c",
       "packs": [
         "system-doc"
-      ]
-    },
-    {
-      "name": "Cthulhuwiki | pt-BR",
-      "sorting": "a",
-      "color": "#75844c",
-      "packs": [
-        "pt-BR-wiki-phobias-and-manias",
-        "pt-BR-wiki-roll-tables",
-        "pt-BR-wiki-weapons"
-      ]
-    },
-    {
-      "name": "Exemplos do Sistema | pt-BR",
-      "sorting": "a",
-      "color": "#75844c",
-      "packs": [
-        "pt-BR-examples",
-        "pt-BR-items",
-        "pt-BR-roll-requests",
-        "pt-BR-sanity-tables-examples",
-        "pt-BR-skills"
       ]
     }
   ],
@@ -224,7 +202,7 @@
   "secondaryTokenAttribute": "attribs.san",
   "url": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT",
   "manifest": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/download/8.15/system.zip",
+  "download": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/download/8.16/system.zip",
   "media": [
     {
       "type": "setup",
