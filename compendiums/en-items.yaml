@@ -206,7 +206,7 @@ img: systems/CoC7/assets/icons/skills/fighting_brawl.svg
 system:
   skill:
     main:
-      name: i.skill.brawl
+      name: i.skill.fighting-brawl
   range:
     normal:
       damage: 1D3
