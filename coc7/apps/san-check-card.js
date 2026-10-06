@@ -722,8 +722,10 @@ export default class CoC7SanCheckCard {
       content: await foundry.applications.handlebars.renderTemplate(CoC7SanCheckCard.template, data)
     }
     if (typeof this.message?.whisper === 'undefined') {
+      /* // FoundryVTT V13 */
       if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode'))) {
         chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+        /* // FoundryVTT V13 */
       } else if (CHAT_MESSAGE_MODE.BLIND === (game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode'))) {
         chatData.blind = true
       }

@@ -120,13 +120,21 @@ export default function (application, element, context, options) {
           update['flags.' + FOLDER_ID + '.fixed-adventure-heading'] = formData.object['flags.' + FOLDER_ID + '.fixed-adventure-heading']
         } else {
           /* // FoundryVTT V13 */
-          update['flags.' + FOLDER_ID + '.-=fixed-adventure-heading'] = null
+          if (game.release.generation === 13) {
+            update['flags.' + FOLDER_ID + '.-=fixed-adventure-heading'] = null
+          } else {
+            update['flags.' + FOLDER_ID + '.fixed-adventure-heading'] = new foundry.data.operators.ForcedDeletion()
+          }
         }
         if (formData.object['flags.' + FOLDER_ID + '.journal-css']) {
           update['flags.' + FOLDER_ID + '.journal-css'] = formData.object['flags.' + FOLDER_ID + '.journal-css']
         } else {
           /* // FoundryVTT V13 */
-          update['flags.' + FOLDER_ID + '.-=journal-css'] = null
+          if (game.release.generation === 13) {
+            update['flags.' + FOLDER_ID + '.-=journal-css'] = null
+          } else {
+            update['flags.' + FOLDER_ID + '.journal-css'] = new foundry.data.operators.ForcedDeletion()
+          }
         }
         await application.document.update(update)
       }
@@ -152,7 +160,11 @@ export default function (application, element, context, options) {
           update['flags.' + FOLDER_ID + '.fixed-adventure-subheading'] = formData.object['flags.' + FOLDER_ID + '.fixed-adventure-subheading']
         } else {
           /* // FoundryVTT V13 */
-          update['flags.' + FOLDER_ID + '.-=fixed-adventure-subheading'] = null
+          if (game.release.generation === 13) {
+            update['flags.' + FOLDER_ID + '.-=fixed-adventure-subheading'] = null
+          } else {
+            update['flags.' + FOLDER_ID + '.fixed-adventure-subheading'] = new foundry.data.operators.ForcedDeletion()
+          }
         }
         await application.document.update(update)
       }

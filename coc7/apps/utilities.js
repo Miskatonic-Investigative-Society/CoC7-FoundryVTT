@@ -369,17 +369,19 @@ export default class CoC7Utilities {
     }
 
     const normalized = await CoC7RollNormalize.trigger(config)
-    normalized.runRoll = true
-    normalized.isShiftKey = true
-    normalized.event = event
+    if (normalized) {
+      normalized.runRoll = true
+      normalized.isShiftKey = true
+      normalized.event = event
 
-    for (const actor of actors) {
-      normalized.actor = actor
-      await CoC7RollNormalize.trigger(normalized)
-    }
+      for (const actor of actors) {
+        normalized.actor = actor
+        await CoC7RollNormalize.trigger(normalized)
+      }
 
-    if (actors.length === 0) {
-      await CoC7RollNormalize.trigger(normalized)
+      if (actors.length === 0) {
+        await CoC7RollNormalize.trigger(normalized)
+      }
     }
   }
 

@@ -848,7 +848,11 @@ export default class CoC7ChatOpposedMessage {
         /* // FoundryVTT V13 */
         for (const actorUuid of this.#removeRolls) {
           /* // FoundryVTT V13 */
-          foundry.utils.setProperty(diff, 'flags.' + FOLDER_ID + '.load.actorRolls.-=' + actorUuid, null)
+          if (game.release.generation === 13) {
+            foundry.utils.setProperty(diff, 'flags.' + FOLDER_ID + '.load.actorRolls.-=' + actorUuid, null)
+          } else {
+            foundry.utils.setProperty(diff, 'flags.' + FOLDER_ID + '.load.actorRolls.' + actorUuid, new foundry.data.operators.ForcedDeletion())
+          }
         }
       }
       if (!this.message.canUserModify(game.user, 'update')) {

@@ -265,6 +265,7 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
         sanReason: this.document.system.infos.type?.length ? this.document.system.infos.type : this.document.name,
         difficulty,
         poolModifier,
+        /* // FoundryVTT V13 */
         blind: (game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode')) === CHAT_MESSAGE_MODE.BLIND
       })
       link.toChatMessage()

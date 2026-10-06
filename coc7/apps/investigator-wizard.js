@@ -1097,11 +1097,9 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
   async _onRender (context, options) {
     await super._onRender(context, options)
 
-    const form = this.element
-
     switch (context.coc7Config.step) {
       case context.pages.PAGE_CONFIGURATION:
-        form.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', async (event) => {
           const key = event.currentTarget.dataset.property
           switch (key) {
             case 'default-enabled':
@@ -1148,7 +1146,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
               break
           }
         }))
-        form.querySelectorAll('.quick-fire-values input').forEach((element) => element.addEventListener('blur', async (event) => {
+        this.element.querySelectorAll('.quick-fire-values input').forEach((element) => element.addEventListener('blur', async (event) => {
           const match = event.target.name.match(/^quick-fire-values-(\d+)$/)
           const value = Number(event.target.value)
           if (match && value > 0) {
@@ -1158,21 +1156,21 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           this.coc7Config.placeable = foundry.utils.duplicate(this.coc7Config.quickFireValues)
           this.render({ force: true })
         }))
-        form.querySelector('input[name=default-quantity]')?.addEventListener('blur', async (event) => {
+        this.element.querySelector('input[name=default-quantity]')?.addEventListener('blur', async (event) => {
           this.coc7Config.defaultQuantity = Number(event.target.value)
           game.settings.set(FOLDER_ID, 'InvestigatorWizardQuantity', this.coc7Config.defaultQuantity)
           this.render({ force: true })
         })
-        form.querySelector('select[name=default-ownership]')?.addEventListener('blur', async (event) => {
+        this.element.querySelector('select[name=default-ownership]')?.addEventListener('blur', async (event) => {
           this.coc7Config.defaultOwnership = Number(event.target.value)
           game.settings.set(FOLDER_ID, 'InvestigatorWizardOwnership', this.coc7Config.defaultOwnership)
           this.render({ force: true })
         })
-        form.querySelector('select[name=world-era]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=world-era]')?.addEventListener('change', async (event) => {
           const started = Date.now()
-          form.querySelector('.era-change').style.display = 'block'
-          form.querySelector('.scroll-section').style.display = 'none'
-          form.querySelector('footer.form-footer').style.display = 'none'
+          this.element.querySelector('.era-change').style.display = 'block'
+          this.element.querySelector('.scroll-section').style.display = 'none'
+          this.element.querySelector('footer.form-footer').style.display = 'none'
           this.coc7Config.defaultEra = event.target.value
           await game.settings.set(FOLDER_ID, 'worldEra', this.coc7Config.defaultEra)
           this.coc7Config.cacheCoCID = await CoC7InvestigatorWizard.loadCacheItemByCoCID()
@@ -1185,7 +1183,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           }
           this.render({ force: true })
         })
-        form.querySelector('select[name=default-setup]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=default-setup]')?.addEventListener('change', async (event) => {
           this.coc7Config.defaultSetup = event.target.value
           game.settings.set(FOLDER_ID, 'InvestigatorWizardSetup', this.coc7Config.defaultSetup)
           this.coc7Config.setup = this.coc7Config.defaultSetup
@@ -1196,7 +1194,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_SETUPS:
-        form.querySelector('select[name=coc-setup]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=coc-setup]')?.addEventListener('change', async (event) => {
           this.coc7Config.setup = event.target.value
           this.clearSetupPoints()
           await this.setSkillLists()
@@ -1205,7 +1203,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_ARCHETYPES:
-        form.querySelector('select[name=coc-archetype]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=coc-archetype]')?.addEventListener('change', async (event) => {
           this.coc7Config.archetype = event.target.value
           this.coc7Config.coreCharacteristic = ''
           this.clearSetupPoints()
@@ -1226,13 +1224,13 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             drop: this._onDragDrop.bind(this)
           }
         }).bind(this.element)
-        form.querySelector('select[name=coc-core-characteristic]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=coc-core-characteristic]')?.addEventListener('change', async (event) => {
           this.coc7Config.coreCharacteristic = event.target.value
           this.clearSetupPoints()
           this.coc7Config.placeable = foundry.utils.duplicate(this.coc7Config.quickFireValues)
           this.render({ force: true })
         })
-        form.querySelector('button.roll_choose')?.addEventListener('click', async (event) => {
+        this.element.querySelector('button.roll_choose')?.addEventListener('click', async (event) => {
           event.preventDefault()
           if (this.coc7Config.setup !== '') {
             const setup = await this.getCacheItemByCoCID(this.coc7Config.setup)
@@ -1290,7 +1288,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           }
           this.render({ force: true })
         })
-        form.querySelectorAll('input.save-on-blur').forEach((element) => element.addEventListener('blur', async (event) => {
+        this.element.querySelectorAll('input.save-on-blur').forEach((element) => element.addEventListener('blur', async (event) => {
           const key = event.target.closest('.input-line').dataset.key
           switch (key) {
             case 'age':
@@ -1313,7 +1311,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           }
           this.render({ force: true })
         }))
-        form.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
           switch (event.currentTarget.dataset.action) {
             case 'roll-characteristic':
               {
@@ -1362,7 +1360,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_ATTRIBUTES:
-        form.querySelector('button.roll_edu')?.addEventListener('click', async (event) => {
+        this.element.querySelector('button.roll_edu')?.addEventListener('click', async (event) => {
           event.preventDefault()
           if (typeof this.coc7Config.requiresAgeAdjustments.edu !== 'undefined') {
             if (!this.coc7Config.requiresAgeAdjustments.edu.rolled && this.coc7Config.requiresAgeAdjustments.edu.total) {
@@ -1408,7 +1406,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             }
           }
         })
-        form.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
           switch (event.currentTarget.dataset.action) {
             case 'modify-characteristic':
               {
@@ -1428,7 +1426,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
               break
           }
         }))
-        form.querySelector('button.roll_luck')?.addEventListener('click', async (event) => {
+        this.element.querySelector('button.roll_luck')?.addEventListener('click', async (event) => {
           const setup = await this.getCacheItemByCoCID(this.coc7Config.setup)
           if (setup) {
             const die = await new Roll(setup.system.characteristics.rolls.luck.toString()).evaluate()
@@ -1452,7 +1450,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_OCCUPATIONS:
-        form.querySelector('select[name=coc-occupation]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=coc-occupation]')?.addEventListener('change', async (event) => {
           this.coc7Config.occupation = event.target.value
           await this.setSkillLists()
           this.render({ force: true })
@@ -1461,13 +1459,13 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
 
       case context.pages.PAGE_OCCUPATION_SKILLS:
       case context.pages.PAGE_ARCHETYPE_SKILLS:
-        form.querySelectorAll('.clickable').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.clickable').forEach((element) => element.addEventListener('click', async (event) => {
           this._onClickPickSkill(event)
         }))
-        form.querySelectorAll('.rollable').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.rollable').forEach((element) => element.addEventListener('click', async (event) => {
           this._onToggleSkill(event)
         }))
-        form.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
           switch (event.currentTarget.dataset.action) {
             case 'delete-skill':
               this._onClickDeleteSkill(event)
@@ -1487,7 +1485,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_POINTS_SKILLS:
-        form.querySelectorAll('.skill-adjustment').forEach((element) => {
+        this.element.querySelectorAll('.skill-adjustment').forEach((element) => {
           element.addEventListener('blur', async (event) => {
             const input = event.currentTarget
             const adjustment = input.dataset.adjustment
@@ -1508,11 +1506,11 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_INVESTIGATOR:
-        form.querySelectorAll('file-picker').forEach((element) => element.addEventListener('change', async (event) => {
+        this.element.querySelectorAll('file-picker').forEach((element) => element.addEventListener('change', async (event) => {
           this.coc7Config[event.currentTarget.name] = event.currentTarget.value
           this.render({ force: true })
         }))
-        form.querySelectorAll('input.save-on-blur').forEach((element) => element.addEventListener('blur', async (event) => {
+        this.element.querySelectorAll('input.save-on-blur').forEach((element) => element.addEventListener('blur', async (event) => {
           switch (event.currentTarget.name) {
             case 'name':
             case 'residence':
@@ -1526,7 +1524,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
               break
           }
         }))
-        form.querySelectorAll('select.save-on-change').forEach((element) => element.addEventListener('change', async (event) => {
+        this.element.querySelectorAll('select.save-on-change').forEach((element) => element.addEventListener('change', async (event) => {
           if (typeof this.coc7Config.own[event.currentTarget.dataset.key] !== 'undefined') {
             this.coc7Config.own[event.currentTarget.dataset.key].selected = event.currentTarget.value
           }
@@ -1535,21 +1533,21 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_BACKSTORY:
-        form.querySelectorAll('textarea.backstory-text').forEach((element) => element.addEventListener('blur', async (event) => {
+        this.element.querySelectorAll('textarea.backstory-text').forEach((element) => element.addEventListener('blur', async (event) => {
           const textarea = event.currentTarget
           const index = textarea.dataset.index
           if (typeof this.coc7Config.bioSections[index] !== 'undefined') {
             this.coc7Config.bioSections[index].value = textarea.value
           }
         }))
-        form.querySelectorAll('button.backstory-reset').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('button.backstory-reset').forEach((element) => element.addEventListener('click', async (event) => {
           const index = event.currentTarget.dataset.index
           if (typeof this.coc7Config.bioSections[index] !== 'undefined') {
             this.coc7Config.bioSections[index].value = ''
           }
           this.render({ force: true })
         }))
-        form.querySelectorAll('button.backstory-roll').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('button.backstory-roll').forEach((element) => element.addEventListener('click', async (event) => {
           const button = event.currentTarget
           const index = button.dataset.index
           const key = button.dataset.key

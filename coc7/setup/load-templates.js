@@ -54,6 +54,8 @@ export default async function () {
     'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/parts/biography.hbs',
     'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/tabs/portrait-config.hbs',
     'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/tabs/active-effects.hbs',
+
+    'templates/generic/tab-navigation.hbs',
     Roll.CHAT_TEMPLATE
   ]
   return foundry.applications.handlebars.loadTemplates(templatePaths)

@@ -15,14 +15,18 @@ import CoC7SanCheckCard from '../apps/san-check-card.js'
  * @param {Array} menuItems
  */
 export default function (application, menuItems) {
-  menuItems.push({
-    name: 'Refresh',
+  const menuItem = {
+    /* // FoundryVTT V13 */
+    [game.release.generation === 13 ? 'name' : 'label']: 'Refresh',
     icon: '<i class="fa-solid fa-arrow-rotate-left"></i>',
-    condition: li => {
+    /* // FoundryVTT V13 */
+    [game.release.generation === 13 ? 'condition' : 'visible']: li => {
       const message = game.messages.get(li.dataset.messageId)
       return (game.user.isGM && message.flags[FOLDER_ID]?.load?.cardOpen && ['CoC7ChatChaseObstacle', 'CoC7ChatCombatMelee', 'CoC7ChatCombatRanged', 'CoC7ChatCombinedMessage', 'CoC7ChatDamage', 'CoC7ChatOpposedMessage', 'CoC7Check', 'CoC7ConCheck', 'CoC7SanCheckCard'].includes(message.flags[FOLDER_ID]?.load?.as))
     },
-    callback: async li => {
+    /* // FoundryVTT V13 */
+    callback: async li => { return menuItem.onClick(null, li) },
+    onClick: async (event, li) => {
       const message = game.messages.get(li.dataset.messageId)
       let check
       switch (message.flags[FOLDER_ID].load.as) {
@@ -57,5 +61,7 @@ export default function (application, menuItems) {
       check.updateMessage()
       return true
     }
-  })
+  }
+  /* // FoundryVTT V13 */
+  menuItems.push(menuItem)
 }

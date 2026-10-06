@@ -644,7 +644,11 @@ export default class CoCID {
         for (const [key] of Object.entries(document.flags[FOLDER_ID].cocidFlag.eras)) {
           if (key !== era) {
             /* // FoundryVTT V13 */
-            update['-=' + key] = null
+            if (game.release.generation === 13) {
+              update['-=' + key] = null
+            } else {
+              update[key] = new foundry.data.operators.ForcedDeletion()
+            }
           }
         }
       }
@@ -659,7 +663,11 @@ export default class CoCID {
       const value = cocidFlag.eras[era] ?? false
       if (value) {
         /* // FoundryVTT V13 */
-        cocidFlag.eras['-=' + era] = null
+        if (game.release.generation === 13) {
+          cocidFlag.eras['-=' + era] = null
+        } else {
+          cocidFlag.eras[era] = new foundry.data.operators.ForcedDeletion()
+        }
       } else {
         cocidFlag.eras[era] = true
       }

@@ -123,13 +123,15 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
       itemUuid: skill.uuid
     }
     const check = await CoC7RollNormalize.trigger(config)
-    check.flavor = game.i18n.format('CoC7.ReadAttempt', {
-      book: this.parent.name,
-      language,
-      difficulty: this.difficultyLevel
-    })
-    check.setCallback(this.parent.uuid, 'attemptInitialReading')
-    check.toMessage()
+    if (check) {
+      check.flavor = game.i18n.format('CoC7.ReadAttempt', {
+        book: this.parent.name,
+        language,
+        difficulty: this.difficultyLevel
+      })
+      check.setCallback(this.parent.uuid, 'attemptInitialReading')
+      check.toMessage()
+    }
   }
 
   /**

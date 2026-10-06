@@ -107,6 +107,7 @@ export default class CoC7RollNormalize {
       flatThresholdModifier: options.flatThresholdModifier ?? 0,
       hasPlayerOwner: options.actor?.hasPlayerOwner ?? false,
       isAltKey: options.event?.altKey === true,
+      /* // FoundryVTT V13 */
       isBlind: options.isBlind ?? (game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode') === CHAT_MESSAGE_MODE.BLIND),
       isCombat: options.event?.currentTarget?.classList?.contains('combat') ?? false,
       isCtrlKey: options.isCtrlKey ?? CoC7Utilities.isCtrlKey(options.event ?? false),
@@ -313,15 +314,20 @@ export default class CoC7RollNormalize {
   /**
    * Prompt for changes to normalized roll request
    * @param {object} config
+   * @returns {boolean}
    */
   static async createRoll (config) {
     const usage = await CoC7RollDialog.create(config)
-    config.cardType = usage.cardType
-    config.poolModifier = usage.poolModifier
-    config.difficulty = usage.difficulty
-    config.flatDiceModifier = usage.flatDiceModifier
-    config.flatThresholdModifier = usage.flatThresholdModifier
-    config.threshold = usage.threshold
+    if (usage) {
+      config.cardType = usage.cardType
+      config.poolModifier = usage.poolModifier
+      config.difficulty = usage.difficulty
+      config.flatDiceModifier = usage.flatDiceModifier
+      config.flatThresholdModifier = usage.flatThresholdModifier
+      config.threshold = usage.threshold
+      return true
+    }
+    return false
   }
 
   /**

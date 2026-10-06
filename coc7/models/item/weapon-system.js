@@ -390,10 +390,14 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
   async toggleProperty (property, key, { isCtrlKey = false } = {}) {
     await super.toggleProperty(property, key, isCtrlKey)
     if (property === 'eras' && this.parent.flags[FOLDER_ID]?.cocidFlag?.eras?.[key] !== true) {
-      this.parent.update({
-        /* // FoundryVTT V13 */
-        ['system.price.-=' + key]: null
-      })
+      const updates = {}
+      /* // FoundryVTT V13 */
+      if (game.release.generation === 13) {
+        updates['system.price.-=' + key] = null
+      } else {
+        updates['system.price.' + key] = new foundry.data.operators.ForcedDeletion()
+      }
+      this.parent.update(updates)
     }
   }
 

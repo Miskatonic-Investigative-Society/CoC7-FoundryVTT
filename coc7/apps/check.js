@@ -54,7 +54,8 @@ export default class CoC7Check {
     this.#isStandby = false
     // this.#key = undefined
     // this.message = undefined
-    this.#rollMode = game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode')
+    /* // FoundryVTT V13 */
+    this.#rollMode = game.settings.get('core', (game.release.generation === 13 ? 'rollMode' : 'messageMode'))
     this.#standbyRightIcon = ''
     // this.#type = undefined
   }
@@ -558,7 +559,7 @@ export default class CoC7Check {
     if (this.message?.id) {
       await this.flagForDevelopment()
     }
-    const chatData = {
+    let chatData = {
       flags: {
         [FOLDER_ID]: {
           load: {
@@ -608,11 +609,21 @@ export default class CoC7Check {
           break
 
         default:
-          ChatMessage.applyRollMode(chatData, this.#rollMode)
+          /* // FoundryVTT V13 */
+          if (game.release.generation === 13) {
+            chatData = ChatMessage.applyRollMode(chatData, this.#rollMode)
+          } else {
+            chatData = ChatMessage.applyMode(chatData, this.#rollMode)
+          }
           break
       }
     } else {
-      ChatMessage.applyRollMode(chatData, this.#rollMode)
+      /* // FoundryVTT V13 */
+      if (game.release.generation === 13) {
+        chatData = ChatMessage.applyRollMode(chatData, this.#rollMode)
+      } else {
+        chatData = ChatMessage.applyMode(chatData, this.#rollMode)
+      }
     }
     if (game.user.isGM && this.#isStandby) {
       chatData.blind = false

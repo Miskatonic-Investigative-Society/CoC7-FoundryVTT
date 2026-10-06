@@ -689,12 +689,14 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
                 config.threshold = participants[offset].speedCheck.score
                 config.runRoll = false
                 const modified = await CoC7RollNormalize.trigger(config)
-                modified.flavor = game.i18n.format('CoC7.CheckResult', {
-                  name: value.name,
-                  value: modified.threshold.toString() + (modified.flatThresholdModifier !== 0 ? (modified.flatThresholdModifier > 0 ? '+' : '') + modified.flatThresholdModifier.toString() : ''),
-                  difficulty: CoC7DicePool.difficultyString(modified.difficulty)
-                })
-                CoC7RollNormalize.runRoll(modified)
+                if (modified) {
+                  modified.flavor = game.i18n.format('CoC7.CheckResult', {
+                    name: value.name,
+                    value: modified.threshold.toString() + (modified.flatThresholdModifier !== 0 ? (modified.flatThresholdModifier > 0 ? '+' : '') + modified.flatThresholdModifier.toString() : ''),
+                    difficulty: CoC7DicePool.difficultyString(modified.difficulty)
+                  })
+                  CoC7RollNormalize.runRoll(modified)
+                }
               }
             }
           }

@@ -590,11 +590,16 @@ export default class CoC7Updater {
     if (document.type === 'chase') {
       // Migrate Actor flag to dataModel field
       if (typeof document.flags?.[FOLDER_ID]?.started !== 'undefined') {
-        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, {
-          'system.system.started': document.flags[FOLDER_ID].started === true,
-          /* // FoundryVTT V13 */
-          ['flags.' + FOLDER_ID + '.-=started']: null
-        })
+        const newData = {
+          'system.system.started': document.flags[FOLDER_ID].started === true
+        }
+        /* // FoundryVTT V13 */
+        if (game.release.generation === 13) {
+          newData['flags.' + FOLDER_ID + '.-=started'] = null
+        } else {
+          newData['flags.' + FOLDER_ID + '.started'] = new foundry.data.operators.ForcedDeletion()
+        }
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Item', packId, parentUuid, newData)
       }
       // Migrate Participant roll RollString to Check Message Data
       let changed = false
@@ -673,7 +678,11 @@ export default class CoC7Updater {
             }
             participants[offset].speedCheck.checkData = checkData
             /* // FoundryVTT V13 */
-            participants[offset].speedCheck['-=rollDataString'] = null
+            if (game.release.generation === 13) {
+              participants[offset].speedCheck['-=rollDataString'] = null
+            } else {
+              participants[offset].speedCheck.rollDataString = new foundry.data.operators.ForcedDeletion()
+            }
             changed = true
           } catch (e) {
           }
@@ -895,35 +904,55 @@ export default class CoC7Updater {
   static _migrateActorFlags ({ document, documentUpdates, packId = '', parentUuid = '' } = {}) {
     // Move Actor.flags mythosHardened to Actor.system.flags
     if (typeof document.flags?.[FOLDER_ID]?.mythosHardened !== 'undefined') {
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, {
-        'system.flags.mythosHardened': document.flags[FOLDER_ID].mythosHardened === true,
-        /* // FoundryVTT V13 */
-        ['flags.' + FOLDER_ID + '.-=mythosHardened']: null
-      })
+      const newData = {
+        'system.flags.mythosHardened': document.flags[FOLDER_ID].mythosHardened === true
+      }
+      /* // FoundryVTT V13 */
+      if (game.release.generation === 13) {
+        newData['flags.' + FOLDER_ID + '.-=mythosHardened'] = null
+      } else {
+        newData['flags.' + FOLDER_ID + '.mythosHardened'] = new foundry.data.operators.ForcedDeletion()
+      }
+      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, newData)
     }
     // Move Actor.flags mythosInsanityExperienced to Actor.system.flags
     if (typeof document.flags?.[FOLDER_ID]?.mythosInsanityExperienced !== 'undefined') {
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, {
-        'system.flags.mythosInsanityExperienced': document.flags[FOLDER_ID].mythosInsanityExperienced === true,
-        /* // FoundryVTT V13 */
-        ['flags.' + FOLDER_ID + '.-=mythosInsanityExperienced']: null
-      })
+      const newData = {
+        'system.flags.mythosInsanityExperienced': document.flags[FOLDER_ID].mythosInsanityExperienced === true
+      }
+      /* // FoundryVTT V13 */
+      if (game.release.generation === 13) {
+        newData['flags.' + FOLDER_ID + '.-=mythosInsanityExperienced'] = null
+      } else {
+        newData['flags.' + FOLDER_ID + '.mythosInsanityExperienced'] = new foundry.data.operators.ForcedDeletion()
+      }
+      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, newData)
     }
     // Move Actor.flags skillListMode to Actor.system.flags
     if (typeof document.flags?.[FOLDER_ID]?.skillListMode !== 'undefined') {
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, {
-        'system.flags.skillListMode': document.flags[FOLDER_ID].skillListMode === true,
-        /* // FoundryVTT V13 */
-        ['flags.' + FOLDER_ID + '.-=skillListMode']: null
-      })
+      const newData = {
+        'system.flags.skillListMode': document.flags[FOLDER_ID].skillListMode === true
+      }
+      /* // FoundryVTT V13 */
+      if (game.release.generation === 13) {
+        newData['flags.' + FOLDER_ID + '.-=skillListMode'] = null
+      } else {
+        newData['flags.' + FOLDER_ID + '.skillListMode'] = new foundry.data.operators.ForcedDeletion()
+      }
+      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, newData)
     }
     // Move Actor.flags skillShowUncommon to Actor.system.flags
     if (typeof document.flags?.[FOLDER_ID]?.skillShowUncommon !== 'undefined') {
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, {
-        'system.flags.skillShowUncommon': document.flags[FOLDER_ID].skillShowUncommon === true,
-        /* // FoundryVTT V13 */
-        ['flags.' + FOLDER_ID + '.-=skillShowUncommon']: null
-      })
+      const newData = {
+        'system.flags.skillShowUncommon': document.flags[FOLDER_ID].skillShowUncommon === true
+      }
+      /* // FoundryVTT V13 */
+      if (game.release.generation === 13) {
+        newData['flags.' + FOLDER_ID + '.-=skillShowUncommon'] = null
+      } else {
+        newData['flags.' + FOLDER_ID + '.skillShowUncommon'] = new foundry.data.operators.ForcedDeletion()
+      }
+      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, newData)
     }
   }
 
@@ -939,16 +968,25 @@ export default class CoC7Updater {
     if (document.type === 'vehicle') {
       // Move vehicle attribs to vehicle stats
       if (typeof document.system?.description?.notes !== 'undefined') {
-        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, {
-          'system.description.keeper': document.system.description.notes,
-          /* // FoundryVTT V13 */
-          'system.description.-=notes': null
-        })
-      }
-      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, {
+        const newData = {
+          'system.description.keeper': document.system.description.notes
+        }
         /* // FoundryVTT V13 */
-        'system.-=attribs': null
-      })
+        if (game.release.generation === 13) {
+          newData['system.description.-=notes'] = null
+        } else {
+          newData['system.description.notes'] = new foundry.data.operators.ForcedDeletion()
+        }
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, newData)
+      }
+      const newData = {}
+      /* // FoundryVTT V13 */
+      if (game.release.generation === 13) {
+        newData['system.-=attribs'] = null
+      } else {
+        newData['system.attribs'] = new foundry.data.operators.ForcedDeletion()
+      }
+      CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Actor', packId, parentUuid, newData)
     }
   }
 

@@ -27,7 +27,7 @@ export default function () {
 
   document.body.classList.add('running-v' + game.release.generation.toString())
 
-  game.CoC7 = {
+  game[FOLDER_ID] = {
     macros: {
       skillCheck: CoC7Utilities.skillCheckMacro,
       weaponCheck: CoC7Utilities.weaponCheckMacro,

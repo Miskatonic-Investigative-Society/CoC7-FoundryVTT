@@ -188,7 +188,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
       event.preventDefault()
       event.stopPropagation()
     }))
-    const dragDrop = new foundry.applications.ux.DragDrop({
+    new foundry.applications.ux.DragDrop({
       dragSelector: '.spell-cost-list',
       dropSelector: '.spell-cost-list',
       permissions: {
@@ -199,8 +199,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
         dragstart: this._onDragStart.bind(this),
         drop: this._onDragDrop.bind(this)
       }
-    })
-    dragDrop.bind(this.element)
+    }).bind(this.element)
   }
 
   /**

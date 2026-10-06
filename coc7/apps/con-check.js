@@ -99,6 +99,7 @@ export default class CoC7ConCheck {
    */
   async getChatData () {
     const actor = (await this.actor)
+    /* // FoundryVTT V13 */
     const isBlind = (typeof this.message?.blind === 'undefined' ? (CHAT_MESSAGE_MODE.BLIND === (game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode'))) : this.message.blind)
     const buttons = {}
     foundry.utils.mergeObject(buttons, this.#dicePool.availableButtons({ luckAvailable: actor?.system.attribs.lck.value ?? 0, isPushable: false, key: 'con' }))
@@ -155,6 +156,7 @@ export default class CoC7ConCheck {
       content: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/con-check.hbs', data)
     }
     if (typeof this.message?.whisper === 'undefined') {
+      /* // FoundryVTT V13 */
       if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode'))) {
         chatData.whisper = ChatMessage.getWhisperRecipients('GM')
       }
