@@ -216,7 +216,7 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
           type: 'submit',
           action: 'update',
           label: (this.coc7Config.isExisting ? 'CoC7.Update' : 'CoC7.Add'),
-          icon: (this.coc7Config.isExisting ? 'fa-solid fa-user-edit' : 'fa-solid fa-user-plus')
+          icon: (this.coc7Config.isExisting ? 'fa-solid fa-user-edit fa-fw' : 'fa-solid fa-user-plus fa-fw')
         }]
         break
     }

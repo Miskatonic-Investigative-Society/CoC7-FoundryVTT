@@ -1062,7 +1062,7 @@ export default class CoC7Utilities {
   }
 
   /**
-   * Sort by normalized label fields
+   * Sort by normalized label field
    * @param {object} a
    * @param {object} b
    * @returns {int}
@@ -1070,7 +1070,8 @@ export default class CoC7Utilities {
   static sortByLabelKey (a, b) {
     return a.label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
       .localeCompare(
-        b.label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+        b.label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+        game.i18n.lang
       )
   }
 
@@ -1085,7 +1086,8 @@ export default class CoC7Utilities {
     const nameB = (b.system.properties.special === true ? b.system.specialization + (b.system.properties.own === true ? 'Z' : 'A') + ' (' + b.system.skillName + ')' : b.name)
     return nameA.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
       .localeCompare(
-        nameB.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+        nameB.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+        game.i18n.lang
       )
   }
 
@@ -1110,7 +1112,8 @@ export default class CoC7Utilities {
     if (b.sort === a.sort) {
       return a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
         .localeCompare(
-          b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+          b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+          game.i18n.lang
         )
     }
     return a.sort - b.sort
@@ -1126,14 +1129,15 @@ export default class CoC7Utilities {
     if (b.system.value === a.system.value) {
       return a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
         .localeCompare(
-          b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+          b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+          game.i18n.lang
         )
     }
     return b.system.value - a.system.value
   }
 
   /**
-   * Sort by normalized name fields
+   * Sort by normalized name field
    * @param {object} a
    * @param {object} b
    * @returns {int}
@@ -1141,7 +1145,8 @@ export default class CoC7Utilities {
   static sortByNameKey (a, b) {
     return a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
       .localeCompare(
-        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+        game.i18n.lang
       )
   }
 
@@ -1162,7 +1167,8 @@ export default class CoC7Utilities {
     }
     return a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
       .localeCompare(
-        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+        game.i18n.lang
       )
   }
 
@@ -1178,7 +1184,8 @@ export default class CoC7Utilities {
     }
     return a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
       .localeCompare(
-        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+        game.i18n.lang
       )
   }
 

@@ -114,7 +114,7 @@ export default class CoC7CreateMythosEncounter extends foundry.applications.api.
       immunity
     })
     sanityLossEvents.sort(function (left, right) {
-      return left.type.localeCompare(right.type)
+      return left.type.localeCompare(right.type, game.i18n.lang)
     })
     this.coc7Config.actor.update({ 'system.sanityLossEvents': sanityLossEvents })
   }

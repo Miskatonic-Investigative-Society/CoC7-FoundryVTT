@@ -50,7 +50,7 @@ export default class WebpackConfig {
     this.#config.rootFolder = TemplateHelpers.systemRoot
 
     if (!fs.existsSync(path.join(this.#config.rootFolder, 'fvtt.config.json'))) {
-      throw new Error('No fvtt.config try running "npm run init"')
+      throw new Error('No fvtt.config.json try running "npm run init"')
     }
 
     if (!fs.existsSync(path.join(this.#config.rootFolder, 'binary-packs/en-skills/LOCK'))) {

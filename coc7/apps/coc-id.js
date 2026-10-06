@@ -269,7 +269,7 @@ export default class CoCID {
    * @returns {Array}
    */
   static async fromCoCIDRegexBest ({ cocidRegExp, type, lang = game.i18n.lang, era = true, langFallback = true, showLoading = false } = {}) {
-    let candidates = await this.fromCoCIDRegexAllMixed({ cocidRegExp, type, lang, era, scope: 'all', langFallback, showLoading })
+    let candidates = await CoCID.fromCoCIDRegexAllMixed({ cocidRegExp, type, lang, era, scope: 'all', langFallback, showLoading })
     if (langFallback && lang !== 'en') {
       candidates = CoCID.#filterByLanguage(candidates, lang)
     }

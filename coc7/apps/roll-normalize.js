@@ -249,10 +249,7 @@ export default class CoC7RollNormalize {
       CoC7RollNormalize.createLink(config)
     } else {
       if (!config.isShiftKey) {
-        try {
-          await CoC7RollNormalize.createRoll(config)
-        } catch (e) {
-          console.error(e)
+        if (!await CoC7RollNormalize.createRoll(config)) {
           return
         }
       }

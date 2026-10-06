@@ -709,15 +709,15 @@ export default class CoC7Check {
     let threshold
     if (this.#type === CoC7Check.type.attribute && this.#key && typeof this.#asyncActor !== 'undefined') {
       this.#allowPush = true
-      threshold = parseInt((await this.#asyncActor)?.system?.attribs?.[this.#key]?.value, 10)
+      threshold = parseInt((await this.#asyncActor)?.system?.attribs?.[this.#key]?.value ?? 0, 10)
     } else if (this.#type === CoC7Check.type.characteristic && this.#key && typeof this.#asyncActor !== 'undefined') {
       this.#allowPush = true
       if (this.#cardType === CoC7RollNormalize.CARD_TYPE.IDEA_CHECK) {
-        threshold = parseInt((await this.#asyncActor)?.system?.config?.idea?.value, 10)
+        threshold = parseInt((await this.#asyncActor)?.system?.config?.idea?.value ?? 0, 10)
       } else if (this.#cardType === CoC7RollNormalize.CARD_TYPE.KNOW_CHECK) {
-        threshold = parseInt((await this.#asyncActor)?.system?.config?.know?.value, 10)
+        threshold = parseInt((await this.#asyncActor)?.system?.config?.know?.value ?? 0, 10)
       } else {
-        threshold = parseInt((await this.#asyncActor)?.system?.characteristics?.[this.#key]?.value, 10)
+        threshold = parseInt((await this.#asyncActor)?.system?.characteristics?.[this.#key]?.value ?? 0, 10)
       }
     } else if (this.#type === CoC7Check.type.skill && this.#key) {
       if (!this.item) {

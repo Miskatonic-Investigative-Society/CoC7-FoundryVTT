@@ -56,16 +56,6 @@ export default class CoC7ActiveEffect {
   }
 
   /**
-   * Find status keys that is for the system
-   * @param {Document} effect
-   * @returns {Array}
-   */
-  static getStatusKeys (effect) {
-    const keys = Object.keys(STATUS_EFFECTS)
-    return effect.statuses.filter(key => keys.includes(key))
-  }
-
-  /**
    * Get simplified data
    * @param {Document} effect
    * @param {object} object

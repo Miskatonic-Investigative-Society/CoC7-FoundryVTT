@@ -777,7 +777,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
 
   /**
    * Toggle Automatic Calculation flag
-   * @param {SubmitEvent|null} event
+   * @param {ClickEvent} event
    */
   async _onAttributeAutoToggleClicked (event) {
     event.preventDefault()
@@ -844,7 +844,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
   }
 
   /**
-   * Toggle description
+   * Toggle Read Only
    * @param {ClickEvent} event
    */
   _toggleReadOnly (event) {
@@ -880,7 +880,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
 
   /**
    * Show uneditable skill sheet
-   * @param {SubmitEvent|null} event
+   * @param {ClickEvent} event
    */
   async _onItemPopup (event) {
     event.preventDefault()

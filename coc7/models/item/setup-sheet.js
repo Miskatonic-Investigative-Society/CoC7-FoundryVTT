@@ -373,7 +373,7 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
   _processFormData (event, form, formData) {
     const object = super._processFormData(event, form, formData)
 
-    if (typeof object.system.monetary.values !== 'undefined') {
+    if (typeof object.system.monetary?.values !== 'undefined') {
       object.system.monetary.values = Object.values(object.system.monetary.values)
       if (event.target.classList.contains('cash-assets-range')) {
         this._onMonetaryReorder(object.system.monetary.values)

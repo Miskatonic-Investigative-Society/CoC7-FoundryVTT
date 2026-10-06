@@ -569,8 +569,8 @@ export default class CoC7ChatDamage {
   }
 
   /**
-   * Click Event on dice roll
-   * @param {ClickEvent} event
+   * Change Event on dice roll
+   * @param {ChangeEvent} event
    * @param {Document} message
    */
   static async _onChangeEvent (event, message) {

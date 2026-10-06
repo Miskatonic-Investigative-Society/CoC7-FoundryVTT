@@ -249,7 +249,10 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
           return false
         })
       } else {
-        uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/*'] = 1
+        if (typeof uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/*'] === 'undefined') {
+          uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/*'] = 0
+        }
+        uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/*']++
       }
       const eras = (d.flags[FOLDER_ID].cocidFlag.eras ? Object.entries(d.flags[FOLDER_ID].cocidFlag.eras).filter(e => e[1]).map(e => e[0]).sort() : [])
       for (const era of eras) {

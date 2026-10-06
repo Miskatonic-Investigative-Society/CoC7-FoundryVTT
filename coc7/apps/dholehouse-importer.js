@@ -124,9 +124,6 @@ export default class CoC7DholeHouseActorImporter {
       isOwn = (name === 'Language (Own)')
     } else if (name === 'Operate Heavy Machine') {
       name = 'Operate Heavy Machinery'
-    } else if (name === 'Throw' && specialization === '') {
-      name = 'Fighting'
-      specialization = 'Throw'
     }
     return {
       isOwn,
@@ -284,9 +281,9 @@ export default class CoC7DholeHouseActorImporter {
         cloned.system.range = cloned.system.range ?? {}
         cloned.system.range.normal = cloned.system.range.normal ?? {}
         cloned.system.range.normal.damage = damage
-        cloned.system.ammo = parseInt(weapon.ammo, 10)
-        cloned.system.bullets = parseInt(weapon.ammo, 10)
-        cloned.system.malfunction = parseInt(weapon.malf, 10)
+        cloned.system.ammo = parseInt(weapon.ammo, 10) || null
+        cloned.system.bullets = parseInt(weapon.ammo, 10) || null
+        cloned.system.malfunction = parseInt(weapon.malf, 10) || null
         cloned.system.properties = cloned.system.properties ?? {}
         cloned.system.properties.melee = skill?.system.properties?.fighting ?? false
         cloned.system.properties.rngd = skill?.system.properties?.firearm ?? false
@@ -309,9 +306,9 @@ export default class CoC7DholeHouseActorImporter {
                 damage
               }
             },
-            ammo: parseInt(weapon.ammo, 10),
-            bullets: parseInt(weapon.ammo, 10),
-            malfunction: parseInt(weapon.malf, 10),
+            ammo: parseInt(weapon.ammo, 10) || null,
+            bullets: parseInt(weapon.ammo, 10) || null,
+            malfunction: parseInt(weapon.malf, 10) || null,
             properties: {
               melee: skill?.system.properties?.fighting ?? false,
               rngd: skill?.system.properties?.firearm ?? false,

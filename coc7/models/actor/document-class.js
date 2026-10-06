@@ -1768,7 +1768,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       } else if (index > -1) {
         sanityLossEvents.splice(index, 1)
         sanityLossEvents.sort(function (left, right) {
-          return left.type.localeCompare(right.type)
+          return left.type.localeCompare(right.type, game.i18n.lang)
         })
       }
       return this.update({
@@ -2266,7 +2266,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
         const nameValue = Math.floor(Math.abs(difference) / 2)
         const luckValue = nameValue * 2
         const newLuck = parseInt(this.system.attribs.lck.value ?? 0, 10) - luckValue
-        if (newLuck >= 0) {
+        if (nameValue > 0 && newLuck >= 0) {
           const luckSpent = await CoC7SpendLuckDialog.create({ name: game.i18n.localize('CoC7.SANLoss'), luckValue, nameValue })
           if (luckSpent > 0) {
             if (await this.spendLuck(luckValue) !== false) {

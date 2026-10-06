@@ -204,7 +204,7 @@ export default class CoC7ModelsItemDocumentClass extends Item {
       updates['system.adjustments.' + flagName] = null
     } else if (flagName === 'developement') {
       if (!(game.settings.get(FOLDER_ID, 'xpEnabled') || game.user.isGM)) {
-        ui.notifications.info('CoC7.SkillXpGainDisabled')
+        ui.notifications.info('CoC7.SkillXpGainDisabled', { localize: true })
         return
       }
     }

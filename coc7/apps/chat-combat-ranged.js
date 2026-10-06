@@ -60,6 +60,14 @@ export default class CoC7ChatCombatRanged {
   }
 
   /**
+   * Get minimum weapon volley size
+   * @returns {integer}
+   */
+  static get minVolleySize () {
+    return 3
+  }
+
+  /**
    * Create melee initiator message
    * @param {object} options
    * @param {string} options.attackerUuid
@@ -75,7 +83,7 @@ export default class CoC7ChatCombatRanged {
       const attacker = (await check.attacker)
       const item = (await check.item)
       if (attacker && item) {
-        check.#volleySize = check.#volleyMax = Math.max(CoC7DicePool.minVolleySize, Math.floor((item.system.skillAlternative?.system.value ?? 0) / 10))
+        check.#volleySize = check.#volleyMax = Math.max(CoC7ChatCombatRanged.minVolleySize, Math.floor((item.system.skillAlternative?.system.value ?? 0) / 10))
         if (item.system.singleShot) {
           check.#singleShot = true
         } else if (item.system.properties.auto) {
@@ -236,7 +244,7 @@ export default class CoC7ChatCombatRanged {
           }
         }
       }
-      shot.bulletsShot = Math.min(Math.max(CoC7DicePool.minVolleySize, this.#volleySize), this.#volleyMax)
+      shot.bulletsShot = Math.min(Math.max(CoC7ChatCombatRanged.minVolleySize, this.#volleySize), this.#volleyMax)
       if (shot.bulletsShot >= bulletLeft && !game.settings.get(FOLDER_ID, 'disregardAmmo')) {
         shot.bulletsShot = bulletLeft
         bulletLeft = 0
@@ -568,7 +576,7 @@ export default class CoC7ChatCombatRanged {
         {
           const check = await CoC7ChatCombatRanged.loadFromMessage(message)
           if (check) {
-            check.#volleySize = Math.max(CoC7DicePool.minVolleySize, check.#volleySize - 1)
+            check.#volleySize = Math.max(CoC7ChatCombatRanged.minVolleySize, check.#volleySize - 1)
             check.updateMessage()
           } else {
             ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
@@ -959,7 +967,7 @@ export default class CoC7ChatCombatRanged {
       totalAmmo: item?.system.ammo ?? 0,
       totalBulletsFired: this.#totalBulletsFired,
       volleyMax: this.#volleyMax,
-      volleyMin: CoC7DicePool.minVolleySize,
+      volleyMin: CoC7ChatCombatRanged.minVolleySize,
       volleySize: this.#volleySize,
       weaponRolled: this.#weaponRolled
     }

@@ -76,14 +76,6 @@ export default class CoC7DicePool {
   }
 
   /**
-   * Get minimum weapon volley size
-   * @returns {integer}
-   */
-  static get minVolleySize () {
-    return 3
-  }
-
-  /**
    * Success Levels
    * @returns {object}
    */

@@ -9,7 +9,7 @@
     }
   ],
   "compatibility": {
-    "minimum": "12",
+    "minimum": "13",
     "verified": "14"
   },
   "esmodules": [
@@ -212,26 +212,124 @@
   "background": "systems/CoC7/assets/images/system-background.jpg",
   "documentTypes": {
     "Actor": {
-      "character": {},
-      "container": {},
-      "creature": {},
-      "npc": {},
-      "vehicle": {}
+      "character": {
+        "htmlFields": [
+          "biography.*.value",
+          "backstory",
+          "description.keeper"
+        ]
+      },
+      "container": {
+        "htmlFields": [
+          "description.value",
+          "description.keeper"
+        ]
+      },
+      "creature": {
+        "htmlFields": [
+          "biography.personalDescription.value",
+          "description.keeper"
+        ]
+      },
+      "npc": {
+        "htmlFields": [
+          "biography.personalDescription.value",
+          "description.keeper"
+        ]
+      },
+      "vehicle": {
+        "htmlFields": [
+          "description.value",
+          "description.keeper"
+        ]
+      }
     },
     "Item": {
-      "archetype": {},
-      "armor": {},
-      "book": {},
-      "chase": {},
-      "experiencePackage": {},
-      "item": {},
-      "occupation": {},
-      "setup": {},
-      "skill": {},
-      "spell": {},
-      "status": {},
-      "talent": {},
-      "weapon": {}
+      "archetype": {
+        "htmlFields": [
+          "description.value",
+          "description.keeper",
+          "suggestedOccupations",
+          "suggestedTraits"
+        ]
+      },
+      "armor": {
+        "htmlFields": [
+          "description.value",
+          "description.keeper"
+        ]
+      },
+      "book": {
+        "htmlFields": [
+          "content",
+          "description.value",
+          "description.keeper"
+        ]
+      },
+      "chase": {
+        "htmlFields": [
+          "description.keeper"
+        ]
+      },
+      "experiencePackage": {
+        "htmlFields": [
+          "description.value",
+          "description.keeper"
+        ]
+      },
+      "item": {
+        "htmlFields": [
+          "description.value",
+          "description.keeper"
+        ]
+      },
+      "occupation": {
+        "htmlFields": [
+          "description.value",
+          "description.keeper"
+        ]
+      },
+      "setup": {
+        "htmlFields": [
+          "description.value",
+          "description.keeper",
+          "backstory"
+        ]
+      },
+      "skill": {
+        "htmlFields": [
+          "description.value",
+          "description.keeper"
+        ]
+      },
+      "spell": {
+        "htmlFields": [
+          "description.value",
+          "description.keeper",
+          "description.alternativeNames"
+        ]
+      },
+      "status": {
+        "htmlFields": [
+          "description.value",
+          "description.notes",
+          "description.keeper"
+        ]
+      },
+      "talent": {
+        "htmlFields": [
+          "description.value",
+          "description.notes",
+          "description.keeper"
+        ]
+      },
+      "weapon": {
+        "htmlFields": [
+          "description.value",
+          "description.special",
+          "description.keeper"
+        ]
+      }
     },
     "RegionBehavior": {
       "ChaosiumCanvasInterfaceAmbientLightToggle": {},
