@@ -140,7 +140,7 @@ export default class CoC7ActorPickerDialog extends foundry.applications.api.Hand
     }
     if (found.length === 0) {
       if (canvas.ready) {
-        found = canvas.tokens.placeables.filter(t => TARGET_ALLOWED.includes(t.document.actor.type) && t.actor.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)).map(t => t.document)
+        found = canvas.tokens.placeables.filter(t => TARGET_ALLOWED.includes(t.document.actor?.type) && t.actor.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)).map(t => t.document)
       }
       const foundIDs = found.map(t => t.actorId)
       found = found.concat(game.actors.filter(a => TARGET_ALLOWED.includes(a.type) && !foundIDs.includes(a.id) && a.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)))
