@@ -24,6 +24,22 @@ const SETTINGS = {
     config: false,
     type: Array,
     default: ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu']
+  },
+  allowFlatDiceModifier: {
+    name: 'SETTINGS.AllowFlatDiceModifier',
+    hint: 'SETTINGS.AllowFlatDiceModifierHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  },
+  allowFlatThresholdModifier: {
+    name: 'SETTINGS.AllowFlatThresholdModifier',
+    hint: 'SETTINGS.AllowFlatThresholdModifierHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
   }
 }
 

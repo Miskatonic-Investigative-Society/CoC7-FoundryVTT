@@ -117,24 +117,6 @@ export default function () {
     default: true,
     type: Boolean
   })
-  /** Allow usage of a flat dice modifier */
-  game.settings.register(FOLDER_ID, 'allowFlatDiceModifier', {
-    name: 'SETTINGS.AllowFlatDiceModifier',
-    hint: 'SETTINGS.AllowFlatDiceModifierHint',
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean
-  })
-  /** Allow usage of a flat threshold modifier */
-  game.settings.register(FOLDER_ID, 'allowFlatThresholdModifier', {
-    name: 'SETTINGS.AllowFlatThresholdModifier',
-    hint: 'SETTINGS.AllowFlatThresholdModifierHint',
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean
-  })
   game.settings.register(FOLDER_ID, 'defaultCheckDifficulty', {
     name: 'SETTINGS.DefaultDifficulty',
     hint: 'SETTINGS.DefaultDifficultyHint',
@@ -531,14 +513,14 @@ export default function () {
     default: false
   })
   game.settings.register(FOLDER_ID, 'developmentEnabled', {
-    name: 'Dev phased allowed',
+    name: 'Development phased enabled',
     scope: 'world',
     config: false,
     type: Boolean,
     default: false
   })
   game.settings.register(FOLDER_ID, 'charCreationEnabled', {
-    name: 'Char creation allowed',
+    name: 'Investigator creation enabled',
     scope: 'world',
     config: false,
     type: Boolean,
