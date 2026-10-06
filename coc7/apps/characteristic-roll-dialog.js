@@ -91,7 +91,8 @@ export default class CoC7CharacteristicRollDialog extends foundry.applications.a
         flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
           label: CoC7Utilities.getAttributeNames('lck')?.label,
           formula: this.coc7Config.attribs.luck.formula
-        })
+        }),
+        'flags.CoC7.plainRoll': true
       })
       this.coc7Config.values.luck = roll.total
     } else if (typeof this.coc7Config.characteristics[key] !== 'undefined' && this.coc7Config.characteristics[key].formula) {
@@ -100,7 +101,8 @@ export default class CoC7CharacteristicRollDialog extends foundry.applications.a
         flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
           label: CoC7Utilities.getCharacteristicNames(key)?.label,
           formula: this.coc7Config.characteristics[key].formula
-        })
+        }),
+        'flags.CoC7.plainRoll': true
       })
       this.coc7Config.values[key] = roll.total
     }

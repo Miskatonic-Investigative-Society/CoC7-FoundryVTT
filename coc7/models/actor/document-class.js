@@ -847,13 +847,11 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     if (data.system.coreCharacteristicsFormula.enabled) {
       const roll = await new Roll(data.system.coreCharacteristicsFormula.value).roll()
       roll.toMessage({
-        flavor: game.i18n.format(
-          'CoC7.MessageRollingCharacteristic',
-          {
-            label: game.i18n.localize(coreCharacteristic.label),
-            formula: data.system.coreCharacteristicsFormula.value
-          }
-        )
+        flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
+          label: game.i18n.localize(coreCharacteristic.label),
+          formula: data.system.coreCharacteristicsFormula.value
+        }),
+        'flags.CoC7.plainRoll': true
       })
       if (roll.total > coreCharacteristic.value) {
         updateDocument['system.characteristics.' + coreCharacteristic.key + '.value'] = roll.total

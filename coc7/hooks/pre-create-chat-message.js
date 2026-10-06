@@ -8,7 +8,7 @@ import { FOLDER_ID } from '../constants.js'
  * @param {string} userId
  */
 export default async function (message, data, options, userId) {
-  if (userId === game.user.id && message.rolls.length && typeof message.flags[FOLDER_ID]?.load?.as === 'undefined' && message.content !== '') {
+  if (userId === game.user.id && message.rolls.length && typeof message.flags[FOLDER_ID]?.load?.as === 'undefined' && message.content !== '' && message.flags[FOLDER_ID]?.plainRoll !== true) {
     const el = document.createElement('div')
     el.innerHTML = message.content
     if (!el.childElementCount) {
