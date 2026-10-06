@@ -104,9 +104,9 @@
   "CoC7.Other": "Other",
   "CoC7.rounds": "round(s)",
   "CoC7.hours": "hour(s)",
-  "CoC7.days": "days(s)",
+  "CoC7.days": "day(s)",
   "CoC7.weeks": "week(s)",
-  "CoC7.months": "months(s)",
+  "CoC7.months": "month(s)",
   "CoC7.remove": "Remove",
   "CoC7.Any": "Any",
   "CoC7.All": "All",
@@ -127,6 +127,9 @@
   "CoC7.Reset": "Reset",
   "CoC7.Initiative": "Initiative",
   "CoC7.InitiativeRoll": "Initiative roll",
+  "CoC7.LinkActiveEffect.MigrateReason": "Active Effect compendiums where added in FoundryVTT v14 to correctly migrate existing links the Active Effect should be moved to a compendium",
+  "CoC7.LinkActiveEffect.MigrateToExisting": "Existing Compendium",
+  "CoC7.LinkActiveEffect.MigrateToNew": "Create New Compendium",
 
   "CoC7.Cast": "Cast",
   "CoC7.CastHidden": "Cast Hidden",
@@ -1452,6 +1455,7 @@
   "CoC7.CoCIDFlag.new": "- Custom System ID -",
   "CoC7.CoCIDFlag.guess": "Create System ID (CoC ID) based on current document.",
   "CoC7.CoCIDFlag.priority": "System ID Priority",
+  "CoC7.CoCIDFlag.priority-short": "Priority",
   "CoC7.CoCIDFlag.info": "Information",
   "CoC7.CoCIDFlag.others": "Other documents with this CoC ID and language (excluding documents in other actors and items)",
   "CoC7.CoCIDFlag.documents-in-world": "{count} documents in the world",
@@ -1535,19 +1539,10 @@
 
   "CoC7.AlternativeNames": "Alternative names",
 
-  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Walk",
-  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Fly",
-  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Swim",
-  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "Burrow",
-  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Crawl",
-  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Climb",
-  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Jump",
-  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (Blink)",
-  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (Displace)",
-
   "CoC7.PortraitOptions": "Portrait Options",
   "CoC7.WhatCopiedClipboard": "\"{what}\" copied to clipboard.",
   "CoC7.AddedEmbeddedItems": "Added {names}",
+  "CoC7.ExistingEmbeddedItems": "{names} already exist",
 
   "CoC7.Errors.UnableToLoadMessage": "Unable to load message",
   "CoC7.Errors.UnparsableRoll": "Unable to work out what you are rolling",
@@ -1573,6 +1568,7 @@
   "CoC7.MapNoteNoBackground": "Hide Background",
   "CoC7.Config.AdventureCSS": "Adventure CSS",
   "CoC7.Config.FixedHeadingCSS": "Fixed Adventure Heading CSS",
+  "CoC7.Config.AdventureHeading": "Fixed Adventure Heading",
   "CoC7.Config.AdventureSubheading": "Fixed Adventure Subheading",
   "CoC7.Config.AdventureChangeHint": "You will need to close and reopen the document for the changes to be applied",
   "CoC7.Config.JournalCSS": "Journal CSS Class",
@@ -1733,5 +1729,15 @@
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerRegionUuids.Title": "Trigger This Region",
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerRegionUuids.Hint": "",
   "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Title": "With A Button Click",
-  "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Hint": ""
+  "CoC7.ChaosiumCanvasInterface.TileToggle.TriggerAsButton.Hint": "",
+
+  "CoC7.ProseMirror.DropCap": "Drop Capital",
+  "CoC7.ProseMirror.Indent": "Indent",
+  "CoC7.ProseMirror.Example": "Example",
+  "CoC7.ProseMirror.KeeperInformation": "Keeper Information",
+  "CoC7.ProseMirror.FoundryVTTNote": "FoundryVTT Note Block",
+  "CoC7.ProseMirror.ReadAloud": "Read Aloud: Block",
+  "CoC7.ProseMirror.KeeperNotes": "Keeper Note: Block",
+  "CoC7.ProseMirror.ToggleSection": "Toggle Section Button",
+  "CoC7.ProseMirror.Quote": "Quote"
 }
