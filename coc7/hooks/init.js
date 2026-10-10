@@ -40,9 +40,9 @@ export default function () {
         alwaysFumble: false
       }
     },
-    eras: (era, name, icon = 'fa-solid fa-info-circle') => {
+    eras: (era, label, icon = 'fa-solid fa-info-circle') => {
       ERAS[era] = {
-        name,
+        label,
         icon
       }
     },

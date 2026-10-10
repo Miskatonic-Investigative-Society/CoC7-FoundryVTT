@@ -10,19 +10,7 @@ import CoC7InvestigatorWizard from '../apps/investigator-wizard.js'
  * @param {ApplicationRenderOptions} options
  */
 export default function (application, element, context, options) {
-  // Allow Investigator Wizard
-  //  * If the user role is allowed to create actors
-  //  * If the user has less owned actors than allowed in settings
-  let allowWizard = game.user.hasPermission('ACTOR_CREATE')
-  if (!allowWizard) {
-    const allowed = game.settings.get(FOLDER_ID, 'InvestigatorWizardQuantity')
-    if (allowed > 0) {
-      const existing = game.actors.filter(d => d.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)).length
-      allowWizard = existing < allowed
-    }
-  }
-
-  if (allowWizard) {
+  if (game.user.hasPermission('ACTOR_CREATE') || game.settings.get(FOLDER_ID, 'InvestigatorWizardQuantity') > 0) {
     const link = document.createElement('button')
     link.type = 'button'
     link.dataset.action = 'investigatorWizard'

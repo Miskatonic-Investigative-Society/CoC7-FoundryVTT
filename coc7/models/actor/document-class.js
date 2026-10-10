@@ -1,3 +1,4 @@
+// cSpell:ignore reportCharactedriticsValue
 import { FOLDER_ID, STATUS_EFFECTS } from '../../constants.js'
 import CoC7AverageRoll from '../../apps/average-roll.js'
 import CoC7CharacteristicRollDialog from '../../apps/characteristic-roll-dialog.js'
@@ -4048,29 +4049,29 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       if (item.type === 'skill') {
         let sort = 3
         let group = game.i18n.localize('CoC7.Skills')
-        let name = item.name
+        let label = item.name
         if (item.system.properties.fighting) {
           sort = (rangedFirst ? 2 : 0)
           group = game.i18n.localize('CoC7.SkillFighting')
-          name = item.system.skillName
+          label = item.system.skillName
         } else if (item.system.properties.firearm) {
           sort = (rangedFirst ? 0 : 1)
           group = game.i18n.localize('CoC7.SkillFirearm')
-          name = item.system.skillName
+          label = item.system.skillName
         } else if (item.system.properties.ranged) {
           sort = (rangedFirst ? 1 : 2)
           group = game.i18n.localize('CoC7.SkillRanged')
-          name = item.system.skillName
+          label = item.system.skillName
         }
         skills.push({
-          id: item.id,
-          name,
+          value: item.id,
+          label,
           group,
           sort
         })
       }
     }
-    skills.sort(CoC7Utilities.sortBySortThenNameKey)
+    skills.sort(CoC7Utilities.sortBySortThenLabelKey)
     return skills
   }
 

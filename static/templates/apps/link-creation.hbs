@@ -1,198 +1,211 @@
-<div class="flexcol">
-  <div class="link-header flexcol">
+<section class="tab active">
+  <div class="form-group">
+    <label class="flex-single">{{localize 'CoC7.Type'}}</label>
+    <div class="form-value">
+      <select name="check">
+        {{selectOptions checkType selected=link.check}}
+      </select>
+    </div>
+  </div>
+  {{#if (eq link.check checkTypes.CHECK)}}
     <div class="form-group">
-      <label>{{localize 'CoC7.Type'}}:</label>
-      <div class="form-fields">
-        <select name="check">
-          {{selectOptions checkType selected=link.check valueAttr='key' labelAttr='label'}}
+      <label class="flex-single">{{localize 'CoC7.Check'}}</label>
+      <div class="form-value">
+        <select name="subtype">
+          {{selectOptions linkType selected=link.subtype}}
         </select>
       </div>
     </div>
-    {{#if (eq link.check checkTypes.CHECK)}}
+    {{#if (eq link.subtype linkTypes.CHARACTERISTIC)}}
       <div class="form-group">
-        <label>{{localize 'CoC7.Check'}}:</label>
-        <div class="form-fields">
-          <select name="subtype">
-            {{selectOptions linkType selected=link.subtype valueAttr='key' labelAttr='label'}}
+        <label class="flex-single">{{localize 'CoC7.Characteristic'}}</label>
+        <div class="form-value">
+          <select name="characteristicName">
+            {{selectOptions characteristicType selected=other.characteristicName}}
           </select>
         </div>
       </div>
-      {{#if (eq link.subtype linkTypes.CHARACTERISTIC)}}
-        <div class="form-group">
-          <label>{{localize 'CoC7.Characteristic'}}:</label>
-          <div class="form-fields">
-            <select name="characteristicName">
-              {{selectOptions characteristicType selected=other.characteristicName valueAttr='key' labelAttr='label'}}
-            </select>
-          </div>
-        </div>
-      {{else if (eq link.subtype linkTypes.ATTRIBUTE)}}
-        <div class="form-group">
-          <label>{{localize 'CoC7.Attribute'}}:</label>
-          <div class="form-fields">
-            <select name="attributeName">
-              {{selectOptions attributeType selected=other.attributeName valueAttr='key' labelAttr='label'}}
-            </select>
-          </div>
-        </div>
-      {{else if (eq link.subtype linkTypes.SKILL)}}
-        <div class="form-group">
-          <label>{{localize 'CoC7.Name'}}:</label>
-          <div class="form-fields">
-            <input type="text" name="skillName" value="{{other.skillName}}" required="required" />
-          </div>
-        </div>
-      {{/if}}
-    {{else if (eq link.check checkTypes.ITEM)}}
+    {{else if (eq link.subtype linkTypes.ATTRIBUTE)}}
       <div class="form-group">
-        <label>{{localize 'CoC7.Name'}}:</label>
-        <div class="form-fields">
-          <input type="text" name="itemName" value="{{other.itemName}}" required="required" />
+        <label class="flex-single">{{localize 'CoC7.Attribute'}}</label>
+        <div class="form-value">
+          <select name="attributeName">
+            {{selectOptions attributeType selected=other.attributeName}}
+          </select>
         </div>
       </div>
-    {{else if (eq link.check checkTypes.SANLOSS)}}
+    {{else if (eq link.subtype linkTypes.SKILL)}}
       <div class="form-group">
-        <label>{{localize 'CoC7.MinSanloss'}}:</label>
-        <div class="form-fields">
-          <input type="text" name="sanMin" value="{{link.sanMin}}" required="required" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label>{{localize 'CoC7.MaxSanloss'}}:</label>
-        <div class="form-fields">
-          <input type="text" name="sanMax" value="{{link.sanMax}}" required="required" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label>{{localize 'CoC7.SanityLossTypeReason'}}:</label>
-        <div class="form-fields">
-          <input type="text" name="sanReason" value="{{link.sanReason}}" />
-        </div>
-      </div>
-    {{else if (eq link.check checkTypes.EFFECT)}}
-      <div class="form-group">
-        <label>{{localize 'CoC7.Name'}}:</label>
-        <div class="form-fields">
-          <input type="text" name="object.name" value="{{link.object.name}}" required="required" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label>{{localize 'CoC7.Icon'}}:</label>
-        <div class="form-fields">
-          <file-picker name="object.img" type="image" value="{{link.object.img}}"></file-picker>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>{{localize 'CoC7.Label'}}:</label>
-        <div class="form-fields">
-          <input type="text" name="label" value="{{link.label}}" />
+        <label class="flex-single">{{localize 'CoC7.Name'}}</label>
+        <div class="form-value">
+          <input type="text" name="skillName" value="{{other.skillName}}" required="required" />
         </div>
       </div>
     {{/if}}
-  </div>
+  {{else if (eq link.check checkTypes.ITEM)}}
+    <div class="form-group">
+      <label class="flex-single">{{localize 'CoC7.Name'}}</label>
+      <div class="form-value">
+        <input type="text" name="itemName" value="{{other.itemName}}" required="required" />
+      </div>
+    </div>
+  {{else if (eq link.check checkTypes.SANLOSS)}}
+    <div class="form-group">
+      <label class="flex-single">{{localize 'CoC7.MinSanloss'}}</label>
+      <div class="form-value">
+        <input type="text" name="sanMin" value="{{link.sanMin}}" required="required" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="flex-single">{{localize 'CoC7.MaxSanloss'}}</label>
+      <div class="form-value">
+        <input type="text" name="sanMax" value="{{link.sanMax}}" required="required" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="flex-single">{{localize 'CoC7.SanityLossTypeReason'}}</label>
+      <div class="form-value">
+        <input type="text" name="sanReason" value="{{link.sanReason}}" />
+      </div>
+    </div>
+  {{else if (and (eq link.check checkTypes.EFFECT) (lte generation 13))}}
+    <div class="form-group">
+      <label class="flex-single">{{localize 'CoC7.Name'}}</label>
+      <div class="form-value">
+        <input type="text" name="object.name" value="{{link.object.name}}" required="required" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="flex-single">{{localize 'CoC7.Icon'}}</label>
+      <div class="form-value">
+        <file-picker name="object.img" type="image" value="{{link.object.img}}"></file-picker>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="flex-single">{{localize 'CoC7.Label'}}</label>
+      <div class="form-value">
+        <input type="text" name="label" value="{{link.label}}" />
+      </div>
+    </div>
+  {{/if}}
   {{#if (eq link.check checkTypes.EFFECT)}}
-    <nav class="sheet-tabs tabs" aria-role="{{localize 'SHEETS.FormNavLabel'}}">
-      {{#each tabs as |tab|}}
-        <a class="{{tab.cssClass}}" data-action="tab" data-group="{{tab.group}}" data-tab="{{tab.id}}">
-          <i class="{{tab.icon}}"></i>
-          <label>{{localize tab.label}}</label>
-        </a>
-      {{/each}}
-    </nav>
-    <section class="tab flexcol {{#if (eq 'details' tabsPrimary)}} active{{/if}}" data-group="primary" data-tab="details" data-application-part="details">
-      {{formGroup fields.tint value=link.object.tint rootId=rootId placeholder="#ffffff"}}
-      {{formGroup fields.description value=link.object.description rootId=rootId}}
-      {{formGroup fields.disabled value=link.object.disabled rootId=rootId}}
-      {{formGroup fields.statuses value=link.object.statuses options=statuses rootId=rootId classes="statuses"}}
-    </section>
-    <section class="tab flexcol {{#if (eq 'duration' tabsPrimary)}} active{{/if}}" data-group="primary" data-tab="duration" data-application-part="duration">
-      <fieldset>
-        {{formGroup fields.duration.fields.seconds value=link.object.duration.seconds rootId=rootId}}
-        {{formGroup fields.duration.fields.startTime value=link.object.duration.startTime rootId=rootId}}
-      </fieldset>
-      <fieldset>
+    {{#if (gt generation 13)}}
+      <p>{{localize 'CoC7.LinkActiveEffect.MigrateReason'}}</p>
+      <div class="form-group">
+        {{#if packs}}
+          <label class="checkbox"><input type="radio" name="compendium" value="existing"{{#if (eq other.compendium 'existing')}} checked=""{{/if}}> {{localize 'CoC7.LinkActiveEffect.MigrateToExisting'}}</label>
+        {{/if}}
+        <label class="checkbox"><input type="radio" name="compendium" value="create"{{#if (eq other.compendium 'create')}} checked=""{{/if}}> {{localize 'CoC7.LinkActiveEffect.MigrateToNew'}}</label>
+      </div>
+      {{#if (eq other.compendium 'existing')}}
         <div class="form-group">
-          <label>{{localize "EFFECT.DurationTurns"}}</label>
-          <div class="form-fields">
-            <label for="{{rootId}}-duration.rounds">{{fields.duration.fields.rounds.label}}</label>
-            {{formInput fields.duration.fields.rounds value=link.object.duration.rounds id=(concat rootId "-duration.rounds")}}
-            <label for="{{rootId}}-duration.turns">{{fields.duration.fields.turns.label}}</label>
-            {{formInput fields.duration.fields.turns value=link.object.duration.turns id=(concat rootId "-duration.turns")}}
+          <label class="flex-single">{{localize 'CoC7.Name'}}</label>
+          <div class="form-value">
+            <select name="packId">
+              {{selectOptions packs selected=other.packId}}
+            </select>
           </div>
         </div>
+      {{else}}
         <div class="form-group">
-          <label>{{localize "EFFECT.StartTurns"}}</label>
-          <div class="form-fields">
-            <label for="{{rootId}}-duration.startRound">{{fields.duration.fields.startRound.label}}</label>
-            {{formInput fields.duration.fields.startRound value=link.object.duration.startRound id=(concat rootId "-duration.startRound")}}
-            <label for="{{rootId}}-duration.startTurn">{{fields.duration.fields.startTurn.label}}</label>
-            {{formInput fields.duration.fields.startTurn value=link.object.duration.startTurn id=(concat rootId "-duration.startTurn")}}
+          <label class="flex-single">{{localize 'CoC7.Name'}}</label>
+          <div class="form-value">
+            <input type="text" name="packName" value="{{other.packName}}" required="required" />
           </div>
         </div>
-      </fieldset>
-    </section>
-    <section class="tab flexcol changes{{#if (eq 'effects' tabsPrimary)}} active{{/if}}" data-group="primary" data-tab="effects" data-application-part="effects">
-      <header>
-        <div class="key">{{localize "EFFECT.ChangeKey"}}</div>
-        <div class="mode">{{localize "EFFECT.ChangeMode"}}</div>
-        <div class="value">{{localize "EFFECT.ChangeValue"}}</div>
-        {{#unless noPriority}}
-          <div class="priority">{{localize "EFFECT.ChangePriority"}}</div>
-        {{/unless}}
-        <div class="controls">
-          <button type="button" class="inline-control icon fa-regular fa-square-plus" data-action="addChange"></button>
-        </div>
-      </header>
-      <ol class="scrollable" data-changes>
-        {{#each link.object.changes as |change i|}}
-          {{#with ../fields.changes.element.fields as |changeFields|}}
-            <li data-index="{{i}}">
-              <div class="key">
-                {{formInput changeFields.key name=(concat "changes." i ".key") value=change.key}}
-              </div>
-              <div class="mode">
-                {{formInput changeFields.mode name=(concat "changes." i ".mode") value=change.mode choices=@root.modes}}
-              </div>
-              <div class="value">
-                {{formInput changeFields.value name=(concat "changes." i ".value") value=change.value}}
-              </div>
-              {{#unless ../../noPriority}}
-                <div class="priority">
-                  {{formInput changeFields.priority name=(concat "changes." i ".priority") value=change.priority placeholder=(lookup ../../priorities change.mode)}}
+      {{/if}}
+      <footer class="form-footer"><button type="submit" data-action="active-effect" autofocus="">{{localize 'SIDEBAR.ACTIONS.CREATE.ActiveEffect'}}</button></footer>
+    {{else}}
+      {{> 'templates/generic/tab-navigation.hbs'}}
+      <section class="tab scrollable {{#if (eq 'details' tabsPrimary)}} active{{/if}}" data-group="primary" data-tab="details" data-application-part="details">
+        {{formGroup fields.tint value=link.object.tint rootId=rootId placeholder="#ffffff"}}
+        {{formGroup fields.description value=link.object.description rootId=rootId}}
+        {{formGroup fields.disabled value=link.object.disabled rootId=rootId}}
+        {{formGroup fields.statuses value=link.object.statuses options=statuses sort=true rootId=rootId classes="statuses"}}
+      </section>
+      <section class="tab scrollable {{#if (eq 'duration' tabsPrimary)}} active{{/if}}" data-group="primary" data-tab="duration" data-application-part="duration">
+        <fieldset>
+          {{formGroup fields.duration.fields.seconds value=link.object.duration.seconds rootId=rootId}}
+          {{formGroup fields.duration.fields.startTime value=link.object.duration.startTime rootId=rootId}}
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label>{{localize "EFFECT.DurationTurns"}}</label>
+            <div class="form-fields">
+              <label for="{{rootId}}-duration.rounds">{{localize 'EFFECT.FIELDS.duration.rounds.label'}}</label>
+              {{formInput fields.duration.fields.rounds value=link.object.duration.rounds id=(concat rootId "-duration.rounds")}}
+              <label for="{{rootId}}-duration.turns">{{localize 'EFFECT.FIELDS.duration.turns.label'}}</label>
+              {{formInput fields.duration.fields.turns value=link.object.duration.turns id=(concat rootId "-duration.turns")}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label>{{localize "EFFECT.StartTurns"}}</label>
+            <div class="form-fields">
+              <label for="{{rootId}}-duration.startRound">{{localize 'EFFECT.FIELDS.duration.startRound.label'}}</label>
+              {{formInput fields.duration.fields.startRound value=link.object.duration.startRound id=(concat rootId "-duration.startRound")}}
+              <label for="{{rootId}}-duration.startTurn">{{localize 'EFFECT.FIELDS.duration.startTurn.label'}}</label>
+              {{formInput fields.duration.fields.startTurn value=link.object.duration.startTurn id=(concat rootId "-duration.startTurn")}}
+            </div>
+          </div>
+        </fieldset>
+      </section>
+      <section class="tab flexcol changes{{#if (eq 'effects' tabsPrimary)}} active{{/if}}" data-group="primary" data-tab="effects" data-application-part="effects">
+        <header>
+          <div class="key">{{localize 'EFFECT.ChangeKey'}}</div>
+          <div class="mode">{{localize 'EFFECT.ChangeMode'}}</div>
+          <div class="value">{{localize 'EFFECT.ChangeValue'}}</div>
+          <div class="priority">{{localize 'EFFECT.ChangePriority'}}</div>
+          <div class="controls">
+            <button class="inline-control icon fa-regular fa-square-plus" data-action="addChange"></button>
+          </div>
+        </header>
+        <ol class="scrollable" data-changes>
+          {{#each link.object.changes as |change index|}}
+            {{#with ../fields.changes.element.fields as |changeFields|}}
+              <li data-index="{{index}}">
+                <div class="key">
+                  {{formInput changeFields.key name=(concat "changes." index ".key") value=change.key}}
                 </div>
-              {{/unless}}
-              <div class="controls">
-                <button type="button" class="inline-control icon fa-solid fa-trash" data-action="deleteChange"></button>
-              </div>
-            </li>
-          {{/with}}
-        {{/each}}
-      </ol>
-    </section>
-  {{else}}
-    <fieldset class="link-body flexcol">
-      <div class="toggle-row flexrow">
-        <div class="toggle-attributes flexrow">
-          {{#each modifiers as |row|}}
-            <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}}>{{localize row.name}}</button>
+                <div class="mode">
+                  {{formInput changeFields.mode name=(concat "changes." index ".mode") value=change.mode choices=@root.modes}}
+                </div>
+                <div class="value">
+                  {{formInput changeFields.value name=(concat "changes." index ".value") value=change.value}}
+                </div>
+                <div class="priority">
+                  {{formInput changeFields.priority name=(concat "changes." index ".priority") value=change.priority placeholder=(lookup ../../priorities change.mode)}}
+                </div>
+                <div class="controls">
+                  <button class="inline-control icon fa-solid fa-trash" data-action="deleteChange"></button>
+                </div>
+              </li>
+            {{/with}}
           {{/each}}
-        </div>
+        </ol>
+      </section>
+    {{/if}}
+  {{else}}
+    <fieldset>
+      <div class="toggle-attributes form-value flexrow">
+        {{#each modifiers as |row|}}
+          <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.value}}"{{#if row.tooltip}} data-tooltip="{{row.tooltip}}"{{/if}}>{{localize row.label}}</button>
+        {{/each}}
       </div>
       {{#if other.difficulty}}
         <div class="form-group">
-          <label>{{localize 'CoC7.Check'}}:</label>
-          <div class="form-fields">
+          <label class="flex-single">{{localize 'CoC7.Check'}}</label>
+          <div class="form-value">
             <select name="difficulty">
-              {{selectOptions rollDifficulties selected=link.difficulty localize=true valueAttr='key' labelAttr='label'}}
+              {{selectOptions rollDifficulties selected=link.difficulty localize=true}}
             </select>
           </div>
         </div>
       {{/if}}
       {{#if other.poolModifier}}
         <div class="form-group bonus-penalty-selector">
-          <label>{{localize 'CoC7.BonusDice'}}</label>
-          <div class="form-fields">
-            <div class="bonus-penalty-box" style="padding: 0.5rem">
+          <label class="flex-single">{{localize 'CoC7.BonusDice'}}</label>
+          <div class="form-value">
+            <div class="bonus-penalty-box">
               <div class="flexrow bonus-penalty-labels">
                 <span class="double-penalty"><i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i></span>
                 <span class="penalty"><i class="fa-solid fa-dice-d10"></i></span>
@@ -207,35 +220,35 @@
                 <span class="bonus">+1</span>
                 <span class="double-bonus">+2</span>
               </div>
-              <input type="range" name="poolModifier" min="-2" max="2" value="{{link.poolModifier}}" style="height: 0.5rem">
+              <input type="range" name="poolModifier" min="-2" max="2" value="{{link.poolModifier}}">
             </div>
           </div>
         </div>
       {{/if}}
       {{#if other.label}}
         <div class="form-group">
-          <label>{{localize 'CoC7.Label'}}:</label>
-          <div class="form-fields">
+          <label class="flex-single">{{localize 'CoC7.Label'}}</label>
+          <div class="form-value">
             <input type="text" name="label" value="{{link.label}}" required="required" />
           </div>
         </div>
       {{/if}}
       {{#if other.icon}}
         <div class="form-group">
-          <label>{{localize 'CoC7.Icon'}}:</label>
-          <div class="form-fields">
+          <label class="flex-single">{{localize 'CoC7.Icon'}}</label>
+          <div class="form-value">
             <input type="text" name="icon" value="{{link.icon}}" />
           </div>
         </div>
       {{/if}}
     </fieldset>
+    <footer class="form-footer">
+      <button class="submit-button" type="submit" data-action="clipboard"><i class="fa-solid fa-clipboard"></i>{{localize 'CoC7.CopyToClipboard'}}</button>
+      <button class="submit-button" type="submit" data-action="whisper-selected"><i class="fa-regular fa-object-group"></i>{{localize 'CoC7.WhisperToSelection'}}</button>
+      {{#if actorNames}}
+        <button class="submit-button" type="submit" data-action="whisper-owner"><i class="fa-solid fa-user"></i>{{localize 'CoC7.WhisperTo'}}: {{actorNames}}</button>
+      {{/if}}
+      <button class="submit-button" type="submit" data-action="chat"><i class="fa-solid fa-comments"></i>{{localize 'CoC7.SendToChat'}}</button>
+    </footer>
   {{/if}}
-  <div class="link-buttons flexcol">
-    <button class="submit-button" type="submit" data-action="clipboard"><i class="fa-solid fa-clipboard"></i>{{localize 'CoC7.CopyToClipboard'}}</button>
-    <button class="submit-button" type="submit" data-action="whisper-selected"><i class="fa-regular fa-object-group"></i>{{localize 'CoC7.WhisperToSelection'}}</button>
-    {{#if actorNames}}
-      <button class="submit-button" type="submit" data-action="whisper-owner"><i class="fa-solid fa-user"></i>{{localize 'CoC7.WhisperTo'}}: {{actorNames}}</button>
-    {{/if}}
-    <button class="submit-button" type="submit" data-action="chat"><i class="fa-solid fa-comments"></i>{{localize 'CoC7.SendToChat'}}</button>
-  </div>
-</div>
+</section>

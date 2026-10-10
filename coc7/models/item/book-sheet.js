@@ -133,65 +133,65 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
       case 'details':
         context.difficultyLevels = [
           {
-            key: 'regular',
+            value: 'regular',
             label: 'CoC7.RollDifficultyRegular'
           },
           {
-            key: 'hard',
+            value: 'hard',
             label: 'CoC7.RollDifficultyHard'
           },
           {
-            key: 'extreme',
+            value: 'extreme',
             label: 'CoC7.RollDifficultyExtreme'
           },
           {
-            key: 'critical',
+            value: 'critical',
             label: 'CoC7.RollDifficultyCritical'
           },
           {
-            key: 'unreadable',
+            value: 'unreadable',
             label: 'CoC7.Unreadable'
           }
         ]
         context.studyUnits = [
           {
-            key: 'CoC7.months',
+            value: 'CoC7.months',
             label: 'CoC7.months'
           },
           {
-            key: 'CoC7.weeks',
+            value: 'CoC7.weeks',
             label: 'CoC7.weeks'
           },
           {
-            key: 'CoC7.days',
+            value: 'CoC7.days',
             label: 'CoC7.days'
           },
           {
-            key: 'CoC7.hours',
+            value: 'CoC7.hours',
             label: 'CoC7.hours'
           }
         ]
         context.otherGains = [
           {
-            key: 'development',
+            value: 'development',
             label: 'CoC7.Development'
           },
           {
-            key: '1d6',
+            value: '1d6',
             label: '+1D6'
           },
           {
-            key: '1d10',
+            value: '1d10',
             label: '+1D10'
           }
         ]
         context._types = []
-        for (const [key, value] of context.document.system.schema.getField('type').entries()) {
+        for (const [value, field] of context.document.system.schema.getField('type').entries()) {
           context._types.push({
-            id: key,
-            name: value.label,
-            tooltip: value.hint,
-            isEnabled: context.document.system.type[key] === true
+            value,
+            label: field.label,
+            tooltip: field.hint,
+            isEnabled: context.document.system.type[value] === true
           })
         }
         if (knownBook) {
@@ -239,21 +239,11 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
         case 'attemptReference':
           this.document.system.attemptReference()
           break
-        case 'itemEdit':
-          {
-            const embeddedId = event.currentTarget.closest('.item').dataset.embeddedId
-            if (embeddedId) {
-              CoC7Utilities.openEmbeddedItem(this.document, embeddedId)
-            }
-          }
+        case 'item-edit':
+          this._onItemEdit(event)
           break
-        case 'itemDelete':
-          {
-            const embeddedId = event.currentTarget.closest('.item').dataset.embeddedId
-            if (embeddedId) {
-              CoC7Utilities.deleteEmbeddedItem(this.document, embeddedId)
-            }
-          }
+        case 'item-delete':
+          this._onItemDelete(event)
           break
         case 'add-other-gains':
           this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
@@ -267,9 +257,21 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
           break
         case 'teach-spell':
           {
-            const embeddedId = event.currentTarget.closest('.item').dataset.embeddedId
-            if (embeddedId) {
-              await this.document.system.attemptSpellLearning(embeddedId)
+            event.preventDefault()
+            this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+            const li = event.currentTarget.closest('.item')
+            if (li.dataset.uuid) {
+              const item = await fromUuid(li.dataset.uuid)
+              if (item) {
+                await this.document.system.attemptSpellItemLearning(li.dataset.uuid, item.name)
+              }
+            } else if (li.dataset.id) {
+              const itemData = this.document.system.itemDocuments.find(doc => doc._id === li.dataset.id)
+              const Cls = CONFIG.Item.documentClass
+              const item = new Cls(itemData, { parent: this.document })
+              if (item) {
+                await this.document.system.attemptSpellItemLearning(li.dataset.id, item.name)
+              }
             }
           }
           break
@@ -355,6 +357,22 @@ export default class CoC7ModelsItemBookSheet extends CoC7ModelsItemGlobalSheet {
    */
   async _onItemSummary (event) {
     this._onItemSummaryEvent(event, 'system')
+  }
+
+  /**
+   * Edit embedded item
+   * @param {ClickEvent} event
+   */
+  async _onItemEdit (event) {
+    this._onItemEditEvent(event, 'system')
+  }
+
+  /**
+   * Delete embedded item
+   * @param {ClickEvent} event
+   */
+  async _onItemDelete (event) {
+    this._onItemDeleteEvent(event, 'system')
   }
 
   /**

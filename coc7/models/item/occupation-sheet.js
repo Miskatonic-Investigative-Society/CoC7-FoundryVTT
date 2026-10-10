@@ -96,7 +96,7 @@ export default class CoC7ModelsItemOccupationSheet extends CoC7ModelsItemGlobalS
   async _onItemDrop (event) {
     const group = event.target.closest('fieldset[data-group]')
     const source = (group ? 'system.groups.' + group.dataset.group : 'system')
-    this._onItemDropEvent(event, source, ['skill'])
+    this._onItemDropEvent(event, source, ['skill'], ['system'])
   }
 
   /**
@@ -167,14 +167,11 @@ export default class CoC7ModelsItemOccupationSheet extends CoC7ModelsItemGlobalS
     context = await super._preparePartContext(partId, context, options)
 
     switch (partId) {
-      case 'header':
-        context.occupationPointsString = context.document.system.occupationPointsString
-        break
       case 'description':
         context._properties = []
-        for (const [key, value] of context.document.system.schema.getField('type').entries()) {
-          if (context.document.system.type[key] === true) {
-            context._properties.push(value.label)
+        for (const [value, field] of context.document.system.schema.getField('type').entries()) {
+          if (context.document.system.type[value] === true) {
+            context._properties.push(field.label)
           }
         }
         context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
@@ -186,23 +183,23 @@ export default class CoC7ModelsItemOccupationSheet extends CoC7ModelsItemGlobalS
         )
         break
       case 'details':
-        context._type = []
-        for (const [key, value] of context.document.system.schema.getField('type').entries()) {
-          context._type.push({
-            id: key,
-            name: value.label,
-            tooltip: value.hint,
-            isEnabled: context.document.system.type[key] === true
+        context._types = []
+        for (const [value, field] of context.document.system.schema.getField('type').entries()) {
+          context._types.push({
+            value,
+            label: field.label,
+            tooltip: field.hint,
+            isEnabled: context.document.system.type[value] === true
           })
         }
         context._occupationSkillPoints = []
-        for (const [key, value] of context.document.system.schema.getField('occupationSkillPoints').entries()) {
+        for (const [value, field] of context.document.system.schema.getField('occupationSkillPoints').entries()) {
           context._occupationSkillPoints.push({
-            id: key,
-            label: value.label,
-            selected: context.document.system.occupationSkillPoints[key].selected,
-            optional: context.document.system.occupationSkillPoints[key].optional,
-            multiplier: context.document.system.occupationSkillPoints[key].multiplier
+            value,
+            label: field.label,
+            selected: context.document.system.occupationSkillPoints[value].selected,
+            optional: context.document.system.occupationSkillPoints[value].optional,
+            multiplier: context.document.system.occupationSkillPoints[value].multiplier
           })
         }
         break

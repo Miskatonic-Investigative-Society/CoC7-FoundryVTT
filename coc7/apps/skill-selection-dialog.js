@@ -12,7 +12,7 @@ export default class CoC7SkillSelectionDialog extends foundry.applications.api.H
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       contentClasses: [
         'standard-form'

@@ -1,3 +1,4 @@
+// cspell:ignore characteritic
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ActiveEffect from '../../apps/active-effect.js'
 import CoC7ChatDamage from '../../apps/chat-damage.js'
@@ -13,7 +14,7 @@ import deprecated from '../../deprecated.js'
 
 export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
   static DEFAULT_OPTIONS = {
-    classes: ['coc7', 'sheet'],
+    classes: ['coc7-sheet', 'coc7-actor-sheet'],
     form: {
       handler: CoC7ModelsActorGlobalSheet.#onSubmit,
       submitOnChange: true
@@ -253,11 +254,14 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
 
     this.element.querySelectorAll('.item-name.effect-name').forEach((element) => element.addEventListener('click', this._onEffect.bind(this)))
 
-    this.element.querySelectorAll('.attribute-value').forEach((element) => element.addEventListener('wheel', this._onWheel.bind(this), {
-      passive: true
+    this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', (event) => {
+      event.preventDefault()
+      switch (event.currentTarget.dataset.action) {
+        case 'item-popup':
+          this._onItemPopup(event)
+          break
+      }
     }))
-
-    this.element.querySelectorAll('.item-popup').forEach((element) => element.addEventListener('click', this._onItemPopup.bind(this)))
 
     this.element.querySelector('.slide-out-notes.clickable')?.addEventListener('click', (event) => {
       const tab = event.currentTarget.closest('section.window-content').querySelector('.tab-group-notes .tab-group-header')
@@ -282,7 +286,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
               div = document.createElement('div')
               div.style.gridArea = 'details'
               div.style.display = 'grid'
-              await CoC7Utilities.setItemSummaryHtml(div, item, this.document)
+              await CoC7Utilities.setItemSummaryHtml(div, item)
               li.append(div)
             }
             CoC7Utilities.htmlElementToggleShow(li, div)
@@ -296,6 +300,10 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return
+
+    this.element.querySelectorAll('.attribute-value').forEach((element) => element.addEventListener('wheel', this._onWheel.bind(this), {
+      passive: true
+    }))
 
     this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', (event) => { this._onClickToggle(event) }))
 
@@ -336,8 +344,16 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
           this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
           this.document.rollCharacteristicsValue()
           break
+        case 'clear-conditions':
+          this._onClearConditions(event)
+          break
         case 'condition':
           this._onConditionToggle(event)
+          break
+        case 'development-flag':
+          if (event.detail%2 === 0) {
+            this._onDevelopmentFlag(event)
+          }
           break
         case 'dying-check':
           this.checkForDeath(event)
@@ -431,16 +447,6 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
     })
     this.element.querySelectorAll('.item div.show-detail').forEach((element) => element.addEventListener('dblclick', this._onItemEdit.bind(this)))
     this.element.querySelectorAll('.item-edit').forEach((element) => element.addEventListener('click', this._onItemEdit.bind(this)))
-    this.element.querySelectorAll('.development-flag').forEach((element) => element.addEventListener('dblclick', async (event) => {
-      event.preventDefault()
-      const itemUuid = event.target.closest('.item').dataset.itemUuid
-      const document = await fromUuid(itemUuid)
-      if (document) {
-        document.update({
-          'system.flags.developement': !document.system.flags.developement
-        })
-      }
-    }))
     this.element.querySelectorAll('.skill-name').forEach((element) => element.addEventListener('change', this._onSkillSetName.bind(this)))
     this.element.querySelectorAll('.npc-skill-score').forEach((element) => element.addEventListener('change', this._onSkillSetValue.bind(this)))
     this.element.querySelectorAll('.skill-adjustment').forEach((element) => element.addEventListener('change', this._onSkillSetAdjustment.bind(this)))
@@ -456,22 +462,6 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
     this.element.querySelector('.skill-development')?.addEventListener('click', (event) => {
       if (!event.detail || event.detail === 1) {
         this.document.developmentPhase(event.shiftKey)
-      }
-    })
-
-    this.element.querySelector('.clear_conditions')?.addEventListener('click', (event) => {
-      const disable = {}
-      for (const condition in this.document.system.conditions) {
-        if (this.document.system.conditions[condition].value === true) {
-          disable[`system.conditions.${condition}.value`] = false
-        }
-      }
-      if (Object.keys(disable).length > 0) {
-        this.actor.update(disable)
-      }
-      const effects = this.document.effects.map(effect => effect.id)
-      if (effects.length > 0) {
-        this.document.deleteEmbeddedDocuments('ActiveEffect', effects)
       }
     })
 
@@ -787,6 +777,41 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
   }
 
   /**
+   * Clear all conditions
+   * @param {ClickEvent} event
+   */
+  _onClearConditions (event) {
+    const disable = {}
+    for (const condition in this.document.system.conditions) {
+      if (this.document.system.conditions[condition].value === true) {
+        disable[`system.conditions.${condition}.value`] = false
+      }
+    }
+    if (Object.keys(disable).length > 0) {
+      this.actor.update(disable)
+    }
+    const effects = this.document.effects.map(effect => effect.id)
+    if (effects.length > 0) {
+      this.document.deleteEmbeddedDocuments('ActiveEffect', effects)
+    }
+  }
+
+  /**
+   * Toggle development flag
+   * @param {ClickEvent} event
+   */
+  async _onDevelopmentFlag (event) {
+    event.preventDefault()
+    const itemUuid = event.target.closest('.item').dataset.itemUuid
+    const document = await fromUuid(itemUuid)
+    if (document) {
+      document.update({
+        'system.flags.developement': !document.system.flags.developement
+      })
+    }
+  }
+
+  /**
    * Toggle item property
    * @param {ClickEvent} event
    */
@@ -868,7 +893,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
           let div = li.querySelector('.html-element-toggled')
           if (!div) {
             div = document.createElement('div')
-            div.style.flexBasis = '100%'
+            div.classList.add('item-summary')
             await CoC7Utilities.setItemSummaryHtml(div, item)
             li.append(div)
           }
@@ -1005,9 +1030,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
   async _onItemDelete (event) {
     this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const itemUuid = event.target.closest('.item').dataset.itemUuid
-    fromUuid(itemUuid).then(item => {
-      item.delete()
-    })
+    ;(await fromUuid(itemUuid))?.delete()
   }
 
   /**

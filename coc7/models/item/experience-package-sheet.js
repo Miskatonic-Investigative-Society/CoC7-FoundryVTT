@@ -93,12 +93,12 @@ export default class CoC7ModelsItemExperiencePackageSheet extends CoC7ModelsItem
         break
       case 'details':
         context._properties = []
-        for (const [key, value] of context.document.system.schema.getField('properties').entries()) {
+        for (const [value, field] of context.document.system.schema.getField('properties').entries()) {
           context._properties.push({
-            id: key,
-            name: value.label,
-            tooltip: value.hint,
-            isEnabled: context.document.system.properties[key] === true
+            value,
+            label: field.label,
+            tooltip: field.hint,
+            isEnabled: context.document.system.properties[value] === true
           })
         }
         break
@@ -188,7 +188,7 @@ export default class CoC7ModelsItemExperiencePackageSheet extends CoC7ModelsItem
   async _onItemDrop (event) {
     const group = event.target.closest('fieldset[data-group]')
     const source = (group ? 'system.groups.' + group.dataset.group : 'system')
-    this._onItemDropEvent(event, source, ['skill'])
+    this._onItemDropEvent(event, source, ['skill'], ['system'])
   }
 
   /**

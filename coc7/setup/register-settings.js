@@ -44,7 +44,7 @@ export default function () {
     choices: () => Object.entries(ERAS).reduce((c, e) => {
       c.push({
         value: e[0],
-        label: game.i18n.localize(e[1].name)
+        label: game.i18n.localize(e[1].label)
       })
       return c
     }, []).sort(CoC7Utilities.sortByLabelKey).reduce((c, e) => {
@@ -560,7 +560,7 @@ export default function () {
     default: ''
   })
   game.settings.register(FOLDER_ID, 'InvestigatorWizardQuantity', {
-    name: 'Number of investigators a single user without create actor rights can own',
+    name: 'Now a toggle but kept a number for backwards compatibility. Can users without create actor rights use the Investigator Wizard',
     scope: 'world',
     config: false,
     type: Number,

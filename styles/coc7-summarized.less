@@ -1,4 +1,4 @@
-.application.coc7.sheet.investigator-summarized {
+.application.investigator-summarized {
   section.window-content {
     overflow: hidden;
 
@@ -66,7 +66,7 @@
               padding: 0 5px;
               border-radius: 5px;
               column-gap: 3px;
-              background: rgba(0, 0, 0, 0.05);
+              background: var(--nav-bg-color);
               font-family: var(--investigator-sheet-secondary-font);
 
               .detail-value {
@@ -119,7 +119,7 @@
 
         &.flexrow {
           display: grid;
-          grid-template-columns: 1rem auto 1.5rem 0.7rem;
+          grid-template-columns: 1rem auto 1rem 14px;
           border-bottom: 1px solid;
         }
 
@@ -165,7 +165,7 @@
 
           &.flexrow {
             display: grid;
-            grid-template-columns: 1rem auto 1.5rem 2rem;
+            grid-template-columns: 1rem auto 1.5rem 40px;
             border-bottom: 1px solid;
           }
 
@@ -193,9 +193,18 @@
             color: var(--color-labels);
           }
 
-          .item-controls .item-control {
-            height: @rem17px;
-            line-height: @rem18px;
+          .item-controls {
+            justify-content: flex-end;
+
+            .ammo .property {
+              margin: 0;
+              font-size: var(--font-size-8);
+            }
+
+            .item-control {
+              height: @rem17px;
+              line-height: @rem18px;
+            }
           }
         }
       }
@@ -207,8 +216,8 @@
   }
 }
 
-body.theme-dark .application.coc7.sheet.investigator-summarized,
-.themed.theme-dark.application.coc7.sheet.investigator-summarized {
+body.theme-dark .application.investigator-summarized,
+.themed.theme-dark.application.investigator-summarized {
   section.window-content div.npc .character-details.character-blocks {
     .characteristics-block .primary-attributes .characteristics .char-box .characteristic-name {
       background: var(--color-tint-light);

@@ -1286,7 +1286,6 @@
   "CoC7.InvestigatorWizard.IntroductionKeeper": "Your world is set to the \"{era}\" era this can be changed under settings or on the next page.",
   "CoC7.InvestigatorWizard.ChangingEraDelay": "Changing era please wait",
   "CoC7.InvestigatorWizard.PlayerEnabled": "Allow players without actor creation permission to create investigators",
-  "CoC7.InvestigatorWizard.PlayerQuantity": "How many investigators can one player have ownership of?",
   "CoC7.InvestigatorWizard.OtherPlayerOwnership": "Default permission level for players that did not create this investigator",
   "CoC7.InvestigatorWizard.AllowRerolls": "Allow characteristics to be rerolled",
   "CoC7.InvestigatorWizard.UseSetupMethod": "Use method from setup item",

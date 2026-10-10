@@ -208,7 +208,7 @@ export default class CoC7Utilities {
     new foundry.applications.api.DialogV2({
       id: 'CoC7RestTargets',
       window: { title: 'CoC7.dreaming' },
-      classes: ['coc7', 'dialog'],
+      classes: ['coc7-sheet'],
       content: contents.join('\n'),
       buttons: [{
         action: 'start',
@@ -420,6 +420,10 @@ export default class CoC7Utilities {
         const folder = await fromUuid(dataList.uuid)
         if (!folder) return []
         return folder.contents.filter(doc => doc.documentName === entityType)
+      } else if (dataList.type === 'Compendium') {
+        const compendium = await game.packs.get(dataList.collection)?.getDocuments()
+        if (!compendium) return []
+        return compendium.filter(doc => doc.documentName === entityType)
       } else if (dataList.type === entityType) {
         const item = await fromUuid(dataList.uuid)
         if (!item) return []
@@ -467,35 +471,6 @@ export default class CoC7Utilities {
   }
 
   /**
-   * Delete Embedded Document from an Item
-   * @param {Document|object} document
-   * @param {string} documentId
-   * @returns {Promise<undefined|Document>}
-   */
-  static async deleteEmbeddedItem (document, documentId) {
-    const updates = {}
-    const itemDocuments = foundry.utils.duplicate(document.system.itemDocuments)
-    const offset = itemDocuments.findIndex(d => d._id === documentId)
-    if (offset === -1) {
-      const item = (await document.system.items()).find(d => d._id === documentId)
-      if (!item) {
-        throw new Error('Unable to find embedded document')
-      }
-      const id = item.flags.CoC7.cocidFlag.id
-      const offset = document.system.itemKeys.findIndex(k => k === id)
-      if (offset === -1) {
-        throw new Error('Unable to find embedded document')
-      }
-      updates['system.itemKeys'] = foundry.utils.duplicate(document.system.itemKeys)
-      updates['system.itemKeys'].splice(offset, 1)
-    } else {
-      updates['system.itemDocuments'] = itemDocuments
-      updates['system.itemDocuments'].splice(offset, 1)
-    }
-    return document.update(updates)
-  }
-
-  /**
    * Edit Embedded Document from an Item
    * @param {Document|object} document
    * @param {string} documentId
@@ -525,20 +500,6 @@ export default class CoC7Utilities {
       updates['system.itemDocuments'][offset] = foundry.utils.mergeObject(updates['system.itemDocuments'][offset], submitData)
     }
     return document.update(updates)
-  }
-
-  /**
-   * Open Embedded Document from an Item
-   * @param {Document|object} document
-   * @param {string} documentId
-   */
-  static async openEmbeddedItem (document, documentId) {
-    const itemData = (await document.system.items()).find(d => d._id === documentId)
-    if (itemData) {
-      const Cls = CONFIG.Item.documentClass
-      const item = new Cls(itemData, { parent: document })
-      item.sheet.render({ force: true })
-    }
   }
 
   /**
@@ -893,22 +854,21 @@ export default class CoC7Utilities {
    * Add Item summary to HTML Element
    * @param {HtmlElement} div
    * @param {object|Document} item
-   * @param {null|Document} actor
    */
-  static async setItemSummaryHtml (div, item, actor = null) {
+  static async setItemSummaryHtml (div, item) {
     const chatData = await CONFIG.Item.documentClass.getChatData(item)
     if (chatData.labels.length) {
       const labels = document.createElement('div')
       labels.classList.add('item-labels', 'flexrow')
-      for (const label of chatData.labels) {
+      for (const option of chatData.labels) {
         const element = document.createElement('div')
         element.classList.add('item-label', 'flexrow')
         const labelElement = document.createElement('label')
-        const labelText = document.createTextNode(label.name + ':')
+        const labelText = document.createTextNode(option.label + ':')
         labelElement.appendChild(labelText)
         element.appendChild(labelElement)
         const valueElement = document.createElement('div')
-        const valueText = document.createTextNode(label.value)
+        const valueText = document.createTextNode(option.value)
         valueElement.appendChild(valueText)
         element.appendChild(valueElement)
         labels.appendChild(element)
@@ -917,24 +877,20 @@ export default class CoC7Utilities {
     }
     if (chatData.description.value.length) {
       const element = document.createElement('div')
-      element.classList.add('coc7-formatted-text')
       element.innerHTML = chatData.description.value
       div.appendChild(element)
     }
     if (chatData.description.special.length) {
       const element = document.createElement('div')
-      element.classList.add('coc7-formatted-text')
       element.innerHTML = chatData.description.special
       div.appendChild(element)
     }
     if (chatData.properties.length) {
       const properties = document.createElement('div')
-      properties.classList.add('properties-list', 'item-details', 'flexrow')
+      properties.classList.add('properties-list', 'item-details')
       for (const property of chatData.properties) {
         const element = document.createElement('div')
         element.classList.add('property')
-        element.style.flex = 'none'
-        element.style.padding = '0.125rem'
         const elementText = document.createTextNode(property)
         element.appendChild(elementText)
         properties.appendChild(element)
@@ -1105,16 +1061,16 @@ export default class CoC7Utilities {
   }
 
   /**
-   * Sort by sort, then normalized name fields
+   * Sort by sort, then normalized label fields
    * @param {object} a
    * @param {object} b
    * @returns {int}
    */
-  static sortBySortThenNameKey (a, b) {
+  static sortBySortThenLabelKey (a, b) {
     if (b.sort === a.sort) {
-      return a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+      return a.label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
         .localeCompare(
-          b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+          b.label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
           game.i18n.lang
         )
     }

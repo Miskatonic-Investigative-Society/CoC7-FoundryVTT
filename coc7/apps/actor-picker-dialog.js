@@ -13,7 +13,7 @@ export default class CoC7ActorPickerDialog extends foundry.applications.api.Hand
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       title: 'CoC7.PickWhichActorTitle',
       contentClasses: [

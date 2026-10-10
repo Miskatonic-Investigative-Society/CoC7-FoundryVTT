@@ -6,7 +6,7 @@ export default class CoC7RollDialog extends foundry.applications.api.DialogV2 {
   /**
    * Show User a roll dialog
    * @param {object} options
-   * @returns {object}
+   * @returns {object|undefined}
    */
   static async create (options = {}) {
     const data = {
@@ -17,20 +17,20 @@ export default class CoC7RollDialog extends foundry.applications.api.DialogV2 {
       difficulty: CoC7DicePool.difficultyLevel,
       difficultyTypes: [
         {
-          key: CoC7DicePool.difficultyLevel.unknown,
-          val: 'CoC7.RollDifficultyUnknownName'
+          value: CoC7DicePool.difficultyLevel.unknown,
+          label: 'CoC7.RollDifficultyUnknownName'
         },
         {
-          key: CoC7DicePool.difficultyLevel.regular,
-          val: 'CoC7.RollDifficultyRegular'
+          value: CoC7DicePool.difficultyLevel.regular,
+          label: 'CoC7.RollDifficultyRegular'
         },
         {
-          key: CoC7DicePool.difficultyLevel.hard,
-          val: 'CoC7.RollDifficultyHard'
+          value: CoC7DicePool.difficultyLevel.hard,
+          label: 'CoC7.RollDifficultyHard'
         },
         {
-          key: CoC7DicePool.difficultyLevel.extreme,
-          val: 'CoC7.RollDifficultyExtreme'
+          value: CoC7DicePool.difficultyLevel.extreme,
+          label: 'CoC7.RollDifficultyExtreme'
         }
       ],
       hideDifficulty: options.hideDifficulty === true,
@@ -48,15 +48,14 @@ export default class CoC7RollDialog extends foundry.applications.api.DialogV2 {
         threshold: options.threshold
       }
     }
-    await this.prompt({
-      classes: ['coc7', 'dialog', 'bonus-selection'],
+    const result = await this.prompt({
+      classes: ['coc7-sheet', 'bonus-selection'],
       window: {
         title: options.displayName ? game.i18n.format('CoC7.BonusSelectionWindowNamed', { name: options.displayName }) : game.i18n.localize('CoC7.BonusSelectionWindow')
       },
       position: {
         width: 610
       },
-      rejectClose: true,
       content: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/apps/bonus.hbs', data),
       render: (event, dialog) => {
         dialog.element.querySelector('select[name=cardType]')?.addEventListener('change', (event) => {
@@ -96,6 +95,9 @@ export default class CoC7RollDialog extends foundry.applications.api.DialogV2 {
         }
       }
     })
+    if (!result) {
+      return
+    }
     return data.options
   }
 

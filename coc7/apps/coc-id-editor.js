@@ -14,7 +14,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
   }
 
   static DEFAULT_OPTIONS = {
-    classes: ['coc7', 'dialog', 'coc-id-editor'],
+    classes: ['coc7-sheet', 'coc-id-editor'],
     tag: 'form',
     window: {
       contentClasses: [
@@ -56,23 +56,25 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
     context.priority = cocidFlag.priority || 0
 
     context._eras = []
-    for (const [key, era] of Object.entries(ERAS)) {
+    for (const [value, era] of Object.entries(ERAS)) {
       context._eras.push({
-        id: key,
-        name: game.i18n.localize(era.name),
-        isEnabled: (cocidFlag.eras ?? {})[key] === true
+        value,
+        label: game.i18n.localize(era.label),
+        icon: era.icon,
+        isEnabled: (cocidFlag.eras ?? {})[value] === true
       })
     }
-    context._eras.sort(CoC7Utilities.sortByNameKey)
+    context._eras.sort(CoC7Utilities.sortByLabelKey)
+    context.useEraIcons = game.settings.get(FOLDER_ID, 'sheetEraIcons')
 
     const CoCIDKeys = Object.assign(foundry.utils.flattenObject(game.i18n._fallback.CoC7?.CoCIDFlag?.keys ?? {}), foundry.utils.flattenObject(game.i18n.translations.CoC7?.CoCIDFlag?.keys ?? {}))
     const prefix = new RegExp('^' + CoC7Utilities.quoteRegExp(context.idPrefix))
-    context.existingKeys = Object.keys(CoCIDKeys).reduce((obj, k) => {
-      if (k.match(prefix)) {
-        obj.push({ k, name: CoCIDKeys[k] })
+    context.existingKeys = Object.keys(CoCIDKeys).reduce((obj, value) => {
+      if (value.match(prefix)) {
+        obj.push({ value, label: CoCIDKeys[value] })
       }
       return obj
-    }, []).sort(CoC7Utilities.sortByNameKey)
+    }, []).sort(CoC7Utilities.sortByLabelKey)
 
     context.isSystemID = (typeof CoCIDKeys[context.id] !== 'undefined')
     const match = context.id.match(/^([^\\.]+)\.([^\\.]*)\.(.+)/)
@@ -92,14 +94,14 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
       context.warnDuplicateCompendiumPriority = response.warnDuplicatePriority
       this.#showLoading = false
 
-      for (const [key, era] of Object.entries(usedEras)) {
+      for (const [value, field] of Object.entries(usedEras)) {
         context.usedEras.push({
-          id: key,
-          icon: era.icon,
-          name: game.i18n.localize(era.name)
+          value,
+          icon: field.icon,
+          label: game.i18n.localize(field.label)
         })
       }
-      context.usedEras.sort(CoC7Utilities.sortByNameKey)
+      context.usedEras.sort(CoC7Utilities.sortByLabelKey)
       context.compendiumDocumentInfo = context.compendiumDocumentInfo.reduce((c, o) => {
         const sortKey = []
         for (const s of context.usedEras) {
@@ -257,7 +259,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
       const eras = (d.flags[FOLDER_ID].cocidFlag.eras ? Object.entries(d.flags[FOLDER_ID].cocidFlag.eras).filter(e => e[1]).map(e => e[0]).sort() : [])
       for (const era of eras) {
         usedEras[era] = {
-          name: ERAS[era]?.name ?? '?',
+          label: ERAS[era]?.label ?? '?',
           icon: ERAS[era]?.icon ?? 'fa-solid fa-info-circle'
         }
       }

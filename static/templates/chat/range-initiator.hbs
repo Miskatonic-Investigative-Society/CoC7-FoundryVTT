@@ -12,11 +12,11 @@
   </div>
   {{#if (or enrichedItemDescriptionValue hasWeaponSpecial)}}
     <div class="coc7-chat-description flexcol">
-      <div class="coc7-formatted-text">
+      <div class="overflowable">
         {{{enrichedItemDescriptionValue}}}
       </div>
       {{#if hasWeaponSpecial}}
-        <div class="coc7-formatted-text">
+        <div class="overflowable">
           <div class="coc7-tags">
             <span class="tag">{{localize 'CoC7.WeaponSpecial'}}</span>
           </div>
@@ -69,7 +69,7 @@
 {{#each targets as |target offset|}}
   <div class="ranged-targets-option{{#if target.active}} active{{/if}}" data-offset="{{offset}}">
     {{#if target.uuid}}
-      <div class="coc7-target-name">
+      <div class="coc7-chat-content">
         <label>{{localize 'CoC7.Target'}}: {{target.name}}{{#if target.roundedDistance}} ({{target.roundedDistance}}{{#if target.unit}} {{target.unit}}){{/if}}{{/if}}</label>
       </div>
     {{/if}}
@@ -85,7 +85,7 @@
           <label>{{localize 'CoC7.BonusDice'}}</label>
           <div class="coc7-card-buttons coc7-half-buttons flexrow">
             {{#each ../poolBonus as |poolModifier|}}
-              <button class="keeper-only-control{{#if (contains poolModifier.key target.poolKeys)}} switched-on{{/if}}{{#if (contains poolModifier.key target.poolDisabled)}} talent-off{{/if}}" data-action="toggleTargetKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
+              <button class="keeper-only-control{{#if (contains poolModifier.value target.poolKeys)}} switched-on{{/if}}{{#if (contains poolModifier.value target.poolDisabled)}} talent-off{{/if}}" data-action="toggleTargetKey" data-set="{{poolModifier.value}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.label}}</button>
             {{/each}}
           </div>
         {{/if}}
@@ -93,7 +93,7 @@
           <label>{{localize 'CoC7.PenaltyDice'}}</label>
           <div class="coc7-card-buttons coc7-half-buttons flexrow">
             {{#each ../poolPenalty as |poolModifier|}}
-              <button class="keeper-only-control{{#if (contains poolModifier.key target.poolKeys)}} switched-on{{/if}}{{#if (contains poolModifier.key target.poolDisabled)}} talent-off{{/if}}" data-action="toggleTargetKey" data-set="{{poolModifier.key}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.name}}</button>
+              <button class="keeper-only-control{{#if (contains poolModifier.value target.poolKeys)}} switched-on{{/if}}{{#if (contains poolModifier.value target.poolDisabled)}} talent-off{{/if}}" data-action="toggleTargetKey" data-set="{{poolModifier.value}}" data-tooltip="{{poolModifier.tooltip}}">{{poolModifier.label}}</button>
             {{/each}}
           </div>
         {{/if}}

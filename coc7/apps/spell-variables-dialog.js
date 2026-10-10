@@ -12,7 +12,7 @@ export default class CoC7SpellVariablesDialog extends foundry.applications.api.H
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog', 'spell-variables'],
+    classes: ['coc7-sheet', 'spell-variables'],
     window: {
       title: 'CoC7.SpellCosts',
       contentClasses: [

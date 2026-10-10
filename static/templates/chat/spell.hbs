@@ -3,24 +3,24 @@
     <label>{{localize 'CoC7.SpellCastingTime'}}: {{castingTime}}</label>
   {{/if}}
   {{#if automatedLosses}}
-    <div class="coc7-book-gains flexcol">
-      <div class="coc7-spell-gains-header">
+    <div class="coc7-table flexcol">
+      <div class="coc7-header">
         <div>{{localize 'CoC7.Spell.Cost.CasterCost'}}</div>
       </div>
       {{#each automatedLosses as |loss key|}}
-        <div class="coc7-book-gains-row">
+        <div class="coc7-row">
           <div>{{loss.name}}</div>
           <div>{{loss.value}}</div>
         </div>
       {{/each}}
     </div>
     {{#if additionalInformation}}
-      <div class="coc7-book-gains flexcol">
-        <div class="coc7-spell-gains-header">
+      <div class="coc7-table flexcol">
+        <div class="coc7-header">
           <div>{{localize 'CoC7.Spell.Cost.AdditionalInformation'}}</div>
         </div>
         {{#each additionalInformation as |loss|}}
-          <div class="coc7-spell-gains-row">
+          <div class="coc7-row">
             <div>{{loss}}</div>
           </div>
         {{/each}}
@@ -40,18 +40,18 @@
 
 {{#each casterGroups as |additionalCaster index|}}
   {{#if additionalCaster.contents.length}}
-    <div style="margin-top: 0.5rem">
+    <div class="as-inherit-block">
       <div class="coc7-card-buttons flexrow">
         <button data-action="toggleBlock" data-offset="{{index}}">{{additionalCaster.label}}</button>
       </div>
-      <div class="coc7-chat-toggled coc7-formatted-text">
+      <div class="coc7-chat-toggled">
         {{#each additionalCaster.contents as |contents|}}
-          <div class="coc7-book-gains flexcol">
-            <div class="coc7-spell-gains-header">
+          <div class="coc7-table flexcol">
+            <div class="coc7-header">
               <div>{{contents.name}}</div>
             </div>
             {{#each contents.costs as |loss|}}
-              <div class="coc7-book-gains-row">
+              <div class="coc7-row">
                 <div>{{loss.name}}</div>
                 <div>{{loss.value}}</div>
               </div>
@@ -62,14 +62,16 @@
     </div>
   {{/if}}
 {{/each}}
-<div class="keeper-only-block" style="margin-top: 0.5rem">
+<div class="keeper-only-block">
   <div class="coc7-card-buttons flexrow">
     <button data-action="toggleBlock" data-offset="{{casterGroups.length}}">{{localize 'CoC7.Description'}}</button>
   </div>
-  <div class="coc7-chat-toggled coc7-formatted-text">
+  <div class="coc7-chat-toggled">
     {{{description}}}
   </div>
-  {{#each dice as |roll|}}
-    {{> (lookup .. 'diceTemplate') roll}}
-  {{/each}}
+  <div class="separator-top-large">
+    {{#each dice as |roll|}}
+      {{> (lookup .. 'diceTemplate') roll}}
+    {{/each}}
+  </div>
 </div>

@@ -87,7 +87,7 @@ export default class CoCID {
       era = game.settings.get(FOLDER_ID, 'worldEra')
     }
 
-    return game.i18n.format(ERAS[era]?.name ?? 'CoC7.CoCIDFlag.error.unknown-era', { era })
+    return game.i18n.format(ERAS[era]?.label ?? 'CoC7.CoCIDFlag.error.unknown-era', { era })
   }
 
   /**

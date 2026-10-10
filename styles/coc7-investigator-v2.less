@@ -1,5 +1,5 @@
-body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.investigator),
-.themed.theme-light.application.coc7.sheetV2:not(.investigator-summarized):not(.investigator) {
+body.theme-light .application.investigator-v2:not(.investigator-summarized):not(.investigator),
+.themed.theme-light.application.investigator-v2:not(.investigator-summarized):not(.investigator) {
   section.window-content {
     border-image: var(--main-sheet-bg);
     border-image-slice: 450 200 50 200 fill;
@@ -8,13 +8,16 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
   }
 }
 
-.application.coc7.sheetV2:not(.investigator-summarized):not(.investigator) {
+.application.investigator-v2:not(.investigator-summarized):not(.investigator) {
   --nav-height: 30px;
-  min-width: 688px;
-  min-height: 640px;
+
+  &:not(.minimized) {
+    min-width: 688px;
+    min-height: 640px;
+  }
 
   prose-mirror {
-    font-family: customSheetFont, 'Noto Sans';
+    font-family: customSheetFont, var(--coc7-font-sans-serif-secondary);
 
     &:hover,
     &:has(:focus) {
@@ -27,11 +30,15 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
     z-index: 3;
   }
 
+  header.window-header {
+    z-index: 2;
+  }
+
   section.window-content {
     padding: 0;
-    font-family: customSheetFont, 'Noto Sans';
+    font-family: customSheetFont, var(--coc7-font-sans-serif-secondary);
     color: var(--main-sheet-front-color);
-    font-size: 0.8rem;
+    font-size: var(--font-size-12);
 
     /* Allows the sheet body to expand to fit height */
     display: grid;
@@ -51,23 +58,28 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
       background-image: var(--main-sheet-image);
       background-repeat: no-repeat;
       z-index: 1;
+      background-position-y: var(--header-height);
     }
 
     .button {
       --button-border-color: #999;
       --button-size: @rem18px;
-      font-family: customSheetFont, 'Noto Sans';
+      font-family: customSheetFont, var(--coc7-font-sans-serif-secondary);
       color: var(--main-sheet-front-color);
     }
 
     .sheet-header {
       padding-bottom: @rem15px;
 
+      input {
+        box-shadow: none;
+      }
+
       .token-extras {
         position: absolute;
-        top: @rem1px;
+        top: calc(@rem1px + var(--header-height));
         right: @rem8px;
-        font-size: var(--font-size-24);
+        font-size: var(--font-size-22);
         gap: @rem4px;
         flex-direction: row-reverse;
 
@@ -148,18 +160,16 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
 
             .attribute-label {
               flex: 0 0 auto;
-
-              h2 {
-                font-family: customSheetFont, 'Noto Sans';
-                font-size: var(--font-size-12);
-                line-height: 1;
-                margin: 0;
-              }
+              font-family: customSheetFont, var(--coc7-font-sans-serif-secondary);
+              font-size: var(--font-size-11);
+              line-height: 1;
+              margin: 0;
+              font-weight: bold;
             }
 
             .attribute-value {
               flex: 0 0 auto;
-              font-size: var(--font-size-12);
+              font-size: var(--font-size-11);
               line-height: 1;
 
               &:has(input) {
@@ -168,6 +178,12 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
 
               input {
                 border: 0;
+                box-shadow: none;
+
+                &[readonly] {
+                  outline: 2px solid transparent;
+                  outline-offset: -2px;
+                }
               }
             }
           }
@@ -218,7 +234,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                 input {
                   text-align: center;
                   font-weight: bold;
-                  font-size: 1.3rem;
+                  font-size: var(--font-size-19);
                   border: 0;
                   color: var(--main-sheet-interactive-color);
                   background: transparent;
@@ -227,7 +243,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
 
               .half-score,
               .fifth-score {
-                font-size: 0.6rem;
+                font-size: var(--font-size-9);
                 justify-self: center; //
                 align-self: center; //
                 font-weight: bold;
@@ -252,19 +268,21 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
       border-bottom: 0;
       line-height: 2;
       margin: 0 @rem16px;
-      font-size: var(--font-size-16);
+      font-size: var(--font-size-15);
       justify-content: space-between;
       align-items: stretch;
       padding-left: 1rem;
+      background-color: transparent;
 
       a {
         font-family: var(--investigator-sheet-primary-font);
         text-transform: uppercase;
-        font-size: @rem18px;
+        font-size: var(--font-size-17);
         line-height: var(--nav-height);
         display: flex;
         align-items: center;
         color: var(--main-sheet-front-color);
+        flex: 0 1 auto;
 
         i,
         span {
@@ -331,6 +349,12 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
             font-weight: bold;
             background: transparent;
             border-radius: 0.25rem;
+            box-shadow: none;
+
+            &[readonly] {
+              outline: 2px solid transparent;
+              outline-offset: -2px;
+            }
 
             &.attribute-max:not(:read-only) {
               background-color: rgba(0, 0, 0, 0.1);
@@ -358,6 +382,12 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
           input.attribute-value {
             margin-bottom: 0.75rem;
             text-align: center;
+            box-shadow: none;
+
+            &[readonly] {
+              outline: 2px solid transparent;
+              outline-offset: -2px;
+            }
           }
         }
 
@@ -379,7 +409,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
             }
 
             .status {
-              font-size: 20px;
+              font-size: var(--font-size-19);
               line-height: 20px;
               color: grey;
 
@@ -413,7 +443,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
             }
 
             .status {
-              font-size: 20px;
+              font-size: var(--font-size-19);
               line-height: 20px;
               color: grey;
 
@@ -500,12 +530,13 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
           button {
             margin: 0 @rem4px;
             justify-content: center;
+            font-size: var(--font-size-10);
           }
         }
 
         .missing-attrib-warning {
           margin-top: @rem4px;
-          font-size: var(--font-size-20);
+          font-size: var(--font-size-18);
           font-weight: bold;
           color: red;
         }
@@ -544,7 +575,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                 margin: 0 @rem8px 0 0;
 
                 &.pulpCharacter {
-                  grid-template-columns: 1.875rem auto 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem;
+                  grid-template-columns: 2rem auto 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem;
                 }
 
                 .item-controls {
@@ -564,7 +595,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                 }
 
                 span {
-                  font-size: .8rem;
+                  font-size: var(--font-size-12);
                   height: 1rem;
                   line-height: 1rem;
                   margin: 0;
@@ -572,7 +603,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                 }
 
                 input {
-                  font-size: .8rem;
+                  font-size: var(--font-size-12);
                   height: 100%;
                   line-height: 1rem;
                   margin: 0;
@@ -602,22 +633,26 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                 margin: 8px 0;
 
                 .section-heading {
-                  font-size: 1rem;
-                  font-family: customSheetFont, 'Noto Sans';
+                  font-size: var(--font-size-15);
+                  font-family: customSheetFont, var(--coc7-font-sans-serif-secondary);
                   color: var(--main-sheet-front-color);
                   font-weight: bold;
                   text-transform: none;
+                  margin-bottom: 0;
+                  flex: 1;
                 }
               }
 
               .cash-assets {
                 .flex-col(@row-gap: @rem3px);
-                font-size: @rem13px;
+                font-size: var(--font-size-12);
 
                 .asset {
                   .flex-row();
 
                   input {
+                    flex: 1;
+
                     &:first-child {
                       flex: 2;
                     }
@@ -653,15 +688,19 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
             }
 
             .bio-section {
+              .flex-col(@row-gap: @rem4px);
+
               .section-header {
                 .flex-row(@col-gap: @rem13px);
 
                 .section-heading {
-                  font-family: customSheetFont, 'Noto Sans';
+                  font-family: customSheetFont, var(--coc7-font-sans-serif-secondary);
                   color: var(--main-sheet-front-color);
-                  font-size: @rem11px;
+                  font-size: var(--font-size-11);
                   font-weight: bold;
                   text-transform: none;
+                  flex: 1 0 auto;
+                  margin: 0;
                 }
               }
 
@@ -672,6 +711,26 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                 background: rgba(0, 0, 0, 0.05);
                 border: 1px solid var(--main-sheet-front-color);
                 border-radius: 4px;
+
+                .event {
+                  .flex-row(@col-gap: @rem4px);
+
+                  .title {
+                    flex: 1;
+                  }
+
+                  .values {
+                    flex: 0 0 @rem32px;
+                    text-align: center;
+
+                    input {
+                      text-align: center;
+                      border: 0;
+                      background-color: transparent;
+                      box-shadow: none;
+                    }
+                  }
+                }
               }
             }
           }
@@ -698,11 +757,12 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                     border: 2px groove #eeede0;
 
                     .section-heading {
-                      font-size: var(--font-size-13);
+                      font-size: var(--font-size-12);
                       color: var(--main-sheet-front-color);
-                      font-family: customSheetFont, 'Noto Sans';
+                      font-family: customSheetFont, var(--coc7-font-sans-serif-secondary);
                       font-weight: bold;
                       text-transform: none;
+                      margin: 0;
                     }
                   }
                 }
@@ -770,7 +830,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
               column-gap: 15px;
 
               li {
-                margin: @rem1px 0;
+                margin: 0;
 
                 &.specialization-header {
                   margin: @rem3px 0;
@@ -795,7 +855,10 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
               .section-heading {
                 color: white;
                 text-transform: none;
-                font-size: 22px;
+                font-size: var(--font-size-20);
+                margin: 0;
+                flex: 1;
+                font-variant: small-caps;
               }
             }
 
@@ -813,7 +876,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                 li.item {
                   display: grid;
                   border-bottom: 1px solid;
-                  grid-template-columns: @rem24px @rem32px 1fr @rem168px @rem44px @rem44px;
+                  grid-template-columns: @rem24px @rem32px 1fr @rem168px @rem54px @rem44px;
                   grid-template-rows: @rem32px 1fr;
                   grid-template-areas:
                     'expand image name range weaponControl itemControl'
@@ -823,7 +886,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                   .expand-arrow {
                     .flex-row(@justify: center; );
                     transition: rotate 0.2s ease-out;
-                    font-size: @rem18px;
+                    font-size: var(--font-size-17);
 
                     i {
                       &::before {
@@ -851,7 +914,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                     }
 
                     .alternative-skill {
-                      flex: 0 0 24px;
+                      flex: 0 0 auto;
                     }
                   }
 
@@ -864,23 +927,9 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                     }
                   }
 
-                  .weapon-controls {
-                    .flex-row(@col-gap: @rem5px);
-
-                    .tag {
-                      margin: 0;
-                      font-size: @rem13px;
-                      padding: @rem2px;
-                      line-height: 1;
-                    }
-
-                    a.reload-weapon {
-                      vertical-align: middle;
-                    }
-
-                    .ammo span.tag {
-                      width: @rem22px;
-                      text-align: center;
+                  .properties-list.item-details {
+                    .property.ammo {
+                      width: @rem32px;
                     }
                   }
                 }
@@ -903,7 +952,7 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
           }
 
           ul.effects-list {
-            font-size: var(--font-size-13);
+            font-size: var(--font-size-12);
 
             li {
               &.items-header {
@@ -915,9 +964,9 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
                 border: 2px groove #eeede0;
 
                 .section-heading {
-                  font-size: var(--font-size-13);
+                  font-size: var(--font-size-12);
                   color: var(--main-sheet-front-color);
-                  font-family: customSheetFont, 'Noto Sans';
+                  font-family: customSheetFont, var(--coc7-font-sans-serif-secondary);
                   font-weight: bold;
                   text-transform: none;
                 }
@@ -960,10 +1009,12 @@ body.theme-light .application.coc7.sheetV2:not(.investigator-summarized):not(.in
   }
 }
 
-body.theme-dark .application.coc7.sheetV2:not(.investigator-summarized):not(.investigator),
-.themed.theme-dark.application.coc7.sheetV2:not(.investigator-summarized):not(.investigator) {
+body.theme-dark .application.investigator-v2:not(.investigator-summarized):not(.investigator),
+.themed.theme-dark.application.investigator-v2:not(.investigator-summarized):not(.investigator) {
   section.window-content {
     color: var(--color-text-primary);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 
     .sheet-header {
       .infos {

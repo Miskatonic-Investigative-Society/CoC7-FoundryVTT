@@ -71,24 +71,24 @@ export default class CoC7ModelsItemSkillSheet extends CoC7ModelsItemGlobalSheet 
         context.canModifySpec = !((context.document.system.properties.firearm && context.document.system.specialization === game.i18n.localize('CoC7.FirearmSpecializationName')) || (context.document.system.properties.fighting && context.document.system.specialization === game.i18n.localize('CoC7.FightingSpecializationName')) || (context.document.system.properties.ranged && context.document.system.specialization === game.i18n.localize('CoC7.RangedSpecializationName')))
         context.hasNonCharacterOwner = (context.document.isEmbedded && context.document.actor?.type !== 'character')
         context._properties = []
-        for (const [key, value] of context.document.system.schema.getField('properties').entries()) {
+        for (const [value, field] of context.document.system.schema.getField('properties').entries()) {
           context._properties.push({
-            id: key,
-            name: value.label,
-            tooltip: value.hint,
-            isEnabled: context.document.system.properties[key] === true
+            value,
+            label: field.label,
+            tooltip: field.hint,
+            isEnabled: context.document.system.properties[value] === true
           })
         }
         context._eras = []
-        for (const [key, era] of Object.entries(ERAS)) {
+        for (const [value, era] of Object.entries(ERAS)) {
           context._eras.push({
-            id: key,
-            name: game.i18n.localize(era.name),
+            value,
+            label: game.i18n.localize(era.label),
             icon: era.icon,
-            isEnabled: (context.document.flags[FOLDER_ID]?.cocidFlag?.eras ?? {})[key] === true
+            isEnabled: (context.document.flags[FOLDER_ID]?.cocidFlag?.eras ?? {})[value] === true
           })
         }
-        context._eras.sort(CoC7Utilities.sortByNameKey)
+        context._eras.sort(CoC7Utilities.sortByLabelKey)
         context.useEraIcons = game.settings.get(FOLDER_ID, 'sheetEraIcons')
         break
       case 'description':
@@ -111,6 +111,18 @@ export default class CoC7ModelsItemSkillSheet extends CoC7ModelsItemGlobalSheet 
         break
     }
     return context
+  }
+
+  /**
+   * Scroll selected element into view
+   * @param {ApplicationRenderContext} context
+   * @param {RenderOptions} options
+   */
+  async _onFirstRender (context, options) {
+    if (!context.document.isEmbedded) {
+      options.position.height = 545
+    }
+    await super._onFirstRender(context, options)
   }
 
   /**

@@ -12,7 +12,7 @@ export default class CoC7ExperiencePackageDialog extends foundry.applications.ap
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       title: 'CoC7.ExperiencePackageDialogTitle',
       contentClasses: [
@@ -217,7 +217,8 @@ export default class CoC7ExperiencePackageDialog extends foundry.applications.ap
         isSanityLoss: system.properties.sanityLoss,
         isSanitySame: system.properties.sanitySame,
         resolve,
-        rolled: false,
+        rolledSan: false,
+        rolledCthulhu: false,
         sanityLoss: system.sanityLoss,
         spells: []
       }).render({ force: true })
@@ -233,24 +234,24 @@ export default class CoC7ExperiencePackageDialog extends foundry.applications.ap
    */
   static async #onSubmit (event, form, formData) {
     if (event.submitter.dataset.action === 'roll') {
-      if (this.coc7Config.rolled === false) {
-        let formula = false
+      if (this.coc7Config.rolledCthulhu === false && this.coc7Config.rolledSan === false) {
         if (this.coc7Config.isCthulhuGain) {
-          formula = this.coc7Config.cthulhuGain
-        } else if (this.coc7Config.isSanityLoss) {
-          formula = this.coc7Config.sanityLoss
+          this.coc7Config.rolledCthulhu = (await new Roll(this.coc7Config.cthulhuGain).evaluate()).total
+          if (this.coc7Config.isSanitySame) {
+            this.coc7Config.rolledSan = this.coc7Config.rolledCthulhu
+          }
         }
-        if (formula !== false) {
-          this.coc7Config.rolled = (await new Roll(formula).evaluate()).total
-          this.render({ force: true })
+        if (this.coc7Config.isSanitySame && this.coc7Config.rolledSan === false) {
+          this.coc7Config.rolledSan = (await new Roll(this.coc7Config.sanityLoss).evaluate()).total
         }
+        this.render({ force: true })
         return
       }
     }
 
     const output = {
-      'i.skill.cthulhu-mythos': (this.coc7Config.rolled && this.coc7Config.isCthulhuGain ? this.coc7Config.rolled : 0),
-      SAN: (this.coc7Config.rolled && (this.coc7Config.isSanitySame || this.coc7Config.isSanityLoss) ? this.coc7Config.rolled : 0),
+      'i.skill.cthulhu-mythos': (this.coc7Config.rolledCthulhu !== false && this.coc7Config.isCthulhuGain ? this.coc7Config.rolledCthulhu : 0),
+      SAN: (this.coc7Config.rolledSan !== false && (this.coc7Config.isSanitySame || this.coc7Config.isSanityLoss) ? this.coc7Config.rolledSan : 0),
       items: [],
       backstory: [],
       encounters: []
@@ -314,7 +315,9 @@ export default class CoC7ExperiencePackageDialog extends foundry.applications.ap
         context.cthulhuGain = this.coc7Config.cthulhuGain
         context.isCthulhuGain = this.coc7Config.isCthulhuGain
         context.isSanityLoss = this.coc7Config.isSanityLoss
-        context.rolled = this.coc7Config.rolled
+        context.isSanitySame = this.coc7Config.isSanitySame
+        context.rolledSan = this.coc7Config.rolledSan
+        context.rolledCthulhu = this.coc7Config.rolledCthulhu
         context.sanityLoss = this.coc7Config.sanityLoss
         context.spells = this.coc7Config.spells
         break

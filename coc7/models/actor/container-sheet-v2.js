@@ -3,7 +3,7 @@ import CoC7ModelsActorGlobalSheet from './global-sheet.js'
 
 export default class CoC7ModelsActorContainerSheetV2 extends CoC7ModelsActorGlobalSheet {
   static DEFAULT_OPTIONS = {
-    classes: ['dialog', 'item', 'container'],
+    classes: ['coc7-sheet', 'npc'],
     position: {
       width: 672,
       height: 765

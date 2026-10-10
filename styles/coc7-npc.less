@@ -1,14 +1,120 @@
-.application.coc7.sheet.npc {
+.application.sheet.npc {
   overflow: visible;
-  font-size: @rem16px;
+  font-size: var(--font-size-15);
+  border-radius: 6px 6px 0 6px;
+  &:not(:has(.tab-group-notes.visible-notes)) {
+    border-radius: 6px;
+  }
 
   section.window-content {
+    border-radius: 0 0 6px 6px;
+    max-height: calc(90vh - 2rem);
+    font-family: var(--investigator-sheet-secondary-font);
+    background-image: var(--background-sheet);
+
     &:has(.tab-group-notes.visible-notes) {
       overflow: visible;
+      border-radius: 6px 6px 0 6px;
     }
-    max-height: calc(90vh - 2rem);
-    background-position: top right;
-    font-family: var(--investigator-sheet-secondary-font);
+
+    .tab-group-header {
+      .flex-row();
+      background: var(--npc-color-header-background);
+      border: 2px groove var(--npc-color-groove);
+      padding: @rem2px @rem6px;
+      cursor: pointer;
+
+      div {
+        flex: 1;
+
+        &.tab-group-title {
+          flex: 2;
+          font-family: var(--investigator-sheet-primary-font);
+          font-size: var(--font-size-16);
+          text-align: center;
+        }
+
+        &.item-controls {
+          justify-content: flex-end;
+        }
+      }
+    }
+
+    .tab-group-tab {
+      .inventory-tab {
+        margin: 0 @rem4px;
+
+        .tab-group-header {
+          .tab-group-title {
+            font-size: var(--font-size-15);
+          }
+        }
+      }
+    }
+
+    .item-list,
+    .skill-list {
+      gap: @rem8px;
+
+      .item {
+        .npc-specialization {
+          color: var(--color-labels);
+          font-size: var(--font-size-10);
+          flex: 0 0 auto;
+          margin-right: @rem3px;
+        }
+
+        .skill-name {
+          overflow: hidden;
+        }
+
+        .detail-value {
+          flex: 0 0 @rem25px;
+          text-align: right;
+        }
+
+        .detail-value,
+        .skill-name {
+          padding: 0 2px;
+          border: none;
+          background: transparent;
+        }
+
+        span.pc {
+          flex: 0 0 auto;
+        }
+
+        .item-controls {
+          flex: 0 0 auto;
+          font-size: var(--font-size-12);
+        }
+
+        input:read-only {
+          cursor: default;
+        }
+      }
+    }
+
+    .item-list {
+      row-gap: @rem4px;
+      margin-bottom: @rem8px;
+
+      .item {
+        gap: @rem8px;
+      }
+    }
+
+    .skill-list {
+      font-size: var(--font-size-15);
+      padding-top: @rem4px;
+      row-gap: @rem2px;
+
+      .item {
+        flex: 0 0 calc(33% - @rem4px);
+        flex-wrap: wrap;
+
+      }
+    }
 
     div.npc {
       gap: @rem6px;
@@ -29,6 +135,10 @@
         }
       }
 
+      input {
+        box-shadow: none;
+      }
+
       /* ---------------------------------------- */
       /*  Name, History, etc                      */
       /* ---------------------------------------- */
@@ -40,7 +150,7 @@
 
           .title {
             font-family: var(--investigator-sheet-primary-font);
-            font-size: @rem15px;
+            font-size: var(--font-size-15);
             text-transform: uppercase;
             line-height: @rem17px;
           }
@@ -50,7 +160,7 @@
             background: transparent;
             border: none;
             font-family: var(--investigator-sheet-secondary-font);
-            font-size: @rem13px;
+            font-size: var(--font-size-13);
             color: var(--color-labels);
             height: @rem17px;
             line-height: @rem17px;
@@ -123,7 +233,7 @@
             div.roll-san,
             div.characteristic-name {
               font-family: var(--investigator-sheet-primary-font);
-              font-size: @rem15px;
+              font-size: var(--font-size-15);
               text-transform: uppercase;
               line-height: @rem17px;
             }
@@ -154,7 +264,7 @@
               background: transparent;
               border: none;
               font-family: var(--investigator-sheet-secondary-font);
-              font-size: @rem13px;
+              font-size: var(--font-size-13);
               color: var(--color-labels);
               height: @rem17px;
               line-height: @rem17px;
@@ -204,66 +314,28 @@
 
       .tab-group-notes {
         position: absolute;
-        top: 0px;
+        top: var(--header-height);
         right: -460px;
         width: 460px;
-        height: calc(100% - 1px);
-        overflow: scroll;
+        height: calc(100% - var(--header-height));
         background-image: var(--background-sheet);
-        background-position: top right;
-        transform: scaleX(-1);
+        background-position: -648px calc(-1 * var(--header-height));
         transition: right 0.5s;
         overflow: hidden;
 
         &.slide-out-notes {
-          right: 0;
+          right: 6px;
         }
 
         &.sliding-out-notes {
           z-index: -1;
         }
 
-        .tab-group-header,
-        .tab-group-tab {
-          transform: scaleX(-1);
-        }
-
         .tab-group-tab {
           padding: @rem16px;
-        }
-      }
 
-      .tab-group-header {
-        .flex-row();
-        background: rgba(0, 0, 0, 0.15);
-        border: 2px groove #eeede0;
-        padding: @rem2px @rem6px;
-        cursor: pointer;
-
-        div {
-          flex: 1;
-
-          &.tab-group-title {
-            flex: 2;
-            font-family: var(--investigator-sheet-primary-font);
-            font-size: @rem16px;
-            text-align: center;
-          }
-
-          &.item-controls {
-            justify-content: flex-end;
-          }
-        }
-      }
-
-      .tab-group-tab {
-        .inventory-tab {
-          margin: 0 @rem4px;
-
-          .tab-group-header {
-            .tab-group-title {
-              font-size: @rem15px;
-            }
+          prose-mirror {
+            flex: 1;
           }
         }
       }
@@ -273,79 +345,11 @@
         background: transparent;
         border: none;
         font-family: var(--investigator-sheet-secondary-font);
-        font-size: @rem13px;
+        font-size: var(--font-size-13);
         color: var(--color-labels);
         height: @rem17px;
         line-height: @rem17px;
         padding: @rem2px @rem3px 0;
-      }
-
-      .item-list,
-      .skill-list {
-        gap: @rem8px;
-
-        .item {
-          .npc-specialization {
-            color: #a42;
-            font-size: @rem10px;
-            flex: 0 0 auto;
-            margin-right: @rem3px;
-          }
-
-          .skill-name {
-            overflow: hidden;
-          }
-
-          .detail-value {
-            flex: 0 0 @rem25px;
-            text-align: right;
-          }
-
-          .detail-value,
-          .skill-name {
-            padding: 0 2px;
-            border: none;
-            background: transparent;
-          }
-
-          span.pc {
-            flex: 0 0 auto;
-          }
-
-          .item-controls {
-            flex: 0 0 auto;
-            font-size: @rem12px;
-          }
-
-          input:read-only {
-            cursor: default;
-          }
-        }
-      }
-
-      .item-list {
-        row-gap: @rem4px;
-        margin-bottom: @rem8px;
-
-        .item {
-          gap: @rem8px;
-
-          .coc7-formatted-text {
-            font-size: var(--font-size-14);
-          }
-        }
-      }
-
-      .skill-list {
-        font-size: @rem15px;
-        padding-top: @rem4px;
-        row-gap: @rem2px;
-
-        .item {
-          flex: 0 0 calc(33% - @rem4px);
-          flex-wrap: wrap;
-
-        }
       }
 
       .use-luck-list {
@@ -365,20 +369,20 @@
 
       div.attacks-per-round {
         font-family: var(--investigator-sheet-primary-font);
-        font-size: @rem15px;
+        font-size: var(--font-size-15);
         text-transform: uppercase;
         line-height: @rem17px;
         flex: 0 0 auto;
       }
 
       .combat-row {
-        font-size: @rem15px;
-        border-top: 1px groove #ccc;
-        border-left: 1px groove #ccc;
+        font-size: var(--font-size-15);
+        border-top: 1px groove var(--npc-color-groove);
+        border-left: 1px groove var(--npc-color-groove);
         align-items: stretch;
 
         &:last-of-type {
-          border-bottom: 1px groove #ccc;
+          border-bottom: 1px groove var(--npc-color-groove);
         }
 
         &.combat-title {
@@ -389,7 +393,7 @@
         }
 
         .combat-value {
-          border-right: 1px groove #ccc;
+          border-right: 1px groove var(--npc-color-groove);
           padding: @rem2px 0;
           line-height: 1;
 
@@ -397,7 +401,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: @rem13px;
+            font-size: var(--font-size-13);
           }
 
           &.no-skill-set {
@@ -406,7 +410,7 @@
           }
 
           div.weapon-damage {
-            font-size: @rem11px;
+            font-size: var(--font-size-11);
           }
 
           div.weapon-controls {
@@ -415,13 +419,13 @@
             margin: 0 @rem2px;
 
             span.tag {
-              font-size: @rem13px;
+              font-size: var(--font-size-13);
             }
           }
 
           div.item-controls {
             flex: 0 0 @rem24px;
-            font-size: @rem11px;
+            font-size: var(--font-size-11);
             column-gap: @rem2px;
           }
         }
@@ -430,7 +434,7 @@
           flex: 0 0 100%;
 
           .toggle-attributes button {
-            font-size: @rem10px;
+            font-size: var(--font-size-10);
             padding: @rem3px;
           }
         }
@@ -492,30 +496,14 @@
   }
 }
 
-body.theme-dark .application.coc7.sheet.npc,
-.themed.theme-dark.application.coc7.sheet.npc {
+body.theme-dark .application.sheet.npc,
+.themed.theme-dark.application.sheet.npc {
   div.npc {
-    .tab-group-header {
-      background: rgba(128, 128, 128, 0.15);
-      border: 2px groove #121212;
-    }
-
     .combat-list {
-
       .combat-row {
-        border-top: 1px groove #121212;
-        border-left: 1px groove #121212;
-
-        &:last-of-type {
-          border-bottom: 1px groove #121212;
-        }
-
         .combat-value {
-          border-right: 1px groove #121212;
-
           &.no-skill-set {
             background-color: darkred;
-            color: var(--color-text-primary)
           }
         }
       }

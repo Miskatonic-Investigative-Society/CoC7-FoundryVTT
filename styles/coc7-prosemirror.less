@@ -1,0 +1,63 @@
+body {
+  #prosemirror-dropdown {
+
+    li.level1,
+    li.level2,
+    li.level3,
+    li.level4 {
+      text-transform: uppercase;
+    }
+
+    li.level1 {
+      font-size: var(--font-size-20);
+    }
+
+    li.level2 {
+      font-size: var(--font-size-19);
+    }
+
+    li.level3 {
+      font-size: var(--font-size-17);
+    }
+
+    li.level4 {
+      font-size: var(--font-size-14);
+
+      em {
+        text-transform: none;
+      }
+    }
+
+    li.level5 {
+      font-size: var(--font-size-16);
+      font-weight: normal;
+    }
+
+    li.level6 {
+      font-size: var(--font-size-13);
+      font-weight: normal;
+      font-style: italic;
+    }
+  }
+
+  prose-mirror button.pm-dropdown.format span em {
+    display: none;
+  }
+
+  .prosemirror:hover button.toggle:enabled,
+  prose-mirror:hover button.toggle:enabled {
+    display: flex;
+  }
+
+  &.theme-light .application.menu-dialog.prosemirror,
+  .application.menu-dialog.prosemirror.themed.theme-light {
+    --background-sheet: inherit;
+    --dialog-background: url(../systems/CoC7/assets/art/page-light.webp);
+  }
+
+  &.theme-dark .application.menu-dialog.prosemirror,
+  .application.menu-dialog.prosemirror.themed.theme-dark {
+    --background-sheet: inherit;
+    --dialog-background: url(../systems/CoC7/assets/art/page-dark.webp);
+  }
+}

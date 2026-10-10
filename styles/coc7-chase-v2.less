@@ -1,9 +1,14 @@
-.application.coc7.dialog.item.chase {
+.application.coc7-chase-participant {
+  section.standard-form {
+    section.standard-form {
+      row-gap: @rem4px;
+    }
+  }
+}
+.application.coc7-chase {
   section.window-content {
-    overflow: clip;
-
     nav.tabs {
-      margin: @rem4px 0 0;
+      margin: @rem4px -@rem16px;
     }
 
     .item-header {
@@ -64,7 +69,7 @@
 
               .chase-control {
                 flex: 0 0 auto;
-                font-size: 1rem;
+                font-size: var(--font-size-16);
               }
 
               .toggle-switch {
@@ -72,11 +77,9 @@
               }
 
               .obstacle-toggles {
-                gap: @rem4px;
-
                 .toggle-icon {
                   flex: 0 0 auto;
-                  font-size: @rem19px;
+                  font-size: var(--font-size-19);
 
                   &.switched-on {
                     color: red;
@@ -92,12 +95,7 @@
       .item-control,
       .item-control-disabled {
         flex: 0 0 auto;
-        font-size: 1rem;
-      }
-
-      .item-control-disabled {
-        opacity: 0.2;
-        pointer-events: none;
+        font-size: var(--font-size-16);
       }
     }
 
@@ -115,7 +113,7 @@
         .p-adjust,
         .food-chain {
           flex: 0 0 auto;
-          font-size: 1.5rem;
+          font-size: var(--font-size-24);
           width: 1.5rem;
           text-align: center;
         }
@@ -167,7 +165,7 @@
         }
 
         .p-modified-mov {
-          font-size: 2rem;
+          font-size: var(--font-size-30);
           text-align: center;
           flex: 0 0 2rem;
 
@@ -203,7 +201,7 @@
         justify-content: center;
         border: 0.25rem groove;
         border-radius: 0.5rem;
-        font-size: 1.5rem;
+        font-size: var(--font-size-24);
 
         &:hover {
           cursor: pointer;
@@ -418,7 +416,7 @@
           width: 100%;
           align-items: center;
           color: red;
-          font-size: 1.5rem;
+          font-size: var(--font-size-24);
           height: 2rem;
         }
 
@@ -427,7 +425,7 @@
           flex-direction: row;
           flex: 1;
           color: var(--main-sheet-front-color);
-          font-size: 0.8rem;
+          font-size: var(--font-size-12);
           font-weight: 700;
           min-width: 2rem;
           justify-content: flex-start;
@@ -453,7 +451,7 @@
             border-radius: 1rem;
             color: var(--button-text-color);
             flex: 0 0 auto;
-            font-size: 1rem;
+            font-size: var(--font-size-15);
             height: 2rem;
             line-height: 1.75rem;
             padding: 0 @rem4px;

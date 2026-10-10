@@ -499,7 +499,7 @@ export default class CoC7ChatCombatMelee {
         element.addEventListener('change', event => CoC7ChatCombatMelee._onChangeEvent(event, message))
       })
     }
-    html.querySelectorAll('.coc7-formatted-text').forEach((element) => {
+    html.querySelectorAll('.overflowable').forEach((element) => {
       const div = document.createElement('div')
       div.id = 'temporary-measure-' + Math.floor(Math.random() * 100)
       div.style.width = 'var(--sidebar-width)'
@@ -660,15 +660,15 @@ export default class CoC7ChatCombatMelee {
     const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable))) ?? []
     const targetPoolDisabled = targetTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
     data.targetTalent = await Promise.all(targetTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
-    for (const key in dicePoolReasons) {
-      const type = (dicePoolReasons[key].forBonus ? 'poolBonus' : (dicePoolReasons[key].forPenalty ? 'poolPenalty' : ''))
+    for (const value in dicePoolReasons) {
+      const type = (dicePoolReasons[value].forBonus ? 'poolBonus' : (dicePoolReasons[value].forPenalty ? 'poolPenalty' : ''))
       if (type) {
         const row = {
-          key,
-          disabled: ((dicePoolReasons[key].ifAttacker === true && attackerPoolDisabled.includes(key)) || (dicePoolReasons[key].ifDefender === true && targetPoolDisabled.includes(key))),
-          name: game.i18n.localize(dicePoolReasons[key].name),
-          selected: this.#poolKeys.includes(key),
-          tooltip: game.i18n.localize(dicePoolReasons[key].tooltip)
+          value,
+          disabled: ((dicePoolReasons[value].ifAttacker === true && attackerPoolDisabled.includes(value)) || (dicePoolReasons[value].ifDefender === true && targetPoolDisabled.includes(value))),
+          label: game.i18n.localize(dicePoolReasons[value].label),
+          selected: this.#poolKeys.includes(value),
+          tooltip: game.i18n.localize(dicePoolReasons[value].tooltip)
         }
         if (row.selected) {
           if (type === 'poolBonus') {
@@ -698,8 +698,8 @@ export default class CoC7ChatCombatMelee {
     } else if (data.finalPoolModifier > 0) {
       data.tags.push(data.finalPoolModifier + ' ' + game.i18n.localize('CoC7.DiceModifierBonus'))
     }
-    data.poolBonus.sort(CoC7Utilities.sortByNameKey)
-    data.poolPenalty.sort(CoC7Utilities.sortByNameKey)
+    data.poolBonus.sort(CoC7Utilities.sortByLabelKey)
+    data.poolPenalty.sort(CoC7Utilities.sortByLabelKey)
     if (!data.targetUuid) {
       data.targetImg = 'icons/svg/mystery-man-black.svg'
       data.targetName = game.i18n.localize('CoC7.NoTarget')
@@ -784,7 +784,7 @@ export default class CoC7ChatCombatMelee {
     }
     if (typeof this.message?.whisper === 'undefined') {
       /* // FoundryVTT V13 */
-      if (game.release.generation < 14) {
+      if (game.release.generation === 13) {
         if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'rollMode'))) {
           chatData.whisper = ChatMessage.getWhisperRecipients('GM')
         } else if (CHAT_MESSAGE_MODE.BLIND === game.settings.get('core', 'rollMode')) {

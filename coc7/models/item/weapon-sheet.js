@@ -84,17 +84,17 @@ export default class CoC7ModelsItemWeaponSheet extends CoC7ModelsItemGlobalSheet
     switch (partId) {
       case 'header':
         context._properties = [{
-          id: 'melee',
-          name: 'CoC7.Weapon.Property.Melee',
+          value: 'melee',
+          label: 'CoC7.Weapon.Property.Melee',
           tooltip: '',
           isEnabled: context.document.system.properties.rngd !== true
         }]
-        for (const [key, value] of context.document.system.schema.getField('properties').entries()) {
+        for (const [value, field] of context.document.system.schema.getField('properties').entries()) {
           context._properties.push({
-            id: key,
-            name: value.label,
-            tooltip: value.hint,
-            isEnabled: context.document.system.properties[key] === true
+            value,
+            label: field.label,
+            tooltip: field.hint,
+            isEnabled: context.document.system.properties[value] === true
           })
         }
         context.usesAlternateSkill = context.document.system.usesAlternateSkill
@@ -122,17 +122,17 @@ export default class CoC7ModelsItemWeaponSheet extends CoC7ModelsItemGlobalSheet
         break
       case 'prices':
         context._eras = []
-        for (const [key, era] of Object.entries(ERAS)) {
-          const isEnabled = (context.document.flags[FOLDER_ID]?.cocidFlag?.eras ?? {})[key] === true
+        for (const [value, era] of Object.entries(ERAS)) {
+          const isEnabled = (context.document.flags[FOLDER_ID]?.cocidFlag?.eras ?? {})[value] === true
           context._eras.push({
-            price: (isEnabled ? context.document.system.price[key] : null),
-            id: key,
-            name: game.i18n.localize(era.name),
+            price: (isEnabled ? context.document.system.price[value] : null),
+            value,
+            label: game.i18n.localize(era.label),
             icon: era.icon,
             isEnabled
           })
         }
-        context._eras.sort(CoC7Utilities.sortByNameKey)
+        context._eras.sort(CoC7Utilities.sortByLabelKey)
         context.useEraIcons = game.settings.get(FOLDER_ID, 'sheetEraIcons')
         break
       case 'keeper':

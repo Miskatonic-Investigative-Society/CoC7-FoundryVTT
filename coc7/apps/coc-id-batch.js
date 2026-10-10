@@ -13,8 +13,9 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
   }
 
   static DEFAULT_OPTIONS = {
+    id: 'coc-id-batch-update',
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       title: 'CoC7.CoCIDBatch.title',
       contentClasses: [

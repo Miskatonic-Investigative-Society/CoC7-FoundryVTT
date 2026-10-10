@@ -12,7 +12,7 @@ export default class CoC7SkillSpecializationSelectDialog extends foundry.applica
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       contentClasses: [
         'standard-form'
@@ -115,7 +115,7 @@ export default class CoC7SkillSpecializationSelectDialog extends foundry.applica
         context.label = this.coc7Config.label
         context.name = this.coc7Config.name
         context.selected = this.coc7Config.selected
-        context.skills = this.coc7Config.skills.map(d => { return { id: d._id, name: d.name } })
+        context.skills = this.coc7Config.skills.map(d => { return { value: d._id, label: d.name } })
         break
       case 'footer':
         context.buttons = []

@@ -472,8 +472,7 @@ try {
             id: 'je..call-of-cthulhu-7-th-edition-system-documentation',
             lang,
             priority: sources[lang].priority
-          },
-          'css-adventure-entry': true
+          }
         }
       }
     }

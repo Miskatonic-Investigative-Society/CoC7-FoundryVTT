@@ -14,7 +14,9 @@
     {{#if occupationSet}}
       <span class="rollable open-item detail-value" data-type="occupation">{{document.system.infos.occupation}}</span>
       {{#unless document.system.flags.locked}}
-        <a class="reset-occupation" data-tooltip="CoC7.ResetOccupation" data-type="occupation"><i class="fa-regular fa-times-circle"></i></a>
+        <div class="item-controls">
+          <a class="item-control" data-action="reset-occupation" data-tooltip="CoC7.ResetOccupation"><i class="fa-regular fa-times-circle fa-fw"></i></a>
+        </div>
       {{/unless}}
     {{else}}
       <input name="system.infos.occupation" type="text" class="detail-value" value="{{document.system.infos.occupation}}" />
@@ -33,7 +35,9 @@
       {{#if archetypeSet}}
         <span class="rollable open-item detail-value" data-type="archetype">{{document.system.infos.archetype}}</span>
         {{#unless document.system.flags.locked}}
-          <a class="reset-archetype" data-tooltip="CoC7.ResetArchetype" data-type="archetype"><i class="fa-regular fa-times-circle"></i></a>
+          <div class="item-controls">
+            <a class="item-control" data-action="reset-archetype" data-tooltip="CoC7.ResetArchetype"><i class="fa-regular fa-times-circle fa-fw"></i></a>
+          </div>
         {{/unless}}
       {{else}}
         <input name="system.infos.archetype" type="text" class="detail-value" value="{{document.system.infos.archetype}}" />
@@ -44,7 +48,9 @@
       <div class="title">{{localize 'CoC7.SheetExperiencePackageName'}}</div>
       <span class="rollable open-item detail-value" data-type="experiencePackage">{{nameExperiencePackage}}</span>
       {{#unless document.system.flags.locked}}
-        <a class="reset-experience-package" data-tooltip="CoC7.ClearExperiencePackageName" data-type="experiencePackage"><i class="fa-regular fa-times-circle"></i></a>
+        <div class="item-controls">
+          <a class="item-control" data-action="reset-experience-package" data-tooltip="CoC7.ClearExperiencePackageName"><i class="fa-regular fa-times-circle fa-fw"></i></a>
+        </div>
       {{/unless}}
     </div>
   {{/if}}

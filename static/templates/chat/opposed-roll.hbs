@@ -1,14 +1,14 @@
 {{#if cardOpen}}
   <div class="keeper-only-block coc7-card-buttons flexrow">
-    <button class="{{#if isCombat}} switched-on{{/if}}" data-action="toggleValue" data-set="isCombat"><i class="game-icon game-icon-crossed-swords"></i> {{localize 'CoC7.OpposedRollCard'}}{{#if isCombat}} ({{localize 'CoC7.AttackManeuver'}}){{/if}}</button>
+    <button class="{{#if isCombat}} switched-on{{/if}}" data-action="toggleValue" data-set="isCombat"><i class="game-icon game-icon-crossed-swords fa-fw"></i> {{localize 'CoC7.OpposedRollCard'}}{{#if isCombat}} ({{localize 'CoC7.AttackManeuver'}}){{/if}}</button>
   </div>
 {{/if}}
 {{#if isCombat}}
   {{#if cardOpen}}
     {{#if canAdvantage}}
       <div class="keeper-only-block coc7-card-buttons flexrow">
-        <button class="{{#if advantageAttacker}} switched-on{{/if}}" style="flex: 1;" data-action="setValue" data-set="advantage" data-value="{{advantageTypes.attacker}}">{{localize 'CoC7.AdvantageAttacker'}}</button>
-        <button class="{{#if advantageDefender}} switched-on{{/if}}" style="flex: 1;" data-action="setValue" data-set="advantage" data-value="{{advantageTypes.defender}}">{{localize 'CoC7.AdvantageDefender'}}</button>
+        <button class="flex-single{{#if advantageAttacker}} switched-on{{/if}}" data-action="setValue" data-set="advantage" data-value="{{advantageTypes.attacker}}">{{localize 'CoC7.AdvantageAttacker'}}</button>
+        <button class="flex-single{{#if advantageDefender}} switched-on{{/if}}" data-action="setValue" data-set="advantage" data-value="{{advantageTypes.defender}}">{{localize 'CoC7.AdvantageDefender'}}</button>
       </div>
       <div class="not-keeper-block coc7-tags">
         {{#if advantageAttacker}}

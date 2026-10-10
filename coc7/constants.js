@@ -2,59 +2,59 @@ export const FOLDER_ID = 'CoC7'
 
 export const ERAS = {
   standard: {
-    name: 'CoC7.Era1920',
+    label: 'CoC7.Era1920',
     icon: 'game-icon game-icon-mustache'
   },
   modern: {
-    name: 'CoC7.EraModern',
+    label: 'CoC7.EraModern',
     icon: 'game-icon game-icon-billed-cap'
   },
   modernPulp: {
-    name: 'CoC7.EraModernPulp',
+    label: 'CoC7.EraModernPulp',
     icon: 'game-icon game-icon-captain-hat-profile'
   },
   pulp: {
-    name: 'CoC7.EraPulp',
+    label: 'CoC7.EraPulp',
     icon: 'game-icon game-icon-fedora'
   },
   downDarkerTrails: {
-    name: 'CoC7.EraDownDarkerTrails',
+    label: 'CoC7.EraDownDarkerTrails',
     icon: 'game-icon game-icon-western-hat'
   },
   downDarkerTrailsPulp: {
-    name: 'CoC7.EraDownDarkerTrailsPulp',
+    label: 'CoC7.EraDownDarkerTrailsPulp',
     icon: 'game-icon game-icon-bandit'
   },
   darkAges: {
-    name: 'CoC7.EraDarkAges',
+    label: 'CoC7.EraDarkAges',
     icon: 'game-icon game-icon-barbute'
   },
   darkAgesPulp: {
-    name: 'CoC7.EraDarkAgesPulp',
+    label: 'CoC7.EraDarkAgesPulp',
     icon: 'game-icon game-icon-heavy-helm'
   },
   regency: {
-    name: 'CoC7.EraRegency',
+    label: 'CoC7.EraRegency',
     icon: 'game-icon game-icon-top-hat'
   },
   regencyPulp: {
-    name: 'CoC7.EraRegencyPulp',
+    label: 'CoC7.EraRegencyPulp',
     icon: 'game-icon game-icon-carnival-mask'
   },
   reignOfTerror: {
-    name: 'CoC7.EraReignOfTerror',
+    label: 'CoC7.EraReignOfTerror',
     icon: 'game-icon game-icon-guillotine'
   },
   gasLight: {
-    name: 'CoC7.EraGasLight',
+    label: 'CoC7.EraGasLight',
     icon: 'game-icon game-icon-old-lantern'
   },
   gasLightPulp: {
-    name: 'CoC7.EraGasLightPulp',
+    label: 'CoC7.EraGasLightPulp',
     icon: 'game-icon game-icon-wall-light'
   },
   invictus: {
-    name: 'CoC7.EraInvictus',
+    label: 'CoC7.EraInvictus',
     icon: 'game-icon game-icon-centurion-helmet'
   }
 }
@@ -91,39 +91,39 @@ export const MONETARY_TYPE_KEYS = {
 
 export const MONETARY_TYPES = {
   none: {
-    name: 'CoC7.MonetaryTypeNone',
+    label: 'CoC7.MonetaryTypeNone',
     filter: []
   },
   asses: {
-    name: 'CoC7.MonetaryTypeAsses',
+    label: 'CoC7.MonetaryTypeAsses',
     filter: ['roman']
   },
   sestertii: {
-    name: 'CoC7.MonetaryTypeSestertii',
+    label: 'CoC7.MonetaryTypeSestertii',
     filter: ['roman']
   },
   quinarii: {
-    name: 'CoC7.MonetaryTypeQuinarii',
+    label: 'CoC7.MonetaryTypeQuinarii',
     filter: ['roman']
   },
   denarii: {
-    name: 'CoC7.MonetaryTypeDenarii',
+    label: 'CoC7.MonetaryTypeDenarii',
     filter: ['roman']
   },
   d: {
-    name: 'CoC7.MonetaryTypeDeniers',
+    label: 'CoC7.MonetaryTypeDeniers',
     filter: ['lsd']
   },
   s: {
-    name: 'CoC7.MonetaryTypeSous',
+    label: 'CoC7.MonetaryTypeSous',
     filter: ['lsd']
   },
   value: {
-    name: 'CoC7.MonetaryTypeOne',
+    label: 'CoC7.MonetaryTypeOne',
     filter: []
   },
   multiplier: {
-    name: 'CoC7.MonetaryTypeCreditRating',
+    label: 'CoC7.MonetaryTypeCreditRating',
     filter: []
   }
 }
@@ -153,7 +153,7 @@ export const DICE_POOL_REASONS = {
     forPenalty: false,
     forMelee: true,
     forRanged: false,
-    name: 'CoC7.OutNumbered',
+    label: 'CoC7.OutNumbered',
     tooltip: 'CoC7.TitleOutNumbered'
   },
   surprised: {
@@ -164,7 +164,7 @@ export const DICE_POOL_REASONS = {
     forPenalty: false,
     forMelee: true,
     forRanged: false,
-    name: 'CoC7.combatCard.surprised',
+    label: 'CoC7.combatCard.surprised',
     tooltip: 'CoC7.TitleSurprised'
   },
   sizeBig: {
@@ -175,7 +175,7 @@ export const DICE_POOL_REASONS = {
     forPenalty: false,
     forMelee: false,
     forRanged: true,
-    name: 'CoC7.rangeCombatCard.BigTarget',
+    label: 'CoC7.rangeCombatCard.BigTarget',
     tooltip: 'CoC7.rangeCombatCard.BigTargetTooltip'
   },
   sizeSmall: {
@@ -186,7 +186,7 @@ export const DICE_POOL_REASONS = {
     forPenalty: true,
     forMelee: false,
     forRanged: true,
-    name: 'CoC7.combatCard.SmallTarget',
+    label: 'CoC7.combatCard.SmallTarget',
     tooltip: 'CoC7.combatCard.SmallTargetTooltip'
   },
   cover: {
@@ -197,7 +197,7 @@ export const DICE_POOL_REASONS = {
     forPenalty: true,
     forMelee: false,
     forRanged: true,
-    name: 'CoC7.rangeCombatCard.Cover',
+    label: 'CoC7.rangeCombatCard.Cover',
     tooltip: 'CoC7.rangeCombatCard.CoverTitle'
   },
   surprisedRanged: {
@@ -208,7 +208,7 @@ export const DICE_POOL_REASONS = {
     forPenalty: false,
     forMelee: false,
     forRanged: true,
-    name: 'CoC7.combatCard.surprised',
+    label: 'CoC7.combatCard.surprised',
     tooltip: 'CoC7.rangeCombatCard.SurprisedTargetTitle'
   },
   pointBlankRange: {
@@ -219,7 +219,7 @@ export const DICE_POOL_REASONS = {
     forPenalty: false,
     forMelee: false,
     forRanged: true,
-    name: 'CoC7.rangeCombatCard.PointBlankRange',
+    label: 'CoC7.rangeCombatCard.PointBlankRange',
     tooltip: 'CoC7.rangeCombatCard.PointBlankRangeTitle'
   },
   inMelee: {
@@ -230,7 +230,7 @@ export const DICE_POOL_REASONS = {
     forPenalty: true,
     forMelee: false,
     forRanged: true,
-    name: 'CoC7.rangeCombatCard.InMelee',
+    label: 'CoC7.rangeCombatCard.InMelee',
     tooltip: 'CoC7.rangeCombatCard.InMeleeTitle'
   },
   fast: {
@@ -241,7 +241,7 @@ export const DICE_POOL_REASONS = {
     forPenalty: true,
     forMelee: false,
     forRanged: true,
-    name: 'CoC7.rangeCombatCard.FastMovingTarget',
+    label: 'CoC7.rangeCombatCard.FastMovingTarget',
     tooltip: 'CoC7.rangeCombatCard.FastMovingTargetTitle'
   },
   shootWithOffhand: {
@@ -252,7 +252,7 @@ export const DICE_POOL_REASONS = {
     forPenalty: true,
     forMelee: false,
     forRanged: true,
-    name: 'CoC7.rangeCombatCard.ShootingWithOffHand',
+    label: 'CoC7.rangeCombatCard.ShootingWithOffHand',
     tooltip: 'CoC7.Settings.DDTRules.ShootingWithOffHand.Hint'
   },
   reloading: {
@@ -263,7 +263,7 @@ export const DICE_POOL_REASONS = {
     forPenalty: true,
     forMelee: false,
     forRanged: true,
-    name: 'CoC7.rangeCombatCard.ReloadingFirearm',
+    label: 'CoC7.rangeCombatCard.ReloadingFirearm',
     tooltip: 'CoC7.rangeCombatCard.ReloadingFirearmTooltip'
   }
 }
@@ -287,58 +287,58 @@ export const TRADE_ALLOWED = [
 
 export const SPELL_COST_TYPE_KEYS = {
   additionalCasterPromptAdd: {
-    name: 'CoC7.Spell.Cost.AdditionalCasterPromptAdd',
+    label: 'CoC7.Spell.Cost.AdditionalCasterPromptAdd',
     group: 'CoC7.Spell.Group.AdditionalCasters'
   },
   additionalCasterCost: {
-    name: 'CoC7.Spell.Cost.AdditionalCasterCost',
+    label: 'CoC7.Spell.Cost.AdditionalCasterCost',
     group: 'CoC7.Spell.Group.AdditionalCasters'
   },
   additionalCasterPromptRequireNumber: {
-    name: 'CoC7.Spell.Cost.AdditionalCasterPromptRequireNumber',
+    label: 'CoC7.Spell.Cost.AdditionalCasterPromptRequireNumber',
     group: 'CoC7.Spell.Group.AdditionalCasters'
   },
   additionalInformation: {
-    name: 'CoC7.Spell.Cost.AdditionalInformation',
+    label: 'CoC7.Spell.Cost.AdditionalInformation',
     group: 'CoC7.Spell.Group.CasterCosts'
   },
   castingTime: {
-    name: 'CoC7.Spell.Cost.CastingTime',
+    label: 'CoC7.Spell.Cost.CastingTime',
     group: 'CoC7.Spell.Group.CastingTime'
   },
   casterCost: {
-    name: 'CoC7.Spell.Cost.CasterCost',
+    label: 'CoC7.Spell.Cost.CasterCost',
     group: 'CoC7.Spell.Group.CasterCosts'
   },
   promptRequireNumber: {
-    name: 'CoC7.Spell.Cost.PromptRequireNumber',
+    label: 'CoC7.Spell.Cost.PromptRequireNumber',
     group: 'CoC7.Spell.Group.Prompt'
   },
   promptShowText: {
-    name: 'CoC7.Spell.Cost.PromptShowText',
+    label: 'CoC7.Spell.Cost.PromptShowText',
     group: 'CoC7.Spell.Group.Prompt'
   },
   promptShowVariable: {
-    name: 'CoC7.Spell.Cost.PromptShowVariable',
+    label: 'CoC7.Spell.Cost.PromptShowVariable',
     group: 'CoC7.Spell.Group.Prompt'
   },
   promptToggleButton: {
-    name: 'CoC7.Spell.Cost.PromptToggleButton',
+    label: 'CoC7.Spell.Cost.PromptToggleButton',
     group: 'CoC7.Spell.Group.Prompt'
   },
   setVariable: {
-    name: 'CoC7.Spell.Cost.SetVariable',
+    label: 'CoC7.Spell.Cost.SetVariable',
     group: 'CoC7.Spell.Group.System'
   },
   triggerPrompt: {
-    name: 'CoC7.Spell.Cost.TriggerPrompt',
+    label: 'CoC7.Spell.Cost.TriggerPrompt',
     group: 'CoC7.Spell.Group.Prompt'
   }
 }
 
 export const TALENT_ADJUSTMENT_TYPES = {
   disableCombatPool: {
-    name: 'CoC7.Talent.Type.DisableCombatPool'
+    label: 'CoC7.Talent.Type.DisableCombatPool'
   }
 }
 

@@ -1,4 +1,4 @@
-<section class="tab details scrollable {{tabs.details.cssClass}}" data-group="primary" data-tab="details">
+<section class="tab details flexcol scrollable legend-fieldset {{tabs.details.cssClass}}" data-group="primary" data-tab="details">
   <fieldset class="flexcol">
     <legend>{{localize 'CoC7.Armor'}}</legend>
     <div class="toggle-row flexrow">
@@ -7,7 +7,7 @@
       </div>
       {{#if document.system.stats.armor.localized}}
         <div class="item-controls">
-          <a class="item-control" data-action="armor-add"><i class="fa-regular fa-plus-circle"></i></a>
+          <a class="item-control" data-action="armor-add"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
         </div>
       {{/if}}
     </div>
@@ -17,7 +17,7 @@
           <input type="text" name="system.stats.armor.locations.{{offset}}.name" value="{{location.name}}" placeholder="{{localize 'CoC7.Location'}}" />
           <input type="text" name="system.stats.armor.locations.{{offset}}.value" value="{{location.value}}" placeholder="{{localize 'CoC7.Armor'}}" />
           <div class="item-controls">
-            <a class="item-control" data-action="armor-remove" data-offset="{{offset}}"><i class="fa-regular fa-minus-circle"></i></a>
+            <a class="item-control" data-action="armor-remove" data-offset="{{offset}}"><i class="fa-regular fa-minus-circle fa-fw"></i></a>
           </div>
         </div>
       {{/each}}
@@ -31,11 +31,11 @@
   <fieldset class="flexcol">
     <legend>{{localize 'CoC7.Attributes'}}</legend>
     <div class="flexrow">
-      <label>{{localize 'CoC7.Movement'}}</label>
+      <label class="flex-single">{{localize 'CoC7.Movement'}}</label>
       <input type="text" name="system.stats.mov" value="{{document.system.stats.mov}}" />
     </div>
     <div class="flexrow">
-      <label>{{localize 'CoC7.Build'}}</label>
+      <label class="flex-single">{{localize 'CoC7.Build'}}</label>
       <input type="text" name="system.stats.build.value" value="{{document.system.stats.build.value}}" />
     </div>
   </fieldset>

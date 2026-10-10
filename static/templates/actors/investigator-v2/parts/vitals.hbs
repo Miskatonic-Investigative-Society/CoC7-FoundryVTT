@@ -16,17 +16,17 @@
       </div>
     </div>
     <div class="status">
-      <a class="item-control {{#if document.system.conditions.prone.value}}status-on{{/if}}" data-tooltip="CoC7.Prone" data-action="condition" data-condition="prone"><i class="game-icon game-icon-falling"></i></a>
-      <a class="item-control {{#if document.system.conditions.unconscious.value}}status-on{{/if}}" data-tooltip="CoC7.Unconscious" data-action="condition" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars"></i></a>
-      <a class="item-control {{#if document.system.conditions.criticalWounds.value}}status-on{{/if}}" data-tooltip="CoC7.CriticalWounds" data-action="condition" data-condition="criticalWounds"><i class="game-icon game-icon-arm-sling"></i></a>
-      <a class="item-control {{#if document.system.conditions.dying.value}}status-on{{/if}}" data-tooltip="CoC7.Dying" data-action="condition" data-condition="dying"><i class="game-icon game-icon-heart-beats"></i></a>
+      <a class="item-control {{#if document.system.conditions.prone.value}}status-on{{/if}}" data-tooltip="CoC7.Prone" data-action="condition" data-condition="prone"><i class="game-icon game-icon-falling fa-fw"></i></a>
+      <a class="item-control {{#if document.system.conditions.unconscious.value}}status-on{{/if}}" data-tooltip="CoC7.Unconscious" data-action="condition" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars fa-fw"></i></a>
+      <a class="item-control {{#if document.system.conditions.criticalWounds.value}}status-on{{/if}}" data-tooltip="CoC7.CriticalWounds" data-action="condition" data-condition="criticalWounds"><i class="game-icon game-icon-arm-sling fa-fw"></i></a>
+      <a class="item-control {{#if document.system.conditions.dying.value}}status-on{{/if}}" data-tooltip="CoC7.Dying" data-action="condition" data-condition="dying"><i class="game-icon game-icon-heart-beats fa-fw"></i></a>
     </div>
 
     <div class="status">
       {{#if document.system.conditions.dead.value}}
-        <a class="item-control status-on" data-tooltip="CoC7.Dead" data-action="condition" data-condition="dead"><i class="game-icon game-icon-tombstone"></i></a>
+        <a class="item-control status-on" data-tooltip="CoC7.Dead" data-action="condition" data-condition="dead"><i class="game-icon game-icon-tombstone fa-fw"></i></a>
       {{else}}
-        <a class="{{#if document.system.conditions.dying.value}}item-control dying-check{{else}}inactive-status{{/if}}" data-action="dying-check" data-tooltip="{{#if document.system.conditions.dying.value}}CoC7.DyingCheck{{/if}}"><i class="game-icon game-icon-d10"></i></a>
+        <a class="{{#if document.system.conditions.dying.value}}item-control dying-check{{else}}inactive-status{{/if}}" data-action="dying-check" data-tooltip="{{#if document.system.conditions.dying.value}}CoC7.DyingCheck{{/if}}"><i class="game-icon game-icon-d10 fa-fw"></i></a>
       {{/if}}
     </div>
   </div>
@@ -48,8 +48,8 @@
       <label>{{localize 'CoC7.DailyLoss'}}: {{attribs.san.dailyLoss}}/{{attribs.san.dailyLimit}}</label>
     </div>
     <div class="status">
-      <a class="item-control {{#if document.system.conditions.tempoInsane.value}}status-on{{/if}}" data-tooltip="{{localize 'CoC7.BoutOfMadness'}}{{#if actor.getTempoInsaneDurationText}}: {{actor.getTempoInsaneDurationText}}{{/if}}" data-action="condition" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></a>
-      <a class="item-control {{#if document.system.conditions.indefInsane.value}}status-on{{/if}}" data-tooltip="{{#if document.system.conditions.indefInsane.value}}CoC7.UnderlyingInsanity{{else}}CoC7.IndefiniteInsanity{{/if}}" data-action="condition" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>
+      <a class="item-control {{#if document.system.conditions.tempoInsane.value}}status-on{{/if}}" data-tooltip="{{localize 'CoC7.BoutOfMadness'}}{{#if actor.getTempoInsaneDurationText}}: {{actor.getTempoInsaneDurationText}}{{/if}}" data-action="condition" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider fa-fw"></i></a>
+      <a class="item-control {{#if document.system.conditions.indefInsane.value}}status-on{{/if}}" data-tooltip="{{#if document.system.conditions.indefInsane.value}}CoC7.UnderlyingInsanity{{else}}CoC7.IndefiniteInsanity{{/if}}" data-action="condition" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull fa-fw"></i></a>
     </div>
     <div class="control">
       <a class="item-control" data-action="reset-counter" data-tooltip="CoC7.DailySanIconOver" data-counter="system.attribs.san.dailyLoss"><i class="fa-solid fa-undo"></i></a>

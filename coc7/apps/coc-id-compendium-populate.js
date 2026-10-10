@@ -13,7 +13,7 @@ export default class CoCIDCompendiumPopulate extends foundry.applications.api.Ha
   static DEFAULT_OPTIONS = {
     id: 'coc-id-actor-update-items',
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       contentClasses: [
         'standard-form'
@@ -53,9 +53,9 @@ export default class CoCIDCompendiumPopulate extends foundry.applications.api.Ha
     })
     this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', (event) => {
       const propertyId = event.target.dataset.property
-      const index = this.coc7Config.types.findIndex(t => t.id === propertyId)
+      const index = this.coc7Config.types.findIndex(t => t.value === propertyId)
       if (index > -1) {
-        this.coc7Config.types[index].toggle = !this.coc7Config.types[index].toggle
+        this.coc7Config.types[index].isEnabled = !this.coc7Config.types[index].isEnabled
       }
       this.render({ force: true })
     }))
@@ -74,7 +74,7 @@ export default class CoCIDCompendiumPopulate extends foundry.applications.api.Ha
         return
       }
       event.submitter.classList.add('currently-submitting')
-      const included = this.coc7Config.types.filter(t => t.toggle).map(t => t.id)
+      const included = this.coc7Config.types.filter(t => t.isEnabled).map(t => t.value)
       const destination = game.packs.get(this.coc7Config.packList)
       if (included.length && destination) {
         const items = await game[FOLDER_ID].cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^i.(' + included.join('|') + ')'), type: 'i', showLoading: true })
@@ -163,15 +163,15 @@ export default class CoCIDCompendiumPopulate extends foundry.applications.api.Ha
 
     const types = Object.keys(CONFIG.Item.sheetClasses).filter(t => t !== 'base').map(t => {
       return {
-        id: t,
+        value: t,
         label: game.i18n.localize('TYPES.Item.' + t),
-        toggle: (t === 'skill')
+        isEnabled: (t === 'skill')
       }
-    }).sort((a, b) => a.id.localeCompare(b.id))
+    }).sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang))
 
     new CoCIDCompendiumPopulate({}, {}, {
       packLists,
-      packList: packLists.reduce((c, d) => { if (c === '') { c = d.id } return c }, ''),
+      packList: packLists.reduce((c, d) => { if (c === '') { c = d.value } return c }, ''),
       types
     }).render({ force: true })
   }

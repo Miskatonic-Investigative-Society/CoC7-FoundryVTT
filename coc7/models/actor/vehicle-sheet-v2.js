@@ -3,7 +3,7 @@ import CoC7ModelsActorGlobalSheet from './global-sheet.js'
 
 export default class CoC7ModelsActorVehicleSheetV2 extends CoC7ModelsActorGlobalSheet {
   static DEFAULT_OPTIONS = {
-    classes: ['dialog', 'item', 'vehicle'],
+    classes: ['coc7-sheet', 'coc7-vehicle'],
     position: {
       width: 650,
       height: 420

@@ -12,7 +12,7 @@ export default class CoC7SpendLuckDialog extends foundry.applications.api.Handle
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       contentClasses: [
         'standard-form'

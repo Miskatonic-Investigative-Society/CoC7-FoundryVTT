@@ -8,10 +8,10 @@ import CoC7Utilities from '../../apps/utilities.js'
 
 export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet {
   static DEFAULT_OPTIONS = {
-    classes: ['chase'],
+    classes: ['coc7-chase'],
     position: {
       width: 550,
-      height: 580
+      height: 610
     }
   }
 
@@ -926,7 +926,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
         currentWidth = Number(context.document.sheet.element.style.width.replace('px', ''))
       }
       const minWidth = CoC7Utilities.remToPx(40)
-      const participantWidth = CoC7Utilities.remToPx(context.document.system.participants.length * 12.25 + (context.document.system.participants.length - 1) * 0.5 + 1 + 1) // initiative-block each + each gap + padding on tab
+      const participantWidth = CoC7Utilities.remToPx(context.document.system.participants.length * 12.25 + (context.document.system.participants.length - 1) * 0.5 + 1 + 1.75) // initiative-block each + each gap + padding on tab
       const maxWidth = document.body.clientWidth
       const newWidth = Math.min(maxWidth, Math.max(currentWidth, minWidth, participantWidth))
       if (typeof options.position?.width !== 'undefined') {

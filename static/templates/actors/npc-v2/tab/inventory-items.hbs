@@ -9,24 +9,24 @@
         <div class="tab-group-title">{{localize 'CoC7.Items'}}</div>
         {{#unless document.system.flags.locked}}
           <div class="item-controls">
-            <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddItem" data-type="item"><i class="fa-regular fa-plus-circle"></i></a>
+            <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddItem" data-type="item"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
           </div>
         {{/unless}}
       </div>
       <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelInventoryItems}} html-element-hidden{{/unless}}">
-        <div class="item-list flexcol">
+        <ul class="item-list">
           {{#each itemsByType.item as |item|}}
-            <div class="item flexrow" data-item-uuid="{{item.uuid}}">
+            <li class="item" data-item-uuid="{{item.uuid}}">
               <div class="item-image" style="background-image: url('{{item.img}}')"></div>
               <div class="item-name show-detail">{{#unless (eq system.quantity 1)}}{{system.quantity}} x {{/unless}}{{item.name}}</div>
               <div class="item-controls">
-                <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
-                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade fa-fw"></i></a>
+                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
               </div>
-            </div>
+            </li>
           {{/each}}
-        </div>
+        </ul>
       </div>
     </div>
   {{/if}}
@@ -40,24 +40,24 @@
         <div class="tab-group-title">{{localize 'CoC7.Books'}}</div>
         {{#unless document.system.flags.locked}}
           <div class="item-controls">
-            <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddBook" data-type="book"><i class="fa-regular fa-plus-circle"></i></a>
+            <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddBook" data-type="book"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
           </div>
         {{/unless}}
       </div>
       <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelInventoryBooks}} html-element-hidden{{/unless}}">
-        <div class="item-list flexcol">
+        <ul class="item-list">
           {{#each itemsByType.book as |item|}}
-            <div class="item flexrow" data-item-uuid="{{item.uuid}}">
+            <li class="item" data-item-uuid="{{item.uuid}}">
               <div class="item-image" style="background-image: url('{{item.img}}')"></div>
               <div class="item-name show-detail">{{item.name}}</div>
               <div class="item-controls">
-                <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
-                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade fa-fw"></i></a>
+                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
               </div>
-            </div>
+            </li>
           {{/each}}
-        </div>
+        </ul>
       </div>
     </div>
   {{/if}}
@@ -71,24 +71,24 @@
         <div class="tab-group-title">{{localize 'CoC7.Spells'}}</div>
         {{#unless document.system.flags.locked}}
           <div class="item-controls">
-            <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddSpell" data-type="spell"><i class="fa-regular fa-plus-circle"></i></a>
+            <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddSpell" data-type="spell"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
           </div>
         {{/unless}}
       </div>
       <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelInventorySpells}} html-element-hidden{{/unless}}">
-        <div class="item-list flexcol">
+        <ul class="item-list">
           {{#each itemsByType.spell as |item|}}
-            <div class="item flexrow" data-item-uuid="{{item.uuid}}">
+            <li class="item" data-item-uuid="{{item.uuid}}">
               <div class="item-image" style="background-image: url('{{item.img}}')"></div>
               <div class="item-name show-detail">{{item.name}}</div>
               <div class="item-controls">
-                <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
-                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade fa-fw"></i></a>
+                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
               </div>
-            </div>
+            </li>
           {{/each}}
-        </div>
+        </ul>
       </div>
     </div>
   {{/if}}
@@ -98,18 +98,18 @@
         <div class="tab-group-title">{{localize 'CoC7.PulpTalents'}}</div>
       </div>
       <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelInventoryTalents}} html-element-hidden{{/unless}}">
-        <div class="item-list flexcol">
+        <ul class="item-list">
           {{#each itemsByType.talent as |item|}}
-            <div class="item flexrow" data-item-uuid="{{item.uuid}}">
+            <li class="item" data-item-uuid="{{item.uuid}}">
               <div class="item-image" style="background-image: url('{{item.img}}')"></div>
               <div class="item-name show-detail">{{item.name}}</div>
               <div class="item-controls">
-                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
               </div>
-            </div>
+            </li>
           {{/each}}
-        </div>
+        </ul>
       </div>
     </div>
   {{/if}}
@@ -123,24 +123,24 @@
         <div class="tab-group-title">{{localize 'CoC7.Weapons'}}</div>
         {{#unless document.system.flags.locked}}
           <div class="item-controls">
-            <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddWeapon" data-type="weapon"><i class="fa-regular fa-plus-circle"></i></a>
+            <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddWeapon" data-type="weapon"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
           </div>
         {{/unless}}
       </div>
       <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelInventoryWeapons}} html-element-hidden{{/unless}}">
-        <div class="item-list flexcol">
+        <ul class="item-list">
           {{#each itemsByType.weapon as |item|}}
-            <div class="item flexrow" data-item-uuid="{{item.uuid}}">
+            <li class="item" data-item-uuid="{{item.uuid}}">
               <div class="item-image" style="background-image: url('{{item.img}}')"></div>
               <div class="item-name show-detail">{{item.name}}</div>
               <div class="item-controls">
-                <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
-                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade fa-fw"></i></a>
+                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
               </div>
-            </div>
+            </li>
           {{/each}}
-        </div>
+        </ul>
       </div>
     </div>
   {{/if}}
@@ -154,24 +154,24 @@
         <div class="tab-group-title">{{localize 'CoC7.Armor'}}</div>
         {{#unless document.system.flags.locked}}
           <div class="item-controls">
-            <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddArmor" data-type="armor"><i class="fa-regular fa-plus-circle"></i></a>
+            <a class="item-control" data-action="item-add" data-tooltip="CoC7.AddArmor" data-type="armor"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
           </div>
         {{/unless}}
       </div>
       <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelInventoryArmor}} html-element-hidden{{/unless}}">
-        <div class="item-list flexcol">
+        <ul class="item-list">
           {{#each itemsByType.armor as |item|}}
-            <div class="item flexrow" data-item-uuid="{{item.uuid}}">
+            <li class="item" data-item-uuid="{{item.uuid}}">
               <div class="item-image" style="background-image: url('{{item.img}}')"></div>
               <div class="item-name show-detail">{{item.name}}</div>
               <div class="item-controls">
-                <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
-                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade fa-fw"></i></a>
+                <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
               </div>
-            </div>
+            </li>
           {{/each}}
-        </div>
+        </ul>
       </div>
     </div>
   {{/if}}
@@ -181,20 +181,20 @@
         <div class="tab-group-title">{{localize 'CoC7.Status'}}</div>
       </div>
       <div class="tab-group-tab html-element-toggled{{#unless document.system.flags.panelInventoryStatuses}} html-element-hidden{{/unless}}">
-        <div class="item-list flexcol">
+        <ul class="item-list">
           {{#each itemsByType.status as |item|}}
-            <div class="item flexrow" data-item-uuid="{{item.uuid}}">
+            <li class="item" data-item-uuid="{{item.uuid}}">
               <div class="item-image" style="background-image: url('{{item.img}}')"></div>
               <div class="item-name show-detail">{{item.name}}</div>
               <div class="item-controls">
                 {{#if ../isKeeper}}
-                  <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                  <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                  <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                  <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
                 {{/if}}
               </div>
-            </div>
+            </li>
           {{/each}}
-        </div>
+        </ul>
       </div>
     </div>
   {{/if}}

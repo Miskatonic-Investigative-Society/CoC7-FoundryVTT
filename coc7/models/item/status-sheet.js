@@ -5,7 +5,7 @@ import CoC7ModelsItemGlobalSheet from './global-sheet.js'
 export default class CoC7ModelsItemStatusSheet extends CoC7ModelsItemGlobalSheet {
   static DEFAULT_OPTIONS = {
     position: {
-      width: 550,
+      width: 525,
       height: 480
     }
   }
@@ -84,9 +84,9 @@ export default class CoC7ModelsItemStatusSheet extends CoC7ModelsItemGlobalSheet
     switch (partId) {
       case 'description':
         context._properties = []
-        for (const [key, value] of context.document.system.schema.getField('type').entries()) {
-          if (context.document.system.type[key] === true) {
-            context._properties.push(value.label)
+        for (const [value, field] of context.document.system.schema.getField('type').entries()) {
+          if (context.document.system.type[value] === true) {
+            context._properties.push(field.label)
           }
         }
         context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
@@ -99,12 +99,12 @@ export default class CoC7ModelsItemStatusSheet extends CoC7ModelsItemGlobalSheet
         break
       case 'details':
         context._types = []
-        for (const [key, value] of context.document.system.schema.getField('type').entries()) {
+        for (const [value, field] of context.document.system.schema.getField('type').entries()) {
           context._types.push({
-            id: key,
-            name: value.label,
-            tooltip: value.hint,
-            isEnabled: context.document.system.type[key] === true
+            value,
+            label: field.label,
+            tooltip: field.hint,
+            isEnabled: context.document.system.type[value] === true
           })
         }
         context.enrichedDescriptionNotes = await foundry.applications.ux.TextEditor.implementation.enrichHTML(

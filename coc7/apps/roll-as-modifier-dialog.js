@@ -110,7 +110,7 @@ export default class CoC7RollAsModifierDialog extends foundry.applications.api.H
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog', 'roll-as-modifier'],
+    classes: ['coc7-sheet'],
     window: {
       title: 'CoC7.RollAsModifier.Title',
       contentClasses: [
@@ -223,12 +223,12 @@ export default class CoC7RollAsModifierDialog extends foundry.applications.api.H
           context._modifier = []
           context.modifier = this.coc7Config.modifier
           const options = Object.keys(CoC7RollAsModifierDialog.MODIFIER_NAMES)
-          for (const id of options) {
+          for (const value of options) {
             context._modifier.push({
-              id,
-              name: CoC7RollAsModifierDialog.MODIFIER_NAMES[id],
+              value,
+              label: game.i18n.localize(CoC7RollAsModifierDialog.MODIFIER_NAMES[value]),
               tooltip: '',
-              isEnabled: this.coc7Config.modifier === id
+              isEnabled: this.coc7Config.modifier === value
             })
           }
         }
@@ -236,12 +236,12 @@ export default class CoC7RollAsModifierDialog extends foundry.applications.api.H
           context._type = []
           context.type = this.coc7Config.type
           const options = Object.keys(CoC7RollAsModifierDialog.TYPE_NAMES)
-          for (const id of options) {
+          for (const value of options) {
             context._type.push({
-              id,
-              name: CoC7RollAsModifierDialog.TYPE_NAMES[id],
+              value,
+              label: game.i18n.localize(CoC7RollAsModifierDialog.TYPE_NAMES[value]),
               tooltip: '',
-              isEnabled: this.coc7Config.type === id
+              isEnabled: this.coc7Config.type === value
             })
           }
         }
@@ -249,12 +249,12 @@ export default class CoC7RollAsModifierDialog extends foundry.applications.api.H
           context._activeEffect = []
           context.activeEffect = this.coc7Config.activeEffect
           const options = Object.keys(CoC7RollAsModifierDialog.ACTIVE_EFFECT_METHOD_NAMES)
-          for (const id of options) {
+          for (const value of options) {
             context._activeEffect.push({
-              id,
-              name: CoC7RollAsModifierDialog.ACTIVE_EFFECT_METHOD_NAMES[id],
+              value,
+              label: game.i18n.localize(CoC7RollAsModifierDialog.ACTIVE_EFFECT_METHOD_NAMES[value]),
               tooltip: '',
-              isEnabled: this.coc7Config.activeEffect === id
+              isEnabled: this.coc7Config.activeEffect === value
             })
           }
         }
@@ -264,12 +264,12 @@ export default class CoC7RollAsModifierDialog extends foundry.applications.api.H
           case CoC7RollAsModifierDialog.TYPES.ATTRIBUTE:
             {
               const options = CoC7RollAsModifierDialog.ATTRIBUTES
-              for (const key of options) {
-                const val = CONFIG.Actor.dataModels.character.defineSchema().attribs.getField(key).hint ?? false
-                if (val) {
+              for (const value of options) {
+                const label = CONFIG.Actor.dataModels.character.defineSchema().attribs.getField(value).hint ?? false
+                if (label) {
                   context._values.push({
-                    key,
-                    name: game.i18n.localize(val)
+                    value,
+                    label
                   })
                 }
               }
@@ -278,26 +278,26 @@ export default class CoC7RollAsModifierDialog extends foundry.applications.api.H
           case CoC7RollAsModifierDialog.TYPES.CHARACTERISTIC:
             {
               const options = CoC7RollAsModifierDialog.CHARACTERISTICS
-              for (const key of options) {
-                const val = CONFIG.Actor.dataModels.character.defineSchema().characteristics.getField(key).hint ?? false
-                if (val) {
+              for (const value of options) {
+                const label = CONFIG.Actor.dataModels.character.defineSchema().characteristics.getField(value).hint ?? false
+                if (label) {
                   context._values.push({
-                    key,
-                    name: game.i18n.localize(val)
+                    value,
+                    label
                   })
                 }
               }
             }
             break
           case CoC7RollAsModifierDialog.TYPES.SKILL:
-            for (const key of Object.keys(this.coc7Config.allSkills)) {
+            for (const value of Object.keys(this.coc7Config.allSkills)) {
               context._values.push({
-                key,
-                name: game.i18n.localize(this.coc7Config.allSkills[key])
+                value,
+                label: this.coc7Config.allSkills[value]
               })
             }
         }
-        context._values.sort(CoC7Utilities.sortByNameKey)
+        context._values.sort(CoC7Utilities.sortByLabelKey)
         break
       case 'footer':
         context.buttons = [

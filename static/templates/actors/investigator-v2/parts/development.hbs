@@ -11,11 +11,7 @@
           <div class="current-value"><span>{{totalPersonal}}</span></div>
           <div class="separator">/</div>
           <div class="max-value">
-            {{#if allowCharCreation}}
-              <input type="text" name="system.development.personal" value="{{document.system.development.personal}}" />
-            {{else}}
-              <span>{{document.system.development.personal}}</span>
-            {{/if}}
+            <input type="text" name="system.development.personal" value="{{document.system.development.personal}}" />
           </div>
         </div>
       </div>
@@ -25,11 +21,7 @@
           <div class="current-value"><span>{{totalOccupation}}</span></div>
           <div class="separator">/</div>
           <div class="max-value">
-            {{#if allowCharCreation}}
-              <input type="text" name="system.development.occupation" value="{{document.system.development.occupation}}" />
-            {{else}}
-              <span>{{document.system.development.occupation}}</span>
-            {{/if}}
+            <input type="text" name="system.development.occupation" value="{{document.system.development.occupation}}" />
           </div>
         </div>
       </div>
@@ -40,11 +32,7 @@
             <div class="current-value"><span>{{totalArchetype}}</span></div>
             <div class="separator">/</div>
             <div class="max-value">
-              {{#if allowCharCreation}}
-                <input type="text" name="system.development.archetype" value="{{document.system.development.archetype}}" />
-              {{else}}
-                <span>{{document.system.development.archetype}}</span>
-              {{/if}}
+              <input type="text" name="system.development.archetype" value="{{document.system.development.archetype}}" />
             </div>
           </div>
         </div>
@@ -63,10 +51,10 @@
   {{/if}}
   {{#if allowDevelopment}}
     {{#if hasDevelopmentPhase}}
-      <button class="skill-development button" title="{{localize 'CoC7.DevelopmentPhase'}}">{{localize 'CoC7.DevelopmentPhase'}}</button>
+      <button class="skill-development">{{localize 'CoC7.DevelopmentPhase'}}</button>
     {{/if}}
     {{#if developmentRollForLuck}}
-      <button class="luck-development button" title="{{localize 'CoC7.RecoverLuckPoints'}}">{{localize 'CoC7.RecoverLuckPoints'}}</button>
+      <button class="luck-development">{{localize 'CoC7.RecoverLuckPoints'}}</button>
     {{/if}}
   {{/if}}
   {{#if (or allowCharCreation allowDevelopment)}}

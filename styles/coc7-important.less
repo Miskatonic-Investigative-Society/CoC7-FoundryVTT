@@ -1,0 +1,85 @@
+body {
+  ul.item-list {
+    li.item,
+    li.items-header {
+      > * {
+        flex: 1;
+      }
+    }
+  }
+
+  .application.coc7-sheet label.flex-auto,
+  .flex-auto,
+  ul.item-list li.item .flex-auto,
+  ul.item-list li.items-header .flex-auto {
+    flex: 0 0 auto;
+  }
+
+  .application.coc7-sheet label.flex-none,
+  .flex-none,
+  ul.item-list li.item .flex-none,
+  ul.item-list li.items-header .flex-none {
+    flex: none;
+  }
+
+  .application.coc7-sheet label.flex-single,
+  .flex-single,
+  ul.item-list li.item .flex-single,
+  ul.item-list li.items-header .flex-single {
+    flex: 1;
+  }
+
+  .application.coc7-sheet label.flex-double,
+  .flex-double,
+  ul.item-list li.item .flex-double,
+  ul.item-list li.items-header .flex-double {
+    flex: 2;
+  }
+
+  .application.coc7-sheet label.flex-triple,
+  .flex-triple,
+  ul.item-list li.item .flex-triple,
+  ul.item-list li.items-header .flex-triple {
+    flex: 3;
+  }
+
+  .application.coc7-sheet label.flex-full,
+  .flex-full,
+  ul.item-list li.item .flex-full,
+  ul.item-list li.items-header .flex-full {
+    flex: 0 0 100%;
+  }
+
+  /* Restore FoundryVTT styles */
+  .message-content h4.dice-total {
+    margin: 0;
+    color: inherit;
+    font-family: var(--font-body);
+  }
+
+  .application.coc7-sheet section.window-content,
+  .application section.window-content prose-mirror,
+  .application section.window-content .journal-entry-content {
+    .roll-table-embed h4 {
+      font-weight: bold;
+      text-transform: none;
+      margin: 0;
+      color: inherit;
+      font-family: var(--font-body);
+    }
+  }
+
+  // Replace FoundryVTT styles
+  .application {
+    font-size: var(--font-size-13);
+  }
+
+  .settings-sidebar .info .title {
+    font-size: var(--font-size-30);
+  }
+
+  a.button:not(.icon),
+  button:not(.icon) {
+    font-size: var(--font-size-13);
+  }
+}

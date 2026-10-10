@@ -8,9 +8,7 @@
         <img class="portrait open-actor" data-actor-uuid="{{targetUuid}}" src="{{itemImg}}" data-tooltip="{{itemName}}" />
       {{/if}}
     </div>
-    <div class="card-title">
-      {{itemName}}
-    </div>
+    <div class="card-title">{{itemName}}</div>
     <div class="actor-portrait right-portrait">
       <img class="portrait" data-actor-uuid="{{attackerUuid}}" src="{{attackerImg}}" data-tooltip="{{attackerName}}" />
     </div>
@@ -18,7 +16,7 @@
   {{#if (or itemImg rolled)}}
     <div class="coc7-chat-description flexcol">
       {{#if enrichedItemDescriptionValue}}
-        <div class="coc7-formatted-text">
+        <div class="overflowable">
           {{{enrichedItemDescriptionValue}}}
         </div>
       {{/if}}

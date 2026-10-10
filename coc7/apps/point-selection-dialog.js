@@ -12,7 +12,7 @@ export default class CoC7PointSelectionDialog extends foundry.applications.api.H
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       title: 'CoC7.InvestigatorWizard.OccupationSkillPoints',
       contentClasses: [
@@ -47,11 +47,16 @@ export default class CoC7PointSelectionDialog extends foundry.applications.api.H
   async _onRender (context, options) {
     await super._onRender(context, options)
 
-    this.element.querySelectorAll('.selectable').forEach((element) => element.addEventListener('click', async (event) => {
-      event.preventDefault()
-      this.coc7Config.selected = event.currentTarget.dataset.key
-      this.render({ force: true })
-    }))
+    this.element.querySelectorAll('[data-action]').forEach((element) => {
+      element.addEventListener('click', async (event) => {
+        switch (event.currentTarget.dataset.action) {
+          case 'selectable':
+            this.coc7Config.selected = event.currentTarget.dataset.key
+            this.render({ force: true })
+            break
+        }
+      })
+    })
   }
 
   /**

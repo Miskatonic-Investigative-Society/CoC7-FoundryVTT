@@ -12,7 +12,7 @@ export default class CoC7CharacteristicSelectionDialog extends foundry.applicati
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       contentClasses: [
         'standard-form'
@@ -49,10 +49,16 @@ export default class CoC7CharacteristicSelectionDialog extends foundry.applicati
   async _onRender (context, options) {
     await super._onRender(context, options)
 
-    this.element.querySelectorAll('.selectable').forEach((element) => element.addEventListener('click', async (event) => {
-      this.coc7Config.resolve(element.dataset.key)
-      this.close()
-    }))
+    this.element.querySelectorAll('[data-action]').forEach((element) => {
+      element.addEventListener('click', async (event) => {
+        switch (event.currentTarget.dataset.action) {
+          case 'selectable':
+            this.coc7Config.resolve(element.dataset.key)
+            this.close()
+            break
+        }
+      })
+    })
   }
 
   /**

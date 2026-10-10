@@ -5,9 +5,9 @@
         <div class="participant flexrow" data-uuid={{participant.uuid}}>
           <div class="food-chain{{#if participant.chaser}} chaser{{else}} prey{{/if}}" data-action="participantChaser">
             {{#if participant.chaser}}
-              <a><i class="game-icon game-icon-moon-claws"></i></a>
+              <a><i class="game-icon game-icon-moon-claws fa-fw"></i></a>
             {{else}}
-              <a><i class="fa-solid fa-running"></i></a>
+              <a><i class="fa-solid fa-running fa-fw"></i></a>
             {{/if}}
           </div>
           <div class="p-icon{{#if participant.isActor}} open-actor{{/if}}" data-actor-uuid="{{participant.docUuid}}">
@@ -27,29 +27,29 @@
           </select>
           <input class="right-text" type="text"{{#if participant.hasSpeedCheckValue}} readonly{{else}} data-set="participant.speedCheck.score"{{/if}} value="{{participant.speedCheck.score}}" />
           {{#if participant.rolledSpeedCheck}}
-            <div class="inline-roll-data{{#if participant.speedCheckResult.isCritical}} critical{{else if participant.speedCheckResult.isFumble}} fumble{{else if participant.speedCheckResult.isRegularFailure}} failure{{else if participant.speedCheckResult.isSuccess}} success{{/if}}" data-tooltip="{{participant.speedCheckResult.tooltip}}" data-tooltip-class="coc7-wider-tooltip"><i class="game-icon game-icon-d10"></i> {{participant.speedCheckResult.value}}</div>
+            <div class="inline-roll-data{{#if participant.speedCheckResult.isCritical}} critical{{else if participant.speedCheckResult.isFumble}} fumble{{else if participant.speedCheckResult.isRegularFailure}} failure{{else if participant.speedCheckResult.isSuccess}} success{{/if}}" data-tooltip="{{participant.speedCheckResult.tooltip}}" data-tooltip-class="coc7-wider-tooltip"><i class="game-icon game-icon-d10 fa-fw"></i> {{participant.speedCheckResult.value}}</div>
           {{else if participant.rollingSpeedCheck}}
-            <div class="inline-roll-data"><i class="game-icon game-icon-d10"></i> ??</div>
+            <div class="inline-roll-data"><i class="game-icon game-icon-d10 fa-fw"></i> ??</div>
           {{else if participant.rollableSpeedCheck}}
             <div class="inline-roll-request">
-              <a class="item-control" data-action="rollSpeedCheck"><i class="game-icon game-icon-d10"></i></a>
+              <a class="item-control" data-action="rollSpeedCheck"><i class="game-icon game-icon-d10 fa-fw"></i></a>
             </div>
           {{/if}}
           <div class="p-adjust">
             {{#if (lt participant.movAdjustment 0)}}
-              <i class="fa-solid fa-down"></i>
+              <i class="fa-solid fa-down fa-fw"></i>
             {{else if (gt participant.movAdjustment 0)}}
-              <i class="fa-solid fa-up"></i>
+              <i class="fa-solid fa-up fa-fw"></i>
             {{else}}
-              <i class="fa-solid fa-equals"></i>
+              <i class="fa-solid fa-equals fa-fw"></i>
             {{/if}}
           </div>
           <div class="p-modified-mov{{participant.adjustedMovClasses}}">{{participant.adjustedMov}}</div>
           <div class="p-control">
             {{#if (or participant.rolledSpeedCheck participant.rollingSpeedCheck)}}
-              <a class="item-control" data-action="resetRoll"><i class="fa-solid fa-undo"></i></a>
+              <a class="item-control" data-action="resetRoll"><i class="fa-solid fa-undo fa-fw"></i></a>
             {{else}}
-              <a class="item-control" data-action="deleteParticipant"><i class="fa-solid fa-times"></i></a>
+              <a class="item-control" data-action="deleteParticipant"><i class="fa-solid fa-times fa-fw"></i></a>
             {{/if}}
           </div>
         </div>
@@ -57,7 +57,7 @@
     </div>
     <div class="new-participant flexcol">
       <div class="add-sign flexcol">
-        <i class="fa-regular fa-plus"></i>
+        <i class="fa-regular fa-plus fa-fw"></i>
       </div>
     </div>
   {{/if}}

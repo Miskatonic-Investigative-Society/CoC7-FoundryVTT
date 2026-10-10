@@ -13,7 +13,7 @@
       <div class="dice-formula{{#if diceGroup.isCritical}} critical{{else if diceGroup.isFumble}} fumble{{else if diceGroup.isSuccess}} success{{else}} failure{{/if}}">
         {{#if (ne diceGroup.successLevelIcons.hint '')}}
           {{#each diceGroup.successLevelIcons.icons as |icon|}}
-            <i class="fa-solid fa-{{icon}}"></i>
+            <i class="fa-solid fa-{{icon}} fa-fw"></i>
           {{/each}}
         {{/if}}
       </div>

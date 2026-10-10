@@ -839,7 +839,7 @@ export default class CoC7ChatCombatRanged {
         element.addEventListener('change', event => CoC7ChatCombatRanged._onChangeEvent(event, message))
       })
     }
-    html.querySelectorAll('.coc7-formatted-text').forEach((element) => {
+    html.querySelectorAll('.overflowable').forEach((element) => {
       const div = document.createElement('div')
       div.id = 'temporary-measure-' + Math.floor(Math.random() * 100)
       div.style.width = 'var(--sidebar-width)'
@@ -979,13 +979,13 @@ export default class CoC7ChatCombatRanged {
     const attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable))) ?? []
     const attackerPoolDisabled = attackerTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
     data.attackerTalent = await Promise.all(attackerTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
-    for (const key in dicePoolReasons) {
-      const type = (dicePoolReasons[key].forBonus ? 'poolBonus' : (dicePoolReasons[key].forPenalty ? 'poolPenalty' : ''))
+    for (const value in dicePoolReasons) {
+      const type = (dicePoolReasons[value].forBonus ? 'poolBonus' : (dicePoolReasons[value].forPenalty ? 'poolPenalty' : ''))
       if (type) {
         const row = {
-          key,
-          name: game.i18n.localize(dicePoolReasons[key].name),
-          tooltip: game.i18n.localize(dicePoolReasons[key].tooltip)
+          value,
+          label: game.i18n.localize(dicePoolReasons[value].label),
+          tooltip: game.i18n.localize(dicePoolReasons[value].tooltip)
         }
         data[type].push(row)
       }
@@ -1025,12 +1025,12 @@ export default class CoC7ChatCombatRanged {
         poolModifier -= this.#shots.length
       }
       for (const poolRow of data.poolBonus) {
-        if (data.targets[offset].poolKeys.includes(poolRow.key)) {
+        if (data.targets[offset].poolKeys.includes(poolRow.value)) {
           poolModifier++
         }
       }
       for (const poolRow of data.poolPenalty) {
-        if (data.targets[offset].poolKeys.includes(poolRow.key)) {
+        if (data.targets[offset].poolKeys.includes(poolRow.value)) {
           poolModifier--
         }
       }
@@ -1132,7 +1132,7 @@ export default class CoC7ChatCombatRanged {
     }
     if (typeof this.message?.whisper === 'undefined') {
       /* // FoundryVTT V13 */
-      if (game.release.generation < 14) {
+      if (game.release.generation === 13) {
         if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'rollMode'))) {
           chatData.whisper = ChatMessage.getWhisperRecipients('GM')
         } else if (CHAT_MESSAGE_MODE.BLIND === game.settings.get('core', 'rollMode')) {

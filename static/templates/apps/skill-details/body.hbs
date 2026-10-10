@@ -1,12 +1,14 @@
-<section class="tab flexcol scrollable active">
-  <div class="flexrow" style="flex: 1; align-items: stretch;">
+<section class="tab flexcol filled-box no-tabs active">
+  <div class="flexrow flex-single tall-columns">
     <div class="properties-list">
       {{#each _properties}}
         <div class="property">{{localize this}}</div>
       {{/each}}
     </div>
-    <fieldset class="item-description coc7-formatted-text flexcol" style="flex: 1; margin-right: 8px;">
-      {{{enrichedDescriptionValue}}}
+    <fieldset class="flexcol flex-single">
+      <div class="prosemirror flex-single">
+        <div class="editor-content">{{{enrichedDescriptionValue}}}</div>
+      </div>
     </fieldset>
   </div>
 </section>

@@ -93,7 +93,7 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
       price: new fields.TypedObjectField(
         new fields.StringField({ nullable: true, initial: null }),
         {
-          validateKey: (key) => typeof ERAS[key] !== 'undefined'
+          validateKey: (value) => typeof ERAS[value] !== 'undefined'
         }
       )
     }
@@ -128,24 +128,24 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
 
     if (skills.length) {
       output.labels.push({
-        name: game.i18n.localize((skills.length === 1 ? 'CoC7.Skill' : 'CoC7.Skills')),
+        label: game.i18n.localize((skills.length === 1 ? 'CoC7.Skill' : 'CoC7.Skills')),
         value: skills.join('/')
       })
     }
 
     output.labels.push({
-      name: game.i18n.localize('CoC7.WeaponUsesPerRound'),
+      label: game.i18n.localize('CoC7.WeaponUsesPerRound'),
       value: CoC7ModelsItemWeaponSystem.usesPerRoundString(object)
     })
 
     output.labels.push({
-      name: game.i18n.localize('CoC7.WeaponMalfunction'),
+      label: game.i18n.localize('CoC7.WeaponMalfunction'),
       value: object.system.malfunction ? object.system.malfunction : '-'
     })
 
     if (object.system.bullets) {
       output.labels.push({
-        name: game.i18n.localize('CoC7.WeaponBulletsInMag'),
+        label: game.i18n.localize('CoC7.WeaponBulletsInMag'),
         value: object.system.bullets
       })
     }

@@ -59,7 +59,7 @@ export default class CoC7Updater {
           window: { title: 'CoC7.Migrate.Title' },
           content: game.i18n.format(Object.keys(currentModules).length === 0 ? 'CoC7.Migrate.Message' : 'CoC7.Migrate.WithModulesMessage', {
             version: game.system.version,
-            modules: '<ul style="margin: 0"><li>' + Object.keys(currentModules).map(mod => game.modules.get(mod).title).join('</li><li>') + '</li></ul>'
+            modules: '<ul class="without-margin"><li>' + Object.keys(currentModules).map(mod => game.modules.get(mod).title).join('</li><li>') + '</li></ul>'
           }),
           buttons: [{
             action: 'cancel',
@@ -1244,6 +1244,27 @@ export default class CoC7Updater {
           await CoC7ChatChaseObstacle.migrateOlderMessages({ offset, updates, deleteIds })
         } catch (e) {
           ui.notifications.error('CoC7.Errors.UnableToMigrateMessages', { localize: true })
+        }
+      } else {
+        let changed = false
+        let content = message.content
+        if (message.content.indexOf('coc7-book-gains') > -1) {
+          content = content.replace(/\bcoc7-book-gains-header\b/g, 'coc7-header').replace(/\bcoc7-book-gains-row\b/g, 'coc7-row').replace(/\bcoc7-book-gains\b/g, 'coc7-table').replace(/\bcoc7-spell-gains-header\b/g, 'coc7-header').replace(/\bcoc7-spell-gains-row\b/g, 'coc7-row')
+          changed = true
+        }
+        if (message.content.indexOf('coc7-target-name') > -1) {
+          content = content.replace(/\bcoc7-target-name\b/g, 'coc7-chat-content')
+          changed = true
+        }
+        if (['CoC7ChatCombatMelee', 'CoC7ChatCombatRanged', 'CoC7ChatDamage'].includes(message.flags[FOLDER_ID]?.load?.as) && message.content.indexOf('coc7-formatted-text') > -1) {
+          content = content.replace(/\bcoc7-formatted-text\b/g, 'overflowable')
+          changed = true
+        }
+        if (changed) {
+          updates.push({
+            _id: message.id,
+            content
+          })
         }
       }
     }

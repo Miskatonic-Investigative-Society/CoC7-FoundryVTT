@@ -83,7 +83,7 @@
       {{/if}}
       {{#if tryToBreak}}
         <div class="coc7-card-buttons flexrow">
-          <div style="flex: 3">{{localize 'CoC7.ObstacleDamage'}}: {{{obstacleDamageRoll}}} (<i class="game-icon game-icon-life-bar" data-tooltip="CoC7.HitPoints"></i>{{obstacle.HitPoints}})</div>
+          <div class="flex-triple">{{localize 'CoC7.ObstacleDamage'}}: {{{obstacleDamageRoll}}} (<i class="game-icon game-icon-life-bar" data-tooltip="CoC7.HitPoints"></i>{{obstacle.HitPoints}})</div>
           <div class="flexrow">
             <input type="text" data-change-set="totalObstacleDamage" value="{{totalObstacleDamage}}" />
             <a class="item-control{{#if obstacleDestroyed}} switched-on{{/if}} larger-icon" data-action="setValue" data-set="obstacleDestroyed" data-tooltip="CoC7.RemoveObstacle"><i class="game-icon game-icon-wrecking-ball"></i></a>
@@ -92,12 +92,12 @@
       {{/if}}
       {{#if (and obstacle.hasDamage (not isSuccess))}}
         <div class="coc7-card-buttons flexrow">
-          <div style="flex: 3">{{localize 'CoC7.DamageInflicted'}}: {{{failedCheckDamageRoll}}}{{#unless ignoreArmor}} - <i class="game-icon game-icon-armor-upgrade"></i>{{targetArmor}}{{/unless}}</div>
+          <div class="flex-triple">{{localize 'CoC7.DamageInflicted'}}: {{{failedCheckDamageRoll}}}{{#unless ignoreArmor}} - <i class="game-icon game-icon-armor-upgrade"></i>{{targetArmor}}{{/unless}}</div>
           <input type="text" data-change-set="totalPlayerDamageTaken" value="{{totalPlayerDamageTaken}}" />
         </div>
       {{/if}}
       <div class="coc7-card-buttons flexrow">
-        <div style="flex: 3">{{localize 'CoC7.ActionCost'}}{{#if actionLost}}: {{{failedActionCostRoll}}}{{/if}}</div>
+        <div class="flex-triple">{{localize 'CoC7.ActionCost'}}{{#if actionLost}}: {{{failedActionCostRoll}}}{{/if}}</div>
         <input type="text" data-change-set="totalActionCost" value="{{totalActionCost}}" />
       </div>
       <div class="coc7-card-buttons flexrow">
@@ -119,7 +119,7 @@
                   <div></div>
                   <button class="keeper-only-control coc7-short-button{{#if ignoreArmor}} switched-on{{/if}}" data-action="setValue" data-set="ignoreArmor">{{#if ignoreArmor}}<i class="game-icon game-icon-armor-downgrade"></i>{{else}}<i class="game-icon game-icon-armor-upgrade"></i>{{/if}}</button>
                   {{#unless ignoreArmor}}
-                    <label style="flex: 0 0 auto;">{{localize 'CoC7.Armor'}}:</label>
+                    <label class="flex-auto">{{localize 'CoC7.Armor'}}:</label>
                     <input type="text" data-change-set="targetArmor" value="{{targetArmor}}" />
                     {{#if isArmorFormula}}
                       <button class="keeper-only-control coc7-short-button" data-action="rollArmor"><i class="fa-solid fa-dice"></i></button>
@@ -128,15 +128,15 @@
                 </div>
               {{/if}}
               <div class="coc7-card-buttons flexrow">
-                <div class="flexrow" style="gap: 0.25rem;">
+                <div class="separated flexrow">
                   {{#unless obstacle.isBarrier}}
-                    <a class="item-control{{#if obstacle.hasActionCost}} switched-on{{/if}} larger-icon" data-action="setValue" data-set="obstacle.hasActionCost" data-tooltip="CoC7.ActionCostOnFail"><i class="fas fa-bahai"></i></a>
+                    <a class="item-control{{#if obstacle.hasActionCost}} switched-on{{/if}} larger-icon" data-action="setValue" data-set="obstacle.hasActionCost" data-tooltip="CoC7.ActionCostOnFail"><i class="fa-solid fa-bahai"></i></a>
                     {{#if obstacle.hasActionCost}}
                       <input type="text" data-change-set="obstacle.failedActionCost" value="{{obstacle.failedActionCost}}" />
                     {{/if}}
                   {{/unless}}
                 </div>
-                <div class="flexrow" style="gap: 0.25rem;">
+                <div class="separated flexrow">
                   <a class="item-control{{#if obstacle.hasDamage}} switched-on{{/if}} larger-icon" data-action="setValue" data-set="obstacle.hasDamage" data-tooltip="CoC7.DamageOnFail"><i class="game-icon game-icon-broken-bone"></i></a>
                   {{#if obstacle.hasDamage}}
                     <input type="text" data-change-set="obstacle.failedCheckDamage" value="{{obstacle.failedCheckDamage}}" />
@@ -217,7 +217,7 @@
             {{#if (eq weaponKey 'other')}}
               <div class="coc7-card-buttons flexrow">
                 <div></div>
-                <div class="flexrow" style="gap: 0.25rem;">
+                <div class="separated flexrow">
                   <div class="larger-icon" data-tooltip="CoC7.DamageInflicted"><i class="game-icon game-icon-rolling-dices"></i></div>
                   <input type="text" data-change-set="weaponOtherDamage" value="{{weaponOtherDamage}}" />
                 </div>
@@ -269,7 +269,7 @@
       <span class="tag movement-action">
         {{localize 'CoC7.Actions'}}
         {{#each movementActionArray as |actionClass|}}
-          <i class="fas fa-bahai {{actionClass}}"></i>
+          <i class="fa-solid fa-bahai {{actionClass}}"></i>
         {{/each}}
       </span>
       {{#each statuses as |status|}}

@@ -13,7 +13,7 @@ export default class CoC7SanDataDialog extends foundry.applications.api.DialogV2
       sanReason: ''
     }
     await this.prompt({
-      classes: ['coc7', 'dialog', 'bonus-selection'],
+      classes: ['coc7-sheet'],
       window: {
         title: 'CoC7.SanDataSelectionWindow'
       },

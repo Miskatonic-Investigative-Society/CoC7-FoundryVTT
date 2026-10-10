@@ -2,7 +2,7 @@
   <div class="inventory">
     <div class="gear">
       {{#unless hasInventory}}
-        <h3 class="warning">{{localize 'CoC7.InventoryIsCurrentlyEmpty'}}</h3>
+        <h3>{{localize 'CoC7.InventoryIsCurrentlyEmpty'}}</h3>
       {{else}}
         {{#if showInventoryItems}}
           <section class="items">
@@ -10,7 +10,7 @@
               <h3 class="section-heading">{{localize 'CoC7.Items'}}</h3>
               {{#unless document.system.flags.locked}}
                 <div class="item-controls">
-                  <a class="item-control" data-action="item-add" data-type="item" data-tooltip="CoC7.AddItem"><i class="fa-regular fa-plus-circle"></i></a>
+                  <a class="item-control" data-action="item-add" data-type="item" data-tooltip="CoC7.AddItem"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
                 </div>
               {{/unless}}
             </header>
@@ -20,9 +20,9 @@
                   <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{system.quantity}} x {{item.name}}</div>
                   <div class="item-controls">
-                    <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
-                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                    <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade fa-fw"></i></a>
+                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
                   </div>
                 </li>
               {{/each}}
@@ -35,7 +35,7 @@
               <h3 class="section-heading">{{localize 'CoC7.Books'}}</h3>
               {{#unless document.system.flags.locked}}
                 <div class="item-controls">
-                  <a class="item-control" data-action="item-add" data-type="book" data-tooltip="CoC7.AddBook"><i class="fa-regular fa-plus-circle"></i></a>
+                  <a class="item-control" data-action="item-add" data-type="book" data-tooltip="CoC7.AddBook"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
                 </div>
               {{/unless}}
             </header>
@@ -45,9 +45,9 @@
                   <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
-                    <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
-                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                    <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade fa-fw"></i></a>
+                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
                   </div>
                 </li>
               {{/each}}
@@ -60,7 +60,7 @@
               <h3 class="section-heading">{{localize 'CoC7.Spells'}}</h3>
               {{#unless document.system.flags.locked}}
                 <div class="item-controls">
-                  <a class="item-control" data-action="item-add" data-type="spell" data-tooltip="CoC7.AddSpell"><i class="fa-regular fa-plus-circle"></i></a>
+                  <a class="item-control" data-action="item-add" data-type="spell" data-tooltip="CoC7.AddSpell"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
                 </div>
               {{/unless}}
             </header>
@@ -70,9 +70,9 @@
                   <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
-                    <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
-                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                    <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade fa-fw"></i></a>
+                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
                   </div>
                 </li>
               {{/each}}
@@ -90,8 +90,8 @@
                   <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
-                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
                   </div>
                 </li>
               {{/each}}
@@ -104,7 +104,7 @@
               <h3 class="section-heading">{{localize 'CoC7.Weapons'}}</h3>
               {{#unless document.system.flags.locked}}
                 <div class="item-controls">
-                  <a class="item-control" data-action="item-add" data-type="weapon" data-tooltip="CoC7.AddWeapon"><i class="fa-regular fa-plus-circle"></i></a>
+                  <a class="item-control" data-action="item-add" data-type="weapon" data-tooltip="CoC7.AddWeapon"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
                 </div>
               {{/unless}}
             </header>
@@ -114,9 +114,9 @@
                   <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
-                    <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
-                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                    <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade fa-fw"></i></a>
+                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
                   </div>
                 </li>
               {{/each}}
@@ -129,7 +129,7 @@
               <h3 class="section-heading">{{localize 'CoC7.Armor'}}</h3>
               {{#unless document.system.flags.locked}}
                 <div class="item-controls">
-                  <a class="item-control" data-action="item-add" data-type="armor" data-tooltip="CoC7.AddArmor"><i class="fa-regular fa-plus-circle"></i></a>
+                  <a class="item-control" data-action="item-add" data-type="armor" data-tooltip="CoC7.AddArmor"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
                 </div>
               {{/unless}}
             </header>
@@ -139,9 +139,9 @@
                   <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
-                    <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade"></i></a>
-                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                    <a class="item-control" data-action="item-trade" data-tooltip="CoC7.TradeItem"><i class="game-icon game-icon-trade fa-fw"></i></a>
+                    <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                    <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
                   </div>
                 </li>
               {{/each}}
@@ -160,8 +160,8 @@
                   <div class="item-name show-detail">{{item.name}}</div>
                   <div class="item-controls">
                     {{#if ../isKeeper}}
-                      <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
-                      <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                      <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
+                      <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
                     {{/if}}
                   </div>
                 </li>
@@ -176,10 +176,10 @@
         <div class="cash-row">
           {{#if document.system.flags.manualCredit}}
             <label>{{localize 'CoC7.ManualCreditValues'}}</label>
-            <div class="flex1"></div>
+            <div class="flex-single"></div>
           {{/if}}
           <div class="{{#if document.system.flags.manualCredit}}auto-off{{else}}auto-on{{/if}} item-control" data-action="toggle-flag" data-toggle-flag="manualCredit" data-tooltip="CoC7.AutoCreditValues">
-            <i class="fa-solid fa-cogs"></i>
+            <i class="fa-solid fa-cogs fa-fw"></i>
           </div>
         </div>
       {{/unless}}
@@ -224,7 +224,7 @@
         {{#if usingLuck.pulpRuleLuckUnconsciousness}}
           <div class="luck-spend-with-reset">
             <button class="item-control trigger-button" data-action="useLuckAvoidUnconsciousness">{{localize 'CoC7.UseLuckForAvoidUnconsciousness' luck=document.system.config.luckAvoidUnconsciousness}}</button>
-            <button class="item-control reset-button" data-action="resetLuckAvoidUnconsciousness"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+            <button class="item-control reset-button" data-action="resetLuckAvoidUnconsciousness"><i class="fa-solid fa-arrow-rotate-left fa-fw"></i></button>
           </div>
         {{/if}}
         {{#if usingLuck.pulpRuleLuckHeal}}

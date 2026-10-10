@@ -12,7 +12,7 @@ export default class CoC7CreateMythosEncounter extends foundry.applications.api.
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       contentClasses: [
         'standard-form'
@@ -50,11 +50,11 @@ export default class CoC7CreateMythosEncounter extends foundry.applications.api.
         context.isImmunity = this.coc7Config.type === 'immunity'
         context.encounterTypes = [
           {
-            key: 'encounter',
+            value: 'encounter',
             label: 'CoC7.SanityLossEncounter'
           },
           {
-            key: 'immunity',
+            value: 'immunity',
             label: 'CoC7.SanityLossImmunity'
           }
         ]

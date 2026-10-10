@@ -22,6 +22,7 @@ import CoC7PreCreateChatMessage from './hooks/pre-create-chat-message.js'
 import CoC7PreUpdateChatMessage from './hooks/pre-update-chat-message.js'
 import CoC7PreUpdateItem from './hooks/pre-update-item.js'
 import CoC7Ready from './hooks/ready.js'
+import CoC7RenderApplicationV2 from './hooks/render-application-v2.js'
 import CoC7RenderActorDirectory from './hooks/render-actor-directory.js'
 import CoC7RenderActorSheetV2 from './hooks/render-actor-sheet-v2.js'
 import CoC7RenderChatMessageHTML from './hooks/render-chat-message-html.js'
@@ -70,6 +71,7 @@ Hooks.on('preUpdateChatMessage', CoC7PreUpdateChatMessage)
 Hooks.on('preUpdateItem', CoC7PreUpdateItem)
 Hooks.on('renderActorDirectory', CoC7RenderActorDirectory)
 Hooks.on('renderActorSheetV2', CoC7RenderActorSheetV2)
+Hooks.on('renderApplicationV2', CoC7RenderApplicationV2)
 Hooks.on('renderChatMessageHTML', CoC7RenderChatMessageHTML)
 Hooks.on('renderCoC7ModelsActorCharacterSheetV2', CoC7RenderCoC7ModelsActorCharacterSheetV2)
 Hooks.on('renderCombatTracker', CoC7RenderCombatTracker)

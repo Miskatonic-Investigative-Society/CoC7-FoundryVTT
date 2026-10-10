@@ -84,7 +84,6 @@ function createFormGroup (rootId, type, key, title, value, options) {
  */
 export default function (application, element, context, options) {
   if (application.document instanceof CONFIG.JournalEntry.documentClass) {
-    const cssAdventureEntry = (application.document.getFlag(FOLDER_ID, 'css-adventure-entry') ?? false)
     const fixedAdventureHeading = (application.document.getFlag(FOLDER_ID, 'fixed-adventure-heading') ?? false)
     const journalCss = (application.document.getFlag(FOLDER_ID, 'journal-css') ?? '')
     const destination = element.querySelector('section[data-application-part="form"].standard-form')
@@ -93,10 +92,6 @@ export default function (application, element, context, options) {
       const legend = document.createElement('legend')
       legend.innerText = game.i18n.localize('CoC7.title')
       fieldset.append(legend)
-      {
-        const formGroup = createFormGroup(application.id, 'checkbox', 'css-adventure-entry', 'CoC7.Config.AdventureCSS', cssAdventureEntry)
-        fieldset.append(formGroup)
-      }
       {
         const formGroup = createFormGroup(application.id, 'checkbox', 'fixed-adventure-heading', 'CoC7.Config.FixedHeadingCSS', fixedAdventureHeading)
         fieldset.append(formGroup)
@@ -110,12 +105,6 @@ export default function (application, element, context, options) {
       application.options.form.handler = async (event, form, formData) => {
         await oldHandler.call(application, event, form, formData)
         const update = {}
-        if (formData.object['flags.' + FOLDER_ID + '.css-adventure-entry']) {
-          update['flags.' + FOLDER_ID + '.css-adventure-entry'] = formData.object['flags.' + FOLDER_ID + '.css-adventure-entry']
-        } else {
-          /* // FoundryVTT V13 */
-          update['flags.' + FOLDER_ID + '.-=css-adventure-entry'] = null
-        }
         if (formData.object['flags.' + FOLDER_ID + '.fixed-adventure-heading']) {
           update['flags.' + FOLDER_ID + '.fixed-adventure-heading'] = formData.object['flags.' + FOLDER_ID + '.fixed-adventure-heading']
         } else {
@@ -140,6 +129,7 @@ export default function (application, element, context, options) {
       }
     }
   } else if (application.document instanceof CONFIG.JournalEntryPage.documentClass && application.document.type === 'text') {
+    const fixedAdventureHeading = (application.document.getFlag(FOLDER_ID, 'fixed-adventure-heading') ?? '').toString()
     const fixedAdventureSubheading = (application.document.getFlag(FOLDER_ID, 'fixed-adventure-subheading') ?? '').toString()
     const destination = element.querySelector('section[data-application-part="form"].standard-form')
     if (destination) {
@@ -147,6 +137,10 @@ export default function (application, element, context, options) {
       const legend = document.createElement('legend')
       legend.innerText = game.i18n.localize('CoC7.title')
       fieldset.append(legend)
+      {
+        const formGroup = createFormGroup(application.id, 'text', 'fixed-adventure-heading', 'CoC7.Config.AdventureHeading', fixedAdventureHeading)
+        fieldset.append(formGroup)
+      }
       {
         const formGroup = createFormGroup(application.id, 'text', 'fixed-adventure-subheading', 'CoC7.Config.AdventureSubheading', fixedAdventureSubheading)
         fieldset.append(formGroup)
@@ -164,6 +158,16 @@ export default function (application, element, context, options) {
             update['flags.' + FOLDER_ID + '.-=fixed-adventure-subheading'] = null
           } else {
             update['flags.' + FOLDER_ID + '.fixed-adventure-subheading'] = new foundry.data.operators.ForcedDeletion()
+          }
+        }
+        if (formData.object['flags.' + FOLDER_ID + '.fixed-adventure-heading'].length) {
+          update['flags.' + FOLDER_ID + '.fixed-adventure-heading'] = formData.object['flags.' + FOLDER_ID + '.fixed-adventure-heading']
+        } else {
+          /* // FoundryVTT V13 */
+          if (game.release.generation === 13) {
+            update['flags.' + FOLDER_ID + '.-=fixed-adventure-heading'] = null
+          } else {
+            update['flags.' + FOLDER_ID + '.fixed-adventure-heading'] = new foundry.data.operators.ForcedDeletion()
           }
         }
         await application.document.update(update)

@@ -39,7 +39,7 @@
       {{else}}
         <input type="text" class="derived-attribute-edit derived-attribute-dailysan" {{#if attribs.san.activeEffectDailyLoss}} data-tooltip="CoC7.ModifiedByActiveEffect" {{/if}} name="system.attribs.san.dailyLoss" value="{{#if attribs.san.activeEffectDailyLoss}}{{attribs.san.sourceDailyLoss}}{{else}}{{attribs.san.dailyLoss}}{{/if}}" />
       {{/if}}
-      <div class="separator">/</div>
+      <span class="flex-auto">/</span>
       {{#if document.system.flags.locked}}
         <span class="derived-attribute-value derived-attribute-dailysan">{{document.system.attribs.san.dailyLimit}}</span>
       {{else}}

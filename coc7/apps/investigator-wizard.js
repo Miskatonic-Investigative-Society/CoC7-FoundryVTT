@@ -19,7 +19,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
   static DEFAULT_OPTIONS = {
     id: 'investigator-wizard-application',
     tag: 'form',
-    classes: ['coc7', 'dialog', 'investigator-wizard'],
+    classes: ['coc7-sheet'],
     window: {
       contentClasses: [
         'standard-form'
@@ -40,7 +40,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
     form: {
       template: 'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/body.hbs',
       scrollable: [
-        '.scroll-section'
+        '.scrollable'
       ]
     },
     footer: {
@@ -203,7 +203,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         }
       }
       if (missing.length) {
-        const era = game.i18n.format(ERAS[this.coc7Config.defaultEra]?.name ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: this.coc7Config.defaultEra })
+        const era = game.i18n.format(ERAS[this.coc7Config.defaultEra]?.label ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: this.coc7Config.defaultEra })
         ui.notifications.warn('CoC7.CoCIDFlag.error.documents-not-found', { format: { cocids: missing.join(', '), lang: game.i18n.lang, era } })
       }
     }
@@ -282,14 +282,14 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
 
     switch (context.coc7Config.step) {
       case context.pages.PAGE_INTRODUCTION:
-        context.era = game.i18n.format(ERAS[context.coc7Config.defaultEra]?.name ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: context.coc7Config.defaultEra })
+        context.era = game.i18n.format(ERAS[context.coc7Config.defaultEra]?.label ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: context.coc7Config.defaultEra })
         context.canNext = true
         break
 
       case context.pages.PAGE_CONFIGURATION:
         if (game.user.isGM) {
           context.setups = await this.filterCacheItemByCoCID(/^i\.setup\./)
-          context.setupOptions = context.setups.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+          context.setupOptions = context.setups.reduce((c, d) => { c.push({ value: d.flags.CoC7.cocidFlag.id, label: d.name }); return c }, [])
           context.occupations = await this.filterCacheItemByCoCID(/^i\.occupation\./)
           context.archetypes = await this.filterCacheItemByCoCID(/^i\.archetype\./)
           const setup = context.setups.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.defaultSetup)
@@ -312,10 +312,10 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             [CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER]: 'OWNERSHIP.OWNER'
           }
           context._eras = []
-          for (const [key, era] of Object.entries(ERAS)) {
+          for (const [value, era] of Object.entries(ERAS)) {
             context._eras.push({
-              id: key,
-              name: game.i18n.localize(era.name)
+              value,
+              label: game.i18n.localize(era.label)
             })
           }
           context.characteristicsMethods = CoC7InvestigatorWizard.CharacteristicsMethods
@@ -327,7 +327,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           } else if (context.coc7Config.quickFireValues.length) {
             context.characteristicsMethod = context.characteristicsMethods.METHOD_VALUES
           }
-          context._eras.sort(CoC7Utilities.sortByNameKey)
+          context._eras.sort(CoC7Utilities.sortByLabelKey)
           context.hasArchetypes = game.settings.get(FOLDER_ID, 'pulpRuleArchetype')
           context.canNext = true
         }
@@ -337,7 +337,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         if (context.coc7Config.defaultSetup === '') {
           context.setups = await this.filterCacheItemByCoCID(/^i\.setup\./)
           context.setups.sort(CoC7Utilities.sortByNameKey)
-          context.setupOptions = context.setups.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+          context.setupOptions = context.setups.reduce((c, d) => { c.push({ value: d.flags.CoC7.cocidFlag.id, label: d.name }); return c }, [])
           if (context.coc7Config.setup !== '') {
             const setup = context.setups.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.setup)
             if (typeof setup !== 'undefined') {
@@ -360,7 +360,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           context.canNext = true
         } else {
           context.archetypes.sort(CoC7Utilities.sortByNameKey)
-          context.archetypeOptions = context.archetypes.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+          context.archetypeOptions = context.archetypes.reduce((c, d) => { c.push({ value: d.flags.CoC7.cocidFlag.id, label: d.name }); return c }, [])
           if (context.coc7Config.archetype !== '') {
             const archetype = context.archetypes.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.archetype)
             if (typeof archetype !== 'undefined') {
@@ -480,12 +480,12 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                 for (const coreCharacteristic in archetype.system.coreCharacteristics) {
                   if (archetype.system.coreCharacteristics[coreCharacteristic]) {
                     context.coreCharacteristics.push({
-                      key: coreCharacteristic,
-                      name: game.i18n.format(context.setup.characteristics.find(c => c.key === coreCharacteristic)?.label ?? 'Unknown')
+                      value: coreCharacteristic,
+                      label: game.i18n.format(context.setup.characteristics.find(c => c.key === coreCharacteristic)?.label ?? 'Unknown')
                     })
                   }
                 }
-                context.coreCharacteristics.sort(CoC7Utilities.sortByNameKey)
+                context.coreCharacteristics.sort(CoC7Utilities.sortByLabelKey)
                 if (this.coc7Config.coreCharacteristic !== '') {
                   if (archetype.system.coreCharacteristicsFormula.enabled) {
                     context.setup.characteristics.find(c => c.key === this.coc7Config.coreCharacteristic).roll = archetype.system.coreCharacteristicsFormula.value
@@ -493,20 +493,20 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                 }
               }
             }
-            let empties = false
+            context.empties = false
             for (const key in context.coc7Config.setupPoints) {
               if (context.coc7Config.setupPoints[key] !== '') {
                 if (key !== 'luck') {
                   context.setup.total += parseInt(context.coc7Config.setupPoints[key], 10)
                 }
               } else {
-                empties = true
+                context.empties = true
               }
             }
             if (this.coc7Config.coreCharacteristic) {
               context.coreCharacteristic = this.coc7Config.coreCharacteristic.toLocaleUpperCase()
             }
-            if (!empties && this.coc7Config.age >= 15) {
+            if (!context.empties && this.coc7Config.age >= 15) {
               if ([context.characteristicsMethods.METHOD_ROLL, context.characteristicsMethods.METHOD_VALUES, context.characteristicsMethods.METHOD_CHOOSE].includes(context.characteristicsMethod)) {
                 context.canNext = true
               } else if (context.setup.total.toString() === context.setup.points.toString()) {
@@ -622,7 +622,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       case context.pages.PAGE_OCCUPATIONS:
         context.occupations = await this.filterCacheItemByCoCID(/^i\.occupation\./)
         context.occupations.sort(CoC7Utilities.sortByNameKey)
-        context.occupationOptions = context.occupations.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+        context.occupationOptions = context.occupations.reduce((c, d) => { c.push({ value: d.flags.CoC7.cocidFlag.id, label: d.name }); return c }, [])
         if (context.coc7Config.occupation !== '') {
           const occupation = context.occupations.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.occupation)
           if (typeof occupation !== 'undefined') {
@@ -700,6 +700,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
               }
             } else {
               group = 'other'
+              isPickable = isMultiple
             }
             let toggle = context.coc7Config.skillItems[key].rows[index].occupationToggle
             if (isPickable) {
@@ -986,12 +987,12 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           for (const item of options) {
             if (item.flags.CoC7.cocidFlag.id !== key && !item.system.properties.requiresname && !item.system.properties.picknameonly && !item.system.properties.own) {
               context.own[key].options.push({
-                name: item.name,
-                key: item.flags.CoC7.cocidFlag.id
+                label: item.name,
+                value: item.flags.CoC7.cocidFlag.id
               })
             }
           }
-          context.own[key].options.sort(CoC7Utilities.sortByNameKey)
+          context.own[key].options.sort(CoC7Utilities.sortByLabelKey)
         }
         context.canNext = true
         break
@@ -1169,7 +1170,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         this.element.querySelector('select[name=world-era]')?.addEventListener('change', async (event) => {
           const started = Date.now()
           this.element.querySelector('.era-change').style.display = 'block'
-          this.element.querySelector('.scroll-section').style.display = 'none'
+          this.element.querySelector('.scrollable').style.display = 'none'
           this.element.querySelector('footer.form-footer').style.display = 'none'
           this.coc7Config.defaultEra = event.target.value
           await game.settings.set(FOLDER_ID, 'worldEra', this.coc7Config.defaultEra)
@@ -1230,7 +1231,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           this.coc7Config.placeable = foundry.utils.duplicate(this.coc7Config.quickFireValues)
           this.render({ force: true })
         })
-        this.element.querySelector('button.roll_choose')?.addEventListener('click', async (event) => {
+        this.element.querySelector('button.roll-choose')?.addEventListener('click', async (event) => {
           event.preventDefault()
           if (this.coc7Config.setup !== '') {
             const setup = await this.getCacheItemByCoCID(this.coc7Config.setup)
@@ -1360,7 +1361,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_ATTRIBUTES:
-        this.element.querySelector('button.roll_edu')?.addEventListener('click', async (event) => {
+        this.element.querySelector('button.roll-edu')?.addEventListener('click', async (event) => {
           event.preventDefault()
           if (typeof this.coc7Config.requiresAgeAdjustments.edu !== 'undefined') {
             if (!this.coc7Config.requiresAgeAdjustments.edu.rolled && this.coc7Config.requiresAgeAdjustments.edu.total) {
@@ -1426,7 +1427,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
               break
           }
         }))
-        this.element.querySelector('button.roll_luck')?.addEventListener('click', async (event) => {
+        this.element.querySelector('button.roll-luck')?.addEventListener('click', async (event) => {
           const setup = await this.getCacheItemByCoCID(this.coc7Config.setup)
           if (setup) {
             const die = await new Roll(setup.system.characteristics.rolls.luck.toString()).evaluate()
@@ -1489,7 +1490,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           element.addEventListener('blur', async (event) => {
             const input = event.currentTarget
             const adjustment = input.dataset.adjustment
-            const row = input.closest('.points-row')
+            const row = input.closest('.item')
             const key = row.dataset.key
             const index = row.dataset.index
             if (typeof this.coc7Config.skillItems[key]?.rows[index][adjustment] !== 'undefined') {
@@ -1563,6 +1564,17 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             }
           }
           this.render({ force: true })
+        }))
+        this.element.querySelectorAll('button.backstory-table').forEach((element) => element.addEventListener('click', async (event) => {
+          const button = event.currentTarget
+          const index = button.dataset.index
+          const key = button.dataset.key
+          if (typeof this.coc7Config.bioSections[index] !== 'undefined') {
+            const table = await game[FOLDER_ID].cocid.fromCoCID(key)
+            if (table.length === 1) {
+              table[0].sheet.render({ force: true })
+            }
+          }
         }))
         break
     }
@@ -1931,7 +1943,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       if (typeof pageNumber !== 'undefined') {
         this.coc7Config.step = pageNumber
         // When moving step reset scroll height
-        const obj = this.element.querySelector('.scroll-section')
+        const obj = this.element.querySelector('.scrollable')
         if (obj && obj.scrollTop) {
           obj.scrollTop = 0
         }
@@ -1976,7 +1988,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           }
           this.coc7Config.step = pageNumber
           // When moving step reset scroll height
-          const obj = this.element.querySelector('.scroll-section')
+          const obj = this.element.querySelector('.scrollable')
           if (obj && obj.scrollTop) {
             obj.scrollTop = 0
           }

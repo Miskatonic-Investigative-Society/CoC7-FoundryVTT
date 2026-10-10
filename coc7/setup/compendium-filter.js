@@ -96,8 +96,8 @@ export default function () {
         }
       }
       selectEras.push('<option value="">' + game.i18n.localize('CoC7.All') + '</option>')
-      for (const era of Object.entries(ERAS).map(e => { return { id: e[0], name: game.i18n.localize(e[1].name) } }).sort(CoC7Utilities.sortByNameKey)) {
-        selectEras.push('<option value="' + era.id + '"' + (selectedEra === era.id ? ' selected="selected"' : '') + '>' + era.name + '</option>')
+      for (const era of Object.entries(ERAS).map(e => { return { value: e[0], label: game.i18n.localize(e[1].label) } }).sort(CoC7Utilities.sortByLabelKey)) {
+        selectEras.push('<option value="' + era.value + '"' + (selectedEra === era.value ? ' selected="selected"' : '') + '>' + era.label + '</option>')
       }
       let uncommon = game.i18n.localize('CoC7.SkillRarityShort')
       if (uncommon === 'CoC7.SkillRarityShort') {

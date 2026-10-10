@@ -167,7 +167,7 @@ export default class CoC7ActiveEffect {
       isSuppressed: effect.isSuppressed,
       isTemporary: effect.isTemporary,
       disabled: effect.disabled,
-      readable: (readable.length > 0 ? '<ul class="active-effect-adjustments"><li>' + readable.join('</li><li>') + '</li></ul>' : '')
+      readable: (readable.length > 0 ? '<ul class="without-margin"><li>' + readable.join('</li><li>') + '</li></ul>' : '')
     }
   }
 

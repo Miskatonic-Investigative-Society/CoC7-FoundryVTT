@@ -1,93 +1,93 @@
-<section class="tab details flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="details">
+<section class="tab details flexcol scrollable legend-fieldset {{tab.cssClass}}" data-group="primary" data-tab="details">
   {{#if tabs.details}}
     <fieldset class="flexrow">
       <legend>{{localize 'CoC7.SpellType'}}</legend>
       <div class="toggle-row flexrow">
         <div class="toggle-attributes flexrow" data-set="type">
           {{#each _types as |row|}}
-            <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+            <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.value}}"{{#if row.tooltip}} data-tooltip="{{row.tooltip}}"{{/if}}>{{localize row.label}}</button>
           {{/each}}
         </div>
       </div>
     </fieldset>
     <fieldset class="flexcol">
       <legend>{{localize 'CoC7.SpellCosts'}}</legend>
-      <div class="spell-cost-lists flexcol">
-        {{#each document.system.costList as |value index|}}
-          <div class="spell-cost-list flexrow" data-index="{{index}}" draggable="true">
+      <div class="adjustable-listbox flexcol">
+        {{#each document.system.costList as |row index|}}
+          <div class="adjustable-list-item" data-index="{{index}}" draggable="true">
             <div class="item-controls allow-drag">
               <i class="fa-solid fa-bars"></i>
             </div>
-            <div class="spell-cost-block flexcol" draggable="true">
-              <div class="spell-cost-row flexrow">
-                <select name="system.costList.{{index}}.type">{{selectOptions ../_costListTypes selected=value.type valueAttr='key' labelAttr='name'}}</select>
+            <div class="adjustable-item-block flexcol" draggable="true">
+              <div class="adjustable-item-row">
+                <select name="system.costList.{{index}}.type">{{selectOptions ../_costListTypes selected=row.type}}</select>
                 <label>{{localize 'CoC7.Spell.Costs.If'}}</label>
-                <div class="spell-cost-if"><input type="text" name="system.costList.{{index}}.if" value="{{value.if}}" placeholder="{{localize 'CoC7.Spell.Costs.VariablePlaceholder'}}"></div>
+                <input type="text" class="small" name="system.costList.{{index}}.if" value="{{row.if}}" placeholder="{{localize 'CoC7.Spell.Costs.VariablePlaceholder'}}">
               </div>
-              <div class="spell-cost-row flexrow">
-                {{#if (or (eq value.type 'promptRequireNumber') (eq value.type 'additionalCasterPromptRequireNumber') (eq value.type 'promptToggleButton'))}}
+              <div class="adjustable-item-row">
+                {{#if (or (eq row.type 'promptRequireNumber') (eq row.type 'additionalCasterPromptRequireNumber') (eq row.type 'promptToggleButton'))}}
                   <label>{{localize 'CoC7.Spell.Costs.PromptName'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.prompt" value="{{value.config.prompt}}"></div>
-                {{else if (or (eq value.type 'casterCost') (eq value.type 'additionalCasterCost'))}}
+                  <div><input type="text" name="system.costList.{{index}}.config.prompt" value="{{row.config.prompt}}"></div>
+                {{else if (or (eq row.type 'casterCost') (eq row.type 'additionalCasterCost'))}}
                   <label>{{localize 'CoC7.Spell.Costs.Modify'}}</label>
-                  <div><select name="system.costList.{{index}}.config.modify">{{selectOptions ../_costListCosts selected=value.config.modify valueAttr='key' labelAttr='name'}}</select></div>
-                {{else if (eq value.type 'castingTime')}}
+                  <div><select name="system.costList.{{index}}.config.modify">{{selectOptions ../_costListCosts selected=row.config.modify}}</select></div>
+                {{else if (eq row.type 'castingTime')}}
                   <label>{{localize 'CoC7.Spell.Costs.Text'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.value" value="{{value.config.value}}"></div>
-                {{else if (eq value.type 'additionalCasterPromptAdd')}}
+                  <div><input type="text" name="system.costList.{{index}}.config.value" value="{{row.config.value}}"></div>
+                {{else if (eq row.type 'additionalCasterPromptAdd')}}
                   <label>{{localize 'CoC7.Spell.Costs.PromptName'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.prompt" value="{{value.config.prompt}}"></div>
-                {{else if (eq value.type 'setVariable')}}
+                  <div><input type="text" name="system.costList.{{index}}.config.prompt" value="{{row.config.prompt}}"></div>
+                {{else if (eq row.type 'setVariable')}}
                   <label>{{localize 'CoC7.Spell.Costs.VariableName'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.variable" value="{{value.config.variable}}" placeholder="{{localize 'CoC7.Spell.Costs.VariablePlaceholder'}}"></div>
+                  <div><input type="text" name="system.costList.{{index}}.config.variable" value="{{row.config.variable}}" placeholder="{{localize 'CoC7.Spell.Costs.VariablePlaceholder'}}"></div>
                   <label>{{localize 'CoC7.Spell.Costs.Value'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.value" value="{{value.config.value}}"></div>
-                {{else if (eq value.type 'showVariable')}}
+                  <div><input type="text" name="system.costList.{{index}}.config.value" value="{{row.config.value}}"></div>
+                {{else if (eq row.type 'showVariable')}}
                   <label>{{localize 'CoC7.Spell.Costs.PromptName'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.prompt" value="{{value.config.prompt}}"></div>
-                {{else if (eq value.type 'promptShowText')}}
+                  <div><input type="text" name="system.costList.{{index}}.config.prompt" value="{{row.config.prompt}}"></div>
+                {{else if (eq row.type 'promptShowText')}}
                   <label>{{localize 'CoC7.Spell.Costs.PromptName'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.prompt" value="{{value.config.prompt}}"></div>
-                {{else if (eq value.type 'additionalInformation')}}
+                  <div><input type="text" name="system.costList.{{index}}.config.prompt" value="{{row.config.prompt}}"></div>
+                {{else if (eq row.type 'additionalInformation')}}
                   <label>{{localize 'CoC7.Spell.Costs.Text'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.prompt" value="{{value.config.prompt}}"></div>
+                  <div><input type="text" name="system.costList.{{index}}.config.prompt" value="{{row.config.prompt}}"></div>
                 {{/if}}
               </div>
-              <div class="spell-cost-row flexrow">
-                {{#if (or (eq value.type 'promptRequireNumber') (eq value.type 'additionalCasterPromptRequireNumber') (eq value.type 'promptToggleButton'))}}
+              <div class="adjustable-item-row">
+                {{#if (or (eq row.type 'promptRequireNumber') (eq row.type 'additionalCasterPromptRequireNumber') (eq row.type 'promptToggleButton'))}}
                   <label>{{localize 'CoC7.Spell.Costs.VariableName'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.variable" value="{{value.config.variable}}" placeholder="{{localize 'CoC7.Spell.Costs.VariablePlaceholder'}}"></div>
-                {{else if (or (eq value.type 'casterCost') (eq value.type 'additionalCasterCost'))}}
+                  <div><input type="text" name="system.costList.{{index}}.config.variable" value="{{row.config.variable}}" placeholder="{{localize 'CoC7.Spell.Costs.VariablePlaceholder'}}"></div>
+                {{else if (or (eq row.type 'casterCost') (eq row.type 'additionalCasterCost'))}}
                   <label>{{localize 'CoC7.Spell.Costs.Value'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.value" value="{{value.config.value}}"></div>
-                {{else if (eq value.type 'additionalCasterPromptAdd')}}
+                  <div><input type="text" name="system.costList.{{index}}.config.value" value="{{row.config.value}}"></div>
+                {{else if (eq row.type 'additionalCasterPromptAdd')}}
                   <label>{{localize 'CoC7.Spell.Costs.VariableName'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.variable" value="{{value.config.variable}}" placeholder="{{localize 'CoC7.Spell.Costs.VariablePlaceholder'}}"></div>
+                  <div><input type="text" name="system.costList.{{index}}.config.variable" value="{{row.config.variable}}" placeholder="{{localize 'CoC7.Spell.Costs.VariablePlaceholder'}}"></div>
                   <label>{{localize 'CoC7.Spell.Costs.GroupSize'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.step" value="{{value.config.step}}"></div>
+                  <div><input type="text" name="system.costList.{{index}}.config.step" value="{{row.config.step}}"></div>
                   <label>{{localize 'CoC7.Spell.Costs.Minimum'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.min" value="{{value.config.min}}"></div>
-                {{else if (eq value.type 'showVariable')}}
+                  <div><input type="text" name="system.costList.{{index}}.config.min" value="{{row.config.min}}"></div>
+                {{else if (eq row.type 'showVariable')}}
                   <label>{{localize 'CoC7.Spell.Costs.VariableName'}}</label>
-                  <div><input type="text" name="system.costList.{{index}}.config.variable" value="{{value.config.variable}}" placeholder="{{localize 'CoC7.Spell.Costs.VariablePlaceholder'}}"></div>
+                  <div><input type="text" name="system.costList.{{index}}.config.variable" value="{{row.config.variable}}" placeholder="{{localize 'CoC7.Spell.Costs.VariablePlaceholder'}}"></div>
                 {{/if}}
               </div>
             </div>
             <div class="item-controls item-controls-column" draggable="true">
-              <a class="item-control" data-action="cost-list-before" data-tooltip="CoC7.Spell.Costs.AddSectionBefore"><i class="fa-regular fa-plus-circle"></i></a>
-              <a class="item-control" data-action="cost-list-remove" data-tooltip="CoC7.Spell.Costs.DeleteSection"><i class="fa-regular fa-minus-circle"></i></a>
+              <a class="item-control" data-action="cost-list-before" data-tooltip="CoC7.Spell.Costs.AddSectionBefore"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
+              <a class="item-control" data-action="cost-list-remove" data-tooltip="CoC7.Spell.Costs.DeleteSection"><i class="fa-regular fa-minus-circle fa-fw"></i></a>
             </div>
           </div>
         {{/each}}
       </div>
       <div class="flexrow">
-        <label></label>
+        <div></div>
         <div class="item-controls">
-          <a class="item-control" data-action="cost-list-add"><i class="fa-regular fa-plus-circle"></i></a>
+          <a class="item-control" data-action="cost-list-add"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
         </div>
       </div>
     </fieldset>
-    <fieldset class="flexcol" style="flex: 1">
+    <fieldset class="flexcol flex-single">
       <legend>{{localize 'CoC7.AlternativeNames'}}</legend>
       <prose-mirror name="system.description.alternativeNames" value="{{document.system.description.alternativeNames}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedDescriptionAlternativeNames}}}</prose-mirror>
     </fieldset>

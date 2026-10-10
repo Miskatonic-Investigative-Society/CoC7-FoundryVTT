@@ -550,7 +550,7 @@ export default class CoC7ChatDamage {
     }
     if (typeof this.message?.whisper === 'undefined') {
       /* // FoundryVTT V13 */
-      if (game.release.generation < 14) {
+      if (game.release.generation === 13) {
         if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'rollMode'))) {
           chatData.whisper = ChatMessage.getWhisperRecipients('GM')
         } else if (CHAT_MESSAGE_MODE.BLIND === game.settings.get('core', 'rollMode')) {
@@ -721,7 +721,7 @@ export default class CoC7ChatDamage {
         element.addEventListener('change', event => CoC7ChatDamage._onChangeEvent(event, message))
       }
     })
-    html.querySelectorAll('.coc7-formatted-text').forEach((element) => {
+    html.querySelectorAll('.overflowable').forEach((element) => {
       const div = document.createElement('div')
       div.id = 'temporary-measure-' + Math.floor(Math.random() * 100)
       div.style.width = 'var(--sidebar-width)'

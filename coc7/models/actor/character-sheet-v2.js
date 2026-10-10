@@ -6,7 +6,7 @@ import CoC7Utilities from '../../apps/utilities.js'
 
 export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlobalSheet {
   static DEFAULT_OPTIONS = {
-    classes: ['coc7', 'sheetV2', 'actor', 'character'],
+    classes: ['investigator-v2'],
     position: {
       width: 687,
       height: 623
@@ -103,16 +103,16 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
     context.showDevPanel = context.allowDevelopment || context.allowCharCreation
 
     context._monetaryFormats = []
-    for (const key in MONETARY_FORMATS) {
-      context._monetaryFormats.push({ key, val: game.i18n.localize(MONETARY_FORMATS[key]) })
+    for (const value in MONETARY_FORMATS) {
+      context._monetaryFormats.push({ value, label: game.i18n.localize(MONETARY_FORMATS[value]) })
     }
 
     context.showCurrencySymbol = ['decimalLeft', 'decimalRight', 'integerLeft', 'integerRight'].includes(context.document.system.monetary.format)
 
     context._monetaryTypes = []
-    for (const key in MONETARY_TYPES) {
-      if (MONETARY_TYPES[key].filter.length === 0 || MONETARY_TYPES[key].filter.includes(context.document.system.monetary.format)) {
-        context._monetaryTypes.push({ key, val: game.i18n.localize(MONETARY_TYPES[key].name) })
+    for (const value in MONETARY_TYPES) {
+      if (MONETARY_TYPES[value].filter.length === 0 || MONETARY_TYPES[value].filter.includes(context.document.system.monetary.format)) {
+        context._monetaryTypes.push({ value, label: game.i18n.localize(MONETARY_TYPES[value].label) })
       }
     }
 
@@ -267,9 +267,6 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return
-    this.element.querySelector('.reset-occupation')?.addEventListener('click', this.document.resetOccupation.bind(this.document))
-    this.element.querySelector('.reset-experience-package')?.addEventListener('click', this.document.resetExperiencePackage.bind(this.document))
-    this.element.querySelector('.reset-archetype')?.addEventListener('click', this.document.resetArchetype.bind(this.document))
     if (game.user.isGM) {
       this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', (event) => {
         switch (event.currentTarget.dataset.action) {
@@ -287,6 +284,16 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
             break
           case 'bookClear':
             this._onBookRemove(event)
+            break
+          case 'reset-archetype':
+            this.document.resetArchetype(event)
+            break
+          case 'reset-experience-package':
+            this.document.resetExperiencePackage(event)
+            break
+          case 'reset-occupation':
+            this.document.resetOccupation(event)
+            break
         }
       }))
     }

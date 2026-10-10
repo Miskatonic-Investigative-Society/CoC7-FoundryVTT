@@ -160,12 +160,12 @@ export default class CoC7ModelsItemArchetypeSheet extends CoC7ModelsItemGlobalSh
         break
       case 'details':
         context._types = []
-        for (const [key, value] of context.document.system.schema.getField('coreCharacteristics').entries()) {
+        for (const [value, field] of context.document.system.schema.getField('coreCharacteristics').entries()) {
           context._types.push({
-            id: key,
-            name: value.label,
-            tooltip: value.hint,
-            isEnabled: context.document.system.coreCharacteristics[key] === true
+            value,
+            label: field.label,
+            tooltip: field.hint,
+            isEnabled: context.document.system.coreCharacteristics[value] === true
           })
         }
         context.enrichedSuggestedOccupations = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
