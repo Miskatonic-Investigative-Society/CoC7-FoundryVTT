@@ -162,6 +162,22 @@ export default class CoC7Updater {
       CoC7Updater.migrateSceneData({ document, documentUpdates, packId: '', parentUuid: '' })
     }
 
+    console.log('PREPARE game.combats')
+    // Migrate World Combats Combatants
+    for (const combat of game.combats.contents) {
+      for (const document of combat.combatants) {
+        const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+        if (image2) {
+          const newName = CoC7Updater.gameIconsRemap(image2[1])
+          if (newName !== false) {
+            CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Combatant', '', combat.uuid, {
+              img: 'systems/CoC7/assets/game-icons/' + newName
+            })
+          }
+        }
+      }
+    }
+
     console.log('PREPARE game.packs')
     // Migrate World and Module Compendium Packs
     for (const pack of game.packs) {
@@ -338,7 +354,7 @@ export default class CoC7Updater {
   static migrateSceneData ({ document, documentUpdates, packId = '', parentUuid = '' } = {}) {
     for (const token of document.tokens) {
       if (!token.actorLink && token.object?.actor) {
-        CoC7Updater._migrateTokenArtwork({ document: token, documentUpdates, packId, parentUuid })
+        CoC7Updater._migrateTokenArtwork({ document: token, documentUpdates, packId, parentUuid: document.uuid })
         CoC7Updater.migrateActorData({ document: token.object.actor, documentUpdates, packId, parentUuid: token.uuid })
       }
     }
@@ -767,7 +783,8 @@ export default class CoC7Updater {
     if (document.type === 'talent') {
       if (document.name === game.i18n.localize('CoC7.quickHealer') && document.effects.size === 0) {
         const effects = []
-        if (game.release.generation < 14) {
+        /* // FoundryVTT V13 */
+        if (game.release.generation === 13) {
           effects.push({
             name: game.i18n.localize('CoC7.quickHealer'),
             img: 'icons/svg/aura.svg',
@@ -1124,6 +1141,15 @@ export default class CoC7Updater {
       if (newName !== false) {
         CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Token', packId, parentUuid, {
           img: 'systems/CoC7/assets/game-icons/' + newName
+        })
+      }
+    }
+    const image3 = String(document.texture?.src).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    if (image3) {
+      const newName = CoC7Updater.gameIconsRemap(image3[1])
+      if (newName !== false) {
+        CoC7Updater.mergeEmbeddedDocuments(document, documentUpdates, 'Token', packId, parentUuid, {
+          'texture.src': 'systems/CoC7/assets/game-icons/' + newName
         })
       }
     }
