@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix Punch item using wrong skill name, thanks to @ClickerOfThings #2164
+
 ## Version 8.16
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
