@@ -58,7 +58,7 @@
     {{/if}}
   </div>
   {{#unless rollHtml}}
-    <div class="keeper-only-block as-whisper-block coc7-card-buttons coc7-half-buttons flexrow">
+    <div class="keeper-only-block coc7-card-buttons coc7-half-buttons flexrow">
       <button class="keeper-only-control{{#if isCritical}} switched-on{{/if}}" data-action="toggleValue" data-set="isCritical" data-tooltip="CoC7.CriticalTitle">{{localize 'CoC7.Critical'}}</button>
       {{#if isCritical}}
         <button class="keeper-only-control{{#if isImpale}} switched-on{{/if}}" data-action="toggleValue" data-set="isImpale" data-tooltip="CoC7.ImpaleTitle">{{localize 'CoC7.Impale'}}</button>
@@ -67,7 +67,7 @@
       {{/if}}
     </div>
     {{#if targetUuid}}
-      <div class="keeper-only-block as-whisper-block coc7-card-buttons flexrow">
+      <div class="keeper-only-block coc7-card-buttons flexrow">
         <div></div>
         <button class="keeper-only-control coc7-short-button{{#if ignoreArmor}} switched-on{{/if}}"data-action="toggleValue" data-set="ignoreArmor">{{#if ignoreArmor}}<i class="game-icon game-icon-armor-downgrade"></i>{{else}}<i class="game-icon game-icon-armor-upgrade"></i>{{/if}}</button>
         {{#unless ignoreArmor}}

@@ -78,6 +78,36 @@ export default function () {
 
   deprecated.CoCID()
 
+  /* // FoundryVTT V13 */
+  if (game.release.generation > 13) {
+    CONFIG.TextEditor.inserts.push(...[{
+      action: 'keeper-foundryvtt',
+      title: 'CoC7.ProseMirror.FoundryVTTNote',
+      inline: false,
+      html: '<div class="keeper-foundryvtt"><div class="keeper-title"><p></p></div><div class="keeper-body"><selection><p>Body</p></selection></div></div>'
+    }, {
+      action: 'keeper-read-aloud',
+      title: 'CoC7.ProseMirror.ReadAloud',
+      inline: false,
+      html: '<div class="keeper-read-aloud"><div class="keeper-title"><p></p></div><div class="keeper-body"><selection><p>Body</p></selection></div></div>'
+    }, {
+      action: 'keeper-notes',
+      title: 'CoC7.ProseMirror.KeeperNotes',
+      inline: false,
+      html: '<div class="keeper-notes"><div class="keeper-title"><p></p></div><div class="keeper-body"><selection><p>Body</p></selection></div></div>'
+    }, {
+      action: 'coc7-toggle-section',
+      title: 'CoC7.ProseMirror.ToggleSection',
+      inline: false,
+      html: '<section class="tmi-toggleable"><p class="toggle">Reveal</p><div class="toggle"><selection><p>Body</p></selection></div></section>'
+    }, {
+      action: 'coc7-quote',
+      title: 'CoC7.ProseMirror.Quote',
+      inline: false,
+      html: '<div><blockquote><selection><p>Body</p></selection></blockquote><p style="text-align: right;">—Author, <em>source</em></p></div>'
+    }])
+  }
+
   CONFIG.TextEditor.enrichers.push({
     pattern: /@chaosiumUUID\[([^#\]]+)(?:#([^\]]+))?](?:{([^}]+)})?/gi,
     enricher: async (match, { relativeTo } = {}) => {
