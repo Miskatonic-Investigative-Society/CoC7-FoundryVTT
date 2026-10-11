@@ -23,29 +23,20 @@ export default class CoC7Updater {
       systemUpdateVersion = game.system.version
       await game.settings.set(FOLDER_ID, 'systemUpdateVersion', systemUpdateVersion)
     }
+    const coc7Model = '9.0' // Last breaking model / css change
     const runMigrate = foundry.utils.isNewerVersion(game.system.version, systemUpdateVersion ?? '0')
     const updatedModules = game.settings.get(FOLDER_ID, 'systemUpdatedModuleVersion') || {}
     const currentModules = {}
-    const knownModuleVersions = {
-      'call-of-cthulhu-foundryvtt-investigator-wizard': '1.1.0', // cspell:disable-line
-      'cha-coc-fvtt-en-keeperitems': '1.4.0', // cspell:disable-line
-      'cha-coc-fvtt-en-notimetoscream': '1.1.0', // cspell:disable-line
-      'cha-coc-fvtt-en-quickstart': '5.1.0', // cspell:disable-line
-      'cha-coc-fvtt-en-starterset': '5.1.0' // cspell:disable-line
-    }
     for (const pack of game.packs) {
-      if (![FOLDER_ID, 'world'].includes(pack.metadata.packageName) && ['Actor', 'Item', 'Scene'].includes(pack.metadata.type)) {
+      if (![FOLDER_ID, 'world'].includes(pack.metadata.packageName) && ['Actor', 'Adventure', 'Item', 'Scene'].includes(pack.metadata.type)) {
         if (typeof currentModules[pack.metadata.packageName] === 'undefined') {
           // Only need to check each module once
           const module = game.modules.get(pack.metadata.packageName)
           if (module) {
             if (runMigrate || typeof updatedModules[module.id] === 'undefined' || String(updatedModules[module.id]) !== String(module.version)) {
-              // A migration is required, module has not been updated before, or the version number has changed, check against known good values
-              if (typeof knownModuleVersions[module.id] === 'string') {
-                if (foundry.utils.isNewerVersion(module.version, knownModuleVersions[module.id])) {
-                  currentModules[module.id] = module.version
-                }
-              } else {
+              if (typeof module.flags?.coc7Model === 'undefined') {
+                currentModules[module.id] = module.version
+              } else if (foundry.utils.isNewerVersion(coc7Model, module.flags.coc7Model)) {
                 currentModules[module.id] = module.version
               }
             }
