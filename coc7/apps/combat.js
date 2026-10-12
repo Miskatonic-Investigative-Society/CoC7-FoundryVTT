@@ -98,7 +98,7 @@ export default class CoC7Combat {
       }
     }
 
-    const newInit = await combatant.actor.rollInitiative(!!combatant.getFlag('CoC7', 'hasGun'))
+    const newInit = await combatant.actor.rollInitiative(!!combatant.getFlag('CoC7', 'hasGun'), { hidden: combatant.hidden })
     if (combatant.getFlag('CoC7', 'hasGun')) {
       if (combatant.initiative < newInit) {
         game.combat.setInitiative(combatant.id, newInit)
