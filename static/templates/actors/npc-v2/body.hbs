@@ -274,6 +274,9 @@
           {{#if usingLuck.pulpRuleLuckLookOutMaster}}
             <button class="item-control trigger-button" data-action="useLuckLookOutMaster">{{localize 'CoC7.UseLuckForLookOutMaster'}}</button>
           {{/if}}
+          {{#each otherLuckButtons as |row|}}
+            <button class="item-control trigger-button" data-action="useLuckValue" data-value="{{row.luck}}">{{row.label}}</button>
+          {{/each}}
         </div>
       </div>
     </div>

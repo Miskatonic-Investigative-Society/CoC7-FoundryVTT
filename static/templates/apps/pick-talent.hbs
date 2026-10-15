@@ -1,0 +1,11 @@
+<section class="standard-form">
+  {{#each talents as |talent|}}
+    <div class="form-group">
+      <div class="flex-auto toggle-attributes"><button class="toggle-switch{{#if talent.enabled}} switched-on{{/if}}" data-property="enabled" data-id="{{talent.id}}">{{localize 'CoC7.Enable'}}</button></div>
+      <div>
+        {{{talent.link}}}
+      </div>
+    </div>
+  {{/each}}
+  <div>{{localize 'CoC7.LuckReduceLossRatio' name=name luck=luck loss=loss}}</div>
+</section>

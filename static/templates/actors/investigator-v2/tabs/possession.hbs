@@ -237,6 +237,11 @@
             <button class="item-control trigger-button" data-action="useLuckAvoidDeath">{{localize 'CoC7.UseLuckForAvoidDeath' luck=(ifThen (gt 30 document.system.attribs.lck.value) 30 document.system.attribs.lck.value)}}</button>
           </div>
         {{/if}}
+        {{#each otherLuckButtons as |row|}}
+          <div class="luck-spend">
+            <button class="item-control trigger-button" data-action="useLuckValue" data-value="{{row.luck}}">{{row.label}}</button>
+          </div>
+        {{/each}}
       {{/if}}
     </div>
   </div>

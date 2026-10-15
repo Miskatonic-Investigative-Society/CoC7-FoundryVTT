@@ -244,6 +244,17 @@ export const DICE_POOL_REASONS = {
     label: 'CoC7.rangeCombatCard.FastMovingTarget',
     tooltip: 'CoC7.rangeCombatCard.FastMovingTargetTitle'
   },
+  shootingInDark: {
+    active: true,
+    ifAttacker: true,
+    ifDefender: false,
+    forBonus: false,
+    forPenalty: true,
+    forMelee: false,
+    forRanged: true,
+    label: 'CoC7.rangeCombatCard.ShootingInDark',
+    tooltip: 'CoC7.rangeCombatCard.ShootingInDarkTooltip'
+  },
   shootWithOffhand: {
     active: () => game.settings.get(FOLDER_ID, 'ddtRuleShootingWithOffHand'),
     ifAttacker: true,
@@ -337,8 +348,29 @@ export const SPELL_COST_TYPE_KEYS = {
 }
 
 export const TALENT_ADJUSTMENT_TYPES = {
+  addSkillChoice: {
+    label: 'CoC7.Talent.Type.AddSkillChoice'
+  },
   disableCombatPool: {
     label: 'CoC7.Talent.Type.DisableCombatPool'
+  },
+  luckButton: {
+    label: 'CoC7.Talent.Type.LuckButton'
+  },
+  showOnCombatAttacker: {
+    label: 'CoC7.Talent.Type.ShowOnCombatAttacker'
+  },
+  showOnFailure: {
+    label: 'CoC7.Talent.Type.ShowOnFailure'
+  },
+  showOnInvestigatorCheck: {
+    label: 'CoC7.Talent.Type.ShowOnInvestigatorCheck'
+  },
+  showOnSkillCheck: {
+    label: 'CoC7.Talent.Type.ShowOnSkillCheck'
+  },
+  takingDamage: {
+    label: 'CoC7.Talent.Type.TakingDamage'
   }
 }
 

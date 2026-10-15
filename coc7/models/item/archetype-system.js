@@ -32,6 +32,12 @@ export default class CoC7ModelsItemArchetypeSystem extends CoC7ModelsItemGlobalS
       suggestedOccupations: new fields.HTMLField({ initial: '' }),
       suggestedTraits: new fields.HTMLField({ initial: '' }),
       talents: new fields.NumberField({ nullable: false, initial: 2 }),
+      talentsSuggested: new fields.ArrayField(
+        new fields.StringField({ initial: '' })
+      ),
+      talentsRequired: new fields.ArrayField(
+        new fields.StringField({ initial: '' })
+      ),
       /* // FoundryVTT V13 - not required
       type: {
         classic: false,

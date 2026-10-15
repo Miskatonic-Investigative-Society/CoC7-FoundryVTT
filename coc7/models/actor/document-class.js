@@ -16,6 +16,7 @@ import CoC7ModelsItemItemSystem from '../item/item-system.js'
 import CoC7ModelsItemSkillSystem from '../item/skill-system.js'
 import CoC7ModelsItemSpellSystem from '../item/spell-system.js'
 import CoC7ModelsItemWeaponSystem from '../item/weapon-system.js'
+import CoC7PickTalentDialog from '../../apps/pick-talent-dialog.js'
 import CoC7PointSelectionDialog from '../../apps/point-selection-dialog.js'
 import CoC7RollNormalize from '../../apps/roll-normalize.js'
 import CoC7SkillSelectionDialog from '../../apps/skill-selection-dialog.js'
@@ -528,6 +529,45 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
             // experience package are only for PCs
             if (this.type === 'character') {
               await this.prepareEmbeddedExperiencePackage(data, updateDocument, itemByType, processedDataArray, updateEmbeddedDocuments)
+            }
+            break
+          case 'talent':
+            {
+              // If talent adds a skill process it here
+              const cocids = data.system.adjustments.filter(doc => doc.type === 'addSkillChoice').map(doc => { if (typeof doc.config === 'string') { doc.config = JSON.parse(doc.config) } return doc.config.cocid })
+              if (cocids.length) {
+                const skills = await game.CoC7.cocid.expandItemArray({ itemList: cocids })
+                switch (skills.length) {
+                  case 0:
+                    break
+                  case 1:
+                    {
+                      const newItem = foundry.utils.duplicate(skills[0])
+                      if (typeof itemByType[newItem.type] === 'undefined') {
+                        itemByType[newItem.type] = []
+                      }
+                      itemByType[newItem.type].push(newItem)
+                    }
+                    break
+                  default:
+                    {
+                      const rolled = await CoC7SkillSelectionDialog.create({ skills, optionsCount: 1 })
+                      for (const item of skills) {
+                        if (rolled[item._id] === true) {
+                          const newItem = foundry.utils.duplicate(item)
+                          if (typeof itemByType[newItem.type] === 'undefined') {
+                            itemByType[newItem.type] = []
+                          }
+                          itemByType[newItem.type].push(newItem)
+                        }
+                      }
+                    }
+                    break
+                }
+                processedDataArray.push(data)
+              } else {
+                processedDataArray.push(data)
+              }
             }
             break
           default:
@@ -4416,7 +4456,26 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
           armorValue = 0
         }
       }
-      const damageTotal = damageValue - armorValue
+      let damageTotal = damageValue - armorValue
+      if (damageTotal <= 0) return 0
+      const talents = this.items.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'takingDamage'))
+      if (talents.length) {
+        let reductionValue = 0
+        let spentLuck = 0
+        const pickedTalents = await CoC7PickTalentDialog.create({ talents, type: 'takingDamage', actorUuid: this.uuid, name: game.i18n.localize('CoC7.Damage'), maxLoss: damageTotal })
+        for (const talent of pickedTalents) {
+          const offsets = talent.system.getLuckAndReduction('takingDamage', damageTotal)
+          spentLuck += offsets.luck
+          reductionValue += offsets.loss
+        }
+        if (spentLuck > 0) {
+          if (await this.spendLuck(spentLuck) !== false) {
+            damageTotal -= reductionValue
+          } else {
+            ui.notifications.warn('CoC7.NotEnoughLuck', { localize: true })
+          }
+        }
+      }
       if (damageTotal <= 0) return 0
       const hpNew = await this.#modifyHp(-damageTotal)
       const hpMax = (this.system.attribs.hp.max ?? 0)

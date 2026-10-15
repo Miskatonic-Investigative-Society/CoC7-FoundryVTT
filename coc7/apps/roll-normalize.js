@@ -121,6 +121,8 @@ export default class CoC7RollNormalize {
       rollType: options.rollType ?? CoC7RollNormalize.ROLL_TYPE.MANUAL,
       runRoll: options.runRoll ?? true,
       standbyRightIcon: options.standbyRightIcon ?? '',
+      talentsAuto: [],
+      talentsManual: [],
       threshold: options.threshold,
       hideDifficulty: options.hideDifficulty ?? false
     }
@@ -168,6 +170,11 @@ export default class CoC7RollNormalize {
           if (config.poolModifier === 0) {
             config.poolModifier = item.system.bonusDice ?? 0
           }
+          const cocid = item.flags?.[FOLDER_ID]?.cocidFlag?.id ?? ''
+          if (cocid.toString().length) {
+            config.talentsAuto = options.actor?.items?.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(cocid))) ?? []
+            config.talentsManual = options.actor?.items?.filter(doc => doc.type === 'talent' && doc.system.appliesToKey(cocid)) ?? []
+          }
           okay = true
         } else if (item.type === 'weapon') {
           config.rollType = CoC7RollNormalize.ROLL_TYPE.WEAPON
@@ -212,6 +219,11 @@ export default class CoC7RollNormalize {
           config.poolModifier = options.actor.system.characteristics[config.key].bonusDice ?? 0
         }
         okay = true
+      }
+      if (item === false) {
+        const key = (config.cardType === CoC7RollNormalize.CARD_TYPE.KNOW_CHECK ? 'know' : (config.cardType === CoC7RollNormalize.CARD_TYPE.IDEA_CHECK ? 'idea' : config.key))
+        config.talentsAuto = options.actor?.items?.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(key))) ?? []
+        config.talentsManual = options.actor?.items?.filter(doc => doc.type === 'talent' && doc.system.appliesToKey(key)) ?? []
       }
     }
     if (!okay && typeof options.event === 'undefined' && ![CoC7RollNormalize.ROLL_TYPE.MANUAL, CoC7RollNormalize.ROLL_TYPE.ENCOUNTER].includes(config.rollType)) {

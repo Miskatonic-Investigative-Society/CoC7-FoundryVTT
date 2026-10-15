@@ -532,7 +532,33 @@ export default class CoC7Check {
       isUnknownDifficulty: this.#dicePool.difficulty === CoC7DicePool.difficultyLevel.unknown,
       luckSpent: this.#dicePool.luckSpent,
       name: this.name,
+      showOnFailureTalents: [],
       standbyRightIcon: this.#standbyRightIcon
+    }
+    if (this.#dicePool.isRolled && !this.#dicePool.isSuccess && actor) {
+      let showOnFailureTalents = []
+      switch (this.#type) {
+        case CoC7Check.type.attribute:
+        case CoC7Check.type.characteristic:
+          showOnFailureTalents = actor.items.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(this.#key)) && doc.system.adjustments.find(doc => doc.type === 'showOnFailure'))
+          break
+        case CoC7Check.type.skill:
+        case CoC7Check.type.item:
+          {
+            const item = await fromUuid(this.#key)
+            if (item?.flags?.[FOLDER_ID]?.cocidFlag?.id?.length) {
+              showOnFailureTalents = actor.items.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(item.flags[FOLDER_ID].cocidFlag.id)) && doc.system.adjustments.find(doc => doc.type === 'showOnFailure'))
+            }
+            if (item?.type === 'weapon') {
+              const skill = actor.items.get(item.system?.skillMain?.id)
+              if (skill?.flags?.[FOLDER_ID]?.cocidFlag?.id?.length) {
+                showOnFailureTalents = showOnFailureTalents.concat(actor.items.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(skill.flags[FOLDER_ID].cocidFlag.id)) && doc.system.adjustments.find(doc => doc.type === 'showOnFailure')))
+              }
+            }
+          }
+          break
+      }
+      data.showOnFailureTalents = await Promise.all(showOnFailureTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true })))
     }
     return data
   }

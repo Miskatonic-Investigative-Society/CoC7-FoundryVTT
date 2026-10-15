@@ -63,6 +63,15 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
     }
 
     context.effects = context.document.type === 'character' ? await CoC7ActiveEffect.prepareActiveEffectCategories(context.document) : await CoC7ActiveEffect.prepareNPCActiveEffectCategories(context.document)
+    context.manualTalents = await Promise.all(context.document.items.filter(doc => doc.type === 'talent' && doc.system.adjustments.length > 0).map(async doc => {
+      const readable = doc.system.readableAdjustments()
+      return {
+        img: doc.img,
+        name: doc.name,
+        source: await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }),
+        readable: (readable.length > 0 ? '<ul class="without-margin"><li>' + readable.join('</li><li>') + '</li></ul>' : '')
+      }
+    }))
 
     context.allowUnlock = this.allowUnlock
 
@@ -171,7 +180,18 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
       c[k] = game.settings.get(FOLDER_ID, k)
       return c
     }, {})
-    context.hasLuckAbilities = Object.values(context.usingLuck).reduce((c, b) => c || b, false)
+    context.otherLuckButtons = context.document.items.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'luckButton')).reduce((c, doc) => {
+      for (const adjustment of doc.system.adjustments) {
+        if (adjustment.type === 'luckButton') {
+          c.push({
+            luck: adjustment.config.luckValue,
+            label: adjustment.config.prompt
+          })
+        }
+      }
+      return c
+    }, []).sort(CoC7Utilities.sortByLabelKey)
+    context.hasLuckAbilities = context.otherLuckButtons.length > 0 || Object.values(context.usingLuck).reduce((c, b) => c || b, false)
 
     return context
   }
@@ -438,6 +458,21 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
           this.document.update({
             'system.attribs.lck.value': 0
           })
+          break
+        case 'useLuckValue':
+          {
+            if (event.detail === 1 && typeof event.currentTarget.dataset.value !== 'undefined') {
+              this.document.update({
+                'system.attribs.lck.value': Math.max(0, parseInt(this.document.system.attribs.lck.value ?? 0, 10) - parseInt(event.currentTarget.dataset.value, 10))
+              })
+              ChatMessage.create({
+                speaker: {
+                  actor: this.document.id
+                },
+                content: event.currentTarget.innerHTML
+              })
+            }
+          }
           break
       }
     }))

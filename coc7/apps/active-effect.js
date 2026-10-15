@@ -1,4 +1,5 @@
 import { STATUS_EFFECTS } from '../constants.js'
+import CoC7Utilities from '../apps/utilities.js'
 
 export default class CoC7ActiveEffect {
   /**
@@ -70,7 +71,7 @@ export default class CoC7ActiveEffect {
       /* // FoundryVTT V13 */
       const changeType = (game.release.generation < 14 ? (change.mode === CONST.ACTIVE_EFFECT_MODES.ADD ? 'add' : (change.mode === CONST.ACTIVE_EFFECT_MODES.OVERRIDE ? 'override' : 'other')) : change.type)
       if (['add', 'override'].includes(changeType)) {
-        let name = false
+        const names = []
         let what = false
         let unit = ''
         const match = change.key.match(/^system\.skills\.(i(\.|>>)skill(\.|>>))?(.+)\.system\.(bonusDice|value)$/)
@@ -83,11 +84,22 @@ export default class CoC7ActiveEffect {
           unit = '%'
           /* // FoundryVTT V13 */
           if (game.release.generation < 14 && effect.parent instanceof Actor) {
-            name = effect.parent.system.skills[key]?.name ?? key.replace(/>>/g, '.')
-          } else if (typeof effect.actor?.system.skills[key] !== 'undefined') {
-            name = effect.actor.system.skills[key].name
+            names.push(effect.parent.system.skills[key]?.name ?? key.replace(/>>/g, '.'))
           } else {
-            name = key.replace(/>>/g, '.')
+            const index = key.replace(/>>/g, '.').indexOf('*')
+            if (index > -1) {
+              const quoted = new RegExp(key.split('*').map(t => CoC7Utilities.quoteRegExp(t)).join('(.+)'))
+              const keys = Object.keys(effect.actor.system.skills).filter(key => quoted.test(key))
+              for (const key of keys) {
+                names.push(effect.actor.system.skills[key].name)
+              }
+            } else {
+              if (typeof effect.actor?.system.skills[key] !== 'undefined') {
+                names.push(effect.actor.system.skills[key].name)
+              } else {
+                names.push(key.replace(/>>/g, '.'))
+              }
+            }
           }
         } else {
           const match = change.key.match(/^system\.(characteristics|attribs|config)\.([^.]+)\.(bonusDice|max|value)$/)
@@ -95,23 +107,23 @@ export default class CoC7ActiveEffect {
             what = match[3]
             switch (match[1]) {
               case 'attribs':
-                name = game.i18n.localize(CONFIG.Actor.dataModels.character.defineSchema().attribs.getField(match[2])?.hint ?? false)
+                names.push(game.i18n.localize(CONFIG.Actor.dataModels.character.defineSchema().attribs.getField(match[2])?.hint ?? false))
                 if (['lck', 'san'].includes(match[2])) {
                   unit = '%'
                 }
                 break
               case 'characteristics':
-                name = game.i18n.localize(CONFIG.Actor.dataModels.character.defineSchema().characteristics.getField(match[2])?.hint ?? false)
+                names.push(game.i18n.localize(CONFIG.Actor.dataModels.character.defineSchema().characteristics.getField(match[2])?.hint ?? false))
                 unit = '%'
                 break
               case 'config':
                 switch (match[2]) {
                   case 'idea':
-                    name = game.i18n.localize('CoC7.IdeaCheck')
+                    names.push(game.i18n.localize('CoC7.IdeaCheck'))
                     unit = '%'
                     break
                   case 'know':
-                    name = game.i18n.localize('CoC7.KnowCheck')
+                    names.push(game.i18n.localize('CoC7.KnowCheck'))
                     unit = '%'
                     break
                 }
@@ -123,10 +135,10 @@ export default class CoC7ActiveEffect {
               what = 'value'
               switch (match[1]) {
                 case 'luckRecovery':
-                  name = game.i18n.localize('CoC7.RecoverLuckPoints')
+                  names.push(game.i18n.localize('CoC7.RecoverLuckPoints'))
                   break
                 case 'naturalHealing':
-                  name = game.i18n.localize('CoC7.ActorConfig.NaturalHealing')
+                  names.push(game.i18n.localize('CoC7.ActorConfig.NaturalHealing'))
                   break
               }
             }
@@ -149,8 +161,10 @@ export default class CoC7ActiveEffect {
             }
             break
         }
-        if (name !== false && what !== false) {
-          readable.push(name + ' ' + what)
+        if (names.length && what !== false) {
+          for (const name of names) {
+            readable.push(name + ' ' + what)
+          }
         } else {
           readable.push(change.key + ' ' + (changeType === 'add' ? (change.value < 0 ? '' : '+') : '=') + change.value)
         }

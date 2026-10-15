@@ -14,6 +14,52 @@
             <input type="text" name="system.talents" value="{{document.system.talents}}" placeholder="{{localize 'CoC7.Value'}}" />
           </div>
         </div>
+        <div class="form-group flexrow drop-talent" data-type="talentsRequired">
+          <label class="flex-single">{{localize 'CoC7.RequiredPulpTalents'}}</label>
+          <div class="form-value">
+            <ul class="item-list">
+              {{#if talentsRequiredEmpty}}
+                <li class="item">
+                  <label>{{localize 'CoC7.EmptyTalentList'}}</label>
+                </li>
+              {{else}}
+                {{#each talentsRequired as |item|}}
+                  <li class="item" data-uuid="{{item.uuid}}" data-id="{{item._id}}" data-cocid="{{item.flags.CoC7.cocidFlag.id}}">
+                    <div class="summary">{{item.name}}</div>
+                    <div class="item-controls">
+                      {{#unless ../document.isEmbedded}}
+                        <a class="item-control" data-action="talent-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
+                      {{/unless}}
+                    </div>
+                  </li>
+                {{/each}}
+              {{/if}}
+            </ul>
+          </div>
+        </div>
+        <div class="form-group flexrow drop-talent" data-type="talentsSuggested">
+          <label class="flex-single">{{localize 'CoC7.SuggestedPulpTalents'}}</label>
+          <div class="form-value">
+            <ul class="item-list">
+              {{#if talentsSuggestedEmpty}}
+                <li class="item">
+                  <label>{{localize 'CoC7.EmptyTalentList'}}</label>
+                </li>
+              {{else}}
+                {{#each talentsSuggested as |item|}}
+                  <li class="item" data-uuid="{{item.uuid}}" data-id="{{item._id}}" data-cocid="{{item.flags.CoC7.cocidFlag.id}}">
+                    <div class="summary">{{item.name}}</div>
+                    <div class="item-controls">
+                      {{#unless ../document.isEmbedded}}
+                        <a class="item-control" data-action="talent-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
+                      {{/unless}}
+                    </div>
+                  </li>
+                {{/each}}
+              {{/if}}
+            </ul>
+          </div>
+        </div>
       </fieldset>
       <fieldset class="flexcol">
         <legend>{{localize 'CoC7.CoreCharacteristics'}}</legend>

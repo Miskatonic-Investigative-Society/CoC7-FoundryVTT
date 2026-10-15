@@ -47,4 +47,23 @@
       {{/each}}
     {{/unless}}
   {{/each}}
+  {{#if manualTalents}}
+    <li class="items-header">
+      <h4 class="section-heading">{{localize 'CoC7.ManualTalents'}}</h4>
+      <div class="effect-source">{{localize 'CoC7.Source'}}</div>
+      <div class="effect-duration">{{localize 'CoC7.Duration'}}</div>
+      <div class="item-controls"></div>
+    </li>
+    {{#each manualTalents as |talent|}}
+      <li class="item">
+        <div class="effect-identifier" data-tooltip="{{talent.readable}}">
+          <div class="item-image" style="background-image: url('{{talent.img}}')"></div>
+          <div class="item-name effect-name">{{talent.name}}</div>
+        </div>
+        <div class="effect-source">{{{talent.source}}}</div>
+        <div class="effect-duration">{{localize 'COMMON.None'}}</div>
+        <div class="item-controls"></div>
+      </li>
+    {{/each}}
+  {{/if}}
 </ul>

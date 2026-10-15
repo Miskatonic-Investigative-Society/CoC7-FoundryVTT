@@ -1,0 +1,56 @@
+<section class="tab adjustments flexcol scrollable legend-fieldset {{tab.cssClass}}" data-group="primary" data-tab="adjustments">
+  {{#if tabs.adjustments}}
+    {{#if activeEffectsAdjustments}}
+      <fieldset class="flexrow">
+        <legend>{{localize 'CoC7.Effects'}}</legend>
+        {{{activeEffectsAdjustments}}}
+      </fieldset>
+    {{/if}}
+    <fieldset class="flexcol">
+      <legend>{{localize 'CoC7.TalentAdjustments'}}</legend>
+      <div class="adjustable-listbox flexcol">
+        {{#each document.system.adjustments as |row index|}}
+          <div class="adjustable-list-item" data-index="{{index}}">
+            <div class="adjustable-item-block flexcol">
+              <div class="adjustable-item-row">
+                <select name="system.adjustments.{{index}}.type" class="change-type">{{selectOptions ../_adjustmentTypes selected=row.type}}</select>
+              </div>
+              <div class="adjustable-item-row">
+                {{#if (eq row.type 'disableCombatPool')}}
+                  <label>{{localize 'CoC7.Disable'}}</label>
+                  <div><select name="system.adjustments.{{index}}.config.disable">{{selectOptions ../_combatPoolKeys selected=row.config.disable}}</select></div>
+                {{else if (eq row.type 'luckButton')}}
+                  <label>{{localize 'CoC7.TalentLuckValue'}}</label>
+                  <div class="shorter-number"><input type="text" name="system.adjustments.{{index}}.config.luckValue" value="{{row.config.luckValue}}"></div>
+                  <label>{{localize 'CoC7.Spell.Costs.PromptName'}}</label>
+                  <div><input type="text" name="system.adjustments.{{index}}.config.prompt" value="{{row.config.prompt}}"></div>
+                {{else if (eq row.type 'takingDamage')}}
+                  <label>{{localize 'CoC7.TalentLuckValue'}}</label>
+                  <div><input type="text" name="system.adjustments.{{index}}.config.luckValue" value="{{row.config.luckValue}}"></div>
+                  <label>{{localize 'CoC7.TalentDamageReduction'}}</label>
+                  <div><input type="text" name="system.adjustments.{{index}}.config.reductionValue" value="{{row.config.reductionValue}}"></div>
+                  <select name="system.adjustments.{{index}}.config.type">{{selectOptions ../_types selected=row.config.type}}</select>
+                {{else if (eq row.type 'showOnInvestigatorCheck')}}
+                  <label>{{localize 'CoC7.AttributeOrCharacteristic'}}</label>
+                  <div><select name="system.adjustments.{{index}}.config.field">{{selectOptions ../_investigatorKeys selected=row.config.field}}</select></div>
+                {{else if (or (eq row.type 'addSkillChoice') (eq row.type 'showOnSkillCheck'))}}
+                  <label>{{localize 'CoC7.CoCIDFlag.key'}}</label>
+                  <div><input type="text" name="system.adjustments.{{index}}.config.cocid" value="{{row.config.cocid}}"></div>
+                {{/if}}
+              </div>
+            </div>
+            <div class="item-controls item-controls-column">
+              <a class="item-control" data-action="adjustments-remove" data-tooltip="CoC7.Spell.Costs.DeleteSection"><i class="fa-regular fa-minus-circle fa-fw"></i></a>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+      <div class="flexrow">
+        <div></div>
+        <div class="item-controls">
+          <a class="item-control" data-action="adjustments-add"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
+        </div>
+      </div>
+    </fieldset>
+  {{/if}}
+</section>

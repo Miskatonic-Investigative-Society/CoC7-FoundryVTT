@@ -48,6 +48,28 @@
     </div>
   {{/if}}
 
+  {{#if talentsAuto}}
+    <div class="form-group">
+      <label class="flex-single">{{localize 'CoC7.TalentsActiveEffects'}}</label>
+      <div class="form-value">
+        {{#each talentsAuto as |link|}}
+          {{{link}}}
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if talentsManual}}
+    <div class="form-group">
+      <label class="flex-single">{{localize 'CoC7.TalentsAdjustments'}}</label>
+      <div class="form-value">
+        {{#each talentsManual as |link|}}
+          {{{link}}}
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+
   <div class="form-group bonus-penalty-selector">
     <label class="flex-single">{{localize 'CoC7.BonusDice'}}</label>
     <div class="form-value">

@@ -1,4 +1,58 @@
+import CoC7Utilities from '../../apps/utilities.js'
+
 export default class CoC7ModelsActiveEffectDocumentClass extends ActiveEffect {
+  /**
+   * Does this Active Effect have changes for key
+   * @param {string} key
+   * @returns {boolean}
+   */
+  appliesToKey (key) {
+    const checks = []
+    switch (key) {
+      case 'str':
+      case 'con':
+      case 'siz':
+      case 'dex':
+      case 'app':
+      case 'int':
+      case 'pow':
+      case 'edu':
+        checks.push('system.characteristics.' + key + '.bonusDice')
+        break
+      case 'know':
+      case 'idea':
+        checks.push('system.config.' + key + '.bonusDice')
+        break
+      case 'lck':
+      case 'san':
+        checks.push('system.attribs.' + key + '.bonusDice')
+        break
+      default:
+        {
+          const match = key.match(/^(i)(\.|>>)(skill)(\.|>>)(.+)$/)
+          if (match) {
+            checks.push('system.skills.' + match[1] + '>>' + match[3] + '>>' + match[5] + '.system.bonusDice')
+            checks.push('system.skills.' + match[1] + '.' + match[3] + '.' + match[5] + '.system.bonusDice')
+          } else {
+            checks.push('system.skills.' + key + '.system.bonusDice')
+          }
+        }
+        break
+    }
+    if (this.system.changes.find(r => checks.includes(r.key))) {
+      return true
+    }
+    // Support for *
+    for (const r of this.system.changes) {
+      const index = r.key.indexOf('*')
+      if (index > -1) {
+        const quoted = new RegExp(r.key.split('*').map(t => CoC7Utilities.quoteRegExp(t)).join('(.+)'))
+        return checks.find(t => quoted.test(t))
+      }
+    }
+    return false
+  }
+
   /**
    * Apply ActiveEffect change to Actor
    * @deprecated FoundryVTT v13

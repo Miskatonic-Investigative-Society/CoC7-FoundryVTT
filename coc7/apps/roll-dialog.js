@@ -46,7 +46,9 @@ export default class CoC7RollDialog extends foundry.applications.api.DialogV2 {
         flatThresholdModifier: options.flatThresholdModifier,
         poolModifier: options.poolModifier,
         threshold: options.threshold
-      }
+      },
+      talentsAuto: await Promise.all((options.talentsAuto ?? []).map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) )),
+      talentsManual: await Promise.all((options.talentsManual ?? []).map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
     }
     const result = await this.prompt({
       classes: ['coc7-sheet', 'bonus-selection'],

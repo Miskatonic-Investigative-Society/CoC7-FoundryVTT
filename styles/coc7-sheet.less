@@ -185,6 +185,7 @@ body {
             padding: @rem4px;
             border: @rem1px solid var(--color-form-label);
             border-radius: var(--border-radius-large);
+            flex: 1;
 
             .adjustable-item-row {
               .flex-row(@row-gap: @rem4px; @col-gap: @rem4px);
@@ -194,6 +195,10 @@ body {
               &>select,
               &>input {
                 flex: 1;
+              }
+
+              &>div.shorter-number {
+                flex: 0 0 @rem32px;
               }
 
               input::placeholder {

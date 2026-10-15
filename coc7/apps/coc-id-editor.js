@@ -212,7 +212,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
           const button = document.createElement('button')
           button.type = 'button'
           button.classList = 'header-control fa-solid fa-fingerprint icon'
-          if (!(application.document.flags[FOLDER_ID]?.cocidFlag?.id ?? false)) {
+          if (!application.document.flags[FOLDER_ID]?.cocidFlag?.id?.length || !application.document.flags[FOLDER_ID]?.cocidFlag?.lang?.length || typeof application.document.flags[FOLDER_ID]?.cocidFlag?.priority === 'undefined') {
             button.classList.add('invalid-coc-id')
           }
           button.dataset.action = 'cocid'

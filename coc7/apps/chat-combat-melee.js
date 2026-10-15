@@ -653,7 +653,18 @@ export default class CoC7ChatCombatMelee {
     }
     const dicePoolReasons = CoC7Utilities.dicePoolReasons({ forMelee: true })
     const attackerKeys = Object.keys(dicePoolReasons).filter(k => dicePoolReasons[k].ifAttacker)
-    const attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable))) ?? []
+    let attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => (row.type === 'showOnCombatAttacker' || (row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable))))) ?? []
+    if (typeof item?.flags?.CoC7?.cocidFlag?.id === 'string') {
+      attackerTalents = attackerTalents.concat(attacker?.items?.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(item.flags.CoC7.cocidFlag.id))) ?? [])
+    }
+    if (item?.type === 'weapon') {
+      const skill = attacker.items.get(item.system.skill.main.id)
+      if (skill?.type === 'skill') {
+        if (typeof skill?.flags?.CoC7?.cocidFlag?.id === 'string') {
+          attackerTalents = attackerTalents.concat(attacker?.items?.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(skill.flags.CoC7.cocidFlag.id))) ?? [])
+        }
+      }
+    }
     const attackerPoolDisabled = attackerTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
     data.attackerTalent = await Promise.all(attackerTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
     const targetKeys = Object.keys(dicePoolReasons).filter(k => dicePoolReasons[k].ifDefender)

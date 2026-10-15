@@ -144,6 +144,15 @@
     {{/if}}
   </div>
 {{/if}}
+{{#if showOnFailureTalents}}
+  <div class="keeper-only-block flexcol">
+    <div class="coc7-card-buttons">
+      {{#each showOnFailureTalents as |link|}}
+        {{{link}}}
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
 {{#if cardOpen}}
   <div class="keeper-only-block coc7-card-buttons flexrow">
     <button data-action="toggleValue" data-set="cardOpen">{{localize 'CoC7.CloseCard'}}</button>
