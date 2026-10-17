@@ -21,7 +21,6 @@ import CoC7PointSelectionDialog from '../../apps/point-selection-dialog.js'
 import CoC7RollNormalize from '../../apps/roll-normalize.js'
 import CoC7SkillSelectionDialog from '../../apps/skill-selection-dialog.js'
 import CoC7SkillSpecializationSelectDialog from '../../apps/skill-specialization-select-dialog.js'
-import CoC7SpendLuckDialog from '../../apps/spend-luck-dialog.js'
 import CoC7Utilities from '../../apps/utilities.js'
 import deprecated from '../../deprecated.js'
 
@@ -2303,20 +2302,34 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     }
     let difference = changes['system.attribs.san.value'] - (this.system.attribs.san.value ?? 0)
     if (difference < 0) {
+      const options = this.items.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'takingSanityLoss')).map(doc => { return { talent: doc, enabled: false, luck: 0 } })
       if (game.settings.get(FOLDER_ID, 'pulpRuleLuckHalfSanityLoss')) {
-        const nameValue = Math.floor(Math.abs(difference) / 2)
-        const luckValue = nameValue * 2
-        const newLuck = parseInt(this.system.attribs.lck.value ?? 0, 10) - luckValue
-        if (nameValue > 0 && newLuck >= 0) {
-          const luckSpent = await CoC7SpendLuckDialog.create({ name: game.i18n.localize('CoC7.SANLoss'), luckValue, nameValue })
-          if (luckSpent > 0) {
-            if (await this.spendLuck(luckValue) !== false) {
-              difference = difference + nameValue
-              changes['system.attribs.san.value'] = changes['system.attribs.san.value'] + nameValue
-            } else {
-              ui.notifications.error('CoC7.Errors.UnparsableModification')
-              return
+        options.unshift({
+          enabled: false,
+          luck: 0,
+          ratio: false,
+          html: (loss, luck) => {
+            const halve = Math.floor(loss / 2)
+            return game.i18n.format('CoC7.LuckReduceLossRatio', { luck: halve * 4, name: game.i18n.localize('CoC7.SANLoss'), loss: halve })
+          },
+          getLuckAndReduction: (type, loss, luck) => {
+            const halve = Math.floor(loss / 2)
+            return {
+              luck: halve * 4,
+              loss: halve
             }
+          }
+        })
+      }
+      if (options.length) {
+        const pickedOptions = await CoC7PickTalentDialog.create({ options, adjustmentType: 'takingSanityLoss', actorUuid: this.uuid, lossName: game.i18n.localize('CoC7.SANLoss'), lossMax: Math.abs(difference) })
+        console.log(pickedOptions)
+        if (pickedOptions.spentLuck > 0) {
+          if (await this.spendLuck(pickedOptions.spentLuck) !== false) {
+            difference += pickedOptions.reductionValue
+            changes['system.attribs.san.value'] = changes['system.attribs.san.value'] + pickedOptions.reductionValue
+          } else {
+            ui.notifications.warn('CoC7.NotEnoughLuck', { localize: true })
           }
         }
       }
@@ -4458,19 +4471,12 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       }
       let damageTotal = damageValue - armorValue
       if (damageTotal <= 0) return 0
-      const talents = this.items.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'takingDamage'))
-      if (talents.length) {
-        let reductionValue = 0
-        let spentLuck = 0
-        const pickedTalents = await CoC7PickTalentDialog.create({ talents, type: 'takingDamage', actorUuid: this.uuid, name: game.i18n.localize('CoC7.Damage'), maxLoss: damageTotal })
-        for (const talent of pickedTalents) {
-          const offsets = talent.system.getLuckAndReduction('takingDamage', damageTotal)
-          spentLuck += offsets.luck
-          reductionValue += offsets.loss
-        }
-        if (spentLuck > 0) {
-          if (await this.spendLuck(spentLuck) !== false) {
-            damageTotal -= reductionValue
+      const options = this.items.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'takingDamage')).map(doc => { return { talent: doc, enabled: false, luck: 0 } })
+      if (options.length) {
+        const pickedOptions = await CoC7PickTalentDialog.create({ options, adjustmentType: 'takingDamage', actorUuid: this.uuid, lossName: game.i18n.localize('CoC7.Damage'), lossMax: damageTotal })
+        if (pickedOptions.spentLuck > 0) {
+          if (await this.spendLuck(pickedOptions.spentLuck) !== false) {
+            damageTotal -= pickedOptions.reductionValue
           } else {
             ui.notifications.warn('CoC7.NotEnoughLuck', { localize: true })
           }

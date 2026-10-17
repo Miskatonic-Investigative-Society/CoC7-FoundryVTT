@@ -371,6 +371,9 @@ export const TALENT_ADJUSTMENT_TYPES = {
   },
   takingDamage: {
     label: 'CoC7.Talent.Type.TakingDamage'
+  },
+  takingSanityLoss: {
+    label: 'CoC7.Talent.Type.TakingSanityLoss'
   }
 }
 

@@ -55,7 +55,7 @@ export default class CoC7ModelsItemTalentSystem extends CoC7ModelsItemGlobalSyst
    * @returns {Array}
    */
   readableAdjustments () {
-    return this.adjustments.filter(r => ['disableCombatPool', 'luckButton', 'showOnInvestigatorCheck', 'showOnSkillCheck', 'takingDamage'].includes(r.type)).map(r => {
+    return this.adjustments.filter(r => ['disableCombatPool', 'luckButton', 'showOnInvestigatorCheck', 'showOnSkillCheck', 'takingDamage', 'takingSanityLoss'].includes(r.type)).map(r => {
       switch (r.type) {
         case 'disableCombatPool':
           if (typeof DICE_POOL_REASONS[r.config.disable]?.label === 'string') {
@@ -93,6 +93,8 @@ export default class CoC7ModelsItemTalentSystem extends CoC7ModelsItemGlobalSyst
           break
         case 'takingDamage':
           return game.i18n.localize('CoC7.Talent.Type.TakingDamage') + ': ' + game.i18n.format('CoC7.LuckReduceLossRatio', { luck: r.config.luckValue, name: game.i18n.localize('CoC7.Damage'), loss: r.config.reductionValue })
+        case 'takingSanityLoss':
+          return game.i18n.localize('CoC7.Talent.Type.TakingSanityLoss') + ': ' + game.i18n.format('CoC7.LuckReduceLossRatio', { luck: r.config.luckValue, name: game.i18n.localize('CoC7.SANLoss'), loss: r.config.reductionValue })
       }
       return false
     }).filter(t => t)
@@ -109,13 +111,20 @@ export default class CoC7ModelsItemTalentSystem extends CoC7ModelsItemGlobalSyst
       config: {}
     }
     switch (type) {
+      case 'addSkillChoice':
+        output.config = { cocid: '' }
+        break
       case 'disableCombatPool':
         {
           const disable = Object.entries(DICE_POOL_REASONS).find(e => e[1].ifAttacker || e[1].ifDefender)[0]
           output.config = { disable }
         }
         break
+      case 'luckButton':
+        output.config = { luckValue: '', prompt: '' }
+        break
       case 'showOnCombatAttacker':
+      case 'showOnFailure':
         // NOP
         break
       case 'showOnInvestigatorCheck':
@@ -127,6 +136,9 @@ export default class CoC7ModelsItemTalentSystem extends CoC7ModelsItemGlobalSyst
       case 'takingDamage':
         output.config = { type: 'fixed', luckValue: '', reductionValue: '' }
         break
+      case 'takingSanityLoss':
+        output.config = { type: 'fixed', luckValue: '', reductionValue: '' }
+        break
     }
     return output
   }
@@ -135,9 +147,10 @@ export default class CoC7ModelsItemTalentSystem extends CoC7ModelsItemGlobalSyst
    * Get Luck And Reduction for Type
    * @param {string} type
    * @param {int} maxLoss
+   * @param {int} luck
    * @returns {object}
    */
-  getLuckAndReduction (type, maxLoss) {
+  getLuckAndReduction (type, maxLoss, luck) {
     const output = {
       luck: 0,
       loss: 0
@@ -152,6 +165,11 @@ export default class CoC7ModelsItemTalentSystem extends CoC7ModelsItemGlobalSyst
           case 'percent':
             output.luck += parseInt(adjustment.config.luckValue, 10)
             output.loss += Math.floor(adjustment.config.reductionValue * maxLoss / 100, 10)
+            break
+          case 'ratio':
+            output.luck += luck
+            output.loss += (adjustment.config.reductionValue > 0 ? Math.floor(luck / adjustment.config.reductionValue * adjustment.config.reductionValue) : 0)
+            break
         }
       }
     }

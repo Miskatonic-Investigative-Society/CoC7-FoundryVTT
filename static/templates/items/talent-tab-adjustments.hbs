@@ -30,6 +30,12 @@
                   <label>{{localize 'CoC7.TalentDamageReduction'}}</label>
                   <div><input type="text" name="system.adjustments.{{index}}.config.reductionValue" value="{{row.config.reductionValue}}"></div>
                   <select name="system.adjustments.{{index}}.config.type">{{selectOptions ../_types selected=row.config.type}}</select>
+                {{else if (eq row.type 'takingSanityLoss')}}
+                  <label>{{localize 'CoC7.TalentLuckValue'}}</label>
+                  <div><input type="text" name="system.adjustments.{{index}}.config.luckValue" value="{{row.config.luckValue}}"></div>
+                  <label>{{localize 'CoC7.TalentLossReduction'}}</label>
+                  <div><input type="text" name="system.adjustments.{{index}}.config.reductionValue" value="{{row.config.reductionValue}}"></div>
+                  <select name="system.adjustments.{{index}}.config.type">{{selectOptions ../_types selected=row.config.type}}</select>
                 {{else if (eq row.type 'showOnInvestigatorCheck')}}
                   <label>{{localize 'CoC7.AttributeOrCharacteristic'}}</label>
                   <div><select name="system.adjustments.{{index}}.config.field">{{selectOptions ../_investigatorKeys selected=row.config.field}}</select></div>
