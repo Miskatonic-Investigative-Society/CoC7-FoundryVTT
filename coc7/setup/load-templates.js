@@ -24,6 +24,7 @@ export default async function () {
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/select-archetype.hbs',
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/select-occupation.hbs',
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/set-characteristics.hbs',
+    'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/pick-talents.hbs',
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/set-attributes.hbs',
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/view-attributes.hbs',
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/set-investigator.hbs',

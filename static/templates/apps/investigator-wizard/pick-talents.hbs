@@ -1,0 +1,21 @@
+<div class="panel flexcol">
+  <h2>{{localize 'CoC7.InvestigatorWizard.TitlePickTalents'}}</h2>
+  <div class="scrollable flexcol">
+    {{#each talents as |talent index|}}
+      <div class="form-group">
+        <label class="flex-single">{{localize 'TYPES.Item.talent'}}</label>
+        <div class="form-fields">
+          <select data-index="{{index}}">
+            {{#unless talent.fixed}}
+              <option value="">&nbsp;</option>
+            {{/unless}}
+            {{selectOptions talent.options selected=talent.selected}}
+          </select>
+        </div>
+      </div>
+      <div>
+        {{{talent.description}}}
+      </div>
+    {{/each}}
+  </div>
+</div>

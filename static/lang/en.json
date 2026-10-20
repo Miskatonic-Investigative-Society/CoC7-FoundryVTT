@@ -612,6 +612,7 @@
   "CoC7.UseLuckForSecondAttack": "Spend 10 luck for a second attack",
   "CoC7.UseLuckForLookOutMaster": "Spend all luck FOR Look Out Master!",
   "CoC7.TakeLoss": "Take {loss} loss",
+  "CoC7.TalentNoAutomation": "There is no automation",
 
   "CoC7.BackgroundNewSection": "Add new section",
   "CoC7.BackgroundSectionNameHolder": "Enter section title",

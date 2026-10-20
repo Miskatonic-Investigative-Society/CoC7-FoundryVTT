@@ -16,6 +16,15 @@
       <div>
         {{{description}}}
         <ul>
+          {{#if (gt talents 0)}}
+            <li><strong>{{localize 'CoC7.PulpTalents'}}:</strong> {{talents}}</li>
+            {{#if talentsRequired}}
+              <li><strong>{{localize 'CoC7.RequiredPulpTalents'}}:</strong> {{#each talentsRequired as |talent|}}{{{talent}}}{{/each}}</label>
+            {{/if}}
+            {{#if talentsSuggested}}
+              <li><strong>{{localize 'CoC7.SuggestedPulpTalents'}}:</strong> {{#each talentsSuggested as |talent|}}{{{talent}}}{{/each}}</label>
+            {{/if}}
+          {{/if}}
           <li>{{{localize 'CoC7.InvestigatorWizard.CoreCharacteristicName' coreCharacteristic=coreCharacteristic}}}</li>
           <li>{{{localize 'CoC7.InvestigatorWizard.AddBonusPointsToSkills' bonusPoints=bonusPoints skills=skills}}}</li>
           <li>{{{localize 'CoC7.InvestigatorWizard.SuggestedOccupations' suggested=suggestedOccupations}}}</li>

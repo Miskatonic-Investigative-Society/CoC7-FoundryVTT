@@ -60,15 +60,16 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       PAGE_SETUPS: 2,
       PAGE_ARCHETYPES: 3,
       PAGE_CHARACTERISTICS: 4,
-      PAGE_ATTRIBUTES: 5,
-      PAGE_VIEW_ATTRIBUTES: 6,
-      PAGE_OCCUPATIONS: 7,
-      PAGE_OCCUPATION_SKILLS: 8,
-      PAGE_ARCHETYPE_SKILLS: 9,
-      PAGE_POINTS_SKILLS: 10,
-      PAGE_INVESTIGATOR: 11,
-      PAGE_BACKSTORY: 12,
-      PAGE_CREATE: 13
+      PAGE_PICK_TALENTS: 5,
+      PAGE_ATTRIBUTES: 6,
+      PAGE_VIEW_ATTRIBUTES: 7,
+      PAGE_OCCUPATIONS: 8,
+      PAGE_OCCUPATION_SKILLS: 9,
+      PAGE_ARCHETYPE_SKILLS: 10,
+      PAGE_POINTS_SKILLS: 11,
+      PAGE_INVESTIGATOR: 12,
+      PAGE_BACKSTORY: 13,
+      PAGE_CREATE: 14
     }
   }
 
@@ -130,6 +131,9 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       pageOrder.push(pages.PAGE_ARCHETYPES)
     }
     pageOrder.push(pages.PAGE_CHARACTERISTICS)
+    if (game.settings.get(FOLDER_ID, 'pulpRuleArchetype') && game.settings.get(FOLDER_ID, 'pulpRuleTalents')) {
+      // pageOrder.push(pages.PAGE_PICK_TALENTS)
+    }
     if (!game.settings.get(FOLDER_ID, 'pulpRuleIgnoreAgePenalties')) {
       pageOrder.push(pages.PAGE_ATTRIBUTES)
     }
@@ -372,6 +376,9 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                 }
               )
               context.bonusPoints = archetype.system.bonusPoints
+              context.talents = archetype.system.talents
+              context.talentsSuggested = await Promise.all((await game.CoC7.cocid.expandItemArray({ itemList: archetype.system.talentsSuggested })).map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true })))
+              context.talentsRequired = await Promise.all((await game.CoC7.cocid.expandItemArray({ itemList: archetype.system.talentsRequired })).map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true })))
               const coreCharacteristics = []
               for (const coreCharacteristic in archetype.system.coreCharacteristics) {
                 if (archetype.system.coreCharacteristics[coreCharacteristic]) {
@@ -515,6 +522,48 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             }
           }
         }
+        break
+
+      case context.pages.PAGE_PICK_TALENTS:
+        if (context.coc7Config.archetype !== '') {
+          const archetype = await this.getCacheItemByCoCID(this.coc7Config.archetype)
+          if (archetype) {
+            context.talents = []
+            const selectedTalents = this.coc7Config.talents.map(row => row.cocid)
+            const talents = (await this.filterCacheItemByCoCID(/^i\.talent\./)).filter(doc => doc.system.usable.investigator === true)
+            for (const talentOption of this.coc7Config.talents) {
+              const row = {
+                selected: '',
+                options: [],
+                fixed: false,
+                description: ''
+              }
+              const talent = talents.find(doc => doc.flags?.[FOLDER_ID]?.cocidFlag?.id === talentOption.cocid)
+              if (talent) {
+                row.selected = talentOption.cocid
+                row.description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
+                  talent.system.description.value,
+                  {
+                    async: true,
+                    secrets: game.user.isGM
+                  }
+                )
+                if (talentOption.required) {
+                  row.fixed = true
+                  row.options.push({ value: talentOption.cocid, label: talent.name })
+                }
+              }
+              if (row.options.length === 0) {
+                row.options = talents.filter(doc => !doc.system.type.insane && (doc.flags?.[FOLDER_ID]?.cocidFlag?.id === talentOption.cocid || !selectedTalents.includes(doc.flags?.[FOLDER_ID]?.cocidFlag?.id))).map(doc => { return { value: doc.flags?.[FOLDER_ID]?.cocidFlag?.id, label: doc.name } }).sort(CoC7Utilities.sortByLabelKey)
+                if (row.selected.length) {
+                  selectedTalents.push(row.selected)
+                }
+              }
+              context.talents.push(row)
+            }
+          }
+        }
+        context.canNext = true
         break
 
       case context.pages.PAGE_ATTRIBUTES:
@@ -1207,8 +1256,22 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         this.element.querySelector('select[name=coc-archetype]')?.addEventListener('change', async (event) => {
           this.coc7Config.archetype = event.target.value
           this.coc7Config.coreCharacteristic = ''
+          this.coc7Config.talents = []
+
           this.clearSetupPoints()
           await this.setSkillLists()
+          const archetype = await this.getCacheItemByCoCID(this.coc7Config.archetype)
+          if (archetype) {
+            for (const cocid of archetype.system.talentsRequired) {
+              this.coc7Config.talents.push({ cocid, required: true })
+            }
+            for (const cocid of archetype.system.talentsSuggested) {
+              this.coc7Config.talents.push({ cocid, required: false })
+            }
+            while (this.coc7Config.talents.length < archetype.system.talents) {
+              this.coc7Config.talents.push({ cocid: '', required: false })
+            }
+          }
           this.render({ force: true })
         })
         break
@@ -1356,6 +1419,16 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                 this.render({ force: true })
               }
               break
+          }
+        }))
+        break
+
+      case context.pages.PAGE_PICK_TALENTS:
+        this.element.querySelectorAll('select').forEach((element) => element.addEventListener('change', async (event) => {
+          const index = event.target.dataset.index
+          if (typeof index !== 'undefined') {
+            this.coc7Config.talents[index].cocid = event.target.value
+            this.render({ force: true })
           }
         }))
         break
@@ -1985,6 +2058,8 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                 this.coc7Config.own = own
               }
               break
+            case CoC7InvestigatorWizard.PageList.PAGE_PICK_TALENTS:
+              break
           }
           this.coc7Config.step = pageNumber
           // When moving step reset scroll height
@@ -2302,6 +2377,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       parsedValues: {},
       archetype: '',
       coreCharacteristic: '',
+      talents: [],
       occupation: '',
       bioSections: [],
       personal: 0,
