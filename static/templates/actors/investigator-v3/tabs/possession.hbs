@@ -91,7 +91,7 @@
               {{#each itemsByType.talent as |item|}}
                 <li class="item" data-item-uuid="{{item.uuid}}">
                   <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-                  <div class="item-name show-detail">{{item.name}}</div>
+                  <div class="item-name show-detail">{{item.name}} {{#if (and (eq item.system.adjustments.length 0) (eq item.effects.size 0))}} <i class="fa-regular fa-seal-exclamation" data-tooltip="CoC7.TalentNoAutomation"></i>{{/if}}</div>
                   <div class="item-controls">
                     <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
                     <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
