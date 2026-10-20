@@ -252,6 +252,10 @@ body {
       label {
         flex: 0.7;
       }
+
+      .control.copy-to-clipboard {
+        pointer-events: auto;
+      }
     }
 
     .coc7-warning {
@@ -801,10 +805,10 @@ body {
 
     .form-footer {
       button.no-button {
-        height: 0;
-        min-height: 0;
+        background: none;
+        pointer-events: none;
         border: 0;
-        margin: 1px;
+        margin: 0 1px;
       }
     }
   }
