@@ -2996,7 +2996,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
    * @param {boolean} options.hidden
    * @returns {integer}
    */
-  async rollInitiative (hasGun = false, { hidden = false }) {
+  async rollInitiative (hasGun = false, { hidden = false } = {}) {
     switch (game.settings.get(FOLDER_ID, 'initiativeRule')) {
       case 'optional':
         {
