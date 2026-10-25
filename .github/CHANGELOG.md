@@ -9,7 +9,30 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 9.0
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v13 please consider upgrading !!_**
+
+- Add adjustments tab to Talents to support more types
+- Add flag to allow rolls to not show damage/heal options
+- Add Journal specific styling drop down which you can add this to your init hook `game.CoC7.journalStyle('key', 'name')`
+- Add Prose Mirror button for key backstory element (FoundryVTT v14+)
+- Add Prose Mirror system specific styles and inserts (FoundryVTT v14+)
+- Add required and suggested talents to Archetypes Item
+- Apply system styling to all FoundryVTT components
+- Change name to label and key to value to be consistent with FoundryVTT usage
+- Change out of date module checks system for system updater
+- Flag v13 specific code
+- Fix Actor picker if a token's Actor has been deleted
+- Fix "Draw gun" toggle in the combat tracker, thanks to @Jah-yee #2166
+- Fix Punch item using wrong skill name, thanks to @ClickerOfThings #2164
+- Move flat dice/roll modifiers to house rules
 - Remove v12 specific code and styles
+- Remove limit from Investigator Wizard as issue needing this appears to have been fully resolved now
+- Several improvements to dark mode theme colours
+- When opening Prose Mirror sheet match application theme
 
 ## Version 8.16
 
