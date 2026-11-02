@@ -278,7 +278,7 @@ export default class CoC7Link {
           case 'modifier':
             deprecated.warningLogger({
               was: '@coc7.check[modifier:]',
-              now: '@coc7.effect[poolModifier:]',
+              now: '@coc7.check[poolModifier:]',
               until: 15
             })
             key = 'poolModifier'
@@ -286,7 +286,7 @@ export default class CoC7Link {
           case 'type':
             deprecated.warningLogger({
               was: '@coc7.check[type:]',
-              now: '@coc7.effect[subtype:]',
+              now: '@coc7.check[subtype:]',
               until: 15
             })
             key = 'subtype'

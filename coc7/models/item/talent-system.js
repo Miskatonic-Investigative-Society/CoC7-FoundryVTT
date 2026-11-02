@@ -124,6 +124,7 @@ export default class CoC7ModelsItemTalentSystem extends CoC7ModelsItemGlobalSyst
         output.config = { luckValue: '', prompt: '' }
         break
       case 'showOnCombatAttacker':
+      case 'showOnCombatDefender':
       case 'showOnFailure':
         // NOP
         break

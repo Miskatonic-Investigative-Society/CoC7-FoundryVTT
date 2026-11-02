@@ -18,6 +18,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Add adjustments tab to Talents to support more types
 - Add flag to allow rolls to not show damage/heal options
 - Add Journal specific styling drop down which you can add this to your init hook `game.CoC7.journalStyle('key', 'name')`
+- Add mouse out support for clickable events
 - Add Prose Mirror button for key backstory element (FoundryVTT v14+)
 - Add Prose Mirror system specific styles and inserts (FoundryVTT v14+)
 - Add required and suggested talents to Archetypes Item
@@ -27,6 +28,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Flag v13 specific code
 - Fix Actor picker if a token's Actor has been deleted
 - Fix "Draw gun" toggle in the combat tracker, thanks to @Jah-yee #2166
+- Fix link creation on Firefox submitting the form
 - Fix Punch item using wrong skill name, thanks to @ClickerOfThings #2164
 - Move flat dice/roll modifiers to house rules
 - Remove v12 specific code and styles

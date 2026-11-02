@@ -137,7 +137,7 @@ export default class CoC7ChatCombatRanged {
               uuid: targetUuid,
               mov: target.system.attribs.mov.value
             })
-            const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)))
+            const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => (row.type === 'showOnCombatDefender' || (row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)))))
             const targetPoolDisabled = targetTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
             if (target.system.attribs.build.value <= -2) {
               targetData.size = CoC7ChatCombatRanged.TARGET_SIZE.small
@@ -976,7 +976,7 @@ export default class CoC7ChatCombatRanged {
     }
     const dicePoolReasons = CoC7Utilities.dicePoolReasons({ forRanged: true })
     const attackerKeys = Object.keys(dicePoolReasons).filter(k => dicePoolReasons[k].ifAttacker)
-    let attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => (row.type === 'showOnCombatAttacker' || (row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable))))) ?? []
+    let attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => (row.type === 'showOnCombatAttacker' || (row.type === 'disableCombatPool' && (row.config.disable === 'codedMultipleShots' || attackerKeys.includes(row.config.disable)))))) ?? []
     if (typeof item?.flags?.CoC7?.cocidFlag?.id === 'string') {
       attackerTalents = attackerTalents.concat(attacker?.items?.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(item.flags.CoC7.cocidFlag.id))) ?? [])
     }
@@ -988,7 +988,7 @@ export default class CoC7ChatCombatRanged {
         }
       }
     }
-    const attackerPoolDisabled = attackerTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
+    const attackerPoolDisabled = attackerTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && (row.config.disable === 'codedMultipleShots' || attackerKeys.includes(row.config.disable))).map(doc => doc.config.disable)); return c }, [])
     data.attackerTalent = await Promise.all(attackerTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
     for (const value in dicePoolReasons) {
       const type = (dicePoolReasons[value].forBonus ? 'poolBonus' : (dicePoolReasons[value].forPenalty ? 'poolPenalty' : ''))
@@ -1008,7 +1008,7 @@ export default class CoC7ChatCombatRanged {
           data.targets[offset].poolDisabled = []
         }
         const target = await fromUuid(data.targets[offset].uuid)
-        const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)))
+        const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => (row.type === 'showOnCombatDefender' || (row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)))))
         const targetPoolDisabled = targetTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
         data.targets[offset].targetTalent = await Promise.all(targetTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
         data.targets[offset].poolDisabled = attackerPoolDisabled.concat(targetPoolDisabled)
@@ -1028,8 +1028,7 @@ export default class CoC7ChatCombatRanged {
       if (this.#aiming && this.#shots.length === 0) {
         poolModifier++
       }
-      // if (this.reload) modifier--
-      if (this.#multipleShots && !this.#fullAuto) {
+      if (this.#multipleShots && !this.#fullAuto && !attackerPoolDisabled.includes('codedMultipleShots')) {
         poolModifier--
       }
       if (this.#fullAuto) {

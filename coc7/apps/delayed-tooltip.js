@@ -26,9 +26,7 @@ export default class CoC7DelayedTooltip {
           game.tooltip.activate(element, { html: element.dataset.generatedTooltip, cssClass: 'coc7-wider-tooltip' })
         }, delay)
         game.tooltip.activate(element, { html: element.dataset.generatedBasicTooltip, cssClass: 'coc7-wider-tooltip' })
-        return
       }
-      game.tooltip.activate(element, { html: element.dataset.generatedTooltip, cssClass: 'coc7-wider-tooltip' })
     })
     // If leaving the element give a short amount of time to stop game.tooltip.activate being called
     element.addEventListener('pointerleave', (event) => {

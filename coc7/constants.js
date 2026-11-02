@@ -360,6 +360,9 @@ export const TALENT_ADJUSTMENT_TYPES = {
   showOnCombatAttacker: {
     label: 'CoC7.Talent.Type.ShowOnCombatAttacker'
   },
+  showOnCombatDefender: {
+    label: 'CoC7.Talent.Type.ShowOnCombatDefender'
+  },
   showOnFailure: {
     label: 'CoC7.Talent.Type.ShowOnFailure'
   },

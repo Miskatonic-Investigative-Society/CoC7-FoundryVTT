@@ -352,6 +352,7 @@
   "CoC7.rangeCombatCard.InMeleeTitle": "1 penalty die. Target is engaged in melee combat",
   "CoC7.rangeCombatCard.FastMovingTargetTitle": "1 penalty die. Target is fast (MOV 8+) and moving at full speed",
   "CoC7.rangeCombatCard.SurprisedTargetTitle": "1 bonus die for surprised target",
+  "CoC7.rangeCombatCard.DisableMultipleShots": "One penalty die for multiple shots",
 
   "CoC7.meleeCombatDamageTakes": "takes",
   "CoC7.meleeCombatDamageFrom": "from",
@@ -898,6 +899,7 @@
   "CoC7.Talent.Type.DisableCombatPool": "Disable Combat Pool Modifiers",
   "CoC7.Talent.Type.LuckButton": "Luck Button",
   "CoC7.Talent.Type.ShowOnCombatAttacker": "Show on Combat If Attacker",
+  "CoC7.Talent.Type.ShowOnCombatDefender": "Show on Combat If Defender",
   "CoC7.Talent.Type.ShowOnFailure": "Show on Failure",
   "CoC7.Talent.Type.ShowOnInvestigatorCheck": "Show on Attribute/Characteristic Check",
   "CoC7.Talent.Type.ShowOnSkillCheck": "Show on Skill Check",

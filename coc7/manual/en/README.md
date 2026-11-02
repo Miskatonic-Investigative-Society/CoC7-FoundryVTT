@@ -1,4 +1,4 @@
-# System documentation for version 8.10
+# System documentation for version 9.0
 
 This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
 
@@ -16,29 +16,10 @@ This documentation can be reopened under [fa-solid fa-cogs]Game Settings -> Help
 
 # Recent changes
 
+- This version no longer supports FoundryVTT v12
+- The CSS has been redone to apply the same styling across all FoundryVTT windows
+
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
-
-- [Active effects](effects.md) - Add Luck Recovery formula, Natural Healing value, Know roll bonus dice/value, Idea roll bonus dice/value, and Wildcard bonus dice/value based on CoC ID adjustments
-- Added Idea and Know roll buttons to Investigator Sheet v3
-- Add Active Effects to Talent Items
-
-### Changes in version 8.1 -  8.9
-- [Spells](item_spell.md) can once again automatically deduct costs from the caster. The old costs will be available, if the updater can not convert it, in the Keeper tab. The new system allows for more interactive casting an example can be found in the Items Examples compendium @UUID[Compendium.CoC7.items.Item.4Rrff1sAoWh7NFkL]{Test Spell}
-- Allow reordering of Characteristics in house rules settings
-- Move to FoundryVTT implementations of dataModels, AppV2, and Tooltips
-- Trigger Actor Picker if User interacting with chat message owns multiple Actors
-- If keeper is online check chat message permissions against Actor ownership instead of User permissions and change message owner to prevent user doesn't have permissions error message
-- Move game.system.api.cocid to game.CoC7.cocid
-- Add ping location button to Chase Item
-- Move book progress and learned spells list to Actor to allow sharing books without progress
-- Move i.skill.fighting-throw, i.skill.firearms-throw, i.skill.ranged-throw to Throw (i.skill.throw)
-- Allow CoC7 journal styles to be turned on and off in the config pages
-- Allow toggling the NPC notes panel
-- Rolling dice allows the Keeper to assign the roll as damage / healing to characteristics, attributes, or skills
-- Move d100 rolls to new dice-pool class so manual dice windows will trigger if set
-- Remove custom CSS options and Override Sheet Artwork button to Game Settings panel with information how to move them to a separate module
-- Add setting to use icons for eras instead of text
-- Add house rule to allow pushing fumbles, after dealing with the fumble consequences why not risk more?
 
 # Chaosium Modules
 - [Call of Cthulhu® - Starter Set](https://foundryvtt.com/packages/cha-coc-fvtt-en-starterset) - Contains three scenarios (Paper Chase, Edge of Darkness, and Dead Man Stomp) and instructions for playing Call of Cthulhu 7th edition.
@@ -46,6 +27,8 @@ For a full list of changes checkout the [changelog](https://github.com/Miskatoni
 - [Call of Cthulhu® - FoundryVTT - Investigator Wizard](https://foundryvtt.com/packages/call-of-cthulhu-foundryvtt-investigator-wizard) - Released with permission from Chaosium contains archetypes, occupations, setups, and skills for use with the Investigator Creation Wizard.
 - [Call of Cthulhu® - Core Content](https://foundryvtt.com/packages/cha-coc-fvtt-en-keeperitems) - The Core Content package contains everything you need to play Call of Cthulhu on Foundry including lethal weapons, forbidden tomes, arcane spells, eldritch horrors, and more!
 - [Call of Cthulhu® - No Time To Scream](https://foundryvtt.com/packages/cha-coc-fvtt-en-notimetoscream) - No Time to Scream contains three short-play scenarios for Call of Cthulhu. Each scenario is perfect for a single evening of mystery and horror, and are designed to be played in around two hours. Each scenario includes four pre-generated investigators, along with full-color maps and handouts.
+- [Call of Cthulhu® - The Order of the Stone](https://foundryvtt.com/packages/cha-coc-fvtt-en-theorderofthestone) - A Campaign in Three Parts
+- [Call of Cthulhu® - Arkham](https://foundryvtt.com/packages/cha-coc-fvtt-en-arkham) - On the streets of Arkham, the threat of the Cthulhu Mythos is ever-present. A quiet town in New England—home to the prestigious Miskatonic University—Arkham’s underbelly hides criminals, speakeasies, and a witch-cursed history. Call of Cthulhu: Arkham is the definitive guide to the signature setting of Call of Cthulhu.
 
 # Overview sections below
 

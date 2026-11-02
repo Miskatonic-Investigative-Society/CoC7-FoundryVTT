@@ -154,7 +154,7 @@ export default class CoC7ModelsItemTalentSheet extends CoC7ModelsItemGlobalSheet
           label: game.i18n.localize('CoC7.TalentReductionRatio')
         }]
         context._adjustmentTypes = Object.entries(TALENT_ADJUSTMENT_TYPES).reduce((c, e) => { c.push({ value: e[0], label: game.i18n.localize(e[1].label) }); return c }, []).sort(CoC7Utilities.sortByLabelKey)
-        context._combatPoolKeys = Object.entries(DICE_POOL_REASONS).reduce((c, e) => { if (e[1].ifAttacker || e[1].ifDefender) { c.push({ value: e[0], label: game.i18n.localize(e[1].label) + ' (' + [(e[1].forMelee ? game.i18n.localize('CoC7.Weapon.Property.Melee') : false), (e[1].forRanged ? game.i18n.localize('CoC7.WeaponRanged') : false)].filter(t => t).join(' / ') + ')' }) } return c }, []).sort(CoC7Utilities.sortByLabelKey)
+        context._combatPoolKeys = Object.entries(DICE_POOL_REASONS).reduce((c, e) => { if (e[1].ifAttacker || e[1].ifDefender) { c.push({ value: e[0], label: game.i18n.localize(e[1].label) + ' (' + [(e[1].forMelee ? game.i18n.localize('CoC7.Weapon.Property.Melee') : false), (e[1].forRanged ? game.i18n.localize('CoC7.WeaponRanged') : false)].filter(t => t).join(' / ') + ')' }) } return c }, [{ value: 'codedMultipleShots', label: game.i18n.localize('CoC7.rangeCombatCard.DisableMultipleShots') }]).sort(CoC7Utilities.sortByLabelKey)
         context._investigatorKeys = []
         for (const [value, field] of CONFIG.Actor.dataModels.character.schema.getField('attribs').entries()) {
           if (['lck', 'san'].includes(value)) {

@@ -323,10 +323,9 @@ body {
       --font-h6-size: var(--coc7-font-h6-size);
     }
 
-    &.coc7-actor-sheet.investigator {
-      section.window-content {
-        backdrop-filter: none; // Foundry applies a backdrop filter in dark mode which breaks our UI.
-      }
+    section.window-content {
+      backdrop-filter: none; // Foundry applies a backdrop filter in dark mode which breaks our UI.
+      -webkit-backdrop-filter: none;
     }
   }
 

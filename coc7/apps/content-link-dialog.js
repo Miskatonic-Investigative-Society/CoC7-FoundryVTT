@@ -228,10 +228,10 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
     await super._onRender(context, options)
 
     this.element.querySelectorAll('select').forEach((element) => element.addEventListener('change', async (event) => {
-      event.currentTarget.closest('form').dispatchEvent(new SubmitEvent('submit'))
+      this.form.dispatchEvent(new Event('submit', { cancelable: true }))
     }))
     this.element.querySelectorAll('input[type=radio]').forEach((element) => element.addEventListener('change', async (event) => {
-      event.currentTarget.closest('form').dispatchEvent(new SubmitEvent('submit'))
+      this.form.dispatchEvent(new Event('submit', { cancelable: true }))
     }))
     this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', (event) => {
       const propertyId = event.target.dataset.property
@@ -249,7 +249,7 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
       if (propertyId === 'difficulty' && this.coc7Config.other[propertyId] && typeof this.coc7Config.linkData.difficulty === 'undefined') {
         this.coc7Config.linkData.difficulty = CoC7DicePool.difficultyLevel[game.settings.get(FOLDER_ID, 'defaultCheckDifficulty')]
       }
-      event.currentTarget.closest('form').dispatchEvent(new SubmitEvent('submit'))
+      this.form.dispatchEvent(new Event('submit', { cancelable: true }))
       this.render({ force: true })
     }))
 
@@ -267,7 +267,7 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
    * Add Active Effect Change
    */
   static async #onAddChange () {
-    this.form.dispatchEvent(new SubmitEvent('submit'))
+    this.form.dispatchEvent(new Event('submit', { cancelable: true }))
     const submitData = new foundry.applications.ux.FormDataExtended(this.form)
     const formData = foundry.utils.expandObject(submitData.object)
     const changes = Object.values(formData.changes ?? {})
@@ -281,7 +281,7 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
    * @param {ClickEvent} event
    */
   static async #onDeleteChange (event) {
-    this.form.dispatchEvent(new SubmitEvent('submit'))
+    this.form.dispatchEvent(new Event('submit', { cancelable: true }))
     const submitData = new foundry.applications.ux.FormDataExtended(this.form)
     const formData = foundry.utils.expandObject(submitData.object)
     const changes = Object.values(formData.changes)

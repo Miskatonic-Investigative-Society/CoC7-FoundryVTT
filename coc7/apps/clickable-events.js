@@ -13,6 +13,7 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
    * Set up Clickable Events and Chaosium Canvas Interface
    */
   static initSelf () {
+    CoC7ClickableEvents.lastBehaviors = []
     const known = [
       ChaosiumCanvasInterfaceAmbientLightToggle,
       ChaosiumCanvasInterfaceDrawingToggle,
@@ -102,6 +103,7 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
         const level = canvas.level?.id
         const destination = canvas.activeLayer.toLocal(event)
         let setPointer = false
+        const currentBehaviors = []
         for (const region of canvas.scene.regions.contents) {
           /* // FoundryVTT V13 */
           if (typeof level === 'undefined' || region.levels.size === 0 || region.levels.has(level)) {
@@ -109,6 +111,9 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
             if (behaviors) {
               setPointer = (await Promise.all(behaviors.map(async (doc) => {
                 const r = await doc.system._handleMouseOverEvent()
+                if (typeof doc.system._handleMouseOutEvent === 'function') {
+                  currentBehaviors.push(doc.uuid)
+                }
                 if (r === true) {
                   return true
                 }
@@ -125,6 +130,11 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
         } else {
           document.getElementById('board').style.cursor = ''
         }
+        const uuids = CoC7ClickableEvents.lastBehaviors.filter(uuid => !currentBehaviors.includes(uuid))
+        for (const uuid of uuids) {
+          fromUuid(uuid).then(doc => doc.system._handleMouseOutEvent())
+        }
+        CoC7ClickableEvents.lastBehaviors = currentBehaviors
       }
     })
   }
