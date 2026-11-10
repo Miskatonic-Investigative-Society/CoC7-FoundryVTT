@@ -336,7 +336,7 @@ export default class CoC7ChaseParticipant {
         isFumble: check.isFumble,
         isRegularFailure: check.isRegularFailure,
         isSuccess: check.isSuccess,
-        tooltip: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/inline-roll.hbs', data),
+        tooltip: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/inline-roll.hbs', data),
         value: check.total
       }
     }

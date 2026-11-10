@@ -1,3 +1,4 @@
+// cspell:ignore characteritic
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ActiveEffect from '../../apps/active-effect.js'
 import CoC7ChatDamage from '../../apps/chat-damage.js'
@@ -13,7 +14,7 @@ import deprecated from '../../deprecated.js'
 
 export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
   static DEFAULT_OPTIONS = {
-    classes: ['coc7', 'sheet'],
+    classes: ['coc7-sheet', 'coc7-actor-sheet'],
     form: {
       handler: CoC7ModelsActorGlobalSheet.#onSubmit,
       submitOnChange: true
@@ -27,11 +28,6 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
    */
   async _prepareContext (options) {
     const context = await super._prepareContext(options)
-
-    /* // FoundryV12 polyfill */
-    if (!context.document) {
-      context.document = this.document
-    }
 
     context.canDragToken = (context.document.token instanceof TokenDocument) && game.user.isGM
     context.linkedActor = (context.document.token ?? context.document.prototypeToken)?.actorLink === true
@@ -67,6 +63,15 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
     }
 
     context.effects = context.document.type === 'character' ? await CoC7ActiveEffect.prepareActiveEffectCategories(context.document) : await CoC7ActiveEffect.prepareNPCActiveEffectCategories(context.document)
+    context.manualTalents = await Promise.all(context.document.items.filter(doc => doc.type === 'talent' && doc.system.adjustments.length > 0).map(async doc => {
+      const readable = doc.system.readableAdjustments()
+      return {
+        img: doc.img,
+        name: doc.name,
+        source: await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }),
+        readable: (readable.length > 0 ? '<ul class="without-margin"><li>' + readable.join('</li><li>') + '</li></ul>' : '')
+      }
+    }))
 
     context.allowUnlock = this.allowUnlock
 
@@ -175,7 +180,18 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
       c[k] = game.settings.get(FOLDER_ID, k)
       return c
     }, {})
-    context.hasLuckAbilities = Object.values(context.usingLuck).reduce((c, b) => c || b, false)
+    context.otherLuckButtons = context.document.items.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'luckButton')).reduce((c, doc) => {
+      for (const adjustment of doc.system.adjustments) {
+        if (adjustment.type === 'luckButton') {
+          c.push({
+            luck: adjustment.config.luckValue,
+            label: adjustment.config.prompt
+          })
+        }
+      }
+      return c
+    }, []).sort(CoC7Utilities.sortByLabelKey)
+    context.hasLuckAbilities = context.otherLuckButtons.length > 0 || Object.values(context.usingLuck).reduce((c, b) => c || b, false)
 
     return context
   }
@@ -194,11 +210,6 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
       context.tab = context.tabs[partId]
     } else {
       context.tab = undefined
-    }
-
-    /* // FoundryV12 polyfill */
-    if (game.release.generation === 12) {
-      context.editable = this.isEditable
     }
 
     return context
@@ -263,11 +274,14 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
 
     this.element.querySelectorAll('.item-name.effect-name').forEach((element) => element.addEventListener('click', this._onEffect.bind(this)))
 
-    this.element.querySelectorAll('.attribute-value').forEach((element) => element.addEventListener('wheel', this._onWheel.bind(this), {
-      passive: true
+    this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', (event) => {
+      event.preventDefault()
+      switch (event.currentTarget.dataset.action) {
+        case 'item-popup':
+          this._onItemPopup(event)
+          break
+      }
     }))
-
-    this.element.querySelectorAll('.item-popup').forEach((element) => element.addEventListener('click', this._onItemPopup.bind(this)))
 
     this.element.querySelector('.slide-out-notes.clickable')?.addEventListener('click', (event) => {
       const tab = event.currentTarget.closest('section.window-content').querySelector('.tab-group-notes .tab-group-header')
@@ -292,7 +306,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
               div = document.createElement('div')
               div.style.gridArea = 'details'
               div.style.display = 'grid'
-              await CoC7Utilities.setItemSummaryHtml(div, item, this.document)
+              await CoC7Utilities.setItemSummaryHtml(div, item)
               li.append(div)
             }
             CoC7Utilities.htmlElementToggleShow(li, div)
@@ -307,13 +321,9 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return
 
-    /* // FoundryVTT V12 */
-    if (game.release.generation === 12) {
-      deprecated.ActorAppV2DragDrop(this)
-      this.element.querySelectorAll('img[data-action="editImage"]').forEach((element) => element.addEventListener('click', async (event) => {
-        deprecated.AppV2EditImage(event, this.document, this.element, { submitOnChange: this.options.form.submitOnChange, position: this.position })
-      }))
-    }
+    this.element.querySelectorAll('.attribute-value').forEach((element) => element.addEventListener('wheel', this._onWheel.bind(this), {
+      passive: true
+    }))
 
     this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', (event) => { this._onClickToggle(event) }))
 
@@ -354,8 +364,16 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
           this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
           this.document.rollCharacteristicsValue()
           break
+        case 'clear-conditions':
+          this._onClearConditions(event)
+          break
         case 'condition':
           this._onConditionToggle(event)
+          break
+        case 'development-flag':
+          if (event.detail%2 === 0) {
+            this._onDevelopmentFlag(event)
+          }
           break
         case 'dying-check':
           this.checkForDeath(event)
@@ -441,6 +459,21 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
             'system.attribs.lck.value': 0
           })
           break
+        case 'useLuckValue':
+          {
+            if (event.detail === 1 && typeof event.currentTarget.dataset.value !== 'undefined') {
+              this.document.update({
+                'system.attribs.lck.value': Math.max(0, parseInt(this.document.system.attribs.lck.value ?? 0, 10) - parseInt(event.currentTarget.dataset.value, 10))
+              })
+              ChatMessage.create({
+                speaker: {
+                  actor: this.document.id
+                },
+                content: event.currentTarget.innerHTML
+              })
+            }
+          }
+          break
       }
     }))
     this.element.querySelectorAll('.reload-weapon').forEach((element) => {
@@ -449,16 +482,6 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
     })
     this.element.querySelectorAll('.item div.show-detail').forEach((element) => element.addEventListener('dblclick', this._onItemEdit.bind(this)))
     this.element.querySelectorAll('.item-edit').forEach((element) => element.addEventListener('click', this._onItemEdit.bind(this)))
-    this.element.querySelectorAll('.development-flag').forEach((element) => element.addEventListener('dblclick', async (event) => {
-      event.preventDefault()
-      const itemUuid = event.target.closest('.item').dataset.itemUuid
-      const document = await fromUuid(itemUuid)
-      if (document) {
-        document.update({
-          'system.flags.developement': !document.system.flags.developement
-        })
-      }
-    }))
     this.element.querySelectorAll('.skill-name').forEach((element) => element.addEventListener('change', this._onSkillSetName.bind(this)))
     this.element.querySelectorAll('.npc-skill-score').forEach((element) => element.addEventListener('change', this._onSkillSetValue.bind(this)))
     this.element.querySelectorAll('.skill-adjustment').forEach((element) => element.addEventListener('change', this._onSkillSetAdjustment.bind(this)))
@@ -477,27 +500,10 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
       }
     })
 
-    this.element.querySelector('.clear_conditions')?.addEventListener('click', (event) => {
-      const disable = {}
-      for (const condition in this.document.system.conditions) {
-        if (this.document.system.conditions[condition].value === true) {
-          disable[`system.conditions.${condition}.value`] = false
-        }
-      }
-      if (Object.keys(disable).length > 0) {
-        this.actor.update(disable)
-      }
-      const effects = this.document.effects.map(effect => effect.id)
-      if (effects.length > 0) {
-        this.document.deleteEmbeddedDocuments('ActiveEffect', effects)
-      }
-    })
-
     this.element.querySelectorAll('.read-only').forEach((element) => element.addEventListener('dblclick', this._toggleReadOnly.bind(this)))
 
     // Everything below here is not available if in compendium
-    /* // FoundryVTT V12 */
-    if (context.document.inCompendium ?? !!context.document.pack) return
+    if (context.document.inCompendium) return
 
     this.element.querySelectorAll('.attribute-name.rollable').forEach((element) => {
       element.addEventListener('click', this._onRollAttribTest.bind(this))
@@ -526,22 +532,6 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
       element.addEventListener('click', this._onWeaponRoll.bind(this))
       element.addEventListener('contextmenu', this._onOpposedRoll.bind(this))
     })
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**
@@ -812,13 +802,48 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
 
   /**
    * Toggle Automatic Calculation flag
-   * @param {SubmitEvent|null} event
+   * @param {ClickEvent} event
    */
   async _onAttributeAutoToggleClicked (event) {
     event.preventDefault()
     this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const flagName = event.currentTarget.closest('[data-attrib]').dataset.attrib
     this.document.update({ ['system.attribs.' + flagName + '.auto']: !this.document.system.attribs[flagName].auto })
+  }
+
+  /**
+   * Clear all conditions
+   * @param {ClickEvent} event
+   */
+  _onClearConditions (event) {
+    const disable = {}
+    for (const condition in this.document.system.conditions) {
+      if (this.document.system.conditions[condition].value === true) {
+        disable[`system.conditions.${condition}.value`] = false
+      }
+    }
+    if (Object.keys(disable).length > 0) {
+      this.actor.update(disable)
+    }
+    const effects = this.document.effects.map(effect => effect.id)
+    if (effects.length > 0) {
+      this.document.deleteEmbeddedDocuments('ActiveEffect', effects)
+    }
+  }
+
+  /**
+   * Toggle development flag
+   * @param {ClickEvent} event
+   */
+  async _onDevelopmentFlag (event) {
+    event.preventDefault()
+    const itemUuid = event.target.closest('.item').dataset.itemUuid
+    const document = await fromUuid(itemUuid)
+    if (document) {
+      document.update({
+        'system.flags.developement': !document.system.flags.developement
+      })
+    }
   }
 
   /**
@@ -879,7 +904,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
   }
 
   /**
-   * Toggle description
+   * Toggle Read Only
    * @param {ClickEvent} event
    */
   _toggleReadOnly (event) {
@@ -903,7 +928,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
           let div = li.querySelector('.html-element-toggled')
           if (!div) {
             div = document.createElement('div')
-            div.style.flexBasis = '100%'
+            div.classList.add('item-summary')
             await CoC7Utilities.setItemSummaryHtml(div, item)
             li.append(div)
           }
@@ -915,7 +940,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
 
   /**
    * Show uneditable skill sheet
-   * @param {SubmitEvent|null} event
+   * @param {ClickEvent} event
    */
   async _onItemPopup (event) {
     event.preventDefault()
@@ -1040,9 +1065,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
   async _onItemDelete (event) {
     this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
     const itemUuid = event.target.closest('.item').dataset.itemUuid
-    fromUuid(itemUuid).then(item => {
-      item.delete()
-    })
+    ;(await fromUuid(itemUuid))?.delete()
   }
 
   /**
@@ -1156,8 +1179,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
     const name = event.target?.name
     const value = event.target?.value
     if (name && typeof overrides[name] !== 'undefined') {
-      /* // FoundryVTT V12 */
-      ui.notifications.warn(game.i18n.format('CoC7.EffectAppliedCantOverride', { name }))
+      ui.notifications.warn('CoC7.EffectAppliedCantOverride', { format: { name } })
       return
     }
 
@@ -1193,8 +1215,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
         try {
           new Roll(value).evaluateSync({ maximize: true })
         } catch (e) {
-          /* // FoundryVTT V12 */
-          ui.notifications.error(game.i18n.format('CoC7.ErrorInvalidFormula', { value }))
+          ui.notifications.error('CoC7.ErrorInvalidFormula', { format: { value } })
         }
         break
     }
@@ -1331,8 +1352,7 @@ export default class CoC7ModelsActorGlobalSheet extends foundry.applications.api
         if (flag === 'occupation' && occupation) {
           const newValue = parseInt(value, 10)
           if (newValue > occupation.system.creditRating.max || newValue < occupation.system.creditRating.min) {
-            /* // FoundryVTT V12 */
-            ui.notifications.warn(game.i18n.format('CoC7.CreditOutOfRange', { min: occupation.system.creditRating.min, max: occupation.system.creditRating.max }))
+            ui.notifications.warn('CoC7.CreditOutOfRange', { format: { min: occupation.system.creditRating.min, max: occupation.system.creditRating.max } })
           }
         }
       }

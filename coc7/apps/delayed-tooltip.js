@@ -23,26 +23,9 @@ export default class CoC7DelayedTooltip {
             return
           }
           game.tooltip.deactivate()
-          /* // FoundryV12 */
-          if (!foundry.utils.isNewerVersion(game.version, 13)) {
-            game.tooltip.activate(element, { content: (new DOMParser().parseFromString('<div>' + element.dataset.generatedTooltip + '</div>', 'text/html')).querySelector('body').children[0], cssClass: 'coc7-wider-tooltip' })
-          } else {
-            game.tooltip.activate(element, { html: element.dataset.generatedTooltip, cssClass: 'coc7-wider-tooltip' })
-          }
+          game.tooltip.activate(element, { html: element.dataset.generatedTooltip, cssClass: 'coc7-wider-tooltip' })
         }, delay)
-        /* // FoundryV12 */
-        if (!foundry.utils.isNewerVersion(game.version, 13)) {
-          game.tooltip.activate(element, { content: (new DOMParser().parseFromString('<div>' + element.dataset.generatedBasicTooltip + '</div>', 'text/html')).querySelector('body').children[0], cssClass: 'coc7-wider-tooltip' })
-        } else {
-          game.tooltip.activate(element, { html: element.dataset.generatedBasicTooltip, cssClass: 'coc7-wider-tooltip' })
-        }
-        return
-      }
-      /* // FoundryV12 */
-      if (!foundry.utils.isNewerVersion(game.version, 13)) {
-        game.tooltip.activate(element, { content: (new DOMParser().parseFromString('<div>' + element.dataset.generatedTooltip + '</div>', 'text/html')).querySelector('body').children[0], cssClass: 'coc7-wider-tooltip' })
-      } else {
-        game.tooltip.activate(element, { html: element.dataset.generatedTooltip, cssClass: 'coc7-wider-tooltip' })
+        game.tooltip.activate(element, { html: element.dataset.generatedBasicTooltip, cssClass: 'coc7-wider-tooltip' })
       }
     })
     // If leaving the element give a short amount of time to stop game.tooltip.activate being called

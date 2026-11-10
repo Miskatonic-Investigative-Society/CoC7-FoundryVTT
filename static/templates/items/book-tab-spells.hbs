@@ -1,31 +1,31 @@
 <section class="tab spells flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="spells">
   {{#if tabs.spells}}
-    <fieldset class="flexcol drop-item" style="flex: 1">
-      <div class="item-list flexcol">
+    <fieldset class="flexcol drop-item flex-single">
+      <ul class="item-list">
         {{#if spellListEmpty}}
-          <div class="item flexcol">
+          <li class="item">
             <label>{{localize 'CoC7.DragSpell'}}</label>
-          </div>
+          </li>
         {{else}}
           {{#each spells as |item|}}
-            <div class="item flexrow" data-embedded-id="{{item._id}}">
+            <li class="item" data-uuid="{{item.uuid}}" data-id="{{item._id}}" data-cocid="{{item.flags.CoC7.cocidFlag.id}}">
               <img class="item-image" src="{{item.img}}" />
               <div class="summary">{{item.name}}</div>
               <div class="item-controls">
                 {{#if (and ../isOwner (not (contains item._id ../spellsLearned)))}}
-                  <a class="item-control" data-action="teach-spell"><i class="fa-solid fa-book-open"></i></a>
+                  <a class="item-control" data-action="teach-spell"><i class="fa-solid fa-book-open fa-fw"></i></a>
                 {{/if}}
                 {{#if (or ../isKeeper (contains item._id ../spellsLearned))}}
-                  <a class="item-control" data-action="itemEdit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit"></i></a>
+                  <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditItem"><i class="fa-solid fa-edit fa-fw"></i></a>
                 {{/if}}
                 {{#if ../isKeeper}}
-                  <a class="item-control" data-action="itemDelete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash"></i></a>
+                  <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteItem"><i class="fa-solid fa-trash fa-fw"></i></a>
                 {{/if}}
               </div>
-            </div>
+            </li>
           {{/each}}
         {{/if}}
-      </div>
+      </ul>
     </fieldset>
   {{/if}}
 </section>

@@ -13,8 +13,9 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
   }
 
   static DEFAULT_OPTIONS = {
+    id: 'coc-id-batch-update',
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       title: 'CoC7.CoCIDBatch.title',
       contentClasses: [
@@ -801,21 +802,5 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         updateList
       }).render({ force: true })
     })
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 }

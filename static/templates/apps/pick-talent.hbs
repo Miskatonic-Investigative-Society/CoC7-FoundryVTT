@@ -1,0 +1,19 @@
+<section class="standard-form">
+  {{#each talents as |talent index|}}
+    <div class="form-group talent-order" data-index="{{index}}" draggable="true">
+      <div class="item-controls allow-drag">
+        <i class="fa-solid fa-bars fa-fw"></i>
+      </div>
+      <div class="flex-auto toggle-attributes" draggable="true"><button class="toggle-switch{{#if talent.enabled}} switched-on{{/if}}" data-property="enabled">{{localize 'CoC7.Enable'}}</button></div>
+      <div draggable="true" class="adjustable-inputs">
+        {{#if talent.ratio}}
+          <a class="item-control" data-action="modify-luck" data-by="-1"><i class="fa-regular fa-minus-circle fa-fw"></i></a>
+          <input type="number" name="spend" value="{{talent.luck}}" class="shorter-number" readonly>
+          <a class="item-control" data-action="modify-luck" data-by="1"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
+        {{/if}}
+        {{{talent.html}}}
+      </div>
+    </div>
+  {{/each}}
+  <div>{{localize 'CoC7.LuckReduceLossRatio' name=lossName luck=luck loss=loss}}</div>
+</section>

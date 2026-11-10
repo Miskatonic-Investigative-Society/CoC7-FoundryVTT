@@ -3,7 +3,7 @@
     <header class="section-header">
       <h3 class="section-heading">{{localize 'CoC7.SanityLossEncounters'}}</h3>
       <div class="item-controls">
-        <a class="item-control" data-action="sanity-loss-type-add" data-type="encounter" data-tooltip="CoC7.AddSanityLossEncounter"><i class="fa-regular fa-plus-circle"></i></a>
+        <a class="item-control" data-action="sanity-loss-type-add" data-type="encounter" data-tooltip="CoC7.AddSanityLossEncounter"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
       </div>
     </header>
     <div class="events">
@@ -15,7 +15,7 @@
               <input name="system.sanityLossEvents.{{index}}.totalLoss" type="text" value="{{sanityLossEvent.totalLoss}}">
             </div>
             <div class="item-controls">
-              <a class="item-control" data-action="sanity-loss-type-delete" data-tooltip="CoC7.DeleteSanityLossEncounter"><i class="fa-solid fa-trash"></i></a>
+              <a class="item-control" data-action="sanity-loss-type-delete" data-tooltip="CoC7.DeleteSanityLossEncounter"><i class="fa-solid fa-trash fa-fw"></i></a>
             </div>
           </div>
         {{/unless}}
@@ -26,7 +26,7 @@
     <header class="section-header">
       <h3 class="section-heading">{{localize 'CoC7.SanityLossImmunities'}}</h3>
       <div class="item-controls">
-        <a class="item-control" data-action="sanity-loss-type-add" data-type="immunity" data-tooltip="CoC7.AddSanityLossImmunity"><i class="fa-regular fa-plus-circle"></i></a>
+        <a class="item-control" data-action="sanity-loss-type-add" data-type="immunity" data-tooltip="CoC7.AddSanityLossImmunity"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
       </div>
     </header>
     <div class="events">
@@ -35,7 +35,7 @@
           <div class="event" data-index="{{index}}">
             <div class="title">{{sanityLossEvent.type}}</div>
             <div class="item-controls">
-              <a class="item-control" data-action="sanity-loss-type-delete" data-tooltip="CoC7.DeleteSanityLossImmunity"><i class="fa-solid fa-trash"></i></a>
+              <a class="item-control" data-action="sanity-loss-type-delete" data-tooltip="CoC7.DeleteSanityLossImmunity"><i class="fa-solid fa-trash fa-fw"></i></a>
             </div>
           </div>
         {{/if}}
@@ -52,9 +52,9 @@
         <div class="item-controls">
           <a class="item-control" data-tooltip="CoC7.BackgroundFlagsMythosExperienced" data-action="toggle-flag" data-toggle-flag="mythosInsanityExperienced">
             {{#if document.system.flags.mythosInsanityExperienced}}
-              <i class="fa-regular fa-check-square"></i>
+              <i class="fa-regular fa-check-square fa-fw"></i>
             {{else}}
-              <i class="fa-regular fa-square"></i>
+              <i class="fa-regular fa-square fa-fw"></i>
             {{/if}}
           </a>
         </div>
@@ -64,16 +64,16 @@
         <div class="item-controls">
           <a class="item-control" data-tooltip="CoC7.BackgroundFlagsMythosHardened" data-action="toggle-flag" data-toggle-flag="mythosHardened">
             {{#if document.system.flags.mythosHardened}}
-              <i class="fa-regular fa-check-square"></i>
+              <i class="fa-regular fa-check-square fa-fw"></i>
             {{else}}
-              <i class="fa-regular fa-square"></i>
+              <i class="fa-regular fa-square fa-fw"></i>
             {{/if}}
           </a>
         </div>
       </div>
       <div class="event">
         <div class="title">{{localize 'CoC7.ActorConfig.NaturalHealing'}}</div>
-        <div class="item-controls">
+        <div class="values">
           {{document.system.config.naturalHealing}}
         </div>
       </div>
@@ -87,10 +87,10 @@
       {{#each document.system.books as |book index|}}
         <div class="event" data-index="{{index}}">
           <div class="title">{{book.name}}</div>
-          <div class=""><i class="fa-solid fa-check"></i></div>
+          <div class=""><i class="fa-solid fa-check fa-fw"></i></div>
           <div class="">{{localize 'CoC7.BookProgressSummary' fullStudies=book.fullStudies currentPercent=(percentValue book.progress book.necessary)}}</div>
           <div class="item-controls">
-            <a class="item-control" data-action="bookClear" data-tooltip="CoC7.DeleteBookProgress"><i class="fa-solid fa-trash"></i></a>
+            <a class="item-control" data-action="bookClear" data-tooltip="CoC7.DeleteBookProgress"><i class="fa-solid fa-trash fa-fw"></i></a>
           </div>
         </div>
       {{/each}}

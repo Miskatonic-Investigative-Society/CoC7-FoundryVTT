@@ -218,8 +218,7 @@ export default class CoC7ChatMessage {
           isHeal: message.flags[FOLDER_ID]?.load?.modifier === CoC7RollAsModifierDialog.MODIFIERS.HEAL_MODIFY,
           name: message.flags[FOLDER_ID]?.load?.name ?? ''
         }
-        /* // FoundryVTT V12 */
-        buttons.innerHTML = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/parts/damage-buttons.hbs', data)
+        buttons.innerHTML = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/parts/damage-buttons.hbs', data)
         html.querySelector('.message-content').append(buttons)
       }
       html.querySelectorAll('button[data-action]').forEach((element) => element.addEventListener('click', event => CoC7ChatMessage._onClickEvent(event, message)))

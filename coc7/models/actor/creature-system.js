@@ -7,6 +7,6 @@ export default class CoC7ModelsActorCreatureSystem extends CoC7ModelsActorNPCSys
    * @returns {string}
    */
   static get defaultImg () {
-    return 'systems/' + FOLDER_ID + '/assets/icons/floating-tentacles.svg'
+    return 'systems/' + FOLDER_ID + '/assets/game-icons/delapouite/floating-tentacles.svg'
   }
 }

@@ -236,13 +236,11 @@ export default class CoC7ModelsItemChaseSystem extends CoC7ModelsItemGlobalSyste
       return
     }
     if (participants[beneficiaryIndex].bonusDice >= CoC7DicePool.maxDiceBonus) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ErrorBeneficiaryAtMaxBonus', { name: participants[beneficiaryIndex].name }))
+      ui.notifications.error('CoC7.ErrorBeneficiaryAtMaxBonus', { format: { name: participants[beneficiaryIndex].name } })
       return
     }
     if (participants[assistantIndex].currentMovementActions < 1) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ParticipantNotEnoughMovement', { assistantUuid, actions: participants[assistantIndex].currentMovementActions }))
+      ui.notifications.error('CoC7.ParticipantNotEnoughMovement', { format: { assistantUuid, actions: participants[assistantIndex].currentMovementActions } })
       return
     }
     participants[beneficiaryIndex].bonusDice++
@@ -286,18 +284,15 @@ export default class CoC7ModelsItemChaseSystem extends CoC7ModelsItemGlobalSyste
     const participants = foundry.utils.duplicate(this.participants)
     const offset = participants.findIndex(p => p.uuid === participantUuid)
     if (offset === -1) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ParticipantUuidNotFound', { participantUuid }))
+      ui.notifications.error('CoC7.ParticipantUuidNotFound', { format: { participantUuid } })
       return
     }
     if (participants[offset].bonusDice >= CoC7DicePool.maxDiceBonus) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ErrorBeneficiaryAtMaxBonus', { name: participants[offset].name }))
+      ui.notifications.error('CoC7.ErrorBeneficiaryAtMaxBonus', { format: { name: participants[offset].name } })
       return
     }
     if (participants[offset].currentMovementActions < 1) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ParticipantNotEnoughMovement', { assistantUuid: participantUuid, actions: participants[offset].currentMovementActions }))
+      ui.notifications.error('CoC7.ParticipantNotEnoughMovement', { format: { assistantUuid: participantUuid, actions: participants[offset].currentMovementActions } })
       return
     }
     participants[offset].bonusDice++
@@ -314,8 +309,7 @@ export default class CoC7ModelsItemChaseSystem extends CoC7ModelsItemGlobalSyste
     const participants = foundry.utils.duplicate(this.participants)
     const offset = participants.findIndex(p => p.uuid === participantUuid)
     if (offset === -1) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ParticipantUuidNotFound', { participantUuid }))
+      ui.notifications.error('CoC7.ParticipantUuidNotFound', { format: { participantUuid } })
       return
     }
     participants[offset].bonusDice--
@@ -607,8 +601,7 @@ export default class CoC7ModelsItemChaseSystem extends CoC7ModelsItemGlobalSyste
     const locations = foundry.utils.duplicate(this.locations.list)
     const offset = locations.findIndex(l => l.participants.includes(participantId))
     if (offset === -1) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ParticipantUuidNotFound', { participantUuid: participantId }))
+      ui.notifications.error('CoC7.ParticipantUuidNotFound', { format: { participantUuid: participantId } })
       return
     }
     const newLocation = Math.min(Math.max(0, offset + locationsMoved), locations.length - 1)
@@ -617,8 +610,7 @@ export default class CoC7ModelsItemChaseSystem extends CoC7ModelsItemGlobalSyste
       const participants = foundry.utils.duplicate(this.participants)
       const participantIndex = participants.findIndex(p => p.uuid === participantId)
       if (participants[participantIndex].currentMovementActions < totalMove) {
-        /* // FoundryVTT V12 */
-        ui.notifications.error(game.i18n.format('CoC7.ParticipantNotEnoughMovement', { assistantUuid: participantId, actions: participants[participantIndex].currentMovementActions }))
+        ui.notifications.error('CoC7.ParticipantNotEnoughMovement', { format: { assistantUuid: participantId, actions: participants[participantIndex].currentMovementActions } })
         return
       }
       const offset2 = locations[offset].participants.findIndex(p => p === participantId)

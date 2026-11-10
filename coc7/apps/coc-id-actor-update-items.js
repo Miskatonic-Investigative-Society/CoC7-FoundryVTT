@@ -13,7 +13,7 @@ export default class CoCIDActorUpdateItems extends foundry.applications.api.Hand
   static DEFAULT_OPTIONS = {
     id: 'coc-id-actor-update-items',
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       contentClasses: [
         'standard-form'
@@ -69,7 +69,7 @@ export default class CoCIDActorUpdateItems extends foundry.applications.api.Hand
           context.lang = CONFIG.supportedLanguages[game.i18n.lang] ?? '?'
           const defaultEra = game.settings.get(FOLDER_ID, 'worldEra')
           context.isEn = game.i18n.lang === 'en'
-          context.era = game.i18n.format(ERAS[defaultEra]?.name ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: defaultEra })
+          context.era = game.i18n.format(ERAS[defaultEra]?.label ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: defaultEra })
         }
         break
       case 'footer':
@@ -89,22 +89,6 @@ export default class CoCIDActorUpdateItems extends foundry.applications.api.Hand
         break
     }
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**

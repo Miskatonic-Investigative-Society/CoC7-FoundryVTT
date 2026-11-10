@@ -2,31 +2,31 @@
   {{#if tabs.details}}
     <fieldset class="flexrow">
       <div class="columns flexrow">
-        <div class="column-third flexrow">
-          <label>{{localize 'CoC7.WeaponMalfunction'}}:</label>
+        <div class="column-triple flexrow">
+          <label class="flex-single">{{localize 'CoC7.WeaponMalfunction'}}:</label>
           <input class="small" type="text" name="system.malfunction" value="{{document.system.malfunction}}" placeholder="-" />
         </div>
-        <div class="column-third flexrow" data-tooltip="CoC7.WeaponUsesPerRoundHint">
-          <label>{{localize 'CoC7.WeaponUsesPerRound'}}:</label>
+        <div class="column-triple flexrow" data-tooltip="CoC7.WeaponUsesPerRoundHint">
+          <label class="flex-single">{{localize 'CoC7.WeaponUsesPerRound'}}:</label>
           <input class="small" type="text" name="system.usesPerRound.normal" value="{{document.system.usesPerRound.normal}}" placeholder="-" />
         </div>
-        <div class="column-third flexrow">
-          <label>{{localize 'CoC7.WeaponMax'}}:</label>
+        <div class="column-triple flexrow">
+          <label class="flex-single">{{localize 'CoC7.WeaponMax'}}:</label>
           <input class="small" type="text" name="system.usesPerRound.max" value="{{document.system.usesPerRound.max}}" placeholder="-" />
         </div>
-        <div class="column-third flexrow">
-          <label>{{localize 'CoC7.WeaponBulletsInMag'}}:</label>
+        <div class="column-triple flexrow">
+          <label class="flex-single">{{localize 'CoC7.WeaponBulletsInMag'}}:</label>
           <input class="small" type="text" name="system.bullets" value="{{document.system.bullets}}" placeholder="-" />
         </div>
         {{#if document.system.properties.brst}}
-          <div class="column-third flexrow" data-tooltip="CoC7.BurstSizeHint">
-            <label>{{localize 'CoC7.BurstSize'}}:</label>
+          <div class="column-triple flexrow" data-tooltip="CoC7.BurstSizeHint">
+            <label class="flex-single">{{localize 'CoC7.BurstSize'}}:</label>
             <input class="small" type="text" name="system.usesPerRound.burst" value="{{document.system.usesPerRound.burst}}" placeholder="-" />
           </div>
         {{/if}}
         {{#if document.system.properties.blst}}
-          <div class="column-third flexrow">
-            <label>{{localize 'CoC7.Weapon.BlastRadius'}}:</label>
+          <div class="column-triple flexrow">
+            <label class="flex-single">{{localize 'CoC7.Weapon.BlastRadius'}}:</label>
             <input type="text" name="system.blastRadius" value="{{document.system.blastRadius}}" placeholder="-" />
           </div>
         {{/if}}

@@ -1,100 +1,115 @@
-<section class="tab details drop-skill-item flexcol scrollable {{tab.cssClass}}" data-group="primary" data-tab="details">
-  <div class="book-details flexrow">
-    <div class="book-type">
-      <fieldset class="flexcol">
+<section class="tab details flexcol scrollable legend-fieldset {{tab.cssClass}}" data-group="primary" data-tab="details">
+  {{#if tabs.details}}
+    <div class="book-details">
+      <fieldset class="book-type">
         <legend>{{localize 'CoC7.BookType'}}</legend>
         <div class="toggle-row flexrow">
           <div class="toggle-attributes flexrow" data-set="type">
             {{#each _types as |row|}}
-              <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}}>{{localize row.name}}</button>
+              <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.value}}"{{#if row.tooltip}} data-tooltip="{{row.tooltip}}"{{/if}}>{{localize row.label}}</button>
             {{/each}}
           </div>
         </div>
-        <div class="flexrow">
-          <label>{{localize 'CoC7.DifficultyLevel'}}:</label>
-          <select name="system.difficultyLevel">
-            {{selectOptions difficultyLevels selected=document.system.difficultyLevel localize=true valueAttr='key' labelAttr='label'}}
-          </select>
+        <div class="form-group flexrow">
+          <label class="flex-single">{{localize 'CoC7.DifficultyLevel'}}</label>
+          <div class="form-value">
+            <select name="system.difficultyLevel">
+              {{selectOptions difficultyLevels selected=document.system.difficultyLevel localize=true}}
+            </select>
+          </div>
         </div>
         {{#if document.system.type.mythos}}
-          <div class="flexrow">
-            <label>{{localize 'CoC7.StudyTime'}}:</label>
-            {{#if knownNecessary}}
-              <input type="number" class="known-value-change short" data-known="necessary" value="{{knownNecessary}}" />
-            {{else}}
-              <input type="number" class="short" name="system.study.necessary" value="{{document.system.study.necessary}}" />
-            {{/if}}
-            {{#if knownUnits}}
-              <select class="known-value-change" data-known="units">
-                {{selectOptions studyUnits selected=knownUnits localize=true valueAttr='key' labelAttr='label'}}
-              </select>
-            {{else}}
-              <select name="system.study.units">
-                {{selectOptions studyUnits selected=document.system.study.units localize=true valueAttr='key' labelAttr='label'}}
-              </select>
-            {{/if}}
+          <div class="form-group flexrow">
+            <label class="flex-single">{{localize 'CoC7.StudyTime'}}</label>
+            <div class="form-value flexrow">
+              {{#if knownNecessary}}
+                <input type="number" class="known-value-change shorter-number" data-known="necessary" value="{{knownNecessary}}" />
+              {{else}}
+                <input type="number" class="shorter-number" name="system.study.necessary" value="{{document.system.study.necessary}}" />
+              {{/if}}
+              {{#if knownUnits}}
+                <select class="known-value-change" data-known="units">
+                  {{selectOptions studyUnits selected=knownUnits localize=true}}
+                </select>
+              {{else}}
+                <select name="system.study.units">
+                  {{selectOptions studyUnits selected=document.system.study.units localize=true}}
+                </select>
+              {{/if}}
+            </div>
           </div>
         {{/if}}
         {{#if (or document.system.type.mythos document.system.type.occult)}}
-          <div class="flexrow">
-            <label>{{localize 'CoC7.SANLoss'}}:</label>
-            <input type="text" name="system.sanityLoss" value="{{document.system.sanityLoss}}" />
+          <div class="form-group flexrow">
+            <label class="flex-single">{{localize 'CoC7.SANLoss'}}</label>
+            <div class="form-value">
+              <input type="text" name="system.sanityLoss" value="{{document.system.sanityLoss}}" />
+            </div>
           </div>
         {{/if}}
       </fieldset>
-    </div>
-    <div class="book-gains">
       {{#if (or document.system.type.mythos document.system.type.occult)}}
-        <fieldset class=" flexcol">
+        <fieldset class="book-gains">
           <legend>{{localize 'CoC7.Gains'}}</legend>
           {{#if document.system.type.mythos}}
-            <div class="flexrow">
-              <label>{{localize 'CoC7.CthulhuMythosInitial'}}:</label>
-              <input type="number" class="short" name="system.gains.cthulhuMythos.initial" value="{{document.system.gains.cthulhuMythos.initial}}" />
+            <div class="form-group flexrow">
+              <label class="flex-single">{{localize 'CoC7.CthulhuMythosInitial'}}</label>
+              <div class="form-value flex-auto">
+                <input type="number" class="shorter-number" name="system.gains.cthulhuMythos.initial" value="{{document.system.gains.cthulhuMythos.initial}}" />
+              </div>
             </div>
-            <div class="flexrow">
-              <label>{{localize 'CoC7.CthulhuMythosFinal'}}:</label>
-              <input type="number" class="short" name="system.gains.cthulhuMythos.final" value="{{document.system.gains.cthulhuMythos.final}}" />
+            <div class="form-group flexrow">
+              <label class="flex-single">{{localize 'CoC7.CthulhuMythosFinal'}}</label>
+              <div class="form-value flex-auto">
+                <input type="number" class="shorter-number" name="system.gains.cthulhuMythos.final" value="{{document.system.gains.cthulhuMythos.final}}" />
+              </div>
             </div>
-            <div class="flexrow">
-              <label>{{localize 'CoC7.MythosRating'}}:</label>
-              <input type="number" class="short" name="system.mythosRating" value="{{document.system.mythosRating}}" />
+            <div class="form-group flexrow">
+              <label class="flex-single">{{localize 'CoC7.MythosRating'}}</label>
+              <div class="form-value flex-auto">
+                <input type="number" class="shorter-number" name="system.mythosRating" value="{{document.system.mythosRating}}" />
+              </div>
             </div>
           {{/if}}
           {{#if document.system.type.occult}}
-            <div class="flexrow">
-              <label>{{localize 'CoC7.Occult'}}:</label>
-              <input type="number" class="short" name="system.gains.occult" value="{{document.system.gains.occult}}" />
+            <div class="form-group flexrow">
+              <label class="flex-single">{{localize 'CoC7.Occult'}}</label>
+              <div class="form-value flex-auto">
+                <input type="number" class="shorter-number" name="system.gains.occult" value="{{document.system.gains.occult}}" />
+              </div>
             </div>
           {{/if}}
         </fieldset>
       {{/if}}
     </div>
-  </div>
-  {{#if document.system.type.other}}
-    <div class="book-other flexcol">
-      <div class="book-other-header">
-        <div>{{localize 'CoC7.Skill'}}</div>
-        <div>{{localize 'CoC7.Gains'}}</div>
-        <div class="item-controls">
-          <a class="item-control" data-action="add-other-gains"><i class="fa-regular fa-plus-circle"></i></a>
-        </div>
-      </div>
-      {{#each document.system.gains.others as |skill index|}}
-        <div class="book-other-row">
-          <div>
-            <input name="system.gains.others.{{index}}.name" type="text" value="{{skill.name}}">
-          </div>
-          <div>
-            <select name="system.gains.others.{{index}}.value">
-              {{selectOptions ../otherGains selected=skill.value localize=true valueAttr='key' labelAttr='label'}}
-            </select>
-          </div>
-          <div class="item-controls">
-            <a class="item-control" data-action="remove-other-gains" data-index="{{index}}"><i class="fa-solid fa-trash"></i></a>
-          </div>
-        </div>
-      {{/each}}
-    </div>
+    {{#if document.system.type.other}}
+      <fieldset class="book-others drop-skill-item">
+        <ul class="item-list">
+          <li class="items-header">
+            <div>{{localize 'CoC7.Skill'}}</div>
+            <div>{{localize 'CoC7.Gains'}}</div>
+            <div class="item-controls">
+              <a class="item-control" data-action="add-other-gains"><i class="fa-regular fa-plus-circle fw-fw"></i></a>
+            </div>
+          </li>
+          {{#each document.system.gains.others as |skill index|}}
+            <li class="item">
+              <div>
+                <input name="system.gains.others.{{index}}.name" type="text" value="{{skill.name}}">
+              </div>
+              <div>
+                <select name="system.gains.others.{{index}}.value">
+                  {{selectOptions ../otherGains selected=skill.value localize=true}}
+                </select>
+              </div>
+              <div class="item-controls">
+                <a class="item-control" data-action="remove-other-gains" data-index="{{index}}"><i class="fa-solid fa-trash fw-fw"></i></a>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      </fieldset>
+      <div>&nbsp;{{! /* // FoundryVTT V13 */ prevent hovering image / item-control in last fieldset pixel shifting }}</div>
+    {{/if}}
   {{/if}}
 </section>

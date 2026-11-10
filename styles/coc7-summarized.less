@@ -1,4 +1,4 @@
-.application.coc7.sheet.investigator-summarized {
+.application.investigator-summarized {
   section.window-content {
     overflow: hidden;
 
@@ -22,7 +22,7 @@
     }
 
     div.npc .character-details.character-blocks {
-      column-gap: @8px;
+      column-gap: @rem8px;
       align-items: flex-start;
     }
 
@@ -48,7 +48,7 @@
               font-size: var(--font-size-15);
               font-family: var(--investigator-sheet-primary-font);
               text-transform: uppercase;
-              line-height: @17px;
+              line-height: @rem17px;
               margin: 0;
               border: 0;
               padding: 0;
@@ -66,7 +66,7 @@
               padding: 0 5px;
               border-radius: 5px;
               column-gap: 3px;
-              background: rgba(0, 0, 0, 0.05);
+              background: var(--nav-bg-color);
               font-family: var(--investigator-sheet-secondary-font);
 
               .detail-value {
@@ -103,7 +103,7 @@
         }
 
         .character-details .character-detail .detail-value {
-          padding-top: @1px;
+          padding-top: @rem1px;
         }
       }
     }
@@ -111,15 +111,15 @@
     .skills-block {
       flex: 1;
       column-count: 2;
-      column-gap: @8px;
+      column-gap: @rem8px;
 
       .item {
         font-size: var(--font-size-12);
-        --icon-size: @14px;
+        --icon-size: @rem14px;
 
         &.flexrow {
           display: grid;
-          grid-template-columns: 1rem auto 1.5rem 0.7rem;
+          grid-template-columns: 1rem auto 1rem 14px;
           border-bottom: 1px solid;
         }
 
@@ -134,8 +134,8 @@
         }
 
         .item-controls .item-control {
-          height: @17px;
-          line-height: @18px;
+          height: @rem17px;
+          line-height: @rem18px;
         }
       }
 
@@ -143,11 +143,11 @@
         display: grid;
         column-gap: 4px;
         row-gap: 4px;
-        grid-template-columns: repeat(10, @21px);
+        grid-template-columns: repeat(10, @rem21px);
 
         .item {
-          width: @21px;
-          --icon-size: @21px;
+          width: @rem21px;
+          --icon-size: @rem21px;
         }
       }
     }
@@ -161,11 +161,11 @@
 
         .item {
           font-size: var(--font-size-12);
-          --icon-size: @14px;
+          --icon-size: @rem14px;
 
           &.flexrow {
             display: grid;
-            grid-template-columns: 1rem auto 1.5rem 2rem;
+            grid-template-columns: 1rem auto 1.5rem 40px;
             border-bottom: 1px solid;
           }
 
@@ -185,7 +185,7 @@
 
             .icon {
               flex: 0 0 auto;
-              margin: 0 @4px;
+              margin: 0 @rem4px;
             }
           }
 
@@ -193,9 +193,18 @@
             color: var(--color-labels);
           }
 
-          .item-controls .item-control {
-            height: @17px;
-            line-height: @18px;
+          .item-controls {
+            justify-content: flex-end;
+
+            .ammo .property {
+              margin: 0;
+              font-size: var(--font-size-8);
+            }
+
+            .item-control {
+              height: @rem17px;
+              line-height: @rem18px;
+            }
           }
         }
       }
@@ -207,8 +216,8 @@
   }
 }
 
-body.theme-dark .application.coc7.sheet.investigator-summarized,
-.themed.theme-dark.application.coc7.sheet.investigator-summarized {
+body.theme-dark .application.investigator-summarized,
+.themed.theme-dark.application.investigator-summarized {
   section.window-content div.npc .character-details.character-blocks {
     .characteristics-block .primary-attributes .characteristics .char-box .characteristic-name {
       background: var(--color-tint-light);

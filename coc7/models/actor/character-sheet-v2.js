@@ -6,7 +6,7 @@ import CoC7Utilities from '../../apps/utilities.js'
 
 export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlobalSheet {
   static DEFAULT_OPTIONS = {
-    classes: ['coc7', 'sheetV2', 'actor', 'character'],
+    classes: ['investigator-v2'],
     position: {
       width: 687,
       height: 623
@@ -103,16 +103,16 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
     context.showDevPanel = context.allowDevelopment || context.allowCharCreation
 
     context._monetaryFormats = []
-    for (const key in MONETARY_FORMATS) {
-      context._monetaryFormats.push({ key, val: game.i18n.localize(MONETARY_FORMATS[key]) })
+    for (const value in MONETARY_FORMATS) {
+      context._monetaryFormats.push({ value, label: game.i18n.localize(MONETARY_FORMATS[value]) })
     }
 
     context.showCurrencySymbol = ['decimalLeft', 'decimalRight', 'integerLeft', 'integerRight'].includes(context.document.system.monetary.format)
 
     context._monetaryTypes = []
-    for (const key in MONETARY_TYPES) {
-      if (MONETARY_TYPES[key].filter.length === 0 || MONETARY_TYPES[key].filter.includes(context.document.system.monetary.format)) {
-        context._monetaryTypes.push({ key, val: game.i18n.localize(MONETARY_TYPES[key].name) })
+    for (const value in MONETARY_TYPES) {
+      if (MONETARY_TYPES[value].filter.length === 0 || MONETARY_TYPES[value].filter.includes(context.document.system.monetary.format)) {
+        context._monetaryTypes.push({ value, label: game.i18n.localize(MONETARY_TYPES[value].label) })
       }
     }
 
@@ -156,8 +156,7 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
 
     context.hasInventory = this.hasInventory(context)
 
-    /* // FoundryVTT V12 */
-    context.enrichedBackstory = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+    context.enrichedBackstory = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       context.document.system.backstory,
       {
         async: true,
@@ -165,8 +164,7 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
       }
     )
 
-    /* // FoundryVTT V12 */
-    context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+    context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       context.document.system.description.keeper,
       {
         async: true,
@@ -238,8 +236,7 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
         context.biographySections.push({
           title: biography.title,
           value: biography.value,
-          /* // FoundryVTT V12 */
-          enriched: await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          enriched: await foundry.applications.ux.TextEditor.implementation.enrichHTML(
             biography.value,
             {
               async: true,
@@ -270,9 +267,6 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return
-    this.element.querySelector('.reset-occupation')?.addEventListener('click', this.document.resetOccupation.bind(this.document))
-    this.element.querySelector('.reset-experience-package')?.addEventListener('click', this.document.resetExperiencePackage.bind(this.document))
-    this.element.querySelector('.reset-archetype')?.addEventListener('click', this.document.resetArchetype.bind(this.document))
     if (game.user.isGM) {
       this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', (event) => {
         switch (event.currentTarget.dataset.action) {
@@ -290,6 +284,16 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
             break
           case 'bookClear':
             this._onBookRemove(event)
+            break
+          case 'reset-archetype':
+            this.document.resetArchetype(event)
+            break
+          case 'reset-experience-package':
+            this.document.resetExperiencePackage(event)
+            break
+          case 'reset-occupation':
+            this.document.resetOccupation(event)
+            break
         }
       }))
     }
@@ -424,8 +428,7 @@ export default class CoC7ModelsActorCharacterSheetV2 extends CoC7ModelsActorGlob
               const tempHTML = document.createElement('div')
               tempHTML.classList.add(part, 'flexcol', 'limited-view')
               tempHTML.dataset.applicationPart = part
-              /* // FoundryVTT V12 */
-              tempHTML.innerHTML = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/actors/limited.hbs', context)
+              tempHTML.innerHTML = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/actors/limited.hbs', context)
               parts[part] = tempHTML
             }
             break

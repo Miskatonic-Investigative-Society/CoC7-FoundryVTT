@@ -10,21 +10,11 @@ export default class CoC7Combat {
    * @param {ApplicationRenderOptions} options
    */
   static renderCombatTracker (application, element, context, options) {
-    /* // FoundryVTT V12 */
-    const combatants = (element[0] ?? element).querySelectorAll('.combatant')
-    /* // FoundryVTT V12 */
-    let newButton
-    if (game.release.generation === 12) {
-      newButton = document.createElement('a')
-      newButton.classList.add('combatant-control')
-      newButton.dataset.control = 'drawGun'
-      newButton.innerHTML = '<i class="game-icon game-icon-revolver"></i>'
-    } else {
-      newButton = document.createElement('button')
-      newButton.setAttribute('type', 'button')
-      newButton.classList.add('inline-control', 'combatant-control', 'icon', 'game-icon', 'game-icon-revolver')
-      newButton.dataset.control = 'drawGun'
-    }
+    const combatants = element.querySelectorAll('.combatant')
+    const newButton = document.createElement('button')
+    newButton.setAttribute('type', 'button')
+    newButton.classList.add('inline-control', 'combatant-control', 'icon', 'game-icon', 'game-icon-revolver')
+    newButton.dataset.control = 'drawGun'
     if (combatants) {
       for (const element of combatants) {
         const combatantId = element.dataset.combatantId
@@ -42,8 +32,7 @@ export default class CoC7Combat {
         if (combatant.initiative !== null) {
           if (game.settings.get(FOLDER_ID, 'initiativeRule') === 'optional' && game.settings.get(FOLDER_ID, 'displayInitAsText')) {
             const tokenInitiative = element.querySelector('.token-initiative')
-            /* // FoundryVTT V12 */
-            const initiativeText = tokenInitiative.querySelector('.initiative') ?? tokenInitiative.querySelector('span')
+            const initiativeText = tokenInitiative.querySelector('span')
             const parts = combatant.initiative.toString().match(/^(-?\d+)(?:\.(\d+))?$/)
             initiativeText.title = parts[2] ?? 0
             switch (parseInt(parts[1], 10)) {
@@ -98,7 +87,7 @@ export default class CoC7Combat {
       }
     }
 
-    const newInit = await combatant.actor.rollInitiative(!!combatant.getFlag('CoC7', 'hasGun'))
+    const newInit = await combatant.actor.rollInitiative(!!combatant.getFlag('CoC7', 'hasGun'), { hidden: combatant.hidden })
     if (combatant.getFlag('CoC7', 'hasGun')) {
       if (combatant.initiative < newInit) {
         game.combat.setInitiative(combatant.id, newInit)

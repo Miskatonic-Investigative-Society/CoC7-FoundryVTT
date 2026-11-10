@@ -14,7 +14,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
   }
 
   static DEFAULT_OPTIONS = {
-    classes: ['coc7', 'dialog', 'coc-id-editor'],
+    classes: ['coc7-sheet', 'coc-id-editor'],
     tag: 'form',
     window: {
       contentClasses: [
@@ -44,12 +44,6 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
   async _prepareContext (options) {
     const context = await super._prepareContext(options)
 
-    /* // FoundryV12 polyfill */
-    if (!context.document) {
-      context.document = this.document
-      context.editable = this.isEditable
-    }
-
     context.supportedLanguages = CONFIG.supportedLanguages
 
     context.guessCode = game[FOLDER_ID].cocid.guessId(context.document)
@@ -62,23 +56,25 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
     context.priority = cocidFlag.priority || 0
 
     context._eras = []
-    for (const [key, era] of Object.entries(ERAS)) {
+    for (const [value, era] of Object.entries(ERAS)) {
       context._eras.push({
-        id: key,
-        name: game.i18n.localize(era.name),
-        isEnabled: (cocidFlag.eras ?? {})[key] === true
+        value,
+        label: game.i18n.localize(era.label),
+        icon: era.icon,
+        isEnabled: (cocidFlag.eras ?? {})[value] === true
       })
     }
-    context._eras.sort(CoC7Utilities.sortByNameKey)
+    context._eras.sort(CoC7Utilities.sortByLabelKey)
+    context.useEraIcons = game.settings.get(FOLDER_ID, 'sheetEraIcons')
 
     const CoCIDKeys = Object.assign(foundry.utils.flattenObject(game.i18n._fallback.CoC7?.CoCIDFlag?.keys ?? {}), foundry.utils.flattenObject(game.i18n.translations.CoC7?.CoCIDFlag?.keys ?? {}))
     const prefix = new RegExp('^' + CoC7Utilities.quoteRegExp(context.idPrefix))
-    context.existingKeys = Object.keys(CoCIDKeys).reduce((obj, k) => {
-      if (k.match(prefix)) {
-        obj.push({ k, name: CoCIDKeys[k] })
+    context.existingKeys = Object.keys(CoCIDKeys).reduce((obj, value) => {
+      if (value.match(prefix)) {
+        obj.push({ value, label: CoCIDKeys[value] })
       }
       return obj
-    }, []).sort(CoC7Utilities.sortByNameKey)
+    }, []).sort(CoC7Utilities.sortByLabelKey)
 
     context.isSystemID = (typeof CoCIDKeys[context.id] !== 'undefined')
     const match = context.id.match(/^([^\\.]+)\.([^\\.]*)\.(.+)/)
@@ -98,14 +94,14 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
       context.warnDuplicateCompendiumPriority = response.warnDuplicatePriority
       this.#showLoading = false
 
-      for (const [key, era] of Object.entries(usedEras)) {
+      for (const [value, field] of Object.entries(usedEras)) {
         context.usedEras.push({
-          id: key,
-          icon: era.icon,
-          name: game.i18n.localize(era.name)
+          value,
+          icon: field.icon,
+          label: game.i18n.localize(field.label)
         })
       }
-      context.usedEras.sort(CoC7Utilities.sortByNameKey)
+      context.usedEras.sort(CoC7Utilities.sortByLabelKey)
       context.compendiumDocumentInfo = context.compendiumDocumentInfo.reduce((c, o) => {
         const sortKey = []
         for (const s of context.usedEras) {
@@ -130,22 +126,6 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
 
   /**
    * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
-  }
-
-  /**
-   * @inheritdoc
    * @param {ApplicationRenderContext} context
    * @param {RenderOptions} options
    * @returns {Promise<void>}
@@ -159,8 +139,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
       const text = event.target.closest('.form-value').querySelector('input').value
       if (text) {
         game.clipboard.copyPlainText(text).then(() => {
-          /* // FoundryVTT V12 */
-          ui.notifications.info(game.i18n.format('CoC7.WhatCopiedClipboard', { what: text }), { console: false })
+          ui.notifications.info('CoC7.WhatCopiedClipboard', { format: { what: text }, console: false })
         })
       }
     }))
@@ -220,8 +199,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
             if (event.detail > 1) return // Ignore repeated clicks
             if (event.button === 2 && (application.document.flags[FOLDER_ID]?.cocidFlag?.id ?? false)) {
               game.clipboard.copyPlainText(application.document.flags[FOLDER_ID].cocidFlag.id).then(() => {
-                /* // FoundryVTT V12 */
-                ui.notifications.info(game.i18n.format('CoC7.WhatCopiedClipboard', { what: game.i18n.localize('CoC7.CoCIDFlag.key') }), { console: false })
+                ui.notifications.info('CoC7.WhatCopiedClipboard', { format: { what: game.i18n.localize('CoC7.CoCIDFlag.key') }, console: false })
               })
             } else {
               new CoCIDEditor({ document: application.document }, {}).render({ force: true, focus: true })
@@ -234,7 +212,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
           const button = document.createElement('button')
           button.type = 'button'
           button.classList = 'header-control fa-solid fa-fingerprint icon'
-          if (!(application.document.flags[FOLDER_ID]?.cocidFlag?.id ?? false)) {
+          if (!application.document.flags[FOLDER_ID]?.cocidFlag?.id?.length || !application.document.flags[FOLDER_ID]?.cocidFlag?.lang?.length || typeof application.document.flags[FOLDER_ID]?.cocidFlag?.priority === 'undefined') {
             button.classList.add('invalid-coc-id')
           }
           button.dataset.action = 'cocid'
@@ -242,29 +220,6 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
           copyUuidButton.after(button)
         }
       }
-    }
-  }
-
-  /**
-   * Add CoC ID Button to sheet header
-   * @deprecated FoundryVTT v12
-   * @param {Application} application
-   * @param {ApplicationHeaderButton} buttons
-   */
-  static addCoCIDSheetHeaderButtonV12 (application, buttons) {
-    if (game.user.isGM) {
-      const sheetCoCID = application.document.flags?.[FOLDER_ID]?.cocidFlag
-      const noId = (typeof sheetCoCID === 'undefined' || typeof sheetCoCID.id === 'undefined' || sheetCoCID.id === '')
-      const CoCIDEditorButton = {
-        class: (noId ? 'invalid-coc-id' : 'valid-coc-id'),
-        label: 'CoC7.CoCIDFlag.id',
-        icon: 'fa-solid fa-fingerprint',
-        onclick: () => {
-          new CoCIDEditor({ document: application.document }, {}).render(true, { focus: true })
-        }
-      }
-      const numberOfButtons = buttons.length
-      buttons.splice(numberOfButtons - 1, 0, CoCIDEditorButton)
     }
   }
 
@@ -296,12 +251,15 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
           return false
         })
       } else {
-        uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/*'] = 1
+        if (typeof uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/*'] === 'undefined') {
+          uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/*'] = 0
+        }
+        uniquePriority[d.flags[FOLDER_ID].cocidFlag.priority + '/*']++
       }
       const eras = (d.flags[FOLDER_ID].cocidFlag.eras ? Object.entries(d.flags[FOLDER_ID].cocidFlag.eras).filter(e => e[1]).map(e => e[0]).sort() : [])
       for (const era of eras) {
         usedEras[era] = {
-          name: ERAS[era]?.name ?? '?',
+          label: ERAS[era]?.label ?? '?',
           icon: ERAS[era]?.icon ?? 'fa-solid fa-info-circle'
         }
       }
@@ -326,8 +284,7 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
         }, {}),
         priority: parseInt(d.flags[FOLDER_ID].cocidFlag.priority, 10),
         lang: d.flags[FOLDER_ID].cocidFlag.lang ?? 'en',
-        /* // FoundryVTT V12 */
-        link: await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(d.link, { async: true }),
+        link: await foundry.applications.ux.TextEditor.implementation.enrichHTML(d.link, { async: true }),
         folder: folders.map(n => n.indexOf(' ') > -1 ? '"' + n + '"' : n).join(' &gt; ')
       }
     }))
@@ -351,22 +308,12 @@ export default class CoCIDEditor extends foundry.applications.api.HandlebarsAppl
       ['flags.' + FOLDER_ID + '.cocidFlag.lang']: submitData.lang || game.i18n.lang,
       ['flags.' + FOLDER_ID + '.cocidFlag.priority']: submitData.priority || 0
     }
-    if (typeof this.document.sheet.element?.querySelector === 'undefined') {
-      /* // FoundryVTT V12 */
-      const html = this.document.sheet.element.find('header.window-header a.header-button.invalid-coc-id,header.window-header a.header-button.valid-coc-id')
-      if (html) {
-        html.css({
-          color: (changes['flags.' + FOLDER_ID + '.cocidFlag.id'].length ? 'var(--color-text-light-highlight)' : 'var(--color-level-error)')
-        })
-      }
-    } else {
-      const html = this.document.sheet.element.querySelector('header.window-header [data-action="cocid"]')
-      if (html) {
-        if (changes['flags.' + FOLDER_ID + '.cocidFlag.id'].length) {
-          html.classList.remove('invalid-coc-id')
-        } else {
-          html.classList.add('invalid-coc-id')
-        }
+    const html = this.document.sheet.element.querySelector('header.window-header [data-action="cocid"]')
+    if (html) {
+      if (changes['flags.' + FOLDER_ID + '.cocidFlag.id'].length) {
+        html.classList.remove('invalid-coc-id')
+      } else {
+        html.classList.add('invalid-coc-id')
       }
     }
     this.document.update(changes)

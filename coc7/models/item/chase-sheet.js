@@ -8,10 +8,10 @@ import CoC7Utilities from '../../apps/utilities.js'
 
 export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet {
   static DEFAULT_OPTIONS = {
-    classes: ['chase'],
+    classes: ['coc7-chase'],
     position: {
       width: 550,
-      height: 580
+      height: 610
     }
   }
 
@@ -115,8 +115,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
       case 'participants':
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,
@@ -166,8 +165,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
 
     this.element.querySelectorAll('.participant-controls .item-control').forEach((element) => element.addEventListener('click', (event) => { this._onParticipantControlClicked(event) }))
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dragSelector: '.pin-location',
       permissions: {
         dragstart: true
@@ -177,8 +175,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
       }
     }).bind(this.element)
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: 'section.tab.participants',
       permissions: {
         drop: true
@@ -193,8 +190,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
     if (context.document.system.started) {
       this.element.querySelectorAll('.chase-location .chase-participant').forEach((element) => element.addEventListener('click', (event) => { this._onChaseParticipantClick(event) }))
 
-      /* // FoundryVTT V12 */
-      new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+      new foundry.applications.ux.DragDrop({
         dragSelector: '.chase-participant',
         dropSelector: '.chase-location',
         permissions: {
@@ -225,7 +221,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
                 })
               }
             }
-            new (foundry.applications.ux?.ContextMenu?.implementation ?? ContextMenu)(element, '.assist-dropdown', contextOptions, {
+            new foundry.applications.ux.ContextMenu.implementation(element, '.assist-dropdown', contextOptions, {
               jQuery: false,
               fixed: true,
               eventName: 'click'
@@ -693,12 +689,14 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
                 config.threshold = participants[offset].speedCheck.score
                 config.runRoll = false
                 const modified = await CoC7RollNormalize.trigger(config)
-                modified.flavor = game.i18n.format('CoC7.CheckResult', {
-                  name: value.name,
-                  value: modified.threshold.toString() + (modified.flatThresholdModifier !== 0 ? (modified.flatThresholdModifier > 0 ? '+' : '') + modified.flatThresholdModifier.toString() : ''),
-                  difficulty: CoC7DicePool.difficultyString(modified.difficulty)
-                })
-                CoC7RollNormalize.runRoll(modified)
+                if (modified) {
+                  modified.flavor = game.i18n.format('CoC7.CheckResult', {
+                    name: value.name,
+                    value: modified.threshold.toString() + (modified.flatThresholdModifier !== 0 ? (modified.flatThresholdModifier > 0 ? '+' : '') + modified.flatThresholdModifier.toString() : ''),
+                    difficulty: CoC7DicePool.difficultyString(modified.difficulty)
+                  })
+                  CoC7RollNormalize.runRoll(modified)
+                }
               }
             }
           }
@@ -928,7 +926,7 @@ export default class CoC7ModelsItemChaseSheet extends CoC7ModelsItemGlobalSheet 
         currentWidth = Number(context.document.sheet.element.style.width.replace('px', ''))
       }
       const minWidth = CoC7Utilities.remToPx(40)
-      const participantWidth = CoC7Utilities.remToPx(context.document.system.participants.length * 12.25 + (context.document.system.participants.length - 1) * 0.5 + 1 + 1) // initiative-block each + each gap + padding on tab
+      const participantWidth = CoC7Utilities.remToPx(context.document.system.participants.length * 12.25 + (context.document.system.participants.length - 1) * 0.5 + 1 + 1.75) // initiative-block each + each gap + padding on tab
       const maxWidth = document.body.clientWidth
       const newWidth = Math.min(maxWidth, Math.max(currentWidth, minWidth, participantWidth))
       if (typeof options.position?.width !== 'undefined') {

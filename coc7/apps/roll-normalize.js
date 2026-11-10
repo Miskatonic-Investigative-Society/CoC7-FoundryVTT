@@ -107,6 +107,7 @@ export default class CoC7RollNormalize {
       flatThresholdModifier: options.flatThresholdModifier ?? 0,
       hasPlayerOwner: options.actor?.hasPlayerOwner ?? false,
       isAltKey: options.event?.altKey === true,
+      /* // FoundryVTT V13 */
       isBlind: options.isBlind ?? (game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode') === CHAT_MESSAGE_MODE.BLIND),
       isCombat: options.event?.currentTarget?.classList?.contains('combat') ?? false,
       isCtrlKey: options.isCtrlKey ?? CoC7Utilities.isCtrlKey(options.event ?? false),
@@ -120,6 +121,8 @@ export default class CoC7RollNormalize {
       rollType: options.rollType ?? CoC7RollNormalize.ROLL_TYPE.MANUAL,
       runRoll: options.runRoll ?? true,
       standbyRightIcon: options.standbyRightIcon ?? '',
+      talentsAuto: [],
+      talentsManual: [],
       threshold: options.threshold,
       hideDifficulty: options.hideDifficulty ?? false
     }
@@ -167,6 +170,11 @@ export default class CoC7RollNormalize {
           if (config.poolModifier === 0) {
             config.poolModifier = item.system.bonusDice ?? 0
           }
+          const cocid = item.flags?.[FOLDER_ID]?.cocidFlag?.id ?? ''
+          if (cocid.toString().length) {
+            config.talentsAuto = options.actor?.items?.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(cocid))) ?? []
+            config.talentsManual = options.actor?.items?.filter(doc => doc.type === 'talent' && doc.system.appliesToKey(cocid)) ?? []
+          }
           okay = true
         } else if (item.type === 'weapon') {
           config.rollType = CoC7RollNormalize.ROLL_TYPE.WEAPON
@@ -212,20 +220,22 @@ export default class CoC7RollNormalize {
         }
         okay = true
       }
+      if (item === false) {
+        const key = (config.cardType === CoC7RollNormalize.CARD_TYPE.KNOW_CHECK ? 'know' : (config.cardType === CoC7RollNormalize.CARD_TYPE.IDEA_CHECK ? 'idea' : config.key))
+        config.talentsAuto = options.actor?.items?.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(key))) ?? []
+        config.talentsManual = options.actor?.items?.filter(doc => doc.type === 'talent' && doc.system.appliesToKey(key)) ?? []
+      }
     }
     if (!okay && typeof options.event === 'undefined' && ![CoC7RollNormalize.ROLL_TYPE.MANUAL, CoC7RollNormalize.ROLL_TYPE.ENCOUNTER].includes(config.rollType)) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ErrorNotFound', { missing: game.i18n.localize('CoC7.Roll') }))
+      ui.notifications.error('CoC7.ErrorNotFound', { format: { missing: game.i18n.localize('CoC7.Roll') } })
       return false
     }
     if (![CoC7RollNormalize.CARD_TYPE.COMBINED, CoC7RollNormalize.CARD_TYPE.NORMAL, CoC7RollNormalize.CARD_TYPE.OPPOSED, CoC7RollNormalize.CARD_TYPE.SAN_CHECK, CoC7RollNormalize.CARD_TYPE.KNOW_CHECK, CoC7RollNormalize.CARD_TYPE.IDEA_CHECK].includes(config.cardType)) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ErrorInvalidFormula', { value: game.i18n.localize('CoC7.ErrorInvalidCardType') }))
+      ui.notifications.error('CoC7.ErrorInvalidFormula', { format: { value: game.i18n.localize('CoC7.ErrorInvalidCardType') } })
       return false
     }
     if (!config.askValue && typeof config.threshold === 'undefined' && ![CoC7RollNormalize.ROLL_TYPE.SKILL, CoC7RollNormalize.ROLL_TYPE.CHARACTERISTIC, CoC7RollNormalize.ROLL_TYPE.ATTRIBUTE, CoC7RollNormalize.ROLL_TYPE.ENCOUNTER].includes(config.rollType)) {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ErrorInvalidFormula', { value: game.i18n.localize('CoC7.ErrorInvalidRollType') }))
+      ui.notifications.error('CoC7.ErrorInvalidFormula', { format: { value: game.i18n.localize('CoC7.ErrorInvalidRollType') } })
       return false
     }
     config.poolModifier = Math.max(-CoC7DicePool.maxDicePenalty, Math.min(CoC7DicePool.maxDiceBonus, config.poolModifier))
@@ -252,10 +262,7 @@ export default class CoC7RollNormalize {
       CoC7RollNormalize.createLink(config)
     } else {
       if (!config.isShiftKey) {
-        try {
-          await CoC7RollNormalize.createRoll(config)
-        } catch (e) {
-          console.error(e)
+        if (!await CoC7RollNormalize.createRoll(config)) {
           return
         }
       }
@@ -319,15 +326,20 @@ export default class CoC7RollNormalize {
   /**
    * Prompt for changes to normalized roll request
    * @param {object} config
+   * @returns {boolean}
    */
   static async createRoll (config) {
     const usage = await CoC7RollDialog.create(config)
-    config.cardType = usage.cardType
-    config.poolModifier = usage.poolModifier
-    config.difficulty = usage.difficulty
-    config.flatDiceModifier = usage.flatDiceModifier
-    config.flatThresholdModifier = usage.flatThresholdModifier
-    config.threshold = usage.threshold
+    if (usage) {
+      config.cardType = usage.cardType
+      config.poolModifier = usage.poolModifier
+      config.difficulty = usage.difficulty
+      config.flatDiceModifier = usage.flatDiceModifier
+      config.flatThresholdModifier = usage.flatThresholdModifier
+      config.threshold = usage.threshold
+      return true
+    }
+    return false
   }
 
   /**

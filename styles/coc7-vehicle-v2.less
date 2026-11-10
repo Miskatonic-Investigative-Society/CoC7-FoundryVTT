@@ -1,10 +1,10 @@
-.application.coc7.sheet.vehicle {
+.application.coc7-vehicle {
   section.window-content {
     .token-extras {
       position: absolute;
-      top: @1px;
-      right: @8px;
-      gap: @4px;
+      top: calc(@rem1px + var(--header-height));
+      right: @rem8px;
+      gap: @rem4px;
       flex-direction: row-reverse;
 
       .token-drag-handle {
@@ -18,19 +18,14 @@
 
     .item-header {
       flex: 1;
-      padding: @16px;
 
       .profile-details {
-        gap: @4px;
+        gap: @rem4px;
 
         .flexrow {
-          gap: @4px;
+          gap: @rem4px;
         }
       }
-    }
-
-    .tab.details {
-      padding: @16px;
     }
 
     .armor-locations {

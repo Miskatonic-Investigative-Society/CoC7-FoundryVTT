@@ -44,15 +44,13 @@ export default async function (document, options, userId) {
     switch (tokenDropMode) {
       case 'roll':
         await document.actor.rollCharacteristicsValue()
-        /* // FoundryVTT V12 */
-        ui.notifications.info(game.i18n.format('CoC7.TokenCreationRoll.Rolled', { name: document.actor.name }))
+        ui.notifications.info('CoC7.TokenCreationRoll.Rolled', { format: { name: document.actor.name } })
         document.actor.update({ 'system.flags.locked': true })
         break
 
       case 'average':
         await document.actor.averageCharacteristicsValue()
-        /* // FoundryVTT V12 */
-        ui.notifications.info(game.i18n.format('CoC7.TokenCreationRoll.Averaged', { name: document.actor.name }))
+        ui.notifications.info('CoC7.TokenCreationRoll.Averaged', { format: { name: document.actor.name } })
         document.actor.update({ 'system.flags.locked': true })
         break
 

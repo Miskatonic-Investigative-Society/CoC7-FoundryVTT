@@ -1,5 +1,6 @@
 import { FOLDER_ID } from '../../constants.js'
 import CoC7ModelsItemGlobalSheet from './global-sheet.js'
+import CoC7Utilities from '../../apps/utilities.js'
 
 export default class CoC7ModelsItemArchetypeSheet extends CoC7ModelsItemGlobalSheet {
   static DEFAULT_OPTIONS = {
@@ -53,11 +54,13 @@ export default class CoC7ModelsItemArchetypeSheet extends CoC7ModelsItemGlobalSh
         case 'item-delete':
           this._onItemDelete(event)
           break
+        case 'talent-delete':
+          this._onTalentDelete(event)
+          break
       }
     }))
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: '.drop-item',
       permissions: {
         drop: true
@@ -66,14 +69,79 @@ export default class CoC7ModelsItemArchetypeSheet extends CoC7ModelsItemGlobalSh
         drop: this._onItemDrop.bind(this)
       }
     }).bind(this.element)
+
+    new foundry.applications.ux.DragDrop({
+      dropSelector: '.drop-talent',
+      permissions: {
+        drop: true
+      },
+      callbacks: {
+        drop: this._onTalentDrop.bind(this)
+      }
+    }).bind(this.element)
   }
 
   /**
    * Drop
-   * @param {ClickEvent} event
+   * @param {DropEvent} event
    */
   async _onItemDrop (event) {
     this._onItemDropEvent(event, 'system', ['skill'])
+  }
+
+  /**
+   * Drop
+   * @param {DropEvent} event
+   */
+  async _onTalentDrop (event) {
+    event.preventDefault()
+    event.stopPropagation()
+    const fields = ['talentsRequired', 'talentsSuggested']
+    if (fields.includes(event.currentTarget.dataset.type)) {
+      this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+
+      const droppedCocids = (await CoC7Utilities.getDataFromDropEvent(event, 'Item')).filter(doc => doc.type === 'talent' && doc.flags?.[FOLDER_ID]?.cocidFlag?.id?.length).map(doc => doc.flags[FOLDER_ID].cocidFlag.id)
+      const updates = {}
+      for (const field of fields) {
+        updates['system.' + field] = this.document.system.toObject()[field]
+      }
+      let changed = false
+      for (const cocid of droppedCocids) {
+        for (const field of fields) {
+          if (field !== event.currentTarget.dataset.type) {
+            const index = updates['system.' + field].indexOf(cocid)
+            if (index > -1) {
+              updates['system.' + field].splice(index, 1)
+              changed = true
+            }
+          } else {
+            const index = updates['system.' + field].indexOf(cocid)
+            if (index === -1) {
+              updates['system.' + field].push(cocid)
+              changed = true
+            }
+          }
+        }
+      }
+      if (changed) {
+        this.document.update(updates)
+      }
+    }
+  }
+
+  /**
+   * Delete embedded item
+   * @param {ClickEvent} event
+   */
+  async _onTalentDelete (event) {
+    event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    const li = event.currentTarget.closest('.item')
+    const div = event.currentTarget.closest('.drop-talent')
+    const updates = {
+      ['system.' + div.dataset.type]: this.document.system.toObject()[div.dataset.type].filter(t => t !== li.dataset.cocid)
+    }
+    this.document.update(updates)
   }
 
   /**
@@ -151,8 +219,7 @@ export default class CoC7ModelsItemArchetypeSheet extends CoC7ModelsItemGlobalSh
           `${game.i18n.localize('CoC7.PulpTalents')}: ${context.document.system.talents}`,
           `${game.i18n.localize('CoC7.BonusPoints')}: ${context.document.system.bonusPoints}`
         ]
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -162,38 +229,39 @@ export default class CoC7ModelsItemArchetypeSheet extends CoC7ModelsItemGlobalSh
         break
       case 'details':
         context._types = []
-        for (const [key, value] of context.document.system.schema.getField('coreCharacteristics').entries()) {
+        for (const [value, field] of context.document.system.schema.getField('coreCharacteristics').entries()) {
           context._types.push({
-            id: key,
-            name: value.label,
-            tooltip: value.hint,
-            isEnabled: context.document.system.coreCharacteristics[key] === true
+            value,
+            label: field.label,
+            tooltip: field.hint,
+            isEnabled: context.document.system.coreCharacteristics[value] === true
           })
         }
-        /* // FoundryVTT V12 */
-        context.enrichedSuggestedOccupations = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedSuggestedOccupations = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.suggestedOccupations,
           {
             async: true,
             secrets: context.editable
           }
         )
-        /* // FoundryVTT V12 */
-        context.enrichedSuggestedTraits = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedSuggestedTraits = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.suggestedTraits,
           {
             async: true,
             secrets: context.editable
           }
         )
+        context.talentsSuggested = await game.CoC7.cocid.expandItemArray({ itemList: context.document.system.talentsSuggested })
+        context.talentsSuggestedEmpty = context.talentsSuggested.length === 0
+        context.talentsRequired = await game.CoC7.cocid.expandItemArray({ itemList: context.document.system.talentsRequired })
+        context.talentsRequiredEmpty = context.talentsRequired.length === 0
         break
       case 'skills':
         context.skills = await context.document.system.items()
         context.skillListEmpty = context.skills.length === 0
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,

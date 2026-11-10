@@ -14,16 +14,14 @@ export default class CoC7EnableVariantRulesEn extends CoC7Tour {
       steps: [
         {
           id: 'goto-settings',
-          /* // FoundryVTT V12 */
-          selector: (foundry.utils.isNewerVersion(game.version, '13') ? 'button.ui-control[data-action="tab"][data-tab="settings"]' : '.tabs>a[data-tab="settings"]'),
+          selector: 'button.ui-control[data-action="tab"][data-tab="settings"]',
           title: 'COC7.Tour.GotoSettingsTitle',
           content: 'COC7.Tour.GotoSettingsContent',
           sidebarTab: 'settings'
         },
         {
           id: 'goto-configure',
-          /* // FoundryVTT V12 */
-          selector: (foundry.utils.isNewerVersion(game.version, '13') ? 'button[data-action="openApp"][data-app="configure"]' : '[data-action="configure"]'),
+          selector: 'button[data-action="openApp"][data-app="configure"]',
           title: 'COC7.Tour.GotoConfigureTitle',
           content: 'COC7.Tour.GotoConfigureContent',
           action: 'click'

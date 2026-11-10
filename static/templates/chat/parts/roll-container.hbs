@@ -3,7 +3,7 @@
     <img class="portrait open-actor" data-actor-uuid="{{actorUuid}}" src="{{portrait}}" data-tooltip="{{actorName}}" />
     {{#if changeParticipant}}
       <div class="coc7-card-buttons flexrow">
-        <button class="keeper-only-control" {{#if participantLocked}} disabled="disabled" {{/if}} data-action="participant" data-tooltip="{{#if (eq participant @root.advantageTypes.attacker)}}CoC7.ParticipantAttacker{{else if (eq participant @root.advantageTypes.defender)}}CoC7.ParticipantDefender{{else}}CoC7.ParticipantNone{{/if}}"><i class="{{#if (eq participant @root.advantageTypes.attacker)}}game-icon game-icon-crossed-swords{{else if (eq participant @root.advantageTypes.defender)}}game-icon game-icon-shield{{else}}game-icon game-icon-uncertainty{{/if}}"></i></button>
+        <button class="keeper-only-control" {{#if participantLocked}} disabled="disabled" {{/if}} data-action="participant" data-tooltip="{{#if (eq participant @root.advantageTypes.attacker)}}CoC7.ParticipantAttacker{{else if (eq participant @root.advantageTypes.defender)}}CoC7.ParticipantDefender{{else}}CoC7.ParticipantNone{{/if}}"><i class="{{#if (eq participant @root.advantageTypes.attacker)}}game-icon game-icon-crossed-swords{{else if (eq participant @root.advantageTypes.defender)}}game-icon game-icon-shield{{else}}game-icon game-icon-uncertainty{{/if}} fa-fw"></i></button>
       </div>
     {{/if}}
   </div>

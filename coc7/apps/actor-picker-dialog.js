@@ -13,7 +13,7 @@ export default class CoC7ActorPickerDialog extends foundry.applications.api.Hand
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       title: 'CoC7.PickWhichActorTitle',
       contentClasses: [
@@ -140,7 +140,7 @@ export default class CoC7ActorPickerDialog extends foundry.applications.api.Hand
     }
     if (found.length === 0) {
       if (canvas.ready) {
-        found = canvas.tokens.placeables.filter(t => TARGET_ALLOWED.includes(t.document.actor.type) && t.actor.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)).map(t => t.document)
+        found = canvas.tokens.placeables.filter(t => TARGET_ALLOWED.includes(t.document.actor?.type) && t.actor.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)).map(t => t.document)
       }
       const foundIDs = found.map(t => t.actorId)
       found = found.concat(game.actors.filter(a => TARGET_ALLOWED.includes(a.type) && !foundIDs.includes(a.id) && a.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)))
@@ -218,21 +218,5 @@ export default class CoC7ActorPickerDialog extends foundry.applications.api.Hand
         break
     }
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 }

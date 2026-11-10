@@ -15,14 +15,14 @@
     </div>
 
     <div class="status flexrow" style="flex: 0 0 7em;">
-      <div class="item-control icon fallen{{#if document.system.conditions.prone.value}} status-on{{/if}}" data-tooltip="CoC7.Prone" data-action="condition" data-condition="prone"><i class="game-icon game-icon-falling"></i></div>
-      <div class="item-control icon unconscious{{#if document.system.conditions.unconscious.value}} status-on{{/if}}" data-tooltip="CoC7.Unconscious" data-action="condition" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars"></i></div>
-      <div class="item-control icon injured{{#if document.system.conditions.criticalWounds.value}} status-on{{/if}}" data-tooltip="CoC7.CriticalWounds" data-action="condition" data-condition="criticalWounds"><i class="game-icon game-icon-arm-sling"></i></div>
-      <div class="item-control icon dying{{#if document.system.conditions.dying.value}} status-on{{/if}}" data-tooltip="CoC7.Dying" data-action="condition" data-condition="dying"><i class="game-icon game-icon-heart-beats"></i></div>
+      <div class="item-control icon fallen{{#if document.system.conditions.prone.value}} status-on{{/if}}" data-tooltip="CoC7.Prone" data-action="condition" data-condition="prone"><i class="game-icon game-icon-falling fa-fw"></i></div>
+      <div class="item-control icon unconscious{{#if document.system.conditions.unconscious.value}} status-on{{/if}}" data-tooltip="CoC7.Unconscious" data-action="condition" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars fa-fw"></i></div>
+      <div class="item-control icon injured{{#if document.system.conditions.criticalWounds.value}} status-on{{/if}}" data-tooltip="CoC7.CriticalWounds" data-action="condition" data-condition="criticalWounds"><i class="game-icon game-icon-arm-sling fa-fw"></i></div>
+      <div class="item-control icon dying{{#if document.system.conditions.dying.value}} status-on{{/if}}" data-tooltip="CoC7.Dying" data-action="condition" data-condition="dying"><i class="game-icon game-icon-heart-beats fa-fw"></i></div>
       {{#if document.system.conditions.dead.value}}
-        <div class="item-control icon dead status-on" data-tooltip="CoC7.Dead" data-action="condition" data-condition="dead"><i class="game-icon game-icon-tombstone"></i></div>
+        <div class="item-control icon dead status-on" data-tooltip="CoC7.Dead" data-action="condition" data-condition="dead"><i class="game-icon game-icon-tombstone fa-fw"></i></div>
       {{else}}
-        <div class="icon dead{{#if document.system.conditions.dying.value}} item-control dying-check{{else}} inactive-status{{/if}}" data-action="dying-check" data-tooltip="{{#if document.system.conditions.dying.value}}CoC7.DyingCheck{{/if}}"><i class="game-icon game-icon-d10"></i></div>
+        <div class="icon dead{{#if document.system.conditions.dying.value}} item-control dying-check{{else}} inactive-status{{/if}}" data-action="dying-check" data-tooltip="{{#if document.system.conditions.dying.value}}CoC7.DyingCheck{{/if}}"><i class="game-icon game-icon-d10 fa-fw"></i></div>
       {{/if}}
     </div>
 
@@ -34,8 +34,8 @@
     </div>
 
     <div class="status flexrow" style="flex: 0 0 3em;">
-      <div class="item-control icon bout-of-madness{{#if document.system.conditions.tempoInsane.value}} status-on{{/if}}" data-tooltip="{{localize 'CoC7.BoutOfMadness'}}{{#if document.getTempoInsaneDurationText}}: {{document.getTempoInsaneDurationText}}{{/if}}" data-action="condition" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></div>
-      <div class="item-control icon indefinite-insanity{{#if document.system.conditions.indefInsane.value}} status-on{{/if}}" data-tooltip="{{#if document.system.conditions.indefInsane.value}}CoC7.UnderlyingInsanity{{else}}CoC7.IndefiniteInsanity{{/if}}" data-action="condition" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></div>
+      <div class="item-control icon bout-of-madness{{#if document.system.conditions.tempoInsane.value}} status-on{{/if}}" data-tooltip="{{localize 'CoC7.BoutOfMadness'}}{{#if document.getTempoInsaneDurationText}}: {{document.getTempoInsaneDurationText}}{{/if}}" data-action="condition" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider fa-fw"></i></div>
+      <div class="item-control icon indefinite-insanity{{#if document.system.conditions.indefInsane.value}} status-on{{/if}}" data-tooltip="{{#if document.system.conditions.indefInsane.value}}CoC7.UnderlyingInsanity{{else}}CoC7.IndefiniteInsanity{{/if}}" data-action="condition" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull fa-fw"></i></div>
     </div>
 
     <div class="character-detail attribute" data-attrib="mp">
@@ -51,7 +51,7 @@
         <div class="characteristics">
           {{#each characteristics as |characteristic key|}}
             <div class="char-box attribute characteristic-{{key}}" data-characteristic="{{key}}" draggable="true">
-              <div class="characteristic-name rollable" draggable="true" data-tooltip-key="{{key}}"><i class="game-icon game-icon-d10"></i> {{localize characteristic.short}}</div>
+              <div class="characteristic-name rollable" draggable="true" data-tooltip-key="{{key}}"><i class="game-icon game-icon-d10 fa-fw"></i> {{localize characteristic.short}}</div>
               <div class="char-box-values">
                 <input class="characteristic-score detail-value{{#if characteristic.activeEffectValue}} modified-by-active-effect{{/if}}" type="text" {{#if characteristic.activeEffectValue}}{{#if @root.document.system.flags.locked}} value="{{characteristic.value}}" data-tooltip="CoC7.ModifiedByActiveEffect" readonly{{else}} name="system.characteristics.{{key}}.value" value="{{characteristic.sourceValue}}" {{/if}}{{else}} name="system.characteristics.{{key}}.value" value="{{characteristic.value}}" {{/if}} />
                 <span class="part-detail-value half-score">{{calcHard characteristic.value}}</span>
@@ -98,9 +98,9 @@
             <div class="item-controls">
               {{#unless skill.system.properties.noxpgain}}
                 {{#if skill.system.flags.developement}}
-                  <a class="item-control development-flag active" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillFlagged')}}"><i class="fa-solid fa-circle-check"></i></a>
+                  <a class="item-control development-flag active" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillFlagged')}}"><i class="fa-solid fa-circle-check fa-fw"></i></a>
                 {{else}}
-                  <a class="item-control development-flag" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillUnflagged')}}"><i class="fa-light fa-circle"></i></a>
+                  <a class="item-control development-flag" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillUnflagged')}}"><i class="fa-light fa-circle fa-fw"></i></a>
                 {{/if}}
               {{/unless}}
             </div>
@@ -119,22 +119,22 @@
               </div>
               {{#if weapon.system.properties.rngd}}
                 {{#if weapon.usesAlternateSkill}}
-                  <div class="icon combat alternative-skill"><i class="game-icon game-icon-machine-gun-magazine"></i></div>
+                  <div class="icon combat alternative-skill"><i class="game-icon game-icon-machine-gun-magazine fa-fw"></i></div>
                 {{/if}}
               {{else}}
                 {{#if weapon.system.properties.thrown}}
-                  <div class="icon combat alternative-skill"><i class="game-icon game-icon-thrown-knife"></i></div>
+                  <div class="icon combat alternative-skill"><i class="game-icon game-icon-thrown-knife fa-fw"></i></div>
                 {{/if}}
               {{/if}}
             </div>
             <div class="item-damage">{{weapon.system.range.normal.damage}}</div>
-            <div class="item-controls">
+            <div class="item-controls properties-list">
               {{#if weapon.system.properties.rngd}}
                 <div class="ammo">
-                  <span class="tag">{{weapon.system.ammo}}</span>
+                  <div class="property">{{weapon.system.ammo}}</div>
                 </div>
                 <div class="control">
-                  <a class="reload-weapon" data-tooltip="CoC7.Reload"><i class="game-icon game-icon-chaingun"></i></a>
+                  <a class="reload-weapon" data-tooltip="CoC7.Reload"><i class="game-icon game-icon-chaingun fa-fw"></i></a>
                 </div>
               {{else}}
                 {{#if weapon.system.properties.addb}}<span class="tag">{{localize 'CoC7.WeaponAddDb'}}</span>{{/if}}

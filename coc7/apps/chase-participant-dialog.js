@@ -16,7 +16,7 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet', 'coc7-chase-participant'],
     window: {
       contentClasses: [
         'standard-form'
@@ -68,8 +68,7 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
   async _onRender (context, options) {
     await super._onRender(context, options)
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: '.window-content',
       permissions: {
         drop: game.user.isGM
@@ -79,8 +78,7 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
       }
     }).bind(this.element)
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dragSelector: '.chase-token',
       permissions: {
         dragstart: game.user.isGM
@@ -138,12 +136,14 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
                 config.threshold = this.coc7Config.participant.speedCheck.score
                 config.runRoll = false
                 const modified = await CoC7RollNormalize.trigger(config)
-                modified.flavor = game.i18n.format('CoC7.CheckResult', {
-                  name: value.name,
-                  value: modified.threshold.toString() + (modified.flatThresholdModifier !== 0 ? (modified.flatThresholdModifier > 0 ? '+' : '') + modified.flatThresholdModifier.toString() : ''),
-                  difficulty: CoC7DicePool.difficultyString(modified.difficulty)
-                })
-                check = await CoC7RollNormalize.runRoll(modified)
+                if (modified) {
+                  modified.flavor = game.i18n.format('CoC7.CheckResult', {
+                    name: value.name,
+                    value: modified.threshold.toString() + (modified.flatThresholdModifier !== 0 ? (modified.flatThresholdModifier > 0 ? '+' : '') + modified.flatThresholdModifier.toString() : ''),
+                    difficulty: CoC7DicePool.difficultyString(modified.difficulty)
+                  })
+                  check = await CoC7RollNormalize.runRoll(modified)
+                }
               }
               const chatData = await check.getChatData()
               delete chatData.content
@@ -218,7 +218,7 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
           type: 'submit',
           action: 'update',
           label: (this.coc7Config.isExisting ? 'CoC7.Update' : 'CoC7.Add'),
-          icon: (this.coc7Config.isExisting ? 'fa-solid fa-user-edit' : 'fa-solid fa-user-plus')
+          icon: (this.coc7Config.isExisting ? 'fa-solid fa-user-edit fa-fw' : 'fa-solid fa-user-plus fa-fw')
         }]
         break
     }
@@ -250,7 +250,7 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
       this.coc7Config.participant = await CoC7ChaseParticipantDialog.createParticipant(await CoC7Utilities.getActorUuid(found[0]))
       await this.render()
     } else {
-      ui.notifications.warn(game.i18n.localize('CoC7.ErrorTokenIncorrect'))
+      ui.notifications.warn('CoC7.ErrorTokenIncorrect', { localize: true })
     }
   }
 
@@ -353,21 +353,5 @@ export default class CoC7ChaseParticipantDialog extends foundry.applications.api
       locationId,
       participant
     }).render({ force: true })
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 }

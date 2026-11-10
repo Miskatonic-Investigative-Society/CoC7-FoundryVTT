@@ -710,8 +710,7 @@ export default class CoC7ChatCombinedMessage {
       }, [])),
       flavor: this.flavor,
       speaker: { alias: data.rollActors[data.actorUuid]?.actorName ?? '' },
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/combined-roll.hbs', data)
+      content: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/combined-roll.hbs', data)
     }
 
     return chatData
@@ -924,7 +923,7 @@ export default class CoC7ChatCombinedMessage {
       const check = await CoC7ChatCombinedMessage.loadFromMessage(merged, true)
       if (check) {
         const data = await check.getTemplateData()
-        update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/combined-roll.hbs', data)
+        update.content = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/combined-roll.hbs', data)
         update.flavor = check.flavor
         update._id = message.id
         updates.push(update)
@@ -1080,7 +1079,7 @@ export default class CoC7ChatCombinedMessage {
     const check = await CoC7ChatCombinedMessage.loadFromMessage(merged, true)
     if (check) {
       const data = await check.getTemplateData()
-      update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/combined-roll.hbs', data)
+      update.content = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/combined-roll.hbs', data)
       update.flavor = check.flavor
       update._id = message.id
       updates.push(update)

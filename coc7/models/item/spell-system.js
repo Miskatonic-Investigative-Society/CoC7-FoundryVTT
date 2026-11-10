@@ -9,7 +9,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
    * @returns {string}
    */
   static get defaultImg () {
-    return 'systems/' + FOLDER_ID + '/assets/icons/pentagram-rose.svg'
+    return 'systems/' + FOLDER_ID + '/assets/game-icons/lorc/pentagram-rose.svg'
   }
 
   /**
@@ -116,7 +116,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
       return
     }
     const costList = foundry.utils.duplicate(this.costList)
-    const availableCosts = CoC7ModelsItemSpellSystem.availableCosts().reduce((c, e) => { c[e.key] = e; return c }, {})
+    const availableCosts = CoC7ModelsItemSpellSystem.availableCosts().reduce((c, e) => { c[e.value] = e; return c }, {})
     const additionalInformation = []
     const automatedCosts = costList.length > 0
     const automatedLosses = []
@@ -195,7 +195,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
                   console.warn('Unable to assign cost to variables', cost, promptRows)
                   return
                 }
-                const newRoll = await new Roll(cost.config.value.toString(), variables, { reason: availableCosts[cost.config.modify]?.name }).roll()
+                const newRoll = await new Roll(cost.config.value.toString(), variables, { reason: availableCosts[cost.config.modify]?.label }).roll()
                 if (!newRoll.isDeterministic) {
                   rolls.push(newRoll)
                 }
@@ -223,7 +223,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
               break
             case 'casterCost':
               {
-                const newRoll = await new Roll(cost.config.value.toString(), variables, { reason: availableCosts[cost.config.modify]?.name }).roll()
+                const newRoll = await new Roll(cost.config.value.toString(), variables, { reason: availableCosts[cost.config.modify]?.label }).roll()
                 if (!newRoll.isDeterministic) {
                   rolls.push(newRoll)
                 }
@@ -254,7 +254,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
                         for (const additionalCaster of variableValue.contents) {
                           const costs = {}
                           for (const key in variableValue.costs) {
-                            costs[key] = { name: availableCosts[key]?.name ?? key, value: variableValue.costs[key] }
+                            costs[key] = { name: availableCosts[key]?.label ?? key, value: variableValue.costs[key] }
                             variables[variableValue.key + '.' + key] = (variables[variableValue.key + '.' + key] ?? 0) + Number(costs[key].value)
                           }
                           for (const key in additionalCaster.numbers) {
@@ -372,7 +372,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
           if (['san', 'hp'].includes(k)) {
             continue
           }
-          if (typeof availableCosts[k]?.name === 'string') {
+          if (typeof availableCosts[k]?.label === 'string') {
             adjustments['system.' + availableCosts[k].section + '.' + k + '.value'] = Number(actor.system[availableCosts[k].section][k].value) - casterCosts[k]
           }
         }
@@ -389,7 +389,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
       const text = game.i18n.localize('CoC7.Points')
       for (const k in casterCosts) {
         automatedLosses.push({
-          name: availableCosts[k]?.name ?? k,
+          name: availableCosts[k]?.label ?? k,
           value: -casterCosts[k] + ' ' + text
         })
       }
@@ -402,8 +402,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
     }
     const template = 'systems/' + FOLDER_ID + '/templates/chat/spell.hbs'
     const description = this.description.value
-    /* // FoundryVTT V12 */
-    const html = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(template, { additionalInformation, automatedCosts, automatedLosses, casterGroups, castingTime, description, dice, diceTemplate: Roll.CHAT_TEMPLATE, manualLosses })
+    const html = await foundry.applications.handlebars.renderTemplate(template, { additionalInformation, automatedCosts, automatedLosses, casterGroups, castingTime, description, dice, diceTemplate: Roll.CHAT_TEMPLATE, manualLosses })
     let chatData = {
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor }),
@@ -413,7 +412,7 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
     }
     if (privateRoll) {
       /* // FoundryVTT V13 */
-      if (game.release.generation < 14) {
+      if (game.release.generation === 13) {
         chatData = ChatMessage.applyRollMode(chatData, CHAT_MESSAGE_MODE.GM)
       } else {
         chatData = ChatMessage.applyMode(chatData, CHAT_MESSAGE_MODE.GM)
@@ -432,8 +431,8 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
       output.push({
         group: 'Characteristics',
         section: 'characteristics',
-        key: field.name,
-        name: game.i18n.localize(field.hint)
+        value: field.name,
+        label: game.i18n.localize(field.hint)
       })
     }
     for (const field of CONFIG.Actor.dataModels.character.schema.getField('attribs').values()) {
@@ -443,11 +442,11 @@ export default class CoC7ModelsItemSpellSystem extends CoC7ModelsItemGlobalSyste
       output.push({
         group: 'Attributes',
         section: 'attribs',
-        key: field.name,
-        name: game.i18n.localize((field.name === 'san' ? 'CoC7.SanityPoints' : field.hint))
+        value: field.name,
+        label: game.i18n.localize((field.name === 'san' ? 'CoC7.SanityPoints' : field.hint))
       })
     }
-    output.sort(CoC7Utilities.sortByNameKey)
+    output.sort(CoC7Utilities.sortByLabelKey)
     return output
   }
 

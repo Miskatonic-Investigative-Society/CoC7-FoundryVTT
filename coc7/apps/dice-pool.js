@@ -76,14 +76,6 @@ export default class CoC7DicePool {
   }
 
   /**
-   * Get minimum weapon volley size
-   * @returns {integer}
-   */
-  static get minVolleySize () {
-    return 3
-  }
-
-  /**
    * Success Levels
    * @returns {object}
    */
@@ -111,11 +103,6 @@ export default class CoC7DicePool {
         alternativeDice = game.settings.get(FOLDER_ID, 'tenDiePenalty')
       } else if (poolModifier > 0) {
         alternativeDice = game.settings.get(FOLDER_ID, 'tenDieBonus')
-        // Temporary fix for bronze texture in DsN
-        /* // FoundryVTT v12 */
-        if (alternativeDice === 'bronze' && !foundry.utils.isNewerVersion(game.modules.get('dice-so-nice').version, '5.0.5')) {
-          alternativeDice = 'bronze01'
-        }
       }
     }
     return alternativeDice

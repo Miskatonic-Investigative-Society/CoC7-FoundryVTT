@@ -7,9 +7,6 @@ export default class CoC7ModelsActorCharacterSheetV3 extends CoC7ModelsActorChar
     position: {
       width: 980,
       height: 814
-    },
-    window: {
-      resizable: true
     }
   }
 
@@ -134,6 +131,7 @@ export default class CoC7ModelsActorCharacterSheetV3 extends CoC7ModelsActorChar
    */
   _updatePosition (position) {
     const pos = super._updatePosition(position)
+    /* // FoundryVTT V13 */
     if (foundry.utils.isNewerVersion(game.version, 14)) {
       pos.left = Math.max(pos.left, 87)
     }

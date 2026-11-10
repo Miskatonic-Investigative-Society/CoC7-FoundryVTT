@@ -90,15 +90,12 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
         rare: new fields.BooleanField({ label: 'CoC7.WeaponRare', initial: false }),
         burn: new fields.BooleanField({ label: 'CoC7.Weapon.Property.Burn', initial: false })
       }),
-      /* // FoundryVTT V12 */
-      price: (foundry.utils.isNewerVersion(game.version, 13)
-        ? new fields.TypedObjectField(
-          new fields.StringField({ nullable: true, initial: null }),
-          {
-            validateKey: (key) => typeof ERAS[key] !== 'undefined'
-          }
-        )
-        : new fields.ObjectField())
+      price: new fields.TypedObjectField(
+        new fields.StringField({ nullable: true, initial: null }),
+        {
+          validateKey: (value) => typeof ERAS[value] !== 'undefined'
+        }
+      )
     }
   }
 
@@ -131,24 +128,24 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
 
     if (skills.length) {
       output.labels.push({
-        name: game.i18n.localize((skills.length === 1 ? 'CoC7.Skill' : 'CoC7.Skills')),
+        label: game.i18n.localize((skills.length === 1 ? 'CoC7.Skill' : 'CoC7.Skills')),
         value: skills.join('/')
       })
     }
 
     output.labels.push({
-      name: game.i18n.localize('CoC7.WeaponUsesPerRound'),
+      label: game.i18n.localize('CoC7.WeaponUsesPerRound'),
       value: CoC7ModelsItemWeaponSystem.usesPerRoundString(object)
     })
 
     output.labels.push({
-      name: game.i18n.localize('CoC7.WeaponMalfunction'),
+      label: game.i18n.localize('CoC7.WeaponMalfunction'),
       value: object.system.malfunction ? object.system.malfunction : '-'
     })
 
     if (object.system.bullets) {
       output.labels.push({
-        name: game.i18n.localize('CoC7.WeaponBulletsInMag'),
+        label: game.i18n.localize('CoC7.WeaponBulletsInMag'),
         value: object.system.bullets
       })
     }
@@ -393,10 +390,14 @@ export default class CoC7ModelsItemWeaponSystem extends CoC7ModelsItemGlobalSyst
   async toggleProperty (property, key, { isCtrlKey = false } = {}) {
     await super.toggleProperty(property, key, isCtrlKey)
     if (property === 'eras' && this.parent.flags[FOLDER_ID]?.cocidFlag?.eras?.[key] !== true) {
-      this.parent.update({
-        /* // FoundryVTT V13 */
-        ['system.price.-=' + key]: null
-      })
+      const updates = {}
+      /* // FoundryVTT V13 */
+      if (game.release.generation === 13) {
+        updates['system.price.-=' + key] = null
+      } else {
+        updates['system.price.' + key] = new foundry.data.operators.ForcedDeletion()
+      }
+      this.parent.update(updates)
     }
   }
 

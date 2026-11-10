@@ -1,61 +1,63 @@
 <div class="flexrow item-header">
-  <div class="flexcol item-property">
+  <div class="flexcol">
     <div class="flexrow">
       <input type="text" name="name" value="{{document.name}}" placeholder="{{localize 'CoC7.Name'}}" />
-      <div class="flexrow" style="flex: 2">
+      <div class="flexrow flex-double">
         {{#if document.isEmbedded}}
-          <select name="system.skill.main.id" style="flex: 1">
+          <select name="system.skill.main.id" class="flex-single">
             {{#unless document.system.isSkillSet}}
               <option></option>
             {{/unless}}
-            {{selectOptions weaponSkillGroups selected=document.system.skill.main.id localize=false valueAttr='id' labelAttr='name'}}
+            {{selectOptions weaponSkillGroups selected=document.system.skill.main.id localize=false}}
           </select>
           {{#if usesAlternateSkill}}
-            <select name="system.skill.alternativ.id" style="flex: 1">
+            <select name="system.skill.alternativ.id" class="flex-single">
               {{#unless document.system.isAlternativeSkillSet}}
                 <option></option>
               {{/unless}}
-              {{selectOptions weaponSkillGroups selected=document.system.skill.alternativ.id localize=false valueAttr='id' labelAttr='name'}}
+              {{selectOptions weaponSkillGroups selected=document.system.skill.alternativ.id localize=false}}
             </select>
           {{/if}}
         {{else}}
-          <input style="flex: 1" type="text" name="system.skill.main.name" value="{{document.system.skill.main.name}}" placeholder="{{localize 'CoC7.WeaponSkillMain'}}" />
+          <input class="flex-single" type="text" name="system.skill.main.name" value="{{document.system.skill.main.name}}" placeholder="{{localize 'CoC7.WeaponSkillMain'}}" />
           {{#if usesAlternateSkill}}
-            <input style="flex: 1" type="text" name="system.skill.alternativ.name" value="{{document.system.skill.alternativ.name}}" placeholder="{{localize 'CoC7.WeaponSkillAlt'}}" />
+            <input class="flex-single" type="text" name="system.skill.alternativ.name" value="{{document.system.skill.alternativ.name}}" placeholder="{{localize 'CoC7.WeaponSkillAlt'}}" />
           {{/if}}
         {{/if}}
       </div>
     </div>
-    <div class="columns-two flexrow">
+    <div class="flexrow">
       {{#if document.system.properties.rngd}}
-        <div class="column-row flexrow">
+        <div class="flexrow">
           <label>{{localize 'CoC7.WeaponRange'}} (yd):</label>
-          <input class="item-skill" style="flex: 1;" type="text" name="system.range.normal.value" value="{{document.system.range.normal.value}}" placeholder="{{localize 'CoC7.rangeCombatCard.BaseRangeShort'}}" />
+          <input type="text" name="system.range.normal.value" value="{{document.system.range.normal.value}}" placeholder="{{localize 'CoC7.rangeCombatCard.BaseRangeShort'}}" />
           {{#if document.system.properties.shotgun}}
-            <input class="item-skill" style="flex: 1;" type="text" name="system.range.long.value" value="{{document.system.range.long.value}}" placeholder="{{localize 'CoC7.rangeCombatCard.LongRangeShort'}}" />
-            <input class="item-skill" style="flex: 1;" type="text" name="system.range.extreme.value" value="{{document.system.range.extreme.value}}" placeholder="{{localize 'CoC7.rangeCombatCard.ExtremeRangeShort'}}" />
+            <input type="text" name="system.range.long.value" value="{{document.system.range.long.value}}" placeholder="{{localize 'CoC7.rangeCombatCard.LongRangeShort'}}" />
+            <input type="text" name="system.range.extreme.value" value="{{document.system.range.extreme.value}}" placeholder="{{localize 'CoC7.rangeCombatCard.ExtremeRangeShort'}}" />
           {{/if}}
         </div>
-        <div class="column-row flexrow">
-          <label class="flex: 0 0 auto;">{{localize 'CoC7.WeaponDamage'}}:</label>
-          <input class="item-skill" style="flex: 1;" type="text" name="system.range.normal.damage" value="{{document.system.range.normal.damage}}" placeholder="0" />
+        <div class="flexrow">
+          <label>{{localize 'CoC7.WeaponDamage'}}:</label>
+          <input type="text" name="system.range.normal.damage" value="{{document.system.range.normal.damage}}" placeholder="0" />
           {{#if document.system.properties.shotgun}}
-            <input class="item-skill" style="flex: 1;" type="text" name="system.range.long.damage" value="{{document.system.range.long.damage}}" placeholder="0" />
-            <input class="item-skill" style="flex: 1;" type="text" name="system.range.extreme.damage" value="{{document.system.range.extreme.damage}}" placeholder="0" />
+            <input type="text" name="system.range.long.damage" value="{{document.system.range.long.damage}}" placeholder="0" />
+            <input type="text" name="system.range.extreme.damage" value="{{document.system.range.extreme.damage}}" placeholder="0" />
           {{/if}}
         </div>
       {{else}}
-        <label class="column-row flexrow">{{localize 'CoC7.WeaponTouch'}}</label>
-        <div class="column-row flexrow">
-          <label class="flex: 0 0 auto;">{{localize 'CoC7.WeaponDamage'}}:</label>
-          <input class="item-skill" style="flex: 1;" type="text" name="system.range.normal.damage" value="{{document.system.range.normal.damage}}" placeholder="0" />
+        <div class="flexrow">
+          <label>{{localize 'CoC7.WeaponTouch'}}</label>
+        </div>
+        <div class="flexrow">
+          <label>{{localize 'CoC7.WeaponDamage'}}:</label>
+          <input type="text" name="system.range.normal.damage" value="{{document.system.range.normal.damage}}" placeholder="0" />
         </div>
       {{/if}}
     </div>
     <div class="toggle-row flexrow">
       <div class="toggle-attributes flexrow" data-set="properties">
         {{#each _properties as |row|}}
-          <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+          <button class="toggle-switch{{#if row.isEnabled}} switched-on{{/if}}" data-property="{{row.value}}"{{#if row.tooltip}} data-tooltip="{{row.tooltip}}"{{/if}}>{{localize row.label}}</button>
         {{/each}}
       </div>
     </div>

@@ -34,8 +34,7 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
     context.showInventoryWeapons = false
     context.hasInventory = this.hasInventory(context)
 
-    /* // FoundryVTT V12 */
-    context.enrichedBiographyPersonalDescription = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+    context.enrichedBiographyPersonalDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       context.document.system.biography.personalDescription.value,
       {
         async: true,
@@ -43,8 +42,7 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
       }
     )
 
-    /* // FoundryVTT V12 */
-    context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+    context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       context.document.system.description.keeper,
       {
         async: true,
@@ -114,8 +112,8 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
     }))
     this.element.querySelector('.attacks-per-round.rollable')?.addEventListener('click', async (event) => {
       const roll = await new Roll(this.actor.system.special.attacksPerRound, this.actor.parsedValues()).roll()
-      const tooltip = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(Roll.TOOLTIP_TEMPLATE, { parts: roll.dice.map(d => d.getTooltipData()) })
-      const content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(Roll.CHAT_TEMPLATE, {
+      const tooltip = await foundry.applications.handlebars.renderTemplate(Roll.TOOLTIP_TEMPLATE, { parts: roll.dice.map(d => d.getTooltipData()) })
+      const content = await foundry.applications.handlebars.renderTemplate(Roll.CHAT_TEMPLATE, {
         formula: roll.formula,
         tooltip,
         total: roll.total
@@ -148,10 +146,9 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
                     ['system.range.' + event.currentTarget.dataset.field + '.damage']: value
                   })
                 } else {
-                  /* // FoundryVTT V12 */
-                  ui.notifications.error(game.i18n.format('CoC7.ErrorUnableToParseFormula', {
+                  ui.notifications.error('CoC7.ErrorUnableToParseFormula', { format: {
                     value
-                  }))
+                  } })
                   event.currentTarget.focus()
                 }
               }
@@ -175,8 +172,7 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
     }))
 
     // Everything below here is not available if in compendium
-    /* // FoundryVTT V12 */
-    if (context.document.inCompendium ?? !!context.document.pack) return
+    if (context.document.inCompendium) return
 
     this.element.querySelector('.roll-san')?.addEventListener('click', this._onSanCheck.bind(this))
   }
@@ -269,6 +265,7 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
         sanReason: this.document.system.infos.type?.length ? this.document.system.infos.type : this.document.name,
         difficulty,
         poolModifier,
+        /* // FoundryVTT V13 */
         blind: (game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode')) === CHAT_MESSAGE_MODE.BLIND
       })
       link.toChatMessage()
@@ -312,8 +309,7 @@ export default class CoC7ModelsActorNPCSheetV2 extends CoC7ModelsActorGlobalShee
               const tempHTML = document.createElement('div')
               tempHTML.classList.add(part, 'flexcol', 'limited-view')
               tempHTML.dataset.applicationPart = part
-              /* // FoundryVTT V12 */
-              tempHTML.innerHTML = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/actors/limited.hbs', context)
+              tempHTML.innerHTML = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/actors/limited.hbs', context)
               parts[part] = tempHTML
             }
             break

@@ -24,6 +24,7 @@ export default async function () {
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/select-archetype.hbs',
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/select-occupation.hbs',
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/set-characteristics.hbs',
+    'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/pick-talents.hbs',
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/set-attributes.hbs',
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/view-attributes.hbs',
     'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/set-investigator.hbs',
@@ -54,8 +55,9 @@ export default async function () {
     'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/parts/biography.hbs',
     'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/tabs/portrait-config.hbs',
     'systems/' + FOLDER_ID + '/templates/actors/investigator-v3/tabs/active-effects.hbs',
+
+    'templates/generic/tab-navigation.hbs',
     Roll.CHAT_TEMPLATE
   ]
-  /* // FoundryVTT V12 */
-  return (foundry.applications.handlebars?.loadTemplates ?? loadTemplates)(templatePaths)
+  return foundry.applications.handlebars.loadTemplates(templatePaths)
 }

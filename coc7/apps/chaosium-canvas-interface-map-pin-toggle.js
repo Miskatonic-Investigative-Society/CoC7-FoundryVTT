@@ -101,8 +101,7 @@ export default class ChaosiumCanvasInterfaceMapPinToggle extends ChaosiumCanvasI
    */
   async #handleClickEvent () {
     game.socket.emit('system.coc7', { type: 'toggleMapNotes', toggle: true })
-    /* // FoundryVTT V12 */
-    game.settings.set('core', (foundry.canvas.layers?.NotesLayer ?? NotesLayer).TOGGLE_SETTING, true)
+    game.settings.set('core', foundry.canvas.layers.NotesLayer.TOGGLE_SETTING, true)
     let toggle = false
     switch (this.action) {
       case ChaosiumCanvasInterface.actionToggle.On:

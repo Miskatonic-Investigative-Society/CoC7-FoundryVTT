@@ -54,7 +54,8 @@ export default class CoC7Check {
     this.#isStandby = false
     // this.#key = undefined
     // this.message = undefined
-    this.#rollMode = game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode')
+    /* // FoundryVTT V13 */
+    this.#rollMode = game.settings.get('core', (game.release.generation === 13 ? 'rollMode' : 'messageMode'))
     this.#standbyRightIcon = ''
     // this.#type = undefined
   }
@@ -531,7 +532,33 @@ export default class CoC7Check {
       isUnknownDifficulty: this.#dicePool.difficulty === CoC7DicePool.difficultyLevel.unknown,
       luckSpent: this.#dicePool.luckSpent,
       name: this.name,
+      showOnFailureTalents: [],
       standbyRightIcon: this.#standbyRightIcon
+    }
+    if (this.#dicePool.isRolled && !this.#dicePool.isSuccess && actor) {
+      let showOnFailureTalents = []
+      switch (this.#type) {
+        case CoC7Check.type.attribute:
+        case CoC7Check.type.characteristic:
+          showOnFailureTalents = actor.items.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(this.#key)) && doc.system.adjustments.find(doc => doc.type === 'showOnFailure'))
+          break
+        case CoC7Check.type.skill:
+        case CoC7Check.type.item:
+          {
+            const item = await fromUuid(this.#key)
+            if (item?.flags?.[FOLDER_ID]?.cocidFlag?.id?.length) {
+              showOnFailureTalents = actor.items.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(item.flags[FOLDER_ID].cocidFlag.id)) && doc.system.adjustments.find(doc => doc.type === 'showOnFailure'))
+            }
+            if (item?.type === 'weapon') {
+              const skill = actor.items.get(item.system?.skillMain?.id)
+              if (skill?.flags?.[FOLDER_ID]?.cocidFlag?.id?.length) {
+                showOnFailureTalents = showOnFailureTalents.concat(actor.items.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(skill.flags[FOLDER_ID].cocidFlag.id)) && doc.system.adjustments.find(doc => doc.type === 'showOnFailure')))
+              }
+            }
+          }
+          break
+      }
+      data.showOnFailureTalents = await Promise.all(showOnFailureTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true })))
     }
     return data
   }
@@ -558,7 +585,7 @@ export default class CoC7Check {
     if (this.message?.id) {
       await this.flagForDevelopment()
     }
-    const chatData = {
+    let chatData = {
       flags: {
         [FOLDER_ID]: {
           load: {
@@ -587,8 +614,7 @@ export default class CoC7Check {
       speaker,
       rolls: (this.message?.rolls ?? []).concat(this.#dicePool.newRolls),
       flavor: this.flavor,
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(template, data)
+      content: await foundry.applications.handlebars.renderTemplate(template, data)
     }
     if (this.isInitiativeRoll) {
       foundry.utils.setProperty(chatData, 'flags.core.initiativeRoll', true)
@@ -609,11 +635,21 @@ export default class CoC7Check {
           break
 
         default:
-          ChatMessage.applyRollMode(chatData, this.#rollMode)
+          /* // FoundryVTT V13 */
+          if (game.release.generation === 13) {
+            chatData = ChatMessage.applyRollMode(chatData, this.#rollMode)
+          } else {
+            chatData = ChatMessage.applyMode(chatData, this.#rollMode)
+          }
           break
       }
     } else {
-      ChatMessage.applyRollMode(chatData, this.#rollMode)
+      /* // FoundryVTT V13 */
+      if (game.release.generation === 13) {
+        chatData = ChatMessage.applyRollMode(chatData, this.#rollMode)
+      } else {
+        chatData = ChatMessage.applyMode(chatData, this.#rollMode)
+      }
     }
     if (game.user.isGM && this.#isStandby) {
       chatData.blind = false
@@ -710,15 +746,15 @@ export default class CoC7Check {
     let threshold
     if (this.#type === CoC7Check.type.attribute && this.#key && typeof this.#asyncActor !== 'undefined') {
       this.#allowPush = true
-      threshold = parseInt((await this.#asyncActor)?.system?.attribs?.[this.#key]?.value, 10)
+      threshold = parseInt((await this.#asyncActor)?.system?.attribs?.[this.#key]?.value ?? 0, 10)
     } else if (this.#type === CoC7Check.type.characteristic && this.#key && typeof this.#asyncActor !== 'undefined') {
       this.#allowPush = true
       if (this.#cardType === CoC7RollNormalize.CARD_TYPE.IDEA_CHECK) {
-        threshold = parseInt((await this.#asyncActor)?.system?.config?.idea?.value, 10)
+        threshold = parseInt((await this.#asyncActor)?.system?.config?.idea?.value ?? 0, 10)
       } else if (this.#cardType === CoC7RollNormalize.CARD_TYPE.KNOW_CHECK) {
-        threshold = parseInt((await this.#asyncActor)?.system?.config?.know?.value, 10)
+        threshold = parseInt((await this.#asyncActor)?.system?.config?.know?.value ?? 0, 10)
       } else {
-        threshold = parseInt((await this.#asyncActor)?.system?.characteristics?.[this.#key]?.value, 10)
+        threshold = parseInt((await this.#asyncActor)?.system?.characteristics?.[this.#key]?.value ?? 0, 10)
       }
     } else if (this.#type === CoC7Check.type.skill && this.#key) {
       if (!this.item) {

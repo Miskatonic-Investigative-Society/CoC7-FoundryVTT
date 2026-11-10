@@ -96,11 +96,9 @@ export default class ChaosiumCanvasInterfaceOpenDocument extends ChaosiumCanvasI
     const doc = await fromUuid(this.documentUuid)
     if (doc?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED)) {
       if (doc instanceof JournalEntryPage) {
-        /* // FoundryVTT V12 */
-        doc.parent.sheet.render(true, { pageId: doc.id, anchor: this.anchor })
+        doc.parent.sheet.render({ force: true, pageId: doc.id, anchor: this.anchor })
       } else {
-        /* // FoundryVTT V12 */
-        doc.sheet.render(true)
+        doc.sheet.render({ force: true })
       }
     } else {
       console.error('Document ' + this.documentUuid + ' not loaded')

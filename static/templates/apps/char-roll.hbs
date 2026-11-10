@@ -1,39 +1,49 @@
-<div class="flexcol" style="gap: 0.375rem;">
-  <div class="item-list flexcol">
+<section class="standard-form">
+  <ul class="item-list adjustable-inputs">
     {{#each characteristics as |characteristic key|}}
-      <div class="flexrow item" style="gap: 0.375rem;" data-key="{{key}}">
-        <label>{{localize characteristic.label}}{{#if ../isRolls}} - {{characteristic.formula}}{{/if}}:</label>
+      <li class="item" data-key="{{key}}">
+        <label class="flex-double">{{localize characteristic.label}}{{#if ../isRolls}} - {{characteristic.formula}}{{/if}}</label>
         {{#unless ../isRolls}}
-          <a class="decrease-characteristic" style="flex: 0 0 1rem"><i class="fa-regular fa-minus-circle"></i></a>
+          <div class="item-controls">
+            <a class="item-control" data-action="decrease-characteristic"><i class="fa-regular fa-minus-circle fa-fw"></i></a>
+          </div>
         {{/unless}}
-        <input type="text" name="{{key}}" style="flex: 0 0 5rem; text-align: center" value="{{lookup ../values key}}" placeholder="{{localize 'CoC7.Value'}}" />
+        <input type="text" name="{{key}}" value="{{lookup ../values key}}" placeholder="{{localize 'CoC7.Value'}}" />
         {{#if ../isRolls}}
-          <a class="roll-characteristic" style="flex: 0 0 1rem"><i class="fa-solid fa-dice"></i></a>
+          <div class="item-controls">
+            <a class="item-control" data-action="roll-characteristic"><i class="fa-solid fa-dice fa-fw"></i></a>
+          </div>
         {{else}}
-          <a class="increase-characteristic" style="flex: 0 0 1rem"><i class="fa-regular fa-plus-circle"></i></a>
+          <div class="item-controls">
+            <a class="item-control" data-action="increase-characteristic"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
+          </div>
         {{/if}}
-      </div>
+      </li>
     {{/each}}
-    <div class="flexrow item" style="gap: 0.375rem;" data-key="luck">
-      <label>{{localize luck.label}} - {{luck.formula}}:</label>
+    <li class="item" data-key="luck">
+      <label class="flex-double">{{localize luck.label}} - {{luck.formula}}</label>
       {{#unless isRolls}}
-        <a class="reset-characteristic" style="flex: 0 0 1rem"><i class="fa-solid fa-eraser"></i></a>
+        <div class="item-controls">
+          <a class="item-control" data-action="reset-characteristic"><i class="fa-solid fa-eraser fa-fw"></i></a>
+        </div>
       {{/unless}}
-      <input type="text" name="luck" style="flex: 0 0 5rem; text-align: center" value="{{lookup values 'luck'}}" placeholder="{{localize 'CoC7.Value'}}" />
-      <a class="roll-characteristic" style="flex: 0 0 1rem"><i class="fa-solid fa-dice"></i></a>
-    </div>
-  </div>
+      <input type="text" name="luck" value="{{lookup values 'luck'}}" placeholder="{{localize 'CoC7.Value'}}" />
+      <div class="item-controls">
+        <a class="item-control" data-action="roll-characteristic"><i class="fa-solid fa-dice fa-fw"></i></a>
+      </div>
+    </li>
+  </ul>
   {{#if isPoints}}
-    <div class="flexrow points-summary{{#if pointsWarning}} warning{{/if}}" style="justify-content: center;">
-      <label style="flex: 0;white-space: nowrap">{{localize 'CoC7.CharacteristicsPoints'}} :</label>
-      <span class="total-points" style="flex: 0 0 2rem; text-align: center">{{totalPoints}}</span>
-      <span style="flex: 0 0 auto;">/</span>
-      <span style="flex: 0 0 2rem; text-align: center">{{points}}</span>
+    <div class="points-summary{{#if pointsWarning}} coc7-warning{{/if}}">
+      <label>{{localize 'CoC7.CharacteristicsPoints'}}</label>
+      <span class="points-count total-points">{{totalPoints}}</span>
+      <label>/</label>
+      <span class="points-count">{{points}}</span>
     </div>
   {{else if isRolls}}
-    <div class="flexrow points-summary{{#if pointsWarning}} warning{{/if}}" style="justify-content: center;">
-      <label style="flex: 0;white-space: nowrap">{{localize 'CoC7.CharacteristicsPoints'}} :</label>
-      <span class="total-points" style="flex: 0 0 2rem; text-align: center">{{totalPoints}}</span>
+    <div class="points-summary{{#if pointsWarning}} coc7-warning{{/if}}">
+      <label>{{localize 'CoC7.CharacteristicsPoints'}}</label>
+      <span class="points-count total-points">{{totalPoints}}</span>
     </div>
   {{/if}}
-</div>
+</section>

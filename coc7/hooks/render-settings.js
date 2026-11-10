@@ -17,14 +17,9 @@ export default function (application, element, context, options) {
     button.append(buttonIcon)
     button.append(buttonText)
     button.addEventListener('click', async () => {
-      (await fromUuid('Compendium.CoC7.system-doc.JournalEntry.' + game[FOLDER_ID].Manual))?.sheet.render(true)
+      (await fromUuid('Compendium.CoC7.system-doc.JournalEntry.' + game[FOLDER_ID].Manual))?.sheet.render({ force: true })
     })
-    /* // FoundryVTT V12 */
-    if (game.release.generation === 12) {
-      element.find('#settings-documentation').append(button)
-    } else {
-      element.querySelector('section.documentation').append(button)
-    }
+    element.querySelector('section.documentation').append(button)
   }
   if (game.user.isGM) {
     const buttonIcon = document.createElement('i')
@@ -56,12 +51,7 @@ export default function (application, element, context, options) {
         }]
       }).render({ force: true })
     })
-    /* // FoundryVTT V12 */
-    if (game.release.generation === 12) {
-      element.find('#settings-game').append(button)
-    } else {
-      element.querySelector('section.settings').append(button)
-    }
+    element.querySelector('section.settings').append(button)
   }
   deprecated.customCss(element)
 }

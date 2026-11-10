@@ -6,7 +6,7 @@
   </div>
   {{#if removable}}
     <div class="item-controls keeper-only-block">
-      <a class="item-control" data-action="removeRoll" data-actor-uuid="{{actorUuid}}" data-actor-roll-offset="{{offset}}" data-tooltip="CoC7.remove"><i class="fa-regular fa-minus-circle"></i></a>
+      <a class="item-control" data-action="removeRoll" data-actor-uuid="{{actorUuid}}" data-actor-roll-offset="{{offset}}" data-tooltip="CoC7.remove"><i class="fa-regular fa-minus-circle fa-fw"></i></a>
     </div>
   {{/if}}
 </div>
@@ -35,7 +35,7 @@
             {{#if (ne successLevelIcons.hint '')}}
               <span class="roll-icons">
                 {{#each successLevelIcons.icons as |icon|}}
-                  <i class="fa-solid fa-{{icon}}"></i>
+                  <i class="fa-solid fa-{{icon}} fa-fw"></i>
                 {{/each}}
               </span>
             {{else}}
@@ -46,7 +46,7 @@
       {{/if}}
       <div class="dice-tooltip">
         <div class="wrapper">
-          <div style="font-size: var(--font-size-12);">{{flavor}}</div>
+          <div class="coc7-flavor-text">{{flavor}}</div>
           <section class="tooltip-part">
             <div class="dice">
               <header class="part-header flexrow">

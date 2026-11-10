@@ -100,7 +100,7 @@ export default class CoC7SystemSocket {
           CoC7Utilities.refreshOpenOwnerCharacterSheets()
           break
         case 'toggleMapNotes':
-          game.settings.set('core', NotesLayer.TOGGLE_SETTING, data.toggle === true)
+          game.settings.set('core', foundry.canvas.layers.NotesLayer.TOGGLE_SETTING, data.toggle === true)
           break
       }
     }

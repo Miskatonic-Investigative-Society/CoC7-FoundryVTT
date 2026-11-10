@@ -12,7 +12,7 @@ export default class CoC7SpellVariablesDialog extends foundry.applications.api.H
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog', 'spell-variables'],
+    classes: ['coc7-sheet', 'spell-variables'],
     window: {
       title: 'CoC7.SpellCosts',
       contentClasses: [
@@ -127,22 +127,6 @@ export default class CoC7SpellVariablesDialog extends foundry.applications.api.H
     }
 
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**

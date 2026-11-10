@@ -1,15 +1,22 @@
-<div class="flexcol" style="gap: 0.375rem;">
-  <div class="item-list flexcol">
-    <label style="flex: 0;white-space: nowrap; text-align: center;">{{localize 'CoC7.SkillTotalOccupation'}}: {{total}}</label>
+<section class="standard-form">
+  <ul class="item-list">
+    <li class="item single-item">
+      <label class="flex-auto">{{localize 'CoC7.SkillTotalOccupation'}}</label>
+      <span class="flex-auto">{{total}}</span>
+    </li>
     {{#each characteristicOptional as |characteristic|}}
-      <div class="flexrow selectable{{#if (eq ../selected characteristic.key)}} selected{{/if}}" style="justify-content: center;" data-key="{{characteristic.key}}">
-        <label style="flex: 0;white-space: nowrap">{{localize characteristic.label}} ({{characteristic.value}}x{{characteristic.multiplier}}:{{characteristic.total}})</label>
-      </div>
+      <li class="item single-item">
+        <div class="item-controls">
+          <a class="item-control{{#if (eq ../selected characteristic.key)}} selected{{/if}}" data-action="selectable" data-key="{{characteristic.key}}">{{localize characteristic.label}} ({{characteristic.value}}x{{characteristic.multiplier}}:{{characteristic.total}})</a>
+        </div>
+      </li>
     {{/each}}
     {{#each characteristicFixed as |characteristic|}}
-      <div class="flexrow selected" style="justify-content: center;" data-key="{{characteristic.key}}">
-        <label style="flex: 0;white-space: nowrap">{{localize characteristic.label}} ({{characteristic.value}}x{{characteristic.multiplier}}:{{characteristic.total}})</label>
-      </div>
+      <li class="item single-item">
+        <div class="item-controls">
+          <div class="selected">{{localize characteristic.label}} ({{characteristic.value}}x{{characteristic.multiplier}}:{{characteristic.total}})</div>
+        </div>
+      </li>
     {{/each}}
   </div>
-</div>
+</section>

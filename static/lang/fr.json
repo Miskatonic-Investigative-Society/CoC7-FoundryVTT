@@ -1645,16 +1645,6 @@
 
   "CoC7.AlternativeNames": "Noms alternatifs",
 
-  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Marcher",
-  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Voler",
-  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Nager",
-  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "S'enfouir",
-  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Ramper",
-  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Grimper",
-  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Sauter",
-  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Téléporter (Clignote)",
-  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Téléporter (Déplace)",
-
   "CoC7.PortraitOptions": "Options de portrait",
   "CoC7.WhatCopiedClipboard": "\"{what}\" copié dans le presse-papiers.",
   "CoC7.AddedEmbeddedItems": "{names} ajouté(s)",

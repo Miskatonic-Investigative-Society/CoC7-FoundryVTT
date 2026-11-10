@@ -1,4 +1,4 @@
-import { ERAS } from '../../constants.js'
+import { FOLDER_ID, ERAS } from '../../constants.js'
 import CoC7ModelsItemGlobalSystem from './global-system.js'
 
 export default class CoC7ModelsItemItemSystem extends CoC7ModelsItemGlobalSystem {
@@ -18,15 +18,12 @@ export default class CoC7ModelsItemItemSystem extends CoC7ModelsItemGlobalSystem
       /* // FoundryVTT V13 - not required
       attributes: {},
       */
-      /* // FoundryVTT V12 */
-      price: (foundry.utils.isNewerVersion(game.version, 13)
-        ? new fields.TypedObjectField(
-          new fields.StringField({ nullable: true, initial: null }),
-          {
-            validateKey: (key) => typeof ERAS[key] !== 'undefined'
-          }
-        )
-        : new fields.ObjectField())
+      price: new fields.TypedObjectField(
+        new fields.StringField({ nullable: true, initial: null }),
+        {
+          validateKey: (key) => typeof ERAS[key] !== 'undefined'
+        }
+      )
     }
   }
 
@@ -42,6 +39,27 @@ export default class CoC7ModelsItemItemSystem extends CoC7ModelsItemGlobalSystem
       system: new CoC7ModelsItemItemSystem().toObject()
     }, options)
     return object
+  }
+
+  /**
+   * Toggle flag
+   * @param {string} property
+   * @param {string} key
+   * @param {object} options
+   * @param {boolean} options.isCtrlKey
+   */
+  async toggleProperty (property, key, { isCtrlKey = false } = {}) {
+    await super.toggleProperty(property, key, isCtrlKey)
+    if (property === 'eras' && this.parent.flags[FOLDER_ID]?.cocidFlag?.eras?.[key] !== true) {
+      const updates = {}
+      /* // FoundryVTT V13 */
+      if (game.release.generation === 13) {
+        updates['system.price.-=' + key] = null
+      } else {
+        updates['system.price.' + key] = new foundry.data.operators.ForcedDeletion()
+      }
+      this.parent.update(updates)
+    }
   }
 
   /**

@@ -5,7 +5,7 @@ import CoC7ModelsItemGlobalSheet from './global-sheet.js'
 export default class CoC7ModelsItemStatusSheet extends CoC7ModelsItemGlobalSheet {
   static DEFAULT_OPTIONS = {
     position: {
-      width: 550,
+      width: 525,
       height: 480
     }
   }
@@ -84,13 +84,12 @@ export default class CoC7ModelsItemStatusSheet extends CoC7ModelsItemGlobalSheet
     switch (partId) {
       case 'description':
         context._properties = []
-        for (const [key, value] of context.document.system.schema.getField('type').entries()) {
-          if (context.document.system.type[key] === true) {
-            context._properties.push(value.label)
+        for (const [value, field] of context.document.system.schema.getField('type').entries()) {
+          if (context.document.system.type[value] === true) {
+            context._properties.push(field.label)
           }
         }
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -100,16 +99,15 @@ export default class CoC7ModelsItemStatusSheet extends CoC7ModelsItemGlobalSheet
         break
       case 'details':
         context._types = []
-        for (const [key, value] of context.document.system.schema.getField('type').entries()) {
+        for (const [value, field] of context.document.system.schema.getField('type').entries()) {
           context._types.push({
-            id: key,
-            name: value.label,
-            tooltip: value.hint,
-            isEnabled: context.document.system.type[key] === true
+            value,
+            label: field.label,
+            tooltip: field.hint,
+            isEnabled: context.document.system.type[value] === true
           })
         }
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionNotes = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionNotes = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.notes,
           {
             async: true,
@@ -121,8 +119,7 @@ export default class CoC7ModelsItemStatusSheet extends CoC7ModelsItemGlobalSheet
         context.effects = await CoC7ActiveEffect.prepareActiveEffectCategories(context.document, { status: false })
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,
