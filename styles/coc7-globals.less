@@ -129,15 +129,10 @@ body {
   /*  Currently only Light Mode as chat-log is themed theme-light */
   /* ------------------------------------------------------------ */
   .chat-message {
-    --chat-message-background: url(../systems/CoC7/assets/art/page-light.webp) repeat;
-    --color-emote-background: url(../systems/CoC7/assets/art/page-light-emote.webp) repeat;
-    --color-whisper-background: url(../systems/CoC7/assets/art/page-light-whisper.webp) repeat;
-    --color-blind-background: url(../systems/CoC7/assets/art/page-light-blind.webp) repeat;
-
-    --chat-message-background-in-system: url(./assets/art/page-light.webp) repeat;
-    --color-emote-background-in-system: url(./assets/art/page-light-emote.webp) repeat;
-    --color-whisper-background-in-system: url(./assets/art/page-light-whisper.webp) repeat;
-    --color-blind-background-in-system: url(./assets/art/page-light-blind.webp) repeat;
+    --chat-message-background: url(./assets/art/page-light.webp) repeat;
+    --color-emote-background: url(./assets/art/page-light-emote.webp) repeat;
+    --color-whisper-background: url(./assets/art/page-light-whisper.webp) repeat;
+    --color-blind-background: url(./assets/art/page-light-blind.webp) repeat;
   }
 
   &.theme-light,
@@ -784,13 +779,6 @@ body {
     }
   }
 
-  .content-link.broken {
-    border-color: var(--color-level-error);
-    border-style: dashed;
-    cursor: default;
-    background-color: var(--color-background-error);
-  }
-
   em.key-backstory {
     font-style: normal;
     text-decoration: underline;
@@ -868,13 +856,34 @@ body {
     max-width: @rem512px;
   }
 
+  .inline-roll,
+  .coc7-link,
+  .content-link {
+    padding: 0;
+    font-weight: bold;
+    background: none;
+    border: none;
+    text-decoration-line: underline;
+
+    &:hover {
+      text-shadow: 0 0 @rem8px var(--coc7-adventure-colour);
+    }
+
+    &[href*=":"] {
+      text-decoration-line: grammar-error;
+    }
+
+    &.broken {
+      cursor: default;
+      text-decoration-line: spelling-error;
+
+      &:hover {
+        text-shadow: 0 0 @rem8px var(--color-shadow-primary);
+      }
+    }
+  }
+
   .coc7-link {
-    background: var(--content-link-background);
-    border: @rem1px solid var(--content-link-border-color);
-    border-radius: var(--border-radius-tiny);
-    color: var(--content-link-text-color);
-    margin: -@rem1px 0;
-    padding: @rem1px @rem4px 0;
     white-space: nowrap;
     word-break: break-all;
 

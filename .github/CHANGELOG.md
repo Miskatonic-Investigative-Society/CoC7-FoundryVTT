@@ -27,14 +27,22 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Change out of date module checks system for system updater
 - Flag v13 specific code
 - Fix Actor picker if a token's Actor has been deleted
-- Fix "Draw gun" toggle in the combat tracker, thanks to @Jah-yee #2166
 - Fix link creation on Firefox submitting the form
-- Fix Punch item using wrong skill name, thanks to @ClickerOfThings #2164
+- Fix range shotgun weapon damage and difficulty, thanks to @ImproperSubset #2168
 - Move flat dice/roll modifiers to house rules
 - Remove v12 specific code and styles
 - Remove limit from Investigator Wizard as issue needing this appears to have been fully resolved now
 - Several improvements to dark mode theme colours
 - When opening Prose Mirror sheet match application theme
+
+## Version 8.17
+
+**_!! Not all features will work with FoundryVTT v12 please consider upgrading, this is the last bug fix release to support FoundryVTT v12 !!_**
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix "Draw gun" toggle in the combat tracker, thanks to @Jah-yee #2166
+- Fix Punch item using wrong skill name, thanks to @ClickerOfThings #2164
 
 ## Version 8.16
 

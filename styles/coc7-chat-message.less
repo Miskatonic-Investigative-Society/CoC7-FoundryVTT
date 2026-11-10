@@ -1,5 +1,19 @@
 body {
   .chat-message {
+    background: var(--chat-message-background);
+
+    &.emote {
+      background: var(--color-emote-background);
+    }
+
+    &.whisper {
+      background: var(--color-whisper-background);
+    }
+
+    &.blind {
+      background: var(--color-blind-background);
+    }
+
     .message-content {
       padding: @rem3px 0; // Makes space for coc7-links and content link borders
 
@@ -70,7 +84,7 @@ body {
           display: none;
         }
 
-        background: var(--color-whisper-background-in-system);
+        background: var(--color-whisper-background);
         color: var(--color-whisper-border);
       }
 
