@@ -1,28 +1,32 @@
 <div class="panel flexcol">
-  <h1>{{localize 'CoC7.InvestigatorWizard.TitleSelectOccupation'}}</h1>
-  <div class="scroll-section">
+  <h2>{{localize 'CoC7.InvestigatorWizard.TitleSelectOccupation'}}</h2>
+  <div class="scrollable flexcol">
     <p>{{localize 'CoC7.InvestigatorWizard.OccupationPage'}}</p>
     <div class="form-group">
-      <label for="coc-occupation">{{localize 'CoC7.InvestigatorWizard.OccupationSelect'}}:</label>
-      <select name="coc-occupation">
-        <option value="">&nbsp;</option>
-        {{selectOptions occupationOptions selected=coc7Config.occupation valueAttr='key' labelAttr='name'}}
-      </select>
+      <label class="flex-single" for="coc-occupation">{{localize 'CoC7.InvestigatorWizard.OccupationSelect'}}</label>
+      <div class="form-fields">
+        <select name="coc-occupation">
+          <option value="">&nbsp;</option>
+          {{selectOptions occupationOptions selected=coc7Config.occupation}}
+        </select>
+      </div>
     </div>
+
     {{#if coc7Config.occupation}}
-      {{{description}}}
-      <div class="occupation-group flexcol">
+      <div>
+        {{{description}}}
         <div class="form-group">
-          <label>{{localize 'CoC7.InvestigatorWizard.OccupationCreditRating'}}:</label>
-          <div style="flex: 2;">{{creditRating.min}} - {{creditRating.max}}</div>
+          <label class="flex-single">{{localize 'CoC7.InvestigatorWizard.OccupationCreditRating'}}</label>
+          <div class="form-value">{{creditRating.min}} - {{creditRating.max}}</div>
         </div>
         <div class="form-group">
-          <label>{{localize 'CoC7.InvestigatorWizard.OccupationSkillPoints'}}:</label>
-          <div style="flex: 2;">{{occupationPointsString}}: {{points}}</div>
+          <label class="flex-single">{{localize 'CoC7.InvestigatorWizard.OccupationSkillPoints'}}</label>
+          <div class="form-value">{{occupationPointsString}}: {{points}}</div>
         </div>
-        <div class="form-group" style="align-items: baseline;">
-          <label>{{localize 'CoC7.InvestigatorWizard.OccupationSkills'}}:</label>
-          <div class="occupation-skills flexcol">
+
+        <div class="form-group">
+          <label class="flex-single">{{localize 'CoC7.InvestigatorWizard.OccupationSkills'}}</label>
+          <div class="input-line form-value flexcol">
             <div>
               {{#each skills as |skill|}}
                 <div>{{skill.name}}</div>
@@ -30,7 +34,7 @@
             </div>
             {{#each groups as |group|}}
               <div class="form-group">{{localize 'CoC7.InvestigatorWizard.OccupationPickThisMany' count=group.options}}</div>
-              <div style="margin-left: 1rem;">
+              <div class="indent-block">
                 {{#each group.skills as |set|}}
                   <div>{{set.name}}</div>
                 {{/each}}

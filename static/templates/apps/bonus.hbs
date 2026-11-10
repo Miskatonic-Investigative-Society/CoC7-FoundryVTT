@@ -1,61 +1,95 @@
 <div class="flexcol">
   {{#if cardTypes}}
     <div class="form-group">
-      <label>{{localize 'CoC7.CardType'}}</label>
-      <select name="cardType">
-        {{selectOptions cardTypes selected=options.cardType localize=true}}
-      </select>
+      <label class="flex-single">{{localize 'CoC7.CardType'}}</label>
+      <div class="form-value">
+        <select name="cardType">
+          {{selectOptions cardTypes selected=options.cardType localize=true}}
+        </select>
+      </div>
     </div>
   {{/if}}
 
   {{#if askValue}}
     <div class="form-group">
-      <label>{{localize 'CoC7.RollThreshold'}}</label>
-      <input type="number" name="threshold" value="{{options.threshold}}" />
+      <label class="flex-single">{{localize 'CoC7.RollThreshold'}}</label>
+      <div class="form-value">
+        <input type="number" name="threshold" value="{{options.threshold}}" />
+      </div>
     </div>
   {{/if}}
 
   {{#unless hideDifficulty}}
     <div class="form-group">
-      <label>{{localize 'CoC7.RollDifficulty'}}</label>
-      <select name="difficulty">
-        {{selectOptions difficultyTypes selected=options.difficulty localize=true valueAttr='key' labelAttr='val'}}
-      </select>
+      <label class="flex-single">{{localize 'CoC7.RollDifficulty'}}</label>
+      <div class="form-value">
+        <select name="difficulty">
+          {{selectOptions difficultyTypes selected=options.difficulty localize=true}}
+        </select>
+      </div>
     </div>
   {{/unless}}
 
   {{#if allowFlatDiceModifier}}
     <div class="form-group">
-      <label>{{localize 'CoC7.FlatDiceModifier'}}</label>
-      <input type="number" name="flatDiceModifier" value="{{options.flatDiceModifier}}" />
+      <label class="flex-single">{{localize 'CoC7.FlatDiceModifier'}}</label>
+      <div class="form-value">
+        <input type="number" name="flatDiceModifier" value="{{options.flatDiceModifier}}" />
+      </div>
     </div>
   {{/if}}
 
   {{#if allowFlatThresholdModifier}}
     <div class="form-group">
-      <label>{{localize 'CoC7.FlatModifier'}}</label>
-      <input type="number" name="flatThresholdModifier" value="{{options.flatThresholdModifier}}" />
+      <label class="flex-single">{{localize 'CoC7.FlatModifier'}}</label>
+      <div class="form-value">
+        <input type="number" name="flatThresholdModifier" value="{{options.flatThresholdModifier}}" />
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if talentsAuto}}
+    <div class="form-group">
+      <label class="flex-single">{{localize 'CoC7.TalentsActiveEffects'}}</label>
+      <div class="form-value">
+        {{#each talentsAuto as |link|}}
+          {{{link}}}
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if talentsManual}}
+    <div class="form-group">
+      <label class="flex-single">{{localize 'CoC7.TalentsAdjustments'}}</label>
+      <div class="form-value">
+        {{#each talentsManual as |link|}}
+          {{{link}}}
+        {{/each}}
+      </div>
     </div>
   {{/if}}
 
   <div class="form-group bonus-penalty-selector">
-    <label>{{localize 'CoC7.BonusDice'}}</label>
-    <div class="bonus-penalty-box">
-      <div class="flexrow bonus-penalty-labels">
-        <span class="double-penalty"><i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i></span>
-        <span class="penalty"><i class="fa-solid fa-dice-d10"></i></span>
-        <span class="normal-roll"><i class="fa-solid fa-dice-d10"></i></span>
-        <span class="bonus"><i class="fa-solid fa-dice-d10"></i></span>
-        <span class="double-bonus"><i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i></span>
+    <label class="flex-single">{{localize 'CoC7.BonusDice'}}</label>
+    <div class="form-value">
+      <div class="bonus-penalty-box">
+        <div class="flexrow bonus-penalty-labels">
+          <span class="double-penalty"><i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i></span>
+          <span class="penalty"><i class="fa-solid fa-dice-d10"></i></span>
+          <span class="normal-roll"><i class="fa-solid fa-dice-d10"></i></span>
+          <span class="bonus"><i class="fa-solid fa-dice-d10"></i></span>
+          <span class="double-bonus"><i class="fa-solid fa-dice-d10"></i><i class="fa-solid fa-dice-d10"></i></span>
+        </div>
+        <div class="flexrow bonus-penalty-labels">
+          <span class="double-penalty">-2</span>
+          <span class="penalty">-1</span>
+          <span class="normal-roll">0</span>
+          <span class="bonus">+1</span>
+          <span class="double-bonus">+2</span>
+        </div>
+        <input type="range" name="poolModifier" min="-2" max="2" value="{{options.poolModifier}}">
       </div>
-      <div class="flexrow bonus-penalty-labels">
-        <span class="double-penalty">-2</span>
-        <span class="penalty">-1</span>
-        <span class="normal-roll">0</span>
-        <span class="bonus">+1</span>
-        <span class="double-bonus">+2</span>
-      </div>
-      <input type="range" name="poolModifier" min="-2" max="2" value="{{options.poolModifier}}">
     </div>
   </div>
 </div>

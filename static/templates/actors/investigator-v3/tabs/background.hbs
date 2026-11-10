@@ -1,11 +1,16 @@
-<section class="tab background scrollable {{tabs.background.cssClass}}" data-group="primary" data-tab="background">
+<section class="tab background {{tabs.background.cssClass}}" data-group="primary" data-tab="background">
   <header class="tab-header">
+    <div class="item-controls">
+      {{#unless (or oneBlockBackStory document.system.flags.locked)}}
+        <button class="item-control"><i class="fa-regular fa-plus-circle fa-fw"></i>{{localize 'CoC7.BackgroundNewSection'}}</button>
+      {{/unless}}
+    </div>
     <h2 class="tab-heading">{{localize 'CoC7.Background'}}</h2>
-    {{#unless (or oneBlockBackStory document.system.flags.locked)}}
-      <div class="item-controls">
-        <div class="item-control button" data-action="biography-add"><i class="fa-regular fa-plus-circle"></i>{{localize 'CoC7.BackgroundNewSection'}}</div>
-      </div>
-    {{/unless}}
+    <div class="item-controls">
+      {{#unless (or oneBlockBackStory document.system.flags.locked)}}
+        <button class="item-control" data-action="biography-add"><i class="fa-regular fa-plus-circle fa-fw"></i>{{localize 'CoC7.BackgroundNewSection'}}</button>
+      {{/unless}}
+    </div>
   </header>
   {{#if oneBlockBackStory}}
     <prose-mirror name="system.backstory" value="{{document.system.backstory}}" data-document-uuid="{{document.uuid}}" toggled>{{{enrichedBackstory}}}</prose-mirror>
@@ -14,32 +19,32 @@
       <section class="bio-section" data-index="{{index}}">
         <header class="section-header">
           {{#if ../document.system.flags.locked}}
-            <h3 class="section-heading">{{section.title}}</h3>
+            <h4 class="section-heading">{{section.title}}</h4>
           {{else}}
             <input class="title" type="text" name="system.biography.{{index}}.title" value="{{section.title}}" placeholder="{{localize 'CoC7.BackgroundSectionNameHolder'}}">
             <div class="item-controls">
-              <a class="item-control{{#if section.isFirst}} item-control-disabled{{/if}}" {{#unless section.isFirst}} data-action="biography-move-up" {{/unless}} data-tooltip="CoC7.BackgroundSectionMoveUp"><i class="fa-solid fa-caret-up"></i></a>
-              <a class="item-control{{#if section.isLast}} item-control-disabled{{/if}}" {{#unless section.isLast}} data-action="biography-move-down" {{/unless}} data-tooltip="CoC7.BackgroundSectionMoveDown"><i class="fa-solid fa-caret-down"></i></a>
+              <a class="item-control{{#if section.isFirst}} item-control-disabled{{/if}}" {{#unless section.isFirst}} data-action="biography-move-up" {{/unless}} data-tooltip="CoC7.BackgroundSectionMoveUp"><i class="fa-solid fa-caret-up fa-fw"></i></a>
+              <a class="item-control{{#if section.isLast}} item-control-disabled{{/if}}" {{#unless section.isLast}} data-action="biography-move-down" {{/unless}} data-tooltip="CoC7.BackgroundSectionMoveDown"><i class="fa-solid fa-caret-down fa-fw"></i></a>
               <a class="item-control" data-action="biography-remove" data-tooltip="CoC7.BackgroundDeleteSection"><i class="fa-regular fa-minus-circle"></i></a>
             </div>
           {{/if}}
         </header>
-        <prose-mirror name="system.biography.{{index}}.value" value="{{section.value}}" data-document-uuid="{{document.uuid}}" toggled>{{{section.enriched}}}</prose-mirror>
+        <prose-mirror name="system.biography.{{index}}.value" value="{{section.value}}" data-document-uuid="{{document.uuid}}" toggled data-backstory>{{{section.enriched}}}</prose-mirror>
       </section>
     {{/each}}
   {{/if}}
   {{#if document.system.sanityLossEvents}}
     <section class="bio-section">
       <header class="section-header">
-        <h3 class="section-heading">{{localize 'CoC7.BackgroundEncounters'}}</h3>
+        <h4 class="section-heading">{{localize 'CoC7.BackgroundEncounters'}}</h4>
       </header>
       <div class="events">
-        {{#each document.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
+        {{#each document.system.sanityLossEvents as |sanityLossEvent index|}}
           <div class="event">
             <div class="title">{{sanityLossEvent.type}}</div>
             <div class="values">
               {{#if sanityLossEvent.immunity}}
-                <i class="fa-solid fa-shield-alt" data-tooltip="CoC7.SanityLossImmunity"></i>
+                <i class="fa-solid fa-shield-alt fa-fw" data-tooltip="CoC7.SanityLossImmunity"></i>
               {{else}}
                 {{sanityLossEvent.totalLoss}}
               {{/if}}

@@ -1,33 +1,33 @@
-<section class="flexcol scrollable" style="max-height: 20rem">
-  <div class="item-list flexcol">
-    <div class="item-header flexrow">
-      <div style="flex: 1">{{typeName}}</div>
-      <div style="flex: 2">{{localize 'CoC7.CoCIDFlag.key'}}</div>
+<section class="flexcol tab scrollable">
+  <ul class="item-list">
+    <li class="items-header">
+      <div class="flex-single">{{typeName}}</div>
+      <div class="flex-double">{{localize 'CoC7.CoCIDFlag.key'}}</div>
       <div class="item-controls">
-        <a class="item-control" data-action="guess-toggle" data-tooltip="CoC7.CoCIDFlag.guess"><i class="fa-solid fa-wand-magic"></i></a>
+        <a class="item-control" data-action="guess-toggle" data-tooltip="CoC7.CoCIDFlag.guess"><i class="fa-solid fa-wand-magic fa-fw"></i></a>
       </div>
-    </div>
+    </li>
     {{#each missingNames as |row|}}
-      <div class="item flexrow" data-name="{{row.name}}">
-        <div style="flex: 1">{{row.name}}</div>
-        <div style="flex: 1">
+      <li class="item" data-name="{{row.name}}">
+        <div class="flex-single">{{row.name}}</div>
+        <div class="flex-single">
           <select class="existing">
             <option value="">{{localize 'CoC7.CoCIDFlag.new'}}</option>
             {{selectOptions ../foundKeys selected=row.custom valueAttr="key" labelAttr="name"}}
           </select>
         </div>
-        <div class="flexrow" style="flex: 1">
+        <div class="flexrow flex-single">
           {{#if row.key}}
-            {{row.custom}}
+            <label>{{row.custom}}</label>
           {{else}}
-            <span style="flex: 0 0 auto; margin-top: 2px;">{{../idPrefix}}</span>
-            <input type="text" style="flex: 1;" value="{{row.suffix}}">
+            <label>{{../idPrefix}}</label>
+            <input type="text" class="flex-single" value="{{row.suffix}}">
           {{/if}}
         </div>
         <div class="item-controls">
-            <a class="item-control"{{#if row.key}} style="height: 0; overflow: hidden;"{{else}} data-action="guess-id" data-tooltip="CoC7.CoCIDFlag.guess"{{/if}}><i class="fa-solid fa-wand-magic"></i></a>
+            <a class="item-control"{{#unless row.key}} data-action="guess-id" data-tooltip="CoC7.CoCIDFlag.guess"{{/unless}}><i class="fa-solid fa-wand-magic fa-fw"></i></a>
         </div>
-      </div>
+      </li>
     {{/each}}
-  </section>
-</div>
+  </ul>
+</section>

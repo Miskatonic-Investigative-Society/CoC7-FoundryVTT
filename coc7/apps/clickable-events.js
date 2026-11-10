@@ -13,40 +13,7 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
    * Set up Clickable Events and Chaosium Canvas Interface
    */
   static initSelf () {
-    /* // FoundryVTT V12 */
-    if (game.release.generation === 12) {
-      class NoteDocumentPolyfill extends CONFIG.Note.documentClass {
-        /**
-         * Name field for FoundryVTT v12 Note
-         * @returns {string}
-         */
-        get name () {
-          return (this.text?.length ? this.text : this.label)
-        }
-      }
-      CONFIG.Note.documentClass = NoteDocumentPolyfill
-      class TileDocumentPolyfill extends CONFIG.Tile.documentClass {
-        /**
-         * Name field for FoundryVTT v12 Tile
-         * @returns {string}
-         */
-        get name () {
-          return this.collectionName + ': ' + this.id
-        }
-      }
-      CONFIG.Tile.documentClass = TileDocumentPolyfill
-      class DrawingDocumentPolyfill extends CONFIG.Drawing.documentClass {
-        /**
-         * Name field for FoundryVTT v12 Drawing
-         * @returns {string}
-         */
-        get name () {
-          return this.collectionName + ': ' + this.id
-        }
-      }
-      CONFIG.Drawing.documentClass = DrawingDocumentPolyfill
-    }
-
+    CoC7ClickableEvents.lastBehaviors = []
     const known = [
       ChaosiumCanvasInterfaceAmbientLightToggle,
       ChaosiumCanvasInterfaceDrawingToggle,
@@ -78,8 +45,7 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
 
     Object.assign(CONFIG.RegionBehavior.typeIcons, typeIcons)
 
-    /* // FoundryVTT V12 */
-    ;(foundry.applications.apps?.DocumentSheetConfig ?? DocumentSheetConfig).registerSheet(
+    foundry.applications.apps.DocumentSheetConfig.registerSheet(
       RegionBehavior,
       'CoC7',
       foundry.applications.sheets.RegionBehaviorConfig,
@@ -89,22 +55,17 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
       }
     )
 
-    /* // FoundryVTT V12 */
-    const polyfillTokenLayer = (foundry.canvas?.layers?.TokenLayer ?? TokenLayer)
-
-    const oldOnClickLeft = polyfillTokenLayer.prototype._onClickLeft
-    polyfillTokenLayer.prototype._onClickLeft = function (event) {
+    const oldOnClickLeft = foundry.canvas.layers.TokenLayer.prototype._onClickLeft
+    foundry.canvas.layers.TokenLayer.prototype._onClickLeft = function (event) {
       oldOnClickLeft.call(this, event)
-      if (canvas.activeLayer instanceof polyfillTokenLayer) {
+      if (canvas.activeLayer instanceof foundry.canvas.layers.TokenLayer) {
         const destination = canvas.activeLayer.toLocal(event)
         /* // FoundryVTT V13 */
         const level = canvas.level?.id
         for (const region of canvas.scene.regions.contents) {
           /* // FoundryVTT V13 */
           if (typeof level === 'undefined' || region.levels.size === 0 || region.levels.has(level)) {
-            /* // FoundryVTT V12 */
-            const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-            const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+            const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && region.object.document.polygonTree.testPoint(destination))
             if (behaviors) {
               behaviors.map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleLeftClickEvent === 'function') { await b.system._handleLeftClickEvent() } })
             }
@@ -113,19 +74,17 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
       }
     }
 
-    const oldOnClickRight = polyfillTokenLayer.prototype._onClickRight
-    polyfillTokenLayer.prototype._onClickRight = function (event) {
+    const oldOnClickRight = foundry.canvas.layers.TokenLayer.prototype._onClickRight
+    foundry.canvas.layers.TokenLayer.prototype._onClickRight = function (event) {
       oldOnClickRight.call(this, event)
-      if (canvas.activeLayer instanceof polyfillTokenLayer) {
+      if (canvas.activeLayer instanceof foundry.canvas.layers.TokenLayer) {
         const destination = canvas.activeLayer.toLocal(event)
         /* // FoundryVTT V13 */
         const level = canvas.level?.id
         for (const region of canvas.scene.regions.contents) {
           /* // FoundryVTT V13 */
           if (typeof level === 'undefined' || region.levels.size === 0 || region.levels.has(level)) {
-            /* // FoundryVTT V12 */
-            const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-            const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+            const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && region.object.document.polygonTree.testPoint(destination))
             if (behaviors) {
               behaviors.map(async (b) => { if (await b.system._handleMouseOverEvent() === true && typeof b.system._handleRightClickEvent === 'function') { await b.system._handleRightClickEvent() } })
             }
@@ -135,7 +94,7 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
     }
 
     document.body.addEventListener('mousemove', async function (event) {
-      if (canvas.activeLayer instanceof polyfillTokenLayer) {
+      if (canvas.activeLayer instanceof foundry.canvas.layers.TokenLayer) {
         const pointer = canvas?.app?.renderer?.events?.pointer
         if (!pointer) {
           return
@@ -144,15 +103,17 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
         const level = canvas.level?.id
         const destination = canvas.activeLayer.toLocal(event)
         let setPointer = false
+        const currentBehaviors = []
         for (const region of canvas.scene.regions.contents) {
           /* // FoundryVTT V13 */
           if (typeof level === 'undefined' || region.levels.size === 0 || region.levels.has(level)) {
-            /* // FoundryVTT V12 */
-            const polygonTree = region.object?.document.polygonTree ?? region.object.polygonTree
-            const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && polygonTree.testPoint(destination))
+            const behaviors = region.behaviors.filter(b => !b.disabled && (b.system instanceof CoC7ClickableEvents || b.system instanceof ChaosiumCanvasInterface) && region.object.document.polygonTree.testPoint(destination))
             if (behaviors) {
               setPointer = (await Promise.all(behaviors.map(async (doc) => {
                 const r = await doc.system._handleMouseOverEvent()
+                if (typeof doc.system._handleMouseOutEvent === 'function') {
+                  currentBehaviors.push(doc.uuid)
+                }
                 if (r === true) {
                   return true
                 }
@@ -169,6 +130,11 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
         } else {
           document.getElementById('board').style.cursor = ''
         }
+        const uuids = CoC7ClickableEvents.lastBehaviors.filter(uuid => !currentBehaviors.includes(uuid))
+        for (const uuid of uuids) {
+          fromUuid(uuid).then(doc => doc.system._handleMouseOutEvent())
+        }
+        CoC7ClickableEvents.lastBehaviors = currentBehaviors
       }
     })
   }
@@ -336,7 +302,7 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
    */
   static async MapPinToggle (toggle, { journalPageUuids = [], noteUuids = [], permissionFalse = CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE, permissionTrue = CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER } = {}) {
     game.socket.emit('system.CoC7', { type: 'toggleMapNotes', toggle: true })
-    game.settings.set('core', NotesLayer.TOGGLE_SETTING, true)
+    game.settings.set('core', foundry.canvas.layers.NotesLayer.TOGGLE_SETTING, true)
     for (const docUuid of journalPageUuids) {
       const doc = await fromUuid(docUuid)
       if (doc) {
@@ -375,12 +341,10 @@ export default class CoC7ClickableEvents extends foundry.data.regionBehaviors.Re
     if (doc?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)) {
       if (pageId) {
         if (doc.pages.get(pageId)?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)) {
-          /* // FoundryVTT V12 */
-          doc.sheet.render(true, { pageId, anchor })
+          doc.sheet.render({ force: true, pageId, anchor })
         }
       } else {
-        /* // FoundryVTT V12 */
-        doc.sheet.render(true)
+        doc.sheet.render({ force: true })
       }
     }
   }

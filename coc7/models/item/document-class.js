@@ -204,7 +204,7 @@ export default class CoC7ModelsItemDocumentClass extends Item {
       updates['system.adjustments.' + flagName] = null
     } else if (flagName === 'developement') {
       if (!(game.settings.get(FOLDER_ID, 'xpEnabled') || game.user.isGM)) {
-        ui.notifications.info(game.i18n.localize('CoC7.SkillXpGainDisabled'))
+        ui.notifications.info('CoC7.SkillXpGainDisabled', { localize: true })
         return
       }
     }
@@ -520,8 +520,7 @@ export default class CoC7ModelsItemDocumentClass extends Item {
       properties: []
     }
     if (typeof object.system.description.value !== 'undefined') {
-      /* // FoundryVTT V12 */
-      output.description.value = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      output.description.value = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
         object.system.description.value,
         {
           async: true,
@@ -530,8 +529,7 @@ export default class CoC7ModelsItemDocumentClass extends Item {
       )
     }
     if (typeof object.system.description.special !== 'undefined') {
-      /* // FoundryVTT V12 */
-      output.description.special = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      output.description.special = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
         object.system.description.special,
         {
           async: true,

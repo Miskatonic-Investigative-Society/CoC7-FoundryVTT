@@ -1,9 +1,14 @@
-.application.coc7.dialog.item.chase {
+.application.coc7-chase-participant {
+  section.standard-form {
+    section.standard-form {
+      row-gap: @rem4px;
+    }
+  }
+}
+.application.coc7-chase {
   section.window-content {
-    overflow: clip;
-
     nav.tabs {
-      margin: @4px 0 0;
+      margin: @rem4px -@rem16px;
     }
 
     .item-header {
@@ -12,29 +17,29 @@
       align-items: center;
 
       .item-property {
-        gap: @4px;
+        gap: @rem4px;
       }
 
       .sheet-portrait {
         flex: 0 0 6rem;
-        gap: @4px;
+        gap: @rem4px;
         margin: 0 auto;
 
         .profile-img {
-          flex: 0 0 @92px;
-          height: @92px;
-          margin: 0 @2px;
+          flex: 0 0 @rem92px;
+          height: @rem92px;
+          margin: 0 @rem2px;
         }
       }
 
       .chase-location {
-        gap: @4px;
+        gap: @rem4px;
         max-width: 34rem;
         margin: 0 auto;
 
         .active-location {
           .form-group {
-            gap: @4px;
+            gap: @rem4px;
           }
 
           .pin-location {
@@ -56,15 +61,15 @@
           }
 
           .details {
-            gap: @4px;
+            gap: @rem4px;
 
             .obstacle {
-              gap: @4px;
+              gap: @rem4px;
               align-self: flex-start;
 
               .chase-control {
                 flex: 0 0 auto;
-                font-size: 1rem;
+                font-size: var(--font-size-16);
               }
 
               .toggle-switch {
@@ -72,11 +77,9 @@
               }
 
               .obstacle-toggles {
-                gap: @4px;
-
                 .toggle-icon {
                   flex: 0 0 auto;
-                  font-size: @19px;
+                  font-size: var(--font-size-19);
 
                   &.switched-on {
                     color: red;
@@ -92,30 +95,25 @@
       .item-control,
       .item-control-disabled {
         flex: 0 0 auto;
-        font-size: 1rem;
-      }
-
-      .item-control-disabled {
-        opacity: 0.2;
-        pointer-events: none;
+        font-size: var(--font-size-16);
       }
     }
 
     .participants-list {
-      gap: @2px;
+      gap: @rem2px;
 
       .participant {
         gap: 0.5rem;
         line-height: 2rem;
         border: 1px solid #000;
-        padding: @4px;
+        padding: @rem4px;
 
         .p-icon,
         .p-control,
         .p-adjust,
         .food-chain {
           flex: 0 0 auto;
-          font-size: 1.5rem;
+          font-size: var(--font-size-24);
           width: 1.5rem;
           text-align: center;
         }
@@ -157,17 +155,17 @@
 
         .right-text {
           text-align: right;
-          flex: 0 0 @32px;
+          flex: 0 0 @rem32px;
         }
 
         select.name {
           text-overflow: ellipsis;
-          width: @80px;
+          width: @rem80px;
           flex: 0.8;
         }
 
         .p-modified-mov {
-          font-size: 2rem;
+          font-size: var(--font-size-30);
           text-align: center;
           flex: 0 0 2rem;
 
@@ -182,10 +180,10 @@
 
         .inline-roll-request,
         .inline-roll-data {
-          flex: 0 0 @40px;
+          flex: 0 0 @rem40px;
           text-align: center;
           padding: 0;
-          line-height: @22px;
+          line-height: @rem22px;
         }
       }
     }
@@ -203,7 +201,7 @@
         justify-content: center;
         border: 0.25rem groove;
         border-radius: 0.5rem;
-        font-size: 1.5rem;
+        font-size: var(--font-size-24);
 
         &:hover {
           cursor: pointer;
@@ -238,12 +236,12 @@
     }
 
     .initiative-track {
-      gap: @8px;
+      gap: @rem8px;
 
       .initiative-block {
-        border: @2px solid transparent;
-        border-radius: @8px;
-        padding: @8px;
+        border: @rem2px solid transparent;
+        border-radius: @rem8px;
+        padding: @rem8px;
         flex: 0 0 12.25rem;
 
         &.active {
@@ -276,11 +274,11 @@
         .participant {
           align-items: flex-start;
           display: grid;
-          grid-template-columns: @64px 1fr;
+          grid-template-columns: @rem64px 1fr;
           gap: 0.5rem;
 
           .portrait {
-            flex: 0 0 @64px;
+            flex: 0 0 @rem64px;
           }
 
           .infos {
@@ -291,7 +289,7 @@
               align-items: center;
               justify-content: center;
               text-align: center;
-              gap: @4px;
+              gap: @rem4px;
 
               input {
                 flex: 0 0 2rem;
@@ -321,7 +319,7 @@
         }
 
         .participant-controls {
-          gap: @4px;
+          gap: @rem4px;
 
           .assist-dropdown {
             flex: 0 0 auto;
@@ -345,7 +343,7 @@
 
           .separator {
             height: 1rem;
-            border-right: @2px groove #fff;
+            border-right: @rem2px groove #fff;
             flex: 0;
           }
         }
@@ -370,7 +368,7 @@
         }
 
         .spacer {
-          flex: 0 0 @25px;
+          flex: 0 0 @rem25px;
         }
 
         .people {
@@ -418,7 +416,7 @@
           width: 100%;
           align-items: center;
           color: red;
-          font-size: 1.5rem;
+          font-size: var(--font-size-24);
           height: 2rem;
         }
 
@@ -427,7 +425,7 @@
           flex-direction: row;
           flex: 1;
           color: var(--main-sheet-front-color);
-          font-size: 0.8rem;
+          font-size: var(--font-size-12);
           font-weight: 700;
           min-width: 2rem;
           justify-content: flex-start;
@@ -441,7 +439,7 @@
           .line {
             background: #000;
             display: block;
-            height: @2px;
+            height: @rem2px;
             min-width: 1rem;
             position: relative;
             top: 1rem;
@@ -449,14 +447,14 @@
           }
 
           .name-container {
-            border: @2px solid var(--button-background-color);
+            border: @rem2px solid var(--button-background-color);
             border-radius: 1rem;
             color: var(--button-text-color);
             flex: 0 0 auto;
-            font-size: 1rem;
+            font-size: var(--font-size-15);
             height: 2rem;
             line-height: 1.75rem;
-            padding: 0 @4px;
+            padding: 0 @rem4px;
             white-space: nowrap;
 
             &:hover {
@@ -487,7 +485,7 @@
     }
 
     .buttons {
-      gap: @8px;
+      gap: @rem8px;
 
       button {
         flex: 0 0 auto;

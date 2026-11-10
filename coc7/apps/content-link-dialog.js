@@ -17,7 +17,7 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
   static DEFAULT_OPTIONS = {
     id: 'link-creation',
     tag: 'form',
-    classes: ['coc7', 'dialog', 'item', 'active-effect-config'],
+    classes: ['coc7-sheet', 'active-effect-config'],
     window: {
       contentClasses: [
         'standard-form'
@@ -56,80 +56,91 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
 
     switch (partId) {
       case 'form':
+        context.generation = game.release.generation
         context.checkType = [
           {
-            key: CoC7Link.CHECK_TYPE.CHECK,
+            value: CoC7Link.CHECK_TYPE.CHECK,
             label: game.i18n.localize('CoC7.Check')
           },
           {
-            key: CoC7Link.CHECK_TYPE.SANLOSS,
+            value: CoC7Link.CHECK_TYPE.SANLOSS,
             label: game.i18n.localize('CoC7.SanityCheck')
           },
           {
-            key: CoC7Link.CHECK_TYPE.ITEM,
+            value: CoC7Link.CHECK_TYPE.ITEM,
             label: game.i18n.localize('CoC7.ItemWeapon')
-          },
-          {
-            key: CoC7Link.CHECK_TYPE.EFFECT,
-            label: game.i18n.localize('DOCUMENT.ActiveEffects')
           }
         ]
         context.checkTypes = CoC7Link.CHECK_TYPE
         context.linkType = [
           {
-            key: CoC7Link.LINK_TYPE.CHARACTERISTIC,
+            value: CoC7Link.LINK_TYPE.CHARACTERISTIC,
             label: game.i18n.localize('CoC7.Characteristic')
           },
           {
-            key: CoC7Link.LINK_TYPE.ATTRIBUTE,
+            value: CoC7Link.LINK_TYPE.ATTRIBUTE,
             label: game.i18n.localize('CoC7.Attribute')
           },
           {
-            key: CoC7Link.LINK_TYPE.SKILL,
+            value: CoC7Link.LINK_TYPE.SKILL,
             label: game.i18n.localize('CoC7.Skill')
           }
         ]
         context.linkTypes = CoC7Link.LINK_TYPE
         context.attributeType = []
-        for (const [key, field] of CONFIG.Actor.dataModels.character.schema.getField('attribs').entries()) {
-          if (['lck', 'san'].includes(key)) {
+        for (const [value, field] of CONFIG.Actor.dataModels.character.schema.getField('attribs').entries()) {
+          if (['lck', 'san'].includes(value)) {
             context.attributeType.push({
-              key,
+              value,
               label: game.i18n.localize(field.hint)
             })
           }
         }
         context.characteristicType = []
-        for (const [key, field] of CONFIG.Actor.dataModels.character.schema.getField('characteristics').entries()) {
+        for (const [value, field] of CONFIG.Actor.dataModels.character.schema.getField('characteristics').entries()) {
           context.characteristicType.push({
-            key,
+            value,
             label: game.i18n.localize(field.hint)
           })
         }
-        context.modes = Object.entries(CONST.ACTIVE_EFFECT_MODES).reduce((modes, [key, value]) => {
-          modes[value] = game.i18n.localize('EFFECT.MODE_' + key)
-          return modes
-        }, {})
+        /* // FoundryVTT V13 */
+        if (game.release.generation === 13) {
+          context.modes = Object.entries(CONST.ACTIVE_EFFECT_MODES).reduce((modes, [key, value]) => {
+            modes[value] = game.i18n.localize('EFFECT.MODE_' + key)
+            return modes
+          }, {})
+        }
+        /* // FoundryVTT V13 */
+        if (game.release.generation === 13 || typeof this.coc7Config.linkData.object?.name !== 'undefined') {
+          context.checkType.push({
+            value: CoC7Link.CHECK_TYPE.EFFECT,
+            label: game.i18n.localize('DOCUMENT.ActiveEffects')
+          })
+        }
+        if (game.release.generation > 13 || typeof this.coc7Config.linkData.object?.name !== 'undefined') {
+          // Migrating old Active Effect links to Compendium
+          context.packs = game.packs.contents.filter(doc => doc.metadata.type === 'ActiveEffect' && doc.locked === false).map(doc => { return { value: doc.metadata.id, label: doc.metadata.label + ' (' + doc.metadata.packageType + ')' } })
+        }
         context.link = this.coc7Config.linkData
         context.rollDifficulties = [
           {
-            key: CoC7DicePool.difficultyLevel.unknown,
+            value: CoC7DicePool.difficultyLevel.unknown,
             label: 'CoC7.RollDifficultyUnknownName'
           },
           {
-            key: CoC7DicePool.difficultyLevel.regular,
+            value: CoC7DicePool.difficultyLevel.regular,
             label: 'CoC7.RollDifficultyRegular'
           },
           {
-            key: CoC7DicePool.difficultyLevel.hard,
+            value: CoC7DicePool.difficultyLevel.hard,
             label: 'CoC7.RollDifficultyHard'
           },
           {
-            key: CoC7DicePool.difficultyLevel.extreme,
+            value: CoC7DicePool.difficultyLevel.extreme,
             label: 'CoC7.RollDifficultyExtreme'
           },
           {
-            key: CoC7DicePool.difficultyLevel.critical,
+            value: CoC7DicePool.difficultyLevel.critical,
             label: 'CoC7.RollDifficultyCritical'
           }
         ]
@@ -140,79 +151,62 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
             group: 'primary',
             cssClass: (this.tabGroups.primary === 'details' ? 'active' : ''),
             icon: 'fa-solid fa-book',
-            /* // FoundryVTT V12 */
-            label: (game.release.generation === 12 ? 'EFFECT.TabDetails' : 'EFFECT.TABS.details')
+            label: 'EFFECT.TABS.details'
           },
           {
             id: 'duration',
             group: 'primary',
             cssClass: (this.tabGroups.primary === 'duration' ? 'active' : ''),
             icon: 'fa-solid fa-clock',
-            /* // FoundryVTT V12 */
-            label: (game.release.generation === 12 ? 'EFFECT.TabDuration' : 'EFFECT.TABS.duration')
+            label: 'EFFECT.TABS.duration'
           },
           {
             id: 'effects',
             group: 'primary',
             cssClass: (this.tabGroups.primary === 'effects' ? 'active' : ''),
             icon: 'fa-solid fa-cogs',
-            /* // FoundryVTT V12 */
-            label: (game.release.generation === 12 ? 'EFFECT.TabEffects' : 'EFFECT.TABS.changes')
+            label: 'EFFECT.TABS.changes'
           }
         ]
         context.rootId = 'new-effect'
         context.statuses = CONFIG.statusEffects.map(s => ({ value: s.id, label: game.i18n.localize(s.name) }))
         context.actorNames = this.coc7Config.actors.map(a => a.name).join(', ')
-        context.priorities = (foundry.applications.sheets.ActiveEffectConfig ?? ActiveEffectConfig).DEFAULT_PRIORITIES
+        context.priorities = foundry.applications.sheets.ActiveEffectConfig.DEFAULT_PRIORITIES
         context.fields = CONFIG.ActiveEffect.documentClass.schema.fields
-        if (game.release.generation === 12) {
-          context.fields.tint.label = game.i18n.localize(context.fields.tint.label)
-          context.fields.description.label = game.i18n.localize(context.fields.description.label)
-          context.fields.disabled.label = game.i18n.localize('EFFECT.Disabled')
-          context.fields.statuses.label = 'Status Conditions'
-          context.fields.duration.fields.seconds.label = game.i18n.localize(context.fields.duration.fields.seconds.label)
-          context.fields.duration.fields.startTime.label = game.i18n.localize(context.fields.duration.fields.startTime.label)
-          context.fields.duration.fields.rounds.label = game.i18n.localize('COMBAT.Rounds')
-          context.fields.duration.fields.turns.label = game.i18n.localize('COMBAT.Turns')
-          context.fields.duration.fields.startRound.label = game.i18n.localize('COMBAT.Round')
-          context.fields.duration.fields.startTurn.label = game.i18n.localize('COMBAT.Turn')
-        }
-        /* // FoundryVTT V12 */
-        context.noPriority = (game.release.generation === 12)
         context.modifiers = [
           {
-            id: 'difficulty',
+            value: 'difficulty',
             isEnabled: this.coc7Config.other.difficulty,
-            name: 'CoC7.RollDifficulty'
+            label: 'CoC7.RollDifficulty'
           },
           {
-            id: 'poolModifier',
+            value: 'poolModifier',
             isEnabled: this.coc7Config.other.poolModifier,
-            name: 'CoC7.BonusDice'
+            label: 'CoC7.BonusDice'
           },
           {
-            id: 'blind',
+            value: 'blind',
             isEnabled: this.coc7Config.linkData.blind,
-            name: 'CoC7.Blind'
+            label: 'CoC7.Blind'
           },
           {
-            id: 'pushing',
+            value: 'pushing',
             isEnabled: this.coc7Config.linkData.pushing,
-            name: 'CoC7.Pushing'
+            label: 'CoC7.Pushing'
           },
           {
-            id: 'label',
+            value: 'label',
             isEnabled: this.coc7Config.other.label,
-            name: 'CoC7.Label'
+            label: 'CoC7.Label'
           },
           {
-            id: 'icon',
+            value: 'icon',
             isEnabled: this.coc7Config.other.icon,
-            name: 'CoC7.Icon'
+            label: 'CoC7.Icon'
           }
         ]
         if (this.coc7Config.linkData.check !== CoC7Link.CHECK_TYPE.CHECK) {
-          const index = context.modifiers.findIndex(m => m.id === 'pushing')
+          const index = context.modifiers.findIndex(m => m.value === 'pushing')
           if (index > -1) {
             context.modifiers.splice(index, 1)
           }
@@ -226,22 +220,6 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
 
   /**
    * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
-  }
-
-  /**
-   * @inheritdoc
    * @param {ApplicationRenderContext} context
    * @param {RenderOptions} options
    * @returns {Promise<void>}
@@ -250,7 +228,10 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
     await super._onRender(context, options)
 
     this.element.querySelectorAll('select').forEach((element) => element.addEventListener('change', async (event) => {
-      event.currentTarget.closest('form').dispatchEvent(new SubmitEvent('submit'))
+      this.form.dispatchEvent(new Event('submit', { cancelable: true }))
+    }))
+    this.element.querySelectorAll('input[type=radio]').forEach((element) => element.addEventListener('change', async (event) => {
+      this.form.dispatchEvent(new Event('submit', { cancelable: true }))
     }))
     this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', (event) => {
       const propertyId = event.target.dataset.property
@@ -268,12 +249,11 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
       if (propertyId === 'difficulty' && this.coc7Config.other[propertyId] && typeof this.coc7Config.linkData.difficulty === 'undefined') {
         this.coc7Config.linkData.difficulty = CoC7DicePool.difficultyLevel[game.settings.get(FOLDER_ID, 'defaultCheckDifficulty')]
       }
-      event.currentTarget.closest('form').dispatchEvent(new SubmitEvent('submit'))
+      this.form.dispatchEvent(new Event('submit', { cancelable: true }))
       this.render({ force: true })
     }))
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       permissions: {
         drop: true
       },
@@ -287,13 +267,11 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
    * Add Active Effect Change
    */
   static async #onAddChange () {
-    /* // FoundryVTT V12 */
-    ;(this.form ?? this.element).dispatchEvent(new SubmitEvent('submit'))
-    /* // FoundryVTT V12 */
-    const submitData = new (foundry.applications?.ux?.FormDataExtended ?? FormDataExtended)(this.form ?? this.element)
+    this.form.dispatchEvent(new Event('submit', { cancelable: true }))
+    const submitData = new foundry.applications.ux.FormDataExtended(this.form)
     const formData = foundry.utils.expandObject(submitData.object)
     const changes = Object.values(formData.changes ?? {})
-    changes.push({})
+    changes.push({ mode: CONST.ACTIVE_EFFECT_MODES.ADD, priority: foundry.applications.sheets.ActiveEffectConfig.DEFAULT_PRIORITIES[CONST.ACTIVE_EFFECT_MODES.ADD] })
     this.coc7Config.linkData.object.changes = changes
     this.render({ force: true })
   }
@@ -303,10 +281,8 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
    * @param {ClickEvent} event
    */
   static async #onDeleteChange (event) {
-    /* // FoundryVTT V12 */
-    ;(this.form ?? this.element).dispatchEvent(new SubmitEvent('submit'))
-    /* // FoundryVTT V12 */
-    const submitData = new (foundry.applications?.ux?.FormDataExtended ?? FormDataExtended)(this.form ?? this.element)
+    this.form.dispatchEvent(new Event('submit', { cancelable: true }))
+    const submitData = new foundry.applications.ux.FormDataExtended(this.form)
     const formData = foundry.utils.expandObject(submitData.object)
     const changes = Object.values(formData.changes)
     const row = event.target.closest('li')
@@ -330,6 +306,8 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
       } else if (['attributeName', 'characteristicName', 'itemName', 'skillName'].includes(key)) {
         this.coc7Config.other[key] = value
         this.coc7Config.linkData.name = value
+      } else if (['compendium', 'packId', 'packName'].includes(key)) {
+        this.coc7Config.other[key] = value
       } else if (['description', 'disabled', 'statuses', 'tint'].includes(key)) {
         this.coc7Config.linkData.object[key] = value
       } else if (['duration.rounds', 'duration.seconds', 'duration.startRound', 'duration.startTime', 'duration.startTurn', 'duration.turns'].includes(key)) {
@@ -345,8 +323,7 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
       switch (event.submitter?.dataset?.action) {
         case 'clipboard':
           await game.clipboard.copyPlainText(link._createDocumentLink(null))
-          /* // FoundryVTT V12 */
-          ui.notifications.info(game.i18n.format('CoC7.WhatCopiedClipboard', { what: game.i18n.localize('CoC7.CreateLink') }), { console: false })
+          ui.notifications.info('CoC7.WhatCopiedClipboard', { format: { what: game.i18n.localize('CoC7.CreateLink') }, console: false })
           break
         case 'chat':
           link.toChatMessage()
@@ -361,6 +338,23 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
           }
           link.toWhisperMessage(canvas.tokens.controlled.filter(t => t.actor.owners.length).map(t => t.actor))
           break
+      }
+    }
+    if (event.type === 'submit' && event.submitter?.dataset?.action === 'active-effect') {
+      let pack
+      if (this.coc7Config.other.compendium === 'create' && this.coc7Config.other.packName.length) {
+        pack = await foundry.documents.collections.CompendiumCollection.createCompendium({ label: this.coc7Config.other.packName, type: 'ActiveEffect' })
+        pack.render({ force: true })
+      } else if (this.coc7Config.other.compendium === 'existing') {
+        pack = game.packs.get(this.coc7Config.other.packId)
+      }
+      if (pack) {
+        const activeEffect = await ActiveEffect.create(this.coc7Config.linkData.object, { pack: pack.metadata.id })
+        if (activeEffect) {
+          this.close()
+          activeEffect.sheet.render({ force: true })
+          return
+        }
       }
     }
     this.render({ force: true })
@@ -493,7 +487,10 @@ export default class CoC7ContentLinkDialog extends foundry.applications.api.Hand
         difficulty: false,
         poolModifier: false,
         label: false,
-        icon: false
+        icon: false,
+        compendium: 'create',
+        packId: '',
+        packName: ''
       }
     }
     switch (linkData.check ?? '') {

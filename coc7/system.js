@@ -13,6 +13,8 @@ import CoC7DrawNote from './hooks/draw-note.js'
 import CoC7DropActorSheetData from './hooks/drop-actor-sheet-data.js'
 import CoC7DropCanvasData from './hooks/drop-canvas-data.js'
 import CoC7GetChatMessageContextOptions from './hooks/get-chat-message-context-options.js'
+import CoC7GetProseMirrorMenuDropDowns from './hooks/get-prose-mirror-menu-drop-downs.js'
+import CoC7GetProseMirrorMenuItems from './hooks/get-prose-mirror-menu-items.js'
 import CoC7GetSceneControlButtons from './hooks/get-scene-control-buttons.js'
 import CoC7HotbarDrop from './hooks/hotbar-drop.js'
 import CoC7Init from './hooks/init.js'
@@ -22,6 +24,7 @@ import CoC7PreCreateChatMessage from './hooks/pre-create-chat-message.js'
 import CoC7PreUpdateChatMessage from './hooks/pre-update-chat-message.js'
 import CoC7PreUpdateItem from './hooks/pre-update-item.js'
 import CoC7Ready from './hooks/ready.js'
+import CoC7RenderApplicationV2 from './hooks/render-application-v2.js'
 import CoC7RenderActorDirectory from './hooks/render-actor-directory.js'
 import CoC7RenderActorSheetV2 from './hooks/render-actor-sheet-v2.js'
 import CoC7RenderChatMessageHTML from './hooks/render-chat-message-html.js'
@@ -31,6 +34,7 @@ import CoC7RenderDialogV2 from './hooks/render-dialog-v2.js'
 import CoC7RenderDocumentSheetConfig from './hooks/render-document-sheet-config.js'
 import CoC7RenderGamePause from './hooks/render-game-pause.js'
 import CoC7RenderItemSheetV2 from './hooks/render-item-sheet-v2.js'
+import CoC7RenderJournalEntryPageProseMirrorSheet from './hooks/render-journal-entry-page-prose-mirror-sheet.js'
 import CoC7RenderJournalEntryPageTextSheet from './hooks/render-journal-entry-page-text-sheet.js'
 import CoC7RenderJournalEntrySheet from './hooks/render-journal-entry-sheet.js'
 import CoC7RenderMacroConfig from './hooks/render-macro-config.js'
@@ -62,6 +66,8 @@ Hooks.on('drawNote', CoC7DrawNote)
 Hooks.on('dropActorSheetData', CoC7DropActorSheetData)
 Hooks.on('dropCanvasData', CoC7DropCanvasData)
 Hooks.on('getChatMessageContextOptions', CoC7GetChatMessageContextOptions)
+Hooks.on('getProseMirrorMenuDropDowns', CoC7GetProseMirrorMenuDropDowns)
+Hooks.on('getProseMirrorMenuItems', CoC7GetProseMirrorMenuItems)
 Hooks.on('getSceneControlButtons', CoC7GetSceneControlButtons)
 Hooks.on('hotbarDrop', CoC7HotbarDrop)
 Hooks.on('modifyTokenAttribute', CoC7ModifyTokenAttribute)
@@ -70,6 +76,7 @@ Hooks.on('preUpdateChatMessage', CoC7PreUpdateChatMessage)
 Hooks.on('preUpdateItem', CoC7PreUpdateItem)
 Hooks.on('renderActorDirectory', CoC7RenderActorDirectory)
 Hooks.on('renderActorSheetV2', CoC7RenderActorSheetV2)
+Hooks.on('renderApplicationV2', CoC7RenderApplicationV2)
 Hooks.on('renderChatMessageHTML', CoC7RenderChatMessageHTML)
 Hooks.on('renderCoC7ModelsActorCharacterSheetV2', CoC7RenderCoC7ModelsActorCharacterSheetV2)
 Hooks.on('renderCombatTracker', CoC7RenderCombatTracker)
@@ -77,6 +84,7 @@ Hooks.on('renderDialogV2', CoC7RenderDialogV2)
 Hooks.on('renderDocumentSheetConfig', CoC7RenderDocumentSheetConfig)
 Hooks.on('renderGamePause', CoC7RenderGamePause)
 Hooks.on('renderItemSheetV2', CoC7RenderItemSheetV2)
+Hooks.on('renderJournalEntryPageProseMirrorSheet', CoC7RenderJournalEntryPageProseMirrorSheet)
 Hooks.on('renderJournalEntryPageTextSheet', CoC7RenderJournalEntryPageTextSheet)
 Hooks.on('renderJournalEntrySheet', CoC7RenderJournalEntrySheet)
 Hooks.on('renderMacroConfig', CoC7RenderMacroConfig)

@@ -1,5 +1,4 @@
-/* // FoundryVTT V12 */
-export default class CoC7Tour extends (foundry.nue?.Tour ?? Tour) {
+export default class CoC7Tour extends foundry.nue.Tour {
   /**
    * Wait for Html element to appear on body
    * @param {string} selector
@@ -73,12 +72,7 @@ export default class CoC7Tour extends (foundry.nue?.Tour ?? Tour) {
     await new Promise(resolve => setTimeout(resolve, 50))
 
     if (typeof this.currentStep.sidebarTab !== 'undefined') {
-      /* // FoundryVTT V12 */
-      if (game.release.generation === 12) {
-        ui.sidebar.activateTab(this.currentStep.sidebarTab)
-      } else {
-        ui.sidebar.changeTab(this.currentStep.sidebarTab, 'primary')
-      }
+      ui.sidebar.changeTab(this.currentStep.sidebarTab, 'primary')
     }
   }
 

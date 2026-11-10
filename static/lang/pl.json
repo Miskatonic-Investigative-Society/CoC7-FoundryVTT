@@ -1423,16 +1423,6 @@
 
   "CoC7.AlternativeNames": "Nazwy opcjonalne",
 
-  "TOKEN.MOVEMENT.ACTIONS.walk.label": "Chód",
-  "TOKEN.MOVEMENT.ACTIONS.fly.label": "Lot",
-  "TOKEN.MOVEMENT.ACTIONS.swim.label": "Pływanie",
-  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "Rycie",
-  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "Czołganie się",
-  "TOKEN.MOVEMENT.ACTIONS.climb.label": "Wspinaczka",
-  "TOKEN.MOVEMENT.ACTIONS.jump.label": "Skok",
-  "TOKEN.MOVEMENT.ACTIONS.blink.label": "Teleport (w przestrzeni)",
-  "TOKEN.MOVEMENT.ACTIONS.displace.label": "Teleport (przez wymiary)",
-
   "TYPES.RegionBehavior.ChaosiumCanvasInterfaceDrawingToggle": "CCI: Pokaż/ukryj rysunek",
   "TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle": "CCI: Włącz/wyłącz światło",
   "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: Pokaż/ukryj pinezkę na mapie",

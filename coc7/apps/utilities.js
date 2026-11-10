@@ -208,7 +208,7 @@ export default class CoC7Utilities {
     new foundry.applications.api.DialogV2({
       id: 'CoC7RestTargets',
       window: { title: 'CoC7.dreaming' },
-      classes: ['coc7', 'dialog'],
+      classes: ['coc7-sheet'],
       content: contents.join('\n'),
       buttons: [{
         action: 'start',
@@ -369,17 +369,19 @@ export default class CoC7Utilities {
     }
 
     const normalized = await CoC7RollNormalize.trigger(config)
-    normalized.runRoll = true
-    normalized.isShiftKey = true
-    normalized.event = event
+    if (normalized) {
+      normalized.runRoll = true
+      normalized.isShiftKey = true
+      normalized.event = event
 
-    for (const actor of actors) {
-      normalized.actor = actor
-      await CoC7RollNormalize.trigger(normalized)
-    }
+      for (const actor of actors) {
+        normalized.actor = actor
+        await CoC7RollNormalize.trigger(normalized)
+      }
 
-    if (actors.length === 0) {
-      await CoC7RollNormalize.trigger(normalized)
+      if (actors.length === 0) {
+        await CoC7RollNormalize.trigger(normalized)
+      }
     }
   }
 
@@ -418,6 +420,10 @@ export default class CoC7Utilities {
         const folder = await fromUuid(dataList.uuid)
         if (!folder) return []
         return folder.contents.filter(doc => doc.documentName === entityType)
+      } else if (dataList.type === 'Compendium') {
+        const compendium = await game.packs.get(dataList.collection)?.getDocuments()
+        if (!compendium) return []
+        return compendium.filter(doc => doc.documentName === entityType)
       } else if (dataList.type === entityType) {
         const item = await fromUuid(dataList.uuid)
         if (!item) return []
@@ -465,35 +471,6 @@ export default class CoC7Utilities {
   }
 
   /**
-   * Delete Embedded Document from an Item
-   * @param {Document|object} document
-   * @param {string} documentId
-   * @returns {Promise<undefined|Document>}
-   */
-  static async deleteEmbeddedItem (document, documentId) {
-    const updates = {}
-    const itemDocuments = foundry.utils.duplicate(document.system.itemDocuments)
-    const offset = itemDocuments.findIndex(d => d._id === documentId)
-    if (offset === -1) {
-      const item = (await document.system.items()).find(d => d._id === documentId)
-      if (!item) {
-        throw new Error('Unable to find embedded document')
-      }
-      const id = item.flags.CoC7.cocidFlag.id
-      const offset = document.system.itemKeys.findIndex(k => k === id)
-      if (offset === -1) {
-        throw new Error('Unable to find embedded document')
-      }
-      updates['system.itemKeys'] = foundry.utils.duplicate(document.system.itemKeys)
-      updates['system.itemKeys'].splice(offset, 1)
-    } else {
-      updates['system.itemDocuments'] = itemDocuments
-      updates['system.itemDocuments'].splice(offset, 1)
-    }
-    return document.update(updates)
-  }
-
-  /**
    * Edit Embedded Document from an Item
    * @param {Document|object} document
    * @param {string} documentId
@@ -523,20 +500,6 @@ export default class CoC7Utilities {
       updates['system.itemDocuments'][offset] = foundry.utils.mergeObject(updates['system.itemDocuments'][offset], submitData)
     }
     return document.update(updates)
-  }
-
-  /**
-   * Open Embedded Document from an Item
-   * @param {Document|object} document
-   * @param {string} documentId
-   */
-  static async openEmbeddedItem (document, documentId) {
-    const itemData = (await document.system.items()).find(d => d._id === documentId)
-    if (itemData) {
-      const Cls = CONFIG.Item.documentClass
-      const item = new Cls(itemData, { parent: document })
-      item.sheet.render({ force: true })
-    }
   }
 
   /**
@@ -688,6 +651,24 @@ export default class CoC7Utilities {
       ui.notifications.info('CoC7.CreatedImportedCharactersFolder', { localize: true })
     }
     return importedCharactersFolder
+  }
+
+  /**
+   * Create the directory if it doesn't exist and save a base64 encoded image into it
+   * @param {string} filePath
+   * @param {string} fileName
+   * @param {string} base64
+   * @returns {boolean}
+   */
+  static async saveBase64 (filePath, fileName, base64) {
+    const parsed = (new foundry.applications.apps.FilePicker())._inferSourceAndTarget(filePath)
+    foundry.applications.apps.FilePicker.implementation.createDirectory(parsed[0], parsed[1]).catch((e) => {
+      if (!e.message.startsWith('EEXIST')) {
+        ui.notifications.error('CoC7.ActorImporterUploadError', { localize: true })
+        return false
+      }
+    })
+    return foundry.helpers.media.ImageHelper.uploadBase64(base64, fileName, parsed[1], { storage: parsed[0] })
   }
 
   /**
@@ -873,22 +854,21 @@ export default class CoC7Utilities {
    * Add Item summary to HTML Element
    * @param {HtmlElement} div
    * @param {object|Document} item
-   * @param {null|Document} actor
    */
-  static async setItemSummaryHtml (div, item, actor = null) {
+  static async setItemSummaryHtml (div, item) {
     const chatData = await CONFIG.Item.documentClass.getChatData(item)
     if (chatData.labels.length) {
       const labels = document.createElement('div')
       labels.classList.add('item-labels', 'flexrow')
-      for (const label of chatData.labels) {
+      for (const option of chatData.labels) {
         const element = document.createElement('div')
         element.classList.add('item-label', 'flexrow')
         const labelElement = document.createElement('label')
-        const labelText = document.createTextNode(label.name + ':')
+        const labelText = document.createTextNode(option.label + ':')
         labelElement.appendChild(labelText)
         element.appendChild(labelElement)
         const valueElement = document.createElement('div')
-        const valueText = document.createTextNode(label.value)
+        const valueText = document.createTextNode(option.value)
         valueElement.appendChild(valueText)
         element.appendChild(valueElement)
         labels.appendChild(element)
@@ -897,24 +877,20 @@ export default class CoC7Utilities {
     }
     if (chatData.description.value.length) {
       const element = document.createElement('div')
-      element.classList.add('coc7-formatted-text')
       element.innerHTML = chatData.description.value
       div.appendChild(element)
     }
     if (chatData.description.special.length) {
       const element = document.createElement('div')
-      element.classList.add('coc7-formatted-text')
       element.innerHTML = chatData.description.special
       div.appendChild(element)
     }
     if (chatData.properties.length) {
       const properties = document.createElement('div')
-      properties.classList.add('properties-list', 'item-details', 'flexrow')
+      properties.classList.add('properties-list', 'item-details')
       for (const property of chatData.properties) {
         const element = document.createElement('div')
         element.classList.add('property')
-        element.style.flex = 'none'
-        element.style.padding = '0.125rem'
         const elementText = document.createTextNode(property)
         element.appendChild(elementText)
         properties.appendChild(element)
@@ -964,8 +940,7 @@ export default class CoC7Utilities {
       }
       const nowRemaining = Object.keys(derived).length
       if (nowRemaining === remaining) {
-        /* // FoundryVTT V12 */
-        throw new Error(game.i18n.format((foundry.utils.isNewerVersion(game.version, 13) ? 'DICE.ErrorNotParsable' : 'DICE.ErrorNonNumeric'), { formula: Object.values(derived).join(' / ') }))
+        throw new Error(game.i18n.format('DICE.ErrorNotParsable', { formula: Object.values(derived).join(' / ') }))
       }
       if (Object.keys(updates).length) {
         await actor.update(updates, { render: false })
@@ -1045,7 +1020,7 @@ export default class CoC7Utilities {
   }
 
   /**
-   * Sort by normalized label fields
+   * Sort by normalized label field
    * @param {object} a
    * @param {object} b
    * @returns {int}
@@ -1053,7 +1028,8 @@ export default class CoC7Utilities {
   static sortByLabelKey (a, b) {
     return a.label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
       .localeCompare(
-        b.label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+        b.label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+        game.i18n.lang
       )
   }
 
@@ -1068,7 +1044,8 @@ export default class CoC7Utilities {
     const nameB = (b.system.properties.special === true ? b.system.specialization + (b.system.properties.own === true ? 'Z' : 'A') + ' (' + b.system.skillName + ')' : b.name)
     return nameA.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
       .localeCompare(
-        nameB.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+        nameB.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+        game.i18n.lang
       )
   }
 
@@ -1084,16 +1061,17 @@ export default class CoC7Utilities {
   }
 
   /**
-   * Sort by sort, then normalized name fields
+   * Sort by sort, then normalized label fields
    * @param {object} a
    * @param {object} b
    * @returns {int}
    */
-  static sortBySortThenNameKey (a, b) {
+  static sortBySortThenLabelKey (a, b) {
     if (b.sort === a.sort) {
-      return a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+      return a.label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
         .localeCompare(
-          b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+          b.label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+          game.i18n.lang
         )
     }
     return a.sort - b.sort
@@ -1109,14 +1087,15 @@ export default class CoC7Utilities {
     if (b.system.value === a.system.value) {
       return a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
         .localeCompare(
-          b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+          b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+          game.i18n.lang
         )
     }
     return b.system.value - a.system.value
   }
 
   /**
-   * Sort by normalized name fields
+   * Sort by normalized name field
    * @param {object} a
    * @param {object} b
    * @returns {int}
@@ -1124,7 +1103,8 @@ export default class CoC7Utilities {
   static sortByNameKey (a, b) {
     return a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
       .localeCompare(
-        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+        game.i18n.lang
       )
   }
 
@@ -1145,7 +1125,8 @@ export default class CoC7Utilities {
     }
     return a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
       .localeCompare(
-        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+        game.i18n.lang
       )
   }
 
@@ -1161,7 +1142,8 @@ export default class CoC7Utilities {
     }
     return a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
       .localeCompare(
-        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+        b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase(),
+        game.i18n.lang
       )
   }
 
@@ -1270,7 +1252,7 @@ export default class CoC7Utilities {
   static async getActorFromUuid (actorUuid) {
     const model = await fromUuid(actorUuid)
     if (model) {
-      if (model instanceof (foundry.canvas.placeables?.Token ?? Token)) {
+      if (model instanceof foundry.canvas.placeables.Token) {
         if (model.document?.actorLink === true) {
           return model.document.actor
         }
@@ -1290,7 +1272,7 @@ export default class CoC7Utilities {
   static getActorUuid (model) {
     if (!model) {
       return null
-    } else if (model instanceof (foundry.canvas.placeables?.Token ?? Token)) {
+    } else if (model instanceof foundry.canvas.placeables.Token) {
       if (model.document.actorLink === true) {
         return model.document.actor.uuid
       }
@@ -1423,7 +1405,7 @@ export default class CoC7Utilities {
    * @returns {object}
    */
   static distanceBetweenTokens (token1, token2) {
-    let distance = new (foundry.canvas.geometry?.Ray ?? Ray)(token1.object.center, token2.object.center).distance / canvas.grid.size
+    let distance = new foundry.canvas.geometry.Ray(token1.object.center, token2.object.center).distance / canvas.grid.size
     if (game.settings.get(FOLDER_ID, 'distanceElevation')) {
       const elevation = Math.abs((token1.elevation || 0) - (token2.elevation || 0)) / canvas.grid.distance
       distance = Math.sqrt(distance * distance + elevation * elevation)
@@ -1460,8 +1442,7 @@ export default class CoC7Utilities {
       default:
         if (typeof this.toYardWarnings[unit] === 'undefined') {
           this.toYardWarnings[unit] = true
-          /* // FoundryVTT V12 */
-          ui.notifications.warn(game.i18n.format('CoC7.ErrorUnknownDistanceUnit', { distance: distance.toFixed(2), unit }))
+          ui.notifications.warn('CoC7.ErrorUnknownDistanceUnit', { format: { distance: distance.toFixed(2), unit } })
         }
         return distance
     }

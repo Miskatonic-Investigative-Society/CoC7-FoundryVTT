@@ -2,7 +2,7 @@ import { FOLDER_ID } from '../constants.js'
 
 export default class CoC7SkillPopup extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2) {
   static DEFAULT_OPTIONS = {
-    classes: ['coc7', 'dialog', 'item'],
+    classes: ['coc7-sheet'],
     position: {
       width: 520,
       height: 480
@@ -34,8 +34,7 @@ export default class CoC7SkillPopup extends foundry.applications.api.HandlebarsA
 
     context.document = this.options.document
 
-    /* // FoundryVTT V12 */
-    context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+    context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       context.document.system.description.value,
       {
         async: true,
@@ -43,28 +42,12 @@ export default class CoC7SkillPopup extends foundry.applications.api.HandlebarsA
       }
     )
     context._properties = []
-    for (const [key, value] of context.document.system.schema.getField('properties').entries()) {
-      if (context.document.system.properties[key] === true) {
-        context._properties.push(value.label)
+    for (const [value, field] of context.document.system.schema.getField('properties').entries()) {
+      if (context.document.system.properties[value] === true) {
+        context._properties.push(field.label)
       }
     }
 
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 }

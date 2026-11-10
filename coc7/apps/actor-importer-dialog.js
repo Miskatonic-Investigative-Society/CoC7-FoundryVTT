@@ -17,7 +17,7 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
   static DEFAULT_OPTIONS = {
     id: 'actor-importer-dialog',
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       title: 'CoC7.ActorImporter',
       contentClasses: [
@@ -29,7 +29,7 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
       handler: CoC7ActorImporterDialog.#onSubmit
     },
     position: {
-      width: 600
+      width: 620
     }
   }
 
@@ -79,47 +79,47 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
         }
         context.importTypeOptions = [
           {
-            key: 'npc',
+            value: 'npc',
             label: 'CoC7.NonPlayingCharacter'
           },
           {
-            key: 'creature',
+            value: 'creature',
             label: 'CoC7.Creature'
           },
           {
-            key: 'dholehouse',
+            value: 'dholehouse',
             label: 'CoC7.DholeHouseActorImporter'
           }
         ]
         context.convert6EOptions = [
           {
-            key: 'coc-guess',
+            value: 'coc-guess',
             label: 'CoC7.Guess'
           },
           {
-            key: 'coc-convert',
+            value: 'coc-convert',
             label: 'CoC7.Convert'
           },
           {
-            key: 'coc-no-convert',
+            value: 'coc-no-convert',
             label: 'CoC7.NoConvert'
           }
         ]
         context.sourceOptions = [
           {
-            key: '',
+            value: '',
             label: 'CoC7.ImportActorItemsNone'
           },
           {
-            key: 'i',
+            value: 'i',
             label: 'CoC7.ImportActorItemsItem'
           },
           {
-            key: 'iwms',
+            value: 'iwms',
             label: 'CoC7.ImportActorItemsItemWorldModuleSystem'
           },
           {
-            key: 'wmis',
+            value: 'wmis',
             label: 'CoC7.ImportActorItemsWorldModuleItemSystem'
           }
         ]
@@ -180,7 +180,7 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
             application.coc7Config.characterJSON = {}
             const prompt = application.element.querySelector('#coc-prompt')
             prompt.innerHTML = game.i18n.localize('CoC7.TextFieldInvalidJSON')
-            prompt.classList.add('warning')
+            prompt.classList.add('coc7-warning')
             return
           }
           const personalDetails = application.coc7Config.characterJSON?.Investigator?.PersonalDetails
@@ -200,10 +200,10 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
         const prompt = this.element.querySelector('#coc-prompt')
         if (event.currentTarget.value.match(/[\udbc0-\udbfe][\udc00-\udfff]/)) {
           prompt.innerHTML = game.i18n.localize('CoC7.TextFieldInvalidCharacters')
-          prompt.classList.add('warning')
+          prompt.classList.add('coc7-warning')
         } else {
           prompt.innerHTML = prompt.dataset.text
-          prompt.classList.remove('warning')
+          prompt.classList.remove('coc7-warning')
         }
       })
       pastedData.dispatchEvent(new Event('keyup'))
@@ -238,11 +238,10 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
             if (CONFIG.debug.CoC7Importer) {
               console.debug('character:', character)
             }
-            /* // FoundryVTT V12 */
-            ui.notifications.info(game.i18n.format('CoC7.ActorImported', {
+            ui.notifications.info('CoC7.ActorImported', { format: {
               actorType: game.i18n.localize('TYPES.Actor.character'),
               actorName: character.name
-            }), { console: false })
+            }, console: false })
             await character.sheet.render({ force: true })
             this.close()
           } else {
@@ -282,28 +281,11 @@ export default class CoC7ActorImporterDialog extends foundry.applications.api.Ha
     if (CONFIG.debug.CoC7Importer) {
       console.debug('createdActor:', createdActor)
     }
-    /* // FoundryVTT V12 */
-    ui.notifications.info(game.i18n.format('CoC7.ActorImported', {
+    ui.notifications.info('CoC7.ActorImported', { format: {
       actorType: game.i18n.localize('TYPES.Actor.' + createdActor.type),
       actorName: createdActor.name
-    }), { console: false })
+    }, console: false })
     await createdActor.sheet.render({ force: true })
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**

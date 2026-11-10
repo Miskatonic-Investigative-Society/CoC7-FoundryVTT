@@ -719,12 +719,13 @@ export default class CoC7SanCheckCard {
         }
       },
       rolls: (this.message?.rolls ?? []).concat(this.#diceSanPool.newRolls).concat(this.#diceIntPool.newRolls),
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(CoC7SanCheckCard.template, data)
+      content: await foundry.applications.handlebars.renderTemplate(CoC7SanCheckCard.template, data)
     }
     if (typeof this.message?.whisper === 'undefined') {
+      /* // FoundryVTT V13 */
       if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode'))) {
         chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+        /* // FoundryVTT V13 */
       } else if (CHAT_MESSAGE_MODE.BLIND === (game.settings.get('core', 'rollMode') ?? game.settings.get('core', 'messageMode'))) {
         chatData.blind = true
       }
@@ -984,7 +985,7 @@ export default class CoC7SanCheckCard {
         data.actorSan = dataSet.sanCheck?._rawValue ?? 0
       }
       data.actorUseMythosHardened = (dataSet.sanLoss ?? 0) < (dataSet.preHardenedSanLoss ?? 0)
-      update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(CoC7SanCheckCard.template, data)
+      update.content = await foundry.applications.handlebars.renderTemplate(CoC7SanCheckCard.template, data)
       update._id = message.id
       updates.push(update)
     }

@@ -185,7 +185,7 @@
   "CoC7.KeeperSentDecoy": "플레이어가 눈속임판정을 받았습니다",
   "CoC7.FakeRoll": "플레이어에게 눈속임판정을 보냅니다",
   "CoC7.ErrorMissingKeeperUser": "이 작업을 수행하려면 수호자가 연결되어 있어야 합니다.",
- 
+
   "CoC7.ConstitutionCheck": "건강 판정",
 
   "CoC7.SanDataSelectionWindow": "이성치 손실 선택",
@@ -283,7 +283,7 @@
   "CoC7.rangeCombatCard.BaseRange": "단거리",
   "CoC7.rangeCombatCard.BaseRangeShort": "단거리",
   "CoC7.rangeCombatCard.LongRange": "중거리",
-  "CoC7.rangeCombatCard.LongRangeShort": "중거리",  
+  "CoC7.rangeCombatCard.LongRangeShort": "중거리",
   "CoC7.rangeCombatCard.ExtremeRange": "장거리",
   "CoC7.rangeCombatCard.ExtremeRangeShort": "장거리",
   "CoC7.rangeCombatCard.OutOfRange": "사거리 밖",
@@ -402,11 +402,11 @@
   "CoC7.SkillSpecial": "전문화",
   "CoC7.SkillRarity": "희귀",
   "CoC7.SkillRarityShort": "[UC]",
-  "CoC7.SkillPush": "강행",  
-  "CoC7.SkillHintPush": "강행할 수 있는 기술입니다",  
+  "CoC7.SkillPush": "강행",
+  "CoC7.SkillHintPush": "강행할 수 있는 기술입니다",
   "CoC7.SkillFighting": "근접전(무장)",
   "CoC7.SkillHintFighting": "Ctrl + 클릭을 통해 기본 전문 분야 이름을 변경하지 않도록 설정",
-  "CoC7.SkillFirearm": "사격",  
+  "CoC7.SkillFirearm": "사격",
   "CoC7.SkillHintFirearm": "Ctrl + 클릭을 통해 기본 전문 분야 이름을 변경하지 않도록 설정",
   "CoC7.SkillRanged": "원거리",
   "CoC7.SkillHintRanged": "Ctrl + 클릭을 통해 기본 전문 분야 이름을 변경하지 않도록 설정",
@@ -523,7 +523,7 @@
   "CoC7.EnterFormula": "수식 입력",
   "CoC7.SanRollHint": "대상에 대한 이성수치 판정",
   "CoC7.NoSkill": "기능 없음",
-  
+
   "CoC7.LinkCheck": " {name} 판정",
   "CoC7.LinkCheckDiff": "[{difficulty}] {name} 판정",
   "CoC7.LinkCheckModif": " {name} 판정({modifier})",
@@ -1535,16 +1535,6 @@
 
   "CoC7.AlternativeNames": "다른 이름들",
 
-  "TOKEN.MOVEMENT.ACTIONS.walk.label": "걷기",
-  "TOKEN.MOVEMENT.ACTIONS.fly.label": "날기",
-  "TOKEN.MOVEMENT.ACTIONS.swim.label": "헤엄치기",
-  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "굴 파기",
-  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "기어다니기",
-  "TOKEN.MOVEMENT.ACTIONS.climb.label": "오르기",
-  "TOKEN.MOVEMENT.ACTIONS.jump.label": "점프",
-  "TOKEN.MOVEMENT.ACTIONS.blink.label": "순간이동 (점멸)",
-  "TOKEN.MOVEMENT.ACTIONS.displace.label": "순간이동 (이동)",
-
   "CoC7.PortraitOptions": "초상화 옵션",
   "CoC7.WhatCopiedClipboard": "“{what}”이(가) 클립보드에 복사되었습니다.",
   "CoC7.AddedEmbeddedItems": "{names}를 추가했습니다.",
@@ -1599,7 +1589,7 @@
   "CoC7.CoC7ModelsItemTalentSheet": "CoC7 재능 시트",
   "CoC7.CoC7ModelsItemWeaponSheet": "CoC7 무기 시트",
 
-  "TYPES.RegionBehavior.ChaosiumCanvasInterfaceDrawingToggle": "CCI: 그리기 토글",  
+  "TYPES.RegionBehavior.ChaosiumCanvasInterfaceDrawingToggle": "CCI: 그리기 토글",
   "TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle": "CCI: Light Toggle",
   "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: 지도 핀 토글",
   "TYPES.RegionBehavior.ChaosiumCanvasInterfaceOpenDocument": "CCI: 문서 열기",

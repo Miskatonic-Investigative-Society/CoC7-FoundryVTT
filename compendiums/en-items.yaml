@@ -202,7 +202,7 @@ flags:
 _id: 3elxAwnv7WCUNwng
 name: Unarmed
 type: weapon
-img: systems/CoC7/assets/icons/skills/fighting_brawl.svg
+img: systems/CoC7/assets/game-icons/lorc/mailed-fist.svg
 system:
   skill:
     main:
@@ -242,7 +242,7 @@ flags:
 _id: 4Rrff1sAoWh7NFkL
 name: Test Spell
 type: spell
-img: systems/CoC7/assets/icons/pentagram-rose.svg
+img: systems/CoC7/assets/game-icons/lorc/pentagram-rose.svg
 system:
   castingTime: 10 - 15 minutes
   costList:

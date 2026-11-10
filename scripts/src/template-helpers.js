@@ -348,12 +348,6 @@ export default class TemplateHelpers {
             } else {
               range = doc.results[offset].range[1]
             }
-            if (doc.results[offset].type === 'text') {
-              /* // FoundryVTT V12 */
-              doc.results[offset].text = '<strong>' + doc.results[offset].name + '</strong> ' + doc.results[offset].description
-            }
-            /* // FoundryVTT V12 */
-            // type: document / pack
           }
           if (!doc.formula) {
             doc.formula = '1d' + range
@@ -441,8 +435,13 @@ export default class TemplateHelpers {
   static requireNodeVersion () {
     const currentNodeVersion = process.versions.node
 
-    if (currentNodeVersion.split('.')[0] < 20) {
-      TemplateHelpers.ansiFormat('Requires Node 20 or higher.\n' + 'You are currently using Node ' + currentNodeVersion + '.\n' + 'Please update your version of Node.', { color: 'red', output: true })
+    /* // FoundryVTT V13 */
+    // Node.js 20 is now the required node version with optional support for Node 22. (https://github.com/foundryvtt/foundryvtt/issues/11317)
+    /* // FoundryVTT V14 */
+    // Upgraded Electron to version 40 and increased the minimum Node version to 24. (https://github.com/foundryvtt/foundryvtt/issues/13851)
+
+    if (currentNodeVersion.split('.')[0] < 22 || currentNodeVersion.split('.')[1] < 11) {
+      TemplateHelpers.ansiFormat('Requires Node 22.11.0 or higher.\n' + 'You are currently using Node ' + currentNodeVersion + '.\n' + 'Please update your version of Node.', { color: 'red', output: true })
       process.exit(1)
     }
   }

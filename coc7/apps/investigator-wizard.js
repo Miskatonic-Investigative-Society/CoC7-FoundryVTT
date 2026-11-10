@@ -19,7 +19,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
   static DEFAULT_OPTIONS = {
     id: 'investigator-wizard-application',
     tag: 'form',
-    classes: ['coc7', 'dialog', 'investigator-wizard'],
+    classes: ['coc7-sheet'],
     window: {
       contentClasses: [
         'standard-form'
@@ -40,7 +40,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
     form: {
       template: 'systems/' + FOLDER_ID + '/templates/apps/investigator-wizard/body.hbs',
       scrollable: [
-        '.scroll-section'
+        '.scrollable'
       ]
     },
     footer: {
@@ -60,15 +60,16 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       PAGE_SETUPS: 2,
       PAGE_ARCHETYPES: 3,
       PAGE_CHARACTERISTICS: 4,
-      PAGE_ATTRIBUTES: 5,
-      PAGE_VIEW_ATTRIBUTES: 6,
-      PAGE_OCCUPATIONS: 7,
-      PAGE_OCCUPATION_SKILLS: 8,
-      PAGE_ARCHETYPE_SKILLS: 9,
-      PAGE_POINTS_SKILLS: 10,
-      PAGE_INVESTIGATOR: 11,
-      PAGE_BACKSTORY: 12,
-      PAGE_CREATE: 13
+      PAGE_PICK_TALENTS: 5,
+      PAGE_ATTRIBUTES: 6,
+      PAGE_VIEW_ATTRIBUTES: 7,
+      PAGE_OCCUPATIONS: 8,
+      PAGE_OCCUPATION_SKILLS: 9,
+      PAGE_ARCHETYPE_SKILLS: 10,
+      PAGE_POINTS_SKILLS: 11,
+      PAGE_INVESTIGATOR: 12,
+      PAGE_BACKSTORY: 13,
+      PAGE_CREATE: 14
     }
   }
 
@@ -130,6 +131,9 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       pageOrder.push(pages.PAGE_ARCHETYPES)
     }
     pageOrder.push(pages.PAGE_CHARACTERISTICS)
+    if (game.settings.get(FOLDER_ID, 'pulpRuleArchetype') && game.settings.get(FOLDER_ID, 'pulpRuleTalents')) {
+      // pageOrder.push(pages.PAGE_PICK_TALENTS)
+    }
     if (!game.settings.get(FOLDER_ID, 'pulpRuleIgnoreAgePenalties')) {
       pageOrder.push(pages.PAGE_ATTRIBUTES)
     }
@@ -203,9 +207,8 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         }
       }
       if (missing.length) {
-        const era = game.i18n.format(ERAS[this.coc7Config.defaultEra]?.name ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: this.coc7Config.defaultEra })
-        /* // FoundryVTT V12 */
-        ui.notifications.warn(game.i18n.format('CoC7.CoCIDFlag.error.documents-not-found', { cocids: missing.join(', '), lang: game.i18n.lang, era }))
+        const era = game.i18n.format(ERAS[this.coc7Config.defaultEra]?.label ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: this.coc7Config.defaultEra })
+        ui.notifications.warn('CoC7.CoCIDFlag.error.documents-not-found', { format: { cocids: missing.join(', '), lang: game.i18n.lang, era } })
       }
     }
     return documents
@@ -283,14 +286,14 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
 
     switch (context.coc7Config.step) {
       case context.pages.PAGE_INTRODUCTION:
-        context.era = game.i18n.format(ERAS[context.coc7Config.defaultEra]?.name ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: context.coc7Config.defaultEra })
+        context.era = game.i18n.format(ERAS[context.coc7Config.defaultEra]?.label ?? 'CoC7.CoCIDFlag.error.unknown-era', { era: context.coc7Config.defaultEra })
         context.canNext = true
         break
 
       case context.pages.PAGE_CONFIGURATION:
         if (game.user.isGM) {
           context.setups = await this.filterCacheItemByCoCID(/^i\.setup\./)
-          context.setupOptions = context.setups.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+          context.setupOptions = context.setups.reduce((c, d) => { c.push({ value: d.flags.CoC7.cocidFlag.id, label: d.name }); return c }, [])
           context.occupations = await this.filterCacheItemByCoCID(/^i\.occupation\./)
           context.archetypes = await this.filterCacheItemByCoCID(/^i\.archetype\./)
           const setup = context.setups.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.defaultSetup)
@@ -298,8 +301,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             context.coc7Config.defaultSetup = ''
             context.coc7Config.setup = ''
           } else {
-            /* // FoundryVTT V12 */
-            context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+            context.description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
               setup.system.description.value,
               {
                 async: true,
@@ -314,10 +316,10 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             [CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER]: 'OWNERSHIP.OWNER'
           }
           context._eras = []
-          for (const [key, era] of Object.entries(ERAS)) {
+          for (const [value, era] of Object.entries(ERAS)) {
             context._eras.push({
-              id: key,
-              name: game.i18n.localize(era.name)
+              value,
+              label: game.i18n.localize(era.label)
             })
           }
           context.characteristicsMethods = CoC7InvestigatorWizard.CharacteristicsMethods
@@ -329,7 +331,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           } else if (context.coc7Config.quickFireValues.length) {
             context.characteristicsMethod = context.characteristicsMethods.METHOD_VALUES
           }
-          context._eras.sort(CoC7Utilities.sortByNameKey)
+          context._eras.sort(CoC7Utilities.sortByLabelKey)
           context.hasArchetypes = game.settings.get(FOLDER_ID, 'pulpRuleArchetype')
           context.canNext = true
         }
@@ -339,12 +341,11 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         if (context.coc7Config.defaultSetup === '') {
           context.setups = await this.filterCacheItemByCoCID(/^i\.setup\./)
           context.setups.sort(CoC7Utilities.sortByNameKey)
-          context.setupOptions = context.setups.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+          context.setupOptions = context.setups.reduce((c, d) => { c.push({ value: d.flags.CoC7.cocidFlag.id, label: d.name }); return c }, [])
           if (context.coc7Config.setup !== '') {
             const setup = context.setups.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.setup)
             if (typeof setup !== 'undefined') {
-              /* // FoundryVTT V12 */
-              context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+              context.description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
                 setup.system.description.value,
                 {
                   async: true,
@@ -363,12 +364,11 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           context.canNext = true
         } else {
           context.archetypes.sort(CoC7Utilities.sortByNameKey)
-          context.archetypeOptions = context.archetypes.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+          context.archetypeOptions = context.archetypes.reduce((c, d) => { c.push({ value: d.flags.CoC7.cocidFlag.id, label: d.name }); return c }, [])
           if (context.coc7Config.archetype !== '') {
             const archetype = context.archetypes.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.archetype)
             if (typeof archetype !== 'undefined') {
-              /* // FoundryVTT V12 */
-              context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+              context.description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
                 archetype.system.description.value,
                 {
                   async: true,
@@ -376,6 +376,9 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                 }
               )
               context.bonusPoints = archetype.system.bonusPoints
+              context.talents = archetype.system.talents
+              context.talentsSuggested = await Promise.all((await game.CoC7.cocid.expandItemArray({ itemList: archetype.system.talentsSuggested })).map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true })))
+              context.talentsRequired = await Promise.all((await game.CoC7.cocid.expandItemArray({ itemList: archetype.system.talentsRequired })).map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true })))
               const coreCharacteristics = []
               for (const coreCharacteristic in archetype.system.coreCharacteristics) {
                 if (archetype.system.coreCharacteristics[coreCharacteristic]) {
@@ -394,16 +397,14 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                 skills.push(skill.name)
               }
               context.skills = skills.join(', ')
-              /* // FoundryVTT V12 */
-              context.suggestedOccupations = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+              context.suggestedOccupations = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
                 archetype.system.suggestedOccupations,
                 {
                   async: true,
                   secrets: game.user.isGM
                 }
               )
-              /* // FoundryVTT V12 */
-              context.suggestedTraits = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+              context.suggestedTraits = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
                 archetype.system.suggestedTraits,
                 {
                   async: true,
@@ -486,12 +487,12 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                 for (const coreCharacteristic in archetype.system.coreCharacteristics) {
                   if (archetype.system.coreCharacteristics[coreCharacteristic]) {
                     context.coreCharacteristics.push({
-                      key: coreCharacteristic,
-                      name: game.i18n.format(context.setup.characteristics.find(c => c.key === coreCharacteristic)?.label ?? 'Unknown')
+                      value: coreCharacteristic,
+                      label: game.i18n.format(context.setup.characteristics.find(c => c.key === coreCharacteristic)?.label ?? 'Unknown')
                     })
                   }
                 }
-                context.coreCharacteristics.sort(CoC7Utilities.sortByNameKey)
+                context.coreCharacteristics.sort(CoC7Utilities.sortByLabelKey)
                 if (this.coc7Config.coreCharacteristic !== '') {
                   if (archetype.system.coreCharacteristicsFormula.enabled) {
                     context.setup.characteristics.find(c => c.key === this.coc7Config.coreCharacteristic).roll = archetype.system.coreCharacteristicsFormula.value
@@ -499,20 +500,20 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                 }
               }
             }
-            let empties = false
+            context.empties = false
             for (const key in context.coc7Config.setupPoints) {
               if (context.coc7Config.setupPoints[key] !== '') {
                 if (key !== 'luck') {
                   context.setup.total += parseInt(context.coc7Config.setupPoints[key], 10)
                 }
               } else {
-                empties = true
+                context.empties = true
               }
             }
             if (this.coc7Config.coreCharacteristic) {
               context.coreCharacteristic = this.coc7Config.coreCharacteristic.toLocaleUpperCase()
             }
-            if (!empties && this.coc7Config.age >= 15) {
+            if (!context.empties && this.coc7Config.age >= 15) {
               if ([context.characteristicsMethods.METHOD_ROLL, context.characteristicsMethods.METHOD_VALUES, context.characteristicsMethods.METHOD_CHOOSE].includes(context.characteristicsMethod)) {
                 context.canNext = true
               } else if (context.setup.total.toString() === context.setup.points.toString()) {
@@ -521,6 +522,48 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             }
           }
         }
+        break
+
+      case context.pages.PAGE_PICK_TALENTS:
+        if (context.coc7Config.archetype !== '') {
+          const archetype = await this.getCacheItemByCoCID(this.coc7Config.archetype)
+          if (archetype) {
+            context.talents = []
+            const selectedTalents = this.coc7Config.talents.map(row => row.cocid)
+            const talents = (await this.filterCacheItemByCoCID(/^i\.talent\./)).filter(doc => doc.system.usable.investigator === true)
+            for (const talentOption of this.coc7Config.talents) {
+              const row = {
+                selected: '',
+                options: [],
+                fixed: false,
+                description: ''
+              }
+              const talent = talents.find(doc => doc.flags?.[FOLDER_ID]?.cocidFlag?.id === talentOption.cocid)
+              if (talent) {
+                row.selected = talentOption.cocid
+                row.description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
+                  talent.system.description.value,
+                  {
+                    async: true,
+                    secrets: game.user.isGM
+                  }
+                )
+                if (talentOption.required) {
+                  row.fixed = true
+                  row.options.push({ value: talentOption.cocid, label: talent.name })
+                }
+              }
+              if (row.options.length === 0) {
+                row.options = talents.filter(doc => !doc.system.type.insane && (doc.flags?.[FOLDER_ID]?.cocidFlag?.id === talentOption.cocid || !selectedTalents.includes(doc.flags?.[FOLDER_ID]?.cocidFlag?.id))).map(doc => { return { value: doc.flags?.[FOLDER_ID]?.cocidFlag?.id, label: doc.name } }).sort(CoC7Utilities.sortByLabelKey)
+                if (row.selected.length) {
+                  selectedTalents.push(row.selected)
+                }
+              }
+              context.talents.push(row)
+            }
+          }
+        }
+        context.canNext = true
         break
 
       case context.pages.PAGE_ATTRIBUTES:
@@ -628,12 +671,11 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       case context.pages.PAGE_OCCUPATIONS:
         context.occupations = await this.filterCacheItemByCoCID(/^i\.occupation\./)
         context.occupations.sort(CoC7Utilities.sortByNameKey)
-        context.occupationOptions = context.occupations.reduce((c, d) => { c.push({ key: d.flags.CoC7.cocidFlag.id, name: d.name }); return c }, [])
+        context.occupationOptions = context.occupations.reduce((c, d) => { c.push({ value: d.flags.CoC7.cocidFlag.id, label: d.name }); return c }, [])
         if (context.coc7Config.occupation !== '') {
           const occupation = context.occupations.find(s => s.flags.CoC7.cocidFlag.id === context.coc7Config.occupation)
           if (typeof occupation !== 'undefined') {
-            /* // FoundryVTT V12 */
-            context.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+            context.description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
               occupation.system.description.value,
               {
                 async: true,
@@ -707,6 +749,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
               }
             } else {
               group = 'other'
+              isPickable = isMultiple
             }
             let toggle = context.coc7Config.skillItems[key].rows[index].occupationToggle
             if (isPickable) {
@@ -993,12 +1036,12 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           for (const item of options) {
             if (item.flags.CoC7.cocidFlag.id !== key && !item.system.properties.requiresname && !item.system.properties.picknameonly && !item.system.properties.own) {
               context.own[key].options.push({
-                name: item.name,
-                key: item.flags.CoC7.cocidFlag.id
+                label: item.name,
+                value: item.flags.CoC7.cocidFlag.id
               })
             }
           }
-          context.own[key].options.sort(CoC7Utilities.sortByNameKey)
+          context.own[key].options.sort(CoC7Utilities.sortByLabelKey)
         }
         context.canNext = true
         break
@@ -1104,11 +1147,9 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
   async _onRender (context, options) {
     await super._onRender(context, options)
 
-    const form = this.element
-
     switch (context.coc7Config.step) {
       case context.pages.PAGE_CONFIGURATION:
-        form.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', async (event) => {
           const key = event.currentTarget.dataset.property
           switch (key) {
             case 'default-enabled':
@@ -1155,7 +1196,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
               break
           }
         }))
-        form.querySelectorAll('.quick-fire-values input').forEach((element) => element.addEventListener('blur', async (event) => {
+        this.element.querySelectorAll('.quick-fire-values input').forEach((element) => element.addEventListener('blur', async (event) => {
           const match = event.target.name.match(/^quick-fire-values-(\d+)$/)
           const value = Number(event.target.value)
           if (match && value > 0) {
@@ -1165,21 +1206,21 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           this.coc7Config.placeable = foundry.utils.duplicate(this.coc7Config.quickFireValues)
           this.render({ force: true })
         }))
-        form.querySelector('input[name=default-quantity]')?.addEventListener('blur', async (event) => {
+        this.element.querySelector('input[name=default-quantity]')?.addEventListener('blur', async (event) => {
           this.coc7Config.defaultQuantity = Number(event.target.value)
           game.settings.set(FOLDER_ID, 'InvestigatorWizardQuantity', this.coc7Config.defaultQuantity)
           this.render({ force: true })
         })
-        form.querySelector('select[name=default-ownership]')?.addEventListener('blur', async (event) => {
+        this.element.querySelector('select[name=default-ownership]')?.addEventListener('blur', async (event) => {
           this.coc7Config.defaultOwnership = Number(event.target.value)
           game.settings.set(FOLDER_ID, 'InvestigatorWizardOwnership', this.coc7Config.defaultOwnership)
           this.render({ force: true })
         })
-        form.querySelector('select[name=world-era]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=world-era]')?.addEventListener('change', async (event) => {
           const started = Date.now()
-          form.querySelector('.era-change').style.display = 'block'
-          form.querySelector('.scroll-section').style.display = 'none'
-          form.querySelector('footer.form-footer').style.display = 'none'
+          this.element.querySelector('.era-change').style.display = 'block'
+          this.element.querySelector('.scrollable').style.display = 'none'
+          this.element.querySelector('footer.form-footer').style.display = 'none'
           this.coc7Config.defaultEra = event.target.value
           await game.settings.set(FOLDER_ID, 'worldEra', this.coc7Config.defaultEra)
           this.coc7Config.cacheCoCID = await CoC7InvestigatorWizard.loadCacheItemByCoCID()
@@ -1192,7 +1233,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           }
           this.render({ force: true })
         })
-        form.querySelector('select[name=default-setup]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=default-setup]')?.addEventListener('change', async (event) => {
           this.coc7Config.defaultSetup = event.target.value
           game.settings.set(FOLDER_ID, 'InvestigatorWizardSetup', this.coc7Config.defaultSetup)
           this.coc7Config.setup = this.coc7Config.defaultSetup
@@ -1203,7 +1244,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_SETUPS:
-        form.querySelector('select[name=coc-setup]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=coc-setup]')?.addEventListener('change', async (event) => {
           this.coc7Config.setup = event.target.value
           this.clearSetupPoints()
           await this.setSkillLists()
@@ -1212,18 +1253,31 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_ARCHETYPES:
-        form.querySelector('select[name=coc-archetype]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=coc-archetype]')?.addEventListener('change', async (event) => {
           this.coc7Config.archetype = event.target.value
           this.coc7Config.coreCharacteristic = ''
+          this.coc7Config.talents = []
+
           this.clearSetupPoints()
           await this.setSkillLists()
+          const archetype = await this.getCacheItemByCoCID(this.coc7Config.archetype)
+          if (archetype) {
+            for (const cocid of archetype.system.talentsRequired) {
+              this.coc7Config.talents.push({ cocid, required: true })
+            }
+            for (const cocid of archetype.system.talentsSuggested) {
+              this.coc7Config.talents.push({ cocid, required: false })
+            }
+            while (this.coc7Config.talents.length < archetype.system.talents) {
+              this.coc7Config.talents.push({ cocid: '', required: false })
+            }
+          }
           this.render({ force: true })
         })
         break
 
       case context.pages.PAGE_CHARACTERISTICS:
-        /* // FoundryVTT V12 */
-        new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+        new foundry.applications.ux.DragDrop({
           dragSelector: '.draggable',
           permissions: {
             dragstart: true,
@@ -1234,13 +1288,13 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             drop: this._onDragDrop.bind(this)
           }
         }).bind(this.element)
-        form.querySelector('select[name=coc-core-characteristic]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=coc-core-characteristic]')?.addEventListener('change', async (event) => {
           this.coc7Config.coreCharacteristic = event.target.value
           this.clearSetupPoints()
           this.coc7Config.placeable = foundry.utils.duplicate(this.coc7Config.quickFireValues)
           this.render({ force: true })
         })
-        form.querySelector('button.roll_choose')?.addEventListener('click', async (event) => {
+        this.element.querySelector('button.roll-choose')?.addEventListener('click', async (event) => {
           event.preventDefault()
           if (this.coc7Config.setup !== '') {
             const setup = await this.getCacheItemByCoCID(this.coc7Config.setup)
@@ -1298,7 +1352,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           }
           this.render({ force: true })
         })
-        form.querySelectorAll('input.save-on-blur').forEach((element) => element.addEventListener('blur', async (event) => {
+        this.element.querySelectorAll('input.save-on-blur').forEach((element) => element.addEventListener('blur', async (event) => {
           const key = event.target.closest('.input-line').dataset.key
           switch (key) {
             case 'age':
@@ -1321,7 +1375,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
           }
           this.render({ force: true })
         }))
-        form.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
           switch (event.currentTarget.dataset.action) {
             case 'roll-characteristic':
               {
@@ -1369,8 +1423,18 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         }))
         break
 
+      case context.pages.PAGE_PICK_TALENTS:
+        this.element.querySelectorAll('select').forEach((element) => element.addEventListener('change', async (event) => {
+          const index = event.target.dataset.index
+          if (typeof index !== 'undefined') {
+            this.coc7Config.talents[index].cocid = event.target.value
+            this.render({ force: true })
+          }
+        }))
+        break
+
       case context.pages.PAGE_ATTRIBUTES:
-        form.querySelector('button.roll_edu')?.addEventListener('click', async (event) => {
+        this.element.querySelector('button.roll-edu')?.addEventListener('click', async (event) => {
           event.preventDefault()
           if (typeof this.coc7Config.requiresAgeAdjustments.edu !== 'undefined') {
             if (!this.coc7Config.requiresAgeAdjustments.edu.rolled && this.coc7Config.requiresAgeAdjustments.edu.total) {
@@ -1416,7 +1480,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             }
           }
         })
-        form.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
           switch (event.currentTarget.dataset.action) {
             case 'modify-characteristic':
               {
@@ -1436,13 +1500,12 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
               break
           }
         }))
-        form.querySelector('button.roll_luck')?.addEventListener('click', async (event) => {
+        this.element.querySelector('button.roll-luck')?.addEventListener('click', async (event) => {
           const setup = await this.getCacheItemByCoCID(this.coc7Config.setup)
           if (setup) {
             const die = await new Roll(setup.system.characteristics.rolls.luck.toString()).evaluate()
             this.coc7Config.setupModifiers.luck = [die.total]
-            /* // FoundryVTT V12 */
-            const html = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)(Roll.CHAT_TEMPLATE, {
+            const html = await foundry.applications.handlebars.renderTemplate(Roll.CHAT_TEMPLATE, {
               formula: game.i18n.localize('CoC7.InvestigatorWizard.RollTwiceForLuck') + ': ' + setup.system.characteristics.rolls.luck.toString(),
               tooltip: await die.getTooltip(),
               total: die.total
@@ -1461,7 +1524,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_OCCUPATIONS:
-        form.querySelector('select[name=coc-occupation]')?.addEventListener('change', async (event) => {
+        this.element.querySelector('select[name=coc-occupation]')?.addEventListener('change', async (event) => {
           this.coc7Config.occupation = event.target.value
           await this.setSkillLists()
           this.render({ force: true })
@@ -1470,20 +1533,19 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
 
       case context.pages.PAGE_OCCUPATION_SKILLS:
       case context.pages.PAGE_ARCHETYPE_SKILLS:
-        form.querySelectorAll('.clickable').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.clickable').forEach((element) => element.addEventListener('click', async (event) => {
           this._onClickPickSkill(event)
         }))
-        form.querySelectorAll('.rollable').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.rollable').forEach((element) => element.addEventListener('click', async (event) => {
           this._onToggleSkill(event)
         }))
-        form.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('.item-control').forEach((element) => element.addEventListener('click', async (event) => {
           switch (event.currentTarget.dataset.action) {
             case 'delete-skill':
               this._onClickDeleteSkill(event)
           }
         }))
-        /* // FoundryVTT V12 */
-        new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+        new foundry.applications.ux.DragDrop({
           dragSelector: '.draggable',
           permissions: {
             dragstart: true,
@@ -1497,11 +1559,11 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_POINTS_SKILLS:
-        form.querySelectorAll('.skill-adjustment').forEach((element) => {
+        this.element.querySelectorAll('.skill-adjustment').forEach((element) => {
           element.addEventListener('blur', async (event) => {
             const input = event.currentTarget
             const adjustment = input.dataset.adjustment
-            const row = input.closest('.points-row')
+            const row = input.closest('.item')
             const key = row.dataset.key
             const index = row.dataset.index
             if (typeof this.coc7Config.skillItems[key]?.rows[index][adjustment] !== 'undefined') {
@@ -1518,11 +1580,11 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_INVESTIGATOR:
-        form.querySelectorAll('file-picker').forEach((element) => element.addEventListener('change', async (event) => {
+        this.element.querySelectorAll('file-picker').forEach((element) => element.addEventListener('change', async (event) => {
           this.coc7Config[event.currentTarget.name] = event.currentTarget.value
           this.render({ force: true })
         }))
-        form.querySelectorAll('input.save-on-blur').forEach((element) => element.addEventListener('blur', async (event) => {
+        this.element.querySelectorAll('input.save-on-blur').forEach((element) => element.addEventListener('blur', async (event) => {
           switch (event.currentTarget.name) {
             case 'name':
             case 'residence':
@@ -1536,7 +1598,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
               break
           }
         }))
-        form.querySelectorAll('select.save-on-change').forEach((element) => element.addEventListener('change', async (event) => {
+        this.element.querySelectorAll('select.save-on-change').forEach((element) => element.addEventListener('change', async (event) => {
           if (typeof this.coc7Config.own[event.currentTarget.dataset.key] !== 'undefined') {
             this.coc7Config.own[event.currentTarget.dataset.key].selected = event.currentTarget.value
           }
@@ -1545,21 +1607,21 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
         break
 
       case context.pages.PAGE_BACKSTORY:
-        form.querySelectorAll('textarea.backstory-text').forEach((element) => element.addEventListener('blur', async (event) => {
+        this.element.querySelectorAll('textarea.backstory-text').forEach((element) => element.addEventListener('blur', async (event) => {
           const textarea = event.currentTarget
           const index = textarea.dataset.index
           if (typeof this.coc7Config.bioSections[index] !== 'undefined') {
             this.coc7Config.bioSections[index].value = textarea.value
           }
         }))
-        form.querySelectorAll('button.backstory-reset').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('button.backstory-reset').forEach((element) => element.addEventListener('click', async (event) => {
           const index = event.currentTarget.dataset.index
           if (typeof this.coc7Config.bioSections[index] !== 'undefined') {
             this.coc7Config.bioSections[index].value = ''
           }
           this.render({ force: true })
         }))
-        form.querySelectorAll('button.backstory-roll').forEach((element) => element.addEventListener('click', async (event) => {
+        this.element.querySelectorAll('button.backstory-roll').forEach((element) => element.addEventListener('click', async (event) => {
           const button = event.currentTarget
           const index = button.dataset.index
           const key = button.dataset.key
@@ -1568,33 +1630,27 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
             if (table.length === 1) {
               const tableResults = await table[0].roll()
               for (const tableResult of tableResults.results) {
-                /* // FoundryVTT V12 */
                 if (tableResult.type === CONST.TABLE_RESULT_TYPES.TEXT || (tableResult.type === CONST.TABLE_RESULT_TYPES.DOCUMENT && typeof tableResult.type.documentUuid === 'undefined')) {
-                  this.coc7Config.bioSections[index].value = (this.coc7Config.bioSections[index].value + '\n' + (tableResult.description ?? tableResult.text).trim()).trim()
+                  this.coc7Config.bioSections[index].value = (this.coc7Config.bioSections[index].value + '\n' + tableResult.description.trim()).trim()
                 }
               }
             }
           }
           this.render({ force: true })
         }))
+        this.element.querySelectorAll('button.backstory-table').forEach((element) => element.addEventListener('click', async (event) => {
+          const button = event.currentTarget
+          const index = button.dataset.index
+          const key = button.dataset.key
+          if (typeof this.coc7Config.bioSections[index] !== 'undefined') {
+            const table = await game[FOLDER_ID].cocid.fromCoCID(key)
+            if (table.length === 1) {
+              table[0].sheet.render({ force: true })
+            }
+          }
+        }))
         break
     }
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**
@@ -1960,7 +2016,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       if (typeof pageNumber !== 'undefined') {
         this.coc7Config.step = pageNumber
         // When moving step reset scroll height
-        const obj = this.element.querySelector('.scroll-section')
+        const obj = this.element.querySelector('.scrollable')
         if (obj && obj.scrollTop) {
           obj.scrollTop = 0
         }
@@ -2002,10 +2058,12 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
                 this.coc7Config.own = own
               }
               break
+            case CoC7InvestigatorWizard.PageList.PAGE_PICK_TALENTS:
+              break
           }
           this.coc7Config.step = pageNumber
           // When moving step reset scroll height
-          const obj = this.element.querySelector('.scroll-section')
+          const obj = this.element.querySelector('.scrollable')
           if (obj && obj.scrollTop) {
             obj.scrollTop = 0
           }
@@ -2319,6 +2377,7 @@ export default class CoC7InvestigatorWizard extends foundry.applications.api.Han
       parsedValues: {},
       archetype: '',
       coreCharacteristic: '',
+      talents: [],
       occupation: '',
       bioSections: [],
       personal: 0,

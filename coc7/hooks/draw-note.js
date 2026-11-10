@@ -6,7 +6,8 @@ import { FOLDER_ID } from '../constants.js'
  */
 export default function (application) {
   if (application.document.getFlag(FOLDER_ID, 'hide-background') ?? false) {
-    if (game.release.generation < 14) {
+    /* // FoundryVTT V13 */
+    if (game.release.generation === 13) {
       application.controlIcon.bg.clear()
     } else {
       application.controlIcon.children.splice(0, 1)

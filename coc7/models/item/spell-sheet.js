@@ -5,7 +5,7 @@ import CoC7Utilities from '../../apps/utilities.js'
 export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet {
   static DEFAULT_OPTIONS = {
     position: {
-      width: 550,
+      width: 560,
       height: 550
     }
   }
@@ -18,7 +18,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
       template: 'templates/generic/tab-navigation.hbs'
     },
     description: {
-      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-description.hbs',
+      template: 'systems/' + FOLDER_ID + '/templates/items/common-tab-properties-description.hbs',
       scrollable: ['']
     },
     details: {
@@ -85,17 +85,13 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
         context.automatedCast = context.document.system.costList.length > 0
         break
       case 'description':
-        context._types = []
-        for (const [key, value] of context.document.system.schema.getField('type').entries()) {
-          context._types.push({
-            id: key,
-            name: value.label,
-            tooltip: value.hint,
-            isEnabled: context.document.system.type[key] === true
-          })
+        context._properties = []
+        for (const [value, field] of context.document.system.schema.getField('type').entries()) {
+          if (context.document.system.type[value] === true) {
+            context._properties.push(field.label)
+          }
         }
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -104,20 +100,27 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
         )
         break
       case 'details':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionAlternativeNames = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context._types = []
+        for (const [value, field] of context.document.system.schema.getField('type').entries()) {
+          context._types.push({
+            value,
+            label: field.label,
+            tooltip: field.hint,
+            isEnabled: context.document.system.type[value] === true
+          })
+        }
+        context.enrichedDescriptionAlternativeNames = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.alternativeNames,
           {
             async: true,
             secrets: context.editable
           }
         )
-        context._costListTypes = Object.entries(SPELL_COST_TYPE_KEYS).reduce((c, e) => { c.push({ key: e[0], name: game.i18n.localize(e[1].name), group: game.i18n.localize(e[1].group) }); return c }, []).sort(CoC7Utilities.sortByNameKey)
+        context._costListTypes = Object.entries(SPELL_COST_TYPE_KEYS).reduce((c, e) => { c.push({ value: e[0], label: game.i18n.localize(e[1].label), group: game.i18n.localize(e[1].group) }); return c }, []).sort(CoC7Utilities.sortByLabelKey)
         context._costListCosts = CONFIG.Item.dataModels.spell.availableCosts()
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,
@@ -149,7 +152,6 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
           break
         case 'cost-list-add':
           event.preventDefault()
-          this.scrollToNewLast('div.cost-list-section')
           this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
           this.document.update({
             'system.costList': this.document.system.costList.concat([{}])
@@ -159,7 +161,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
           {
             event.preventDefault()
             this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
-            const item = event.currentTarget.closest('.spell-cost-list')
+            const item = event.currentTarget.closest('.adjustable-list-item')
             if (item && typeof item.dataset.index !== 'undefined') {
               const index = Number(item.dataset.index)
               const costList = foundry.utils.duplicate(this.document.system.costList)
@@ -172,7 +174,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
           {
             event.preventDefault()
             this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
-            const item = event.currentTarget.closest('.spell-cost-list')
+            const item = event.currentTarget.closest('.adjustable-list-item')
             if (item && typeof item.dataset.index !== 'undefined') {
               const index = Number(item.dataset.index)
               const costList = foundry.utils.duplicate(this.document.system.costList)
@@ -183,7 +185,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
           break
       }
     }))
-    this.element.querySelectorAll('.spell-cost-block').forEach((element) => element.addEventListener('dragstart', (event) => {
+    this.element.querySelectorAll('.adjustable-item-block').forEach((element) => element.addEventListener('dragstart', (event) => {
       event.preventDefault()
       event.stopPropagation()
     }))
@@ -191,9 +193,9 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
       event.preventDefault()
       event.stopPropagation()
     }))
-    const dragDrop = new (foundry.applications.ux?.DragDrop ?? DragDrop)({
-      dragSelector: '.spell-cost-list',
-      dropSelector: '.spell-cost-list',
+    new foundry.applications.ux.DragDrop({
+      dragSelector: '.adjustable-list-item',
+      dropSelector: '.adjustable-list-item',
       permissions: {
         dragstart: true,
         drop: true
@@ -202,8 +204,7 @@ export default class CoC7ModelsItemSpellSheet extends CoC7ModelsItemGlobalSheet 
         dragstart: this._onDragStart.bind(this),
         drop: this._onDragDrop.bind(this)
       }
-    })
-    dragDrop.bind(this.element)
+    }).bind(this.element)
   }
 
   /**

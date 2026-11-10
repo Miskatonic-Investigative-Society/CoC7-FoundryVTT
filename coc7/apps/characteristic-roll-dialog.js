@@ -13,7 +13,7 @@ export default class CoC7CharacteristicRollDialog extends foundry.applications.a
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       contentClasses: [
         'standard-form'
@@ -53,31 +53,45 @@ export default class CoC7CharacteristicRollDialog extends foundry.applications.a
       this.element.querySelector('.total-points').innerText = total
       const pointsSummary = this.element.querySelector('.points-summary')
       if (this.pointsWarning) {
-        pointsSummary.classList.add('warning')
+        pointsSummary.classList.add('coc7-warning')
       } else {
-        pointsSummary.classList.remove('warning')
+        pointsSummary.classList.remove('coc7-warning')
       }
     }))
-    this.element.querySelectorAll('.roll-characteristic').forEach((element) => element.addEventListener('click', async (event) => {
-      const key = this.formKeyFromEvent(event)
-      await this.rollCharacteristic(key)
-      this.render({ force: true })
-    }))
-    this.element.querySelectorAll('.increase-characteristic').forEach((element) => element.addEventListener('click', async (event) => {
-      const key = this.formKeyFromEvent(event)
-      this.coc7Config.values[key] = Math.min(100, this.coc7Config.values[key] + (CoC7Utilities.isCtrlKey(event) ? 10 : 1))
-      this.render({ force: true })
-    }))
-    this.element.querySelectorAll('.decrease-characteristic').forEach((element) => element.addEventListener('click', async (event) => {
-      const key = this.formKeyFromEvent(event)
-      this.coc7Config.values[key] = Math.max(0, this.coc7Config.values[key] - (CoC7Utilities.isCtrlKey(event) ? 10 : 1))
-      this.render({ force: true })
-    }))
-    this.element.querySelectorAll('.reset-characteristic').forEach((element) => element.addEventListener('click', async (event) => {
-      const key = this.formKeyFromEvent(event)
-      this.coc7Config.values[key] = null
-      this.render({ force: true })
-    }))
+    this.element.querySelectorAll('[data-action]').forEach((element) => {
+      element.addEventListener('click', async (event) => {
+        switch (event.currentTarget.dataset.action) {
+          case 'roll-characteristic':
+            {
+              const key = this.formKeyFromEvent(event)
+              await this.rollCharacteristic(key)
+              this.render({ force: true })
+            }
+            break
+          case 'increase-characteristic':
+            {
+              const key = this.formKeyFromEvent(event)
+              this.coc7Config.values[key] = Math.min(100, this.coc7Config.values[key] + (CoC7Utilities.isCtrlKey(event) ? 10 : 1))
+              this.render({ force: true })
+            }
+            break
+          case 'decrease-characteristic':
+            {
+              const key = this.formKeyFromEvent(event)
+              this.coc7Config.values[key] = Math.max(0, this.coc7Config.values[key] - (CoC7Utilities.isCtrlKey(event) ? 10 : 1))
+              this.render({ force: true })
+            }
+            break
+          case 'reset-characteristic':
+            {
+              const key = this.formKeyFromEvent(event)
+              this.coc7Config.values[key] = null
+              this.render({ force: true })
+            }
+            break
+        }
+      })
+    })
   }
 
   /**
@@ -91,7 +105,8 @@ export default class CoC7CharacteristicRollDialog extends foundry.applications.a
         flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
           label: CoC7Utilities.getAttributeNames('lck')?.label,
           formula: this.coc7Config.attribs.luck.formula
-        })
+        }),
+        'flags.CoC7.plainRoll': true
       })
       this.coc7Config.values.luck = roll.total
     } else if (typeof this.coc7Config.characteristics[key] !== 'undefined' && this.coc7Config.characteristics[key].formula) {
@@ -100,7 +115,8 @@ export default class CoC7CharacteristicRollDialog extends foundry.applications.a
         flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
           label: CoC7Utilities.getCharacteristicNames(key)?.label,
           formula: this.coc7Config.characteristics[key].formula
-        })
+        }),
+        'flags.CoC7.plainRoll': true
       })
       this.coc7Config.values[key] = roll.total
     }
@@ -181,7 +197,7 @@ export default class CoC7CharacteristicRollDialog extends foundry.applications.a
     event.preventDefault()
     const li = event.currentTarget.closest('.item')
     const form = event.currentTarget.closest('form')
-    const formData = new (foundry.applications.ux.FormDataExtended ?? FormDataExtended)(form)
+    const formData = new foundry.applications.ux.FormDataExtended(form)
     for (const key in this.coc7Config.values) {
       if (typeof formData.object[key] !== 'undefined' && formData.object[key].toString().length && !isNaN(Number(formData.object[key]))) {
         this.coc7Config.values[key] = Number(formData.object[key])
@@ -241,22 +257,6 @@ export default class CoC7CharacteristicRollDialog extends foundry.applications.a
         break
     }
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**

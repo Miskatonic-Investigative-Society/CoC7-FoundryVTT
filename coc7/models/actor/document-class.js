@@ -1,3 +1,4 @@
+// cSpell:ignore reportCharactedriticsValue
 import { FOLDER_ID, STATUS_EFFECTS } from '../../constants.js'
 import CoC7AverageRoll from '../../apps/average-roll.js'
 import CoC7CharacteristicRollDialog from '../../apps/characteristic-roll-dialog.js'
@@ -15,11 +16,11 @@ import CoC7ModelsItemItemSystem from '../item/item-system.js'
 import CoC7ModelsItemSkillSystem from '../item/skill-system.js'
 import CoC7ModelsItemSpellSystem from '../item/spell-system.js'
 import CoC7ModelsItemWeaponSystem from '../item/weapon-system.js'
+import CoC7PickTalentDialog from '../../apps/pick-talent-dialog.js'
 import CoC7PointSelectionDialog from '../../apps/point-selection-dialog.js'
 import CoC7RollNormalize from '../../apps/roll-normalize.js'
 import CoC7SkillSelectionDialog from '../../apps/skill-selection-dialog.js'
 import CoC7SkillSpecializationSelectDialog from '../../apps/skill-specialization-select-dialog.js'
-import CoC7SpendLuckDialog from '../../apps/spend-luck-dialog.js'
 import CoC7Utilities from '../../apps/utilities.js'
 import deprecated from '../../deprecated.js'
 
@@ -48,9 +49,9 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       case 'container':
         return 'icons/svg/chest.svg'
       case 'creature':
-        return 'systems/CoC7/assets/icons/floating-tentacles.svg'
+        return 'systems/CoC7/assets/game-icons/delapouite/floating-tentacles.svg'
       case 'npc':
-        return 'systems/CoC7/assets/icons/cultist.svg'
+        return 'systems/CoC7/assets/game-icons/lorc/cultist.svg'
     }
   }
 
@@ -117,46 +118,35 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       if (boutOfMadnessTable) {
         const tableRoll = await boutOfMadnessTable.roll()
         for (const tableResult of tableRoll.results) {
-          /* // FoundryVTT V12 */
-          let document
-          if (game.release.generation === 12 && tableResult.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
-            document = await game.packs.get(tableResult.documentCollection)?.getDocument(tableResult.documentId)
-            tableResult.type = CONST.TABLE_RESULT_TYPES.DOCUMENT
-          }
           switch (tableResult.type) {
             case CONST.TABLE_RESULT_TYPES.DOCUMENT:
-              /* // FoundryVTT V12 */
-              if (typeof document === 'undefined') {
-                const documentUuid = (tableResult.documentUuid ?? tableResult.documentCollection + '.' + tableResult.documentId)
-                document = await fromUuid(documentUuid)
-              }
-              if (document && ['status'].includes(document.type)) {
-                if (document.type === 'status') {
-                  if (document.system.type.phobia) {
-                    result.phobia = true
+              {
+                const doc = await fromUuid(tableResult.documentUuid)
+                if (doc && ['status'].includes(doc.type)) {
+                  if (doc.type === 'status') {
+                    if (doc.system.type.phobia) {
+                      result.phobia = true
+                    }
+                    if (doc.system.type.mania) {
+                      result.mania = true
+                    }
                   }
-                  if (document.system.type.mania) {
-                    result.mania = true
-                  }
+                  result.description = doc.name + ':' + await foundry.applications.ux.TextEditor.implementation.enrichHTML(
+                    doc.system.description.value,
+                    { async: true }
+                  )
+                  result.name = doc.name
+                  const itemData = doc.toObject()
+                  delete itemData._id
+                  await this.createEmbeddedDocuments('Item', [itemData])
+                } else {
+                  ui.notifications.error('CoC7.MessageBoutOfMadnessItemNotFound', { localize: true })
                 }
-                /* // FoundryVTT V12 */
-                result.description = document.name + ':' + await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
-                  document.system.description.value,
-                  { async: true }
-                )
-                result.name = document.name
-                const itemData = document.toObject()
-                delete itemData._id
-                await this.createEmbeddedDocuments('Item', [itemData])
-              } else {
-                ui.notifications.error('CoC7.MessageBoutOfMadnessItemNotFound', { localize: true })
               }
               break
             case CONST.TABLE_RESULT_TYPES.TEXT:
-              /* // FoundryVTT V12 */
-              result.description = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
-                /* // FoundryVTT V12 */
-                (game.release.generation === 12 ? tableResult.text : tableResult.name + (tableResult.name.length && tableResult.description.length ? ':' : '') + tableResult.description),
+              result.description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
+                tableResult.name + (tableResult.name.length && tableResult.description.length ? ': ' : '') + tableResult.description,
                 { async: true }
               )
               break
@@ -540,6 +530,45 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
               await this.prepareEmbeddedExperiencePackage(data, updateDocument, itemByType, processedDataArray, updateEmbeddedDocuments)
             }
             break
+          case 'talent':
+            {
+              // If talent adds a skill process it here
+              const cocids = data.system.adjustments.filter(doc => doc.type === 'addSkillChoice').map(doc => { if (typeof doc.config === 'string') { doc.config = JSON.parse(doc.config) } return doc.config.cocid })
+              if (cocids.length) {
+                const skills = await game.CoC7.cocid.expandItemArray({ itemList: cocids })
+                switch (skills.length) {
+                  case 0:
+                    break
+                  case 1:
+                    {
+                      const newItem = foundry.utils.duplicate(skills[0])
+                      if (typeof itemByType[newItem.type] === 'undefined') {
+                        itemByType[newItem.type] = []
+                      }
+                      itemByType[newItem.type].push(newItem)
+                    }
+                    break
+                  default:
+                    {
+                      const rolled = await CoC7SkillSelectionDialog.create({ skills, optionsCount: 1 })
+                      for (const item of skills) {
+                        if (rolled[item._id] === true) {
+                          const newItem = foundry.utils.duplicate(item)
+                          if (typeof itemByType[newItem.type] === 'undefined') {
+                            itemByType[newItem.type] = []
+                          }
+                          itemByType[newItem.type].push(newItem)
+                        }
+                      }
+                    }
+                    break
+                }
+                processedDataArray.push(data)
+              } else {
+                processedDataArray.push(data)
+              }
+            }
+            break
           default:
             processedDataArray.push(data)
             break
@@ -858,13 +887,11 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     if (data.system.coreCharacteristicsFormula.enabled) {
       const roll = await new Roll(data.system.coreCharacteristicsFormula.value).roll()
       roll.toMessage({
-        flavor: game.i18n.format(
-          'CoC7.MessageRollingCharacteristic',
-          {
-            label: game.i18n.localize(coreCharacteristic.label),
-            formula: data.system.coreCharacteristicsFormula.value
-          }
-        )
+        flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
+          label: game.i18n.localize(coreCharacteristic.label),
+          formula: data.system.coreCharacteristicsFormula.value
+        }),
+        'flags.CoC7.plainRoll': true
       })
       if (roll.total > coreCharacteristic.value) {
         updateDocument['system.characteristics.' + coreCharacteristic.key + '.value'] = roll.total
@@ -997,11 +1024,10 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     for (const index in data.system.groups) {
       const skills = await CoC7Utilities.getEmbeddedItems(data, 'system.groups.' + index)
       if (skills.length <= data.system.groups[index].options) {
-        /* // FoundryVTT V12 */
-        ui.notifications.info(game.i18n.format('CoC7.InfoLessSkillThanOptions', {
+        ui.notifications.info('CoC7.InfoLessSkillThanOptions', { format: {
           skillCount: skills.length,
           optionsCount: data.system.groups[index].options
-        }))
+        } })
         for (const item of skills) {
           const newItem = foundry.utils.duplicate(item)
           if (typeof itemByType[newItem.type] === 'undefined') {
@@ -1037,11 +1063,10 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       }
       const skills = this.items.filter(d => d.type === 'skill' && !d.system.flags.occupation && !d.system.properties.noxpgain && !markedSkills.includes(d.name) && !markedSkills.includes(d.flags[FOLDER_ID]?.cocidFlag?.id))
       if (skills.length < data.system.personal) {
-        /* // FoundryVTT V12 */
-        ui.notifications.info(game.i18n.format('CoC7.InfoLessSkillThanOptions', {
+        ui.notifications.info('CoC7.InfoLessSkillThanOptions', { format: {
           skillCount: skills.length,
           optionsCount: data.system.personal
-        }))
+        } })
         for (const item of skills) {
           const newItem = foundry.utils.duplicate(item)
           if (typeof itemByType[newItem.type] === 'undefined') {
@@ -1109,11 +1134,10 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
         for (const index in data.system.groups) {
           const skills = await CoC7Utilities.getEmbeddedItems(data, 'system.groups.' + index)
           if (skills.length <= data.system.groups[index].options) {
-            /* // FoundryVTT V12 */
-            ui.notifications.info(game.i18n.format('CoC7.InfoLessSkillThanOptions', {
+            ui.notifications.info('CoC7.InfoLessSkillThanOptions', { format: {
               skillCount: skills.length,
               optionsCount: data.system.groups[index].options
-            }))
+            } })
             for (const item of skills) {
               const newItem = foundry.utils.duplicate(item)
               if (typeof itemByType[newItem.type] === 'undefined') {
@@ -1784,7 +1808,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       } else if (index > -1) {
         sanityLossEvents.splice(index, 1)
         sanityLossEvents.sort(function (left, right) {
-          return left.type.localeCompare(right.type)
+          return left.type.localeCompare(right.type, game.i18n.lang)
         })
       }
       return this.update({
@@ -2278,20 +2302,34 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     }
     let difference = changes['system.attribs.san.value'] - (this.system.attribs.san.value ?? 0)
     if (difference < 0) {
+      const options = this.items.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'takingSanityLoss')).map(doc => { return { talent: doc, enabled: false, luck: 0 } })
       if (game.settings.get(FOLDER_ID, 'pulpRuleLuckHalfSanityLoss')) {
-        const nameValue = Math.floor(Math.abs(difference) / 2)
-        const luckValue = nameValue * 2
-        const newLuck = parseInt(this.system.attribs.lck.value ?? 0, 10) - luckValue
-        if (newLuck >= 0) {
-          const luckSpent = await CoC7SpendLuckDialog.create({ name: game.i18n.localize('CoC7.SANLoss'), luckValue, nameValue })
-          if (luckSpent > 0) {
-            if (await this.spendLuck(luckValue) !== false) {
-              difference = difference + nameValue
-              changes['system.attribs.san.value'] = changes['system.attribs.san.value'] + nameValue
-            } else {
-              ui.notifications.error('CoC7.Errors.UnparsableModification')
-              return
+        options.unshift({
+          enabled: false,
+          luck: 0,
+          ratio: false,
+          html: (loss, luck) => {
+            const halve = Math.floor(loss / 2)
+            return game.i18n.format('CoC7.LuckReduceLossRatio', { luck: halve * 4, name: game.i18n.localize('CoC7.SANLoss'), loss: halve })
+          },
+          getLuckAndReduction: (type, loss, luck) => {
+            const halve = Math.floor(loss / 2)
+            return {
+              luck: halve * 4,
+              loss: halve
             }
+          }
+        })
+      }
+      if (options.length) {
+        const pickedOptions = await CoC7PickTalentDialog.create({ options, adjustmentType: 'takingSanityLoss', actorUuid: this.uuid, lossName: game.i18n.localize('CoC7.SANLoss'), lossMax: Math.abs(difference) })
+        console.log(pickedOptions)
+        if (pickedOptions.spentLuck > 0) {
+          if (await this.spendLuck(pickedOptions.spentLuck) !== false) {
+            difference += pickedOptions.reductionValue
+            changes['system.attribs.san.value'] = changes['system.attribs.san.value'] + pickedOptions.reductionValue
+          } else {
+            ui.notifications.warn('CoC7.NotEnoughLuck', { localize: true })
           }
         }
       }
@@ -2605,11 +2643,10 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       options.poolModifier = options.modifier
     }
     if (typeof this.system.schema.getField('attribs')?.getField(attributeName.toLowerCase()) === 'undefined') {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ErrorNotFoundForActor', {
+      ui.notifications.error('CoC7.ErrorNotFoundForActor', { format: {
         missing: attributeName,
         actor: this.name
-      }))
+      } })
       return
     }
     const config = {
@@ -2651,11 +2688,10 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       options.poolModifier = options.modifier
     }
     if (typeof this.system.schema.getField('characteristics')?.getField(characteristicName.toLowerCase()) === 'undefined') {
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.ErrorNotFoundForActor', {
+      ui.notifications.error('CoC7.ErrorNotFoundForActor', { format: {
         missing: characteristicName,
         actor: this.name
-      }))
+      } })
       return
     }
     const config = {
@@ -2778,11 +2814,10 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     item = this.getItemByName(itemIdentifier, type)
     if (item) {
       if (item.type === 'skill') {
-        /* // FoundryVTT V12 */
-        ui.notifications.info(game.i18n.format('CoC7.InfoSkillAddedAtBase', {
+        ui.notifications.info('CoC7.InfoSkillAddedAtBase', { format: {
           name: item.name,
           percent: item.system.value
-        }))
+        } })
       } else if (item.type === 'weapon') {
         const updates = await item.system.reloadUpdates()
         if (item.system.skill.main.id === '' && item.system.skill.main.name !== '') {
@@ -2819,11 +2854,10 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       const item = items[0]
       if (item) {
         if (item.type === 'skill') {
-          /* // FoundryVTT V12 */
-          ui.notifications.info(game.i18n.format('CoC7.InfoSkillAddedAtBase', {
+          ui.notifications.info('CoC7.InfoSkillAddedAtBase', { format: {
             name: item.name,
             percent: item.system.value
-          }))
+          } })
         } else if (item.type === 'weapon') {
           const updates = await item.system.reloadUpdates()
           if (item.system.skill.main.id === '' && item.system.skill.main.name !== '') {
@@ -3323,7 +3357,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
         if (!scene) return null
         const tokenData = scene.getEmbeddedDocument('Token', tokenId)
         if (!tokenData) return null
-        const token = new Token(tokenData)
+        const token = new foundry.canvas.placeables.Token(tokenData)
         return token.actor
       }
     }
@@ -4068,29 +4102,29 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
       if (item.type === 'skill') {
         let sort = 3
         let group = game.i18n.localize('CoC7.Skills')
-        let name = item.name
+        let label = item.name
         if (item.system.properties.fighting) {
           sort = (rangedFirst ? 2 : 0)
           group = game.i18n.localize('CoC7.SkillFighting')
-          name = item.system.skillName
+          label = item.system.skillName
         } else if (item.system.properties.firearm) {
           sort = (rangedFirst ? 0 : 1)
           group = game.i18n.localize('CoC7.SkillFirearm')
-          name = item.system.skillName
+          label = item.system.skillName
         } else if (item.system.properties.ranged) {
           sort = (rangedFirst ? 1 : 2)
           group = game.i18n.localize('CoC7.SkillRanged')
-          name = item.system.skillName
+          label = item.system.skillName
         }
         skills.push({
-          id: item.id,
-          name,
+          value: item.id,
+          label,
           group,
           sort
         })
       }
     }
-    skills.sort(CoC7Utilities.sortBySortThenNameKey)
+    skills.sort(CoC7Utilities.sortBySortThenLabelKey)
     return skills
   }
 
@@ -4413,8 +4447,7 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
     if (this.system.schema.getField('attribs')?.getField('hp') && this.system.schema.getField('attribs')?.getField('armor')) {
       const damageValue = parseInt(amount, 10)
       if (isNaN(damageValue)) {
-        /* // FoundryVTT V12 */
-        ui.notifications.warn(game.i18n.format('CoC7.ErrorUnableToParseArmorFormula', { value: amount }))
+        ui.notifications.warn('CoC7.ErrorUnableToParseArmorFormula', { format: { value: amount } })
         return 0
       }
       let armorValue = 0
@@ -4432,12 +4465,23 @@ export default class CoC7ModelsActorDocumentClass extends Actor {
           armorFormula = ((armorFormula ?? '').toString().trim() === '' ? 0 : armorFormula)
           armorValue = parseInt((await new Roll(armorFormula.toString()).roll()).total, 10)
         } catch (e) {
-          /* // FoundryVTT V12 */
-          ui.notifications.warn(game.i18n.format('CoC7.ErrorUnableToParseArmorFormula', { value: armorValue }))
+          ui.notifications.warn('CoC7.ErrorUnableToParseArmorFormula', { format: { value: armorValue } })
           armorValue = 0
         }
       }
-      const damageTotal = damageValue - armorValue
+      let damageTotal = damageValue - armorValue
+      if (damageTotal <= 0) return 0
+      const options = this.items.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'takingDamage')).map(doc => { return { talent: doc, enabled: false, luck: 0 } })
+      if (options.length) {
+        const pickedOptions = await CoC7PickTalentDialog.create({ options, adjustmentType: 'takingDamage', actorUuid: this.uuid, lossName: game.i18n.localize('CoC7.Damage'), lossMax: damageTotal })
+        if (pickedOptions.spentLuck > 0) {
+          if (await this.spendLuck(pickedOptions.spentLuck) !== false) {
+            damageTotal -= pickedOptions.reductionValue
+          } else {
+            ui.notifications.warn('CoC7.NotEnoughLuck', { localize: true })
+          }
+        }
+      }
       if (damageTotal <= 0) return 0
       const hpNew = await this.#modifyHp(-damageTotal)
       const hpMax = (this.system.attribs.hp.max ?? 0)

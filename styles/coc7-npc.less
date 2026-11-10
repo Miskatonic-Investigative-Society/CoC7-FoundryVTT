@@ -1,17 +1,123 @@
-.application.coc7.sheet.npc {
+.application.sheet.npc {
   overflow: visible;
-  font-size: @16px;
+  font-size: var(--font-size-15);
+  border-radius: 6px 6px 0 6px;
+  &:not(:has(.tab-group-notes.visible-notes)) {
+    border-radius: 6px;
+  }
 
   section.window-content {
+    border-radius: 0 0 6px 6px;
+    max-height: calc(90vh - 2rem);
+    font-family: var(--investigator-sheet-secondary-font);
+    background-image: var(--background-sheet);
+
     &:has(.tab-group-notes.visible-notes) {
       overflow: visible;
+      border-radius: 6px 6px 0 6px;
     }
-    max-height: calc(90vh - 2rem);
-    background-position: top right;
-    font-family: var(--investigator-sheet-secondary-font);
+
+    .tab-group-header {
+      .flex-row();
+      background: var(--npc-color-header-background);
+      border: 2px groove var(--npc-color-groove);
+      padding: @rem2px @rem6px;
+      cursor: pointer;
+
+      div {
+        flex: 1;
+
+        &.tab-group-title {
+          flex: 2;
+          font-family: var(--investigator-sheet-primary-font);
+          font-size: var(--font-size-16);
+          text-align: center;
+        }
+
+        &.item-controls {
+          justify-content: flex-end;
+        }
+      }
+    }
+
+    .tab-group-tab {
+      .inventory-tab {
+        margin: 0 @rem4px;
+
+        .tab-group-header {
+          .tab-group-title {
+            font-size: var(--font-size-15);
+          }
+        }
+      }
+    }
+
+    .item-list,
+    .skill-list {
+      gap: @rem8px;
+
+      .item {
+        .npc-specialization {
+          color: var(--color-labels);
+          font-size: var(--font-size-10);
+          flex: 0 0 auto;
+          margin-right: @rem3px;
+        }
+
+        .skill-name {
+          overflow: hidden;
+        }
+
+        .detail-value {
+          flex: 0 0 @rem25px;
+          text-align: right;
+        }
+
+        .detail-value,
+        .skill-name {
+          padding: 0 2px;
+          border: none;
+          background: transparent;
+        }
+
+        span.pc {
+          flex: 0 0 auto;
+        }
+
+        .item-controls {
+          flex: 0 0 auto;
+          font-size: var(--font-size-12);
+        }
+
+        input:read-only {
+          cursor: default;
+        }
+      }
+    }
+
+    .item-list {
+      row-gap: @rem4px;
+      margin-bottom: @rem8px;
+
+      .item {
+        gap: @rem8px;
+      }
+    }
+
+    .skill-list {
+      font-size: var(--font-size-15);
+      padding-top: @rem4px;
+      row-gap: @rem2px;
+
+      .item {
+        flex: 0 0 calc(33% - @rem4px);
+        flex-wrap: wrap;
+
+      }
+    }
 
     div.npc {
-      gap: @6px;
+      gap: @rem6px;
 
       div.editor-content {
         font-size: var(--font-size-14);
@@ -22,11 +128,15 @@
       }
 
       .item-controlled-width {
-        flex: 0 0 @20px;
+        flex: 0 0 @rem20px;
 
         &.slid-out-notes {
           display: none;
         }
+      }
+
+      input {
+        box-shadow: none;
       }
 
       /* ---------------------------------------- */
@@ -36,13 +146,13 @@
         .flex-row();
 
         .character-detail {
-          .flex-row(@col-gap: @5px);
+          .flex-row(@col-gap: @rem5px);
 
           .title {
             font-family: var(--investigator-sheet-primary-font);
-            font-size: @15px;
+            font-size: var(--font-size-15);
             text-transform: uppercase;
-            line-height: @17px;
+            line-height: @rem17px;
           }
 
           .detail-value {
@@ -50,11 +160,11 @@
             background: transparent;
             border: none;
             font-family: var(--investigator-sheet-secondary-font);
-            font-size: @13px;
+            font-size: var(--font-size-13);
             color: var(--color-labels);
-            height: @17px;
-            line-height: @17px;
-            padding: @2px @3px 0;
+            height: @rem17px;
+            line-height: @rem17px;
+            padding: @rem2px @rem3px 0;
 
             &.name-value {
               flex: 1.3;
@@ -100,7 +210,7 @@
         align-items: flex-start;
 
         .attribute-detail {
-          gap: @6px;
+          gap: @rem6px;
 
           .attributes {
             align-items: flex-start;
@@ -123,9 +233,9 @@
             div.roll-san,
             div.characteristic-name {
               font-family: var(--investigator-sheet-primary-font);
-              font-size: @15px;
+              font-size: var(--font-size-15);
               text-transform: uppercase;
-              line-height: @17px;
+              line-height: @rem17px;
             }
 
             div.attribute-name,
@@ -135,7 +245,7 @@
 
             .notes-toggle {
               flex: 0 0 auto;
-              margin: 0 @2px;
+              margin: 0 @rem2px;
               font-size: var(--font-size-15);
               line-height: var(--font-size-15);
             }
@@ -154,11 +264,11 @@
               background: transparent;
               border: none;
               font-family: var(--investigator-sheet-secondary-font);
-              font-size: @13px;
+              font-size: var(--font-size-13);
               color: var(--color-labels);
-              height: @17px;
-              line-height: @17px;
-              padding: @2px @3px 0;
+              height: @rem17px;
+              line-height: @rem17px;
+              padding: @rem2px @rem3px 0;
 
               &.attribute-value {
                 text-align: right;
@@ -189,81 +299,43 @@
         }
 
         div.profile-img {
-          flex: 0 0 @100px;
-          margin: 0 0 0 @16px;
+          flex: 0 0 @rem100px;
+          margin: 0 0 0 @rem16px;
 
           img[data-action="editImage"] {
             cursor: pointer;
           }
 
           a {
-            font-size: @100px;
+            font-size: @rem100px;
           }
         }
       }
 
       .tab-group-notes {
         position: absolute;
-        top: 0px;
+        top: var(--header-height);
         right: -460px;
         width: 460px;
-        height: calc(100% - 1px);
-        overflow: scroll;
+        height: calc(100% - var(--header-height));
         background-image: var(--background-sheet);
-        background-position: top right;
-        transform: scaleX(-1);
+        background-position: -648px calc(-1 * var(--header-height));
         transition: right 0.5s;
         overflow: hidden;
 
         &.slide-out-notes {
-          right: 0;
+          right: 6px;
         }
 
         &.sliding-out-notes {
           z-index: -1;
         }
 
-        .tab-group-header,
         .tab-group-tab {
-          transform: scaleX(-1);
-        }
+          padding: @rem16px;
 
-        .tab-group-tab {
-          padding: @16px;
-        }
-      }
-
-      .tab-group-header {
-        .flex-row();
-        background: rgba(0, 0, 0, 0.15);
-        border: 2px groove #eeede0;
-        padding: @2px @6px;
-        cursor: pointer;
-
-        div {
-          flex: 1;
-
-          &.tab-group-title {
-            flex: 2;
-            font-family: var(--investigator-sheet-primary-font);
-            font-size: @16px;
-            text-align: center;
-          }
-
-          &.item-controls {
-            justify-content: flex-end;
-          }
-        }
-      }
-
-      .tab-group-tab {
-        .inventory-tab {
-          margin: 0 @4px;
-
-          .tab-group-header {
-            .tab-group-title {
-              font-size: @15px;
-            }
+          prose-mirror {
+            flex: 1;
           }
         }
       }
@@ -273,86 +345,18 @@
         background: transparent;
         border: none;
         font-family: var(--investigator-sheet-secondary-font);
-        font-size: @13px;
+        font-size: var(--font-size-13);
         color: var(--color-labels);
-        height: @17px;
-        line-height: @17px;
-        padding: @2px @3px 0;
-      }
-
-      .item-list,
-      .skill-list {
-        gap: @8px;
-
-        .item {
-          .npc-specialization {
-            color: #a42;
-            font-size: @10px;
-            flex: 0 0 auto;
-            margin-right: @3px;
-          }
-
-          .skill-name {
-            overflow: hidden;
-          }
-
-          .detail-value {
-            flex: 0 0 @25px;
-            text-align: right;
-          }
-
-          .detail-value,
-          .skill-name {
-            padding: 0 2px;
-            border: none;
-            background: transparent;
-          }
-
-          span.pc {
-            flex: 0 0 auto;
-          }
-
-          .item-controls {
-            flex: 0 0 auto;
-            font-size: @12px;
-          }
-
-          input:read-only {
-            cursor: default;
-          }
-        }
-      }
-
-      .item-list {
-        row-gap: @4px;
-        margin-bottom: @8px;
-
-        .item {
-          gap: @8px;
-
-          .coc7-formatted-text {
-            font-size: var(--font-size-14);
-          }
-        }
-      }
-
-      .skill-list {
-        font-size: @15px;
-        padding-top: @4px;
-        row-gap: @2px;
-
-        .item {
-          flex: 0 0 calc(33% - @4px);
-          flex-wrap: wrap;
-
-        }
+        height: @rem17px;
+        line-height: @rem17px;
+        padding: @rem2px @rem3px 0;
       }
 
       .use-luck-list {
         display: grid;
         grid-template-columns: repeat(3, 33%);
-        gap: @4px;
-        margin-top: @4px;
+        gap: @rem2px;
+        margin-top: @rem4px;
 
         button.trigger-button {
           height: auto;
@@ -365,39 +369,39 @@
 
       div.attacks-per-round {
         font-family: var(--investigator-sheet-primary-font);
-        font-size: @15px;
+        font-size: var(--font-size-15);
         text-transform: uppercase;
-        line-height: @17px;
+        line-height: @rem17px;
         flex: 0 0 auto;
       }
 
       .combat-row {
-        font-size: @15px;
-        border-top: 1px groove #ccc;
-        border-left: 1px groove #ccc;
+        font-size: var(--font-size-15);
+        border-top: 1px groove var(--npc-color-groove);
+        border-left: 1px groove var(--npc-color-groove);
         align-items: stretch;
 
         &:last-of-type {
-          border-bottom: 1px groove #ccc;
+          border-bottom: 1px groove var(--npc-color-groove);
         }
 
         &.combat-title {
           font-family: var(--investigator-sheet-primary-font);
           text-transform: uppercase;
-          line-height: @17px;
+          line-height: @rem17px;
           text-align: center;
         }
 
         .combat-value {
-          border-right: 1px groove #ccc;
-          padding: @2px 0;
+          border-right: 1px groove var(--npc-color-groove);
+          padding: @rem2px 0;
           line-height: 1;
 
           &.skill-name {
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: @13px;
+            font-size: var(--font-size-13);
           }
 
           &.no-skill-set {
@@ -406,23 +410,23 @@
           }
 
           div.weapon-damage {
-            font-size: @11px;
+            font-size: var(--font-size-11);
           }
 
           div.weapon-controls {
-            flex: 0 0 @40px;
-            column-gap: @2px;
-            margin: 0 @2px;
+            flex: 0 0 @rem40px;
+            column-gap: @rem2px;
+            margin: 0 @rem2px;
 
             span.tag {
-              font-size: @13px;
+              font-size: var(--font-size-13);
             }
           }
 
           div.item-controls {
-            flex: 0 0 @24px;
-            font-size: @11px;
-            column-gap: @2px;
+            flex: 0 0 @rem24px;
+            font-size: var(--font-size-11);
+            column-gap: @rem2px;
           }
         }
 
@@ -430,8 +434,8 @@
           flex: 0 0 100%;
 
           .toggle-attributes button {
-            font-size: @10px;
-            padding: @3px;
+            font-size: var(--font-size-10);
+            padding: @rem3px;
           }
         }
       }
@@ -449,8 +453,8 @@
 
         li {
           &.items-header {
-            margin: @2px 0;
-            padding: @3px;
+            margin: @rem2px 0;
+            padding: @rem3px;
             border: none;
             font-weight: bold;
             border-bottom: 2px solid var(--color-highlight);
@@ -466,7 +470,7 @@
           }
 
           .effect-identifier {
-            .flex-row(@col-gap: @5px);
+            .flex-row(@col-gap: @rem5px);
           }
 
           h4 {
@@ -476,15 +480,15 @@
           }
 
           .effect-source {
-            flex: 0 0 @130px;
+            flex: 0 0 @rem130px;
           }
 
           .effect-duration {
-            flex: 0 0 @90px;
+            flex: 0 0 @rem90px;
           }
 
           .item-controls {
-            flex: 0 0 @64px;
+            flex: 0 0 @rem64px;
           }
         }
       }
@@ -492,30 +496,14 @@
   }
 }
 
-body.theme-dark .application.coc7.sheet.npc,
-.themed.theme-dark.application.coc7.sheet.npc {
+body.theme-dark .application.sheet.npc,
+.themed.theme-dark.application.sheet.npc {
   div.npc {
-    .tab-group-header {
-      background: rgba(128, 128, 128, 0.15);
-      border: 2px groove #121212;
-    }
-
     .combat-list {
-
       .combat-row {
-        border-top: 1px groove #121212;
-        border-left: 1px groove #121212;
-
-        &:last-of-type {
-          border-bottom: 1px groove #121212;
-        }
-
         .combat-value {
-          border-right: 1px groove #121212;
-
           &.no-skill-set {
             background-color: darkred;
-            color: var(--color-text-primary)
           }
         }
       }

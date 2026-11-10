@@ -2,11 +2,10 @@ import { FOLDER_ID } from '../../constants.js'
 import CoC7ActiveEffect from '../../apps/active-effect.js'
 import CoC7DropCoCID from '../../apps/drop-coc-id.js'
 import CoC7Utilities from '../../apps/utilities.js'
-import deprecated from '../../deprecated.js'
 
 export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheetV2) {
   static DEFAULT_OPTIONS = {
-    classes: ['coc7', 'sheet', 'dialog', 'item'],
+    classes: ['coc7-sheet'],
     form: {
       handler: CoC7ModelsItemGlobalSheet.#onSubmit,
       submitOnChange: true
@@ -82,6 +81,26 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
   }
 
   /**
+   * Edit embedded item
+   * @param {ClickEvent} event
+   * @param {string} source
+   */
+  async _onItemEditEvent (event, source) {
+    event.preventDefault()
+    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
+    const li = event.currentTarget.closest('.item')
+    if (li.dataset.uuid) {
+      const item = await fromUuid(li.dataset.uuid)
+      item.sheet.render({ force: true })
+    } else if (li.dataset.id) {
+      const itemData = foundry.utils.getProperty(this.document, source).itemDocuments.find(doc => doc._id === li.dataset.id)
+      const Cls = CONFIG.Item.documentClass
+      const item = new Cls(itemData, { parent: this.document })
+      item.sheet.render({ force: true })
+    }
+  }
+
+  /**
    * Delete embedded item
    * @param {ClickEvent} event
    * @param {string} source
@@ -117,8 +136,9 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
    * @param {ClickEvent} event
    * @param {string} source
    * @param {Array} allowedTypes
+   * @param {Array} otherLocations
    */
-  async _onItemDropEvent (event, source, allowedTypes) {
+  async _onItemDropEvent (event, source, allowedTypes, otherLocations = []) {
     event.preventDefault()
     event.stopPropagation()
     this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
@@ -128,12 +148,20 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
     if (droppedItems.length) {
       const useCoCID = await CoC7DropCoCID.create()
       const embeddedItems = await CoC7Utilities.getEmbeddedItems(this.document, source)
+      for (const otherLocation of otherLocations) {
+        if (otherLocation !== source) {
+          const otherItems = await CoC7Utilities.getEmbeddedItems(this.document, otherLocation)
+          embeddedItems.push(...otherItems)
+        }
+      }
       let collectionName
+      const skipped = []
       const updates = {}
       const names = []
       for (const document of droppedItems) {
         if (!this.document.constructor.isAnySpec(document)) {
           if (embeddedItems.find(doc => ((doc.name === document.name && doc.type === document.type) || (typeof doc.flags?.[FOLDER_ID]?.cocidFlag?.id !== 'undefined' && doc.flags[FOLDER_ID].cocidFlag.id === document.flags?.[FOLDER_ID]?.cocidFlag?.id)))) {
+            skipped.push(document.name)
             continue
           }
         }
@@ -149,9 +177,11 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
         }
         updates[source + '.' + collectionName].push(newEntry)
       }
+      if (skipped.length) {
+        ui.notifications.warn('CoC7.ExistingEmbeddedItems', { format: { names: '"' + skipped.join('" / "') + '"' } })
+      }
       if (names.length) {
-        /* // FoundryVTT V12 */
-        ui.notifications.info(game.i18n.format('CoC7.AddedEmbeddedItems', { names: '"' + names.join('" / "') + '"' }))
+        ui.notifications.info('CoC7.AddedEmbeddedItems', { format: { names: '"' + names.join('" / "') + '"' } })
         const object = foundry.utils.expandObject(updates)
         const parts = source.match(/\.([^\\.]+)\.\d+$/)
         if (parts) {
@@ -203,32 +233,9 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return
-    this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', (event) => { this._onClickToggle(event) }))
-
-    /* // FoundryVTT V12 */
-    if (game.release.generation === 12) {
-      this.element.querySelectorAll('img[data-action="editImage"]').forEach((element) => element.addEventListener('click', async (event) => {
-        deprecated.AppV2EditImage(event, this.document, this.element, { submitOnChange: this.options.form.submitOnChange, position: this.position })
-      }))
-    }
+    this.element.querySelectorAll('.toggle-switch').forEach((element) => element.addEventListener('click', this._onClickToggle.bind(this)))
 
     CoC7ActiveEffect._onRender(this.element, context.document)
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<ApplicationRenderContext>}
-   */
-  async _prepareContext (options) {
-    const context = await super._prepareContext(options)
-
-    /* // FoundryV12 polyfill */
-    if (!context.document) {
-      context.document = this.document
-    }
-
-    return context
   }
 
   /**
@@ -247,28 +254,7 @@ export default class CoC7ModelsItemGlobalSheet extends foundry.applications.api.
       context.tab = undefined
     }
 
-    /* // FoundryV12 polyfill */
-    if (game.release.generation === 12) {
-      context.editable = this.isEditable
-    }
-
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**

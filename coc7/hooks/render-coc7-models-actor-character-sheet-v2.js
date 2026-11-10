@@ -11,14 +11,6 @@ import CoC7ModelsActorCharacterSheetV3 from '../models/actor/character-sheet-v3.
  * @param {ApplicationRenderOptions} options
  */
 export default function (application, element, context, options) {
-  /* // FoundryV12 polyfill */
-  if (!context) {
-    context = {}
-    if (!context.document) {
-      context.document = application.document
-    }
-  }
-
   if (!context.document.isLimitedView) {
     if (!(application instanceof CoC7ModelsActorCharacterSheetSummarizedV2) && !element.querySelector('button.header-control.fa-solid.fa-window-minimize')) {
       application.options.actions.minimizeSheet = {

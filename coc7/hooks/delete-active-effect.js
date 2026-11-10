@@ -8,7 +8,7 @@ import CoC7ActiveEffect from '../apps/active-effect.js'
  * @param {string} userId
  */
 export default function (document, options, userId) {
-  if (game.userId === userId) {
+  if (game.userId === userId && document.parent !== null) {
     const statusKey = CoC7ActiveEffect.getStatusKey(document)
     if (statusKey) {
       switch (statusKey) {

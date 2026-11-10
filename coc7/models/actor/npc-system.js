@@ -77,7 +77,7 @@ export default class CoC7ModelsActorNPCSystem extends CoC7ModelsActorGlobalSyste
    * @returns {string}
    */
   static get defaultImg () {
-    return 'systems/' + FOLDER_ID + '/assets/icons/cultist.svg'
+    return 'systems/' + FOLDER_ID + '/assets/game-icons/lorc/cultist.svg'
   }
 
   /**

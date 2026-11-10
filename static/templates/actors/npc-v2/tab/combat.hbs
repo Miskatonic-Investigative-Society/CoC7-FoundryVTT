@@ -17,13 +17,13 @@
               {{#each weapon.system.range as |range key|}}
                 {{#if range.value}}
                   <div class="weapon-damage">
-                    <div class="item-control clickable" data-action="weapon-damage" data-range="{{key}}" data-tooltip="{{localize 'CoC7.RollDamageRange' range=range.value}}"><i class="fa-solid fa-dice-d20"></i> {{range.damage}}</div>
+                    <div class="item-control clickable" data-action="weapon-damage" data-range="{{key}}" data-tooltip="{{localize 'CoC7.RollDamageRange' range=range.value}}"><i class="fa-solid fa-dice-d20 fa-fw"></i> {{range.damage}}</div>
                   </div>
                 {{/if}}
               {{/each}}
             {{else}}
               <div class="weapon-damage">
-                <div class="item-control clickable" data-action="weapon-damage" data-range="normal" data-tooltip="{{localize 'CoC7.RollDamageRange' range=weapon.system.range.normal.value}}"><i class="fa-solid fa-dice-d20"></i> {{weapon.system.range.normal.damage}}</div>
+                <div class="item-control clickable" data-action="weapon-damage" data-range="normal" data-tooltip="{{localize 'CoC7.RollDamageRange' range=weapon.system.range.normal.value}}"><i class="fa-solid fa-dice-d20 fa-fw"></i> {{weapon.system.range.normal.damage}}</div>
               </div>
             {{/if}}
             <div class="weapon-controls flexrow">
@@ -32,15 +32,15 @@
               </div>
               <div class="control">
                 {{#if (eq null weapon.system.bullets)}}
-                  <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditWeapon" style=""><i class="fa-solid fa-edit"></i></a>
+                  <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditWeapon"><i class="fa-solid fa-edit fa-fw"></i></a>
                 {{else}}
-                  <a class="reload-weapon" data-tooltip="CoC7.Reload"><i class="game-icon game-icon-chaingun"></i></a>
+                  <a class="reload-weapon" data-tooltip="CoC7.Reload"><i class="game-icon game-icon-chaingun fa-fw"></i></a>
                 {{/if}}
               </div>
             </div>
           {{else}}
             <div class="weapon-damage">
-              <div class="item-control clickable" data-action="weapon-damage" data-range="normal" data-tooltip="CoC7.Weapon.Property.Melee"><i class="fa-solid fa-dice-d20"></i> {{weapon.system.range.normal.damage}}</div>
+              <div class="item-control clickable" data-action="weapon-damage" data-range="normal" data-tooltip="CoC7.Weapon.Property.Melee"><i class="fa-solid fa-dice-d20 fa-fw"></i> {{weapon.system.range.normal.damage}}</div>
             </div>
           {{/if}}
           <div class="coc7-tags">
@@ -79,14 +79,14 @@
             {{/if}}
           </div>
           <div class="item-controls">
-            <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditWeapon"><i class="fa-solid fa-edit"></i></a>
-            <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteWeapon"><i class="fa-solid fa-trash"></i></a>
+            <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditWeapon"><i class="fa-solid fa-edit fa-fw"></i></a>
+            <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteWeapon"><i class="fa-solid fa-trash fa-fw"></i></a>
           </div>
         </div>
         <div class="combat-toggle toggle-row flexrow">
           <div class="toggle-attributes flexrow" data-set="properties">
             {{#each ../_properties as |row|}}
-              <button class="toggle-switch{{#if (eq row.id 'melee')}}{{#if (not weapon.system.properties.rngd)}} switched-on{{/if}}{{else if (lookup weapon.system.properties row.id)}} switched-on{{/if}}" data-apply-to="item" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}} type="button">{{localize row.name}}</button>
+              <button class="toggle-switch{{#if (eq row.id 'melee')}}{{#if (not weapon.system.properties.rngd)}} switched-on{{/if}}{{else if (lookup weapon.system.properties row.id)}} switched-on{{/if}}" data-apply-to="item" data-property="{{row.id}}" {{#if row.tooltip}}data-tooltip="{{row.tooltip}}" {{/if}}>{{localize row.name}}</button>
             {{/each}}
           </div>
         </div>

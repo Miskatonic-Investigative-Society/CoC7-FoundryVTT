@@ -60,6 +60,14 @@ export default class CoC7ChatCombatRanged {
   }
 
   /**
+   * Get minimum weapon volley size
+   * @returns {integer}
+   */
+  static get minVolleySize () {
+    return 3
+  }
+
+  /**
    * Create melee initiator message
    * @param {object} options
    * @param {string} options.attackerUuid
@@ -75,7 +83,7 @@ export default class CoC7ChatCombatRanged {
       const attacker = (await check.attacker)
       const item = (await check.item)
       if (attacker && item) {
-        check.#volleySize = check.#volleyMax = Math.max(CoC7DicePool.minVolleySize, Math.floor((item.system.skillAlternative?.system.value ?? 0) / 10))
+        check.#volleySize = check.#volleyMax = Math.max(CoC7ChatCombatRanged.minVolleySize, Math.floor((item.system.skillAlternative?.system.value ?? 0) / 10))
         if (item.system.singleShot) {
           check.#singleShot = true
         } else if (item.system.properties.auto) {
@@ -116,7 +124,7 @@ export default class CoC7ChatCombatRanged {
         }
         const dicePoolReasons = CoC7Utilities.dicePoolReasons({ forRanged: true })
         const attackerKeys = Object.keys(dicePoolReasons).filter(k => dicePoolReasons[k].ifAttacker)
-        const attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable))) ?? []
+        const attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => (row.type === 'showOnCombatAttacker' || (row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable))))) ?? []
         const attackerPoolDisabled = attackerTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
         const targetKeys = Object.keys(dicePoolReasons).filter(k => dicePoolReasons[k].ifDefender)
         for (const targetUuid of targetUuids) {
@@ -129,7 +137,7 @@ export default class CoC7ChatCombatRanged {
               uuid: targetUuid,
               mov: target.system.attribs.mov.value
             })
-            const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)))
+            const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => (row.type === 'showOnCombatDefender' || (row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)))))
             const targetPoolDisabled = targetTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
             if (target.system.attribs.build.value <= -2) {
               targetData.size = CoC7ChatCombatRanged.TARGET_SIZE.small
@@ -236,7 +244,7 @@ export default class CoC7ChatCombatRanged {
           }
         }
       }
-      shot.bulletsShot = Math.min(Math.max(CoC7DicePool.minVolleySize, this.#volleySize), this.#volleyMax)
+      shot.bulletsShot = Math.min(Math.max(CoC7ChatCombatRanged.minVolleySize, this.#volleySize), this.#volleyMax)
       if (shot.bulletsShot >= bulletLeft && !game.settings.get(FOLDER_ID, 'disregardAmmo')) {
         shot.bulletsShot = bulletLeft
         bulletLeft = 0
@@ -568,7 +576,7 @@ export default class CoC7ChatCombatRanged {
         {
           const check = await CoC7ChatCombatRanged.loadFromMessage(message)
           if (check) {
-            check.#volleySize = Math.max(CoC7DicePool.minVolleySize, check.#volleySize - 1)
+            check.#volleySize = Math.max(CoC7ChatCombatRanged.minVolleySize, check.#volleySize - 1)
             check.updateMessage()
           } else {
             ui.notifications.warn('CoC7.Errors.UnparsableModification', { localize: true })
@@ -652,7 +660,7 @@ export default class CoC7ChatCombatRanged {
                     check.#targets[offset].poolKeys.splice(index, 1)
                   }
                 } else if (set === 'fast' && check.#targets[offset].mov < 8) {
-                  ui.notifications.warn(game.i18n.format('CoC7.WarnFastTargetWithWrongMOV', { mov: check.#targets[offset].mov }))
+                  ui.notifications.warn('CoC7.WarnFastTargetWithWrongMOV', { format: { mov: check.#targets[offset].mov } })
                 }
               } else {
                 check.#targets[offset].poolKeys.splice(index, 1)
@@ -831,7 +839,7 @@ export default class CoC7ChatCombatRanged {
         element.addEventListener('change', event => CoC7ChatCombatRanged._onChangeEvent(event, message))
       })
     }
-    html.querySelectorAll('.coc7-formatted-text').forEach((element) => {
+    html.querySelectorAll('.overflowable').forEach((element) => {
       const div = document.createElement('div')
       div.id = 'temporary-measure-' + Math.floor(Math.random() * 100)
       div.style.width = 'var(--sidebar-width)'
@@ -906,8 +914,7 @@ export default class CoC7ChatCombatRanged {
       didAnyShotHit: !!this.#shots.find(s => s.dicePool.isSuccess),
       displayActorOnCard: game.settings.get(FOLDER_ID, 'displayActorOnCard'),
       enrichedWeaponDescriptionSpecial: '',
-      /* // FoundryVTT V12 */
-      enrichedItemDescriptionValue: await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      enrichedItemDescriptionValue: await foundry.applications.ux.TextEditor.implementation.enrichHTML(
         item?.system.description?.value,
         {
           async: true,
@@ -960,7 +967,7 @@ export default class CoC7ChatCombatRanged {
       totalAmmo: item?.system.ammo ?? 0,
       totalBulletsFired: this.#totalBulletsFired,
       volleyMax: this.#volleyMax,
-      volleyMin: CoC7DicePool.minVolleySize,
+      volleyMin: CoC7ChatCombatRanged.minVolleySize,
       volleySize: this.#volleySize,
       weaponRolled: this.#weaponRolled
     }
@@ -969,16 +976,27 @@ export default class CoC7ChatCombatRanged {
     }
     const dicePoolReasons = CoC7Utilities.dicePoolReasons({ forRanged: true })
     const attackerKeys = Object.keys(dicePoolReasons).filter(k => dicePoolReasons[k].ifAttacker)
-    const attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable))) ?? []
-    const attackerPoolDisabled = attackerTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && attackerKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
-    data.attackerTalent = await Promise.all(attackerTalents.map(async (doc) => await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(doc.link, { async: true }) ))
-    for (const key in dicePoolReasons) {
-      const type = (dicePoolReasons[key].forBonus ? 'poolBonus' : (dicePoolReasons[key].forPenalty ? 'poolPenalty' : ''))
+    let attackerTalents = attacker?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => (row.type === 'showOnCombatAttacker' || (row.type === 'disableCombatPool' && (row.config.disable === 'codedMultipleShots' || attackerKeys.includes(row.config.disable)))))) ?? []
+    if (typeof item?.flags?.CoC7?.cocidFlag?.id === 'string') {
+      attackerTalents = attackerTalents.concat(attacker?.items?.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(item.flags.CoC7.cocidFlag.id))) ?? [])
+    }
+    if (item?.type === 'weapon') {
+      const skill = attacker.items.get(item.system.skill.main.id)
+      if (skill?.type === 'skill') {
+        if (typeof skill?.flags?.CoC7?.cocidFlag?.id === 'string') {
+          attackerTalents = attackerTalents.concat(attacker?.items?.filter(doc => doc.type === 'talent' && doc.effects.find(doc => doc.disabled === false && doc.appliesToKey(skill.flags.CoC7.cocidFlag.id))) ?? [])
+        }
+      }
+    }
+    const attackerPoolDisabled = attackerTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && (row.config.disable === 'codedMultipleShots' || attackerKeys.includes(row.config.disable))).map(doc => doc.config.disable)); return c }, [])
+    data.attackerTalent = await Promise.all(attackerTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
+    for (const value in dicePoolReasons) {
+      const type = (dicePoolReasons[value].forBonus ? 'poolBonus' : (dicePoolReasons[value].forPenalty ? 'poolPenalty' : ''))
       if (type) {
         const row = {
-          key,
-          name: game.i18n.localize(dicePoolReasons[key].name),
-          tooltip: game.i18n.localize(dicePoolReasons[key].tooltip)
+          value,
+          label: game.i18n.localize(dicePoolReasons[value].label),
+          tooltip: game.i18n.localize(dicePoolReasons[value].tooltip)
         }
         data[type].push(row)
       }
@@ -990,40 +1008,42 @@ export default class CoC7ChatCombatRanged {
           data.targets[offset].poolDisabled = []
         }
         const target = await fromUuid(data.targets[offset].uuid)
-        const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)))
+        const targetTalents = target?.items?.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => (row.type === 'showOnCombatDefender' || (row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)))))
         const targetPoolDisabled = targetTalents.filter(doc => doc.type === 'talent' && doc.system.adjustments.find(row => row.type === 'disableCombatPool')).reduce((c, doc) => { c = c.concat(doc.system.adjustments.filter(row => row.type === 'disableCombatPool' && targetKeys.includes(row.config.disable)).map(doc => doc.config.disable)); return c }, [])
-        data.targets[offset].targetTalent = await Promise.all(targetTalents.map(async (doc) => await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(doc.link, { async: true }) ))
+        data.targets[offset].targetTalent = await Promise.all(targetTalents.map(async (doc) => await foundry.applications.ux.TextEditor.implementation.enrichHTML(doc.link, { async: true }) ))
         data.targets[offset].poolDisabled = attackerPoolDisabled.concat(targetPoolDisabled)
       }
       let difficulty = CoC7DicePool.difficultyLevel.regular
+      if (data.targets[offset].longRange) {
+        difficulty = CoC7DicePool.difficultyLevel.hard
+      } else if (data.targets[offset].extremeRange) {
+        difficulty = CoC7DicePool.difficultyLevel.extreme
+      }
       let poolModifier = data.targets[offset].poolModifier
       let damage = item?.system.range.normal.damage
-      if (!item?.system.properties.shotgun) {
+      if (item?.system.properties.shotgun) {
         if (data.targets[offset].longRange) {
-          difficulty = CoC7DicePool.difficultyLevel.hard
           damage = item?.system.range.long.damage
         } else if (data.targets[offset].extremeRange) {
-          difficulty = CoC7DicePool.difficultyLevel.extreme
           damage = item?.system.range.extreme.damage
         }
       }
       if (this.#aiming && this.#shots.length === 0) {
         poolModifier++
       }
-      // if (this.reload) modifier--
-      if (this.#multipleShots && !this.#fullAuto) {
+      if (this.#multipleShots && !this.#fullAuto && !attackerPoolDisabled.includes('codedMultipleShots')) {
         poolModifier--
       }
       if (this.#fullAuto) {
         poolModifier -= this.#shots.length
       }
       for (const poolRow of data.poolBonus) {
-        if (data.targets[offset].poolKeys.includes(poolRow.key)) {
+        if (data.targets[offset].poolKeys.includes(poolRow.value)) {
           poolModifier++
         }
       }
       for (const poolRow of data.poolPenalty) {
-        if (data.targets[offset].poolKeys.includes(poolRow.key)) {
+        if (data.targets[offset].poolKeys.includes(poolRow.value)) {
           poolModifier--
         }
       }
@@ -1066,7 +1086,7 @@ export default class CoC7ChatCombatRanged {
       }
     }
     if (data.hasWeaponSpecial) {
-      data.enrichedWeaponDescriptionSpecial = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+      data.enrichedWeaponDescriptionSpecial = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
         item.system.description.special,
         {
           async: true,
@@ -1121,12 +1141,11 @@ export default class CoC7ChatCombatRanged {
         }
       },
       rolls: (this.message?.rolls ?? []).concat(this.#shots.reduce((c, s) => c.concat(s.dicePool.newRolls), [])),
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/range-initiator.hbs', data)
+      content: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/range-initiator.hbs', data)
     }
     if (typeof this.message?.whisper === 'undefined') {
       /* // FoundryVTT V13 */
-      if (game.release.generation < 14) {
+      if (game.release.generation === 13) {
         if ([CHAT_MESSAGE_MODE.GM].includes(game.settings.get('core', 'rollMode'))) {
           chatData.whisper = ChatMessage.getWhisperRecipients('GM')
         } else if (CHAT_MESSAGE_MODE.BLIND === game.settings.get('core', 'rollMode')) {
@@ -1371,7 +1390,7 @@ export default class CoC7ChatCombatRanged {
           itemName: data.itemName
         })
       }
-      update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/range-initiator.hbs', data)
+      update.content = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/range-initiator.hbs', data)
       update._id = message.id
       updates.push(update)
     }

@@ -1,44 +1,44 @@
-<section class="tab combat scrollable {{tabs.combat.cssClass}}" data-group="primary" data-tab="combat">
+<section class="tab combat {{tabs.combat.cssClass}}" data-group="primary" data-tab="combat">
   <header class="tab-header">
     <h2 class="tab-heading">{{localize 'CoC7.Combat'}}</h2>
   </header>
-  <section class="weapon-list melee">
+  <section class="weapon-list">
     <header class="section-header">
-      <h3 class="section-heading">{{localize 'CoC7.MeleeWeapons'}}</h3>
+      <h4 class="section-heading">{{localize 'CoC7.MeleeWeapons'}}</h4>
       {{#unless document.system.flags.locked}}
         <div class="item-controls">
-          <a class="item-control" data-action="item-add" data-type="weapon" data-tooltip="CoC7.AddWeapon" data-melee="true"><i class="fa-regular fa-plus-circle"></i></a>
+          <a class="item-control" data-action="item-add" data-type="weapon" data-tooltip="CoC7.AddWeapon" data-melee="true"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
         </div>
       {{/unless}}
     </header>
     <ul class="item-list">
       {{#each meleeWpn as |weapon|}}
-        <li class="weapon-row item weapon{{#unless weapon.system.isSkillSet}} no-skill-set{{/unless}}" data-item-uuid="{{weapon.uuid}}"{{#unless weapon.system.isSkillSet}} data-tooltip="CoC7.NoSkill"{{/unless}}>
-          <div class="expand-arrow clickable"><i class="fa-solid fa-play"></i></div>
+        <li class="weapon-row item{{#unless weapon.system.isSkillSet}} no-skill-set{{/unless}}" data-item-uuid="{{weapon.uuid}}"{{#unless weapon.system.isSkillSet}} data-tooltip="CoC7.NoSkill"{{/unless}}>
+          <div class="expand-arrow clickable"><i class="fa-solid fa-play fa-fw"></i></div>
           <div class="item-image" style="background-image: url('{{weapon.img}}')"></div>
           <div class="weapon-title">
             <div class="weapon-name combat{{#if weapon.system.isSkillSet}} rollable{{else}} item-edit{{/if}}">{{weapon.name}}</div>
             {{#if weapon.system.properties.thrown}}
-              <a class="weapon-name combat alternative-skill{{#if weapon.system.isSkillSet}} rollable{{else}} item-edit{{/if}}" title="Throw"><i class="game-icon game-icon-thrown-knife"></i></a>
+              <a class="weapon-name combat alternative-skill{{#if weapon.system.isSkillSet}} rollable{{else}} item-edit{{/if}}" data-tooltip="CoC7.CoCIDFlag.keys.i.skill.throw"><i class="game-icon game-icon-thrown-knife fa-fw"></i></a>
             {{/if}}
           </div>
           <div class="weapon-range">
             {{#each weapon.system.range as |range key|}}
               {{#if range.damage}}
                 <div class="weapon-damage">
-                  <a class="item-control" data-action="weapon-damage" data-range="{{key}}" data-tooltip="{{localize 'CoC7.RollDamageRange' range=range.value}}">{{range.damage}}</a>
+                  <a class="item-control" data-action="weapon-damage" data-range="{{key}}">{{range.damage}}</a>
                 </div>
               {{/if}}
             {{/each}}
           </div>
-          <div class="weapon-controls">
-            {{#if weapon.system.properties.addb}}<span class="tag">{{localize 'CoC7.WeaponAddDb'}}</span>{{/if}}
-            {{#if weapon.system.properties.ahdb}}<span class="tag">{{localize 'CoC7.WeaponAddHalfDb'}}</span>{{/if}}
+          <div class="properties-list item-details">
+            {{#if weapon.system.properties.addb}}<div class="property">{{localize 'CoC7.WeaponAddDb'}}</div>{{/if}}
+            {{#if weapon.system.properties.ahdb}}<div class="property">{{localize 'CoC7.WeaponAddHalfDb'}}</div>{{/if}}
           </div>
           <div class="item-controls">
-            <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditWeapon"><i class="fa-solid fa-edit"></i></a>
+            <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditWeapon"><i class="fa-solid fa-edit fa-fw"></i></a>
             {{#unless ../document.system.flags.locked}}
-              <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteWeapon"><i class="fa-solid fa-trash"></i></a>
+              <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteWeapon"><i class="fa-solid fa-trash fa-fw"></i></a>
             {{/unless}}
           </div>
         </li>
@@ -46,49 +46,45 @@
     </ul>
   </section>
 
-  <section class="weapon-list range">
+  <section class="weapon-list">
     <header class="section-header">
-      <h3 class="section-heading">{{localize 'CoC7.RangeWeapons'}}</h3>
+      <h4 class="section-heading">{{localize 'CoC7.RangeWeapons'}}</h4>
       {{#unless document.system.flags.locked}}
         <div class="item-controls">
-          <a class="item-control" data-action="item-add" data-type="weapon" data-tooltip="CoC7.AddWeapon" data-rngd="true"><i class="fa-regular fa-plus-circle"></i></a>
+          <a class="item-control" data-action="item-add" data-type="weapon" data-tooltip="CoC7.AddWeapon" data-rngd="true"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
         </div>
       {{/unless}}
     </header>
     <ul class="item-list">
       {{#each rangeWpn as |weapon|}}
-        <li class="weapon-row item weapon{{#unless weapon.system.isSkillSet}} no-skill-set{{/unless}}" data-item-uuid="{{weapon.uuid}}"{{#unless weapon.system.isSkillSet}} data-tooltip="CoC7.NoSkill"{{/unless}}>
-          <div class="expand-arrow clickable"><i class="fa-solid fa-play"></i></div>
+        <li class="weapon-row item{{#unless weapon.system.isSkillSet}} no-skill-set{{/unless}}" data-item-uuid="{{weapon.uuid}}"{{#unless weapon.system.isSkillSet}} data-tooltip="CoC7.NoSkill"{{/unless}}>
+          <div class="expand-arrow clickable"><i class="fa-solid fa-play fa-fw"></i></div>
           <div class="item-image" style="background-image: url('{{weapon.img}}')"></div>
-          <div>
+          <div class="weapon-title">
             <div class="weapon-name combat{{#if weapon.system.isSkillSet}} rollable{{else}} item-edit{{/if}}">{{weapon.name}}</div>
-            {{#if weapon.usesAlternateSkill}}
-              <a class="weapon-name combat alternative-skill{{#if weapon.system.isSkillSet}} rollable{{else}} item-edit{{/if}}" data-tooltip="CoC7.AutomaticFire"><i class="game-icon game-icon-machine-gun-magazine"></i></a>
+            {{#if weapon.system.usesAlternateSkill}}
+              <a class="weapon-name combat alternative-skill{{#if weapon.system.isSkillSet}} rollable{{else}} item-edit{{/if}}" data-tooltip="CoC7.AutomaticFire"><i class="game-icon game-icon-machine-gun-magazine fa-fw"></i></a>
             {{/if}}
           </div>
           <div class="weapon-range">
             {{#each weapon.system.range as |range key|}}
-              {{#if range.damage}}
-                <div class="weapon-damage">
+              <div class="weapon-damage">
+                {{#if range.damage}}
                   <a class="item-control" data-action="weapon-damage" data-range="{{key}}" data-tooltip="{{localize 'CoC7.RollDamageRange' range=range.value}}">{{range.damage}}</a>
-                </div>
-              {{else}}
-                <div></div>
-              {{/if}}
+                {{else}}
+                  <a class="item-control"></a>
+                {{/if}}
+              </div>
             {{/each}}
           </div>
-          <div class="weapon-controls">
-            <div class="ammo">
-              <span class="tag">{{weapon.system.ammo}}</span>
-            </div>
-            <div class="control">
-              <a class="reload-weapon" data-tooltip="CoC7.Reload"><i class="game-icon game-icon-chaingun"></i></a>
-            </div>
+          <div class="properties-list item-details">
+            <div class="property ammo">{{weapon.system.ammo}}</div>
+            <a class="reload-weapon" data-tooltip="CoC7.Reload"><i class="game-icon game-icon-chaingun fa-fw"></i></a>
           </div>
           <div class="item-controls">
-            <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditWeapon"><i class="fa-solid fa-edit"></i></a>
+            <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditWeapon"><i class="fa-solid fa-edit fa-fw"></i></a>
             {{#unless ../document.system.flags.locked}}
-              <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteWeapon"><i class="fa-solid fa-trash"></i></a>
+              <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteWeapon"><i class="fa-solid fa-trash fa-fw"></i></a>
             {{/unless}}
           </div>
         </li>
@@ -96,44 +92,45 @@
     </ul>
   </section>
 
-  <section class="weapon-list maneuver">{{!Ensure no white space so that CSS hides it}}</section>
+  <section class="weapon-list">{{!Ensure no white space so that CSS hides it - maneuver section}}</section>
 
-  <section class="skill-list melee">
+  <section class="skill-list">
     <header class="section-header">
-      <h3 class="section-heading">{{localize 'CoC7.MeleeSkills'}}</h3>
+      <h4 class="section-heading">{{localize 'CoC7.MeleeSkills'}}</h4>
       {{#unless document.system.flags.locked}}
         <div class="item-controls">
-          <a class="item-control" data-action="item-add" data-type="skill" title="{{localize 'CoC7.AddSkill'}}"><i class="fa-regular fa-plus-circle"></i></a>
+          <a class="item-control" data-action="item-add" data-type="skill" data-tooltip="CoC7.AddSkill"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
         </div>
       {{/unless}}
     </header>
-    <ul class="item-list skill melee">
+    <ul class="item-list skill-list{{#if showPartValues}} show-part-values{{/if}}">
       {{#each meleeSkills as |skill|}}
-        <li class="item itemV2 skill" data-item-uuid="{{skill.uuid}}">
+        <li class="item skill" data-item-uuid="{{skill.uuid}}">
           <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
           {{#if ../document.system.flags.locked}}
-            <div class="item-name skill-name combat rollable" data-name-tooltip="{{skill.name}}" data-value-tooltip="{{skill.system.value}}">{{skill.name}}</div>
-            <div class="item-score">{{skill.system.value}}</div>
-            <div class="skill-icons">
+            <div class="item-name skill-name combat rollable" data-name-tooltip="{{skill.name}}" data-value-tooltip="{{skill.system.value}}">{{skill.system.skillName}}</div>
+            <div class="skill-value item-score">{{skill.system.value}}</div>
+            <div class="skill-calc">({{calcHard skill.system.value}}/{{calcExtreme skill.system.value}})</div>
+            <div class="item-controls flex-auto">
               {{#unless skill.system.properties.noxpgain}}
                 {{#if skill.system.flags.developement}}
-                  <a class="item-control development-flag active" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillFlagged')}}"><i class="fa-solid fa-circle-check"></i></a>
+                  <a class="item-control active" data-action="development-flag" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillFlagged')}}"><i class="fa-solid fa-circle-check fa-fw"></i></a>
                 {{else}}
-                  <a class="item-control development-flag" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillUnflagged')}}"><i class="fa-light fa-circle"></i></a>
+                  <a class="item-control" data-action="development-flag" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillUnflagged')}}"><i class="fa-light fa-circle fa-fw"></i></a>
                 {{/if}}
+              {{else}}
+                <a class="item-control"><i class="fa-light fa-circle fa-fw"></i></a>
               {{/unless}}
-              <a class="item-control item-popup" data-tooltip="CoC7.SkillDetail"><i class="fa-solid fa-info-circle"></i></a>
+              <a class="item-control" data-action="item-popup" data-tooltip="CoC7.SkillDetail"><i class="fa-solid fa-info-circle fa-fw"></i></a>
             </div>
           {{else}}
             <div class="item-name">
-              <input class="skill-name" type="text" value="{{skill.name}}">
+              <input class="skill-name" type="text" value="{{#if skill.system.properties.special}}{{skill.system.skillName}}{{else}}{{skill.name}}{{/if}}">
             </div>
-            <div class="item-score">
-              <input class="npc-skill-score" type="text" value="{{skill.system.valueUnmodified}}">
-            </div>
+            <input class="npc-skill-score" type="text" value="{{skill.system.valueUnmodified}}">
             <div class="item-controls">
-              <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditSkill"><i class="fa-solid fa-edit"></i></a>
-              <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteSkill"><i class="fa-solid fa-trash"></i></a>
+              <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditSkill"><i class="fa-solid fa-edit fa-fw"></i></a>
+              <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteSkill"><i class="fa-solid fa-trash fa-fw"></i></a>
             </div>
           {{/if}}
         </li>
@@ -141,42 +138,43 @@
     </ul>
   </section>
 
-  <section class="skill-list range">
+  <section class="skill-list">
     <header class="section-header">
-      <h3 class="section-heading">{{localize 'CoC7.RangeSkills'}}</h3>
+      <h4 class="section-heading">{{localize 'CoC7.RangeSkills'}}</h4>
       {{#unless document.system.flags.locked}}
         <div class="item-controls">
-          <a class="item-control" data-action="item-add" data-type="skill" data-tooltip="CoC7.AddSkill"><i class="fa-regular fa-plus-circle"></i></a>
+          <a class="item-control" data-action="item-add" data-type="skill" data-tooltip="CoC7.AddSkill"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
         </div>
       {{/unless}}
     </header>
-    <ul class="item-list skill range">
+    <ul class="item-list skill-list{{#if showPartValues}} show-part-values{{/if}}">
       {{#each rangeSkills as |skill|}}
-        <li class="item itemV2 skill" data-item-uuid="{{skill.uuid}}">
+        <li class="item skill" data-item-uuid="{{skill.uuid}}">
           <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
           {{#if ../document.system.flags.locked}}
-            <div class="item-name skill-name combat rollable" data-name-tooltip="{{skill.name}}" data-value-tooltip="{{skill.system.value}}">{{skill.name}}</div>
-            <div class="item-score">{{skill.system.value}}</div>
-            <div class="skill-icons">
+            <div class="item-name skill-name combat rollable" data-name-tooltip="{{skill.name}}" data-value-tooltip="{{skill.system.value}}">{{skill.system.skillName}}</div>
+            <div class="skill-value item-score">{{skill.system.value}}</div>
+            <div class="skill-calc">({{calcHard skill.system.value}}/{{calcExtreme skill.system.value}})</div>
+            <div class="item-controls flex-auto">
               {{#unless skill.system.properties.noxpgain}}
                 {{#if skill.system.flags.developement}}
-                  <a class="item-control development-flag active" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillFlagged')}}"><i class="fa-solid fa-circle-check"></i></a>
+                  <a class="item-control active" data-action="development-flag" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillFlagged')}}"><i class="fa-solid fa-circle-check fa-fw"></i></a>
                 {{else}}
-                  <a class="item-control development-flag" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillUnflagged')}}"><i class="fa-light fa-circle"></i></a>
+                  <a class="item-control" data-action="development-flag" data-tooltip="{{localize 'CoC7.ToolTipSkillFlagToggle' status=(localize 'CoC7.ToolTipSkillUnflagged')}}"><i class="fa-light fa-circle fa-fw"></i></a>
                 {{/if}}
+              {{else}}
+                <a class="item-control"><i class="fa-light fa-circle fa-fw"></i></a>
               {{/unless}}
-              <a class="item-control item-popup" data-tooltip="CoC7.SkillDetail"><i class="fa-solid fa-info-circle"></i></a>
+              <a class="item-control" data-action="item-popup" data-tooltip="CoC7.SkillDetail"><i class="fa-solid fa-info-circle fa-fw"></i></a>
             </div>
           {{else}}
             <div class="item-name">
-              <input class="skill-name" type="text" value="{{skill.name}}">
+              <input class="skill-name" type="text" value="{{#if skill.system.properties.special}}{{skill.system.skillName}}{{else}}{{skill.name}}{{/if}}">
             </div>
-            <div class="item-score">
-              <input class="npc-skill-score" type="text" value="{{skill.system.valueUnmodified}}">
-            </div>
+            <input class="npc-skill-score" type="text" value="{{skill.system.valueUnmodified}}">
             <div class="item-controls">
-              <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditSkill"><i class="fa-solid fa-edit"></i></a>
-              <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteSkill"><i class="fa-solid fa-trash"></i></a>
+              <a class="item-control" data-action="item-edit" data-tooltip="CoC7.EditSkill"><i class="fa-solid fa-edit fa-fw"></i></a>
+              <a class="item-control" data-action="item-delete" data-tooltip="CoC7.DeleteSkill"><i class="fa-solid fa-trash fa-fw"></i></a>
             </div>
           {{/if}}
         </li>

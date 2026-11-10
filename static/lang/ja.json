@@ -274,7 +274,7 @@
   "CoC7.Damage": "ダメージ",
   "CoC7.TotalDamage": "ダメージ合計",
 
-  
+
   "CoC7.rangeCombatCard.SingleShot": "単発",
   "CoC7.rangeCombatCard.MultipleShots": "複数回射撃",
   "CoC7.AutomaticFire": "自動火器の射撃",
@@ -615,7 +615,7 @@
   "CoC7.SanityLossEncounter": "遭遇による正気度喪失",
   "CoC7.SanityLossImmunity": "正気度喪失の耐性",
 
-  
+
   "CoC7.PerformInvoluntaryAction": "無意識の行動が行なわれた",
   "CoC7.SanityCheck": "〈正気度〉ロール",
   "CoC7.IntCheck": "INTロール",
@@ -823,7 +823,7 @@
   "CoC7.Spell.Legacy.Hint": "詳細タブ内のコストを使用してください。多くの呪文に求められる可変コストに対応し、アクターからそれを自動消費します。",
   "CoC7.Spell.ErrorPromptNotShown": "使用するコストをすべてプロンプトしてません",
   "CoC7.Spell.ErrorUnableToFindAdditionalCasters": "コスト割り振りの前に追加の詠唱者を設定してください",
-  
+
   "CoC7.BookAlterProgress": "研究進行度",
   "CoC7.BookProgressValue": "研究が進行するまで (1 - {max})",
   "CoC7.BookType": "本の種類",
@@ -1230,7 +1230,7 @@
   "SETTINGS.SceneDistanceNotCalculatedNoErrorHint": "遠隔攻撃を開始する時、戦闘マップを使用しない場合に距離計算メッセージを表示しない。",
   "CoC7.SETTINGS.LegacySpellCosts": "従来の呪文コストを常に表示",
   "CoC7.SETTINGS.LegacySpellCostsHint": "内容が空欄でも空欄でも従来の呪文コストを表示します",
-  
+
   "CoC7.getTheExample": "例をコピー",
   "CoC7.Copied": "例をクリップボードにコピーしました",
 
@@ -1335,7 +1335,7 @@
   "CoC7.CoCIDFlag.keys.i.skill.disguise": "変装",
   "CoC7.CoCIDFlag.keys.i.skill.diving": "潜水",
   "CoC7.CoCIDFlag.keys.i.skill.dodge": "回避",
-  "CoC7.CoCIDFlag.keys.i.skill.drive-auto": "運転（自動車）", 
+  "CoC7.CoCIDFlag.keys.i.skill.drive-auto": "運転（自動車）",
   "CoC7.CoCIDFlag.keys.i.skill.drive-carriage": "運転（Carriage）",
   "CoC7.CoCIDFlag.keys.i.skill.drive-horse-oxen": "運転（馬／牡牛）",
   "CoC7.CoCIDFlag.keys.i.skill.drive-wagon-coach": "運転 (Wagon / Coach)",
@@ -1510,16 +1510,6 @@
 
   "CoC7.AlternativeNames": "その他の名称",
 
-  "TOKEN.MOVEMENT.ACTIONS.walk.label": "歩行",
-  "TOKEN.MOVEMENT.ACTIONS.fly.label": "飛行",
-  "TOKEN.MOVEMENT.ACTIONS.swim.label": "水泳",
-  "TOKEN.MOVEMENT.ACTIONS.burrow.label": "穴掘り",
-  "TOKEN.MOVEMENT.ACTIONS.crawl.label": "這いずり",
-  "TOKEN.MOVEMENT.ACTIONS.climb.label": "登攀",
-  "TOKEN.MOVEMENT.ACTIONS.jump.label": "跳躍",
-  "TOKEN.MOVEMENT.ACTIONS.blink.label": "瞬間移動 (明滅)",
-  "TOKEN.MOVEMENT.ACTIONS.displace.label": "瞬間移動 (入れ替わり)",
-
   "CoC7.PortraitOptions": "Portrait Options",
   "CoC7.WhatCopiedClipboard": "\"{what}\" copied to clipboard.",
   "CoC7.AddedEmbeddedItems": "Added {names}",
@@ -1572,7 +1562,7 @@
   "CoC7.CoC7ModelsItemStatusSheet": "CoC7 状態シート",
   "CoC7.CoC7ModelsItemTalentSheet": "CoC7 タレントシート",
   "CoC7.CoC7ModelsItemWeaponSheet": "CoC7 武器シート",
-  
+
   "TYPES.RegionBehavior.ChaosiumCanvasInterfaceDrawingToggle": "CCI: 描画切り替え",
   "TYPES.RegionBehavior.ChaosiumCanvasInterfaceAmbientLightToggle": "CCI: 光切り替え",
   "TYPES.RegionBehavior.ChaosiumCanvasInterfaceMapPinToggle": "CCI: マップ・ピン切り替え",

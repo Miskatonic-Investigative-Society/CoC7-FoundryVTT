@@ -12,7 +12,7 @@ export default class CoC7CreateMythosEncounter extends foundry.applications.api.
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
-    classes: ['coc7', 'dialog'],
+    classes: ['coc7-sheet'],
     window: {
       contentClasses: [
         'standard-form'
@@ -50,11 +50,11 @@ export default class CoC7CreateMythosEncounter extends foundry.applications.api.
         context.isImmunity = this.coc7Config.type === 'immunity'
         context.encounterTypes = [
           {
-            key: 'encounter',
+            value: 'encounter',
             label: 'CoC7.SanityLossEncounter'
           },
           {
-            key: 'immunity',
+            value: 'immunity',
             label: 'CoC7.SanityLossImmunity'
           }
         ]
@@ -77,22 +77,6 @@ export default class CoC7CreateMythosEncounter extends foundry.applications.api.
         break
     }
     return context
-  }
-
-  /**
-   * @inheritdoc
-   * @param {RenderOptions} options
-   * @returns {Promise<HTMLElement>}
-   */
-  async _renderFrame (options) {
-    const frame = await super._renderFrame(options)
-
-    /* // FoundryV12 polyfill */
-    if (!foundry.utils.isNewerVersion(game.version, 13)) {
-      frame.setAttribute('open', true)
-    }
-
-    return frame
   }
 
   /**
@@ -130,7 +114,7 @@ export default class CoC7CreateMythosEncounter extends foundry.applications.api.
       immunity
     })
     sanityLossEvents.sort(function (left, right) {
-      return left.type.localeCompare(right.type)
+      return left.type.localeCompare(right.type, game.i18n.lang)
     })
     this.coc7Config.actor.update({ 'system.sanityLossEvents': sanityLossEvents })
   }

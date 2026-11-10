@@ -143,10 +143,10 @@ export default class CoC7ModelsItemOccupationSystem extends CoC7ModelsItemGlobal
   static getOccupationPointsString (occupationSkillPoints) {
     const optional = []
     const mandatory = []
-    for (const [key, value] of Object.entries(occupationSkillPoints)) {
-      if (value.selected && value.multiplier) {
-        const text = game.i18n.localize('CHARAC.' + key.toUpperCase()) + 'x' + value.multiplier
-        if (value.optional) {
+    for (const [value, field] of Object.entries(occupationSkillPoints)) {
+      if (field.selected && field.multiplier) {
+        const text = game.i18n.localize('CHARAC.' + value.toUpperCase()) + 'x' + field.multiplier
+        if (field.optional) {
           optional.push(text)
         } else {
           mandatory.push(text)

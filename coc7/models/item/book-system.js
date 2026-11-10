@@ -6,6 +6,7 @@ import CoC7RollNormalize from '../../apps/roll-normalize.js'
 import CoC7SanCheckCard from '../../apps/san-check-card.js'
 import CoC7SystemSocket from '../../apps/system-socket.js'
 import CoC7Utilities from '../../apps/utilities.js'
+import deprecated from '../../deprecated.js'
 
 export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem {
   /**
@@ -13,7 +14,7 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
    * @returns {string}
    */
   static get defaultImg () {
-    return 'systems/' + FOLDER_ID + '/assets/icons/secret-book.svg'
+    return 'systems/' + FOLDER_ID + '/assets/game-icons/delapouite/secret-book.svg'
   }
 
   /**
@@ -110,8 +111,7 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
        * The Actor who owns this does not have the skill of
        * the language in which it was written
        */
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.UnknownLanguage', { actor: this.parent.actor?.name ?? '?' }))
+      ui.notifications.error('CoC7.UnknownLanguage', { format: { actor: this.parent.actor?.name ?? '?' } })
       return
     }
     const config = {
@@ -124,13 +124,15 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
       itemUuid: skill.uuid
     }
     const check = await CoC7RollNormalize.trigger(config)
-    check.flavor = game.i18n.format('CoC7.ReadAttempt', {
-      book: this.parent.name,
-      language,
-      difficulty: this.difficultyLevel
-    })
-    check.setCallback(this.parent.uuid, 'attemptInitialReading')
-    check.toMessage()
+    if (check) {
+      check.flavor = game.i18n.format('CoC7.ReadAttempt', {
+        book: this.parent.name,
+        language,
+        difficulty: this.difficultyLevel
+      })
+      check.setCallback(this.parent.uuid, 'attemptInitialReading')
+      check.toMessage()
+    }
   }
 
   /**
@@ -169,8 +171,7 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
     const knownBook = this.parent.actor?.system.getBook(this.parent)
     if (knownBook?.initialReading !== true) {
       /** Actor did not performed an initial reading first */
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.InitialReadingNeeded', { actor: this.parent.actor.name, book: this.parent.name }))
+      ui.notifications.error('CoC7.InitialReadingNeeded', { format: { actor: this.parent.actor.name, book: this.parent.name } })
       return
     }
     if (modify < 0) {
@@ -243,10 +244,19 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
   }
 
   /**
-   * Add the spell to the Actor
+   * Add the spell to the Actor, but not all embedded items are referenced by id
+   * @deprecated No replacement
    * @param {string} spellId
    */
   async grantSpellLearning (spellId) {
+    deprecated.noLongerAvailable({ was: 'Book.grantSpellLearning(?)' })
+  }
+
+  /**
+   * Add the spell to the Actor
+   * @param {string} spellKey
+   */
+  async grantSpellItemLearning (spellKey) {
     if (!this.parent.isEmbedded) {
       /** This is not owned by any Actor */
       ui.notifications.error('CoC7.NotOwned', { localize: true })
@@ -255,19 +265,25 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
     const knownBook = this.parent.actor?.system.getBook(this.parent)
     if (knownBook?.initialReading !== true) {
       /** Actor did not performed an initial reading first */
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.InitialReadingNeeded', { actor: this.parent.actor.name, book: this.parent.name }))
+      ui.notifications.error('CoC7.InitialReadingNeeded', { format: { actor: this.parent.actor.name, book: this.parent.name } })
       return
     }
-    const spell = (await this.items()).find(spell => spell._id === spellId)
+    let spell
+    if (foundry.utils.parseUuid(spellKey)?.type === 'Item') {
+      spell = await fromUuid(spellKey)
+    } else {
+      const itemData = this.itemDocuments.find(doc => doc._id === spellKey)
+      if (itemData) {
+        const Cls = CONFIG.Item.documentClass
+        spell = new Cls(itemData, { parent: this.document })
+      }
+    }
     if (spell) {
-      if (knownBook.spellsLearned.includes(spellId)) {
-        /* // FoundryVTT V12 */
-        ui.notifications.warn(game.i18n.format('CoC7.SpellAlreadyLearned', { spell: spell.name, book: this.parent.name }))
+      if (knownBook.spellsLearned.includes(spell.id)) {
+        ui.notifications.warn('CoC7.SpellAlreadyLearned', { format: { spell: spell.name, book: this.parent.name } })
         return
       }
-      /* // FoundryVTT V12 */
-      ui.notifications.info(game.i18n.format('CoC7.SpellSuccessfullyLearned', { spell: spell.name, book: this.parent.name }))
+      ui.notifications.info('CoC7.SpellSuccessfullyLearned', { format: { spell: spell.name, book: this.parent.name } })
       await this.parent.actor.createEmbeddedDocuments('Item', [
         foundry.utils.duplicate(spell)
       ])
@@ -390,8 +406,7 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
         })
       }
     }
-    /* // FoundryVTT V12 */
-    const html = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/book-development.hbs', templateData)
+    const html = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/book-development.hbs', templateData)
     const chatData = {
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.parent.actor }),
@@ -402,10 +417,20 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
   }
 
   /**
-   * Attempt to learn the spell in the book
+   * Attempt to learn the spell in the book via id, but not all embedded items are referenced by id
+   * @deprecated No replacement
    * @param {string} id
    */
   async attemptSpellLearning (id) {
+    deprecated.noLongerAvailable({ was: 'Book.attemptSpellLearning(?)' })
+  }
+
+  /**
+   * Attempt to learn the spell in the book
+   * @param {string} key
+   * @param {string} name
+   */
+  async attemptSpellItemLearning (key, name) {
     if (!this.parent.isEmbedded) {
       /** This is not owned by any Actor */
       ui.notifications.error('CoC7.NotOwned', { localize: true })
@@ -414,27 +439,25 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
     const knownBook = this.parent.actor?.system.getBook(this.parent)
     if (knownBook?.initialReading !== true) {
       /** Actor did not performed an initial reading first */
-      /* // FoundryVTT V12 */
-      ui.notifications.error(game.i18n.format('CoC7.InitialReadingNeeded', { actor: this.parent.actor.name, book: this.parent.name }))
+      ui.notifications.error('CoC7.InitialReadingNeeded', { format: { actor: this.parent.actor.name, book: this.parent.name } })
       return
     }
-    const spell = (await this.items()).find(spell => spell._id === id)
-    if (spell) {
-      const config = {
-        rollType: CoC7RollNormalize.ROLL_TYPE.CHARACTERISTIC,
-        cardType: CoC7RollNormalize.CARD_TYPE.NORMAL,
-        cardTypeFixed: true,
-        difficulty: CoC7DicePool.difficultyLevel.hard,
-        actor: this.parent.actor,
-        chatMessage: false,
-        characteristic: 'int'
-      }
-      const check = await CoC7RollNormalize.trigger(config)
+    const config = {
+      rollType: CoC7RollNormalize.ROLL_TYPE.CHARACTERISTIC,
+      cardType: CoC7RollNormalize.CARD_TYPE.NORMAL,
+      cardTypeFixed: true,
+      difficulty: CoC7DicePool.difficultyLevel.hard,
+      actor: this.parent.actor,
+      chatMessage: false,
+      characteristic: 'int'
+    }
+    const check = await CoC7RollNormalize.trigger(config)
+    if (check) {
       check.flavor = game.i18n.format('CoC7.LearnSpellAttempt', {
         book: this.parent.name,
-        spell: spell.name
+        spell: name
       })
-      check.setCallback(this.parent.uuid, 'attemptSpellLearning:' + id)
+      check.setCallback(this.parent.uuid, 'grantSpellItemLearning:' + key)
       check.toMessage()
     }
   }
@@ -451,9 +474,9 @@ export default class CoC7ModelsItemBookSystem extends CoC7ModelsItemGlobalSystem
             await this.grantInitialReading()
             return
         }
-        const attemptSpellLearning = check.callbackContext.match(/^attemptSpellLearning:(.+)$/)
-        if (attemptSpellLearning) {
-          await this.grantSpellLearning(attemptSpellLearning[1])
+        const attemptSpellItemLearning = check.callbackContext.match(/^grantSpellItemLearning:(.+)$/)
+        if (attemptSpellItemLearning) {
+          await this.grantSpellItemLearning(attemptSpellItemLearning[1])
           return
         }
         throw new Error('Unexpected Book System call back')

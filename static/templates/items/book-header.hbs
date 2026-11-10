@@ -1,6 +1,6 @@
 <div class="flexcol">
   <div class="flexrow item-header">
-    <div class="flexcol item-property">
+    <div class="flexcol">
       <div class="flexrow">
         <input type="text" name="name" value="{{document.name}}" placeholder="{{localize 'CoC7.Name'}}" />
       </div>
@@ -23,14 +23,14 @@
       {{#if initialReading}}
         <div class="flexrow">
           <label>{{localize 'CoC7.InitialReading'}}</label>
-          <label><i class="fa-solid fa-check"></i></label>
+          <label><i class="fa-solid fa-check fa-fw"></i></label>
         </div>
         {{#if mythos}}
           <div class="flexrow">
             <label>{{localize 'CoC7.FullStudies'}}:</label>
             <label>{{fullStudies}}</label>
             {{#if studyCompleted}}
-              <a class="item-control" data-action="redo-full-study" data-tooltip="CoC7.RedoFullStudy"><i class="fa-solid fa-redo"></i></a>
+              <a class="item-control" data-action="redo-full-study" data-tooltip="CoC7.RedoFullStudy"><i class="fa-solid fa-redo fa-fw"></i></a>
             {{/if}}
           </div>
           <div class="flexrow">
@@ -46,14 +46,14 @@
   <div class="spell-progress flexrow">
     {{#if (and mythos (or isKeeper initialReading) isEmbedded)}}
       {{#if isKeeper}}
-        <a class="{{#if (lt progress necessary)}}item-control{{else}}item-control-disabled{{/if}}" data-action="decrease-progress"><i class="fa-regular fa-minus-circle"></i></a>
+        <a class="{{#if (lt progress necessary)}}item-control{{else}}item-control-disabled{{/if}} flex-auto" data-action="decrease-progress"><i class="fa-regular fa-minus-circle fa-fw"></i></a>
       {{/if}}
       <div class="progress-wrap">
         <progress name="system.study.progress" value="{{progress}}" max="{{necessary}}"></progress>
         <span class="progress-label">{{localize 'CoC7.Progress'}}: {{progress}} / {{necessary}} {{localize units}}</span>
       </div>
       {{#if isKeeper}}
-        <a class="{{#if (lt progress necessary)}}item-control{{else}}item-control-disabled{{/if}}" data-action="increase-progress"><i class="fa-regular fa-plus-circle"></i></a>
+        <a class="{{#if (lt progress necessary)}}item-control{{else}}item-control-disabled{{/if}} flex-auto" data-action="increase-progress"><i class="fa-regular fa-plus-circle fa-fw"></i></a>
       {{/if}}
     {{else}}
       &nbsp;

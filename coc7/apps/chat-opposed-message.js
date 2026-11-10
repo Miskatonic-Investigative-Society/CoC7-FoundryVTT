@@ -821,8 +821,7 @@ export default class CoC7ChatOpposedMessage {
         return c
       }, [])),
       speaker: { alias: game.i18n.localize('CoC7.OpposedRollCard') },
-      /* // FoundryVTT V12 */
-      content: await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/opposed-roll.hbs', data)
+      content: await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/opposed-roll.hbs', data)
     }
 
     return chatData
@@ -849,7 +848,11 @@ export default class CoC7ChatOpposedMessage {
         /* // FoundryVTT V13 */
         for (const actorUuid of this.#removeRolls) {
           /* // FoundryVTT V13 */
-          foundry.utils.setProperty(diff, 'flags.' + FOLDER_ID + '.load.actorRolls.-=' + actorUuid, null)
+          if (game.release.generation === 13) {
+            foundry.utils.setProperty(diff, 'flags.' + FOLDER_ID + '.load.actorRolls.-=' + actorUuid, null)
+          } else {
+            foundry.utils.setProperty(diff, 'flags.' + FOLDER_ID + '.load.actorRolls.' + actorUuid, new foundry.data.operators.ForcedDeletion())
+          }
         }
       }
       if (!this.message.canUserModify(game.user, 'update')) {
@@ -1064,7 +1067,7 @@ export default class CoC7ChatOpposedMessage {
       const check = await CoC7ChatOpposedMessage.loadFromMessage(merged, true)
       if (check) {
         const data = await check.getTemplateData()
-        update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/opposed-roll.hbs', data)
+        update.content = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/opposed-roll.hbs', data)
         update._id = message.id
         updates.push(update)
       }
@@ -1229,7 +1232,7 @@ export default class CoC7ChatOpposedMessage {
     const check = await CoC7ChatOpposedMessage.loadFromMessage(merged, true)
     if (check) {
       const data = await check.getTemplateData()
-      update.content = await (foundry.applications.handlebars?.renderTemplate ?? renderTemplate)('systems/' + FOLDER_ID + '/templates/chat/opposed-roll.hbs', data)
+      update.content = await foundry.applications.handlebars.renderTemplate('systems/' + FOLDER_ID + '/templates/chat/opposed-roll.hbs', data)
       update.flavor = check.flavor
       update._id = message.id
       updates.push(update)

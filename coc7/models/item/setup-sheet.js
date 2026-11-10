@@ -58,12 +58,6 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
         case 'biography-add':
           this._onBioSectionAdd(event)
           break
-        case 'biography-move-down':
-          this._onBioSectionMoveDown(event)
-          break
-        case 'biography-move-up':
-          this._onBioSectionMoveUp(event)
-          break
         case 'biography-remove':
           this._onBioSectionRemove(event)
           break
@@ -79,8 +73,7 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
       }
     }))
 
-    /* // FoundryVTT V12 */
-    new (foundry.applications.ux?.DragDrop ?? DragDrop)({
+    new foundry.applications.ux.DragDrop({
       dropSelector: '.drop-item',
       permissions: {
         drop: true
@@ -89,6 +82,55 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
         drop: this._onItemDrop.bind(this)
       }
     }).bind(this.element)
+
+    this.element.querySelectorAll('.bio-section input').forEach((element) => element.addEventListener('dragstart', (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+    }))
+    this.element.querySelectorAll('.bio-section .item-controls:not(.allow-drag)').forEach((element) => element.addEventListener('dragstart', (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+    }))
+    new foundry.applications.ux.DragDrop({
+      dragSelector: '.bio-section',
+      dropSelector: '.bio-section',
+      permissions: {
+        dragstart: true,
+        drop: true
+      },
+      callbacks: {
+        dragstart: this._onDragStart.bind(this),
+        drop: this._onDragDrop.bind(this)
+      }
+    }).bind(this.element)
+  }
+
+  /**
+   * Set drag data
+   * @param {DragEvent} event
+   */
+  _onDragStart (event) {
+    const data = {
+      type: 'CoC7BioSection',
+      index: Number(event.currentTarget.dataset.index)
+    }
+    event.dataTransfer.setData('text/plain', JSON.stringify(data))
+  }
+
+  /**
+   * Process dropped characteristic values or skill Items
+   * @param {DropEvent} event
+   */
+  _onDragDrop (event) {
+    const indexDrop = Number(event.currentTarget.dataset.index)
+    const dataString = event.dataTransfer.getData('text/plain')
+    const dropData = JSON.parse(dataString)
+    if (dropData.type === 'CoC7BioSection' && dropData.index !== indexDrop) {
+      const bioSections = this.document.system.bioSections
+      const dragged = bioSections.splice(dropData.index, 1)
+      bioSections.splice(indexDrop, 0, ...dragged)
+      this.document.update({ 'system.bioSections': bioSections })
+    }
   }
 
   /**
@@ -126,42 +168,6 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
     await this.document.update({
       'system.bioSections': this.document.system.bioSections.concat([''])
     })
-  }
-
-  /**
-   * Move Down Biography Section Row
-   * @param {ClickEvent} event
-   */
-  async _onBioSectionMoveDown (event) {
-    event.preventDefault()
-    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
-    const item = event.currentTarget.closest('.bio-section')
-    if (item && typeof item.dataset.index !== 'undefined') {
-      const index = Number(item.dataset.index)
-      const bioSections = foundry.utils.duplicate(this.document.system.bioSections)
-      if (index === 0 || typeof bioSections[index] === 'undefined') return
-      const elem = bioSections.splice(index, 1)[0]
-      bioSections.splice(index - 1, 0, elem)
-      await this.document.update({ 'system.bioSections': bioSections })
-    }
-  }
-
-  /**
-   * Move Up Biography Section Row
-   * @param {ClickEvent} event
-   */
-  async _onBioSectionMoveUp (event) {
-    event.preventDefault()
-    this.element.dispatchEvent(new Event('change')) // Submit any unsaved changes
-    const item = event.currentTarget.closest('.bio-section')
-    if (item && typeof item.dataset.index !== 'undefined') {
-      const index = Number(item.dataset.index)
-      const bioSections = foundry.utils.duplicate(this.document.system.bioSections)
-      if (typeof bioSections[index] === 'undefined') return
-      const elem = bioSections.splice(index, 1)[0]
-      bioSections.splice(index + 1, 0, elem)
-      await this.document.update({ 'system.bioSections': bioSections })
-    }
   }
 
   /**
@@ -286,13 +292,12 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
     switch (partId) {
       case 'description':
         context._properties = []
-        for (const [key, era] of Object.entries(ERAS)) {
-          if (context.document.flags[FOLDER_ID]?.cocidFlag?.eras?.[key] === true) {
-            context._properties.push(era.name)
+        for (const [value, field] of Object.entries(ERAS)) {
+          if (context.document.flags[FOLDER_ID]?.cocidFlag?.eras?.[value] === true) {
+            context._properties.push(field.label)
           }
         }
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionValue = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionValue = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.value,
           {
             async: true,
@@ -303,29 +308,28 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
       case 'details':
         context.oneBlockBackStory = game.settings.get(FOLDER_ID, 'oneBlockBackstory')
         context._eras = []
-        for (const [key, era] of Object.entries(ERAS)) {
+        for (const [value, era] of Object.entries(ERAS)) {
           context._eras.push({
-            id: key,
-            name: game.i18n.localize(era.name),
+            value,
+            label: game.i18n.localize(era.label),
             icon: era.icon,
-            isEnabled: (context.document.flags[FOLDER_ID]?.cocidFlag?.eras ?? {})[key] === true
+            isEnabled: (context.document.flags[FOLDER_ID]?.cocidFlag?.eras ?? {})[value] === true
           })
         }
-        context._eras.sort(CoC7Utilities.sortByNameKey)
+        context._eras.sort(CoC7Utilities.sortByLabelKey)
         context.useEraIcons = game.settings.get(FOLDER_ID, 'sheetEraIcons')
         context._monetaryFormats = []
-        for (const key in MONETARY_FORMATS) {
-          context._monetaryFormats.push({ key, val: game.i18n.localize(MONETARY_FORMATS[key]) })
+        for (const value in MONETARY_FORMATS) {
+          context._monetaryFormats.push({ value, label: game.i18n.localize(MONETARY_FORMATS[value]) })
         }
         context._monetaryTypes = []
-        for (const key in MONETARY_TYPES) {
-          if (MONETARY_TYPES[key].filter.length === 0 || MONETARY_TYPES[key].filter.includes(context.document.system.monetary.format)) {
-            context._monetaryTypes.push({ key, val: game.i18n.localize(MONETARY_TYPES[key].name) })
+        for (const value in MONETARY_TYPES) {
+          if (MONETARY_TYPES[value].filter.length === 0 || MONETARY_TYPES[value].filter.includes(context.document.system.monetary.format)) {
+            context._monetaryTypes.push({ value, label: game.i18n.localize(MONETARY_TYPES[value].label) })
           }
         }
         if (context.oneBlockBackStory) {
-          /* // FoundryVTT V12 */
-          context.enrichedBackstory = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+          context.enrichedBackstory = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
             context.document.system.backstory,
             {
               async: true,
@@ -354,8 +358,7 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
         context.skillListEmpty = context.skills.length === 0
         break
       case 'keeper':
-        /* // FoundryVTT V12 */
-        context.enrichedDescriptionKeeper = await (foundry.applications.ux?.TextEditor.implementation ?? TextEditor).enrichHTML(
+        context.enrichedDescriptionKeeper = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
           context.document.system.description.keeper,
           {
             async: true,
@@ -377,7 +380,7 @@ export default class CoC7ModelsItemSetupSheet extends CoC7ModelsItemGlobalSheet 
   _processFormData (event, form, formData) {
     const object = super._processFormData(event, form, formData)
 
-    if (typeof object.system.monetary.values !== 'undefined') {
+    if (typeof object.system.monetary?.values !== 'undefined') {
       object.system.monetary.values = Object.values(object.system.monetary.values)
       if (event.target.classList.contains('cash-assets-range')) {
         this._onMonetaryReorder(object.system.monetary.values)
