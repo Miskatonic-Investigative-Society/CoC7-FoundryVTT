@@ -9,6 +9,14 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 9.2
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+**_!! Not all features will work with FoundryVTT v13 please consider upgrading !!_**
+
+- Fix game icon migration if the filename is the same in both new and old folders
+
 ## Version 9.1
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
