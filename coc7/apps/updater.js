@@ -1,4 +1,4 @@
-// cSpell:words caro-asercion delapouite john-colburn lorc lord-berandas sbed skoll Uniki Unik
+// cSpell:words bcoc7- caro-asercion delapouite john-colburn lorc lord-berandas sbed skoll Uniki Unik
 import { FOLDER_ID } from '../constants.js'
 import CoC7ChatChaseObstacle from './chat-chase-obstacle.js'
 import CoC7ChatCombatMelee from './chat-combat-melee.js'
@@ -157,7 +157,7 @@ export default class CoC7Updater {
     // Migrate World Combats Combatants
     for (const combat of game.combats.contents) {
       for (const document of combat.combatants) {
-        const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+        const image2 = String(document.img).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
         if (image2) {
           const newName = CoC7Updater.gameIconsRemap(image2[1])
           if (newName !== false) {
@@ -298,7 +298,7 @@ export default class CoC7Updater {
           img: 'systems/CoC7/assets/icons/' + image[1]
         })
       }
-      const image2 = String(document.effects.contents[offset].img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+      const image2 = String(document.effects.contents[offset].img).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
       if (image2) {
         const newName = CoC7Updater.gameIconsRemap(image2[1])
         if (newName !== false) {
@@ -366,7 +366,7 @@ export default class CoC7Updater {
         img: 'systems/CoC7/assets/icons/' + image[1]
       })
     }
-    const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    const image2 = String(document.img).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
     if (image2) {
       const newName = CoC7Updater.gameIconsRemap(image2[1])
       if (newName !== false) {
@@ -391,7 +391,7 @@ export default class CoC7Updater {
               document.system.itemDocuments[offset].img = 'systems/CoC7/assets/icons/' + image[1]
               changed = true
             }
-            const image2 = String(document.system.itemDocuments[offset].img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+            const image2 = String(document.system.itemDocuments[offset].img).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
             if (image2) {
               const newName = CoC7Updater.gameIconsRemap(image2[1])
               if (newName !== false) {
@@ -423,7 +423,7 @@ export default class CoC7Updater {
                 document.system.groups[offset2].itemDocuments[offset].img = 'systems/CoC7/assets/icons/' + image[1]
                 changed = true
               }
-              const image2 = String(document.system.groups[offset2].itemDocuments[offset].img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+              const image2 = String(document.system.groups[offset2].itemDocuments[offset].img).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
               if (image2) {
                 const newName = CoC7Updater.gameIconsRemap(image2[1])
                 if (newName !== false) {
@@ -825,7 +825,7 @@ export default class CoC7Updater {
         img: 'systems/CoC7/assets/icons/' + image[1]
       })
     }
-    const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    const image2 = String(document.img).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
     if (image2) {
       const newName = CoC7Updater.gameIconsRemap(image2[1])
       if (newName !== false) {
@@ -841,7 +841,7 @@ export default class CoC7Updater {
           'prototypeToken.texture.src': 'systems/CoC7/assets/icons/' + image[1]
         })
       }
-      const image2 = String(document.prototypeToken.texture.src).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+      const image2 = String(document.prototypeToken.texture.src).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
       if (image2) {
         const newName = CoC7Updater.gameIconsRemap(image2[1])
         if (newName !== false) {
@@ -858,7 +858,7 @@ export default class CoC7Updater {
           img: 'systems/CoC7/assets/icons/' + image[1]
         })
       }
-      const image2 = String(document.effects.contents[offset].img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+      const image2 = String(document.effects.contents[offset].img).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
       if (image2) {
         const newName = CoC7Updater.gameIconsRemap(image2[1])
         if (newName !== false) {
@@ -1057,7 +1057,7 @@ export default class CoC7Updater {
         img: 'systems/CoC7/assets/icons/' + image[1]
       })
     }
-    const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    const image2 = String(document.img).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
     if (image2) {
       const newName = CoC7Updater.gameIconsRemap(image2[1])
       if (newName !== false) {
@@ -1083,7 +1083,7 @@ export default class CoC7Updater {
         img: 'systems/CoC7/assets/icons/' + image[1]
       })
     }
-    const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    const image2 = String(document.img).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
     if (image2) {
       const newName = CoC7Updater.gameIconsRemap(image2[1])
       if (newName !== false) {
@@ -1099,7 +1099,7 @@ export default class CoC7Updater {
           img: 'systems/CoC7/assets/icons/' + image[1]
         })
       }
-      const image2 = String(document.results.contents[offset].img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+      const image2 = String(document.results.contents[offset].img).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
       if (image2) {
         const newName = CoC7Updater.gameIconsRemap(image2[1])
         if (newName !== false) {
@@ -1126,7 +1126,7 @@ export default class CoC7Updater {
         img: 'systems/CoC7/assets/icons/' + image[1]
       })
     }
-    const image2 = String(document.img).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    const image2 = String(document.img).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
     if (image2) {
       const newName = CoC7Updater.gameIconsRemap(image2[1])
       if (newName !== false) {
@@ -1135,7 +1135,7 @@ export default class CoC7Updater {
         })
       }
     }
-    const image3 = String(document.texture?.src).match(/^systems\/CoC7\/assets\/icons\/(?:skills\/)?([^/]+)/)
+    const image3 = String(document.texture?.src).match(/^(?:systems\/CoC7\/assets\/icons\/(?:skills\/)?|modules\/(?:call-of-cthulhu-foundryvtt-investigator-wizard|cha-coc-fvtt-en-(?:keeperitems|notimetoscream|theorderofthestone|arkham))\/assets\/game-icons\/[^/]+\/)([^/]+)/)
     if (image3) {
       const newName = CoC7Updater.gameIconsRemap(image3[1])
       if (newName !== false) {
@@ -1282,28 +1282,38 @@ export default class CoC7Updater {
   static gameIconsRemap (oldName) {
     switch (oldName) {
       case 'accounting.svg':
+      case 'money-stack.svg':
         return 'delapouite/money-stack.svg'
       case 'animal_handling.svg':
+      case 'jumping-dog.svg':
         return 'delapouite/jumping-dog.svg'
       case 'anthropology.svg':
+      case 'human-pyramid.svg':
         return 'delapouite/human-pyramid.svg'
       case 'appraise.svg':
+      case 'glass-ball.svg':
         return 'delapouite/glass-ball.svg'
       case 'archaeology.svg':
+      case 'great-pyramid.svg':
         return 'delapouite/great-pyramid.svg'
       case 'archive-register.svg':
         return 'delapouite/archive-register.svg'
       case 'arm-sling.svg':
         return 'delapouite/arm-sling.svg'
       case 'art_craft_acting.svg':
+      case 'theater-curtains.svg':
         return 'delapouite/theater-curtains.svg'
       case 'art_craft_any.svg':
+      case 'shining-heart.svg':
         return 'lorc/shining-heart.svg'
       case 'art_craft_fine_art.svg':
+      case 'paint-brush.svg':
         return 'delapouite/paint-brush.svg'
       case 'art_craft_forgery.svg':
+      case 'paper-tray.svg':
         return 'delapouite/paper-tray.svg'
       case 'art_craft_photography.svg':
+      case 'photo-camera.svg':
         return 'delapouite/photo-camera.svg'
       case 'barrier.svg':
         return 'delapouite/barrier.svg'
@@ -1314,36 +1324,49 @@ export default class CoC7Updater {
       case 'church.svg':
         return 'delapouite/church.svg'
       case 'classical_knowledge.svg':
+      case 'classical-knowledge.svg':
         return 'delapouite/classical-knowledge.svg'
       case 'climb.svg':
+      case 'mountain-road.svg':
         return 'delapouite/mountain-road.svg'
       case 'cog.svg':
         return 'lorc/cog.svg'
       case 'computer_use.svg':
+      case 'computing.svg':
         return 'lord-berandas/computing.svg'
       case 'credit_rating.svg':
+      case 'credits-currency.svg':
         return 'delapouite/credits-currency.svg'
       case 'cthulhu_mythos.svg':
+      case 'fish-monster.svg':
         return 'delapouite/fish-monster.svg'
       case 'cultist.svg':
         return 'lorc/cultist.svg'
       case 'demolitions.svg':
+      case 'demolish.svg':
         return 'lorc/demolish.svg'
       case 'diploma.svg':
         return 'delapouite/diploma.svg'
       case 'disguise.svg':
+      case 'domino-mask.svg':
         return 'lorc/domino-mask.svg'
       case 'diving_helmet.svg':
+      case 'diving-helmet.svg':
         return 'delapouite/diving-helmet.svg'
       case 'dodge.svg':
+      case 'dodging.svg':
         return 'lorc/dodging.svg'
       case 'diving.svg':
+      case 'pool-dive.svg':
         return 'delapouite/pool-dive.svg'
       case 'drive_auto.svg':
+      case 'race-car.svg':
         return 'skoll/race-car.svg'
       case 'electrical_repair.svg':
+      case 'electrical-resistance.svg':
         return 'delapouite/electrical-resistance.svg'
       case 'electronics.svg':
+      case 'musical-keyboard.svg':
         return 'delapouite/musical-keyboard.svg'
       case 'evasion.svg':
         return 'delapouite/evasion.svg'
@@ -1352,42 +1375,61 @@ export default class CoC7Updater {
       case 'falling.svg':
         return 'sbed/falling.svg'
       case 'fast_talk.svg':
+      case 'back-forth.svg':
         return 'lorc/back-forth.svg'
       case 'fighting_axe.svg':
+      case 'sharp-axe.svg':
         return 'delapouite/sharp-axe.svg'
       case 'fighting_brawl.svg':
+      case 'mailed-fist.svg':
         return 'lorc/mailed-fist.svg'
       case 'fighting_chainsaw.svg':
+      case 'chainsaw.svg':
         return 'delapouite/chainsaw.svg'
       case 'fighting_flail.svg':
+      case 'flail.svg':
         return 'delapouite/flail.svg'
       case 'fighting_garrote.svg':
+      case 'skipping-rope.svg':
         return 'delapouite/skipping-rope.svg'
       case 'fighting_spear.svg':
+      case 'spear-feather.svg':
         return 'delapouite/spear-feather.svg'
       case 'fighting_sword.svg':
+      case 'sword-clash.svg':
         return 'lorc/sword-clash.svg'
       case 'fighting_throw.svg':
+      case 'throwing-ball.svg':
         return 'delapouite/throwing-ball.svg'
       case 'fighting_whip.svg':
+      case 'whip.svg':
         return 'lorc/whip.svg'
       case 'firearms_artillery.svg':
+      case 'missile-launcher.svg':
         return 'delapouite/missile-launcher.svg'
       case 'firearms_bow.svg':
+      case 'pocket-bow.svg':
         return 'lorc/pocket-bow.svg'
       case 'firearms_flamethrower.svg':
+      case 'flamethrower.svg':
         return 'delapouite/flamethrower.svg'
       case 'firearms_handgun.svg':
+      case 'pistol-gun.svg':
         return 'john-colburn/pistol-gun.svg'
       case 'firearms_heavy_weapons.svg':
+      case 'missile-pod.svg':
         return 'lorc/missile-pod.svg'
       case 'firearms_machine_gun.svg':
+      case 'machine-gun.svg':
         return 'skoll/machine-gun.svg'
       case 'firearms_rifle_shotgun.svg':
+      case 'winchester-rifle.svg':
         return 'skoll/winchester-rifle.svg'
       case 'firearms_submachine_gun.svg':
+      case 'machine-gun-magazine.svg':
         return 'delapouite/machine-gun-magazine.svg'
       case 'first_aid.svg':
+      case 'first-aid-kit.svg':
         return 'delapouite/first-aid-kit.svg'
       case 'floating-tentacles.svg':
         return 'delapouite/floating-tentacles.svg'
@@ -1398,90 +1440,125 @@ export default class CoC7Updater {
       case 'heart-beats.svg':
         return 'delapouite/heart-beats.svg'
       case 'history.svg':
+      case 'book-pile.svg':
         return 'delapouite/book-pile.svg'
       case 'hypnosis.svg':
+      case 'twirl-center.svg':
         return 'lorc/twirl-center.svg'
       case 'intimidate.svg':
+      case 'tired-eye.svg':
         return 'delapouite/tired-eye.svg'
       case 'jeep.svg':
         return 'delapouite/jeep.svg'
       case 'jump.svg':
+      case 'jump-across.svg':
         return 'delapouite/jump-across.svg'
       case 'knocked-out-stars.svg':
         return 'delapouite/knocked-out-stars.svg'
       case 'language.svg':
+      case 'talk.svg':
         return 'skoll/talk.svg'
       case 'lasso.svg':
         return 'delapouite/lasso.svg'
       case 'laurel_crown.svg':
+      case 'laurel-crown.svg':
         return 'lorc/laurel-crown.svg'
       case 'law.svg':
+      case '3d-hammer.svg':
         return 'delapouite/3d-hammer.svg'
       case 'library_use.svg':
+      case 'archive-research.svg':
         return 'delapouite/archive-research.svg'
       case 'listen.svg':
+      case 'sound-on.svg':
         return 'delapouite/sound-on.svg'
       case 'locksmith.svg':
+      case 'house-keys.svg':
         return 'delapouite/house-keys.svg'
       case 'mechanical_repair.svg':
+      case 'mechanical-arm.svg':
         return 'lorc/mechanical-arm.svg'
       case 'medicine.svg':
+      case 'plague-doctor-profile.svg':
         return 'delapouite/plague-doctor-profile.svg'
       case 'natural_world.svg':
+      case 'forest.svg':
         return 'delapouite/forest.svg'
       case 'navigate.svg':
+      case 'earth-america.svg':
         return 'delapouite/earth-america.svg'
       case 'occult.svg':
+      case 'evil-book.svg':
         return 'lorc/evil-book.svg'
       case 'operate_heavy_machinery.svg':
+      case 'melting-metal.svg':
         return 'delapouite/melting-metal.svg'
       case 'paranoia.svg':
         return 'lorc/paranoia.svg'
       case 'pentagram-rose.svg':
         return 'lorc/pentagram-rose.svg'
       case 'persuade.svg':
+      case 'conversation.svg':
         return 'lorc/conversation.svg'
       case 'pilot_any.svg':
+      case 'ship-wheel.svg':
         return 'delapouite/ship-wheel.svg'
       case 'poker-hand.svg':
         return 'lorc/poker-hand.svg'
       case 'psychoanalysis.svg':
+      case 'psychic-waves.svg':
         return 'lorc/psychic-waves.svg'
       case 'psychology.svg':
+      case 'all-seeing-eye.svg':
         return 'delapouite/all-seeing-eye.svg'
       case 'read_lips.svg':
+      case 'lips.svg':
         return 'lorc/lips.svg'
       case 'ride.svg':
+      case 'horse-head.svg':
         return 'delapouite/horse-head.svg'
       case 'rolling-dices.svg':
         return 'delapouite/rolling-dices.svg'
       case 'round-potion.svg':
         return 'caro-asercion/round-potion.svg'
       case 'science_any.svg':
+      case 'materials-science.svg':
         return 'lorc/materials-science.svg'
       case 'science_astronomy.svg':
+      case 'ringed-planet.svg':
         return 'lorc/ringed-planet.svg'
       case 'science_biology.svg':
+      case 'dna2.svg':
         return 'lorc/dna2.svg'
       case 'science_botany.svg':
+      case 'plant-seed.svg':
         return 'delapouite/plant-seed.svg'
       case 'science_chemistry.svg':
+      case 'chemical-drop.svg':
         return 'lorc/chemical-drop.svg'
       case 'science_cryptography.svg':
+      case 'flower-emblem.svg':
         return 'delapouite/flower-emblem.svg'
       case 'science_forensics.svg':
+      case 'bloody-stash.svg':
         return 'lorc/bloody-stash.svg'
       case 'science_geology.svg':
+      case 'earth-spit.svg':
         return 'lorc/earth-spit.svg'
       case 'science_mathematics.svg':
+      case 'calculator.svg':
         return 'delapouite/calculator.svg'
       case 'science_meteorology.svg':
+      case 'cloud-download.svg':
         return 'delapouite/cloud-download.svg'
       case 'science_pharmacy.svg':
+      case 'pill.svg':
         return 'lorc/pill.svg'
       case 'science_physics.svg':
+      case 'vibrating-ball.svg':
         return 'lorc/vibrating-ball.svg'
       case 'science_zoology.svg':
+      case 'animal-skull.svg':
         return 'lorc/animal-skull.svg'
       case 'secret-book.svg':
         return 'delapouite/secret-book.svg'
@@ -1490,24 +1567,32 @@ export default class CoC7Updater {
       case 'skills.svg':
         return 'delapouite/skills.svg'
       case 'sleight_of_hand.svg':
+      case 'hand.svg':
         return 'lorc/hand.svg'
       case 'spanner.svg':
         return 'lorc/spanner.svg'
       case 'spot_hidden.svg':
+      case 'magnifying-glass.svg':
         return 'lorc/magnifying-glass.svg'
       case 'stealth.svg':
+      case 'hidden.svg':
         return 'lorc/hidden.svg'
       case 'survival_any.svg':
+      case 'campfire.svg':
         return 'lorc/campfire.svg'
       case 'swim.svg':
+      case 'swimfins.svg': // cspell:disable-line
         return 'delapouite/swimfins.svg' // cspell:disable-line
       case 'tentacles-skull.svg':
         return 'lorc/tentacles-skull.svg'
+      case 'thumb-up.svg':
+        return 'delapouite/thumb-up.svg'
       case 'time-trap.svg':
         return 'lorc/time-trap.svg'
       case 'tombstone.svg':
         return 'lorc/tombstone.svg'
       case 'track.svg':
+      case 'deer-track.svg':
         return 'delapouite/deer-track.svg'
       case 'whiplash.svg':
         return 'lorc/whiplash.svg'
