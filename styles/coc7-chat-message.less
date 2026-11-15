@@ -1,3 +1,28 @@
+/* ------------------------------------------------------------ */
+/*  Currently only Light Mode as chat-log is themed theme-light */
+/* ------------------------------------------------------------ */
+body.theme-light .chat-log.themed.theme-light,
+body.theme-dark .chat-log.themed.theme-light {
+  input[type=text],
+  input[type=number],
+  input[type=password],
+  input[type=date],
+  input[type=time],
+  input[type=datetime-local],
+  input[type=month],
+  input[type=week],
+  input[type=search],
+  input[type=file],
+  input[type=email],
+  input[type=url],
+  input[type=tel],
+  select {
+    --input-background-color: rgb(0 0 0 / 0.1);
+    --input-border-color: var(--color-dark-6);
+    --input-text-color: var(--color-dark-1);
+  }
+}
+
 body {
   .chat-message {
     background: var(--chat-message-background);
