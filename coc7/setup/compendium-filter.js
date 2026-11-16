@@ -58,9 +58,10 @@ function _onSearchFilter (event, query, rgx, html) {
       if (el.classList.contains('folder')) {
         const { folderId, uuid } = el.dataset
         const match = folderIds.has(folderId)
-        el.style.display = !query || match ? 'flex' : 'none'
-        if (autoExpandIds.has(folderId)) {
-          if (isNameSearch && match) {
+        const autoExpand = autoExpandIds.has(folderId)
+        el.style.display = !query || match || autoExpand ? 'flex' : 'none'
+        if (autoExpand) {
+          if (isNameSearch && (match || autoExpand)) {
             el.classList.add('expanded')
           }
         } else {
