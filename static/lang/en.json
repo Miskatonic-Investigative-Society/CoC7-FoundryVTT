@@ -1501,6 +1501,7 @@
 
   "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
   "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example telling which skill on an Actor is Dodge. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+  "CoC7.CoCIDBatch.ArtillerySkillChange": "The CoC ID for \"Firearms (Artillery)\" is no longer needed, do you want to update the relevant skills in this world to \"Artillery\"?",
   "CoC7.CoCIDBatch.ThrowSkillChange": "The CoC ID for \"Fighting (Throw)\", \"Firearms (Throw)\", and \"Ranged (Throw)\" are no longer needed, do you want to update the relevant skills in this world to \"Throw\"?",
   "CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
   "CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
