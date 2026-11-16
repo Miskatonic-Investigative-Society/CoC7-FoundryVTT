@@ -87,18 +87,16 @@ export default class CoC7ActiveEffect {
             names.push(effect.parent.system.skills[key]?.name ?? key.replace(/>>/g, '.'))
           } else {
             const index = key.replace(/>>/g, '.').indexOf('*')
-            if (index > -1) {
+            if (index > -1 && effect.actor instanceof Actor) {
               const quoted = new RegExp(key.split('*').map(t => CoC7Utilities.quoteRegExp(t)).join('(.+)'))
               const keys = Object.keys(effect.actor.system.skills).filter(key => quoted.test(key))
               for (const key of keys) {
                 names.push(effect.actor.system.skills[key].name)
               }
+            } else if (typeof effect.actor?.system.skills[key] !== 'undefined') {
+              names.push(effect.actor.system.skills[key].name)
             } else {
-              if (typeof effect.actor?.system.skills[key] !== 'undefined') {
-                names.push(effect.actor.system.skills[key].name)
-              } else {
-                names.push(key.replace(/>>/g, '.'))
-              }
+              names.push(key.replace(/>>/g, '.'))
             }
           }
         } else {
