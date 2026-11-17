@@ -283,6 +283,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
     }
     console.log('BATCHED processed')
     await CoCIDBatch.migrateThrowSkill()
+    await CoCIDBatch.migrateArtillerySkill()
   }
 
   /**
@@ -425,6 +426,337 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
       }
     }
     console.log('BATCH processed')
+  }
+
+  /**
+   * Migrate old Firearms (Artillery) to Artillery
+   */
+  static async migrateArtillerySkill () {
+    const foundActor = {}
+    const foundCompendiumActor = {}
+    const foundCompendiumItem = {}
+    const foundItem = []
+    const foundToken = {}
+    console.log('ARTILLERY actors')
+    for (const actor of game.actors.contents) {
+      if (actor.items) {
+        for (const item of actor.items) {
+          if (item.type === 'skill' && item.flags[FOLDER_ID]?.cocidFlag?.id?.match(/^i.skill.firearms-artillery$/) && item.system.properties?.special && item.system.properties?.firearm) {
+            if (typeof foundActor[actor.uuid] === 'undefined') {
+              foundActor[actor.uuid] = []
+            }
+            foundActor[actor.uuid].push({
+              _id: item._id,
+              name: item.system.skillName,
+              ['flags.' + FOLDER_ID + '.cocidFlag.id']: 'i.skill.artillery',
+              'system.specialization': '',
+              'system.properties.special': false,
+              'system.properties.fighting': false,
+              'system.properties.firearm': false,
+              'system.properties.ranged': false
+            })
+          } else if (item.type === 'weapon' && (item.system?.skill?.main?.name?.match(/^i.skill.firearms-artillery$/) || item.system?.skill?.alternativ?.name?.match(/^i.skill.firearms-artillery$/))) {
+            if (typeof foundActor[actor.uuid] === 'undefined') {
+              foundActor[actor.uuid] = []
+            }
+            const row = {
+              _id: item._id
+            }
+            if (item.system?.skill?.main?.name?.match(/^i.skill.firearms-artillery$/)) {
+              row['system.skill.main.name'] = 'i.skill.artillery'
+            }
+            if (item.system?.skill?.alternativ?.name?.match(/^i.skill.firearms-artillery$/)) {
+              row['system.skill.alternativ.name'] = 'i.skill.artillery'
+            }
+            foundActor[actor.uuid].push(row)
+          }
+        }
+      }
+    }
+    console.log('ARTILLERY items')
+    for (const item of game.items.contents) {
+      if (item.type === 'skill' && item.flags[FOLDER_ID]?.cocidFlag?.id?.match(/^i.skill.firearms-artillery$/) && item.system.properties?.special && item.system.properties?.firearm) {
+        foundItem.push({
+          _id: item._id,
+          name: item.system.skillName,
+          ['flags.' + FOLDER_ID + '.cocidFlag.id']: 'i.skill.artillery',
+          'system.specialization': '',
+          'system.properties.special': false,
+          'system.properties.fighting': false,
+          'system.properties.firearm': false,
+          'system.properties.ranged': false
+        })
+      } else if (item.type === 'weapon' && (item.system?.skill?.main?.name?.match(/^i.skill.firearms-artillery$/) || item.system?.skill?.alternativ?.name?.match(/^i.skill.firearms-artillery$/))) {
+        const row = {
+          _id: item._id
+        }
+        if (item.system?.skill?.main?.name?.match(/^i.skill.firearms-artillery$/)) {
+          row['system.skill.main.name'] = 'i.skill.artillery'
+        }
+        if (item.system?.skill?.alternativ?.name?.match(/^i.skill.firearms-artillery$/)) {
+          row['system.skill.alternativ.name'] = 'i.skill.artillery'
+        }
+        foundItem.push(row)
+      } else if (['archetype', 'experiencePackage', 'setup', 'occupation'].includes(item.type)) {
+        const row = {}
+        const found = item.system?.itemKeys?.filter(t => t.match(/^i.skill.firearms-artillery$/)) ?? []
+        if (found.length) {
+          const itemKeys = foundry.utils.duplicate(item.system.itemKeys)
+          let index
+          do {
+            index = itemKeys.findIndex(t => t.match(/^i.skill.firearms-artillery$/))
+            if (index > -1) {
+              itemKeys[index] = 'i.skill.artillery'
+            }
+          } while (index > -1)
+          row['system.itemKeys'] = itemKeys
+        }
+        if (['experiencePackage', 'occupation'].includes(item.type)) {
+          const groups = foundry.utils.duplicate(item.system.groups)
+          let changed = false
+          for (const index in groups) {
+            const found = groups[index].itemKeys?.filter(t => t.match(/^i.skill.firearms-artillery$/)) ?? []
+            if (found.length) {
+              let index2
+              do {
+                index2 = groups[index].itemKeys.findIndex(t => t.match(/^i.skill.firearms-artillery$/))
+                if (index2 > -1) {
+                  groups[index].itemKeys[index2] = 'i.skill.artillery'
+                  changed = true
+                }
+              } while (index2 > -1)
+            }
+          }
+          if (changed) {
+            row['system.groups'] = groups
+          }
+        }
+        if (Object.keys(row).length) {
+          row._id = item._id
+          foundItem.push(row)
+        }
+      }
+    }
+    console.log('ARTILLERY scenes')
+    for (const scene of game.scenes) {
+      for (const token of scene.tokens ?? []) {
+        if (!token.actorLink && typeof token.actor?.uuid === 'string') {
+          for (const item of token.delta?.items ?? []) {
+            if (item.type === 'skill' && item.flags[FOLDER_ID]?.cocidFlag?.id?.match(/^i.skill.firearms-artillery$/) && item.system.properties?.special && item.system.properties?.firearm) {
+              if (typeof foundToken[token.actor.uuid] === 'undefined') {
+                foundToken[token.actor.uuid] = []
+              }
+              foundToken[token.actor.uuid].push({
+                _id: item._id,
+                name: item.system.skillName,
+                ['flags.' + FOLDER_ID + '.cocidFlag.id']: 'i.skill.artillery',
+                'system.specialization': '',
+                'system.properties.special': false,
+                'system.properties.fighting': false,
+                'system.properties.firearm': false,
+                'system.properties.ranged': false
+              })
+            } else if (item.type === 'weapon' && (item.system?.skill?.main?.name?.match(/^i.skill.firearms-artillery$/) || item.system?.skill?.alternativ?.name?.match(/^i.skill.firearms-artillery$/))) {
+              if (typeof foundToken[token.actor.uuid] === 'undefined') {
+                foundToken[token.actor.uuid] = []
+              }
+              const row = {
+                _id: item._id
+              }
+              if (item.system?.skill?.main?.name?.match(/^i.skill.firearms-artillery$/)) {
+                row['system.skill.main.name'] = 'i.skill.artillery'
+              }
+              if (item.system?.skill?.alternativ?.name?.match(/^i.skill.firearms-artillery$/)) {
+                row['system.skill.alternativ.name'] = 'i.skill.artillery'
+              }
+              foundToken[token.actor.uuid].push(row)
+            }
+          }
+        }
+      }
+    }
+    console.log('ARTILLERY packs')
+    for (const pack of game.packs) {
+      if (['world', 'module'].includes(pack.metadata.packageType)) {
+        if (pack.metadata.type === 'Actor') {
+          const documents = await pack.getDocuments()
+          for (const actor of documents) {
+            if (actor.items) {
+              for (const item of actor.items) {
+                if (item.type === 'skill' && item.flags[FOLDER_ID]?.cocidFlag?.id?.match(/^i.skill.firearms-artillery$/) && item.system.properties?.special && item.system.properties?.firearm) {
+                  if (typeof foundCompendiumActor[pack.collection] === 'undefined') {
+                    foundCompendiumActor[pack.collection] = {}
+                  }
+                  if (typeof foundCompendiumActor[pack.collection][actor.uuid] === 'undefined') {
+                    foundCompendiumActor[pack.collection][actor.uuid] = []
+                  }
+                  foundCompendiumActor[pack.collection][actor.uuid].push({
+                    _id: item._id,
+                    name: item.system.skillName,
+                    ['flags.' + FOLDER_ID + '.cocidFlag.id']: 'i.skill.artillery',
+                    'system.specialization': '',
+                    'system.properties.special': false,
+                    'system.properties.fighting': false,
+                    'system.properties.firearm': false,
+                    'system.properties.ranged': false
+                  })
+                } else if (item.type === 'weapon' && (item.system?.skill?.main?.name?.match(/^i.skill.firearms-artillery$/) || item.system?.skill?.alternativ?.name?.match(/^i.skill.firearms-artillery$/))) {
+                  if (typeof foundCompendiumActor[pack.collection] === 'undefined') {
+                    foundCompendiumActor[pack.collection] = {}
+                  }
+                  if (typeof foundCompendiumActor[pack.collection][actor.uuid] === 'undefined') {
+                    foundCompendiumActor[pack.collection][actor.uuid] = []
+                  }
+                  const row = {
+                    _id: item._id
+                  }
+                  if (item.system?.skill?.main?.name?.match(/^i.skill.firearms-artillery$/)) {
+                    row['system.skill.main.name'] = 'i.skill.artillery'
+                  }
+                  if (item.system?.skill?.alternativ?.name?.match(/^i.skill.firearms-artillery$/)) {
+                    row['system.skill.alternativ.name'] = 'i.skill.artillery'
+                  }
+                  foundCompendiumActor[pack.collection][actor.uuid].push(row)
+                }
+              }
+            }
+          }
+        } else if (pack.metadata.type === 'Item') {
+          const documents = await pack.getDocuments()
+          for (const item of documents) {
+            if (item.type === 'skill' && item.flags[FOLDER_ID]?.cocidFlag?.id?.match(/^i.skill.firearms-artillery$/) && item.system.properties?.special && item.system.properties?.firearm) {
+              if (typeof foundCompendiumItem[pack.collection] === 'undefined') {
+                foundCompendiumItem[pack.collection] = []
+              }
+              foundCompendiumItem[pack.collection].push({
+                _id: item._id,
+                name: item.system.skillName,
+                ['flags.' + FOLDER_ID + '.cocidFlag.id']: 'i.skill.artillery',
+                'system.specialization': '',
+                'system.properties.special': false,
+                'system.properties.fighting': false,
+                'system.properties.firearm': false,
+                'system.properties.ranged': false
+              })
+            } else if (item.type === 'weapon' && (item.system?.skill?.main?.name?.match(/^i.skill.firearms-artillery$/) || item.system?.skill?.alternativ?.name?.match(/^i.skill.firearms-artillery$/))) {
+              if (typeof foundCompendiumItem[pack.collection] === 'undefined') {
+                foundCompendiumItem[pack.collection] = []
+              }
+              const row = {
+                _id: item._id
+              }
+              if (item.system?.skill?.main?.name?.match(/^i.skill.firearms-artillery$/)) {
+                row['system.skill.main.name'] = 'i.skill.artillery'
+              }
+              if (item.system?.skill?.alternativ?.name?.match(/^i.skill.firearms-artillery$/)) {
+                row['system.skill.alternativ.name'] = 'i.skill.artillery'
+              }
+              foundCompendiumItem[pack.collection].push(row)
+            } else if (['archetype', 'experiencePackage', 'setup', 'occupation'].includes(item.type)) {
+              const row = {}
+              const found = item.system?.itemKeys?.filter(t => t.match(/^i.skill.firearms-artillery$/)) ?? []
+              if (found.length) {
+                const itemKeys = foundry.utils.duplicate(item.system.itemKeys)
+                let index
+                do {
+                  index = itemKeys.findIndex(t => t.match(/^i.skill.firearms-artillery$/))
+                  if (index > -1) {
+                    itemKeys[index] = 'i.skill.artillery'
+                  }
+                } while (index > -1)
+                row['system.itemKeys'] = itemKeys
+              }
+              if (['experiencePackage', 'occupation'].includes(item.type)) {
+                const groups = foundry.utils.duplicate(item.system.groups)
+                let changed = false
+                for (const index in groups) {
+                  const found = groups[index].itemKeys?.filter(t => t.match(/^i.skill.firearms-artillery$/)) ?? []
+                  if (found.length) {
+                    let index2
+                    do {
+                      index2 = groups[index].itemKeys.findIndex(t => t.match(/^i.skill.firearms-artillery$/))
+                      if (index2 > -1) {
+                        groups[index].itemKeys[index2] = 'i.skill.artillery'
+                        changed = true
+                      }
+                    } while (index2 > -1)
+                  }
+                }
+                if (changed) {
+                  row['system.groups'] = groups
+                }
+              }
+              if (Object.keys(row).length) {
+                if (typeof foundCompendiumItem[pack.collection] === 'undefined') {
+                  foundCompendiumItem[pack.collection] = []
+                }
+                row._id = item._id
+                foundCompendiumItem[pack.collection].push(row)
+              }
+            }
+          }
+        }
+      }
+    }
+    if ((Object.keys(foundActor).length + foundItem.length + Object.keys(foundToken).length + Object.keys(foundCompendiumActor).length + Object.keys(foundCompendiumItem).length) > 0) {
+      const migrate = await new Promise(resolve => {
+        new foundry.applications.api.DialogV2({
+          window: { title: 'CoC7.CoCIDBatch.title' },
+          content: game.i18n.localize('CoC7.CoCIDBatch.ArtillerySkillChange'),
+          buttons: [{
+            action: 'cancel',
+            label: 'CoC7.Migrate.ButtonSkip',
+            icon: 'fa-solid fa-ban'
+          }, {
+            action: 'ok',
+            label: 'CoC7.Migrate.ButtonUpdate',
+            icon: 'fa-solid fa-check'
+          }],
+          submit: result => {
+            resolve(result === 'ok')
+          }
+        }).render({ force: true })
+      })
+      if (migrate) {
+        console.log('ARTILLERY Item')
+        if (foundItem.length) {
+          await Item.updateDocuments(foundItem)
+        }
+        console.log('ARTILLERY Actor.Item')
+        for (const actorUuid of Object.keys(foundActor)) {
+          await Item.updateDocuments(foundActor[actorUuid], { parent: await fromUuid(actorUuid) })
+        }
+        console.log('ARTILLERY Token.Item')
+        for (const actorUuid of Object.keys(foundToken)) {
+          await Item.updateDocuments(foundToken[actorUuid], { parent: await fromUuid(actorUuid) })
+        }
+        console.log('ARTILLERY pack.Item')
+        for (const pack in foundCompendiumItem) {
+          const wasLocked = game.packs.get(pack).locked
+          if (wasLocked) {
+            await game.packs.get(pack).configure({ locked: false })
+          }
+          await Item.updateDocuments(foundCompendiumItem[pack], { pack })
+          if (wasLocked) {
+            await game.packs.get(pack).configure({ locked: true })
+          }
+        }
+        console.log('ARTILLERY pack.Actor.Item')
+        for (const pack in foundCompendiumActor) {
+          const wasLocked = game.packs.get(pack).locked
+          if (wasLocked) {
+            await game.packs.get(pack).configure({ locked: false })
+          }
+          for (const parentUuid in foundCompendiumActor[pack]) {
+            await Item.updateDocuments(foundCompendiumActor[pack][parentUuid], { parent: await fromUuid(parentUuid), pack })
+          }
+          if (wasLocked) {
+            await game.packs.get(pack).configure({ locked: true })
+          }
+        }
+      }
+    }
+    console.log('ARTILLERY processed')
   }
 
   /**
@@ -717,19 +1049,19 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         }).render({ force: true })
       })
       if (migrate) {
-        console.log('THROWN Item')
+        console.log('THROW Item')
         if (foundItem.length) {
           await Item.updateDocuments(foundItem)
         }
-        console.log('THROWN Actor.Item')
+        console.log('THROW Actor.Item')
         for (const actorUuid of Object.keys(foundActor)) {
           await Item.updateDocuments(foundActor[actorUuid], { parent: await fromUuid(actorUuid) })
         }
-        console.log('THROWN Token.Item')
+        console.log('THROW Token.Item')
         for (const actorUuid of Object.keys(foundToken)) {
           await Item.updateDocuments(foundToken[actorUuid], { parent: await fromUuid(actorUuid) })
         }
-        console.log('THROWN pack.Item')
+        console.log('THROW pack.Item')
         for (const pack in foundCompendiumItem) {
           const wasLocked = game.packs.get(pack).locked
           if (wasLocked) {
@@ -740,7 +1072,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
             await game.packs.get(pack).configure({ locked: true })
           }
         }
-        console.log('THROWN pack.Actor.Item')
+        console.log('THROW pack.Actor.Item')
         for (const pack in foundCompendiumActor) {
           const wasLocked = game.packs.get(pack).locked
           if (wasLocked) {
@@ -755,7 +1087,7 @@ export default class CoCIDBatch extends foundry.applications.api.HandlebarsAppli
         }
       }
     }
-    console.log('THROWN processed')
+    console.log('THROW processed')
   }
 
   /**
